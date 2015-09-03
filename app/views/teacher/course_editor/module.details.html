@@ -2,24 +2,24 @@
   <accordion-group class="accordion-group" is-open="true">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="video_settings" class="show-inline" translate>lectures.module</div>
+        <div id="video_settings" class="show-inline" translate>groups.module</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
       <tr>
-        <td class="right-border small-4"><span translate>lectures.title</span>:</td>
+        <td class="right-border small-4"><span translate>editor.details.title</span>:</td>
         <td class="small-8">
             <details-text value="module.name" save="updateModule()" validate="validateModule" column="name" open="module.new"></details-text>            
         </td>
       </tr>
       <tr>
-        <td class="right-border small-4"><span translate>lectures.description</span>:</td>
+        <td class="right-border small-4"><span translate>editor.details.description</span>:</td>
         <td class="small-8">          
-          <details-area value="module.description" save="updateModule()" validate="validateModule" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></details-area>
+          <details-area value="module.description" save="updateModule()" validate="validateModule" column="description" empty_message="({{ 'editor.details.add_description' | translate}}...)"></details-area>
         </td>
       </tr>
       <tr>
-        <td class="right-border small-4"><span translate>groups.student_link_module</span>:</td>
+        <td class="right-border small-4"><span translate>editor.details.student_link_module</span>:</td>
         <td class="break-text small-8">
           <span >{{link_url}}</span>
         </td>
@@ -29,29 +29,29 @@
   <accordion-group class="accordion-group">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="lec_settings" class="show-inline" translate>settings.settings</div>
+        <div id="lec_settings" class="show-inline" translate>global.settings</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin">
       <tr style="height:130px">
-        <td class="right-border small-4"><span translate>groups.appearance_date</span></td>
+        <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
         <td class="small-8">
           <span>
-            <span translate>lectures.set_date</span>:<br>
+            <span translate>editor.details.set_date</span>:<br>
             <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date>
-            <span tooltip-placement="left" tooltip="{{'invisible' | translate}} {{module.appearance_time| fromNow}}" ng-hide="module.appearance_time | visible" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}} {{module.appearance_time| fromNow}}" ng-hide="module.appearance_time | visible" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
             <br>
             <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
           </span>
         </td>
       </tr>
       <tr style="height:130px"  id="bg_fix">
-        <td class="right-border small-4"><span translate>groups.due_date</span></td>
+        <td class="right-border small-4"><span translate>editor.details.due_date</span></td>
         <td class="small-8">
           <input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin">
-          <span class="size-12" >has due date</span>
+          <span class="size-12" translate>editor.details.has_due_date</span>
           <span ng-show="module.due_date_enabled">
-            <span translate>lectures.set_date</span>:<br>
+            <span translate>editor.details.set_date</span>:<br>
             <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
             <br>
             <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>

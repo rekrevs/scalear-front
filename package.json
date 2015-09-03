@@ -47,7 +47,8 @@
     "protractor": "~1.6.0",
     "grunt-protractor-runner": "~1.1.0",
     "grunt-protractor-coverage": "~0.2.9",
-    "grunt-istanbul": "~0.3.0"
+    "grunt-istanbul": "~0.3.0",
+    "grunt-angular-translate": "~0.3.0"
   },
   "engines": {
     "node": ">=0.8.0"

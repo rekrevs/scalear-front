@@ -3,11 +3,11 @@
 angular.module('scalearAngularApp')
   .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window','Page', '$filter','$timeout', function ($scope,$state, $stateParams, Course, $window,Page, $filter,$timeout) {
      $window.scrollTo(0, 0);
-     Page.setTitle('head.calendar');
+     Page.setTitle('navigation.calendar');
     var change_lang = function(){
     	if($scope.eventSources){
 	    	angular.element($scope.myCalendar.children()).remove();
-	    	var obj=($scope.current_lang=="en")?full_calendar_en():full_calendar_sv();
+	    	var obj=($scope.current_lang=="en")?full_calendar_en:full_calendar_sv;
 	    	obj.eventSources=$scope.eventSources;
 	    	$scope.myCalendar.fullCalendar(obj);   
     	}

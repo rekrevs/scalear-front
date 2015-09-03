@@ -22,13 +22,13 @@ angular.module('scalearAngularApp')
 	    	// scope.table_height= $window.innerHeight - element.find("tbody").offset().top - 158
 	    	if(scope.show_popover){
 	    		var template="<div style='font-size:14px; color: black;'>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px'><span translate>courses.original</span> "+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Finished on Time' translate><span translate>courses.on_time</span> "+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px'><span translate>progress.popover.original</span> "+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Finished on Time' translate><span translate>progress.popover.on_time</span> "+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Not Finished' translate><span translate>progress.popover.not_done</span>"+
     						"</div>"
 		    	scope.popover_options={
 		        	content: template,
-		        	title: "<span style='color: black;' translate>courses.change_status</span>",
+		        	title: "<span style='color: black;' translate>progress.popover.change_status</span>",
 		        	html:true,
 		        	placement: 'top'
 		        }
@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
 					'<div class="left no-padding" style="margin-right:3px;margin-left:2px">'+
 						'<input class="show_inclass no-margin" type="checkbox" ng-model="value" ng-change="change()" />'+
 					'</div>'+
-					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>courses.show_in_class</div>'+
+					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>progress.button.show_in_class</div>'+
 				'</div>', 
 	    link:function(scope,element){
 	    	scope.change=function(){
@@ -121,12 +121,12 @@ angular.module('scalearAngularApp')
 	    },
 	    template:'<div class="panel with-small-margin-top text-center time_estimate">'+
 					'<div>'+
-						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
+						'<h6 ng-style="{color: color}">In-class <span translate>inclass.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>time.minutes</span></b></h6>'+
 					'</div>'+
-					'<div><h6 class="size-14">({{quiz_count || 0}} <span translate>groups.quizzes</span>, {{question_count || 0}} <span translate>lectures.discussion</span> <span translate>and</span> {{survey_count || 0}} <span translate>groups.surveys</span>) </h6></div>'+
+					'<div><h6 class="size-14">({{quiz_count || 0}} <span translate>global.quizzes</span>, {{question_count || 0}} <span translate>global.discussion</span> <span translate>global.and</span> {{survey_count || 0}} <span translate>global.surveys</span>) </h6></div>'+
 					'<div>'+
 						'<div>'+
-							'<a pop-over="popover_options" class="color-green">{{"more" | translate}}...</a>'+
+							'<a pop-over="popover_options" class="color-green">{{"inclass.more" | translate}}...</a>'+
 						'</div>'+
 					'</div>'+
 					// '<div class="small-1 inline right columns"></div>'+
@@ -140,11 +140,11 @@ angular.module('scalearAngularApp')
   	 						// "<label class='small-12 columns no-padding'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
   	 						// "<label class='small-12 columns no-padding'><span translate>courses.questions_for_review</span>: {{question_count}}</label>"+
   	 						"<label class='small-12 columns no-padding'>"+
-  	 							"<span translate>courses.time_per_quiz</span>"+
+  	 							"<span translate>inclass.time_per_quiz</span>"+
   	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_quiz' ng-options='i for i in numbers'></select>"+
   	 						"</label>"+
   	 						"<label class='small-12 columns no-padding with-small-margin-bottom'>"+
-  	 							"<span translate>courses.time_per_question</span>"+
+  	 							"<span translate>inclass.time_per_question</span>"+
   	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_question' ng-options='i for i in numbers'></select>"+
 	 						"</label>"+	  	 						
   	 						// "<label translate>formula</label>:"+

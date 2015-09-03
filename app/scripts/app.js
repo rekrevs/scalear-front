@@ -69,7 +69,7 @@ angular.module('scalearAngularApp', [
             editableOptions.theme = 'default';
             editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
             editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
-            editableThemes['default'].errorTpl = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
+            editableThemes['default'].errorTpl  = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
@@ -195,14 +195,14 @@ angular.module('scalearAngularApp', [
 
                     if (s === 0) {
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
                     }
                     if(s === 2){
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
@@ -221,10 +221,10 @@ angular.module('scalearAngularApp', [
         $logProvider.debugEnabled(scalear_api.debug)
 
         $translateProvider
-            .translations('en', translation_en())
-            .translations('sv', translation_sv());
-        $translateProvider.preferredLanguage('en');
-        $translateProvider.useCookieStorage();
+            .translations('en', translation_en)
+            .translations('sv', translation_sv)
+            .preferredLanguage('en')
+            .useCookieStorage()
 
         //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 

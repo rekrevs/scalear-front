@@ -1,29 +1,29 @@
 <div class="well well-lg" style="text-align: left;">
-    <h3><!-- <i class="step fi-info size-38"></i> --> <span translate>enroll.help_enroll</span></h3>
-    <p translate>enroll.instruction</p>
+    <h3><!-- <i class="step fi-info size-38"></i> --> <span translate>enroll_email.help_enroll</span></h3>
+    <p translate>enroll_email.instruction</p>
     <br>
     <div class="panel">
         <div id="enrollment_message" clip-copy="getTextToCopy()" clip-click="animateCopy()">
-            <p ><span translate>enroll.dear_student</span>,</p>
+            <p ><span translate>enroll_email.dear_student</span>,</p>
             <p>&emsp;
-                <span translate translate-values='{course_name: course.name}'>enroll.this_term_new_system</span>
+                <span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system</span>
                 <ol>
                     <li>
-                        <span translate>enroll.go_to</span>
+                        <span translate>enroll_email.go_to</span>
                         <a ui-sref="home" ui-sref-opts="{absolute: true}" >{{'home'| href}}</a>
-                        <span translate>enroll.create_account_with_university</span>
+                        <span translate>enroll_email.create_account_with_university</span>
                     </li>
                     <li>
-                        <span translate>enroll.add_course_by_choosing</span>
+                        <span translate>enroll_email.add_course_by_choosing</span>
                         <span>{{course.short_name}} : </span><b>{{course.unique_identifier}}</b>
                     </li>
                 </ol>
             </p>
-            <p ><span translate>enroll.sincerely</span>,
+            <p ><span translate>enroll_email.sincerely</span>,
                 <br>
                 {{current_user.name+' '+current_user.last_name}}
             </p>
         </div>
-        <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right" ><span translate>courses.click_to_copy</span></div>
+        <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right" ><span translate>courses.information.tooltip.click_to_copy</span></div>
     </div>
 </div> 

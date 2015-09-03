@@ -2,10 +2,10 @@
 
 angular.module('scalearAngularApp')
   .controller('inclassCtrl', ['ContentNavigator','Page', function (ContentNavigator, Page) {
-		Page.setTitle('head.in_class')
+		Page.setTitle('navigation.in_class')
   		ContentNavigator.open()
 //     // $window.scrollTo(0, 0);
-//     Page.setTitle('head.in_class')
+//     Page.setTitle('navigation.in_class')
 //     // $scope.close_selector = false;
 //     $scope.module_obj = {}
 //     Course.getCourse(

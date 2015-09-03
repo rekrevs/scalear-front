@@ -114,7 +114,7 @@ angular.module('scalearAngularApp')
                 },
                 restrict: 'E',
                 template: '<a onshow="selectField()" ng-mouseover="show_pencil = true;" blur="submit" ng-mouseleave="show_pencil = false;"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data, elem)" onaftersave="saveData()" ng-click="action()" style="cursor:pointer;padding-right: 20px;" e-class="editable-input-large">' +
-                    '{{ value || ("empty"|translate) }}' +
+                    '{{ value || ("global.empty"|translate) }}' +
                     '<i ng-class="overclass" ></i>' +
                     ' <span ng-show="show_pencil" class="fi-pencil size-21" style="position: absolute;" ng-click="textBtnForm.$show()"></span>' +
                     '</a>',
@@ -216,7 +216,7 @@ angular.module('scalearAngularApp')
                 // var template = "<div class='alert alert-block alert-error notification fade in' style='padding: 3px;margin-bottom: 5px; width: 50px;text-align:center'>"+
                 //                         "<span class='form-controls-alert' style='margin:auto' >"+
                 //                             "<a class='btn btn-danger btn-mini' ng-click='action({event:$event});showDeletePopup(false)' translate>delete</a>"+
-                //                             // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>lectures.cancel</a>"+
+                //                             // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>button.cancel</a>"+
                 //                         "</span>"+
                 //                 "</div>";
 

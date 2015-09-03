@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate', function ($scope, Kpi, Page, $rootScope, $translate) {
 
-    Page.setTitle('courses.statistics');
+    Page.setTitle('statistics.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
     $scope.close_selector = false;
 

@@ -4,7 +4,7 @@
 			<accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
 				<accordion-heading class="accordion-heading">
 				<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
-					<div class="show-inline" translate>head.course_information</div>
+					<div class="show-inline" translate>navigation.course_information</div>
 				</div>		
 				</accordion-heading>
 			</accordion-group>
@@ -28,7 +28,7 @@
 								<module-progress-check class="left" module="module" ng-if="(module.lectures.length + module.quizzes.length) > 0"></module-progress-check>		
 							</div>
 							<div class="small-9 columns no-padding">
-								<i bo-hide="module.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
+								<i bo-hide="module.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
 								<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
 							</div>
 							<div class="small-2 no-padding text-right columns">
@@ -42,16 +42,16 @@
 					<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
 						<div ng-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
 							<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
-							<i bo-hide="item.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'invisible'|translate}} {{item.appearance_time| fromNow}}"></i>
-							<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
-							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
-							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
+							<i bo-hide="item.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{item.appearance_time| fromNow}}"></i>
+							<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
+							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
 							<div class="truncate-65 show-inline valign-middle left text-left" bo-text="item.name"></div>
 							<div class="color-dark-grey" ng-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 						</div>
 						<a ng-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
 							<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
-							<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
+							<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'content_navigator.customlink' | translate"></i>
 							<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
 						</a>
 					</li>
@@ -77,14 +77,14 @@
 			<li><a ng-click="addModule()" >Add Module</a></li>
 			<li ng-show="clipboard.type == 'module'">
 				<div class="divider border-grey medium-opacity"></div>
-				<a ng-click='paste($event)'>Paste</a>
+				<a ng-click='paste($event)' translate>context_menu.paste</a>
 			</li>			
 		</ul>
 		<accordion class="accordion no-margin">
 			<!-- <accordion-group class="accordion-group">
 				<accordion-heading class="accordion-heading" >
 				<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
-					<div class="show-inline" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}" translate>head.course_information</div>
+					<div class="show-inline" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}" translate>navigation.course_information</div>
 				</div>						
 				</accordion-heading>
 			</accordion-group> -->
@@ -112,14 +112,14 @@
              				<!-- <link-item ng-if="item.class_name=='customlink'" link="item" small="true" ng-click="showItem(item, 'course_editor')"/> -->
 	            		</li>
 	            	</span>
-	            	<button id="new_item" ng-if="'**.course_editor.**' | includedByState" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>add_content</span></button>
+	            	<button id="new_item" ng-if="'**.course_editor.**' | includedByState" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>
 				</accordion-group>
 			</span>
 		</accordion>
 		<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>groups.empty</span>...</i>
 	</div>		
 	<center ng-switch-when="editor" ng-if="'**.course_editor.**' | includedByState" class="content-navigator-bottom-container">
-		<button id="add_module" class="button small green no-margin left" ng-click="addModule()" translate>courses.add_module</button>
-		<button class="button small orange no-margin right" ng-click="preview()" style="width: 43%;padding: 7px 20px;" translate>preview_student</button>
+		<button id="add_module" class="button small green no-margin left" ng-click="addModule()" translate>editor.button.add_module</button>
+		<button class="button small orange no-margin right" ng-click="preview()" style="width: 43%;padding: 7px 20px;" translate>editor.button.preview_student</button>
 	</center>
 </div>

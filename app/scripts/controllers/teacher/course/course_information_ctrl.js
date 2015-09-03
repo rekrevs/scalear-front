@@ -5,9 +5,9 @@ angular.module('scalearAngularApp')
 
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
-  $scope.toggle_message = 'courses.remove_teacher'
-  $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
-  Page.setTitle('head.information')
+  $scope.toggle_message = 'courses.information.button.remove_teacher'
+  $scope.roles = [{value:3, text:'courses.information.professor'}, {value:4, text:'courses.information.ta'}];
+  Page.setTitle('navigation.information')
   Page.startTour()
   ContentNavigator.close()
   $scope.timezones=scalear_utils.listTimezones()
@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
 
   $scope.toggleDelete = function(){
     $scope.in_delete = !$scope.in_delete
-    $scope.toggle_message = $scope.in_delete? 'events.done':'courses.remove_teacher'
+    $scope.toggle_message = $scope.in_delete? 'courses.information.done':'courses.information.button.remove_teacher'
   }
 
   $scope.addNewTeacher= function(){

@@ -5,11 +5,11 @@ angular.module('scalearAngularApp')
     $log.debug("in calendar ctrl")
 
 	$window.scrollTo(0, 0);
-	Page.setTitle('head.calendar')
+	Page.setTitle('navigation.calendar')
     var change_lang = function(){
     	if($scope.eventSources){
     		angular.element($scope.myCalendar.children()).remove();
-	    	var options =($scope.current_lang=="en")? full_calendar_en(): full_calendar_sv()
+	    	var options =($scope.current_lang=="en")? full_calendar_en: full_calendar_sv
 	    	options.eventSources = $scope.eventSources
 			$scope.myCalendar.fullCalendar(options);
     	}    	

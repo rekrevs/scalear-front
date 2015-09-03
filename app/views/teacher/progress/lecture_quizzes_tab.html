@@ -13,18 +13,18 @@
     	<div class="row" ng-repeat="id in sub_question_ids">
         	<div ng-if="lecture_data.questions[id][2]!='Free Text Question'" class="small-12 columns chart" ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)">
             	<div class="small-12 columns" ng-click="seek(id)" style="cursor:pointer">
-            		<a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
-                    <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>groups.export_chart</a>
+            		<a><span translate>global.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
+                    <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>progress.export_chart</a>
             	</div>
                 <div class="small-12 columns" google-chart chart="chart" ></div> -->
-                <!-- <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" /> -->
+                <!-- <button_link title="{{'progress.export_chart'|translate}}" action="saveAsImg($event)" /> -->
             <!-- </div> -->
 
        <!-- lectures_data.lectures feeha el lectures -->
             <!-- Over here, give lecture_id and then over there check if invideo quiz, then free_online_quiz_grades.online_answer instead of answer -->
 <!--             <div class="small-12 columns" ng-if="lecture_data.questions[id][2]=='Free Text Question'">
                 <div class="small-12 columns" ng-click="seek(id)" style="cursor:pointer">
-                    <a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
+                    <a><span translate>global.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
                 </div>
                 <br/>
                 <free-text-table question="online_quiz_free[id]" lecture_id="online_quiz_free[id]['lecture_id']" related-answers="related_answers" />

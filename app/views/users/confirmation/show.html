@@ -3,18 +3,14 @@
 <!-- endbuild -->
 <div class="main-login-container">
     <center>
-
         <overlay ng-show="sending">
-                    <loading size="big" show="true" style="position:relative; top:40%;" />
+            <loading size="big" show="true" style="position:relative; top:40%;" />
         </overlay>
         <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
             <table>
                 <tr>
-                    <td>
-                        {{'language' | translate}}
-                    </td>
-                    <td>
-                    </td>
+                    <td translate>languages</td>
+                    <td></td>
                     <td>
                         <div ng-show="$parent.current_lang=='en'" ng-cloak>
                             <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
@@ -27,9 +23,12 @@
             </table>
         </div>
         <div class="middle-ribbon">
-		    <span class="errormessage" ng-show="user.errors.confirmation_token">Confirmation Token {{user.errors.confirmation_token.join()}}</span>
+		    <span class="errormessage" ng-show="user.errors.confirmation_token">
+                <span translate>account.confirmation_token</span>
+                <span>{{user.errors.confirmation_token.join()}}</span>
+            </span>
 		    <br>
-		    <a ui-sref="new_confirmation" class="btn btn-warning" style="background-color: initial;" translate>{{'devise.confirmations.resend_instructions'}}</a>
+		    <a ui-sref="new_confirmation" class="btn btn-warning" style="background-color: initial;" translate>account.resend_confirmation</a>
 		</div>
     </center>
 </div>

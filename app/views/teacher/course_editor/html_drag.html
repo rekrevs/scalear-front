@@ -6,8 +6,8 @@
 					<img class='drag-item looks-like-a-hook' src='images/move2.png' />
 				</div>
 				<div class='small-9 columns'>
-					<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>
-					<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' ><span translate>courses.required</span>!</small>
+					<input type='text' required name='answer' placeholder="{{'editor.answer'|translate}}" ng-model='answer[columna]' style='margin-bottom:0'/>
+					<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' ><span translate>error_message.required</span>!</small>
 				</div>
 				<div style="margin-top: 7px;">
 					<delete_button size='small' mode="content_navigator" color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />

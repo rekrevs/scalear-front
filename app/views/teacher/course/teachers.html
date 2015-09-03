@@ -30,7 +30,7 @@
                         <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid' translate>invalid_email</span>
                         <br><span class="errormessage" ng-show="new_teachers[$index].error">{{new_teachers[$index].error}}</span>
                         
-                        <!--<details-text value="new_teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>-->
+                        <!--<details-text value="new_teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>
                         </form>
 
                     </td>
@@ -55,7 +55,7 @@
         <center>
             <button class="button" id="add_teacher" ng-click="addRow(teachers.length-1)" ng-disabled="new_teachers.length>0"><span translate>courses.add_teache</span></button>
             <button class="button" ng-click="saveTeachers()" ng-show="new_teachers.length" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0" style="margin-left: 5px;"><span translate>save</span></button>
-            <!-- <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="{{'save'|translate}}" /> -->
+            <!-- <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="{{'save'|translate}}" />
         </center>
     </div>
  -->

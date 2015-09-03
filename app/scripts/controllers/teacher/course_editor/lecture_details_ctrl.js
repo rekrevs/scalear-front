@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
                 lecture[column] = data;
                 if (column == 'url' && invalid_url(data)) {
                     $log.debug(data)
-                    d.resolve($translate('courses.invalid_input'));
+                    d.resolve($translate('error_message.invalid_input'));
                 }
 
                 Lecture.validateLecture({
@@ -70,21 +70,21 @@ angular.module('scalearAngularApp')
                                 $http.jsonp(url).success(function(data) {
                                     // if(parseInt(data.entry.media$group.yt$duration.seconds)<1){
                                     if(data.items[0].status.uploadStatus != "processed"){
-                                        d.reject($translate('lectures.vidoe_not_exist'));
+                                        d.reject($translate('editor.details.vidoe_not_exist'));
                                         return d.promise
                                     }
                                     else{
                                         d.resolve()
                                     }
                                 }).error(function(){
-                                    d.reject($translate('lectures.vidoe_not_exist'));
+                                    d.reject($translate('editor.details.vidoe_not_exist'));
                                     return d.promise
                                 }); 
                             }
                             else if(isMP4(lecture.url))
                                 d.resolve() 
                             else 
-                                d.reject($translate('lectures.incompatible_link'))                  
+                                d.reject($translate('editor.details.incompatible_link'))                  
                         }
                         else{
                             d.resolve()

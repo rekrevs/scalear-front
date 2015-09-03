@@ -3,9 +3,9 @@
 angular.module('scalearAngularApp')
 .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter) {
 
-    Page.setTitle('dashboard');
+    Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate("whats_new")
+    $rootScope.subheader_message = $translate("dashboard.whats_new")
     
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
     var changeLang = function() {
         if ($scope.eventSources && $scope.myCalendar) {
             angular.element($scope.myCalendar.children()).remove();
-            var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
+            var obj = ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv;
             obj.eventSources = $scope.eventSources;
             $scope.myCalendar.fullCalendar(obj);
         }
@@ -27,11 +27,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function( event, element ) { 
-         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('controller_msg.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
-            tooltip_string+="<br />"+$translate("courses.completed_on_time")
+            tooltip_string+="<br />"+$translate("events.completed_on_time")
         else if(event.status==2)
-            tooltip_string+="<br />"+$translate("courses.completed")+" "+event.days+" "+$translate("controller_msg.days")+" "+$translate("controller_msg.late")
+            tooltip_string+="<br />"+$translate("events.completed")+" "+event.days+" "+$translate("time.days")+" "+$translate("events.late")
 
         element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);

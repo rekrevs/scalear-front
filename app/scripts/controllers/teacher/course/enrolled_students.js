@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
  
         ContentNavigator.close()
         $log.debug("in enrolled students");
-        Page.setTitle('head.enrolled_students')
+        Page.setTitle('navigation.enrolled_students')
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
         $scope.loading_students = true, $scope.delete_mode = false;

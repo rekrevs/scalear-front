@@ -13,18 +13,18 @@
 <div ng-repeat="element in ordered_survey">
     <div class="small-12 columns chart" ng-if="element[1]!='Free Text Question' && element[1]!='header'" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)"> 
     	<div >
-			<span translate>answer.question</span>
+			<span translate>global.question</span>
 			<span>{{$index+1}}:</span>
 			<input type="checkbox" ng-model="survey_chart_data[element[0]].student_show" ng-change="updateHideSurveyQuestion(selected_survey[1],element[0], survey_chart_data[element[0]].student_show)"/>
 		</div>
 		<br/>
         <center ng-init="loading=true"><loading size="small" show="loading" /></center>
         <div google-chart on-ready="loading=false" chart="chart" ></div>
-        <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>groups.export_chart</a>
+        <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>progress.export_chart</a>
     </div>
     <div class="small-12 columns" ng-if="element[1]=='Free Text Question'">
     	<div >
-			<span translate>answer.question</span>
+			<span translate>global.question</span>
 			<span>{{$index+1}}: {{survey_free[element[0]].title}}</span>
 			<input type="checkbox" ng-model="survey_free[element[0]].student_show" ng-change="updateHideSurveyQuestion(selected_survey[1],element[0], survey_free[element[0]].student_show)"/>
 		</div>
@@ -35,6 +35,5 @@
 <div class="row">
 	<center>
 		<loading size="small" show="loading_surveys_chart" />
-		<div ng-if="!all_surveys && !loading_surveys_chart" translate>courses.no_surveys</div>
 	</center>
 </div>

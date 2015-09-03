@@ -1,8 +1,8 @@
-<div>
-	<select class="small-12 columns" ng-show="all_quizzes" ng-model="selected_quiz" ng-options="q[0] for q in all_quizzes" ng-change="changeQuiz()"></select>
+<!-- <div> -->
+	<!-- <select class="small-12 columns" ng-show="all_quizzes" ng-model="selected_quiz" ng-options="q[0] for q in all_quizzes" ng-change="changeQuiz()"></select> -->
 	<!-- <a ng-show="quiz_button_msg && all_quizzes" ng-click="makeQuizVisibleBtn()" class="button tiny secondary">{{quiz_button_msg|translate}}</a> -->
 	<!-- <button_link  action="makeQuizVisibleBtn()" title="{{quiz_button_msg|translate}}" style="margin:10px 0px" /> -->
-</div>
+<!-- </div>
 <div>
 	<div class="small-4 small-centered columns">
 		<center>
@@ -10,7 +10,7 @@
 		</center>
 	</div>
 	<br/>	
-</div>
+</div> -->
 	<!-- <center>
 		<b>{{selected_quiz[0]}}</b>
 		<br /><br />
@@ -20,22 +20,21 @@
 	<!-- <div ng-repeat="(id,value) in quiz_chart_data" class="chart" ng-init="chart=createQuizChart(value, $index,student_count)">
 	    <div ng-if="quiz_chart_questions[$index].type != 'header'">
 	    	<div>
-	    		<span translate>answer.question</span> {{$index+1}}:
+	    		<span translate>global.question</span> {{$index+1}}:
 		    </div>
 		    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
 		    <div google-chart on-ready="loading=false" chart="chart"></div>
-		    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
+		    <button_link title="{{'progress.export_chart'|translate}}" action="saveAsImg($event)" >
 		</div>
 	</div> -->
     
-<div ng-repeat="element in ordered_quiz">
-	<div ><span translate>answer.question</span> {{$index+1}}: {{quiz_free[element[0]].title}}</div>
+<!-- <div ng-repeat="element in ordered_quiz">
+	<div ><span translate>global.question</span> {{$index+1}}: {{quiz_free[element[0]].title}}</div>
 	<br/>
     <div ng-if="element[1]!='Free Text Question'" class="small-12 columns chart" ng-init="chart=createQuizChart(quiz_chart_data[element[0]].answers, $index,student_count)">        
         <center ng-init="loading=true"><loading size="small" show="loading" /></center>
         <div google-chart on-ready="loading=false" chart="chart"></div>
-        <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>groups.export_chart</a>
-        <!-- <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" > -->
+        <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>progress.export_chart</a>
     </div>
     <div class="small-12 columns" ng-if="element[1]=='Free Text Question'">
     	<free-text-table graded="true" question="quiz_free[element[0]]" survey-id="selected_quiz[1]" related-answers="related_answers" />
@@ -46,4 +45,4 @@
 		<loading size="small" show="loading_quizzes_chart" />
 		<div ng-if="!all_quizzes && !loading_quizzes_chart" translate>courses.no_quizzes</div>
 	</center>
-</div>
+</div> -->

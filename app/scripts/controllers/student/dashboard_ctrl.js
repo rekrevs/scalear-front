@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter) {
+.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter','$location', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location) {
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
@@ -26,14 +26,8 @@ angular.module('scalearAngularApp')
         angular.element('#studentCalendar').fullCalendar('render');
     }
 
-    $scope.eventRender = function( event, element ) { 
-         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')(event.start, 'HH:mm')
-        if(event.status==1)
-            tooltip_string+="<br />"+$translate("events.completed_on_time")
-        else if(event.status==2)
-            tooltip_string+="<br />"+$translate("events.completed")+" "+event.days+" "+$translate("time.days")+" "+$translate("events.late")
-
-        element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
+    $scope.eventRender = function(event, element){ 
+        element.attr({'tooltip-html-unsafe': event.tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
 
@@ -60,16 +54,21 @@ angular.module('scalearAngularApp')
                 $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
                 // $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+
                 $scope.calendar.events[element].title =  $scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
+                $scope.calendar.events[element].tooltip_string = $scope.calendar.events[element].title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')($scope.calendar.events[element].start, 'HH:mm')
+                if($scope.calendar.events[element].status==1)
+                    $scope.calendar.events[element].tooltip_string+="<br />"+$translate("events.completed_on_time")
+                else if($scope.calendar.events[element].status==2)
+                    $scope.calendar.events[element].tooltip_string+="<br />"+$translate("events.completed")+" "+$scope.calendar.events[element].days+" "+$translate("time.days")+" "+$translate("events.late")
                 if($rootScope.current_user.roles[0].id == 2){
                     if ($scope.calendar.events[element].quiz_id)
-                        $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, quiz_id: $scope.calendar.events[element].quiz_id})
+                        $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, quiz_id: $scope.calendar.events[element].quiz_id},{absolute:true})
                     else if ($scope.calendar.events[element].lecture_id)
-                        $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, lecture_id: $scope.calendar.events[element].lecture_id})
+                        $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, lecture_id: $scope.calendar.events[element].lecture_id},{absolute:true})
                     else
-                        $scope.calendar.events[element].url = $state.href("course.module.courseware", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
+                        $scope.calendar.events[element].url = $state.href("course.module.courseware", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id},{absolute:true})
                 }
                 else
-                    $scope.calendar.events[element].url=$state.href("course.module.progress", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
+                    $scope.calendar.events[element].url=$state.href("course.module.progress", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id},{absolute:true})
                 
             }
             $scope.calendar.className = ["truncate"]
@@ -136,13 +135,13 @@ angular.module('scalearAngularApp')
         // $timeout(function(){
         //     win.close();
         // },100)
-        // var cal = ics();
+        var cal = ics();
         for (var element in $scope.calendar.events){
             console.log($scope.calendar.events[element])
-            // cal.addEvent('Demo Event', 'This is an all day event', 'Nome, AK', '9/13/2015', '9/13/2015');
-            // cal.addEvent('Demo Event', 'This is thirty minut event', 'Nome, AK', '9/13/2015 5:30 pm', '9/15/2015 6:00 pm');
+            var description= $scope.calendar.events[element].tooltip_string.replace("<br />", " ")+" "+$scope.calendar.events[element].url;
+            cal.addEvent($scope.calendar.events[element].title, description, 'Scalable-Learning', $scope.calendar.events[element].start, $scope.calendar.events[element].start);
         }            
-        // cal.download("filename");
+        cal.download("calendar");
     }
 
     getAnnouncements();

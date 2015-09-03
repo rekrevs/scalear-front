@@ -10,7 +10,7 @@ var translation_sv={
     welcome: "Välkommen till ",
     or: "eller",
     and: "och",
-    from:"from (t)",
+    from:"från",
     preview_student: "Förhandsvisa som student",
     exit_preview_as_student:"Gå ur förhandsvisning som student",
     settings: "Inställningar",
@@ -39,7 +39,7 @@ var translation_sv={
     confused: "Förvirrad",
     really_confused: "Verkligen förvirrad", 
     search: "Sök",
-    new_course: "Ny kurs",
+    new_course: "Skapa ny kurs",
     required: "Nödvändig",
     optional: "Valfri",
     students: "Studenter",
@@ -119,7 +119,7 @@ var translation_sv={
     notification: "Meddelande",
     dashboard: "Instrumentpanel",
     account: "Konto",
-    show_all_courses: "Visa alla kurser",
+    show_all_courses: "Visa mina kurser",
     description:{
       settings_description: "Ändra dina kontoinställningar",
     },
@@ -202,7 +202,7 @@ var translation_sv={
     to_module: "till modul",
     copy: "@:global.copy",
     lecture:"@:global.lecture",
-    items: "items (t)"
+    items: "objekt"
   },
   footer:{
     about: "Om ",
@@ -237,12 +237,12 @@ var translation_sv={
         forgot_password: "Återställ lösenord",
         send_reset: "Skicka mig instruktioner för att återställa lösenordet",
         resetting: "Återställer lösenord",
-        need_password: "Vi behöver ditt nuvarande lösenord för att bekräfta dina ändringar",
+        need_password: "Vi behöver ditt nuvarande lösenord för att bekräfta dina ändringar.",
         password_confirmation: "Bekräfta lösenord",
         password: "Lösenord",
         current_password: "Nuvarande lösenord",
     },
-    confirmation_token:"Confirmation Token",
+    confirmation_token:"Bekräftelsekod",
     resend_confirmation: "Skicka om bekräftelse än",
     didnt_receive_confirmation: "Skicka e-postbekräftelsen igen",
     cancel_account: "Ta bort mitt konto",
@@ -262,7 +262,7 @@ var translation_sv={
   },
   events:{
     due: "Förfaller",
-    deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",
+    deadline_msg: "Alla deadlines är vid midnatt den angivna dagen.",
     done: "@:global.done",
     done_late: "Klart sent",
     not_done: "Inte klart",
@@ -317,7 +317,7 @@ var translation_sv={
     answer7:"See (t)"
   },
   intro:{
-    title:"Inledning Video",
+    title:"Introduktionsvideo",
     teacher_introduction: "Denna 10-minuters video ger dig en snabb introduktion till hur du lägger till videos och quizzar och följer dina studenters framsteg på nätet. Du kan",
     teacher_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
     student_introduction: "Denna 3-minuters video beskriver hur du använder",
@@ -400,11 +400,11 @@ var translation_sv={
         drag_to_reorder: "Dra för att ordna",
     },
     home:{
-        choose_module: "Välj en modul till vänster visa och redigera dess innehåll.",
-        drag_module: "Dra moduler runt att sortera dem.",
+        choose_module: "Välj en modul till vänster för att visa och redigera dess innehåll.",
+        drag_module: "Dra moduler upp och ner för att ändra ordningen.",
         create_module: "Skapa moduler för att organisera dina kursinnehåll.",
-        choose_add: "Lägg till videor, frågesporter, undersökningar och länkar.",
-        preview_see: "Förhandsvisning som student för att se hur ditt innehåll kommer att visas för studenter",
+        choose_add: "Lägg till videor, quizzar, undersökningar och länkar.",
+        preview_see: "Förhandsvisa hur ditt innehåll kommer att visas för studenter",
         right_click: "Högerklicka på ett objekt för att kopiera, klistra, eller dela det med andra lärare.",
     },
     regex:{
@@ -563,7 +563,7 @@ var translation_sv={
     },
     home:{
         review_module:"Bedöm en modul",
-        module_review: "Bedöm quizzar och frågor",
+        module_review: "Bedöm arbete med modul",
         module_timeline: "Bedöm interaktion med videos",
         module_completion: "Bedöm slutförande av modul",
         review_course:"Bedöm hela kursen",
@@ -650,9 +650,9 @@ var translation_sv={
         }
     },
     list:{   
-        finished: 'Klart',
+        finished: 'Avslutade',
         all: "Alla",
-        current:"Aktuella",
+        current:"Pågående",
         duration:"@:global.duration",
         lectures:"@:global.lectures",
         quizzes:"@:global.quizzes",
@@ -665,7 +665,7 @@ var translation_sv={
             sort_by: "Sortera efter",
         },
         messages:{
-            no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
+            no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
         },
         tooltip:{
             unenroll: "Avregistrera",
@@ -741,7 +741,7 @@ var translation_sv={
         student:"För studenter",
         teacher:"För lärare",
     },   
-    feedback: "Respons",
+    feedback: "Ge feedback",
     teacher_forum: "Lärarforum",
     instruction_manual: "Bruksanvisning",
     tips: "Tips",

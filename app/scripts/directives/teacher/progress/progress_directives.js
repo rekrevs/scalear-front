@@ -119,18 +119,7 @@ angular.module('scalearAngularApp')
 	    	question_count:'=questionCount',
 	    	survey_count:'=surveyCount'
 	    },
-	    template:'<div class="panel with-small-margin-top text-center time_estimate">'+
-					'<div>'+
-						'<h6 ng-style="{color: color}">In-class <span translate>inclass.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>time.minutes</span></b></h6>'+
-					'</div>'+
-					'<div><h6 class="size-14">({{quiz_count || 0}} <span translate>global.quizzes</span>, {{question_count || 0}} <span translate>global.discussion</span> <span translate>global.and</span> {{survey_count || 0}} <span translate>global.surveys</span>) </h6></div>'+
-					'<div>'+
-						'<div>'+
-							'<a pop-over="popover_options" class="color-green">{{"inclass.more" | translate}}...</a>'+
-						'</div>'+
-					'</div>'+
-					// '<div class="small-1 inline right columns"></div>'+
-				'</div>', 
+	    templateUrl:'/views/teacher/in_class/inclass_time_estimate.html', 
 	    link:function(scope){
 	    	scope.numbers = []
   	 		for (var i = 0; i <= 6; i++) {

@@ -98,44 +98,51 @@ angular.module('scalearAngularApp')
     }
 
     $scope.export_calendar = function() {
-        var ics_file = "BEGIN:VCALENDAR\n";
-        ics_file += "VERSION:2.0\n";
-        for (var element in $scope.calendar.events) {
-            ics_file += "BEGIN:VEVENT\n";
-            ics_file += "CLASS:PUBLIC\n";
-            var fullTitle = $scope.calendar.events[element].title ;
-            fullTitle = fullTitle.split('due')[0];
-            ics_file += "DESCRIPTION:"+"Scalable Learning => "+fullTitle+"\n";
-            var d = new Date($scope.calendar.events[element].start);
-            var str = $.datepicker.formatDate('yymmdd'+"T", d);
-            ics_file += "DTSTART:"+ str+"T"+"000000"+"\n";
-            ics_file += "SUMMARY;LANGUAGE=en-us:"+fullTitle+"\n"
-            ics_file += "TRANSP:TRANSPARENT\n"
-            ics_file += "END:VEVENT\n"
-        }
-        ics_file += "END:VCALENDAR";
-        var win = window.open('', '_blank');
-        if(win){ 
-            win.focus();
-        }
-        var doc = '<script>';
-        doc +=  "function fireEvent(obj,evt){\n";
-        doc +=  "var fireOnThis = obj;\n";
-        doc +=  "if( document.createEvent ) {\n";
-        doc +=  "var evObj = document.createEvent('MouseEvents');\n";
-        doc +=  "evObj.initEvent( evt, true, false );\n";
-        doc +=  "fireOnThis.dispatchEvent(evObj);\n";
-        doc +=  "} else if( document.createEventObject ) {\n";
-        doc +=  "fireOnThis.fireEvent('on'+evt);\n";
-        doc +=  "}\n}";
-        doc += '</script>'
-        doc +=('<a id="download" style="display:none" href='+"'"+'data:Application/ics,'+encodeURIComponent(ics_file)+"'"+ 'Download = "calendar.ics">download</a>');
-        doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
-        win.document.write(doc);
-        win.document.close();
-        $timeout(function(){
-            win.close();
-        },100)
+        // var ics_file = "BEGIN:VCALENDAR\n";
+        // ics_file += "VERSION:2.0\n";
+        // for (var element in $scope.calendar.events) {
+        //     ics_file += "BEGIN:VEVENT\n";
+        //     ics_file += "CLASS:PUBLIC\n";
+        //     var fullTitle = $scope.calendar.events[element].title ;
+        //     fullTitle = fullTitle.split('due')[0];
+        //     ics_file += "DESCRIPTION:"+"Scalable Learning => "+fullTitle+"\n";
+        //     var d = new Date($scope.calendar.events[element].start);
+        //     var str = $.datepicker.formatDate('yymmdd'+"T", d);
+        //     ics_file += "DTSTART:"+ str+"T"+"000000"+"\n";
+        //     ics_file += "SUMMARY;LANGUAGE=en-us:"+fullTitle+"\n"
+        //     ics_file += "TRANSP:TRANSPARENT\n"
+        //     ics_file += "END:VEVENT\n"
+        // }
+        // ics_file += "END:VCALENDAR";
+        // var win = window.open('', '_blank');
+        // if(win){ 
+        //     win.focus();
+        // }
+        // var doc = '<script>';
+        // doc +=  "function fireEvent(obj,evt){\n";
+        // doc +=  "var fireOnThis = obj;\n";
+        // doc +=  "if( document.createEvent ) {\n";
+        // doc +=  "var evObj = document.createEvent('MouseEvents');\n";
+        // doc +=  "evObj.initEvent( evt, true, false );\n";
+        // doc +=  "fireOnThis.dispatchEvent(evObj);\n";
+        // doc +=  "} else if( document.createEventObject ) {\n";
+        // doc +=  "fireOnThis.fireEvent('on'+evt);\n";
+        // doc +=  "}\n}";
+        // doc += '</script>'
+        // doc +=('<a id="download" style="display:none" href='+"'"+'data:Application/ics,'+encodeURIComponent(ics_file)+"'"+ 'Download = "calendar.ics">download</a>');
+        // doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
+        // win.document.write(doc);
+        // win.document.close();
+        // $timeout(function(){
+        //     win.close();
+        // },100)
+        // var cal = ics();
+        for (var element in $scope.calendar.events){
+            console.log($scope.calendar.events[element])
+            // cal.addEvent('Demo Event', 'This is an all day event', 'Nome, AK', '9/13/2015', '9/13/2015');
+            // cal.addEvent('Demo Event', 'This is thirty minut event', 'Nome, AK', '9/13/2015 5:30 pm', '9/15/2015 6:00 pm');
+        }            
+        // cal.download("filename");
     }
 
     getAnnouncements();

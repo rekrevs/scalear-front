@@ -205,6 +205,7 @@ var translation_sv={
   footer:{
     about: "Om ",
     privacy: "Sekretesspolicy",
+    faq: "FAQ (t)",
   },
   feedback:{
     like_to_comment: "Jag skulle vilja kommentera",
@@ -293,8 +294,25 @@ var translation_sv={
     deleting_profile: "Ta bort din profil",
     deleting_profile_details: "Om du raderar ditt konto på denna webbplats kommer all din personligt identifierbara information att tas bort från vårt system. Observera att det kan ta tid för informationen att tas bort från backup-systemet. Anonymiserad information kan behållas för forskning.",
     policy_changes: "Förändringar av sekretesspolicyn",
-    policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Alla väsentliga förändringar i vår integritetspolicy kommer att skickas med e-post till alla aktiva konton. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
-    last_update: "Senast uppdaterad: 2015-02-13",
+    policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
+    last_update: "Senast uppdaterad: 2015-08-17",
+  },
+  faq:{
+    faq:"Frequently Asked Questions (t)",
+    question1:"Who is the owner of the data? (t)",
+    answer1:"Course data is owned by the teacher who created the course. Student data is owned by the student. If a student deletes his or her account the activity data from that student becomes anonymous. (t)",
+    question2:"Where is the data stored, and under what legal jurisdiction? (t)",
+    answer2:"The data is stored in a datacenter in Ireland and ScalableLearning operates under the legal jurisdiction of Sweden, with the Swedish Institute for Computer Science as the legal entity. (t)",
+    question3:"Is it possible to retrieve or export the data? (t)",
+    answer3:"Teachers can export complete course data. (t)",
+    question4:"Are backups made of the system? (t)",
+    answer4:"Daily backups are made for recovery. (t)",
+    question5:"How are data storage and transportation secured? (t)",
+    answer5:"Transportation and storage are secured using industry-standard encryption, authentication, and physical access protection. (t)",
+    question6:"Is traffic logged? (t)",
+    answer6:"Traffic is logged for 4-10 days and is available to the development team. (t)",
+    question7:"How is the system secured? (t)",
+    answer7:"See (t)"
   },
   intro:{
     title:"Inledning Video",

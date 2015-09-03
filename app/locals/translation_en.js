@@ -205,6 +205,7 @@ var translation_en={
   footer:{
     about: "About ",
     privacy: "Privacy",
+    faq: "FAQ",
   },
   feedback:{
     like_to_comment: "I’d like to comment on",
@@ -293,8 +294,25 @@ var translation_en={
     deleting_profile: "Deleting your profile",
     deleting_profile_details: "If you delete your account on this site all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research.",
     policy_changes: "Privacy policy changes",
-    policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Any significant changes in the privacy policy will be sent by email to all active accounts. Changes to the privacy policy take effect when posted here.",
-    last_update: "Last update: 13-February-2015",
+    policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
+    last_update: "Last update: 17-August-2015",
+  },
+  faq:{
+    faq:"Frequently Asked Questions",
+    question1:"Who is the owner of the data?",
+    answer1:"Course data is owned by the teacher who created the course. Student data is owned by the student. If a student deletes his or her account the activity data from that student becomes anonymous.",
+    question2:"Where is the data stored, and under what legal jurisdiction?",
+    answer2:"The data is stored in a datacenter in Ireland and ScalableLearning operates under the legal jurisdiction of Sweden, with the Swedish Institute for Computer Science as the legal entity.",
+    question3:"Is it possible to retrieve or export the data?",
+    answer3:"Teachers can export complete course data.",
+    question4:"Are backups made of the system?",
+    answer4:"Daily backups are made for recovery.",
+    question5:"How are data storage and transportation secured?",
+    answer5:"Transportation and storage are secured using industry-standard encryption, authentication, and physical access protection.",
+    question6:"Is traffic logged?",
+    answer6:"Traffic is logged for 4-10 days and is available to the development team.",
+    question7:"How is the system secured?",
+    answer7:"See"
   },
   intro:{
     title:"Intro Video",

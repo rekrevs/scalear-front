@@ -89,7 +89,7 @@ angular.module('scalearAngularApp', [
 
 
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
             var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -249,6 +249,11 @@ angular.module('scalearAngularApp', [
                 // templateUrl: '/views/main.html',
                 // controller: 'MainCtrl'
             })
+            .state('about', {
+                url: '/about',
+                templateUrl: '/views/about.html',
+                controller: 'AboutCtrl'
+            })
             .state('ie', {
                 url: '/ie',
                 templateUrl: '/views/ie.html'
@@ -326,6 +331,11 @@ angular.module('scalearAngularApp', [
                 url: '/privacy',
                 templateUrl: '/views/privacy.html',
                 controller: 'PrivacyCtrl'
+            })            
+            .state('faq', {
+                url: '/faq',
+                templateUrl: '/views/faq.html',
+                controller: 'FaqCtrl'
             })
             .state('course_list', {
                 url: '/courses',

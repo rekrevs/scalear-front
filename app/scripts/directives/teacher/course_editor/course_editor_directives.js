@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$rootScope','$timeout','$state', '$log', function($rootScope, $timeout,$state, $log) {
+    .directive("module", ['$rootScope','$timeout','$state', '$log','ngDialog', function($rootScope, $timeout,$state, $log,ngDialog) {
         return {
             restrict: "E",
             replace:true,
@@ -32,8 +32,33 @@ angular.module('scalearAngularApp')
 
                 scope.remove=function(event){
                     event.preventDefault();
-                    event.stopPropagation();  
-                    $rootScope.$broadcast("delete_module", scope.module)
+                    event.stopPropagation();
+                    ngDialog.open({
+                        template:'\
+                            <div class="ngdialog-message">\
+                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                                <span>\
+                                    <span translate>groups.delete_popup.delete_module</span>\
+                                    <b>"'+scope.module.name+'"</b>\
+                                    <span translate>groups.delete_popup.will_delete</span>\
+                                    <span translate>groups.delete_popup.are_you_sure</span>\
+                                </span>\
+                            </div>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
+                            </div>',
+                        plain: true,
+                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                        showClose:false,
+                        controller: ['$scope', function($scope) {
+                            $scope.delete=function(){
+                                $rootScope.$broadcast("delete_module", scope.module)
+                                $scope.closeThisDialog()
+                            }
+                        }]
+
+                    });
                 }
 
                 scope.copy=function(){

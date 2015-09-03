@@ -46,6 +46,8 @@ var translation_en={
     done: "Done",
     correct: "Correct",
     incorrect: "Incorrect",
+    warning:"Warning",
+    are_you_sure:"Are you sure you want to proceed?"
   },
   mailer:{
     send_email: "Send an Email",
@@ -598,6 +600,12 @@ var translation_en={
         video_quizzes: "Video Quizzes",
         questions: "@:global.questions",
     },
+    delete_popup:{
+        warning:"@:global.warning",
+        delete_module: "Deleting the module",
+        will_delete: "will delete all items inside it.",
+        are_you_sure: "@:global.are_you_sure"
+    }
   },
   courses:{
     information:{
@@ -643,6 +651,16 @@ var translation_en={
         },
         tooltip:{
             unenroll: "Unenroll", 
+        },
+        delete_popup:{
+            warning:"@:global.warning",
+            delete_course:"Deleting the course",
+            will_delete: "will delete",
+            all_modules:"All modules",
+            all_items:"All items inside each modules",
+            all_progress: "All students progress",
+            are_you_sure: "Are you sure you want to proceed?",
+            cannot_undo:"This cannot be undone!"
         }
     },
     new:{

@@ -36,7 +36,7 @@ var translation_sv={
     survey: "Enkät",
     surveys: "Enkäter",
     answer: "Svar",
-    free_text_question: "Fri-text-fråga",
+    free_text_question: "Fritext-fråga",
     confused: "Förvirrad",
     really_confused: "Verkligen förvirrad", 
     search: "Sök",
@@ -47,8 +47,8 @@ var translation_sv={
     done: "Klart",
     correct: "Korrekt",
     incorrect: "Felaktig",
-    warning:"Warning (t)",
-    are_you_sure:"Are you sure you want to proceed? (t)"
+    warning:"Varning",
+    are_you_sure:"Är du säker på att du vill fortsätta?"
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -106,9 +106,9 @@ var translation_sv={
     hide: "Göm",
   },
   support:{
-    ipad:"iPad stöd är för närvarande i beta.",
-    mobiles:"Mobila enheter är för närvarande inte fullt stöd.",
-    issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra frågor. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop",
+    ipad:"Stöd för iPad är för närvarande i beta.",
+    mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
+    issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra problem. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
   navigation:{
@@ -208,7 +208,7 @@ var translation_sv={
   footer:{
     about: "Om ",
     privacy: "Sekretesspolicy",
-    faq: "FAQ (t)",
+    faq: "Vanliga frågor",
   },
   feedback:{
     like_to_comment: "Jag skulle vilja kommentera",
@@ -351,7 +351,7 @@ var translation_sv={
     blackscreen_close: "Klicka eller tryck på 'b' för att gå tillbaka",
     blackscreen_done: "Genomgången klar. Klicka på ESC för att avsluta",
     start_inclass: "Visa för genomgång i klassrummet",
-    review: "In-class Review (t)",
+    review: "Genomgång i klassrummet",
     survey:"@:survey",
     time_estimate:"Tidsuppskattning",
     time_per_quiz: "Tid per quiz",
@@ -626,8 +626,8 @@ var translation_sv={
     },
     delete_popup:{
         warning:"@:global.warning",
-        delete_module: "Deleting the module (t)",
-        will_delete: "will delete all items inside it. (t)",
+        delete_module: "Att ta bort modulen",
+        will_delete: "kommer att ta bort allt den innehåller.",
         are_you_sure: "@:global.are_you_sure"
     }
   },
@@ -678,13 +678,13 @@ var translation_sv={
         },
         delete_popup:{
             warning:"@:global.warning",
-            delete_course:"Deleting the course (t)",
-            will_delete: "will delete (t)",
-            all_modules:"All modules (t)",
-            all_items:"All items inside each modules (t)",
-            all_progress: "All students progress (t)",
-            are_you_sure: "Are you sure you want to proceed? (t)",
-            cannot_undo: "This cannot be undone! (t)"
+            delete_course:"Att ta bort kursen",
+            will_delete: "kommer att ta bort",
+            all_modules:"Alla moduler",
+            all_items:"Allt innehåll i moduler",
+            all_progress: "All information om studenters arbete",
+            are_you_sure: "Är du säker att du vill fortsätta?",
+            cannot_undo: "Detta kan inte återställas!"
         }
     },
     new:{
@@ -725,7 +725,7 @@ var translation_sv={
     total_quizzes: "Totalt antal quiz-frågor",
     total_surveys: "Totalt antal enkäter",
     total_questions_asked: "Totalt antal frågor ställda",
-    total_confused: "Totalt antal förvirrad meddelade",
+    total_confused: "Totalt antal förvirrad-klick",
     rate_from: "rate from",
     to: "to",
     drag_to_zoom: 'Klicka och dra i hela området för att zooma in',

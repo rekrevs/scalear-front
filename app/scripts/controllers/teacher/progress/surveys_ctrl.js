@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
       		  $scope.all_surveys = data.all_surveys                
           	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
           }
-          $scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
+          $scope.button_msg = $scope.selected_survey[2]? "progress.button.hide" : "progress.button.make_visible"
           $scope.loading_surveys_chart = false
   			}, 
   			function(){
@@ -57,8 +57,8 @@ angular.module('scalearAngularApp')
       var formated_data ={}
       formated_data.cols=
           [
-              {"label": $translate('courses.students'),"type": "string"},
-              {"label": $translate('controller_msg.answered'),"type": "number"}
+              {"label": $translate('global.students'),"type": "string"},
+              {"label": $translate('progress.chart.answered'),"type": "number"}
           ]
       formated_data.rows= []
       for(var ind in data)
@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
           "displayExactValues": true,
           "fontSize" : 12,
           "vAxis": {
-              "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+              "title": $translate("progress.number_of_students")+ " ("+$translate("progress.out_of")+" "+student_count+")",
               "gridlines": {
                   "count":9
               },
@@ -112,7 +112,7 @@ angular.module('scalearAngularApp')
         {quiz_id:survey_id},
     		{visible:$scope.selected_survey[2]},
     		function(){
-    			$scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
+    			$scope.button_msg = $scope.selected_survey[2]? "progress.button.hide" : "progress.button.make_visible"
     		}
     	)
     }

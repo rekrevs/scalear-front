@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
     if(!user.info_complete){
       $state.go("edit_account");
       $rootScope.show_alert = "error";
-      ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
+      ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
     }
     else
       $state.go("dashboard");

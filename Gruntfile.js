@@ -619,6 +619,7 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        beta:false,
                         debug: true,
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
@@ -643,6 +644,7 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        beta:false,
                         debug: false,
                         ga_token: "UA-66097980-1",
                         host: '', //'http://angular-learning.herokuapp.com',
@@ -667,6 +669,7 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        beta:true,
                         debug: true,
                         ga_token: "",
                         host: '', //'http://angular-learning.herokuapp.com',
@@ -691,6 +694,7 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        beta:false,
                         debug: false,
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
@@ -709,6 +713,14 @@ module.exports = function(grunt) {
 
                 }
             }]
+        },
+        i18nextract: {
+          default_options: {
+            src: [ '<%= yeoman.app %>/scripts/**/*.js', '<%= yeoman.app %>/**/*.html' ],
+            lang:     ['en_US'],
+            dest:     'tmp',
+            namespace: true
+          }
         }
 
 

@@ -3,7 +3,7 @@
 // angular.module('scalearAngularApp')
   // .controller('studentModulesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Module','Timeline','Lecture','editor','Page', function ($scope, Course, $stateParams, $rootScope, $log, $window, Module, Timeline, Lecture, editor,Page) {
 
-	// Page.setTitle('head.lectures');
+	// Page.setTitle('navigation.lectures');
 
  //    var init = function()
  //    {

@@ -1,6 +1,9 @@
 <form novalidate class="form-horizontal" name="form" ng-submit="createCourse()">
     <div class="small-12 medium-4 large-3 columns">
-        <h3 class="show-for-medium ng-binding"><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
+        <h3 class="show-for-medium ng-binding">
+            <i class="fi-book"></i>
+            <span translate>navigation.new_course</span>
+        </h3>
         <div class="course-image left show-for-medium-up">
             <span></span>
             <img ng-src="{{course.image_url || '../images/course_image.png'}}" fallback-src="../images/course_image.png" loading-src />
@@ -31,7 +34,7 @@
             <div class="large-10 column with-small-margin-bottom no-padding left">
                 <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
                 <div>
-                    <input name="duration" min="0" type="number" ng-model="course.duration" ng-init="course.duration=10" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
+                    <input name="duration" min="0" type="number" ng-model="course.duration" ng-init="course.duration=10" placeholder="*{{'time.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
                     <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
                 </div>
             </div>
@@ -88,14 +91,14 @@
                         <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
                     </span>
                     <div>
-                        <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
+                        <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'time.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
                         <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
                     </div>
                 </div>
             </center>
             <hr />
         </div>
-        <h5 translate class="subheader">groups.description</h5>
+        <h5 translate class="subheader">courses.information.description</h5>
         <p style="font-weight: 200;">
             <textarea rows="3" style="height: 150px;" ng-model="course.description" ng-class="{error: server_errors['description']}"></textarea>
             <small class="error with-tiny-padding" ng-show="server_errors['description']">{{server_errors['description'].join()}}</small>
@@ -105,10 +108,10 @@
             <textarea rows="3" style="height: 100px;" ng-model="course.prerequisites" ng-class="{error: server_errors['prerequisites']}"></textarea>
             <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
         </p>
-        <h5 translate class="subheader">courses.copy_from_existing</h5>
+        <h5 translate class="subheader">courses.new.copy_from_existing</h5>
         <p>
             <select ng-model="import_from" ng-options="element.id as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
         </p>
-        <button ng-disabled="submitting || image_not_found" type="submit" class="button success right"><span translate>courses.create_course</span></button>
+        <button ng-disabled="submitting || image_not_found" type="submit" class="button success right"><span translate>courses.new.button.create_course</span></button>
     </div>
 </form>

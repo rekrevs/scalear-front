@@ -1,0 +1,28 @@
+<div class="panel with-small-margin-top text-center time_estimate">
+	<div>
+		<h6 ng-style="{color: color}">
+			<span translate>inclass.time_estimate</span>:
+			<br />
+			<b>
+				<span>{{inclass_estimate || 0}}</span>
+				<span translate>time.minutes</span>
+			</b>
+		</h6>
+	</div>
+	<div>
+		<h6 class="size-14">
+			(<span>{{quiz_count || 0}}</span>
+			<span >{{'inclass.quizzes'| translate | lowercase}}</span>
+			<span>, {{question_count || 0}}</span>
+			<span >{{'inclass.discussions' | translate | lowercase}}</span>
+			<span translate>global.and</span>
+			<span>{{survey_count || 0}}</span>
+			<span >{{'inclass.surveys' | translate | lowercase}}</span>)
+		</h6>
+	</div>
+	<div>
+		<div>
+			<a pop-over="popover_options" class="color-green">{{"inclass.more" | translate}}...</a>
+		</div>
+	</div>
+</div> 

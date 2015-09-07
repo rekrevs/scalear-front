@@ -6,8 +6,8 @@
 
 <td style="ppadding: 0 12px;" colspan="3">
 	<div class="solved size-14" ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px;float:left">
-		<span ng-show="item.data.very" translate>courses.really_confused</span>
-		<span ng-show="!item.data.very" translate>courses.confused</span	>
+		<span ng-show="item.data.very" translate>lectures.timeline.really_confused</span>
+		<span ng-show="!item.data.very" translate>lectures.timeline.confused</span>
 	</div>
   	<div style="font-size: 10px; float: right; display: inline-block;">
 		<delete_button size="small" action="deleteConfused(item)" vertical="false" text="false" ></delete_button>

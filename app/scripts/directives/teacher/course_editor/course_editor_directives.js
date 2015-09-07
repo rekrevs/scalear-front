@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$rootScope','$timeout','$state', '$log', function($rootScope, $timeout,$state, $log) {
+    .directive("module", ['$rootScope','$timeout','$state', '$log','ngDialog', function($rootScope, $timeout,$state, $log,ngDialog) {
         return {
             restrict: "E",
             replace:true,
@@ -32,8 +32,33 @@ angular.module('scalearAngularApp')
 
                 scope.remove=function(event){
                     event.preventDefault();
-                    event.stopPropagation();  
-                    $rootScope.$broadcast("delete_module", scope.module)
+                    event.stopPropagation();
+                    ngDialog.open({
+                        template:'\
+                            <div class="ngdialog-message">\
+                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                                <span>\
+                                    <span translate>groups.delete_popup.delete_module</span>\
+                                    <b>"'+scope.module.name+'"</b>\
+                                    <span translate>groups.delete_popup.will_delete</span>\
+                                    <span translate>groups.delete_popup.are_you_sure</span>\
+                                </span>\
+                            </div>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
+                            </div>',
+                        plain: true,
+                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                        showClose:false,
+                        controller: ['$scope', function($scope) {
+                            $scope.delete=function(){
+                                $rootScope.$broadcast("delete_module", scope.module)
+                                $scope.closeThisDialog()
+                            }
+                        }]
+
+                    });
                 }
 
                 scope.copy=function(){
@@ -114,7 +139,7 @@ angular.module('scalearAngularApp')
                 },
                 restrict: 'E',
                 template: '<a onshow="selectField()" ng-mouseover="show_pencil = true;" blur="submit" ng-mouseleave="show_pencil = false;"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data, elem)" onaftersave="saveData()" ng-click="action()" style="cursor:pointer;padding-right: 20px;" e-class="editable-input-large">' +
-                    '{{ value || ("empty"|translate) }}' +
+                    '{{ value || ("global.empty"|translate) }}' +
                     '<i ng-class="overclass" ></i>' +
                     ' <span ng-show="show_pencil" class="fi-pencil size-21" style="position: absolute;" ng-click="textBtnForm.$show()"></span>' +
                     '</a>',
@@ -216,7 +241,7 @@ angular.module('scalearAngularApp')
                 // var template = "<div class='alert alert-block alert-error notification fade in' style='padding: 3px;margin-bottom: 5px; width: 50px;text-align:center'>"+
                 //                         "<span class='form-controls-alert' style='margin:auto' >"+
                 //                             "<a class='btn btn-danger btn-mini' ng-click='action({event:$event});showDeletePopup(false)' translate>delete</a>"+
-                //                             // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>lectures.cancel</a>"+
+                //                             // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>button.cancel</a>"+
                 //                         "</span>"+
                 //                 "</div>";
 

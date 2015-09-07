@@ -3,8 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page','scalear_utils','$translate', function ($rootScope,$scope, Course,$state, $window, $log,Page, scalear_utils, $translate) {
 		$window.scrollTo(0, 0);
-		Page.setTitle('courses.new_course')
-		$rootScope.subheader_message = $translate("courses.new_course")
+		Page.setTitle('navigation.new_course')
+		$rootScope.subheader_message = $translate("navigation.new_course")
 		$scope.submitting=false;
 		$scope.course={}
 		Course.newCourse(

@@ -14,7 +14,7 @@
                     <div>
                         <b bo-text="item.data.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
-                        <span ng-show="item.data.edited" translate>lectures.edited</span>
+                        <span ng-show="item.data.edited" translate>discussion.edited</span>
                         <span>{{ item.data.updated_at | fromNow }}</span>
                         <span ng-if="item.data.flags_count > 0" style="color: red;">
                             <span style="color: #a1a1a1">  </span>
@@ -40,7 +40,7 @@
                                     <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{private_text}}"/>
                                     <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
-                                <span translate>q</span>
+                                <span translate>discussion.q</span>
                                 <span ng-if="item.data.user_id != current_user.id" class="discussion_title" ng-text-truncate="item.data.content" ng-tt-words-threshold="30"></span>
                                 <span ng-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
                                     <span class="discussion_title" >{{item.data.content}}</span>

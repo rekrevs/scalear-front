@@ -2,7 +2,7 @@
 <table class="table small-12 columns quiz_list no-margin-bottom">
 	<!-- <thead>
 		<tr>
-			<th style="width:60%" translate>answer.question</th>
+			<th style="width:60%" translate>global.question</th>
 			<th translate>online_quiz.time</th>
 			<th translate>groups.type</th>
 			<th class="text-center" style="width:95px">Delete</th>
@@ -15,8 +15,8 @@
 					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz)" padded="true" />
 
 						<div class="small-4 columns size-10">
-							<span ng-show="quiz.quiz_type=='survey'">Survey</span>
-							<span ng-show="quiz.quiz_type!='survey'">Quiz</span>
+							<span ng-show="quiz.quiz_type=='survey'" translate>editor.survey</span>
+							<span ng-show="quiz.quiz_type!='survey'" translate>editor.quiz</span>
 						</div>
 						<div class="small-4 left columns size-10" ng-init="quiz.formatedTime = (quiz.time|format)">
 							<span class="looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.formatedTime}}</span>

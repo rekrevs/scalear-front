@@ -72,11 +72,11 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": $translate('courses.students'),"type": "string"},
-                {"label": $translate('courses.students'),"type": "number"}
+                {"label": $translate('global.students'),"type": "string"},
+                {"label": $translate('global.students'),"type": "number"}
             ]
         formated_data.rows= []
-        var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.watched')+" > 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
+        var x_titles=[$translate('progress.chart.not_started_watching'), $translate('progress.chart.watched')+" <= 50%", $translate('progress.chart.watched')+" > 50%", $translate('progress.chart.completed_on_time'), $translate('progress.chart.completed_late')]
         for(var ind in data)
         {
             var row=
@@ -96,14 +96,14 @@ angular.module('scalearAngularApp')
         chart.type = "ColumnChart"
         chart.options = {
             "colors": ['#0c81c8'],
-            "title": $translate('courses.module_progress_charts_quizzes'),
+            "title": $translate('progress.chart.module_progress_charts_quizzes'),
             "isStacked": "true",
             "fill": 20,
             "height": 200,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+                "title": $translate("progress.number_of_students")+ " ("+$translate("progress.out_of")+" "+student_count+")",
                 "gridlines": {
                     "count":9
                 },

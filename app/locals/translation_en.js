@@ -260,6 +260,7 @@ var translation_en={
     remember_me: "Keep me logged in", 
     confirm_destroy: "Are you sure you want to cancel your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
+    required_marked: "Required fields are marked with *"
   },
   events:{
     due:"Due",

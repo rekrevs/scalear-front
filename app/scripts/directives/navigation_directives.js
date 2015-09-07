@@ -498,7 +498,7 @@ angular.module('scalearAngularApp')
  		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
         // else{
-    	if($state.includes("course.progress_overview") || $state.includes("course.progress_main") ||  $state.includes("course.progress_graph"))
+    	if($state.includes("course.progress_overview") || $state.includes("course.progress_main") ||  $state.includes("course.progress_graph") || $state.includes("course.progress"))
     		$state.go('course.module.progress_overview',{module_id: module.id})
  		else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress")  ||  $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students"))
  			$state.go('.',{module_id: module.id})

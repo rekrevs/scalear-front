@@ -366,7 +366,7 @@ var translation_sv={
     incorrect_format_time: "Felaktigt format på tiden",
     time_outside_range: "Tid utanför videons speltid",
     cannot_delete_alteast_one_answer: "Kan inte ta bort; det måste finnas minst ett svar",
-    header: "Nick",
+    header: "Rubrik",
     answer:"@:global.answer",
     type: "Typ",
     quiz:"@:global.quiz",

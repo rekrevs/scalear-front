@@ -330,23 +330,25 @@ angular.module('scalearAngularApp')
     }
   }
 
-}]).directive('dashboardCalendarModal', ['$modal', function($modal){
-  return{
-    restrict: 'A',
-    replace: true,
-    link: function(scope, element){
-      scope.openCalendar = function () {
-        angular.element('.button').blur()
-        $modal.open({
-            templateUrl: '/views/student/calendar/calendar.html',
-            controller: "dashboardCtrl"
-        })
-      }
+}])
+// .directive('dashboardCalendarModal', ['$modal', function($modal){
+//   return{
+//     restrict: 'A',
+//     replace: true,
+//     link: function(scope, element){
+//       scope.openCalendar = function () {
+//         angular.element('.button').blur()
+//         $modal.open({
+//             templateUrl: '/views/student/calendar/calendar.html',
+//             controller: "dashboardCtrl"
+//         })
+//       }
 
-    }
-  }
+//     }
+//   }
 
-}]).directive('enrollHelpModal', ['$modal','$rootScope', function($modal,$rootScope){
+// }])
+.directive('enrollHelpModal', ['$modal','$rootScope', function($modal,$rootScope){
   return{
     restrict: 'A',
     replace: true,

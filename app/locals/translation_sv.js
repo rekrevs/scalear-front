@@ -377,6 +377,7 @@ var translation_sv={
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",
     quiz_editor: "Redigera Quiz",
+    survey_editor: "Redigera Enkät",
     module_editor: "Redigera Modul",
     tooltip:{
         invisible: "Inte synlig för eleverna. Kommer att synas på detta datum.",
@@ -656,7 +657,8 @@ var translation_sv={
         }
     },
     list:{   
-        finished: 'Avslutade',
+        finished: 'Avslutad',
+        all_finished: 'Avslutade',
         all: "Alla",
         current:"Pågående",
         duration:"@:global.duration",
@@ -751,7 +753,8 @@ var translation_sv={
     teacher_forum: "Lärarforum",
     instruction_manual: "Bruksanvisning",
     tips: "Tips",
-    how_to_flip:"Hur du flippar"
+    how_to_flip:"Hur du flippar",
+    privacy_faq:"Sekretesspolicy och Vanliga frågor"
   },
   course_settings:{
     show_notes: "Visa anteckningar",
@@ -820,14 +823,14 @@ var translation_sv={
 }
 
 var full_calendar_sv={
-  monthNames: ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september","oktober","november","december"],
+  monthNames: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September","Oktober","November","December"],
   monthNamesShort: ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"],
   dayNames: ["söndag", "måndag", "tisdag", "onsdag", "torsdag", "fredag" ,"lördag"],
   dayNamesShort: ["sön", "mån","tis","ons","tor","fre","lör"],
   buttonText: {
-    today: 'idag',
-    month: 'månad',
-    week: 'vecka',
-    day: 'dag'
+    today: 'Idag',
+    month: 'Månad',
+    week: 'Vecka',
+    day: 'Dag'
   },
 }

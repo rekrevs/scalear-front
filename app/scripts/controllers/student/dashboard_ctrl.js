@@ -47,6 +47,7 @@ angular.module('scalearAngularApp')
                     eventRender: $scope.eventRender
                 }
             };
+            angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
             $scope.calendar = data;
             for (var element in $scope.calendar.events) {
                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
@@ -75,7 +76,7 @@ angular.module('scalearAngularApp')
 
             $scope.eventSources.push($scope.calendar);
             $timeout(function() {
-                changeLang()
+                // changeLang()
                 resizeCalendar()
             },300)
         })

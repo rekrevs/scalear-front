@@ -14,10 +14,7 @@ angular.module('scalearAngularApp')
                 
                 '&copy; ' + new Date().getFullYear() + ' <span tooltip-html-unsafe="{{tooltip_text}}">ScalableLearning</span> | ' +
                 '<a ui-sref="about" class="color-green" translate="footer.about"></a> | ' +
-                '<a ui-sref="privacy" class="color-green" translate="footer.privacy"></a> | '+
-                '<a ui-sref="faq" class="color-green" translate="footer.faq"></a>'+
-                '<br><center ></center>' +
-                
+                '<a ui-sref="privacy" class="color-green" translate="footer.privacy"></a>'+                
                 '</div>',
             link:function(scope){
                     scope.tooltip_text = '<div style="font-size:10px;color:lightgray;font-weight: 200">build: v' + scalear_api.version + '</div>'

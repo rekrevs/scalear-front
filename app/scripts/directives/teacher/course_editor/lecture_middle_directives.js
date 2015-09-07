@@ -463,7 +463,7 @@ angular.module('scalearAngularApp')
 			]
 			$log.debug(scope.quiz)
 			if(!scope.quiz.match_type)
-				scope.quiz.match_type = scope.match_types[0]
+				scope.quiz.match_type = scope.match_types[0].value
 
 			if(!scope.isSurvey()){
 				scope.quiz_types.push({value:"drag", text:$translate('content.questions.quiz_types.drag')})

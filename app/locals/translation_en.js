@@ -377,6 +377,7 @@ var translation_en={
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",
     quiz_editor: "Quiz Editor",
+    survey_editor: "Survey Editor",
     module_editor:"Module Editor",
     tooltip:{
         invisible: "Not currently visible to students. Will be visible",
@@ -657,6 +658,7 @@ var translation_en={
     },
     list:{     
         finished: 'Finished',
+        all_finished: '@:courses.list.finished',
         all: "All",
         current:"Current",        
         duration:"@:global.duration",
@@ -751,7 +753,8 @@ var translation_en={
     teacher_forum: "Teacher Forum",
     instruction_manual: "Instruction Manual",
     tips: "Tips",
-    how_to_flip:"How to Flip"
+    how_to_flip:"How to Flip",
+    privacy_faq:"Privacy & FAQ"
   },
   course_settings:{
     show_notes: "Show Notes",
@@ -825,9 +828,9 @@ var full_calendar_en = {
 	dayNames: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
 	dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
 	buttonText: {
-		today: 'today',
-		month: 'month',
-		week: 'week',
-		day: 'day'
+		today: 'Today',
+		month: 'Month',
+		week: 'Week',
+		day: 'Day'
 	},
 }

@@ -520,16 +520,16 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/student/lectures/quiz.middle.html',
                 controller: 'studentQuizMiddleCtrl'
             })
-            .state('course.calendar', {
-                url: '/events',
-                templateUrl: '/views/teacher/calendar/calendar.html',
-                controller: 'teacherCalendarCtrl'
-            })
-            .state('course.student_calendar', {
-                url: '/student/events',
-                templateUrl: '/views/student/calendar/calendar.html',
-                controller: 'studentCalendarCtrl'
-            })
+            // .state('course.calendar', {
+            //     url: '/events',
+            //     templateUrl: '/views/teacher/calendar/calendar.html',
+            //     controller: 'teacherCalendarCtrl'
+            // })
+            // .state('course.student_calendar', {
+            //     url: '/student/events',
+            //     templateUrl: '/views/student/calendar/calendar.html',
+            //     controller: 'studentCalendarCtrl'
+            // })
             .state('course.enrolled_students', {
                 url: '/enrolled_students',
                 templateUrl: '/views/teacher/course/enrolled_students.html',

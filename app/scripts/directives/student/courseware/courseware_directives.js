@@ -5,23 +5,27 @@ angular.module('scalearAngularApp')
 	return {
 		restrict: "E",
 		scope: {
-			module: "="
+			module: "&"
 		},
 		templateUrl: "/views/module_progress_check.html",
 	  link: function(scope, element){
 	  		var total = 0
-			for(var i in scope.module.items){
-				if(scope.module.items[i].graded){
+			for(var i in scope.module().items){
+				if(scope.module().items[i].graded){
 					total++;
 				}
 			}
-	  		var unwatch = scope.$watch('module.items', function() {
+
+			scope.$on("item_done", function(){
 				scope.module_done = calculateDone()
-			},true)
+			})
+	  // 		var unwatch = scope.$watch('module.items', function() {
+			// 	scope.module_done = calculateDone()
+			// },true)
 
 			var calculateDone = function(){
 				var done_count = 0;
-				scope.module.items.forEach(function(item, i){
+				scope.module().items.forEach(function(item, i){
 					if(item.is_done && item.graded){  
 						done_count++;
 					}

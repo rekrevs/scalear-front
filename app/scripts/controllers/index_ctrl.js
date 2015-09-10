@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator','scalear_api',
                         function($scope, $timeout, $state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate, $cookieStore, Course, ScalTour, ContentNavigator, scalear_api) {
 
-            // FastClick.attach(document.body);
+            FastClick.attach(document.body);
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.ContentNavigator = ContentNavigator

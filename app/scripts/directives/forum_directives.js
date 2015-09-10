@@ -104,11 +104,11 @@ angular.module('scalearAngularApp')
         restrict:"A",
         scope:{
             seek:'&',
-            item:'=',
-            delete:'&'
+            data:'&'
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
+            scope.item = scope.data()
             scope.current_user = $rootScope.current_user
             scope.preview_as_student = $rootScope.preview_as_student
             scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
@@ -223,24 +223,24 @@ angular.module('scalearAngularApp')
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
             scope.preview_as_student = $rootScope.preview_as_student
-            scope.flagComment = function(comment){
+            scope.flagComment = function(){
                 Forum.flagComment(
-                    {comment_flag:{comment_id: comment.id}}, 
+                    {comment_flag:{comment_id: scope.item.comment.id}}, 
                     function(response){
-                        comment.user_flag=1;
-                        comment.flags_count++;
+                        scope.item.comment.user_flag=1;
+                        scope.item.comment.flags_count++;
                     }, 
                     function(){
                         $log.debug("failure");
                     }
                 )
             }
-            scope.unflagComment = function(comment){
+            scope.unflagComment = function(){
                 Forum.flagComment(
-                    {comment_flag:{comment_id: comment.id}}, 
+                    {comment_flag:{comment_id: scope.item.comment.id}}, 
                     function(response){
-                        comment.user_flag = 0;
-                        comment.flags_count--;
+                        scope.item.comment.user_flag = 0;
+                        scope.item.comment.flags_count--;
                     }, 
                     function(){
                         $log.debug("failure");
@@ -282,8 +282,8 @@ angular.module('scalearAngularApp')
         scope:{            
             votes_count: '=votesCount',
             voted: '=',
-            up: '=',
-            down: '=',
+            up: '&',
+            down: '&',
             direction: '@'
 
         },
@@ -291,30 +291,21 @@ angular.module('scalearAngularApp')
         link: function(scope, element){
             scope.like_text= $translate('discussion.like')
             scope.unlike_text= $translate('discussion.unlike')
-            if(scope.direction == 'horizontal')
-                angular.element(element.find('.looks-like-a-link')).css('display',  'inline-block')
-                // scope.display_style= 'inline-block'
-            else
-                angular.element(element.find('.looks-like-a-link')).css('display',  'block')
-                // scope.display_style= 'block'
+            angular.element(element.find('.looks-like-a-link')).css('display',  scope.direction == 'horizontal'? 'inline-block' : 'block')
         }
     }
 }]).directive('flagButton', ['$translate', '$log',function($translate, $log){
     return{
         restrict: 'E',
-        scope:{            
-            discussion: '=',
-            comment: '=',
-            flag: '=',
-            unflag: '=',
-            type: '@'
-
+        scope:{
+            flagged: '=',
+            flag: '&',
+            unflag: '&',
         },
         templateUrl: '/views/forum/flag_button.html',
         link: function(scope, element){
             scope.flag_text=$translate("discussion.flag_post")
             scope.unflag_text=$translate("discussion.unflag_post")
-
         }
     }
 }]).directive("timelineFilters",['$rootScope', '$log', function($rootScope, $log){
@@ -386,14 +377,14 @@ angular.module('scalearAngularApp')
     return{
         restrict: 'E',
         scope:{            
-            discussion: '=',
-            submit:"="
+            discussion: '&',
+            submit:"&"
         },
         templateUrl: '/views/forum/comment_box.html',
         link: function(scope, element){
             scope.showfield = false;
             scope.submitComment = function(){
-                scope.submit(scope.discussion, scope.comment);
+                scope.submit()(scope.discussion(), scope.comment);
                 scope.comment = null;
                 scope.hideField();
                 $log.debug(scope.showfield)
@@ -402,7 +393,7 @@ angular.module('scalearAngularApp')
                 scope.showfield = !scope.showfield
             }
             scope.hideField = function(){
-                if(!scope.comment && scope.showfield == true){
+                if(!scope.comment && scope.showfield){
                     scope.toggleField();
                 }
             }

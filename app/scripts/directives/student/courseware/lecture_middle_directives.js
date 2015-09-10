@@ -624,14 +624,12 @@ angular.module('scalearAngularApp')
     restrict:"A",
     // replace:true,
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl:'/views/student/lectures/confused_timeline.html',
     link:function(scope, element, attrs){
-      // var unwatch = scope.$watch('item.data.very',function(){
-      //     scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
-      // })
+      scope.item = scope.data()
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
@@ -641,13 +639,7 @@ angular.module('scalearAngularApp')
           confused_id: confused.data.id
         }, 
         function(response){
-          // $log.debug("deleted");
-          // unwatch()
-          // delete scope.item
           scope.$emit('remove_from_timeline', confused)
-          // now want to remove from list (both l.confuseds and $scope.timeline..)
-          // var index=scope.timeline['lecture'][lecture_id].items.indexOf(confused);
-          // scope.timeline['lecture'][lecture_id].items.splice(index, 1)
         });
       }
 
@@ -659,11 +651,12 @@ angular.module('scalearAngularApp')
     restrict:"A",
     // replace:true,
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){
+      scope.item = scope.data()
       scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.unsolved_msg = $translate("lectures.tooltip.unsolved_quiz")
@@ -701,11 +694,12 @@ angular.module('scalearAngularApp')
   return{
     restrict:"A",
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl:"/views/student/lectures/notes_timeline.html",
     link:function(scope,element,attrs){
+      scope.item = scope.data()
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteNote=function(){
         // $log.debug(scope.item)

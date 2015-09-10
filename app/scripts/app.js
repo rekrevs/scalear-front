@@ -302,11 +302,11 @@ angular.module('scalearAngularApp', [
                 //     }
                 // }
             })
-            .state('profile', {
-                url: '/users/profile/:user_id',
-                templateUrl: '/views/users/profile.html',
-                controller: 'UsersProfileCtrl'
-            })
+            // .state('profile', {
+            //     url: '/users/profile/:user_id',
+            //     templateUrl: '/views/users/profile.html',
+            //     controller: 'UsersProfileCtrl'
+            // })
             .state('forgot_password', {
                 url: '/users/password/new',
                 templateUrl: '/views/users/password/new.html',

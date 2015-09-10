@@ -246,8 +246,8 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
-        if($scope.replay_play)
-            $scope.lecture_player.controls.play()
+        // if($scope.replay_play)
+        //     $scope.lecture_player.controls.play()
     }
 
     var updateViewPercentage = function(milestone) {
@@ -311,8 +311,12 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
         $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
-            if(time >=0 && $scope.show_progressbar)
+            if(time >=0 && $scope.show_progressbar){
                 $scope.lecture_player.controls.seek(time)
+                var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
+                $log.debug("current watched: "+percent_view)
+                updateViewPercentage(percent_view)
+            }
         }
         else{
             $state.go("course.module.courseware.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  

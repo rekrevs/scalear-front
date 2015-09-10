@@ -159,7 +159,7 @@ angular.module('scalearAngularApp')
 	$scope.insertQuiz=function(quiz_type, question_type){
 		var promise = $q.when(true)
 		if ($scope.selected_quiz && $scope.quiz_deletable){
-			var old_insert_time = $scope.selected_quiz.time
+			// var old_insert_time = $scope.selected_quiz.time
 			promise = $scope.deleteQuiz($scope.selected_quiz)
 			clearQuizVariables()
 		}
@@ -170,16 +170,17 @@ angular.module('scalearAngularApp')
 
 			if(insert_time < 1 )
 				insert_time = 1
-			else if (insert_time >= duration)
-				insert_time = duration - 1
+			insert_time = checkQuizTimeConflict(insert_time)
+			if (insert_time >= duration -1)
+				insert_time = duration - 2
 
-			if(old_insert_time)
-				insert_time = old_insert_time
-			else{
-				insert_time = checkQuizTimeConflict(insert_time)
-				if (insert_time >= duration)
-					insert_time = duration - 1
-			}
+			// if(old_insert_time)
+			// 	insert_time = old_insert_time
+			// else{
+				
+				// if (insert_time >= duration)
+				// 	insert_time = duration - 1
+			// }
 			
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
 

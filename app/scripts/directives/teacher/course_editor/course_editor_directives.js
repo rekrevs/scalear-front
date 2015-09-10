@@ -1,123 +1,156 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$rootScope','$timeout','$state', '$log','ngDialog', function($rootScope, $timeout,$state, $log,ngDialog) {
-        return {
-            restrict: "E",
-            replace:true,
-            scope: {
-                module:"=data",
-                current: "="
-            },
-            templateUrl: '/views/teacher/course_editor/module.html',
-            link: function(scope,element) {
-                var calculateTime=function(){
-                    var total_calculated_time = 0
-                    scope.module.items.forEach(function(item){
-                        if(item.duration){
-                            total_calculated_time += parseInt(item.duration)
-                        } 
-                    })
-                    scope.module.total_time = total_calculated_time
-                }
-                calculateTime()
-                scope.$on('update_module_time', function(ev, module_id){
-                    if(scope.module.id == module_id){
-                        calculateTime()
-                    }
+.directive("moduleEdit", ['$rootScope','$timeout','$state', '$log','ngDialog', function($rootScope, $timeout,$state, $log,ngDialog) {
+    return {
+        restrict: "E",
+        replace:true,
+        scope: {
+            module:"=data",
+        },
+        templateUrl: '/views/teacher/course_editor/module_edit.html',
+        link: function(scope,element) {
+            var calculateTime=function(){
+                var total_calculated_time = 0
+                scope.module.items.forEach(function(item){
+                    if(item.duration){
+                        total_calculated_time += parseInt(item.duration)
+                    } 
                 })
-                $rootScope.$watch('clipboard', function(){
-                    scope.clipboard = $rootScope.clipboard
-                })
-
-                scope.remove=function(event){
-                    event.preventDefault();
-                    event.stopPropagation();
-                    ngDialog.open({
-                        template:'\
-                            <div class="ngdialog-message">\
-                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
-                                <span>\
-                                    <span translate>groups.delete_popup.delete_module</span>\
-                                    <b>"'+scope.module.name+'"</b>\
-                                    <span translate>groups.delete_popup.will_delete</span>\
-                                    <span translate>groups.delete_popup.are_you_sure</span>\
-                                </span>\
-                            </div>\
-                            <div class="ngdialog-buttons">\
-                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
-                                <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
-                            </div>',
-                        plain: true,
-                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
-                        showClose:false,
-                        controller: ['$scope', function($scope) {
-                            $scope.delete=function(){
-                                $rootScope.$broadcast("delete_module", scope.module)
-                                $scope.closeThisDialog()
-                            }
-                        }]
-
-                    });
+                scope.module.total_time = total_calculated_time
+            }
+            calculateTime()
+            scope.$on('update_module_time', function(ev, module_id){
+                if(scope.module.id == module_id){
+                    calculateTime()
                 }
+            })
+            $rootScope.$watch('clipboard', function(){
+                scope.clipboard = $rootScope.clipboard
+            })
 
-                scope.copy=function(){
-                    $log.debug("copy")
-                    event.preventDefault();
-                    $rootScope.$broadcast('copy_item', scope.module)
-                }
+            scope.remove=function(event){
+                event.preventDefault();
+                event.stopPropagation();
+                ngDialog.open({
+                    template:'\
+                        <div class="ngdialog-message">\
+                            <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                            <span>\
+                                <span translate>groups.delete_popup.delete_module</span>\
+                                <b>"'+scope.module.name+'"</b>\
+                                <span translate>groups.delete_popup.will_delete</span>\
+                                <span translate>groups.delete_popup.are_you_sure</span>\
+                            </span>\
+                        </div>\
+                        <div class="ngdialog-buttons">\
+                            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                            <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
+                        </div>',
+                    plain: true,
+                    className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                    showClose:false,
+                    controller: ['$scope', function($scope) {
+                        $scope.delete=function(){
+                            $rootScope.$broadcast("delete_module", scope.module)
+                            $scope.closeThisDialog()
+                        }
+                    }]
 
-                scope.paste=function(){
-                    $log.debug("Paste")
-                    event.preventDefault();
-                    $rootScope.$broadcast('paste_item', scope.module.id)
-                }
+                });
+            }
 
-                scope.share=function(){
-                    $log.debug("Share")
-                    event.preventDefault();
-                    $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
-                }
+            scope.copy=function(){
+                $log.debug("copy")
+                event.preventDefault();
+                $rootScope.$broadcast('copy_item', scope.module)
+            }
 
+            scope.paste=function(){
+                $log.debug("Paste")
+                event.preventDefault();
+                $rootScope.$broadcast('paste_item', scope.module.id)
+            }
+
+            scope.share=function(){
+                $log.debug("Share")
+                event.preventDefault();
+                $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
+            }
+
+        }
+    }
+}]).directive('itemEdit', ['$rootScope','$timeout','$anchorScroll','$location','$state','$log', function($rootScope, $timeout, $anchorScroll,$location,$state,$log) {
+    return {
+        scope: {
+            item:'=data'
+        },
+        restrict: 'E',
+        templateUrl: '/views/teacher/course_editor/item_edit.html',
+        link: function(scope,element) {
+            $rootScope.$watch('clipboard', function(){
+                scope.clipboard = $rootScope.clipboard
+            })
+            scope.remove=function(event){
+                event.stopPropagation()
+                event.preventDefault() 
+                $rootScope.$broadcast("delete_item", scope.item)
+            }
+
+            scope.copy=function(){
+                $log.debug("copy")
+                event.preventDefault();
+                $rootScope.$broadcast('copy_item', scope.item)
+            }
+
+            scope.paste=function(){
+                $log.debug("Paste")
+                event.preventDefault();
+                $rootScope.$broadcast('paste_item', scope.item.group_id)
+            }
+
+            scope.share=function(){
+                $log.debug("Share")
+                event.preventDefault();
+                $rootScope.$broadcast('share_copy', {module_id:scope.item.group_id, item: scope.item})
             }
         }
-    }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state','$log', function($rootScope, $timeout, $anchorScroll,$location,$state,$log) {
-        return {
-            scope: {
-                item:'=data'
-            },
-            restrict: 'E',
-            templateUrl: '/views/teacher/course_editor/item.html',
-            link: function(scope,element) {
-                $rootScope.$watch('clipboard', function(){
-                    scope.clipboard = $rootScope.clipboard
+    };
+}])
+.directive("module", function() {
+    return {
+        replace:true,
+        restrict: "E",
+        scope: {
+            data:"&data"
+        },
+        templateUrl: '/views/teacher/course_editor/module.html',
+        link: function(scope,element) {
+            scope.module = scope.data()
+            var calculateTime=function(){                
+                var total_calculated_time = 0
+                scope.module.items.forEach(function(item){
+                    if(item.duration){
+                        total_calculated_time += parseInt(item.duration)
+                    } 
                 })
-                scope.remove=function(event){
-                    event.stopPropagation()
-                    event.preventDefault() 
-                    $rootScope.$broadcast("delete_item", scope.item)
-                }
-
-                scope.copy=function(){
-                    $log.debug("copy")
-                    event.preventDefault();
-                    $rootScope.$broadcast('copy_item', scope.item)
-                }
-
-                scope.paste=function(){
-                    $log.debug("Paste")
-                    event.preventDefault();
-                    $rootScope.$broadcast('paste_item', scope.item.group_id)
-                }
-
-                scope.share=function(){
-                    $log.debug("Share")
-                    event.preventDefault();
-                    $rootScope.$broadcast('share_copy', {module_id:scope.item.group_id, item: scope.item})
-                }
+                scope.module.total_time = total_calculated_time
             }
-        };
-    }]).directive('buttonLink', function() {
+            calculateTime()
+        }
+    }
+}).directive('item', function() {
+    return {
+        scope: {
+            data:'&data'
+        },
+        restrict: 'E',
+        templateUrl: '/views/teacher/course_editor/item.html',
+        link: function(scope,element) {
+            scope.item = scope.data()
+        }
+    };
+}).directive('buttonLink', function() {
         return {
             scope: {
                 title: "@",

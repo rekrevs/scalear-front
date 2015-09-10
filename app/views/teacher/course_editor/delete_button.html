@@ -32,12 +32,12 @@
 		</div>
 	</span>
 	<span bo-if="mode == 'content_navigator'" bindonce>
-		<a class="delete delete_tip" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="Delete" ng-click="showDeletePopup(true, $event)">
+		<a class="delete delete_tip" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" ng-click="showDeletePopup(true, $event)">
 			<i bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
 			<i bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
 		</a>
 		<span ng-show="displayDeletePopup" bo-class="{'count-padding':padded,'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay ease_in_out">
-	        <span class="form-controls-alert align-center" style="height: 85%;" ng-show="displayDeletePopup">
+	        <span class="form-controls-alert align-center" style="height: 85%;">
 	            <button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
 	            <button bo-class="{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span bo-text="'button.cancel' | translate"></span></button>
 	        </span>

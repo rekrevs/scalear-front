@@ -80,9 +80,6 @@ angular.module('scalearAngularApp')
 }]).directive('contextMenu', ['$window','$log', function($window,$log) {
   return {
     restrict: 'A',
-    scope:{
-      opened:'='
-    },
     link: function(scope, element, attrs) {
       var menuElement = angular.element(element.find('.'+attrs.target))
       menuElement.css('position', 'fixed');

@@ -203,7 +203,11 @@ var translation_en={
     to_module: "to module",
     copy: "@:global.copy",
     lecture:"@:global.lecture",
-    items:"items"
+    items:"items",
+    lecture: "@:global.lecture",
+    quiz: "@:global.quiz",
+    survey: "@:global.survey",
+    customlink: "@:global.customlink",
   },
   footer:{
     about: "About ",

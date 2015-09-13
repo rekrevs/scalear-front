@@ -45,7 +45,7 @@ angular.module('scalearAngularApp')
                         </div>\
                         <div class="ngdialog-buttons">\
                             <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
-                            <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
+                            <button type="button" class="ngdialog-button ngdialog-button-alert delete_confirm" ng-click="delete()" translate>button.delete</button>\
                         </div>',
                     plain: true,
                     className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',

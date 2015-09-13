@@ -5,6 +5,6 @@
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
 		<i bo-if="item.class_name == 'customlink'" class="fi-link with-tiny-margin-right left color-gray" bo-title="'content_navigator.customlink' | translate"></i>
 		<div class="truncate-70 show-inline valign-middle left text-left"  bo-text="item.name" style="width: 65%"></div>
-		<small class="color-dark-grey with-small-margin-right"><span bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></span></small>
+		<small class="color-dark-grey with-small-margin-right"><span bo-text="item.duration && (item.duration| formattime:'h:mm:ss') || '' "></span></small>
 	</div>
 </li>

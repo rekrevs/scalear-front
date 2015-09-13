@@ -78,8 +78,10 @@ describe("Teacher Management",function(){
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			course_info.student.open()
-			expect(course_info.teachers.count()).toEqual(4)
+			course_info.student.open()			
+		})
+		it("should check number of teacher ",function(){
+			expect(course_info.teachers.count()).toEqual(2)
 		})
 		it("should logout",function(){
             header.logout()

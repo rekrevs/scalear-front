@@ -125,24 +125,24 @@ angular.module('scalearAngularApp')
                 )
             }            
 
-            scope.flagPost = function(discussion){
+            scope.flagPost = function(){
                 Forum.flagPost(
-                    {post_id: discussion.id}, 
+                    {post_id: scope.item.data.id}, 
                     function(response){
-                        discussion.user_flag=1;
-                        discussion.flags_count++;
+                        scope.item.data.user_flag=1;
+                        scope.item.data.flags_count++;
                     },
                     function(){
                         $log.debug("failure");
                     }
                 )
             }
-            scope.unflagPost = function(discussion){
+            scope.unflagPost = function(){
                 Forum.flagPost(
-                    {post_id: discussion.id}, 
+                    {post_id: scope.item.data.id}, 
                     function(response){
-                        discussion.user_flag = 0;
-                        discussion.flags_count--;
+                        scope.item.data.user_flag = 0;
+                        scope.item.data.flags_count--;
                     }, 
                     function(){
                         $log.debug("failure");
@@ -182,7 +182,7 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            scope.deleteComment = function(comment, post_id){
+            scope.deleteComment = function(comment){
                 Forum.deleteComment({comment_id: comment.comment.id, post_id: scope.item.data.id}, function(response){
                     var index=scope.item.data.comments.indexOf(comment);
                     scope.item.data.comments.splice(index, 1);

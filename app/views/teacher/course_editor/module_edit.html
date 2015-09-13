@@ -4,7 +4,7 @@
 		</delete_button>
 		<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'editor.messages.drag_to_reorder'|translate" />
 		<div style="width:67%" class="truncate-70 show-inline left text-left module_name">{{module.name}}</div>
-		<small class="color-grey" style="padding:1px"><span>{{module.total_time | formattime:'h:mm:ss' || ""}}</span></small>
+		<small class="color-grey" style="padding:1px"><span>{{module.total_time && (module.total_time | formattime:'h:mm:ss') || ""}}</span></small>
 		<ul class="module-menu dropdown-menu text-left" bindonce>
 			<li><a ng-click='copy($event)'  bo-text="'context_menu.copy'| translate"></a></li>
 			<li ng-show="clipboard.type"><a ng-click='paste($event)' bo-text="'context_menu.paste'| translate"></a></li>	

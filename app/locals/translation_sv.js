@@ -203,7 +203,11 @@ var translation_sv={
     to_module: "till modul",
     copy: "@:global.copy",
     lecture:"@:global.lecture",
-    items: "objekt"
+    items: "objekt",
+    lecture: "@:global.lecture",
+    quiz: "@:global.quiz",
+    survey: "@:global.survey",
+    customlink: "@:global.customlink",
   },
   footer:{
     about: "Om ",

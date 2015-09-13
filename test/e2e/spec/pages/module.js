@@ -30,6 +30,8 @@ Module.prototype = Object.create({}, {
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
 		this.field.element(by.className('alert')).click()
+		sleep(1000);
+		element(by.className('delete_confirm')).click()		
 	}},
 	copy:{value:function(){
 		right_click(this.name_field)

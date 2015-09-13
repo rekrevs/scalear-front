@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/:lang/users/:id/:action', {lang:$translate.uses()},
       { 
-        'getCurrentUser': { method: 'GET', headers: headers , params: {action: 'get_current_user'}},
+        'getCurrentUser': { method: 'GET', headers: headers , ignoreLoadingBar: true, params: {action: 'get_current_user'}},
         'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
         'sign_out': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
         'sign_up': { method: 'POST', headers: headers},
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
         'show_confirmation':{method:'GET', headers:headers, params:{action: 'confirmation'}},
         'update_account':{method:'PUT', headers:headers},
         'delete_account':{method:'delete', headers:headers},
-        'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}},
+        // 'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}},
         'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers},
         'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers}
       });

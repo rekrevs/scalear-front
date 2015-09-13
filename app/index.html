@@ -72,7 +72,7 @@
                 </content-navigator>
                 <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
-                <br ng-hide="('**.course.**' | includedByState) "/>
+                <br ng-hide="('**.course.**' | includedByState)"/>
                 <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
                 </div>
                 <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
@@ -100,7 +100,7 @@
     
     <!-- build:js({.tmp,app}) scripts/externals.js -->
 
-    <!-- <script src="bower_components/fastclick/lib/fastclick.js"></script>-->
+     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     
@@ -156,6 +156,7 @@
     <script src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
     <script src="bower_components/jquery-easing-original/jquery.easing.min.js"></script>
     <script src="bower_components/ngDialog/js/ngDialog.min.js"></script>
+    <script src="bower_components/ics.js/ics.deps.min.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/externals/bootstrap_plugins.js"></script>
@@ -217,10 +218,11 @@
 
     <script src="scripts/controllers/main_ctrl.js"></script>
     <script src="scripts/controllers/home_ctrl.js"></script>
+    <script src="scripts/controllers/about_ctrl.js"></script>
     <script src="scripts/controllers/index_ctrl.js"></script>
-    <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/navigation.js"></script>
-    <script src="scripts/controllers/privacy.js"></script>
+    <script src="scripts/controllers/login_ctrl.js"></script>
+    <script src="scripts/controllers/privacy_ctrl.js"></script>
+    <script src="scripts/controllers/faq_ctrl.js"></script>
     <script src="scripts/controllers/course_ctrl.js"></script>
     <script src="scripts/controllers/module_ctrl.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>

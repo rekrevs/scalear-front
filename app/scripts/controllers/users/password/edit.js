@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('UsersPasswordEditCtrl',['$scope','User','$state','$stateParams','$rootScope','Page', function ($scope, User, $state, $stateParams, $rootScope,Page) {
-    Page.setTitle('password_edit.resetting')
+    Page.setTitle('account.password.resetting')
     $scope.user={"reset_password_token": $stateParams.reset_password_token}
     $scope.change_password = function(){
         delete $scope.user.errors;

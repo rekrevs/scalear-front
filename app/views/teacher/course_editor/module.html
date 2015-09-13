@@ -1,19 +1,6 @@
 <div class="disable_selection text-right position-relative" style="padding: 5px; min-height: 35px;border-bottom: 1px solid white;">
-	<div context-menu data-target="module-menu" opened='menu_status' class="position-relative" ng-if="'**.course_editor.**' | includedByState">
-		<delete_button class="with-tiny-margin-left right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" padded="true">
-		</delete_button>
-		<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
-		<div style="width:67%" class="truncate-70 show-inline left text-left module_name">{{module.name}}</div>
-		<small class="color-grey" style="padding:1px"><span ng-show="module.total_time" >{{module.total_time | formattime:'h:mm:ss'}}</span></small>
-		<ul class="module-menu dropdown-menu text-left">
-			<li><a ng-click='copy($event)' >Copy </a></li>
-			<li ng-show="clipboard.type"><a ng-click='paste($event)'>Paste</a></li>	
-			<li><a ng-click='share($event)'>Share</a></li>		   
-		</ul>
-	</div>
-
-	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >
-		<div class="truncate-70 show-inline left text-left module_name" bindonce bo-text="module.name"></div>	
-		<small class="color-grey" style="padding:1px"><span bo-text="module.total_time | formattime:'h:mm:ss'" ng-show="module.total_time" ></span></small>
+	<div class="position-relative" bindonce="module">
+		<div class="truncate-70 show-inline left text-left module_name" bo-text="module.name"></div>
+		<small class="color-grey" style="padding:1px"><span bo-text="module.total_time && (module.total_time| formattime:'h:mm:ss') || '' "></span></small>
 	</div>
 </div>

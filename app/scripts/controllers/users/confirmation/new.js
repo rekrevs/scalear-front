@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('UsersConfirmationNewCtrl',['$scope','User','$state','Page', function ($scope, User, $state,Page) {
-        Page.setTitle('confirmations.resend_instructions')
+        Page.setTitle('account.resend_confirmation')
         $scope.user={}
         $scope.resend = function(){
             delete $scope.user.errors;

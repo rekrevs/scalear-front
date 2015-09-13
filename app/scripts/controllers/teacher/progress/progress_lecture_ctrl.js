@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator) {
 
-    Page.setTitle('head.progress')
+    Page.setTitle('navigation.progress')
     ContentNavigator.close()
     $scope.Math = window.Math;
   	$scope.highlight_index = -1
@@ -48,23 +48,23 @@ angular.module('scalearAngularApp')
     //   "lectures.confused":"confused",
     //   // "Questions":"question",
     //   "courses.charts": "charts",
-    //   "lectures.discussion": "discussion",
+    //   "global.discussion": "discussion",
     // }
     $scope.check_sub_items={lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
     $scope.check_items={quiz:true, survey:true}
 
     $scope.grade_options= [{
       value: 0, // not set
-      text: $translate('courses.under_review')
+      text: $translate('quizzes.grade.under_review')
     }, {
       value: 1, // wrong
-      text: $translate('courses.wrong')
+      text: $translate('quizzes.grade.incorrect')
     }, {
       value: 2,
-      text: $translate('courses.partial')
+      text: $translate('quizzes.grade.partial')
     }, {
       value: 3,
-      text: $translate('courses.good')
+      text: $translate('quizzes.grade.correct')
     }]
   	var init= function(){
   		$scope.timeline = new Timeline()
@@ -615,11 +615,11 @@ angular.module('scalearAngularApp')
     var formated_data ={}
     formated_data.cols=
         [
-            {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('courses.students'),"type": "number"}
+            {"label": $translate('global.students'),"type": "string"},
+            {"label": $translate('global.students'),"type": "number"}
         ]
     formated_data.rows= []
-    var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.watched')+" > 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
+    var x_titles=[$translate('progress.chart.not_started_watching'), $translate('progress.chart.watched')+" <= 50%", $translate('progress.chart.watched')+" > 50%", $translate('progress.chart.completed_on_time'), $translate('progress.chart.completed_late')]
     for(var ind in data)
     {
         var row=
@@ -639,7 +639,7 @@ angular.module('scalearAngularApp')
 		var formated_data = {}
 		formated_data.cols =
 	    [{
-		    "label": $translate('courses.students'),
+		    "label": $translate('global.students'),
 		    "type": "string"
 		}, {
 		    "label": $translate('lectures.correct'),
@@ -682,7 +682,7 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols =
           [{
-          "label": $translate('courses.students'),
+          "label": $translate('global.students'),
           "type": "string"
       }, {
           "label": $translate('lectures.correct'),
@@ -722,8 +722,8 @@ angular.module('scalearAngularApp')
     var formated_data ={}
     formated_data.cols=
         [
-            {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"}
+            {"label": $translate('global.students'),"type": "string"},
+            {"label": $translate('progress.chart.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -744,8 +744,8 @@ angular.module('scalearAngularApp')
   //   var formated_data = {}
   //   formated_data.cols=
   //       [
-  //           {"label": $translate('courses.students'),"type": "string"},
-  //           {"label": $translate('controller_msg.answered'),"type": "number"},
+  //           {"label": $translate('global.students'),"type": "string"},
+  //           {"label": $translate('progress.chart.answered'),"type": "number"},
   //       ]
   //   formated_data.rows = []
   //   for (var ind in data) {

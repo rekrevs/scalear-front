@@ -1,4 +1,3 @@
-<!-- <div class="small-12 columns"><h4 ng-show="question" translate>groups.free_text_question</h4></div> -->
 <style>
 td{
 	padding:4px 10px !important;
@@ -6,18 +5,13 @@ td{
 </style>
 <div class="small-12 columns">
 	<table style="width:100%">
-		<!-- <tr>
-			<td colspan="5">
-				<b><span translate>answer.question</span>: {{question.title}}</b>
-			</td>
-		</tr> -->
 		<thead>
 			<tr>
-				<th ng-show="!display_only" style="border-right: 1px gray solid;"><b translate>answer.show</b></th>
+				<th ng-show="!display_only" style="border-right: 1px gray solid;"><b translate>button.show</b></th>
 				<th ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b translate>groups.groups</b></th>
-				<th>related</th>
-				<th style="width: 100%;border-left: 1px gray solid;">Answer</th>
-				<th ng-show="graded" style="border-left: 1px gray solid;" translate>courses.grade</th>
+				<th translate>progress.related</th>
+				<th style="width: 100%;border-left: 1px gray solid;" translate>global.answer</th>
+				<th ng-show="graded" style="border-left: 1px gray solid;" translate>progress.grade</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -37,13 +31,12 @@ td{
 					</a>
 					<div ng-show="answer.response" style="padding-left:10px">
 						<div class="size-14" style="font-style: italic;display:inline;">{{answer.response}}</div>
-						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary" translate>delete</a>
+						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary" translate>button.delete</a>
 						<!-- <button_link  title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							 -->
 					</div>
 					<div ng-show="answer.show_feedback && !display_only">
 						<textarea ng-model="answer.response" />
 						<a ng-click="sendFeedback(question.answers,$index)" class="button success really-tiny" translate>courses.send</a>
-						<!-- <button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question.answers,$index)" /> -->
 					</div>
 				</td>
 		        <td ng-show="!display_only && graded" style="border-left: 1px gray solid;">

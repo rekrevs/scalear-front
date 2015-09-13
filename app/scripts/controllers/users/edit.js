@@ -3,8 +3,8 @@
 angular.module('scalearAngularApp')
     .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal','Page','$translate',function($rootScope, $scope, User, $state, $modal,Page, $translate) {
     
-    Page.setTitle('navigation.edit_account')
-    $rootScope.subheader_message = $translate('navigation.edit_account')
+    Page.setTitle('navigation.account_information')
+    $rootScope.subheader_message = $translate('navigation.account_information')
     $scope.user = {}
     $rootScope.$watch('current_user', function(val) {
         if (val)

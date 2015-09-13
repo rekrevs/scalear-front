@@ -6,28 +6,28 @@
 		<center>
 			<div class="row collapse">			
 				<div ng-show='sortable' class="small-1 columns">
-					<img  src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}"  />
+					<img  src='images/move2.png' class='handle' title="{{'editor.messages.drag_to_reorder'|translate}}"  />
 				</div>
 			    <div class="small-2 columns">
-			      <span class="prefix"><span translate>answer.question</span>:</span>
+			      <span class="prefix"><span translate>global.question</span>:</span>
 			    </div>
 			    <div class="small-8 left columns" ng-class="{'small-10':!isNormalQuiz()}">
 			      <input required name='qlabel' type='text' ng-model='quiz[column]' ng-class="{error: (submitted && qform.qlabel.$error.required)}"/>
-			      <small class='error' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</small>
+			      <small class='error' ng-show='submitted && qform.qlabel.$error.required'><span translate>error_message.required</span>!</small>
 			    </div>
 		  	</div>
 		  	<div  class="row collapse" >
 		  		<div class="small-10 small-push-1 columns">
 			  		<div ng-if="isNormalQuiz()">
 			  			<div class="small-2 columns">
-					      <span class="prefix"><span translate>groups.type</span>:</span>
+					      <span class="prefix"><span translate>editor.type</span>:</span>
 					    </div>
 					    <div class="small-10 columns">
 					    	<select ng-model='quiz.question_type' required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices size-14'></select>
 					    </div>
 					</div>
 				    <div class="small-10 columns" ng-if='isFreeText() && !isSurvey()'>
-				    	<select ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices size-14'></select>
+				    	<select ng-model='quiz.match_type' required  ng-options='obj.value as obj.text for obj in match_types' class='choices size-14'></select>
 				    </div>
 				</div>
 		  	</div>
@@ -38,7 +38,7 @@
 		  	</div>
 		  	<div class="row">
 		  		<div class="small-11 small-push-1 columns text-left">
-					<a id="add_answer" ng-if='!isFreeText()' class='button tiny add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>groups.add_answer</a>
+					<a id="add_answer" ng-if='!isFreeText()' class='button tiny add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>editor.button.add_answer</a>
 				</div>
 		  	</div>		  	
   		</center>

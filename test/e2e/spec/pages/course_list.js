@@ -1,5 +1,6 @@
 'use strict';
 var Header = require('./header');
+var sleep = require('../lib/utils').sleep;
 
 var CourseList = function () {};
 
@@ -24,6 +25,8 @@ CourseList.prototype = Object.create({}, {
 		var course = this.courses.get(num-1)
 		course.element(by.className('delete')).click()
 		course.element(by.className('alert')).click()
+		sleep(1000);
+		element(by.className('delete_confirm')).click()		
 	}}
 
 });

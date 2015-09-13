@@ -4,7 +4,7 @@
 
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
 	<h4 ng-show="module.name" class="small-12 columns with-small-padding-top">
-		<b><span translate>courses.module_timeline</span>: </b>
+		<b><span translate>progress.home.module_timeline</span>: </b>
 		<span>{{module.name}}</span>
 	</h4>
 	<div class="row">
@@ -20,10 +20,10 @@
 	<br />
 	<div class="row">
 		<div id="labels">
-			<div id="first_label"  class="inverted">#<span translate>courses.confused</span></div>
-			<div id="second_label" class="inverted">#<span translate>courses.back</span></div>
-			<div id="third_label"  class="inverted">#<span translate>courses.pauses</span></div>
-			<div id="fourth_label" class="inverted">#<span translate>courses.questions</span></div>
+			<div id="first_label"  class="inverted">#<span translate>progress.confused</span></div>
+			<div id="second_label" class="inverted">#<span translate>progress.back</span></div>
+			<div id="third_label"  class="inverted">#<span translate>progress.pauses</span></div>
+			<div id="fourth_label" class="inverted">#<span translate>progress.questions</span></div>
 		</div>
 		<div style="overflow-x:auto; overflow-y:hidden;" >
 			<div style="margin-left:35px;" ng-style="{width: win_width}"> 
@@ -38,6 +38,6 @@
 <div class="row">
 	<center>
 		<loading size="big" show="loading_statistics_chart" />
-		<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
+		<!-- <div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div> -->
 	</center>
 </div>

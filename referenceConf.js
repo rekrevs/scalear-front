@@ -133,7 +133,7 @@ exports.config = {
         'test/e2e/spec/students_solve_course.spec.js',
         'test/e2e/spec/discussions.spec.js',
         'test/e2e/spec/notes.spec.js',
-        // 'test/e2e/spec/progress-module.spec.js'
+        // // 'test/e2e/spec/progress-module.spec.js'
         'test/e2e/spec/delete_course.spec.js'
    
    //{{reviewed}}  

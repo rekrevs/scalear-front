@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
       	 'destroy': { method: 'DELETE' , headers:headers}
       });
 
-}]).factory("Preview",['Impersonate','$state','$cookieStore','ContentNavigator', '$rootScope',function(Impersonate,$state, $cookieStore, ContentNavigator, $rootScope){
+}]).factory("Preview",['Impersonate','$state','$cookieStore','ContentNavigator', '$rootScope','$log',function(Impersonate,$state, $cookieStore, ContentNavigator, $rootScope, $log){
 	var Preview={
 		start:function(){
 	        $cookieStore.put('old_user_id', $rootScope.current_user.id)

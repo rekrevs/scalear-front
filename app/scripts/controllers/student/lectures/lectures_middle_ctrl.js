@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator', '$rootScope',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator, $rootScope) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator', '$rootScope',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator, $rootScope) {
 
     $log.debug("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
@@ -144,7 +144,7 @@ angular.module('scalearAngularApp')
         if($scope.timeline){ 
             $timeout(function(){
                 $scope.lecture = $scope.timeline['lecture'][id].meta
-                Page.setTitle('head.lectures',': '+$scope.lecture.name); 
+                Page.setTitle('navigation.lectures',': '+$scope.lecture.name); 
             })
 
             $scope.$parent.$parent.current_item= id
@@ -163,9 +163,9 @@ angular.module('scalearAngularApp')
                 $scope.alert_messages = data.alert_messages;
                 for(var key in $scope.alert_messages){
                     if(key=="due")
-                        $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                        $scope.course.warning_message = $translate("events.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("time."+$scope.alert_messages[key][2])+") "+$translate("time.ago")
                     else if(key=="today")
-                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
+                        $scope.course.warning_message = $translate("events.due")+" "+ $translate("time.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
                 }
                                
                 if(!$scope.preview_as_student){
@@ -246,8 +246,8 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
-        if($scope.replay_play)
-            $scope.lecture_player.controls.play()
+        // if($scope.replay_play)
+        //     $scope.lecture_player.controls.play()
     }
 
     var updateViewPercentage = function(milestone) {
@@ -311,8 +311,12 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
         $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
-            if(time >=0 && $scope.show_progressbar)
+            if(time >=0 && $scope.show_progressbar){
                 $scope.lecture_player.controls.seek(time)
+                var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
+                $log.debug("current watched: "+percent_view)
+                updateViewPercentage(percent_view)
+            }
         }
         else{
             $state.go("course.module.courseware.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
@@ -371,7 +375,7 @@ angular.module('scalearAngularApp')
         $scope.seek(time)
         $scope.lecture_player.controls.pause()
         $scope.play_pause_class = "play"
-        showNotification('groups.answer_question')
+        showNotification('lectures.answer_question')
     }
 
     $scope.lecture_player.events.onPlay = function() {  
@@ -452,7 +456,7 @@ angular.module('scalearAngularApp')
         function(data){
             $log.debug(data)
             if(data.msg=="ask"){
-                showNotification("controller_msg.really_confused_use_question")
+                showNotification("lectures.messages.really_confused_use_question")
             }
             if(!data.flag){ //first time confused in these 15 seconds            
                 $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
@@ -574,7 +578,7 @@ angular.module('scalearAngularApp')
                     selected_answers.push(answer.id)
             })
             if(selected_answers.length == 0){
-                showNotification("groups.choose_correct_answer")
+                showNotification("lectures.choose_correct_answer")
                 return      
             }
 
@@ -589,7 +593,7 @@ angular.module('scalearAngularApp')
                 if(selected_answers[el])
                     count++
             if(count<$scope.selected_quiz.online_answers.length){
-                showNotification("groups.must_place_items")
+                showNotification("lectures.must_place_items")
                 return
             }
         }
@@ -616,7 +620,7 @@ angular.module('scalearAngularApp')
         if(data.msg!="Empty"){  // he chose sthg
             if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){                
                 $scope.selected_quiz.is_quiz_solved=true;
-                showNotification('thank_you_answer')
+                showNotification('lectures.messages.thank_you_answer')
             }
             else{
                 for(var el in data.detailed_exp)

@@ -8,7 +8,7 @@
             <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
         </h2> 
         <hr />
-        <h4 class="subheader with-margin-bottom" page-name="head.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase" translate>groups.description</h4>
+        <h4 class="subheader with-margin-bottom" page-name="navigation.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase" translate>courses.information.description</h4>
         <p style="font-weight: 200;">
             <big-area id='desc' value="course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
         </p>
@@ -18,7 +18,7 @@
             <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
         </p>
         <hr />
-        <h4 translate class="subheader" page-name="head.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.taught_by</h4>
+        <h4 translate class="subheader" page-name="navigation.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.information.taught_by</h4>
         <br />
         <div>
             <div class="small-12 large-6 left columns with-margin-bottom" ng-repeat="teacher in teachers">
@@ -37,28 +37,28 @@
             <div class="small-12 columns no-padding">
             <br />                
                 <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny" ng-class="{'alert': !in_delete, 'success': in_delete}">{{toggle_message | translate}}</button>
-                <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.add_teacher</button>
+                <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.information.button.add_teacher</button>
                 <form name='email_form' ng-show="teacher_forum" novalidate>
                     <div class="small-12 columns size-12 with-small-margin-bottom">
-                        <span translate>adding_teacher</span> scalable-learning.<br>
-                        <span translate>create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
+                        <span translate>courses.information.adding_teacher</span> scalable-learning.<br>
+                        <span translate>courses.information.create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
                     </div>
                     <div class="small-12 medium-8 large-5 left columns">
                         <div>
-                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}" class="with-tiny-margin-bottom"/>
-                            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>invalid_email</small>
+                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'global.email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}" class="with-tiny-margin-bottom"/>
+                            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>error_message.invalid_email</small>
                             <small class="error" ng-show="!(email_form.email.$dirty && email_form.email.$invalid)&& new_teacher.errors.email">{{new_teacher.errors.email}}</small>
                         </div>
                         <div>
                             <select id="new_role" ng-model="new_teacher.role" style="height: 34px;margin-bottom: 5px;">
-                                <option value="3" translate>courses.professor</option>
-                                <option value="4" translate>courses.ta</option>
+                                <option value="3" translate>courses.information.professor</option>
+                                <option value="4" translate>courses.information.ta</option>
                             </select>
                             <small class="error" ng-show="new_teacher.errors.role">{{new_teacher.errors.role}}</small>
                         </div>
                         <div>
-                            <a id="invite" ng-click="saveTeacher()" class="button success tiny right" translate>courses.invite</a>
-                            <a class="button alert tiny right with-tiny-margin-right" ng-click="removeNewTeacher()" translate>feedback.cancel</a> 
+                            <a id="invite" ng-click="saveTeacher()" class="button success tiny right" translate>courses.information.button.invite</a>
+                            <a class="button alert tiny right with-tiny-margin-right" ng-click="removeNewTeacher()" translate>button.cancel</a> 
                         </div>
                     </div>                    
                 </form>
@@ -67,10 +67,10 @@
     </div>
     <div class="small-3 columns no-padding-right">
         <img class="small-9 columns with-small-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
-        <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="head.information">
-            <div page-name="head.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="false">
-                <a ui-sref="course.course_editor" id="edit_btn" class="button green tiny" translate>edit_course</a>
-                <button type="button" id="calendar_btn" class="button tiny with-tiny-margin-right" calendar-modal ng-click="openCalendar()" translate>head.calendar</button>
+        <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="navigation.information">
+            <div page-name="navigation.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="false">
+                <a ui-sref="course.course_editor" id="edit_btn" class="button green tiny" translate>courses.information.edit_course</a>
+                <button type="button" id="calendar_btn" class="button tiny with-tiny-margin-right" calendar-modal ng-click="openCalendar()" translate>navigation.calendar</button>
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-photo size-18"></i>
@@ -81,8 +81,8 @@
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-key size-18"></i>
-                <small translate>courses.enrollment_key</small>
-                <div tooltip="Click to copy">
+                <small translate>courses.information.enrollment_key</small>
+                <div tooltip="{{courses.information.click_to_copy | translate}}">
                     <div id="enrollment_key" clip-click="animateCopy()" clip-copy="course.unique_identifier" >{{course.unique_identifier}}</div>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <i class="fi-calendar size-18"></i>
                 <small translate>courses.start_date</small>
                 <div>
-                    <details-date date="course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
+                    <details-date date="course.start_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
@@ -102,7 +102,7 @@
             </div>
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i>
-                <small translate>courses.discussion_forum_link</small>
+                <small translate>courses.information.discussion_forum_link</small>
                 <div>
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link" class="break-text"></details-link>
                 </div>
@@ -114,8 +114,8 @@
                     <details-text id="duration" value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text>
                 </div>
             </div>
-            <div class="with-small-margin-bottom" page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
-                <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.export_as</span> CSV</button>
+            <div class="with-small-margin-bottom" page-name="navigation.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
+                <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.information.button.export_as</span> CSV</button>
             </div>
         </div>
     </div>
@@ -125,10 +125,10 @@
 <div ng-show="course" class="small-12 columns">
     <div class="large-3 columns no-padding">
         <img class="small-10 medium-6 large-10 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
-        <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="head.information">
-            <span page-name="head.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="flase">
+        <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="navigation.information">
+            <span page-name="navigation.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="flase">
                 <a ui-sref="course.course_editor" id="edit_btn" class="button green tiny" translate>edit_course</a><br/>
-                <button type="button" id="calendar_btn" class="button tiny " calendar-modal ng-click="openCalendar()" translate>head.calendar</button>
+                <button type="button" id="calendar_btn" class="button tiny " calendar-modal ng-click="openCalendar()" translate>navigation.calendar</button>
             </span>
             <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
@@ -157,12 +157,12 @@
                 </div>
             </div>
             <div class="small-12 column with-margin-bottom no-padding" ng-show="course.discussion_link">
-                <i class="fi-link size-18"></i> <small class="with-tiny-margin-left" translate>courses.discussion_forum_link</small>
+                <i class="fi-link size-18"></i> <small class="with-tiny-margin-left" translate>courses.information.discussion_forum_link</small>
                 <div>
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link>
                 </div>
             </div>
-            <div class="small-12 column with-margin-bottom no-padding" page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
+            <div class="small-12 column with-margin-bottom no-padding" page-name="navigation.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
                 <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.export_as</span> CSV</button>
             </div >
         </div>
@@ -173,7 +173,7 @@
             <span> | </span>
             <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
         </h2>
-        <h5 translate class="subheader" page-name="head.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase">groups.description</h5>
+        <h5 translate class="subheader" page-name="navigation.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase">groups.description</h5>
         <p style="font-weight: 200;">
             <big-area id='desc' value="course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
         </p>
@@ -181,7 +181,7 @@
         <p style="font-weight: 200;">
             <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
         </p>
-        <h5 translate class="subheader" page-name="head.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.taught_by</h5>
+        <h5 translate class="subheader" page-name="navigation.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.information.taught_by</h5>
         <p style="font-weight: 200;">
             <div class="small-12 medium-6 large-5 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
                 <profile-image class="small-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>

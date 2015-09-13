@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
   	
     $log.debug("in announcements");
     ContentNavigator.close()
-    Page.setTitle('head.announcements')
+    Page.setTitle('navigation.announcements')
   	$scope.disable_new = false;
 
   	var init = function()

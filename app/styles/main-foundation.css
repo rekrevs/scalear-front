@@ -681,6 +681,16 @@ select{
 	margin: 0 0 1rem 0;
 }
 
+input.answer_input{
+  width: 2%; 
+  max-width: 12px;
+}
+
+.ipad input.answer_input{
+  width: 100%;
+  max-width: none;
+}
+
 /*@media only screen and (max-width:40.063em) {
 	.left-navigation{
 		display: none;
@@ -2149,6 +2159,9 @@ a.active{
 .ngdialog.ngdialog-theme-custom .ngdialog-overlay {
   background: rgba(255,255,255,.5);
 }
+.ngdialog.ngdialog-theme-custom.ngdialog-dark_overlay .ngdialog-overlay {
+  background: rgba(0,0,0,.4);
+}
 
 .ngdialog.ngdialog-theme-custom .ngdialog-content {
   background: rgba(255,255,255,.9);
@@ -2169,14 +2182,34 @@ a.active{
   font-size: 16px;
   font-family: 'Source Sans Pro';
   line-height: 22px;
+  margin-bottom: 1.5em;
 }
 
 .ngdialog.ngdialog-theme-custom .ngdialog-message ul {
   padding: 0 0 5px 35px;
 }
+.ngdialog.ngdialog-theme-custom .ngdialog-message li {
+  list-style-type: disc;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-button{
+  font-size: 0.7em;
+}
 
 .ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-primary {
   background: #27ae60;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-secondary {
+  background: #e0e0e0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-alert {
+  background: red;
   -webkit-border-radius: 0;
   border-radius: 0;
 }

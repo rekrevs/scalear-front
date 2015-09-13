@@ -709,7 +709,19 @@ return {
 	    })
 
 	    player.on('ended',function(){
-	    	scope.play_class = "play";
+	    	//for some reason youtube requires clicking the
+	    	//play button twice to play after video end
+	    	//simulating first click on play
+	    	// scope.play()
+	    	// scope.player.controls.seek(0)
+	    	scope.player.controls.seek(0)
+	        $timeout(function(){
+	        	scope.player.controls.play();
+	            scope.player.controls.pause();
+	            scope.play_class = "play";
+	        },1000)
+	    	
+	    	// scope.play_class = "play";
 	    	scope.$apply()
 	    })
 
@@ -790,7 +802,7 @@ return {
   		}
 
         shortcut.add("Space",function(){
-        	scope.playBtn()				
+        	scope.play()				
 		},{"disable_in_input" : true});
 
 		shortcut.add("b",function(){

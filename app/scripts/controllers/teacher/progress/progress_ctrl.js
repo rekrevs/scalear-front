@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('progressCtrl', ['$scope','$stateParams','ContentNavigator','Page','Course','Module','$timeout','$log', function ($scope, $stateParams,ContentNavigator, Page, Course, Module, $timeout, $log) {
-  		Page.setTitle('head.progress')
+  		Page.setTitle('navigation.progress')
   		ContentNavigator.close()
 
   		// $scope.moduleProgressTab=function(){

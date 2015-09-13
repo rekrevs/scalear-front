@@ -33,7 +33,7 @@
                         <a class="font-small page-scroll" href="#started">Getting Started</a>
                     </li>
                     <li>
-                        <a class="font-small visible-xs visible-sm visible-md visible-lg" ng-click='goTo("login")'>Sign In</a>
+                        <a id="login" class="font-small visible-xs visible-sm visible-md visible-lg" ng-click='goTo("login")'>Sign In</a>
                     </li>
                     <li>
                         <a class="font-small visible-md visible-lg btn btn-golden" dropdown-toggle="#signup_list_small">
@@ -55,6 +55,7 @@
         <div class="section_container" >
             <div class="intro-text">
                 <div >
+                    <div class="intro-heading" ng-show="beta" style="padding: 0px 16%;margin-bottom:15px">Welcome to the beta testing site!</div>
                     <div class="intro-lead-in-custom">
                         <img src="images/landing/sl-logo-transparent2.png" style="width: 80%;">
                     </div>

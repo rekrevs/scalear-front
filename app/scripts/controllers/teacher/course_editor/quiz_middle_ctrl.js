@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     });
 
 
- 	$scope.alert={type:"alert", msg:"lectures.got_some_errors"}
+ 	$scope.alert={type:"alert", msg:"error_message.got_some_errors"}
  
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
@@ -149,7 +149,7 @@ angular.module('scalearAngularApp')
 		}else{
 			//$log.debug("Can't delete the last answer..")
 			$rootScope.show_alert="error";
-		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("online_quiz.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
+		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
 		      	$timeout(function(){
 		      		$rootScope.show_alert="";	
 		      	},4000);

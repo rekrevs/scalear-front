@@ -5,53 +5,35 @@
 	}
 </style>
 <span ng-show="eventSources.length">
-<!-- 	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length" >
-	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
-			<span step-text="Here's a calendar with all the events for the courses you're in." step-index="1" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
-				<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"></div>
-	      		<button class="show-inline button really-tiny uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
-				<button class="really-tiny button secondary uppercase no-margin"  ng-click="export_calendar()">Export Calendar</button>
-	      		<span ng-show="current_user.roles[0].id == 2" class="right">
-	      			<span class="calendar_color done alert-box label radius" translate="events.done"></span>
-					<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>
-					<span class="calendar_color not_done alert-box label radius" translate="events.not_done"></span>
-					<span class="calendar_color not_done_late alert-box label radius" translate="events.not_done_late"></span>
-				</span>		
-			</span>
-	 	</div>	 	
-	</div> -->
-	<div class="small-12 large-6 right columns" ng-class="{'large-12 auto-right position-relative': !events.length ||large_calendar}" ng-show="eventSources.length" >
-	<!-- <h3 class="show-for-medium-down" ng-show="events.length"><i class="fi-loop size-30"></i> <span translate>whats_new</span></h3> -->
- 	<div class="calendar-container" step-text="Here's a calendar with all the events for the courses you're in." step-index="1" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
+	<div class="small-12 large-6 right columns" ng-class="{'large-12 auto-right position-relative': !events.length ||large_calendar}">
+	 	<div class="calendar-container" step-text="Here's a calendar with all the events for the courses you're in." step-index="1" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
 
-		<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" style="width:100%;"></div>
-		<span ng-show="events.length" >
-			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
-				<i class="fi-zoom-in size-10"/>
-				<span translate>large_calendar</span>
-			</button>
-			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
-				<i class="fi-zoom-out size-10"/>
-				<span translate>small_calendar</span>
-			</button>
-		</span>
-		<button class="really-tiny button secondary no-margin" ng-click="export_calendar()" translate>export_calendar</button>
-        <span ng-show="current_user.roles[0].id == 2" class="right">
-        	<span class="calendar_color done alert-box label radius" translate="events.done"></span>
-			<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>
-			<span class="calendar_color not_done alert-box label radius" translate="events.not_done"></span>
-			<span class="calendar_color not_done_late alert-box label radius" translate="events.not_done_late"></span>
-		</span>				
- 	</div>
-	 	
-	 	<!-- <button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button> -->
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" style="width:100%;"></div>
+			<span ng-show="events.length" >
+				<button class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
+					<span ng-show="!large_calendar">
+						<i class="fi-zoom-in size-10"/>
+						<span translate>dashboard.large_calendar</span>
+					</span>
+					<span ng-show="!large_calendar">
+						<i class="fi-zoom-out size-10"/>
+						<span translate>dashboard.small_calendar</span>
+					</span>
+				</button>
+			</span>
+			<button class="really-tiny button secondary no-margin" ng-click="export_calendar()" translate>dashboard.export_calendar</button>
+	        <span ng-show="current_user.roles[0].id == 2" class="right">
+	        	<span class="calendar_color done alert-box label radius" translate="events.done"></span>
+				<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>
+				<span class="calendar_color not_done alert-box label radius" translate="events.not_done"></span>
+				<span class="calendar_color not_done_late alert-box label radius" translate="events.not_done_late"></span>
+			</span>				
+	 	</div>	 	
 	</div>
 	<div class="small-12 large-6 columns" ng-show="events.length && !large_calendar" >
 		
-		<!-- <news-feed events="events"></news-feed> -->
 		<span step-text="Here you will find the list of all announcements from the courses you're in." step-index="2" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
 			<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event" role="current_user.roles[0].id"></event-item>
 		</span>
-	</div>
-	
+	</div>	
 </span>

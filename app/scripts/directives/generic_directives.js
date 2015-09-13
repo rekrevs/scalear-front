@@ -80,9 +80,6 @@ angular.module('scalearAngularApp')
 }]).directive('contextMenu', ['$window','$log', function($window,$log) {
   return {
     restrict: 'A',
-    scope:{
-      opened:'='
-    },
     link: function(scope, element, attrs) {
       var menuElement = angular.element(element.find('.'+attrs.target))
       menuElement.css('position', 'fixed');
@@ -219,40 +216,42 @@ angular.module('scalearAngularApp')
           
     }
   }
-}).directive('smartImage', ['$http','$log', function($http, $log){
-  return{
-    restrict: 'E',
-    scope:{
-      defaultimage: '=',
-      desiredimage: '=',
-      notfound: '='
-    },
-    templateUrl: '/views/smart_image.html',
-    link: function(scope, element){
-      var image_pattern = new RegExp('\.(((g|G)(i|I)(f|F))|((j|J)(p|P)(e|E)?(g|G))|((p|P)(n|N)(g|G)))$');
-      var smart_image = angular.element('#course-image-smart')
-      smart_image[0].onerror = function(){
-        scope.notfound = 'courses.image_not_found'
-        smart_image[0].src = scope.defaultimage
-        scope.$apply();
-      }
-      $log.debug(smart_image[0])
-      scope.$watch('desiredimage', function(){
-        if(!scope.desiredimage){
-          scope.finalimage = scope.defaultimage;
-          scope.notfound = ''
-        }
-        else{
-          if(image_pattern.test(scope.desiredimage)){
-            scope.finalimage = scope.desiredimage;
-            scope.notfound = ''
-          }
-        }
+})
+// .directive('smartImage', ['$http','$log', function($http, $log){
+//   return{
+//     restrict: 'E',
+//     scope:{
+//       defaultimage: '=',
+//       desiredimage: '=',
+//       notfound: '='
+//     },
+//     templateUrl: '/views/smart_image.html',
+//     link: function(scope, element){
+//       var image_pattern = new RegExp('\.(((g|G)(i|I)(f|F))|((j|J)(p|P)(e|E)?(g|G))|((p|P)(n|N)(g|G)))$');
+//       var smart_image = angular.element('#course-image-smart')
+//       smart_image[0].onerror = function(){
+//         scope.notfound = 'courses.image_not_found'
+//         smart_image[0].src = scope.defaultimage
+//         scope.$apply();
+//       }
+//       $log.debug(smart_image[0])
+//       scope.$watch('desiredimage', function(){
+//         if(!scope.desiredimage){
+//           scope.finalimage = scope.defaultimage;
+//           scope.notfound = ''
+//         }
+//         else{
+//           if(image_pattern.test(scope.desiredimage)){
+//             scope.finalimage = scope.desiredimage;
+//             scope.notfound = ''
+//           }
+//         }
 
-      });
-    }
-  }
-}]).directive('noticeMessage',function(){
+//       });
+//     }
+  // }
+// }])
+.directive('noticeMessage',function(){
   return{
     restrict:'E',
     scope:{
@@ -328,23 +327,25 @@ angular.module('scalearAngularApp')
     }
   }
 
-}]).directive('dashboardCalendarModal', ['$modal', function($modal){
-  return{
-    restrict: 'A',
-    replace: true,
-    link: function(scope, element){
-      scope.openCalendar = function () {
-        angular.element('.button').blur()
-        $modal.open({
-            templateUrl: '/views/student/calendar/calendar.html',
-            controller: "dashboardCtrl"
-        })
-      }
+}])
+// .directive('dashboardCalendarModal', ['$modal', function($modal){
+//   return{
+//     restrict: 'A',
+//     replace: true,
+//     link: function(scope, element){
+//       scope.openCalendar = function () {
+//         angular.element('.button').blur()
+//         $modal.open({
+//             templateUrl: '/views/student/calendar/calendar.html',
+//             controller: "dashboardCtrl"
+//         })
+//       }
 
-    }
-  }
+//     }
+//   }
 
-}]).directive('enrollHelpModal', ['$modal','$rootScope', function($modal,$rootScope){
+// }])
+.directive('enrollHelpModal', ['$modal','$rootScope', function($modal,$rootScope){
   return{
     restrict: 'A',
     replace: true,

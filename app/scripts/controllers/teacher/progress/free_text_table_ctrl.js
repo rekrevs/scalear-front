@@ -5,16 +5,16 @@ angular.module('scalearAngularApp')
     
     $scope.grade_options= [{
          value: 0, // not set
-         text: $translate('courses.under_review')
+         text: $translate('quizzes.grade.under_review')
      }, {
          value: 1, // wrong
-         text: $translate('courses.wrong')
+         text: $translate('quizzes.grade.incorrect')
      }, {
          value: 2,
-         text: $translate('courses.partial')
+         text: $translate('quizzes.grade.partial')
      }, {
          value: 3,
-         text: $translate('courses.good')
+         text: $translate('quizzes.grade.correct')
      }]
  
      // $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}

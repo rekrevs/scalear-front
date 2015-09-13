@@ -4,7 +4,7 @@
     not_finished:'images/Not_Finished.png'}">
     <div ng-repeat="(stat, img) in status_img">
         <img ng-src="{{img}}" style="width:12px">
-        <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'courses.'+stat}}</span>
+        <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'progress.'+stat}}</span>
     </div>
 </div>
 <table fixed-header style="height:48vh">
@@ -22,9 +22,9 @@
             <td class="state" bindonce ng-repeat='module in status[student.id] track by $index'>
                <span bo-if="module[3]>0">
                     <center>
-                        <img tooltip="{{module[2]}}/{{module[3]}} quizzes solved" tooltip-append-to-body="true" tooltip-placement="top" class="marker" bo-src="status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]"
+                        <img tooltip="{{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}" tooltip-append-to-body="true" tooltip-placement="top" class="marker" bo-src="status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]"
                         style="width:15px; cursor: pointer;">
-                        <div bo-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('controller_msg.days'|translate)+')'"></div>
+                        <div bo-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('time.days'|translate)+')'"></div>
                     </center>
                 </span>
                 <span bo-if="!module[3]">
@@ -32,7 +32,7 @@
                         <img class="marker"
                         ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
                         style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
-                        <div ng-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('controller_msg.days'|translate)+')'"></div>
+                        <div ng-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('time.days'|translate)+')'"></div>
                     </center>
                 </span>
             </td>

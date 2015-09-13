@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
      //                  "<ul class='with-small-margin-top'>"+
      //                    "<li><kbd>B</kbd> <span translate>lectures.back_10s</span></li>"+
      //                    "<li><kbd>Space</kbd> <span translate>lectures.play_pause</span></li>"+
-     //                    "<li><kbd>Q</kbd> <span translate>lectures.ask_question</span></li>"+
+     //                    "<li><kbd>Q</kbd> <span translate>lectures.button.ask_question</span></li>"+
      //                    "<li><kbd>C</kbd> <span translate>lectures.confused</span></li>"+
      //                    "<li><kbd>N</kbd> <span translate>lectures.video_notes</span></li>"+
      //                  "</ul>";
@@ -130,7 +130,7 @@ angular.module('scalearAngularApp')
     scope:{
       action:"&"
     },
-  	template: '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action()">{{"youtube.check_answer" | translate}}</button>',
+  	template: '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action()">{{"lectures.button.check_answer" | translate}}</button>',
   	link: function(scope, element, attrs) {}
   }
 }])
@@ -145,7 +145,7 @@ angular.module('scalearAngularApp')
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
 							"<label >{{quiz.question}}:</label>"+
-							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'groups.answer' : 'groups.choices' | translate}}</div>"+
+							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'lectures.answer' : 'lectures.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
 					"</div></ng-form>",
@@ -206,7 +206,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.please_choose_one_answer'></span><br/>"+
+					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
 			
@@ -231,7 +231,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.please_choose_one_answer'></span><br/>"+
+					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 							 	
 				"</ng-form>",
 		link: function(scope)
@@ -272,7 +272,7 @@ angular.module('scalearAngularApp')
             restrict:'E',
             template:"<ng-form name='aform'>"+
                 "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
-                "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='courses.required'></span><br/>"+
+                "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
                 "</ng-form>"
         }
 
@@ -624,14 +624,12 @@ angular.module('scalearAngularApp')
     restrict:"A",
     // replace:true,
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl:'/views/student/lectures/confused_timeline.html',
     link:function(scope, element, attrs){
-      // var unwatch = scope.$watch('item.data.very',function(){
-      //     scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
-      // })
+      scope.item = scope.data()
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
@@ -641,13 +639,7 @@ angular.module('scalearAngularApp')
           confused_id: confused.data.id
         }, 
         function(response){
-          // $log.debug("deleted");
-          // unwatch()
-          // delete scope.item
           scope.$emit('remove_from_timeline', confused)
-          // now want to remove from list (both l.confuseds and $scope.timeline..)
-          // var index=scope.timeline['lecture'][lecture_id].items.indexOf(confused);
-          // scope.timeline['lecture'][lecture_id].items.splice(index, 1)
         });
       }
 
@@ -659,14 +651,15 @@ angular.module('scalearAngularApp')
     restrict:"A",
     // replace:true,
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){
+      scope.item = scope.data()
       scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
-      scope.unsolved_msg = $translate("lectures.unsolved_quiz")
+      scope.unsolved_msg = $translate("lectures.tooltip.unsolved_quiz")
       scope.voteForReview=function(){
         $log.debug("vote review")
         OnlineQuiz.voteForReview(
@@ -701,11 +694,12 @@ angular.module('scalearAngularApp')
   return{
     restrict:"A",
     scope:{
-      item:'=',
+      data:'&',
       seek:'&'
     },
     templateUrl:"/views/student/lectures/notes_timeline.html",
     link:function(scope,element,attrs){
+      scope.item = scope.data()
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteNote=function(){
         // $log.debug(scope.item)

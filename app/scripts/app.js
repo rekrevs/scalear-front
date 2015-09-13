@@ -69,7 +69,7 @@ angular.module('scalearAngularApp', [
             editableOptions.theme = 'default';
             editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
             editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
-            editableThemes['default'].errorTpl = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
+            editableThemes['default'].errorTpl  = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
@@ -89,7 +89,7 @@ angular.module('scalearAngularApp', [
 
 
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
             var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -195,14 +195,14 @@ angular.module('scalearAngularApp', [
 
                     if (s === 0) {
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
                     }
                     if(s === 2){
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
@@ -221,10 +221,10 @@ angular.module('scalearAngularApp', [
         $logProvider.debugEnabled(scalear_api.debug)
 
         $translateProvider
-            .translations('en', translation_en())
-            .translations('sv', translation_sv());
-        $translateProvider.preferredLanguage('en');
-        $translateProvider.useCookieStorage();
+            .translations('en', translation_en)
+            .translations('sv', translation_sv)
+            .preferredLanguage('en')
+            .useCookieStorage()
 
         //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 
@@ -248,6 +248,11 @@ angular.module('scalearAngularApp', [
                 }
                 // templateUrl: '/views/main.html',
                 // controller: 'MainCtrl'
+            })
+            .state('about', {
+                url: '/about',
+                templateUrl: '/views/about.html',
+                controller: 'AboutCtrl'
             })
             .state('ie', {
                 url: '/ie',
@@ -297,11 +302,11 @@ angular.module('scalearAngularApp', [
                 //     }
                 // }
             })
-            .state('profile', {
-                url: '/users/profile/:user_id',
-                templateUrl: '/views/users/profile.html',
-                controller: 'UsersProfileCtrl'
-            })
+            // .state('profile', {
+            //     url: '/users/profile/:user_id',
+            //     templateUrl: '/views/users/profile.html',
+            //     controller: 'UsersProfileCtrl'
+            // })
             .state('forgot_password', {
                 url: '/users/password/new',
                 templateUrl: '/views/users/password/new.html',
@@ -326,6 +331,11 @@ angular.module('scalearAngularApp', [
                 url: '/privacy',
                 templateUrl: '/views/privacy.html',
                 controller: 'PrivacyCtrl'
+            })            
+            .state('faq', {
+                url: '/faq',
+                templateUrl: '/views/faq.html',
+                controller: 'FaqCtrl'
             })
             .state('course_list', {
                 url: '/courses',
@@ -510,16 +520,16 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/student/lectures/quiz.middle.html',
                 controller: 'studentQuizMiddleCtrl'
             })
-            .state('course.calendar', {
-                url: '/events',
-                templateUrl: '/views/teacher/calendar/calendar.html',
-                controller: 'teacherCalendarCtrl'
-            })
-            .state('course.student_calendar', {
-                url: '/student/events',
-                templateUrl: '/views/student/calendar/calendar.html',
-                controller: 'studentCalendarCtrl'
-            })
+            // .state('course.calendar', {
+            //     url: '/events',
+            //     templateUrl: '/views/teacher/calendar/calendar.html',
+            //     controller: 'teacherCalendarCtrl'
+            // })
+            // .state('course.student_calendar', {
+            //     url: '/student/events',
+            //     templateUrl: '/views/student/calendar/calendar.html',
+            //     controller: 'studentCalendarCtrl'
+            // })
             .state('course.enrolled_students', {
                 url: '/enrolled_students',
                 templateUrl: '/views/teacher/course/enrolled_students.html',

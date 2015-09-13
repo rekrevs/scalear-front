@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log','Page','ContentNavigator', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log, Page, ContentNavigator) {
 
-        Page.setTitle('head.progress')
+        Page.setTitle('navigation.progress')
 
         ContentNavigator.close()
   	  	$scope.moduleProgressTab=function(){
@@ -119,9 +119,9 @@ angular.module('scalearAngularApp')
 		var formated_data ={}
 		formated_data.cols=
 			[
-				{"label": $translate('courses.students'),"type": "string"},
-				{"label": $translate('courses.quiz'),"type": "number"},
-				{"label": $translate('groups.lecture'),"type": "number"}
+				{"label": $translate('global.students'),"type": "string"},
+				{"label": $translate('progress.quiz'),"type": "number"},
+				{"label": $translate('progress.lecture'),"type": "number"}
 			]
 		formated_data.rows= []
 		for(var ind in data)

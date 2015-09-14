@@ -254,7 +254,7 @@ angular.module('scalearAngularApp')
                 tooltiptext: "@",
                 padded: '@'
             },
-            replace: true,
+            // replace: true,
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/delete_button.html',
             link: function(scope) {

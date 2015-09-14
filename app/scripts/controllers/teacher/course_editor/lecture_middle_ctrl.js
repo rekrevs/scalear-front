@@ -402,8 +402,9 @@ angular.module('scalearAngularApp')
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type},
 			function(){
-				if(!(options && options.exit))
-					selected_quiz.quiz_type =="invideo"? getQuizData() : getHTMLData()						
+				getQuizData()
+				// if(!(options && options.exit))
+					// selected_quiz.quiz_type =="invideo"? getQuizData() : getHTMLData()						
 			},
 			function(){}
 		);

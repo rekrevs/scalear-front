@@ -1,6 +1,6 @@
-<span bindonce="overlay">
-	<span bo-if="mode != 'content_navigator'" bo-class="{'delete-overlay': overlay}">
-		<span bo-if="!overlay" bindonce="text_mode">
+<span bindonce>
+	<span bo-if="mode != 'content_navigator'" ng-class="{'delete-overlay': overlay}">
+		<span ng-if="!overlay" bindonce="text_mode">
 			 <div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
 		        <span class="form-controls-alert" style="margin:auto" >
 	           		<button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
@@ -19,7 +19,7 @@
 				</a>
 			</span>
 		</span>
-		<div bo-if="overlay" bindonce>
+		<div ng-if="overlay" bindonce>
 			<span class="align-center">
 				<button class="text_delete button tiny alert valign-middle with-small-padding" ng-hide="displayDeletePopup" title="remove" ng-click="showDeletePopup(true, $event)"><span bo-text="'button.remove'| translate"></span></button>
 				<div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">

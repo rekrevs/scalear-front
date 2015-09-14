@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
 							'</div>'+
 							'<delete_button size="big" action="deleteQuizButton(selected_quiz)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
 							// '<button class="button secondary tiny"  ng-click="exitBtn()" translate>lectures.delete_quiz</button>'+
-							'<button id="save_quiz_button" ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
+							'<button id="save_quiz_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
 							// '<div><span>Are you sure?</span></div>'
 						'</h6>'+
 					'</div>',
@@ -209,13 +209,12 @@ angular.module('scalearAngularApp')
 				}
 				
 			}
-			scope.selectField=function(ev){
-				// var target = angular.element(ev.target)
+			scope.selectField=function(){
 				$timeout(function(){
-					// target.select()
-					element.find('textarea')[0].select()
-				})
-				
+					var elem = element.find('textarea')[0]
+					if(elem)
+						elem.select()
+				})				
 			}
 			scope.updateValues= function(){
 				scope.values=0
@@ -224,6 +223,16 @@ angular.module('scalearAngularApp')
 						scope.values+=1
 					}
 				}
+			}
+
+			scope.close=function(){
+				scope.save()
+				angular.element(element.children()[0]).popover('hide')
+			}
+
+			scope.delete=function(){
+				scope.remove()
+				angular.element(element.children()[0]).popover('hide')
 			}
 	
 			$rootScope.$on("radioChange",function(){
@@ -253,16 +262,20 @@ angular.module('scalearAngularApp')
 								"<input id='correct_checkbox' class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
 								// "<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
 								// "<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
-								"<label class='with-small-margin-top'><span translate>editor.answer</span>"+
-								"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
-								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
-								"</label><br /><label style='margin-top:10px'><span translate>editor.explanation</span>"+
-								"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>"+
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
+								"<label class='with-small-margin-top'>"+
+									"<span translate>editor.answer</span>"+
+									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>"+ 
+									"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
+									"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
 								"</label>"+
-								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>"+
-								'<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>'+
+								// "<br />"+
+								"<label style='margin-top:10px'>"+
+									"<span translate>editor.explanation</span>"+
+									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>"+
+									"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
+								"</label>"+
+								"<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>"+
+								'<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>'+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>button.remove</button>"+
 							"</form>"
 
@@ -270,8 +283,8 @@ angular.module('scalearAngularApp')
             	content: template,
             	html:true,
             	// fullscreen:false,
-            	topcut:true,
-            	// container: 'body',
+            	// topcut:true,
+            	container: 'body',
             	instant_show:!scope.data.id
             }
             
@@ -528,8 +541,7 @@ angular.module('scalearAngularApp')
 			scope.removeAnswer=scope.remove()
 			
 			
-			scope.updateValues= function()
-			{
+			scope.updateValues= function(){
 				scope.values=0
 				for(var element in scope.quiz.answers)
 					if(scope.quiz.answers[element].correct)

@@ -254,12 +254,12 @@ angular.module('scalearAngularApp')
                 tooltiptext: "@",
                 padded: '@'
             },
-            replace: true,
+            // replace: true,
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/delete_button.html',
             link: function(scope) {
                 scope.tooltiptext_translated = $translate(scope.tooltiptext)
-                scope.overlay = scope.overlaymode()
+                scope.overlay = scope.overlaymode() || false
                 scope.display_vertical = scope.vertical()
                 scope.text_mode = scope.text()
                 scope.showDeletePopup = function(value,ev) {

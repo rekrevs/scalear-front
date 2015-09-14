@@ -33,9 +33,11 @@ angular.module('scalearAngularApp')
 				return done_count == total
 			}
 
-			scope.$on('$destroy', function(){
-         		unwatch()
-         	});
+			scope.module_done =calculateDone()
+
+			// scope.$on('$destroy', function(){
+   //       		unwatch()
+   //       	});
 			
 		}
 	}

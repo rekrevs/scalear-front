@@ -485,14 +485,17 @@ angular.module('scalearAngularApp')
 
     var goSmallScreen=function(){
         $scope.resize.small()
-        $scope.fullscreen= false
         $scope.video_class = 'flex-video'
-        $scope.container_class=""
-        $scope.video_layer ={}
-        if($scope.quiz_mode == true){
-            $scope.quiz_mode = false
-            $timeout(function(){$scope.quiz_mode = true},200)
+        $scope.fullscreen= false
+        if($rootScope.is_mobile){
+            $scope.container_class=""
+            $scope.video_layer ={}
         }
+        // $scope.video_layer ={height: "",left: "",position: "",top: "",width: "",zIndex: 0}
+        // if($scope.quiz_mode == true){
+        //     $scope.quiz_mode = false
+        //     $timeout(function(){$scope.quiz_mode = true},200)
+        // }
     }
 
     var openTimeline=function(){

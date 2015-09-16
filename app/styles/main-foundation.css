@@ -1408,7 +1408,7 @@ label{
 	display: block !important;
 }
 .break-text{
-	word-break: break-word;
+	word-break: break-all;
 }
 .show-inline{
 	display: inline-block;

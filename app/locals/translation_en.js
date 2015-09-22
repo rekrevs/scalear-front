@@ -679,6 +679,7 @@ var translation_en={
         },
         messages:{
             no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
+            enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         },
         tooltip:{
             unenroll: "Unenroll", 

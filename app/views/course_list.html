@@ -48,7 +48,7 @@
 	<div ng-if="current_user.roles[0].id == 2">
 		<div ng-show="courses && !courses.length">
 			<center style="height:70px">
-				<h5 class="dark-text" translate>courses.enroll_instruction</h5>
+				<h5 class="muted" translate>courses.list.messages.enroll_instruction</h5>
 			</center>
 		</div>
 		<div ng-if="courses.length > 0" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">

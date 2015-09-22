@@ -638,6 +638,9 @@ angular.module('scalearAngularApp')
                 $scope.selected_quiz.is_quiz_solved=true;
             }
             reviewInclass() 
+            var percent_view = Math.round((($scope.lecture_player.controls.getTime()/$scope.total_duration)*100))
+            $log.debug("current watched: "+percent_view)
+            updateViewPercentage(percent_view)
 
             // if(data.done[2] && !$scope.lecture.is_done){
             //     $scope.not_done_msg = false

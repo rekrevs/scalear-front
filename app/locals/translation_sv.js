@@ -679,6 +679,7 @@ var translation_sv={
         },
         messages:{
             no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
+            enroll_instruction: "För att anmäla dig till en kurs 'Gå med i en ny kurs' på kurser-menyn och ange kursnyckeln du fått från din lärare",
         },
         tooltip:{
             unenroll: "Avregistrera",

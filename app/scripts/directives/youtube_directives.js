@@ -607,7 +607,7 @@ return {
   		scope.chosen_speed=1
   		scope.is_mobile = $rootScope.is_mobile
   		$timeout(function(){
-  			scope.duration = scope.player.controls.getDuration();	
+  			scope.duration = scope.player.controls.getDuration() -1;	
   		})
 		scope.play_class = scope.is_mobile? "pause":"play";		
       	
@@ -672,7 +672,7 @@ return {
 	        var position = ratio*100 
 			if (position >= 0 && position <= 100){
 				scope.elapsed_head = position>99.4? 99.4 : position
-				scope.elapsed_width= position+0.3
+				scope.elapsed_width= position+0.45
 				scope.current_time = scope.duration* ratio
 			}
 			if (position < 0){
@@ -702,7 +702,7 @@ return {
 			if (onplayhead == false) {
 				scope.current_time = player.currentTime()
 				scope.elapsed_width = ((scope.current_time/scope.duration)*100)
-		        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.3 : scope.elapsed_width - 0.2
+		        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width - 0.2
 		        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
 		    }
 			scope.$apply()

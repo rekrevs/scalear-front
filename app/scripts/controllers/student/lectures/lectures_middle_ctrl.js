@@ -33,18 +33,18 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
-    $scope.$on('take_note', function(){
-        $log.debug('taking note')
-        $scope.addNote();
-    })
+    // $scope.$on('take_note', function(){
+    //     $log.debug('taking note')
+    //     $scope.addNote();
+    // })
 
-    $scope.$on('mark_confused', function(){
-        $scope.addConfused();
-    })
+    // $scope.$on('mark_confused', function(){
+    //     $scope.addConfused();
+    // })
 
-    $scope.$on('toggle_fullscreen', function(){
-        $scope.toggleFullscreen();
-    })
+    // $scope.$on('toggle_fullscreen', function(){
+    //     $scope.toggleFullscreen();
+    // })
 
     $scope.$on('lecture_filter_update',function(ev,filters){
         $scope.checkModel=filters
@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
         $scope.studentAnswers = {}
         $scope.explanation = {}
         $scope.fullscreen = false
-        $scope.current_time = 0
+        // $scope.current_time = 0
         $scope.total_duration = 0
         $scope.elapsed_width =0
         $scope.slow = false
@@ -313,7 +313,7 @@ angular.module('scalearAngularApp')
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
             if(time >=0 && $scope.show_progressbar){
                 $scope.lecture_player.controls.seek(time)
-                var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
+                var percent_view = Math.round((($scope.lecture_player.controls.getTime()/$scope.total_duration)*100))
                 $log.debug("current watched: "+percent_view)
                 updateViewPercentage(percent_view)
             }
@@ -388,13 +388,11 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onPause= function(){
         $log.debug("pausing")
-        // $scope.play_pause_class = "play"
-        if($scope.current_time != null){
-            var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
-            $log.debug("current watched: "+percent_view)
-            updateViewPercentage(percent_view)
-            $scope.submitPause($scope.quiz_mode,$scope.current_time);
-        }
+        var current_time = $scope.lecture_player.controls.getTime()
+        var percent_view = Math.round(((current_time/$scope.total_duration)*100))
+        $log.debug("current watched: "+percent_view)
+        updateViewPercentage(percent_view)
+        $scope.submitPause($scope.quiz_mode, current_time);
     }
 
     // $scope.lecture_player.events.timeUpdate = function(){

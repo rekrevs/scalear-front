@@ -391,26 +391,25 @@ return{
 		max_width:'=maxWidth'
 	},
 	link: function($scope, element){
-		angular.element($window).bind('resize',
-			function(){
-				if($scope.fullscreen){
-					$scope.resize.big();
-                    $scope.$apply()
-				}
-				else{
-					$scope.resize.small();
-                    $scope.$apply()
-				}
-			}
-		)
-		$scope.resize.small = function()
-		{
-            $rootScope.changeError = false;
+		// angular.element($window).bind('resize',
+		// 	function(){
+		// 		if($scope.fullscreen){
+		// 			$scope.resize.big();
+  //                   $scope.$apply()
+		// 		}
+		// 		else{
+		// 			$scope.resize.small();
+  //                   $scope.$apply()
+		// 		}
+		// 	}
+		// )
+		$scope.resize.small = function(){
+            // $rootScope.changeError = false;
 			// var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 			$scope.fullscreen = false
 
 
-            angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
+            // angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
 			angular.element("body").css("overflow","");
 			angular.element("body").css("position","");
 
@@ -462,6 +461,7 @@ return{
 			var factor=16.0/9.0
             var win = angular.element($window)
 
+
             var progressbar_height = 80
 
 			$scope.fullscreen = true
@@ -475,33 +475,34 @@ return{
 				"top":0, 
 				"left":0, 
 				"position":"fixed",
-				"width":win.width()-$scope.max_width,
-				"height":win.height(),
+				"width":screen.width-$scope.max_width,
+				"height":screen.height,
 				"z-index": 1031
 			};
 
 			var video=angular.copy(container)
 			video["height"]-=progressbar_height
+			video["width"]-="auto"
 			video["position"]=""
 
 
-			var video_height = win.height()-progressbar_height;
+			var video_height = screen.height-progressbar_height;
 			var video_width = video_height*factor
 			
 			//var video_width = (win.height()-26)*factor
 			//var video_heigt = (win.width()-400)*1.0/factor +26
 			var layer={}
-			if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
+			if(video_width>screen.width-$scope.max_width){ // if width will get cut out.
 				$log.debug("width cutt offff")
 				$log.debug("width cutt offff")
-				video_height= (win.width()-$scope.max_width)*1.0/factor;
-				var margin_top = ((win.height()-progressbar_height) - (video_height))/2.0; //+30
+				video_height= (screen.width-$scope.max_width)*1.0/factor;
+				var margin_top = ((screen.height-progressbar_height) - (video_height))/2.0; //+30
 
 				layer={
 					"position":"fixed",
 					"top":0,
 					"left":0,
-					"width":win.width()-$scope.max_width,
+					"width":screen.width-$scope.max_width,
 					"height":video_height,
 					"margin-top": margin_top+"px",
 					"margin-left":"0px"
@@ -510,11 +511,11 @@ return{
 			}
 			else{		
 				$log.debug("height cutt offff")
-				$log.debug(win.width())
+				$log.debug(screen.width)
 				$log.debug(video_width)
-				$log.debug(((win.width()-$scope.max_width) - video_width)/2.0)
+				$log.debug(((screen.width-$scope.max_width) - video_width)/2.0)
 				// video_width = (win.height()-progressbar_height)*factor
-				var margin_left= ((win.width()-$scope.max_width) - video_width)/2.0;
+				var margin_left= ((screen.width-$scope.max_width) - video_width)/2.0;
 				layer={
 					"position":"fixed",
 					"top":0,
@@ -526,7 +527,10 @@ return{
 					// "z-index": 1531
 				}		
 			 }
-
+			 // console.log("video layer", screen.height)
+			 // $timeout(function(){
+			 // 	console.log("video layer", screen.height)
+			 // },3000)
 			if($scope.container)
 				angular.extend($scope.container, container)
 			if($scope.video_layer)
@@ -538,15 +542,15 @@ return{
 
 		 	// $timeout(function(){$scope.$emit("updatePosition")})
 
-		 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
-		        event.preventDefault()
-		        $scope.resize.small() 
-		        $scope.$apply()
-			});
-			$scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
-		        $scope.resize.small() 
-		        $scope.$apply()
-			});
+		 // 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
+		 //        event.preventDefault()
+		 //        $scope.resize.small() 
+		 //        $scope.$apply()
+			// });
+			// $scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
+		 //        $scope.resize.small() 
+		 //        $scope.$apply()
+			// });
 		}
 
 		// $scope.lecturesFullScreen = function(){

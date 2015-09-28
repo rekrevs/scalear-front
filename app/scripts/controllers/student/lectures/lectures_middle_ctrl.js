@@ -180,8 +180,8 @@ angular.module('scalearAngularApp')
                     }
                 }
 
-                $scope.should_play = $scope.passed_requirments
-                if($scope.should_play)
+                // $scope.should_play = $scope.passed_requirments
+                if($scope.passed_requirments)
                     setShortcuts()
 
                 // if($rootScope.is_mobile){

@@ -494,7 +494,6 @@ angular.module('scalearAngularApp')
 
  	scope.showModule=function(module, event){
  		// $log.debug(scope.currentmodule)
- 		console.log($state)
  		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
         // else{

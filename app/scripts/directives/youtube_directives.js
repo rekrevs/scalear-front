@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
                 	$log.debug("youtube")
                 	player_controls.youtube = true
                 	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
-                	player = Popcorn(video,{frameAnimation:true});
+                	player = Popcorn(video);
                 	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time, scope.autoplay, scope.controls)
                 	$log.debug(video.src)
                 }
@@ -527,10 +527,6 @@ return{
 					// "z-index": 1531
 				}		
 			 }
-			 // console.log("video layer", screen.height)
-			 // $timeout(function(){
-			 // 	console.log("video layer", screen.height)
-			 // },3000)
 			if($scope.container)
 				angular.extend($scope.container, container)
 			if($scope.video_layer)

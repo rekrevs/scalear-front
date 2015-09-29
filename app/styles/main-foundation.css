@@ -1957,7 +1957,7 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:128vh
+    max-width:127vh
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){

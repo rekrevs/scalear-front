@@ -30,7 +30,8 @@ angular.module('scalearAngularApp')
 		        	content: template,
 		        	title: "<span style='color: black;' translate>progress.popover.change_status</span>",
 		        	html:true,
-		        	placement: 'top'
+		        	placement: 'top',
+		        	container: 'body',
 		        }
 		    }
             scope.getImg = function(module)

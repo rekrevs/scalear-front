@@ -1096,8 +1096,8 @@ td.right-border{
 
 }
 .top-dropdown{
-  margin-top: -138px;
-  margin-left: -70px;
+  margin-top: -210px;
+  margin-left: -184px;
 }
 .top-dropdown:before{
   border: inset 0px;
@@ -1118,13 +1118,18 @@ td.right-border{
 }
 #quality_list{
   min-width: 210px;
-  left: -115px !important;
-  top: 5px !important;
+  background: rgb(245, 245, 245);
+  text-align: center;/*
+  left: 416px !important;
+  top: 362px !important;*/
 }
 #speed_list{
   min-width: 120px !important;
-  left: -25px !important;
-  top: -20px !important;
+  background: rgb(245, 245, 245);
+  text-align: center;
+  margin-left: -96px;
+  /*left: -25px !important;
+  top: -20px !important;*/
 }
 #speed_list::after{
   left: 86%;
@@ -1279,6 +1284,7 @@ td.right-border{
     height: 8px;
     /*z-index: 5000;*/
     position: absolute;
+    top: 0px;
 }
 .not-click .scrollable-if-tall{
   max-height: 90vh !important;
@@ -1801,6 +1807,7 @@ textarea.editable-input{
 }
 
 .popover.top .arrow {
+  top: initial !important;
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
@@ -1824,6 +1831,8 @@ textarea.editable-input{
   border-right-color: rgba(0, 0, 0, 0.25);
   border-left-width: 0;
 }
+
+
 
 .popover.right .arrow:after {
   bottom: -10px;

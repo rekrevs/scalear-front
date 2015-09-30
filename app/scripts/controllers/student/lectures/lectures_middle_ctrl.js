@@ -64,18 +64,11 @@ angular.module('scalearAngularApp')
         $scope.course.warning_message=null
         $scope.video_class = 'flex-video'
         $scope.container_class=''
-        // $scope.play_pause_class = 'play'
-        $scope.should_play = false
         $scope.passed_requirments = true
         $scope.lecture = null
         $scope.video_ready=false
         $scope.show_progressbar = false
-
-        if($scope.course && $scope.course.warning_message)
-            $scope.course.warning_message=null
-
-        removeShortcuts()
-        
+        removeShortcuts()        
     }
 
     var init = function() {            
@@ -91,7 +84,6 @@ angular.module('scalearAngularApp')
         }
         if($rootScope.is_mobile){
             $('#lecture_container').addClass('ipad')
-            $('.main_view').addClass('ipad')
             $('.container').addClass('ipad')
         }
 
@@ -192,9 +184,9 @@ angular.module('scalearAngularApp')
             $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time-0.15, function() {                
-                $scope.seek(quiz.time)   
-                $scope.lecture_player.controls.pause()          
+            $scope.lecture_player.controls.cue(quiz.time-0.2, function() {
+                $scope.lecture_player.controls.pause()
+                $scope.seek(quiz.time)          
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
@@ -215,9 +207,10 @@ angular.module('scalearAngularApp')
                     $scope.quiz_layer.overflowX = ''
                     $scope.quiz_layer.overflowY = ''
                 }
-                $scope.$apply()
+                
                 $scope.last_quiz = quiz
-                $scope.backup_quiz = angular.copy(quiz)  
+                $scope.backup_quiz = angular.copy(quiz)
+                $scope.$apply()
             })
         })
 
@@ -237,8 +230,6 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
-        // if($scope.replay_play)
-        //     $scope.lecture_player.controls.play()
     }
 
     var updateViewPercentage = function(milestone) {
@@ -357,6 +348,9 @@ angular.module('scalearAngularApp')
     var clearQuiz=function(){
         $scope.selected_quiz = '';
         $scope.quiz_mode = false;
+        $scope.quiz_layer.backgroundColor = ""
+        $scope.quiz_layer.overflowX = ''
+        $scope.quiz_layer.overflowY = ''
     }
 
     var returnToQuiz=function(time){

@@ -156,24 +156,6 @@ angular.module('scalearAngularApp')
 
 		link: function(scope, element, attrs) {
 
-			//==FUNCTIONS==//
-			// var setAnswerLocation=function(){
-			// 	element.css('z-index', 5)
-			// 	$log.debug("setting answer location")
-			// 	var ontop=angular.element('.ontop');		
-			// 	var w = scope.data.width * ontop.width();
-			// 	var h = scope.data.height* (ontop.height());
-			// 	// var add_left= (w-13)/2.0
-			// 	// var add_top = (h-13)/2.0
-			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
-			// 	scope.xcoor = scope.data.xcoor
-			// 	scope.ycoor = scope.data.ycoor
-			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-			// 	// $log.debug(scope.xcoor+add_left)
-			// 	// $log.debug(scope.ycoor+add_top)
-			// }	
-
 			scope.setAnswerColor=function(){
 				$log.debug("image change")
 				$log.debug(scope.data.correct)
@@ -238,11 +220,6 @@ angular.module('scalearAngularApp')
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
-			
-			// $rootScope.$on("updatePosition",function(){
-			// 	$log.debug("event emiited updated position")
-			// 	setAnswerLocation()
-			// })	
 
 			scope.answerClass = "component dropped answer_img"	
 
@@ -284,7 +261,7 @@ angular.module('scalearAngularApp')
             	html:true,
             	// fullscreen:false,
             	// topcut:true,
-            	container: 'body',
+            	// container: 'body',
             	instant_show:!scope.data.id
             }
             
@@ -302,12 +279,6 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 template: "<div>"+
 		 				"<div class='component dropped answer_drag' style='border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 20px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 					// "<div class='input-prepend'>"+
-		 					// 	"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} End</span>"+
-			 				// 	// "<h6 style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;margin:0' ng-style='{max_width: width, max_height: height}' ng-class='{error: !data.answer}' ng-model='data.answer' pop-over='popover_options' unique='true' >{{data.answer}}</h6>"+
-			 				// 	"<h6 class='no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}</h6>"+
-			 				// 	"<small class='error' ng-show='!data.answer' translate>error_message.required</small>"+
-		 					// "</div>"+
 		 					"<div>"+
 	 							"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>"+
 	 							"<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'>{{data.answer}}</h6>"+
@@ -320,27 +291,6 @@ angular.module('scalearAngularApp')
  					"</div>",
 
 		link: function(scope, element, attrs) {
-
-            // $rootScope.$watch("current_lang", function(){
-            //     scope.require_translated= $translate("error_message.required")
-            // });
-			//==FUNCTIONS==//
-			// var setAnswerLocation=function(){
-			// 	var ontop=angular.element('.ontop');
-			// 	scope.width  = scope.data.width * ontop.width();
-			// 	scope.height = scope.data.height* (ontop.height());
-			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())
-			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height()))
-			// 	// scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
-			// 	// scope.sub_ycoor = (scope.data.sub_ycoor * (ontop.height()))
-			// 	scope.xcoor = scope.data.xcoor
-			// 	scope.ycoor = scope.data.ycoor
-			// 	scope.sub_xcoor = scope.data.sub_xcoor 
-			// 	scope.sub_ycoor = scope.data.sub_ycoor
-			// 	scope.area_width= scope.width - 50
-			// 	scope.area_height= scope.height - 20
-			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-			// }
 
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');
@@ -365,16 +315,7 @@ angular.module('scalearAngularApp')
 				$timeout(function(){
 					element.find('textarea')[0].select()
 				})				
-			}	
-			// scope.selectField()	
-			//==========//	
-			
-			// $rootScope.$on("updatePosition",function(){
-			// 	$log.debug("event emiited updated position")
-			// 	setAnswerLocation()
-			// })	
-
-			// scope.dragClass = "" 
+			}
 
 			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
@@ -709,30 +650,7 @@ angular.module('scalearAngularApp')
       },
       templateUrl: "/views/teacher/course_editor/controls_teacher.html",
       link: function (scope, element) {
-// <<<<<<< HEAD
-//   	 	scope.toggleLink=function(event){
-//   	 		if(!scope.link_url){
-// 	            scope.link_url=scope.link()
-// 	            $timeout(function() {
-// 	                element.find('.video_link').select();
-// 	            });
-// 	            $(document).on("click", function (e) {
-// 		            if(e.target != element.children()[0] && e.target != element.children()[1]){
-// 		              scope.link_url=null
-// 		              scope.$apply()
-// 		              $(document).off("click")
-// 		            }         
-//          	 	});
-// 	        }
-// 	        else{
-// 	        	scope.link_url=null
-// 	        	$(document).off("click")  
-// 	        }
-
-		// scope.link_data= scope.link()
-	         
   	 	scope.selectLink=function(event){
-            // scope.link_url=scope.link()
             $timeout(function() {
                 element.find('.video_link').select();
             });
@@ -740,7 +658,6 @@ angular.module('scalearAngularApp')
         scope.link_content = {
         	content: "<b>Student link to time {{link().time| formattime:'hh:mm:ss'}} in this video</b><hr style='margin: 5px;'/><div style='word-break: break-all;'>{{link().url}}</div>",
         	html:true,
-        	// fullscreen:false,
         	placement: 'left'
         }
       }

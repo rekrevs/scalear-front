@@ -598,7 +598,8 @@ return {
     link: function(scope, element, attrs){
     	var player = scope.player.element
 		var progress_bar= angular.element('.progressBar');
-		var playhead=document.getElementsByClassName("playhead")[0]
+		var playhead= document.getElementsByClassName("playhead")[0]
+		var elapsed_bar = document.getElementsByClassName("elapsed")[0]
 		var onplayhead = false;
     	scope.current_time=0
     	scope.volume_class="mute";
@@ -609,8 +610,13 @@ return {
   		$timeout(function(){
   			scope.duration = scope.player.controls.getDuration() -1;	
   		})
-		scope.play_class = scope.is_mobile? "pause":"play";		
-      	
+		scope.play_class = scope.is_mobile? "pause":"play";
+      	scope.qualites = [
+			{name:"240p", value: "small"},
+	        {name:"360p", value: "medium"},
+	        {name:"480p", value: "large"},
+	        {name:"720p (HD)", value: "hd720"}
+        ]
       	if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
             $log.debug("Speed", scope.speeds)
@@ -640,34 +646,53 @@ return {
 	        scope.chosen_speed = val;
 	        $cookieStore.put('mp4_speed', scope.chosen_speed)
       	}
-		
-		scope.playHeadMouseDown=function() {
-			onplayhead = true;
+
+		scope.showPlayhead=function(event) {
+			if(scope.playhead_timeout)
+				$timeout.cancel(scope.playhead_timeout)
 			scope.playhead_class="playhead_big"
+			scope.$apply()
+		}
+
+		scope.hidePlayhead=function(event) {
+			if(!onplayhead){
+				scope.playhead_timeout = $timeout(function(){
+					scope.playhead_class=""
+					scope.playhead_timeout= null
+					scope.$apply()
+				},1000)
+			}
+		}
+		
+		scope.playHeadMouseDown=function(event) {
+			onplayhead = true;
+			scope.showPlayhead()
 			window.addEventListener('mousemove', scope.moveplayhead, true);
 			window.addEventListener('mouseup', scope.playHeadMouseUp, false);
 
 			window.addEventListener('touchmove', scope.moveplayhead, true);
 			window.addEventListener('touchend', scope.playHeadMouseUp, false);
-		}		
-		
-		playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
-		playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
 
-		scope.playHeadMouseUp=function(e){
+			scope.$apply()
+		}
+
+		scope.playHeadMouseUp=function(event){
 			if (onplayhead == true) {
-				scope.playhead_class=""
+				onplayhead = false;
+				scope.hidePlayhead()
 				window.removeEventListener('mousemove', scope.moveplayhead, true);
 				window.removeEventListener('touchmove', scope.moveplayhead, true);
 
 				window.removeEventListener('mouseup', scope.moveplayhead, true);
 				window.removeEventListener('touchend', scope.moveplayhead, true);
-				scope.progressSeek(e)
+				scope.progressSeek(event)
 			}
-			onplayhead = false;
+			
+
+			scope.$apply()
 		}
 		
-		scope.moveplayhead=function(e) {
+		scope.moveplayhead=function(event) {
 	        var ratio= (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth()
 	        var position = ratio*100 
 			if (position >= 0 && position <= 100){
@@ -698,6 +723,12 @@ return {
 			}
 		}
 
+		elapsed_bar.addEventListener('mouseenter', scope.showPlayhead, false);
+		elapsed_bar.addEventListener('mouseleave', scope.hidePlayhead, false);
+
+		playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
+		playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
+
 		player.on('timeupdate', function(){
 			if (onplayhead == false) {
 				scope.current_time = player.currentTime()
@@ -712,8 +743,6 @@ return {
 	    	//for some reason youtube requires clicking the
 	    	//play button twice to play after video end
 	    	//simulating first click on play
-	    	// scope.play()
-	    	// scope.player.controls.seek(0)
 	    	scope.player.controls.seek(0)
 	        $timeout(function(){
 	        	scope.player.controls.play();
@@ -819,6 +848,9 @@ return {
 			unwatchMute()
 			playhead.removeEventListener('mousedown', scope.playHeadMouseDown, false);
 			playhead.removeEventListener('touchstart', scope.playHeadMouseDown, false);
+
+			elapsed_bar.removeEventListener('mouseenter', scope.showPlayhead, false);
+			elapsed_bar.removeEventListener('mouseleave', scope.hidePlayhead, false);
       	});
 
    //    	scope.$on("blink_blink", function(){

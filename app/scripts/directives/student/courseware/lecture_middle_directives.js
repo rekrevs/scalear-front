@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval', '$log', '$translate', function($interval, $log, $translate) {
-  return {
-    restrict:"E",
-    // replace: true,
-    templateUrl:"/views/student/lectures/controls.html",
-    link: function(scope, element, attrs) {
+// .directive("controls",['$interval', '$log', '$translate', function($interval, $log, $translate) {
+//   return {
+//     restrict:"E",
+//     // replace: true,
+//     templateUrl:"/views/student/lectures/controls.html",
+//     link: function(scope, element, attrs) {
 
      //  scope.screenfull = screenfull
      //  scope.$on('$destroy', function() {
@@ -90,10 +90,10 @@ angular.module('scalearAngularApp')
   		// }
     //   scope.setShortcuts()
 
-    }
-  };
+//     }
+//   };
 
-}])
+// }])
 .directive("notification", ['$translate', '$log', function($translate, $log) {
   return {
     restrict:"E",
@@ -320,13 +320,11 @@ angular.module('scalearAngularApp')
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
-          var ontop=angular.element('.ontop');
+          // var ontop=angular.element('.ontop');
           if(scope.explanation[scope.data.id][0]){
             scope.title_class = "green_notification"
             scope.exp_title = 'lectures.correct'
-            if(scope.quiz.question_type =="MCQ"){
-              scope.show_sub_title = true
-            }
+            scope.show_sub_title = scope.quiz.question_type =="MCQ"
           }
           else{
             scope.title_class = "red_notification"
@@ -339,9 +337,9 @@ angular.module('scalearAngularApp')
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:(scope.data.xcoor > 0.5)? "left":"right"
           }
-          if(ontop.css('position') != 'fixed'){
-             scope.explanation_pop["container"] = 'body'
-          }
+          // if(ontop.css('position') != 'fixed'){
+          //    scope.explanation_pop["container"] = 'body'
+          // }
 
         } 
       })
@@ -355,36 +353,13 @@ angular.module('scalearAngularApp')
   return {
     restrict:'E',
     templateUrl: '/views/student/lectures/answer_drag.html',
-    link:function(scope,elem){
-      $log.debug("student drag")
-      $log.debug(scope.data)
-      // var setAnswerLocation=function(){
-      //   $log.debug("setAnswerLocation")
-      //   var ontop=angular.element('.ontop');
-      //   $log.debug(scope.data)
-      //   scope.width  = scope.data.width * ontop.width();
-      //   scope.height = scope.data.height* (ontop.height());
-      //   scope.xcoor = (scope.data.xcoor * ontop.width())
-      //   scope.ycoor = (scope.data.ycoor * (ontop.height()))
-      //   scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
-      //   scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())
-      //   scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
-      // }
-      
+    link:function(scope,elem){      
       var setup=function(){
-      	$log.debug("setup function")
       	var drag_elem = angular.element('#'+scope.data.id)
   		  destroyPopover(drag_elem)
       	scope.explanation_pop={}
       	scope.explanation[scope.data.id] = null
       }
-      
-     //  $rootScope.$on("updatePosition",function(){
-     //    $log.debug("event emitted updated position")
-     //    setAnswerLocation()
-     //   	var drag_elem = angular.element('#'+scope.data.id)
-     //    resizeAnswer(drag_elem)
-    	// }) 
       
       scope.formatDrag=function(event, ui){
         var drag_elem = angular.element(ui.helper[0])
@@ -396,19 +371,17 @@ angular.module('scalearAngularApp')
         var ontop = angular.element('.ontop');        
         var left= event.pageX - ontop.offset().left
         var top = event.pageY - ontop.offset().top
+        
         if((event.pageX - drag_elem.width())< ontop.offset().left){
         	ui.position.left = 0}
-        else if(left> ontop.width()){
-
+        else if(left> ontop.width())
         	 ui.position.left = ontop.width() -  drag_elem.width()
-          }
-      	else{
+      	else
       		ui.position.left = left - drag_elem.width()/2
-        }
-
-          if((event.pageY - drag_elem.height())< ontop.offset().top)
+        
+        if((event.pageY - drag_elem.height())< ontop.offset().top)
           	ui.position.top  = 0
-          else if(top > ontop.height())
+        else if(top > ontop.height())
           	ui.position.top  = ontop.height() - drag_elem.height()
       	else
           	ui.position.top  = top - drag_elem.height()
@@ -418,11 +391,10 @@ angular.module('scalearAngularApp')
          if(!scope.studentAnswers[scope.quiz.id][scope.data.id])
             ui.draggable.css('background-color', 'lightblue')
           else
-             ui.draggable.css('background-color', 'orange')
+            ui.draggable.css('background-color', 'orange')
       }
 
       scope.setDropped=function(event, ui){
-        // var drop_elem = angular.element(elem[0]).find('div')
         if(!scope.studentAnswers[scope.quiz.id][scope.data.id]){
           ui.draggable.css('background-color', 'lightblue')          
           ui.draggable.css('width', (scope.data.width*100)+'%')          
@@ -443,9 +415,7 @@ angular.module('scalearAngularApp')
 
           ui.draggable.css('left', (scope.data.xcoor*100)+'%')          
           ui.draggable.css('top', (scope.data.ycoor*100)+'%')          
-          // ui.draggable.css('p', (scope.data.ycoor*100)+'%')          
           ui.draggable.addClass('dropped')
-          // resizeAnswer(ui.draggable, drop_elem)
           scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.text()
           ui.draggable.attr('id', scope.data.id)
           scope.$apply()
@@ -490,19 +460,11 @@ angular.module('scalearAngularApp')
       	 if(scope.explanation_pop)
           	draggable.popover("destroy")
       }
-      
-      // var resizeAnswer= function(draggable){
-      //   $log.debug('in resize answer')
-      //   draggable.width(scope.width);
-      //   draggable.height(scope.height);
-      //   draggable.css('left', scope.xcoor+2)
-      //   draggable.css('top', scope.ycoor+2)
-      // }
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
           scope.selected_id= angular.element(elem.children()[1]).attr('id')
-          var ontop=angular.element('.ontop');
+          // var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
@@ -512,16 +474,16 @@ angular.module('scalearAngularApp')
             placement:(scope.data.xcoor > 0.5)? "left":"right"
             // container: 'body'
           }
-          if(ontop.css('position') != 'fixed'){
-            scope.explanation_pop["container"] = 'body'
-          }
+          // if(ontop.css('position') != 'fixed'){
+          //   scope.explanation_pop["container"] = 'body'
+          // }
           var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
           angular.element('#'+scope.data.id).css('background-color', bg_color)
         } 
       })
 
   	  setup()
-      // setAnswerLocation()
+      
     }
   }
 }])

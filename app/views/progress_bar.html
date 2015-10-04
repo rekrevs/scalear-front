@@ -13,13 +13,13 @@
         <!-- </div> -->
     </div>
     <div style="height: 27px;">
-        <div class="right" bindonce="player.controls.youtube">
-            <button bo-if="player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" bo-title="'player.click_video_quality'|translate"></button>
+        <div class="right" bindonce>
+            <button  class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" bo-title="'player.click_video_quality'|translate"></button>
             <ul id="quality_list" class="f-dropdown top-dropdown">
                 <div class="small-6 columns no-padding" >
                     <li class="dark-text" translate>player.quality</li>
-                    <li ng-repeat="quality in qualites" ng-class="{'blue': chosen_quality==quality.value }">
-                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality(quality.value)"><small>{{quality.name}}</small></a>
+                    <li ng-repeat="quality in qualities" ng-class="{'blue': chosen_quality==quality}">
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality(quality)"><small>{{quality_names[quality]}}</small></a>
                     </li>
                 </div>
                 <div class="small-6 columns no-padding" style="border-left: 1px solid rgb(174, 174, 174);">
@@ -30,15 +30,15 @@
                 </div>
             </ul>
 
-            <button bo-if="!player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#speed_list" bo-title="'player.click_video_quality'|translate"></button>
+           <!--  <button bo-if="!player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#speed_list" bo-title="'player.click_video_quality'|translate"></button>
             <ul id="speed_list" class="f-dropdown top-dropdown">
                 <div class="small-12 columns no-padding">
                     <li class="dark-text" translate>player.speed</li>
-                    <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed.value }">
-                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed.value)"><small>x{{speed.name}}</small></a>
+                    <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }">
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed)"><small>x{{speed}}</small></a>
                     </li>
                 </div>
-            </ul>
+            </ul> -->
         </div>
         <div ng-transclude></div>
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()"></div>

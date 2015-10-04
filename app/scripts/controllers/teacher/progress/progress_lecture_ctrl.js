@@ -480,13 +480,14 @@ angular.module('scalearAngularApp')
 
   $scope.sendComment=function(discussion){
     if(discussion.temp_response && discussion.temp_response.length && discussion.temp_response.trim()!=""){
-       Forum.createComment(
-        {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
+      var text = discussion.temp_response
+      discussion.temp_response = null
+      Forum.createComment(
+        {comment: {content: text, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
         function(response){
           $log.debug(response)
           response.comment.hide=false
-          discussion.comments.push(response)
-          discussion.temp_response = null
+          discussion.comments.push(response)          
           angular.element('ul.highlight .feedback textarea').blur()
         },function(){}
       )
@@ -496,20 +497,16 @@ angular.module('scalearAngularApp')
 
   $scope.sendFeedback=function(question){
     if(question.temp_response && question.temp_response.length && question.temp_response.trim()!=""){
-      var survey_id = question.quiz_id,
-      answer_id = question.id,
-      response = question.temp_response,
-      course_id = $stateParams.course_id    
-
+      var response = question.temp_response
+      question.temp_response = null
       Quiz.sendFeedback(
-      {quiz_id: survey_id, course_id: course_id},
+      {quiz_id:  question.quiz_id, course_id:  $stateParams.course_id},
       {
-        groups:[answer_id],
+        groups:[question.id],
         response:response
       },
       function(){
-        question.response = angular.copy(question.temp_response)
-        question.temp_response = null
+        question.response = angular.copy(response)
         angular.element('ul.highlight .feedback textarea').blur()
       },
       function(){}
@@ -517,26 +514,16 @@ angular.module('scalearAngularApp')
     }
   }
 
-    $scope.deleteFeedback=function(question){
-    // if(question.temp_response && question.temp_response.length && question.temp_response.trim()!=""){
-      var survey_id = question.quiz_id,
-      answer_id = question.id,
-      response = question.temp_response,
-      course_id = $stateParams.course_id    
-
-      Quiz.sendFeedback(
-      {quiz_id: survey_id, course_id: course_id},
+  $scope.deleteFeedback=function(question){
+    Quiz.deleteFeedback(
+      {quiz_id: question.quiz_id, course_id: $stateParams.course_id},
       {
-        groups:[answer_id],
-        response:response
+       answer: question.id
       },
       function(){
-        question.response = angular.copy(question.temp_response)
-        question.temp_response = null
-      },
-      function(){}
-      )
-    // }
+        question.response = null
+      }
+    )
   }
 
 

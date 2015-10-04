@@ -238,7 +238,7 @@ angular.module('scalearAngularApp')
 				setDetails(true)	
 			}
 		};
- }]).directive('studentNavigation', ['$cookieStore', '$rootScope', '$state', 'Impersonate', 'ContentNavigator','TimelineNavigator', function($cookieStore, $rootScope, $state, Impersonate, ContentNavigator, TimelineNavigator) {
+ }]).directive('studentNavigation', ['ContentNavigator','TimelineNavigator', function(ContentNavigator, TimelineNavigator) {
            return{
 			replace:true,
 			restrict: "E",
@@ -246,38 +246,19 @@ angular.module('scalearAngularApp')
 			scope:{
 				course:"=",
 				message:"="
-				// modules:"=",
-				// links:"=",
-		  //       selectedmodule: "=",
-		  //       shortname: "=",
-		        // warning_message:"=warning"
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
-				// scope.open_navigator = $rootScope.open_navigator
 				scope.ContentNavigator = ContentNavigator
-				scope.TimelineNavigator = TimelineNavigator
-				scope.preview = $rootScope.preview_as_student
-				
+				scope.TimelineNavigator = TimelineNavigator				
 
 				scope.toggleNavigator=function(){
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
 
-				// var setNavigator=function(val){
-				// 	ContentNavigator.setStatus(val)
-				// }
-
 				scope.toggleTimeline=function(){
 					TimelineNavigator.setStatus(!TimelineNavigator.getStatus())
 				}
-
-				// var setTimeline=function(val){
-				// 	TimelineNavigator.setStatus(val)
-				// }
-
-				
-				// setNavigator(true)
 			}
 		};
  }]).directive('userNavigation', ['$rootScope', 'User', 'Home',function($rootScope, User, Home) {
@@ -540,4 +521,61 @@ angular.module('scalearAngularApp')
   	
    }
   }
-}]);
+}]).directive("timelineFilters",['$rootScope', '$log', 'TimelineFilter', function($rootScope, $log, TimelineFilter){
+    return{
+        restrict: "E",
+        scope: {},
+        templateUrl: '/views/forum/timeline_filters.html',
+        link:function(scope){
+            scope.initFilters=function(){
+                scope.timeline_filter= TimelineFilter
+            }
+
+            scope.exportNotes=function(){
+                $rootScope.$broadcast("export_notes")
+            }
+
+            scope.updateLectureFilter=function(type){
+                scope.timeline_filter.toggle(type)
+            }
+
+            var template ='<ul ng-init="initFilters()" class="no-margin">'+
+                            '<li>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'note\')">'+
+                                    '<input id="showNotesCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'note\')" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_notes</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'discussion\')">'+
+                                    '<input id="showQuestionsCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'discussion\')" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_discussion</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'quiz\')">'+
+                                    '<input id="showQuizzesCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'quiz\')" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_quizzes</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'confused\')">'+
+                                    '<input id="showConfusedCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'confused\')" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_confused</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<a class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="exportNotes()">'+
+                                    '<span style="font-size:12px" translate>course_settings.download_notes</span>'+
+                                '</a>'+
+                            '</li>'+
+                        '</ul>'
+
+            scope.popover_options={
+                content: template,
+                html:true,
+                placement:"left"
+            }
+        }
+    };
+}])

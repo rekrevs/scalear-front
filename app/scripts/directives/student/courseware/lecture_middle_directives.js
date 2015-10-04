@@ -541,7 +541,7 @@ angular.module('scalearAngularApp')
 //       }
 //   };
 // }])
-.directive('studentTimeline', ['$timeout', 'ContentNavigator',function($timeout, ContentNavigator) {
+.directive('studentTimeline', ['$timeout', 'ContentNavigator','TimelineFilter',function($timeout, ContentNavigator,TimelineFilter) {
   return {
     replace: true,
     restrict:"E",
@@ -571,13 +571,13 @@ angular.module('scalearAngularApp')
         }
 
         scope.filterType= function(item){
-          var condition=false;
-          for(var e in scope.$parent.checkModel){
-            if(scope.$parent.checkModel[e])
-              condition = (condition || item.type==e)
-          }
-          var x = item.type!='' && condition
-          return x;
+          return TimelineFilter.get(item.type)
+          // for(var e in scope.$parent.checkModel){
+          //   if(scope.$parent.checkModel[e])
+          //     condition = (condition || item.type==e)
+          // }
+          // var x = item.type!='' && condition
+          // return x;
         }
     }
   }
@@ -679,7 +679,7 @@ angular.module('scalearAngularApp')
         }
         else{
           scope.$emit('remove_from_timeline', scope.item)
-          scope.$emit("note_updated")
+          // scope.$emit("note_updated")
         }
       }
 
@@ -699,8 +699,7 @@ angular.module('scalearAngularApp')
             // scope.$emit("note_updated")
             scope.item.data = response.note
             //$log.debug(response.note)
-          }, 
-          function(response){}
+          }
         );
       }
 

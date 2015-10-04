@@ -51,7 +51,7 @@ var translation_en={
     are_you_sure:"Are you sure you want to proceed?"
   },
   mailer:{
-    send_email: "Send an Email",
+    send_email: "Send An Email",
     to: "To",
     send: "Send",
     subject: "Subject",

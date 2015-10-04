@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator', '$rootScope',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator, $rootScope) {
+    .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log','$timeout','Page', '$filter','OnlineQuiz','scalear_utils', 'ContentNavigator', 'TimelineNavigator', '$rootScope','TimelineFilter','$window', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout,Page, $filter, OnlineQuiz, scalear_utils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window) {
 
     $log.debug("lect mid ctlr")
-    $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
+    // $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     $scope.ContentNavigator.open()
     if($scope.preview_as_student){
         $scope.TimelineNavigator.open()
-        $scope.checkModel={quiz:true,confused:false, discussion:false, note:false};
+        // $scope.checkModel={quiz:true,confused:false, discussion:false, note:false};
     }
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     // $scope.$on('$destroy', function() {
@@ -32,12 +32,12 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
-    $scope.$on('lecture_filter_update',function(ev,filters){
-        $scope.checkModel=filters
-        $timeout(function(){
-            $scope.scrollIntoView()
-        },200)
-    })
+    // $scope.$on('lecture_filter_update',function(ev,filters){
+    //     $scope.checkModel=filters
+    //     $timeout(function(){
+    //         $scope.scrollIntoView()
+    //     },200)
+    // })
 
     $scope.$on('timeline_navigator_change',function(ev, status){
           if(!status){
@@ -52,7 +52,19 @@ angular.module('scalearAngularApp')
     $scope.$on('exit_preview',function(){
         if($scope.lecture_player.controls.pause)
             $scope.lecture_player.controls.pause()
-    })    
+    })
+
+    angular.element($window)
+    .bind('focus', function() {
+        if($scope.lecture_player.controls.element && $scope.last_video_state)
+            $scope.lecture_player.controls.play()        
+    })
+    .bind('blur', function() {
+        if($scope.lecture_player.controls.element){
+            $scope.last_video_state = !$scope.lecture_player.controls.paused()
+            $scope.lecture_player.controls.pause()
+        }            
+    });    
 
     var initVariables=function(){
         $scope.studentAnswers = {}
@@ -184,9 +196,9 @@ angular.module('scalearAngularApp')
             $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time-0.2, function() {
+            $scope.lecture_player.controls.cue(quiz.time-0.1, function() {                
+                $scope.seek(quiz.time)
                 $scope.lecture_player.controls.pause()
-                $scope.seek(quiz.time)          
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
@@ -323,17 +335,20 @@ angular.module('scalearAngularApp')
         checkIfQuizSolved()            
     }
 
-    $scope.submitPause= function(quiz_mode, time){
-        Lecture.pause(
-            {
-                course_id:$state.params.course_id, 
-                lecture_id:$state.params.lecture_id
-                
-            },
-            {
-                time:time,
-                quiz_mode:quiz_mode
-            });
+    $scope.submitPause= function(time, quiz_mode){
+        if(time && time > 0){
+            Lecture.pause(
+                {
+                    course_id:$state.params.course_id, 
+                    lecture_id:$state.params.lecture_id
+                    
+                },
+                {
+                    time:time,
+                    quiz_mode:quiz_mode
+                }
+            );
+        }
     }
 
     var checkIfQuizSolved=function(){
@@ -371,7 +386,7 @@ angular.module('scalearAngularApp')
         var current_time = $scope.lecture_player.controls.getTime()
         var percent_view = Math.round(((current_time/$scope.total_duration)*100))
         $log.debug("current watched: "+percent_view)        
-        $scope.submitPause($scope.quiz_mode, current_time);
+        $scope.submitPause(current_time, $scope.quiz_mode);
         updateViewPercentage(percent_view)
     }
 
@@ -421,23 +436,29 @@ angular.module('scalearAngularApp')
         $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
 
-    var goFullscreen=function(){
-        $scope.resize.big()
+    var goFullscreen=function(){        
         $scope.video_class = ''
         $scope.fullscreen= true
+        $scope.resize.big()
         if($rootScope.is_mobile){
             $scope.container_class='mobile_video_full'
-            $scope.video_layer ={'width':'100%','height': '90%', 'position': 'relative'}
+            $scope.video_layer ={'width':'100%','height': angular.element($window).height()-70, 'position': 'relative'}
+            $(window).bind('orientationchange', function(event) {
+                $scope.video_layer['height'] = angular.element($window).height()-70
+                $scope.resize.big()
+                $scope.$apply()
+            });
         }
     }
 
-    var goSmallScreen=function(){
-        $scope.resize.small()
+    var goSmallScreen=function(){        
         $scope.video_class = 'flex-video'
         $scope.fullscreen= false
+        $scope.resize.small()
         if($rootScope.is_mobile){
             $scope.container_class=""
             $scope.video_layer ={}
+            // $(window).unbind('orientationchange');
         }
         // $scope.video_layer ={height: "",left: "",position: "",top: "",width: "",zIndex: 0}
         // if($scope.quiz_mode == true){
@@ -462,9 +483,10 @@ angular.module('scalearAngularApp')
         }
         $scope.last_discussion = $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
         $scope.last_fullscreen_state = $scope.fullscreen;
-        $scope.last_play_state = $scope.lecture_player.controls.paused()//$scope.play_pause_class;
+        $scope.last_video_state = !$scope.lecture_player.controls.paused()//$scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
-        $scope.checkModel.discussion = true 
+        // $scope.checkModel.discussion = true 
+        TimelineFilter.set('discussion', true)
         $scope.lecture_player.controls.pause()       
         goSmallScreen()
         openTimeline()        
@@ -497,10 +519,12 @@ angular.module('scalearAngularApp')
         var time=$scope.lecture_player.controls.getTime()
         $log.debug($scope.timeline['lecture'][$state.params.lecture_id])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
-        $scope.last_fullscreen_state = $scope.fullscreen;
-        $scope.last_play_state = $scope.lecture_player.controls.paused()//$scope.play_pause_class;
+        $scope.last_fullscreen_state = $scope.fullscreen
+        
+        $scope.last_video_state = !$scope.lecture_player.controls.paused()//$scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
-        $scope.checkModel.note = true
+        // $scope.checkModel.note = true
+        TimelineFilter.set('note', true)
         $scope.lecture_player.controls.pause()
         goSmallScreen()
         openTimeline()
@@ -751,17 +775,20 @@ angular.module('scalearAngularApp')
     })
 
     var returnToState=function(){
-        if($scope.last_fullscreen_state && !$scope.fullscreen)
+        if($scope.last_fullscreen_state && !$scope.fullscreen){
             goFullscreen()
-        if(!$scope.last_play_state && $scope.lecture_player.controls.paused() && !$scope.quiz_mode)
+        }
+        if($scope.last_video_state && $scope.lecture_player.controls.paused() && !$scope.quiz_mode){
             $scope.lecture_player.controls.play()
-        if(!$scope.last_timeline_state && $scope.TimelineNavigator.getStatus())
+        }
+        if(!$scope.last_timeline_state && $scope.TimelineNavigator.getStatus()){
             $timeout(function(){
                $scope.TimelineNavigator.close() 
            },400)
-        $scope.last_fullscreen_state = null
-        $scope.last_play_state = null
-        $scope.last_timeline_state = null
+        }
+        // $scope.last_fullscreen_state = null
+        // $scope.last_video_state = null
+        // $scope.last_timeline_state = null
     }
 
     init();

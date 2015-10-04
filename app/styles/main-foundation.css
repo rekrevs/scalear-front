@@ -1666,7 +1666,7 @@ h2 .editable-click{
 }
 
 /*forum elements*/
-.container .form-control{
+.container .form-control, .email-forum .form-control{
 	padding: 10px;
 	min-height: 150px;
 	border: 1px solid grey;
@@ -2055,12 +2055,24 @@ a.editable-click{
   }
 
   .ipad .portrait-medium-height{
-    height: 30vh !important;
+    height: 38vh !important;
      -webkit-overflow-scrolling: touch;
   }
 
   .ipad .width-max-heigh{
     max-width:initial
+  }
+
+  .ipad .button.small{
+    padding-top: 0.375rem;
+    padding-right: 1.75rem;
+    padding-bottom: 0.4375rem;
+    padding-left: 1.5rem;
+    font-size: 0.76rem;
+  }
+  .ipad .check_answer_button{
+    padding-top:0.5rem !important;
+    padding-bottom: 0.28rem !important;
   }
 }
 

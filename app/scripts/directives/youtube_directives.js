@@ -96,7 +96,7 @@ angular.module('scalearAngularApp')
 					var splitted_url= url.split('?')
 					base_url = splitted_url[0]
 					query = '&'+splitted_url[1]	
-				}
+				}//
 				return base_url+"?start="+time+"&vq="+vq+"&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
 			}
 
@@ -174,11 +174,11 @@ angular.module('scalearAngularApp')
 				player.pause()
 			}
 
-			player_controls.changeQuality=function(quality, time){
-				scope.vq = quality
-				player_controls.setStartTime(time)
-				player_controls.refreshVideo()
-			}
+			// player_controls.changeQuality=function(quality, time){
+			// 	scope.vq = quality
+			// 	player_controls.setStartTime(time)
+			// 	player_controls.refreshVideo()
+			// }
 
 			player_controls.setStartTime=function(time){
 				scope.start_time = Math.round(time)
@@ -214,17 +214,33 @@ angular.module('scalearAngularApp')
       			return player.media.getSpeeds();
 			}
 
-			player_controls.changeSpeed = function(value, youtube){
-				if(youtube){
-					if(player_controls.getSpeeds().indexOf(value) != -1){
-						player.media.setSpeed(value)
+			player_controls.changeSpeed = function(speed){
+				if(scope.player.controls.youtube){
+					if(player_controls.getSpeeds().indexOf(speed) != -1){
+						player.media.setSpeed(speed)
 					}
 				}
 				else{
-					player.video.playbackRate = value
+					player.video.playbackRate = speed
 				}
 			}
 
+			player_controls.getAvailableQuality = function(){
+      			return player.media.getAvailableQuality();
+			}
+
+			player_controls.getQuality = function(){
+      			return player.media.getQuality();
+			}
+
+			player_controls.changeQuality = function(quality){
+				if(player_controls.getAvailableQuality().indexOf(quality) != -1 && player_controls.getQuality() != quality){
+					var paused = player_controls.paused()
+					player.media.setQuality(quality)
+					if(paused)
+						player_controls.pause()
+				}
+			}
 
 			var setupEvents=function(){
 				player.on("loadeddata", 
@@ -457,17 +473,25 @@ return{
 
 			$log.debug("resizing big")
             // $rootScope.changeError = true;
-			//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-			var factor=16.0/9.0
-            var win = angular.element($window)
-
-
-            var progressbar_height = 80
+			var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+			// var factor=16.0/9.0
+            var win = angular.element($window) 
 
 			$scope.fullscreen = true
 			// angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
 			angular.element("body").css("overflow","hidden");
 			angular.element("body").css("position","fixed")
+
+			if($rootScope.is_mobile){
+				var progressbar_height = 70
+				var window_height= win.height()
+				var window_width = win.width()
+			}            	
+            else{
+				var progressbar_height = 80
+				var window_height= screen.height
+				var window_width = screen.width
+            }
 
 			win.scrollTop("0px")
 
@@ -475,8 +499,8 @@ return{
 				"top":0, 
 				"left":0, 
 				"position":"fixed",
-				"width":screen.width-$scope.max_width,
-				"height":screen.height,
+				"width":window_width-$scope.max_width,
+				"height":window_height,
 				"z-index": 1031
 			};
 
@@ -486,23 +510,22 @@ return{
 			video["position"]=""
 
 
-			var video_height = screen.height-progressbar_height;
+			var video_height = window_height-progressbar_height;
 			var video_width = video_height*factor
 			
 			//var video_width = (win.height()-26)*factor
 			//var video_heigt = (win.width()-400)*1.0/factor +26
 			var layer={}
-			if(video_width>screen.width-$scope.max_width){ // if width will get cut out.
+			if(video_width>window_width-$scope.max_width){ // if width will get cut out.
 				$log.debug("width cutt offff")
-				$log.debug("width cutt offff")
-				video_height= (screen.width-$scope.max_width)*1.0/factor;
-				var margin_top = ((screen.height-progressbar_height) - (video_height))/2.0; //+30
+				video_height= (window_width-$scope.max_width)*1.0/factor;
+				var margin_top = ((window_height-progressbar_height) - (video_height))/2.0; //+30
 
 				layer={
 					"position":"fixed",
 					"top":0,
 					"left":0,
-					"width":screen.width-$scope.max_width,
+					"width":window_width-$scope.max_width,
 					"height":video_height,
 					"margin-top": margin_top+"px",
 					"margin-left":"0px"
@@ -511,18 +534,22 @@ return{
 			}
 			else{		
 				$log.debug("height cutt offff")
-				$log.debug(screen.width)
+				$log.debug(window_width)
 				$log.debug(video_width)
-				$log.debug(((screen.width-$scope.max_width) - video_width)/2.0)
+				$log.debug(((window_width-$scope.max_width) - video_width)/2.0)
 				// video_width = (win.height()-progressbar_height)*factor
-				var margin_left= ((screen.width-$scope.max_width) - video_width)/2.0;
+				var margin_left= ((window_width-$scope.max_width) - video_width)/2.0;
+				if($rootScope.is_mobile){
+					margin_left=0
+					video_width="100%"
+				}
 				layer={
 					"position":"fixed",
 					"top":0,
 					"left":0,
 					"width":video_width,
 					"height":video_height,
-					"margin-left": margin_left+"px",
+					"margin-left":  margin_left+"px",
 					"margin-top":"0px"
 					// "z-index": 1531
 				}		
@@ -611,41 +638,41 @@ return {
   			scope.duration = scope.player.controls.getDuration() -1;	
   		})
 		scope.play_class = scope.is_mobile? "pause":"play";
-      	scope.qualites = [
-			{name:"240p", value: "small"},
-	        {name:"360p", value: "medium"},
-	        {name:"480p", value: "large"},
-	        {name:"720p (HD)", value: "hd720"}
-        ]
+      	scope.qualities = ["auto","small", "medium", "large"]
+   		scope.quality_names ={
+   			"auto":"Auto",
+   			"tiny":"144p",
+   			"small":"240p",
+   			"medium":"360p",
+   			"large":"480p",
+   			"hd720":"720p (HD)",
+   			"hd1080":"1080p (HD)",
+   			"highres":"High"
+		}
       	if(scope.player.controls.youtube){
-            scope.speeds = scope.player.controls.getSpeeds();
-            $log.debug("Speed", scope.speeds)
+            scope.speeds = scope.player.controls.getSpeeds();            
             scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-            $log.debug('the chosen speed is '+scope.chosen_speed)
-            scope.player.controls.changeSpeed(scope.chosen_speed, true)
+
+            $timeout(function(){
+            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+            	scope.chosen_quality = scope.player.controls.getQuality()
+            },2000)
       	}
       	else{
-            scope.speeds = [{name:'0.8', value: 0.8},
-                            {name:'1', value: 1},
-                            {name:'1.2', value: 1.2},
-                            {name:'1.5', value: 1.5},
-                            {name:'1.8', value: 1.8}]
+      		scope.qualities = ["auto"]
+      		scope.chosen_quality = scope.qualities[0]
+            scope.speeds = [0.8,1,1.2,1.5,1.8]
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
-            scope.player.controls.changeSpeed(scope.chosen_speed, false)
-      	}		
-
-		scope.setSpeed = function(val){
-	        $log.debug('setting youtube speed to '+val)
-	        scope.player.controls.changeSpeed(val, true)
-	        scope.chosen_speed = val;
-	        $cookieStore.put('youtube_speed', scope.chosen_speed)
-		}
-      	scope.setSpeedMp4 = function(val){
-	        $log.debug('setting mp4 speed to '+val)
-	        scope.player.controls.changeSpeed(val, false)
-	        scope.chosen_speed = val;
-	        $cookieStore.put('mp4_speed', scope.chosen_speed)
       	}
+
+      	scope.player.controls.changeSpeed(scope.chosen_speed)
+
+		scope.setSpeed = function(speed){
+	        $log.debug('setting youtube speed to '+speed)
+	        scope.player.controls.changeSpeed(speed)
+	        scope.chosen_speed = speed;
+        	$cookieStore.put(scope.player.controls.youtube? 'youtube_speed': 'mp4_speed', scope.chosen_speed)
+		}
 
 		scope.showPlayhead=function(event) {
 			if(scope.playhead_timeout)
@@ -687,8 +714,6 @@ return {
 				window.removeEventListener('touchend', scope.moveplayhead, true);
 				scope.progressSeek(event)
 			}
-			
-
 			scope.$apply()
 		}
 		
@@ -803,10 +828,12 @@ return {
       	}
 
   		scope.setQuality = function(quality){
-          var time = scope.player.controls.getTime()
-          scope.player.controls.changeQuality(quality, time);
-          scope.chosen_quality=quality;
-          scope.quality=false;
+			scope.player.controls.changeQuality(quality)
+	        scope.chosen_quality = quality;
+          // var time = scope.player.controls.getTime()
+          // scope.player.controls.changeQuality(quality, time);
+          // scope.chosen_quality=quality;
+          // scope.quality=false;
   		}
 
   		scope.scrollEvent = function(type, id){

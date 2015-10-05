@@ -50,17 +50,17 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('exit_preview',function(){
-        if($scope.lecture_player.controls.pause)
+        if($scope.lecture_player.element)
             $scope.lecture_player.controls.pause()
     })
 
     angular.element($window)
     .bind('focus', function() {
-        if($scope.lecture_player.controls.element && $scope.last_video_state)
+        if($scope.lecture_player.element && $scope.last_video_state)
             $scope.lecture_player.controls.play()        
     })
     .bind('blur', function() {
-        if($scope.lecture_player.controls.element){
+        if($scope.lecture_player.element){
             $scope.last_video_state = !$scope.lecture_player.controls.paused()
             $scope.lecture_player.controls.pause()
         }            
@@ -355,8 +355,13 @@ angular.module('scalearAngularApp')
         if($scope.quiz_mode){
             if(!$scope.selected_quiz.is_quiz_solved && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
                 returnToQuiz($scope.selected_quiz.time)
-            else            
+            else{
+                if($scope.display_review_message){
+                    reviewInclass()
+                    $scope.display_review_message = false
+                }
                 clearQuiz()
+            }
         }
     }
 
@@ -633,7 +638,7 @@ angular.module('scalearAngularApp')
 
                 $scope.selected_quiz.is_quiz_solved=true;
             }
-            reviewInclass() 
+            $scope.display_review_message= true
             var percent_view = Math.round((($scope.lecture_player.controls.getTime()/$scope.total_duration)*100))
             $log.debug("current watched: "+percent_view)
             updateViewPercentage(percent_view)
@@ -662,8 +667,8 @@ angular.module('scalearAngularApp')
                 time = ($scope.total_duration - $scope.selected_quiz.time)/2
             $interval(function(){
                 $scope.review_inclass_inprogress = false
-                $( "#review_inclass" ).fadeIn( "fast")
-                 $interval(function(){
+                $("#review_inclass").fadeIn( "fast")
+                $interval(function(){
                     $scope.closeReviewNotify()
                 },close_time*1000,1)
             },time*1000,1)

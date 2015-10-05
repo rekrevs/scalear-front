@@ -49,7 +49,7 @@
 	<span ng-switch-when="editor" ng-if="'**.course_editor.**' | includedByState">
 		<div class="content-navigator-bottom-container-height modules_container" context-menu data-target="content-menu">
 			<ul class="content-menu dropdown-menu text-left">
-				<li><a ng-click="addModule()" >Add Module</a></li>
+				<li><a ng-click="addModule()" >editor.button.add_module</a></li>
 				<li ng-show="clipboard.type == 'module'">
 					<div class="divider border-grey medium-opacity"></div>
 					<a ng-click='paste($event)' translate>context_menu.paste</a>
@@ -78,7 +78,7 @@
 		</center>
 	</span>
 	<span ng-switch-when="editor" ng-if="!('**.course_editor.**' | includedByState)">
-		<div class="modules_container">
+		<div class="modules_container" style="height:100%;overflow:auto">
 			<accordion class="accordion no-margin">
 				<span>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">

@@ -256,12 +256,20 @@ angular.module('scalearAngularApp')
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>button.remove</button>"+
 							"</form>"
 
+			
+
+
+
            	scope.popover_options={
             	content: template,
             	html:true,
             	// fullscreen:false,
             	// topcut:true,
             	// container: 'body',
+            	placement:function(){
+					var placement= (scope.data.xcoor > 0.5)? "left":"right"
+					return scope.data.ycoor <0.3? "bottom": placement
+				},
             	instant_show:!scope.data.id
             }
             
@@ -360,7 +368,11 @@ angular.module('scalearAngularApp')
             	content: template,
             	html: true,
             	// fullscreen:false
-            	topcut:true,
+            	// topcut:true,
+            	placement:function(){
+					var placement= (scope.data.xcoor > 0.5)? "left":"right"
+					return scope.data.ycoor <0.3? "bottom": placement
+				},
             	instant_show:!scope.data.id
             }
 

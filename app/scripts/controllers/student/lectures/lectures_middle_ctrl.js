@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
                 }
             });
         }
-        if($rootScope.is_mobile){
+       else{
             $('#lecture_container').addClass('ipad')
             $('.container').addClass('ipad')
         }
@@ -265,7 +265,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.scrollIntoView=function(){
-        if($scope.lecture && !$rootScope.is_mobile)
+        if($scope.lecture)
             $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top, duration: 400});
         
     }
@@ -463,7 +463,7 @@ angular.module('scalearAngularApp')
         if($rootScope.is_mobile){
             $scope.container_class=""
             $scope.video_layer ={}
-            // $(window).unbind('orientationchange');
+            $(window).off('orientationchange');
         }
         // $scope.video_layer ={height: "",left: "",position: "",top: "",width: "",zIndex: 0}
         // if($scope.quiz_mode == true){
@@ -633,7 +633,7 @@ angular.module('scalearAngularApp')
                 if (!($scope.selected_quiz.quiz_type=='html' && ($scope.selected_quiz.question_type.toUpperCase()=='DRAG' || $scope.selected_quiz.question_type.toUpperCase()=='FREE TEXT QUESTION')))
                     if($scope.selected_quiz.question_type.toUpperCase()=='MCQ' && !data.correct)
                         middle_msg = 'lectures.multiple_correct'
-                    sub_message  = 'lectures.hover_for_details'
+                    sub_message  = $rootScope.is_mobile?'lectures.click_for_details':'lectures.hover_for_details'
                 showNotification(verdict, sub_message, middle_msg)
 
                 $scope.selected_quiz.is_quiz_solved=true;

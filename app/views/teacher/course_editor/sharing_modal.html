@@ -3,7 +3,6 @@
 <!-- endbuild -->
 <div>
 	<h3><i class="fi-social-skillshare size-38"></i> <span translate>context_menu.share_copy</span></h3>
-	<!-- <input type="text" ng-model="$parent.selected_teacher" class="form-control" style="margin: 0;"> -->
 	<div class="small-12 columns" style="margin: 0 auto;">
 		<form ng-submit="shareItem()" novalidate>
 			<div class="small-2 columns no-padding-right">
@@ -26,20 +25,14 @@
 					<input type="checkbox" ng-model="selected_module.selected" ng-click="selectAll(selected_module,$event)" class="no-margin looks-like-a-link"/>
 					<b><span translate>groups.module</span>:</b> {{selected_module.name}}
 				</a>
-				<!-- <span class="with-margin-left"> -->
-					<ul>
-						<li ng-repeat="item in selected_module.items">
-							<!-- <a ng-if="!item.quiz_type">
-								<input type="checkbox" class="no-margin looks-like-a-link" ng-model="item.selected" ng-click="selectItem(selected_module,item,$event)"/>
-								<b><span translate>groups.lecture</span>:</b> {{item.name}}
-							</a> -->
-							<a >
-								<input type="checkbox" class="no-margin looks-like-a-link" ng-model="item.selected" ng-click="selectItem(selected_module,item,$event)"/>
-								<b>{{'sharing.'+(item.quiz_type|| item.class_name) | translate}}:</b> {{item.name}}
-							</a>
-						</li>
-					</ul>
-				<!-- </span> -->
+				<ul>
+					<li ng-repeat="item in selected_module.items">
+						<a >
+							<input type="checkbox" class="no-margin looks-like-a-link" ng-model="item.selected" ng-click="selectItem(selected_module,item,$event)"/>
+							<b>{{'sharing.'+(item.quiz_type|| item.class_name) | translate}}:</b> {{item.name}}
+						</a>
+					</li>
+				</ul>
 			</li>
 		</ul>
 	</div>	

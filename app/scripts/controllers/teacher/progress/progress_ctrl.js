@@ -5,11 +5,6 @@ angular.module('scalearAngularApp')
   		Page.setTitle('navigation.progress')
   		ContentNavigator.close()
 
-  		// $scope.moduleProgressTab=function(){
-	   //      if($scope.module_offset == null)
-	           	
-  	 //  	}
-
   	  	var getModuleProgress = function(offset, limit){
         $scope.module_limit =  limit
         $scope.module_offset = offset

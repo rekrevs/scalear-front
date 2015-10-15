@@ -2,9 +2,7 @@
 
 angular.module('scalearAngularApp')
 .factory('UserSession',['$rootScope','User', 'Home', '$q', '$log', '$translate', function ($rootScope, User, Home, $q, $log ,$translate) {    
-
-  
-  var x={
+  return{
   	getRole : function(){
   		var deferred = $q.defer();
   		User.getCurrentUser(function(data){
@@ -28,10 +26,6 @@ angular.module('scalearAngularApp')
           }
           else //student
             return deferred.resolve(2)
-   				// if($rootScope.current_user.roles[0].id==2) //student
-   				// 	return deferred.resolve(2)
-   				// else if($rootScope.current_user.roles[0].id!=2)
-   				// 	return deferred.resolve(1) //1(teacher) or 5(admin)
    			}else{ //not signed in
           $rootScope.current_user=null;
           return deferred.resolve(0)
@@ -40,7 +34,4 @@ angular.module('scalearAngularApp')
   		return deferred.promise;
   	}
   };
-  return x;
-
-
 }]);

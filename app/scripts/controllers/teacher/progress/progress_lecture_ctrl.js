@@ -10,7 +10,6 @@ angular.module('scalearAngularApp')
   	$scope.inner_highlight_index = 0
   	$scope.progress_player= {}
   	$scope.timeline = {}
-    // $scope.right_container = angular.element('#right-container')
     $scope.highlight_level = 0
   	$scope.time_parameters={
   		quiz: 3,
@@ -42,14 +41,7 @@ angular.module('scalearAngularApp')
         $scope.highlight_index = angular.element('.ul_item').index(ul)-1
       }
     })
-    // $scope.filters=
-    // {
-    //   "all":"",
-    //   "lectures.confused":"confused",
-    //   // "Questions":"question",
-    //   "courses.charts": "charts",
-    //   "global.discussion": "discussion",
-    // }
+
     $scope.check_sub_items={lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
     $scope.check_items={quiz:true, survey:true}
 
@@ -66,6 +58,7 @@ angular.module('scalearAngularApp')
       value: 3,
       text: $translate('quizzes.grade.correct')
     }]
+
   	var init= function(){
   		$scope.timeline = new Timeline()
 
@@ -226,8 +219,6 @@ angular.module('scalearAngularApp')
         $scope.highlight_index = 0
       else if ($scope.highlight_index >divs.length-1)
         $scope.highlight_index = divs.length-1
-		  // $scope.highlight_index = (($scope.highlight_index+x)%divs.length);
-    	// $scope.highlight_index = $scope.highlight_index < 0 ? divs.length+$scope.highlight_index : $scope.highlight_index;	    
 	    var ul = angular.element(divs[$scope.highlight_index])
 	    ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 1
@@ -247,8 +238,6 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.manageInnerHighlight=function(x){
-      // resizePlayerSmall()
-      $log.debug("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
   			var inner_li = inner_ul.find('li').not('.no_highlight')
@@ -277,8 +266,6 @@ angular.module('scalearAngularApp')
       angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
-      // if($scope.selected_item == item)
-      //   return
       $scope.selected_item =item
       var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
@@ -296,19 +283,6 @@ angular.module('scalearAngularApp')
       }
       seekToItem()
   	}
-
-    // $scope.innerHighlight=function(ev,item){
-    //   var inner_ul= angular.element('ul.highlight').find('ul')
-    //   if(inner_ul.length){
-    //     var inner_li = inner_ul.find('li').not('.no_highlight')
-    //     if(angular.element('li.highlight').length)
-    //       angular.element('li.highlight').removeClass('highlight')
-    //     $scope.inner_highlight_index = $scope.inner_highlight_index+x
-    //     angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
-    //     $scope.highlight_level = 2
-    //   }
-    //   seekToItem()
-    // }
 
    var setupRemoveHightlightEvent=function(){
     $log.debug("adding")

@@ -9,8 +9,7 @@ angular.module('scalearAngularApp')
 		restrict: "E",
 		template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid" 
 	};
-})
-.directive('youtube',['$rootScope','$log','$timeout','$window', '$cookieStore','$interval', function($rootScope,$log,$timeout,$window, $cookieStore, $interval){
+}).directive('youtube',['$rootScope','$log','$timeout','$window', '$cookieStore','$interval', function($rootScope,$log,$timeout,$window, $cookieStore, $interval){
 	return {
 		transclude: true,
 		restrict: 'E',
@@ -174,21 +173,13 @@ angular.module('scalearAngularApp')
 				player.pause()
 			}
 
-			// player_controls.changeQuality=function(quality, time){
-			// 	scope.vq = quality
-			// 	player_controls.setStartTime(time)
-			// 	player_controls.refreshVideo()
-			// }
-
 			player_controls.setStartTime=function(time){
 				scope.start_time = Math.round(time)
 			}
 
 			player_controls.refreshVideo = function(){
 				$log.debug("refreshVideo!")
-				scope.kill_popcorn()
-				
-				// //popcornApiProxy(loadVideo);
+				scope.kill_popcorn()				
 				loadVideo()
 			}
 
@@ -351,7 +342,6 @@ angular.module('scalearAngularApp')
                 if(!match)
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
                 else return match
-                // return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
             }
 
             var isShortYoutube= function(url){
@@ -394,497 +384,407 @@ angular.module('scalearAngularApp')
 	    }
 	};
 }]).directive('resizableVideo', ['$window','$rootScope','$timeout','$log',function($window,$rootScope,$timeout, $log){
-return{
-	restrict:'A',
-	scope:{
-		container:'=',
-		quiz_layer:'=quizLayer',
-		video_layer:'=videoLayer',
-        // ontop_layer:'=ontopLayer',
-		aspect_ratio:'=aspectRatio',
-		fullscreen:'=active',
-		resize:'=',
-		max_width:'=maxWidth'
-	},
-	link: function($scope, element){
-		// angular.element($window).bind('resize',
-		// 	function(){
-		// 		if($scope.fullscreen){
-		// 			$scope.resize.big();
-  //                   $scope.$apply()
-		// 		}
-		// 		else{
-		// 			$scope.resize.small();
-  //                   $scope.$apply()
-		// 		}
-		// 	}
-		// )
-		$scope.resize.small = function(){
-            // $rootScope.changeError = false;
-			// var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-			$scope.fullscreen = false
+	return{
+		restrict:'A',
+		scope:{
+			container:'=',
+			quiz_layer:'=quizLayer',
+			video_layer:'=videoLayer',
+			aspect_ratio:'=aspectRatio',
+			fullscreen:'=active',
+			resize:'=',
+			max_width:'=maxWidth'
+		},
+		link: function($scope, element){
+			$scope.resize.small = function(){
+				$scope.fullscreen = false
+
+				angular.element("body").css("overflow","");
+				angular.element("body").css("position","");
 
 
-            // angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
-			angular.element("body").css("overflow","");
-			angular.element("body").css("position","");
+				var container={
+					"top":"",
+					"left":"",
+					"position":"",
+					"width":'',
+					"height":"",
+					"z-index": 0
+				};
 
+				var video=angular.copy(container)
 
-			var container={
-				"top":"",
-				"left":"",
-				"position":"",
-				"width":'',
-				"height":"",//(500*1.0/factor +30) +'px',
-				"z-index": 0
-			};
-
-			var video=angular.copy(container)
-			// video["height"]-=40
-
-			var layer={
-				"position":"absolute",
-				"margin-left": "0px",
-				"margin-top": "0px",
-				"z-index":1,
-				"width": "100%",
-				"height": '100%',
-				"top": "0px",
-				"left": "0px"
-			}
-
-			if($scope.container)
-				angular.extend($scope.container, container)
-			if($scope.video_layer)
-				angular.extend($scope.video_layer, video)
-			if($scope.quiz_layer)
-				angular.extend($scope.quiz_layer, layer)
-            // angular.extend($scope.ontop_layer, layer)
-            // angular.extend($scope.ontop_layer, {"z-index":0})
-			
-			// $timeout(function(){$scope.$emit("updatePosition")})
-			if($scope.unregister_back_event)
-				$scope.unregister_back_event()
-			if($scope.unregister_state_event)	
-				$scope.unregister_state_event()	
-		}
-
-		$scope.resize.big = function(){
-
-			$log.debug("resizing big")
-            // $rootScope.changeError = true;
-			var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-			// var factor=16.0/9.0
-            var win = angular.element($window) 
-
-			$scope.fullscreen = true
-			// angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
-			angular.element("body").css("overflow","hidden");
-			angular.element("body").css("position","fixed")
-
-			if($rootScope.is_mobile){
-				var progressbar_height = 70
-				var window_height= win.height()
-				var window_width = win.width()
-			}            	
-            else{
-				var progressbar_height = 80
-				var window_height= screen.height
-				var window_width = screen.width
-            }
-
-			win.scrollTop("0px")
-
-			var container={
-				"top":0, 
-				"left":0, 
-				"position":"fixed",
-				"width":window_width-$scope.max_width,
-				"height":window_height,
-				"z-index": 1031
-			};
-
-			var video=angular.copy(container)
-			video["height"]-=progressbar_height
-			video["width"]-="auto"
-			video["position"]=""
-
-
-			var video_height = window_height-progressbar_height;
-			var video_width = video_height*factor
-			
-			//var video_width = (win.height()-26)*factor
-			//var video_heigt = (win.width()-400)*1.0/factor +26
-			var layer={}
-			if(video_width>window_width-$scope.max_width){ // if width will get cut out.
-				$log.debug("width cutt offff")
-				video_height= (window_width-$scope.max_width)*1.0/factor;
-				var margin_top = ((window_height-progressbar_height) - (video_height))/2.0; //+30
-
-				layer={
-					"position":"fixed",
-					"top":0,
-					"left":0,
-					"width":window_width-$scope.max_width,
-					"height":video_height,
-					"margin-top": margin_top+"px",
-					"margin-left":"0px"
-					// "z-index": 1531
-				}		
-			}
-			else{		
-				$log.debug("height cutt offff")
-				$log.debug(window_width)
-				$log.debug(video_width)
-				$log.debug(((window_width-$scope.max_width) - video_width)/2.0)
-				// video_width = (win.height()-progressbar_height)*factor
-				var margin_left= ((window_width-$scope.max_width) - video_width)/2.0;
-				if($rootScope.is_mobile){
-					margin_left=0
-					video_width="100%"
+				var layer={
+					"position":"absolute",
+					"margin-left": "0px",
+					"margin-top": "0px",
+					"z-index":1,
+					"width": "100%",
+					"height": '100%',
+					"top": "0px",
+					"left": "0px"
 				}
-				layer={
+
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
+				if($scope.unregister_back_event)
+					$scope.unregister_back_event()
+				if($scope.unregister_state_event)	
+					$scope.unregister_state_event()	
+			}
+
+			$scope.resize.big = function(){
+				$log.debug("resizing big")
+				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+	            var win = angular.element($window) 
+				$scope.fullscreen = true
+				angular.element("body").css("overflow","hidden");
+				angular.element("body").css("position","fixed")
+
+				if($rootScope.is_mobile){
+					var progressbar_height = 70
+					var window_height= win.height()
+					var window_width = win.width()
+				}            	
+	            else{
+					var progressbar_height = 80
+					var window_height= screen.height
+					var window_width = screen.width
+	            }
+
+				win.scrollTop("0px")
+
+				var container={
+					"top":0, 
+					"left":0, 
 					"position":"fixed",
-					"top":0,
-					"left":0,
-					"width":video_width,
-					"height":video_height,
-					"margin-left":  margin_left+"px",
-					"margin-top":"0px"
-					// "z-index": 1531
-				}		
-			 }
-			if($scope.container)
-				angular.extend($scope.container, container)
-			if($scope.video_layer)
-				angular.extend($scope.video_layer, video)
-			if($scope.quiz_layer)
-				angular.extend($scope.quiz_layer, layer)
-            // angular.extend($scope.ontop_layer, layer)
-            // angular.extend($scope.ontop_layer,{"z-index":1031});
+					"width":window_width-$scope.max_width,
+					"height":window_height,
+					"z-index": 1031
+				};
 
-		 	// $timeout(function(){$scope.$emit("updatePosition")})
+				var video=angular.copy(container)
+				video["height"]-=progressbar_height
+				video["width"]-="auto"
+				video["position"]=""
 
-		 // 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
-		 //        event.preventDefault()
-		 //        $scope.resize.small() 
-		 //        $scope.$apply()
-			// });
-			// $scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
-		 //        $scope.resize.small() 
-		 //        $scope.$apply()
-			// });
+
+				var video_height = window_height-progressbar_height;
+				var video_width = video_height*factor
+				
+				var layer={}
+				if(video_width>window_width-$scope.max_width){ // if width will get cut out.
+					$log.debug("width cutt offff")
+					video_height= (window_width-$scope.max_width)*1.0/factor;
+					var margin_top = ((window_height-progressbar_height) - (video_height))/2.0; //+30
+
+					layer={
+						"position":"fixed",
+						"top":0,
+						"left":0,
+						"width":window_width-$scope.max_width,
+						"height":video_height,
+						"margin-top": margin_top+"px",
+						"margin-left":"0px"
+					}		
+				}
+				else{		
+					$log.debug("height cutt offff")
+					$log.debug(window_width)
+					$log.debug(video_width)
+					$log.debug(((window_width-$scope.max_width) - video_width)/2.0)
+					var margin_left= ((window_width-$scope.max_width) - video_width)/2.0;
+					if($rootScope.is_mobile){
+						margin_left=0
+						video_width="100%"
+					}
+					layer={
+						"position":"fixed",
+						"top":0,
+						"left":0,
+						"width":video_width,
+						"height":video_height,
+						"margin-left":  margin_left+"px",
+						"margin-top":"0px"
+					}		
+				 }
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
+			}
 		}
-
-		// $scope.lecturesFullScreen = function(){
-		// 	var win = angular.elemen($window)
-		// 	var video_layer = angular.element('#main-video-container')
-		// 	var controls_bar = angular.element('#controls-bar')
-		// 	var progress_bar = angular.element('player_progress_bar')
-		// 	var factor = 16/9
-
-		// 	controls_bar.css('width', win.width())
-		// 	controls_bar.css('position', 'fixed')
-		// 	controls_bar.css('bottom', '0')
-		// 	controls_bar.css('left', '0')
-		// 	controls_bar.css('right', '0')
-		// 	controls_bar.css('z-index', '1531')
-
-		// 	progress_bar.css('width', win.width())
-		// 	progress_bar.css('position', 'fixed')
-		// 	progress_bar.css('bottom', controls_bar.height())
-		// 	progress_bar.css('right', '0')
-		// 	progress_bar.css('left', '0')
-		// 	progress_bar.css('z-index', '1531')
-
-		// 	video_layer.css('height', win.height()-progress_bar.height()-controls_bar.height());
-		// 	video_layer.css('width', video_layer*factor);
-		// 	video_layer.css('z-index', '1531')				
-
-		// }
 	}
-}
-}])
-.directive('progressBar',['$rootScope','$log','$window', '$cookieStore','$timeout',function($rootScope,$log, $window, $cookieStore, $timeout){
-return {
-	transclude:true,
-    restrict: 'E',
-    replace:false,
-    scope:{
-        player:'=',
-        // play_pause_class:'=playPauseClass',
-        // elapsed_width: '=elapsedWidth',
-        // current_time: '=currentTime',
-        // total_duration: '=totalDuration',
-        seek: "&",
-        timeline: '='
-        // videoready: '=',
-        // blink : "="
-    },
-    templateUrl:"/views/progress_bar.html",
-    link: function(scope, element, attrs){
-    	var player = scope.player.element
-		var progress_bar= angular.element('.progressBar');
-		var playhead= document.getElementsByClassName("playhead")[0]
-		var elapsed_bar = document.getElementsByClassName("elapsed")[0]
-		var onplayhead = false;
-    	scope.current_time=0
-    	scope.volume_class="mute";
-        scope.quality=false;
-  		scope.chosen_quality='hd720';
-  		scope.chosen_speed=1
-  		scope.is_mobile = $rootScope.is_mobile
-  		$timeout(function(){
-  			scope.duration = scope.player.controls.getDuration() -1;	
-  		})
-		scope.play_class = scope.is_mobile? "pause":"play";
-      	scope.qualities = ["auto","small", "medium", "large"]
-   		scope.quality_names ={
-   			"auto":"Auto",
-   			"tiny":"144p",
-   			"small":"240p",
-   			"medium":"360p",
-   			"large":"480p",
-   			"hd720":"720p (HD)",
-   			"hd1080":"1080p (HD)",
-   			"highres":"High"
-		}
-      	if(scope.player.controls.youtube){
-            scope.speeds = scope.player.controls.getSpeeds();            
-            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-
-            $timeout(function(){
-            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-            	scope.chosen_quality = scope.player.controls.getQuality()
-            },2000)
-      	}
-      	else{
-      		scope.qualities = ["auto"]
-      		scope.chosen_quality = scope.qualities[0]
-            scope.speeds = [0.8,1,1.2,1.5,1.8]
-            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
-      	}
-
-      	
-
-		scope.setSpeed = function(speed){
-	        $log.debug('setting youtube speed to '+speed)
-	        scope.player.controls.changeSpeed(speed)
-	        scope.chosen_speed = speed;
-        	$cookieStore.put(scope.player.controls.youtube? 'youtube_speed': 'mp4_speed', scope.chosen_speed)
-		}
-
-		scope.showPlayhead=function(event) {
-			if(scope.playhead_timeout)
-				$timeout.cancel(scope.playhead_timeout)
-			scope.playhead_class="playhead_big"
-			scope.$apply()
-		}
-
-		scope.hidePlayhead=function(event) {
-			if(!onplayhead){
-				scope.playhead_timeout = $timeout(function(){
-					scope.playhead_class=""
-					scope.playhead_timeout= null
-					scope.$apply()
-				},1000)
+}]).directive('progressBar',['$rootScope','$log','$window', '$cookieStore','$timeout',function($rootScope,$log, $window, $cookieStore, $timeout){
+	return {
+		transclude:true,
+	    restrict: 'E',
+	    replace:false,
+	    scope:{
+	        player:'=',
+	        seek: "&",
+	        timeline: '='
+	    },
+	    templateUrl:"/views/progress_bar.html",
+	    link: function(scope, element, attrs){
+	    	var player = scope.player.element
+			var progress_bar= angular.element('.progressBar');
+			var playhead= document.getElementsByClassName("playhead")[0]
+			var elapsed_bar = document.getElementsByClassName("elapsed")[0]
+			var onplayhead = false;
+	    	scope.current_time=0
+	    	scope.volume_class="mute";
+	        scope.quality=false;
+	  		scope.chosen_quality='hd720';
+	  		scope.chosen_speed=1
+	  		scope.is_mobile = $rootScope.is_mobile
+	  		$timeout(function(){
+	  			scope.duration = scope.player.controls.getDuration() -1;	
+	  		})
+			scope.play_class = scope.is_mobile? "pause":"play";
+	      	scope.qualities = ["auto","small", "medium", "large"]
+	   		scope.quality_names ={
+	   			"auto":"Auto",
+	   			"tiny":"144p",
+	   			"small":"240p",
+	   			"medium":"360p",
+	   			"large":"480p",
+	   			"hd720":"720p (HD)",
+	   			"hd1080":"1080p (HD)",
+	   			"highres":"High"
 			}
-		}
-		
-		scope.playHeadMouseDown=function(event) {
-			onplayhead = true;
-			scope.showPlayhead()
-			window.addEventListener('mousemove', scope.moveplayhead, true);
-			window.addEventListener('mouseup', scope.playHeadMouseUp, false);
+	      	if(scope.player.controls.youtube){
+	            scope.speeds = scope.player.controls.getSpeeds();            
+	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
 
-			window.addEventListener('touchmove', scope.moveplayhead, true);
-			window.addEventListener('touchend', scope.playHeadMouseUp, false);
+	            $timeout(function(){
+	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+	            	scope.chosen_quality = scope.player.controls.getQuality()
+	            },2000)
+	      	}
+	      	else{
+	      		scope.qualities = ["auto"]
+	      		scope.chosen_quality = scope.qualities[0]
+	            scope.speeds = [0.8,1,1.2,1.5,1.8]
+	            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+	      	}	      	
 
-			scope.$apply()
-		}
-
-		scope.playHeadMouseUp=function(event){
-			if (onplayhead == true) {
-				onplayhead = false;
-				scope.hidePlayhead()
-				window.removeEventListener('mousemove', scope.moveplayhead, true);
-				window.removeEventListener('touchmove', scope.moveplayhead, true);
-
-				window.removeEventListener('mouseup', scope.moveplayhead, true);
-				window.removeEventListener('touchend', scope.moveplayhead, true);
-				scope.progressSeek(event)
+			scope.setSpeed = function(speed){
+		        $log.debug('setting youtube speed to '+speed)
+		        scope.player.controls.changeSpeed(speed)
+		        scope.chosen_speed = speed;
+	        	$cookieStore.put(scope.player.controls.youtube? 'youtube_speed': 'mp4_speed', scope.chosen_speed)
 			}
-			scope.$apply()
-		}
-		
-		scope.moveplayhead=function(event) {
-	        var ratio= (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth()
-	        var position = ratio*100 
-			if (position >= 0 && position <= 100){
-				scope.elapsed_head = position>99.4? 99.4 : position
-				scope.elapsed_width= position+0.45
-				scope.current_time = scope.duration* ratio
+
+			scope.showPlayhead=function(event) {
+				if(scope.playhead_timeout)
+					$timeout.cancel(scope.playhead_timeout)
+				scope.playhead_class="playhead_big"
+				scope.$apply()
 			}
-			if (position < 0){
-				scope.elapsed_head = 0;
-				scope.elapsed_width= 0
-				scope.current_time = 0
+
+			scope.hidePlayhead=function(event) {
+				if(!onplayhead){
+					scope.playhead_timeout = $timeout(function(){
+						scope.playhead_class=""
+						scope.playhead_timeout= null
+						scope.$apply()
+					},1000)
+				}
 			}
-			if (position > 100){
-				scope.elapsed_head = 99.4;
-				scope.elapsed_width= 100
-				scope.current_time = scope.duration
+			
+			scope.playHeadMouseDown=function(event) {
+				onplayhead = true;
+				scope.showPlayhead()
+				window.addEventListener('mousemove', scope.moveplayhead, true);
+				window.addEventListener('mouseup', scope.playHeadMouseUp, false);
+
+				window.addEventListener('touchmove', scope.moveplayhead, true);
+				window.addEventListener('touchend', scope.playHeadMouseUp, false);
+
+				scope.$apply()
 			}
-			scope.$apply()
-		}
 
-		scope.play=function(){
-			if (scope.player.controls.paused()) {
-				scope.player.controls.play()
-				scope.play_class = "pause";
-			} else {
-				scope.player.controls.pause()
-				scope.play_class = "play";
+			scope.playHeadMouseUp=function(event){
+				if (onplayhead == true) {
+					onplayhead = false;
+					scope.hidePlayhead()
+					window.removeEventListener('mousemove', scope.moveplayhead, true);
+					window.removeEventListener('touchmove', scope.moveplayhead, true);
+
+					window.removeEventListener('mouseup', scope.moveplayhead, true);
+					window.removeEventListener('touchend', scope.moveplayhead, true);
+					scope.progressSeek(event)
+				}
+				scope.$apply()
 			}
-		}
+			
+			scope.moveplayhead=function(event) {
+		        var ratio= (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth()
+		        var position = ratio*100 
+				if (position >= 0 && position <= 100){
+					scope.elapsed_head = position>99.4? 99.4 : position
+					scope.elapsed_width= position+0.45
+					scope.current_time = scope.duration* ratio
+				}
+				if (position < 0){
+					scope.elapsed_head = 0;
+					scope.elapsed_width= 0
+					scope.current_time = 0
+				}
+				if (position > 100){
+					scope.elapsed_head = 99.4;
+					scope.elapsed_width= 100
+					scope.current_time = scope.duration
+				}
+				scope.$apply()
+			}
 
-		elapsed_bar.addEventListener('mouseenter', scope.showPlayhead, false);
-		elapsed_bar.addEventListener('mouseleave', scope.hidePlayhead, false);
+			scope.play=function(){
+				if (scope.player.controls.paused()) {
+					scope.player.controls.play()
+					scope.play_class = "pause";
+				} else {
+					scope.player.controls.pause()
+					scope.play_class = "play";
+				}
+			}
 
-		playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
-		playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
+			elapsed_bar.addEventListener('mouseenter', scope.showPlayhead, false);
+			elapsed_bar.addEventListener('mouseleave', scope.hidePlayhead, false);
 
-		player.on('timeupdate', function(){
-			if (onplayhead == false) {
-				scope.current_time = player.currentTime()
-				scope.elapsed_width = ((scope.current_time/scope.duration)*100)
-		        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width - 0.2
-		        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
-		    }
-			scope.$apply()
-	    })
+			playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
+			playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
 
-	    player.on('ended',function(){
-	    	//for some reason youtube requires clicking the
-	    	//play button twice to play after video end
-	    	//simulating first click on play
-	    	scope.player.controls.seek(0)
-	        $timeout(function(){
-	        	scope.player.controls.play();
-	            scope.player.controls.pause();
-	            scope.play_class = "play";
-	        },1000)
-	    	
-	    	// scope.play_class = "play";
-	    	scope.$apply()
-	    })
+			player.on('timeupdate', function(){
+				if (onplayhead == false) {
+					scope.current_time = player.currentTime()
+					scope.elapsed_width = ((scope.current_time/scope.duration)*100)
+			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width - 0.2
+			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
+			    }
+				scope.$apply()
+		    })
 
-	    player.on('pause',function(){
-	    	scope.play_class = "play";
-	    	scope.$apply()
-	    })
+		    player.on('ended',function(){
+		    	//for some reason youtube requires clicking the
+		    	//play button twice to play after video end
+		    	//simulating first click on play
+		    	scope.player.controls.seek(0)
+		        $timeout(function(){
+		        	scope.player.controls.play();
+		            scope.player.controls.pause();
+		            scope.play_class = "play";
+		        },1000)
+		    	
+		    	scope.$apply()
+		    })
 
-	    player.on('playing',function(){
-	    	scope.play_class = "pause";
-	    	scope.$apply()
-	    })
+		    player.on('pause',function(){
+		    	scope.play_class = "play";
+		    	scope.$apply()
+		    })
 
-        scope.muteToggle = function(){
-        	scope.volume_class=="mute"? scope.mute():scope.unmute()
-        }
+		    player.on('playing',function(){
+		    	scope.play_class = "pause";
+		    	scope.$apply()
+		    })
 
-        var unwatchMute = scope.$watch("volume",function(){
-            if(scope.volume){
-                scope.player.controls.volume(scope.volume);
-                if(scope.volume!=0)
-                    scope.volume_class="mute";
-                else
-                    scope.volume_class="unmute";
-            }
-        });
+	        scope.muteToggle = function(){
+	        	scope.volume_class=="mute"? scope.mute():scope.unmute()
+	        }
 
-        scope.mute= function(){
-            scope.player.controls.mute();
-            scope.volume_class="unmute";
-            scope.volume=0;
-        }
+	        var unwatchMute = scope.$watch("volume",function(){
+	            if(scope.volume){
+	                scope.player.controls.volume(scope.volume);
+	                if(scope.volume!=0)
+	                    scope.volume_class="mute";
+	                else
+	                    scope.volume_class="unmute";
+	            }
+	        });
 
-        scope.unmute = function(){
-            scope.player.controls.unmute();
-            scope.volume_class="mute";
-            scope.volume=0.8;
-        }
+	        scope.mute= function(){
+	            scope.player.controls.mute();
+	            scope.volume_class="unmute";
+	            scope.volume=0;
+	        }
 
-        scope.progressSeek = function(event){
-	        var element = angular.element('.progressBar');
-	        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
-	        scope.seek()(scope.duration*ratio)
-	        if(scope.timeline)
-	        	scrollToNearestEvent(scope.duration*ratio)
-        }
+	        scope.unmute = function(){
+	            scope.player.controls.unmute();
+	            scope.volume_class="mute";
+	            scope.volume=0.8;
+	        }
 
-      	scope.showQuality = function(){
-      		scope.quality=!scope.quality
-      	}
+	        scope.progressSeek = function(event){
+		        var element = angular.element('.progressBar');
+		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
+		        scope.seek()(scope.duration*ratio)
+		        if(scope.timeline)
+		        	scrollToNearestEvent(scope.duration*ratio)
+	        }
 
-  		scope.setQuality = function(quality){
-			scope.player.controls.changeQuality(quality)
-	        scope.chosen_quality = quality;
-  		}
+	      	scope.showQuality = function(){
+	      		scope.quality=!scope.quality
+	      	}
 
-  		scope.scrollEvent = function(type, id){
-  			scrollToItem(type, id)
-  			addHighlight(type, id)
-  		}
+	  		scope.setQuality = function(quality){
+				scope.player.controls.changeQuality(quality)
+		        scope.chosen_quality = quality;
+	  		}
 
-  		var scrollToItem=function(type, id){
-  			$('.student_timeline').scrollToThis('#'+type+'_'+id, {offsetTop: 100, duration: 350});
-  		}
-  		var addHighlight = function(type, id){
-  			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")
-  			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffffff'},2000)
-  		}
+	  		scope.scrollEvent = function(type, id){
+	  			scrollToItem(type, id)
+	  			addHighlight(type, id)
+	  		}
 
-  		var scrollToNearestEvent=function(time){
-  			$log.debug(time)
-  			$log.debug(scope.timeline.getNearestEvent(time))
-  			var nearest_item= scope.timeline.getNearestEvent(time)
-  			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
-  				scrollToItem(nearest_item.type, nearest_item.data.id)
-  		}
+	  		var scrollToItem=function(type, id){
+	  			$('.student_timeline').scrollToThis('#'+type+'_'+id, {offsetTop: 100, duration: 350});
+	  		}
+	  		var addHighlight = function(type, id){
+	  			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")
+	  			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffffff'},2000)
+	  		}
 
-  		scope.setSpeed(scope.chosen_speed)
-  		scope.setQuality(scope.chosen_quality)
+	  		var scrollToNearestEvent=function(time){
+	  			$log.debug(time)
+	  			$log.debug(scope.timeline.getNearestEvent(time))
+	  			var nearest_item= scope.timeline.getNearestEvent(time)
+	  			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
+	  				scrollToItem(nearest_item.type, nearest_item.data.id)
+	  		}
 
-        shortcut.add("Space",function(){
-        	scope.play()				
-		},{"disable_in_input" : true});
+	  		scope.setSpeed(scope.chosen_speed)
+	  		scope.setQuality(scope.chosen_quality)
 
-		shortcut.add("b",function(){
-          var t=scope.player.controls.getTime();
-          scope.player.controls.pause();
-          scope.player.controls.seek(t-10)
-          scope.player.controls.play();
-          scope.$emit('video_back', t-10)
-		},{"disable_in_input" : true});
+	        shortcut.add("Space",function(){
+	        	scope.play()				
+			},{"disable_in_input" : true});
 
-	   	scope.$on('$destroy', function(){
-         	shortcut.remove("b");
-      		shortcut.remove("Space");
-			unwatchMute()
-			playhead.removeEventListener('mousedown', scope.playHeadMouseDown, false);
-			playhead.removeEventListener('touchstart', scope.playHeadMouseDown, false);
+			shortcut.add("b",function(){
+	          var t=scope.player.controls.getTime();
+	          scope.player.controls.pause();
+	          scope.player.controls.seek(t-10)
+	          scope.player.controls.play();
+	          scope.$emit('video_back', t-10)
+			},{"disable_in_input" : true});
 
-			elapsed_bar.removeEventListener('mouseenter', scope.showPlayhead, false);
-			elapsed_bar.removeEventListener('mouseleave', scope.hidePlayhead, false);
-      	});
+		   	scope.$on('$destroy', function(){
+	         	shortcut.remove("b");
+	      		shortcut.remove("Space");
+				unwatchMute()
+				playhead.removeEventListener('mousedown', scope.playHeadMouseDown, false);
+				playhead.removeEventListener('touchstart', scope.playHeadMouseDown, false);
 
-   //    	scope.$on("blink_blink", function(){
-   //    		scope.blink = "blink_btn";
-   //    		$timeout(function(){
-   //    			scope.blink = "";
-			// },2000)
-   //    	})
-    }
-}
+				elapsed_bar.removeEventListener('mouseenter', scope.showPlayhead, false);
+				elapsed_bar.removeEventListener('mouseleave', scope.hidePlayhead, false);
+	      	});
+	    }
+	}
 }])

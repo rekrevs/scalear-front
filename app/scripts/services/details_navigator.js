@@ -7,9 +7,7 @@ angular.module('scalearAngularApp')
      getStatus: function() { return this.status; },
      setStatus: function(stat){ 
      	this.status = stat
-        // $timeout(function(){
-            $rootScope.$broadcast('details_navigator_change', stat)
-        // },3000)
+        $rootScope.$broadcast('details_navigator_change', stat)
      },
      open: function(){
      	this.setStatus(true)

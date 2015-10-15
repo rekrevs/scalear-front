@@ -33,30 +33,6 @@
           <label>{{lecture.duration|format}}</label>
         </td>
       </tr>
-      <!-- <tr ng-show="video.thumbnail">
-        <td colspan="2">
-          <center>
-            <span translate>lectures.video_preview</span>
-            <div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
-          </center>
-        </td>
-      </tr> -->
-      <!-- <tr ng-show="lecture.url == 'none'">
-        <td class="right-border small-4"><span translate>lectures.provider</span>:</td>
-        <td class="small-8" ng-if="is_youtube">
-          <label >Youtube</label>
-          <label >{{is_youtube}} {{video.title}} by {{video.author}}</label>
-        </td>
-        <td class="small-8" ng-if="!is_youtube">
-          <label>Server</label>
-        </td>
-      </tr> -->
-      <!-- <tr ng-show="video.author">
-        <td class="right-border small-4"><span translate>lectures.author</span>:</td>
-        <td>
-          <label>{{video.author}}</label>
-        </td>
-      </tr> -->
       <tr>
         <td class="right-border small-4"><span translate>editor.details.student_link_lecture</span>:</td>
         <td class="break-text small-8" >
@@ -73,9 +49,6 @@
     </accordion-heading>
     <table class="table small-12 no-margin">
       <tr>
-        <!-- <td class="right-border small-4">
-          <span translate>global.settings</span>:
-        </td> -->
         <td colspan="2">
           <center>
             <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">

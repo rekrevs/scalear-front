@@ -16,9 +16,6 @@ angular.module('scalearAngularApp')
          value: 3,
          text: $translate('quizzes.grade.correct')
      }]
- 
-     // $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}
-
 
     $scope.showFeedback = function(answers, index, flag){
     	if(!flag){
@@ -35,32 +32,32 @@ angular.module('scalearAngularApp')
     var hideFeedback= function(answers, index){
     	answers.showGroups = false
     	answers[index].show_feedback = false
-		answers[index].group_selected = false
+		  answers[index].group_selected = false
     }
 
     $scope.saveCheckedHideSurvey = function(answer_id, answer_hide){
-    	Quiz.hideResponseStudent(
-    		{quiz_id: $scope.survey_id},
-    		{
-                hide:{
-                    id:answer_id, 
-                    hide: answer_hide
-                }                
-            }
-		)
+      Quiz.hideResponseStudent(
+        {quiz_id: $scope.survey_id},
+        {
+          hide:{
+            id:answer_id, 
+            hide: answer_hide
+          }                
+        }
+      )
     }
 
-   $scope.saveCheckedHideQuiz = function(answer_id, answer_hide){
-        Lecture.hideResponses(
-            {lecture_id: $scope.lecture_id},
-            {
-                hide:{
-                    id:answer_id, 
-                    hide: answer_hide
-                }                
-            }
-        )
-    }
+  $scope.saveCheckedHideQuiz = function(answer_id, answer_hide){
+    Lecture.hideResponses(
+      {lecture_id: $scope.lecture_id},
+      {
+        hide:{
+          id:answer_id, 
+          hide: answer_hide
+        }                
+      }
+    )
+  }
 
     $scope.sendFeedback=function(answers,index){
     	var survey_id = $scope.survey_id

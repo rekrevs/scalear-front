@@ -5,14 +5,6 @@ angular.module('scalearAngularApp')
   		Page.setTitle('navigation.progress')
   		ContentNavigator.close()
 
-        // $scope.totalChartTab = function(){
-        // disableModuleScrolling()
-        // if(!$scope.total_chart){
-           
-           
-        // }
-    // }
-
     var getTotalChart=function(){
         $scope.loading_total_charts = true
         Course.getTotalChart(
@@ -21,9 +13,6 @@ angular.module('scalearAngularApp')
                 $scope.student_progress = data.student_progress
                 $scope.total_chart = createTotalChart($scope.student_progress)  
                 $scope.loading_total_charts = false
-            },
-            function(){
-                //alert("Failed to load student progress, please check your internet connection")
             }
         )
     }
@@ -73,9 +62,6 @@ angular.module('scalearAngularApp')
                     "minValue":0
             },
             chartArea:{top: 10},
-            "vAxis": {
-                // "title": $translate("courses.statistics")
-            }
         };
         chart.data = $scope.formatTotalChartData(chart_data)
         return chart

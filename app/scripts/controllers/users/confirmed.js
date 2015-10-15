@@ -17,13 +17,6 @@ angular.module('scalearAngularApp')
 			else{
 				$scope.intro_url = scalear_api.teacher_welcome_video
 			}
-			// $scope.video = Popcorn.HTMLYouTubeVideoElement('#intro_video');
-			// $scope.player = Popcorn($scope.video)
-			// $scope.video.src = $scope.video_url
-			// $scope.player.on( "canplay", function(){
-			// 	$scope.player.play();
-			// });
-			// $scope.player.on('ended', function(){
 			$scope.player.events.onEnd = function() {
 				$scope.can_proceed = true;
 				$interval(function(){
@@ -46,8 +39,7 @@ angular.module('scalearAngularApp')
 					$rootScope.current_user.completion_wizard = {}
 					$rootScope.current_user.completion_wizard.intro_watched = true;
 					$state.go('course_list');
-				}, function(){
-					$log.debug('failed')
-				});
-			}
-	}]);
+				}
+			);
+		}
+}]);

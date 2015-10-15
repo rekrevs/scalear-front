@@ -3,10 +3,6 @@
 angular.module('scalearAngularApp')
   .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
   	
-  	// $scope.lectureProgressTab = function(){
-   //      if($scope.lecture_offset == null)
-            
-   //  }
    $scope.module= $scope.course.selected_module
   	$scope.getAllItemsProgress = function(offset, limit){
         $scope.lecture_limit =  limit

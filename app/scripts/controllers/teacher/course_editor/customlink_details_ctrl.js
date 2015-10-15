@@ -3,12 +3,12 @@
 angular.module('scalearAngularApp')
     .controller('customLinkDetailsCtrl', ['$stateParams', '$scope', '$q', '$filter','CustomLink','$log', function($stateParams, $scope, $q, $filter, CustomLink,$log) {
         
-        $scope.$watch('items_obj["customlink"]['+$stateParams.customlink_id+']', function(){
+        var unwatch = $scope.$watch('items_obj["customlink"]['+$stateParams.customlink_id+']', function(){
             if($scope.items_obj && $scope.items_obj["customlink"][$stateParams.customlink_id]){
                 $scope.link=$scope.items_obj["customlink"][$stateParams.customlink_id]
+                unwatch()
             }
         })
-
 
         $scope.validateLink= function(column, data){
             $log.debug($scope.link)

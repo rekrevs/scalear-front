@@ -4,7 +4,6 @@ angular.module('scalearAngularApp')
     .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log','$timeout','Page', '$filter','OnlineQuiz','scalear_utils', 'ContentNavigator', 'TimelineNavigator', '$rootScope','TimelineFilter','$window', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout,Page, $filter, OnlineQuiz, scalear_utils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window) {
 
     $log.debug("lect mid ctlr")
-    // $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
@@ -17,35 +16,20 @@ angular.module('scalearAngularApp')
     $scope.ContentNavigator.open()
     if($scope.preview_as_student){
         $scope.TimelineNavigator.open()
-        // $scope.checkModel={quiz:true,confused:false, discussion:false, note:false};
     }
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
-    // $scope.$on('$destroy', function() {
-    //     if($scope.course && $scope.course.warning_message)
-    //         $scope.course.warning_message=null
-    //     shortcut.remove("c");
-    //     shortcut.remove("q");
-    //     shortcut.remove("n");
-    //     shortcut.remove("f");
-    // });
+
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
     })
 
-    // $scope.$on('lecture_filter_update',function(ev,filters){
-    //     $scope.checkModel=filters
-    //     $timeout(function(){
-    //         $scope.scrollIntoView()
-    //     },200)
-    // })
-
     $scope.$on('timeline_navigator_change',function(ev, status){
-          if(!status){
+        if(!status){
             $timeout(function(){
                 $scope.delayed_timeline_open = false
             },400)
-          }
-          else
+        }
+        else
             $scope.delayed_timeline_open = status
     })
 
@@ -327,7 +311,6 @@ angular.module('scalearAngularApp')
             clearQuiz()
         $scope.seek(time,lecture_id)
         $scope.lecture_player.controls.pause()
-        // $scope.play_pause_class = "play"
     }
 
     $scope.progressSeek=function(time){
@@ -338,15 +321,10 @@ angular.module('scalearAngularApp')
     $scope.submitPause= function(time, quiz_mode){
         if(time && time > 0){
             Lecture.pause(
-                {
-                    course_id:$state.params.course_id, 
-                    lecture_id:$state.params.lecture_id
-                    
-                },
-                {
-                    time:time,
-                    quiz_mode:quiz_mode
-                }
+                {course_id:$state.params.course_id, 
+                 lecture_id:$state.params.lecture_id},
+                {time:time,
+                 quiz_mode:quiz_mode}
             );
         }
     }
@@ -376,7 +354,6 @@ angular.module('scalearAngularApp')
     var returnToQuiz=function(time){
         $scope.seek(time)
         $scope.lecture_player.controls.pause()
-        // $scope.play_pause_class = "play"
         showNotification('lectures.answer_question')
     }
 
@@ -490,7 +467,6 @@ angular.module('scalearAngularApp')
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_video_state = !$scope.lecture_player.controls.paused()//$scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
-        // $scope.checkModel.discussion = true 
         TimelineFilter.set('discussion', true)
         $scope.lecture_player.controls.pause()       
         goSmallScreen()
@@ -528,7 +504,6 @@ angular.module('scalearAngularApp')
         
         $scope.last_video_state = !$scope.lecture_player.controls.paused()//$scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
-        // $scope.checkModel.note = true
         TimelineFilter.set('note', true)
         $scope.lecture_player.controls.pause()
         goSmallScreen()
@@ -611,9 +586,6 @@ angular.module('scalearAngularApp')
             },
             function(data){
                 displayResult(data)
-                // if(data.msg=="Successfully Submitted"){
-                //     $scope.$broadcast("blink_blink");
-                // }
             }
         )
     }

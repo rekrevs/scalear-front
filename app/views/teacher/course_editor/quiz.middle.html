@@ -1,8 +1,3 @@
-<!--<style>
-	.ui-state-default{
-		background: white;
-	}
-</style>-->
 <div class="row">
 	<div class="small-12 columns">
 		<h4 ><b><span>{{'editor.'+quiz.quiz_type+'_editor' | translate}}</span>: </b>{{quiz.name}}</h4>
@@ -15,12 +10,8 @@
 	</div>
 </div>
 <br>
-
 <div class="panel" style="padding: 0 15px;">
 	<div ng-show="!preview">
-		<!-- <overlay ng-show="!questions">
-		    <loading size="big" show="true" style="position:relative; top:40%;" />
-		</overlay> -->
 		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions'>
 			<div ng-repeat="question in questions" class="row soft-border quiz_sort">
 				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index" sortable="true"/>
@@ -41,19 +32,8 @@
 				<button class="button small" name="add_question" ng-click="addQuestion()" translate>editor.button.add_question</button>
 				<button class="button small" name="add_header" ng-click="addHeader()" translate>editor.button.add_header</button>
 				<button class="button small green" name="save_quiz" ng-click="saveAll()" translate>button.save</button>
-				<!-- <button class="button small secondary" name="preview_quiz" ng-click="openPreview()" translate>preview</button> -->
 				</div>	
 			</center>
 		</div>
 	</div>
-	<!-- <div ng-show="preview" >
-		<br/>
-		<student-quiz ng-if="preview" quiz='temp_quiz' student-answers="formatted_answers" ></student-quiz>
-		<center>
-			<button class="button small" name="edit_quiz" ng-click="closePreview()" translate>edit</button>
-			<button class="button small success" name="save_quiz" ng-click="saveAll()" translate>save</button>
-		</center>
-	</div> -->
 </div>
-
-	

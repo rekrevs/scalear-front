@@ -36,7 +36,6 @@ angular.module('scalearAngularApp')
 	 		$scope.status=data.status;
 	 		$scope.correct=data.correct;
             $scope.next_item= data.next_item;
-            // $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 	 		$scope.alert_messages= data.alert_messages
             $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
 		  	$scope.quiz.questions.forEach(function(question,index){
@@ -51,7 +50,7 @@ angular.module('scalearAngularApp')
  	
  	init();
 
-    $scope.go_to_next_item = function(){
+    $scope.nextItem = function(){
         var next_state = "course.module.courseware." + $scope.next_item.class_name
         var s = $scope.next_item.class_name + "_id"
         var to = {}

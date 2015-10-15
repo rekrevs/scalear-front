@@ -37,36 +37,20 @@ angular.module('scalearAngularApp')
 				            $compile(this.$tip)(scope);
 				            scope.$digest();
 				            this.$tip.data('popover', this);
-				            // if(!options.disabletop){
-				            // 	angular.element(".arrow").css("top",'50%');
-				            // }
 				            if(options.displayontop){
 				            	angular.element('.popover').css('z-index', '999999');
 				            }
-				            // if(options.rightcut)
-				            // 	adjustLeft(pop)
 				            if(options.topcut)
 				            	adjustTop(pop)
 			
 				            return pop;
 			          	};
-
-			    //       	var adjustLeft = function(pop){			          		
-				   //          var win = angular.element($window)
-			    //       		if(pop.right + angular.element('.popover').width() + 15  >  win.width()){
-							// 	pop.left = pop.left -((pop.right + angular.element('.popover').width()) - win.width()+20) 
-							// 	angular.element('.popover').css('z-index', '10000')
-							// 	angular.element('.popover').css('position', 'absolute')
-							// }
-			    //       	}
-
 			          	var adjustTop=function(pop){
 			          		$log.debug("topcut")
 				            var win = angular.element($window)
 				            var arrow = angular.element(".arrow")
 							var elem_top= element.offset().top
 							$log.debug(elem_top)
-							// var elem_bottom= win.height() - elem_top;
 							var arrow_pos
 							if(elem_top<225){ //too close to top
 								$log.debug(angular.element('.popover').parent().position())

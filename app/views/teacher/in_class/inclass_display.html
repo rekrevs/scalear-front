@@ -46,12 +46,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                    <div >{{selected_timeline_item.data.type}}:</div>
-                    <div style="padding-left:5px;"><span>{{selected_timeline_item.data.title}}</span><span class="color-dark-grey" ng-repeat="answer in selected_timeline_item.data.answers" style="padding-left:5px;"><br />{{answer.online_answer}}</span></div>                    
-                </div>                
-            </div> -->
         </div>
 
         <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow: auto;">
@@ -88,7 +82,6 @@
             <button ng-class="button_class" ng-click="nextQuiz()" class="button reall-tiny secondary" ><i class="fi-next" /></button>          
         </div>
         <div class="bottom-right no-padding-top right">
-            <!-- <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" ng-show="!fullscreen" /><i class="fi-arrows-in" ng-show="fullscreen"/></button> -->
             <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button> 
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[6]}}</span></button>
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[7]}}</span></button>

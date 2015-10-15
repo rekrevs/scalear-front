@@ -219,11 +219,6 @@ angular.module('scalearAngularApp', [
             url: '/ie',
             templateUrl: '/views/ie.html'
         })
-        // .state('forum', {
-        //     url: '/forum',
-        //     templateUrl: '/views/forum/forum.html',
-        //     controller: 'forumCtrl'
-        // })
         .state('login', {
             url: '/users/login',
             templateUrl: '/views/login.html',

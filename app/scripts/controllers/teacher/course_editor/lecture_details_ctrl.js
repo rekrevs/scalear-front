@@ -13,8 +13,6 @@ angular.module('scalearAngularApp')
                         if(video_id)
                             getYoutubeDetails(video_id[1]);
                     }
-                    // else
-                        // $scope.lecture.url = $translate("lectures.add_video")
                     if($scope.lecture.due_date) 
                         $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
                     
@@ -25,14 +23,12 @@ angular.module('scalearAngularApp')
                         } 
                         if(isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)){
                             $scope.lecture.disable_module_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)
-                            // $scope.lecture.due_date_module = false
                         }
                         else{
                             $scope.lecture.disable_module_due_controls = false
                         }
                         if ($scope.lecture.due_date_module) { 
                             $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
-                            // $scope.lecture.due_date_enabled = !isDueDateDisabled() 
                         }
                         module_unwatch() 
                     })

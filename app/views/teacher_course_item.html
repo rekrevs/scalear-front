@@ -1,8 +1,5 @@
 <div class="whole-box light-grey">
 	<div class="right hide-for-small-only">
-		<!-- <div class="course-button">
-			<button type="button" class="button uppercase" ui-sref="course.edit_course_information({ course_id: course.id })">Go to course</button>
-		</div> -->
 		<div class="course-image hide-for-small-only" style="padding-left: 0px;">
 			<span></span>
 			<img ng-src="{{course.image_url || '../images/course_image.png'}}" />
@@ -18,10 +15,6 @@
 				<h6 ng-if="teachers" class="dark-text" style="word-wrap: break-word;"><span class="dark-text" translate>courses.information.taught_by</span> <span ng-repeat="teacher in teachers" style="font-weight: 400; padding-left:4px"><span class="looks-like-a-link" ng-click="filterteacher(teacher.user.name, teacher.user.email)">{{teacher.user.name}}</span><span class="with-small-margin-left">(<a href="mailto:{{teacher.user.email}}">{{teacher.user.email}}</a>)</span><span ng-if="$index < teachers.length-1">, </span></span></h6>
 			</div>
 		</div>
-		<!-- <h6 class="color-blue" title="{{course.name}}"><span class="dark-text" translate>courses.information.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6> -->
-		<!-- <p class="describtion">
-			{{course.description}}
-		</p> -->
 		<div class="row bottom-bar" >
 			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
 				<i class="fi-calendar size-18"></i><small class="with-small-margin-left" translate>courses.start_date</small>

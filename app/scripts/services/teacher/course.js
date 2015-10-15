@@ -34,7 +34,6 @@ angular.module('scalearAngularApp')
       'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
-      // 'sortCourseLinks':{method: 'POST', headers:headers, params: {action: 'sort_course_links'}},
       'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}}
     });
 

@@ -3,14 +3,12 @@
         <div class="elapsed" ng-style="{width: elapsed_width + '%'}" >
         </div>
         <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head + '%' }" ></div>
-        <!-- <div class="progress-events-container" ng-show="timeline.items.length>1"> -->
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'lectures.timeline.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'lectures.timeline.confused' | translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==true" style="background-color: red" tooltip="{{'lectures.timeline.really_confused'|translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type=='note'" style="background-color: teal" tooltip="{{'lectures.timeline.note'|translate}}{{': '+element.data.data}}" tooltip-append-to-body="true"></span>
             </div>
-        <!-- </div> -->
     </div>
     <div style="height: 27px;">
         <div class="right" bindonce>
@@ -29,16 +27,6 @@
                     </li>
                 </div>
             </ul>
-
-           <!--  <button bo-if="!player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#speed_list" bo-title="'player.click_video_quality'|translate"></button>
-            <ul id="speed_list" class="f-dropdown top-dropdown">
-                <div class="small-12 columns no-padding">
-                    <li class="dark-text" translate>player.speed</li>
-                    <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }">
-                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed)"><small>x{{speed}}</small></a>
-                    </li>
-                </div>
-            </ul> -->
         </div>
         <div ng-transclude></div>
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()"></div>

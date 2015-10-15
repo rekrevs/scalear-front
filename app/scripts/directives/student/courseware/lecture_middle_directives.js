@@ -402,7 +402,6 @@ angular.module('scalearAngularApp')
           
           ui.draggable.css('word-wrap', 'break-word')
           ui.draggable.css('overflow', 'hidden')
-          $log.debug("ontop.width");
           var ontop_w = angular.element('#ontop').width();
           var ontop_h = angular.element('#ontop').height();
           var ui_w = ((scope.data.width)*ontop_w)
@@ -430,10 +429,9 @@ angular.module('scalearAngularApp')
       }
 	
        scope.clearDropped=function(event, ui){
-
        	destroyPopover(ui.draggable)
         clear(ui.draggable)
-        ui.draggable.css('font-size', 15 +'px')
+        ui.draggable.css('font-size', '15px')
       }
 
       var clear=function(draggable){
@@ -464,14 +462,14 @@ angular.module('scalearAngularApp')
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
           scope.selected_id= angular.element(elem.children()[1]).attr('id')
-          // var ontop=angular.element('.ontop');
+          var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             // rightcut: (ontop.css('position') == 'fixed')
-            placement:(scope.data.xcoor > 0.5)? "left":"right"
+            placement:angular.element(elem.children()[1]).position().left > (ontop.width()/2)? "left":"right"
             // container: 'body'
           }
           // if(ontop.css('position') != 'fixed'){

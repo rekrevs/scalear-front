@@ -665,7 +665,7 @@ return {
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
       	}
 
-      	scope.player.controls.changeSpeed(scope.chosen_speed)
+      	
 
 		scope.setSpeed = function(speed){
 	        $log.debug('setting youtube speed to '+speed)
@@ -830,10 +830,6 @@ return {
   		scope.setQuality = function(quality){
 			scope.player.controls.changeQuality(quality)
 	        scope.chosen_quality = quality;
-          // var time = scope.player.controls.getTime()
-          // scope.player.controls.changeQuality(quality, time);
-          // scope.chosen_quality=quality;
-          // scope.quality=false;
   		}
 
   		scope.scrollEvent = function(type, id){
@@ -856,6 +852,9 @@ return {
   			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
   				scrollToItem(nearest_item.type, nearest_item.data.id)
   		}
+
+  		scope.setSpeed(scope.chosen_speed)
+  		scope.setQuality(scope.chosen_quality)
 
         shortcut.add("Space",function(){
         	scope.play()				

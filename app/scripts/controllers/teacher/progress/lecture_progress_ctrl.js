@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
         $scope.lecture_limit =  limit
         $scope.lecture_offset = offset
         $scope.loading_lectures=true 
-        disableInfinitScrolling()
+        // disableInfinitScrolling()
         Module.getAllItemsProgress(
             {
                 course_id: $stateParams.course_id,
@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.lecture_limit
             },
             function(data){
+                $log.debug("getAllItemsProgress response",data)
                 var obj={}
 
                 obj.lecture_names = data.lecture_names
@@ -38,8 +39,9 @@ angular.module('scalearAngularApp')
                 angular.extend($scope, obj)
 
                 $timeout(function(){
-            		enableInfinitScrolling()
-                    $scope.loading_lectures=false
+                    $scope.getRemainingLectureProgress()
+            		// enableInfinitScrolling()
+                    // $scope.loading_lectures=false
                     // $('.student').tooltip({"placement": "left", container: 'body'})
                     // $('.state').tooltip({"placement": "top", container: 'body'}) 
                 })
@@ -49,26 +51,22 @@ angular.module('scalearAngularApp')
     }    
 
     $scope.getRemainingLectureProgress = function(){
-        $log.debug("getting remaining")
-        $log.debug($scope.total)
-        $log.debug($scope.lecture_offset)
-        $log.debug($scope.lecture_limit)
-
         if($scope.lecture_offset+$scope.lecture_limit<=parseInt($scope.total))
             $scope.getAllItemsProgress($scope.lecture_offset+$scope.lecture_limit,$scope.lecture_limit) 
         else{
-            $log.debug("no more")
-        	disableInfinitScrolling()
+            $scope.loading_lectures=false 
+        //     $log.debug("no more")
+        // 	disableInfinitScrolling()
         }
     }
 
- 	var enableInfinitScrolling = function(){
-        $scope.lecture_scroll_disable = false
-    }
+ 	// var enableInfinitScrolling = function(){
+  //       $scope.lecture_scroll_disable = false
+  //   }
 
-    var disableInfinitScrolling = function(){
-        $scope.lecture_scroll_disable = true
-    }
+  //   var disableInfinitScrolling = function(){
+  //       $scope.lecture_scroll_disable = true
+  //   }
     
     $scope.getAllItemsProgress(0,20)
 

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
         $scope.module_limit =  limit
         $scope.module_offset = offset
         $scope.loading_modules=true 
-        disableModuleScrolling()
+        // disableModuleScrolling()
 
         Course.getModuleProgress(
             {
@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.module_limit
             },
             function(data){
-            	$log.debug(data)
+            	$log.debug("getModuleProgress response",data)
                 var obj={}
 
                 obj.module_names = data.module_names
@@ -37,11 +37,11 @@ angular.module('scalearAngularApp')
                 angular.extend($scope, obj)
 
                 $timeout(function(){
-                	enableModuleScrolling()
-                    $scope.loading_modules=false
-                    $('.student').tooltip({"placement": "left", container: 'body'})
+                    $scope.getRemainingModuleProgress()
+                	// enableModuleScrolling()
+                    // $scope.loading_modules=false
+                    // $('.student').tooltip({"placement": "left", container: 'body'})
                 })
-
             }
         );
     } 
@@ -50,15 +50,16 @@ angular.module('scalearAngularApp')
         if($scope.module_offset+$scope.module_limit<=parseInt($scope.total))
             getModuleProgress($scope.module_offset+$scope.module_limit,$scope.module_limit) 
         else
-        	disableModuleScrolling()
+            $scope.loading_modules=false
+        	// disableModuleScrolling()
     }
 
-    var enableModuleScrolling = function(){
-    	$scope.module_scroll_disable = false
-    }
-    var disableModuleScrolling = function(){
-    	$scope.module_scroll_disable = true
-    }
+    // var enableModuleScrolling = function(){
+    // 	$scope.module_scroll_disable = false
+    // }
+    // var disableModuleScrolling = function(){
+    // 	$scope.module_scroll_disable = true
+    // }
 
     $scope.updateStatus= function(student_id, module_id, module_status){
         if(module_status)

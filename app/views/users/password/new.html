@@ -2,7 +2,6 @@
     <form ng-submit="reset_password()" novalidate>
         <div class="with-margin">
             <div class="right">
-                <!-- <span calss="show-for-large-only">{{'language' | translate}}</span> -->
                 <div class="show-inline" ng-show="$parent.current_lang=='sv'" ng-cloak>
                     <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
                 </div>
@@ -20,15 +19,4 @@
             <button id="forget_btn" type="submit" ng-disabled="sending" class="button" translate>account.password.send_reset</button>
         </div>
     </form>
-<!--     <div class="small-12 column with-margin">
-        <center>
-            <br />
-            <br />
-            <a ui-sref="login" translate="sign_in"></a>
-            <br/>
-            {{'or' | translate}}
-            <br/>
-            <a ui-sref="new_confirmation" translate="account.didnt_receive_confirmation"></a>
-        </center>
-    </div> -->
 </div>

@@ -1,7 +1,16 @@
 <style>
+table [class*="column"] + [class*="column"]:last-child{
+    float: none;
+}
+table.table_matrix_height{
+    margin-bottom: 0
+}
+.columnName{
+    min-width: 115px;
+}
 @media only screen and (min-width:64.063em) {
   .table_matrix_height{
-    height: 48vh !important;
+    height: 55vh !important;
   }
 }
 
@@ -24,13 +33,13 @@
 <table fixed-header class="table_matrix_height">
     <thead>
         <tr>
-            <th style="min-width: 100px;"></th>
-            <th class="columnName" ng-repeat="name in columnNames track by $index" style="min-width: 100px">
+            <th class="columnName"></th>
+            <th class="columnName" ng-repeat="name in columnNames track by $index">
                 <center><span bindonce bo-text="name"></span></center>
             </th>
         </tr>
     </thead>
-    <tbody class="scroll_container">
+    <tbody > <!-- class="scroll_container" -->
         <tr bindonce ng-repeat="student in students" >
             <td><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
             <td class="state" bindonce ng-repeat='module in status[student.id] track by $index'>
@@ -51,6 +60,6 @@
                 </span>
             </td>
         </tr>
-        <tr infinite-scroll='remaining()' infinite-scroll-disabled='scrolldisabled' infinite-scroll-immediate-check='false' infinite-scroll-container="'.scroll_container'"></tr>
+        <!-- <tr infinite-scroll='remaining()' infinite-scroll-disabled='scrolldisabled' infinite-scroll-immediate-check='false' infinite-scroll-container="'.scroll_container'"></tr> -->
     </tbody>
 </table>

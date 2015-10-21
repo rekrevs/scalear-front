@@ -97,7 +97,7 @@ angular.module('scalearAngularApp')
         }, function(){})
     }
 
-    $scope.export_calendar = function() {
+    $scope.exportCalendar = function() {
         var cal = ics();
         for (var element in $scope.calendar.events){
             var description= $scope.calendar.events[element].tooltip_string.replace("<br />", " ")+" "+$scope.calendar.events[element].url;

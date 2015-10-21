@@ -1,55 +1,59 @@
 <div bindonce ng-switch="mode" class="content-navigator-container disable_selection ease_in_out" ng-class="{'content-containeropen small-12 medium-4 large-2 columns no-padding no-margin': open_navigator}">	
-	<div ng-switch-when="courseware">
-		<accordion class="accordion">
-			<accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
-				<accordion-heading class="accordion-heading">
-				<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
-					<div class="show-inline" translate>navigation.course_information</div>
-				</div>		
-				</accordion-heading>
-			</accordion-group>
-			<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
-				<accordion-heading class="accordion-heading">
-					<div bindonce class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
-						<div class="row" style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
-							<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
-								<module-progress-check class="left" module="module" />
+	<span ng-switch-when="courseware">
+		<div class="modules_container" style="height:100%;overflow:auto">
+			<accordion class="accordion no-margin">
+				<span>
+					<accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
+						<accordion-heading class="accordion-heading">
+						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
+							<div class="show-inline" translate>navigation.course_information</div>
+						</div>		
+						</accordion-heading>
+					</accordion-group>
+					<accordion-group class="module accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
+						<accordion-heading class="accordion-heading">
+							<div bindonce bo-id="'module_'+module.id" class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+								<div class="row" style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
+									<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
+										<module-progress-check class="left" module="module" />
+									</div>
+									<div class="small-9 columns no-padding">
+										<i bo-if="!(module.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
+										<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
+									</div>
+									<div class="small-2 no-padding text-right columns">
+										<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
+									</div>
+								</div>
 							</div>
-							<div class="small-9 columns no-padding">
-								<i bo-if="!(module.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
-								<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
-							</div>
-							<div class="small-2 no-padding text-right columns">
-								<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
-							</div>
-						</div>
-					</div>
-				</accordion-heading>
-				<ul>
-					<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
-						<div bo-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
-							<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
-							<i bo-if="!(item.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{item.appearance_time| fromNow}}"></i>
-							<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
-							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
-							<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
-							<div class="truncate-65 show-inline valign-middle left text-left" bo-text="item.name"></div>
-							<div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
-						</div>
-						<a bo-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
-							<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
-							<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'content_navigator.customlink' | translate"></i>
-							<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
-						</a>
-					</li>
-				</ul>
-			</accordion-group>
-		</accordion>
-	</div>
+						</accordion-heading>
+						<ul>
+							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
+								<div bo-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
+									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
+									<i bo-if="!(item.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{item.appearance_time| fromNow}}"></i>
+									<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
+									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
+									<div class="truncate-65 show-inline valign-middle left text-left" bo-text="item.name"></div>
+									<div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
+								</div>
+								<a bo-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
+									<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
+									<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'content_navigator.customlink' | translate"></i>
+									<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
+								</a>
+							</li>
+						</ul>
+					</accordion-group>
+				</span>
+			</accordion>
+		</div>
+	</span>
 	<span ng-switch-when="editor" ng-if="'**.course_editor.**' | includedByState">
 		<div class="content-navigator-bottom-container-height modules_container" context-menu data-target="content-menu">
 			<ul class="content-menu dropdown-menu text-left">
-				<li><a ng-click="addModule()" >Add Module</a></li>
+				<li><a ng-click="addModule()" >editor.button.add_module</a></li>
 				<li ng-show="clipboard.type == 'module'">
 					<div class="divider border-grey medium-opacity"></div>
 					<a ng-click='paste($event)' translate>context_menu.paste</a>
@@ -78,7 +82,7 @@
 		</center>
 	</span>
 	<span ng-switch-when="editor" ng-if="!('**.course_editor.**' | includedByState)">
-		<div class="modules_container">
+		<div class="modules_container" style="height:100%;overflow:auto">
 			<accordion class="accordion no-margin">
 				<span>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">

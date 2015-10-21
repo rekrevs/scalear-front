@@ -504,6 +504,7 @@ var translation_sv={
     confused: "@:global.confused", 
     really_confused: "@:global.really_confused",   
     hover_for_details: "Peka på alternativen för mer information",
+    click_for_details: "@:lectures.hover_for_details",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
     must_place_items: "Du måste placera alla objekt",

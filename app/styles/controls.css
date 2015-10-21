@@ -179,7 +179,7 @@ li{
     background-color:#525252;
    /* overflow:hidden;*/
     cursor:pointer;
-
+    z-index: 1;
     /* A light CSS3 bottom highlight */
 
     -moz-box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
@@ -219,4 +219,66 @@ li{
     background-size:20px 20px;
 }
 
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    background-color: #dfdfdf;
+    width: 5px;
+    height: 15px;
+}
+.really_confused{
+    background-color: red;
+}
+.normal_confused{
+    background-color: orange;
+}
+
+
+#audioplayer{
+    width: 480px;
+    height: 60px;
+    margin: 50px auto auto auto;
+border: solid;
+}
+
+#pButton{
+    height:60px; 
+    width: 60px;
+    border: none;
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    float:left;
+    outline:none;
+}
+
+.play{background: url('http://www.alexkatz.me/codepen/images/play.png') ;}
+.pause{background: url('http://www.alexkatz.me/codepen/images/pause.png') ;}
+
+#timeline{
+    width: 400px;
+    height: 20px;
+    margin-top: 20px;
+    float: left;
+    border-radius: 15px;
+    background: rgba(0,0,0,.3);
+  
+}
+.playhead{
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  background: rgba(153, 153, 153, 1);
+  position: relative;          
+  margin-left: 0%;
+  z-index: 2;
+  opacity:0;
+}
+.playhead:hover, .playhead_big{
+    width: 12px;
+    height: 12px;
+    top: -2px;
+    background:rgba(226, 226, 226, 1);
+    opacity:1
+}
 

@@ -1096,9 +1096,15 @@ td.right-border{
 
 }
 .top-dropdown{
-  margin-top: -138px;
-  margin-left: -70px;
+  margin-top: -210px;
+  margin-left: -184px;
 }
+
+.ipad .top-dropdown{
+  margin-top: -160px;
+  margin-left: -184px;
+}
+
 .top-dropdown:before{
   border: inset 0px;
   border-color: transparent transparent transparent transparent;
@@ -1118,13 +1124,18 @@ td.right-border{
 }
 #quality_list{
   min-width: 210px;
-  left: -115px !important;
-  top: 5px !important;
+  background: rgb(245, 245, 245);
+  text-align: center;/*
+  left: 416px !important;
+  top: 362px !important;*/
 }
 #speed_list{
   min-width: 120px !important;
-  left: -25px !important;
-  top: -20px !important;
+  background: rgb(245, 245, 245);
+  text-align: center;
+  margin-left: -96px;
+  /*left: -25px !important;
+  top: -20px !important;*/
 }
 #speed_list::after{
   left: 86%;
@@ -1279,6 +1290,7 @@ td.right-border{
     height: 8px;
     /*z-index: 5000;*/
     position: absolute;
+    top: 0px;
 }
 .not-click .scrollable-if-tall{
   max-height: 90vh !important;
@@ -1660,7 +1672,7 @@ h2 .editable-click{
 }
 
 /*forum elements*/
-.container .form-control{
+.container .form-control, .email-forum .form-control{
 	padding: 10px;
 	min-height: 150px;
 	border: 1px solid grey;
@@ -1801,6 +1813,7 @@ textarea.editable-input{
 }
 
 .popover.top .arrow {
+  top: initial !important;
   bottom: -11px;
   left: 50%;
   margin-left: -11px;
@@ -1824,6 +1837,8 @@ textarea.editable-input{
   border-right-color: rgba(0, 0, 0, 0.25);
   border-left-width: 0;
 }
+
+
 
 .popover.right .arrow:after {
   bottom: -10px;
@@ -1957,7 +1972,7 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:128vh
+    max-width:127vh
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){
@@ -2046,12 +2061,24 @@ a.editable-click{
   }
 
   .ipad .portrait-medium-height{
-    height: 30vh !important;
+    height: 38vh !important;
      -webkit-overflow-scrolling: touch;
   }
 
   .ipad .width-max-heigh{
     max-width:initial
+  }
+
+  .ipad .button.small{
+    padding-top: 0.375rem;
+    padding-right: 1.75rem;
+    padding-bottom: 0.4375rem;
+    padding-left: 1.5rem;
+    font-size: 0.76rem;
+  }
+  .ipad .check_answer_button{
+    padding-top:0.5rem !important;
+    padding-bottom: 0.28rem !important;
   }
 }
 

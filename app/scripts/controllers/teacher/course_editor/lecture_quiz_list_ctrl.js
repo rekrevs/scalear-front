@@ -9,8 +9,7 @@ angular.module('scalearAngularApp')
 			{lecture_id:$stateParams.lecture_id},
 			function(data){
 				$scope.$parent.$parent.$parent.quiz_list = data.quizList
-			},
-			function(){}
+			}
 		);	
 	}
     init()

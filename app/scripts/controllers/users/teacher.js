@@ -28,13 +28,10 @@ angular.module('scalearAngularApp')
                     user: $scope.final_user
                 }, function() {
                     $scope.sending = false;
-                    //$log.debug("signed up");
-                    // $state.go("home");
                     $state.go('thanks_for_registering',{type:0});
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;
-                    //$log.debug("sign up failed")
                 })
             }
 

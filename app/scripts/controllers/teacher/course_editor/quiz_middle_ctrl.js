@@ -2,13 +2,11 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state','$q' ,function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state, $q) {
- 	// $scope.$parent.not_module = true;
- 	// $scope.$parent.currentitem = $state.params.quiz_id
- 	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
+ 	
+ 	var unwatch = $scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
         $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
-        // $scope.$emit('accordianUpdate',$scope.quiz.group_id);
-        // $scope.$parent.currentmodule = $scope.quiz.group_id
+        unwatch()
       }
     })
 
@@ -73,18 +71,10 @@ angular.module('scalearAngularApp')
  	
  	init();
  	
- 	var updateQuestions=function(ans){
-		$log.debug("savingAll");
+ 	var updateQuestions=function(questions){
 		Quiz.updateQuestions(
 			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
-			{questions: ans},
-			function(data){ //success
-				$log.debug(data)
-				// init();
-			},
-			function(){
-	 		   // alert("Could not save changes, please check network connection.");
-			}
+			{questions: questions}
 		);
 	}
  	
@@ -108,9 +98,7 @@ angular.module('scalearAngularApp')
 				y.answers=[obj]
 				data[elem]= y
 			}
-			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text')
-			{
-				$log.debug("I enterd here removing answer")
+			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text'){
 				var y=angular.copy($scope.questions[elem])
 				y.answers=[]
 				data[elem]= y
@@ -134,31 +122,24 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.addHtmlAnswer=function(ans, question){
-		$log.debug("in add answer");
-		$log.debug("question is ");
-		$log.debug(question);
 		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
 		question.answers.push($scope.new_answer)
 	}
  	
  	$scope.removeHtmlAnswer = function(index, question){
-		if(question.answers.length>1)
-		{
-			//if(confirm($translate('questions.you_sure_delete_answer', {answer: question.answers[index].content})))
-				question.answers.splice(index, 1);
+		if(question.answers.length>1){
+			question.answers.splice(index, 1);
 		}else{
-			//$log.debug("Can't delete the last answer..")
 			$rootScope.show_alert="error";
-		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
-		      	$timeout(function(){
-		      		$rootScope.show_alert="";	
-		      	},4000);
+	      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
+	      	$timeout(function(){
+	      		$rootScope.show_alert="";	
+	      	},4000);
 		}
 	}
 	
 	$scope.removeQuestion = function(index){
- 		// if(confirm($translate('questions.you_sure_delete_question', {question: $scope.questions[index].content})))
-		  	$scope.questions.splice(index, 1);
+	  	$scope.questions.splice(index, 1);
 	}
  
 	$scope.addHeader=function(){
@@ -170,20 +151,6 @@ angular.module('scalearAngularApp')
 		$scope.removeQuestion(index)
 	}
 
-	// $scope.openPreview=function(){
-	// 	$scope.preview=true
-	// 	$scope.temp_quiz={questions:$scope.questions}
-	// 	$scope.formatted_answers={}
-	// 	for(var elem in $scope.temp_quiz.questions){			
-	// 		if($scope.temp_quiz.questions[elem].question_type.toUpperCase() == 'DRAG'){
-	// 			$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] = CourseEditor.mergeDragAnswers($scope.temp_quiz.questions[elem].answers, "quiz", $scope.temp_quiz.questions[elem].id).content
-	// 		}
-	// 	}
-	// }
-	// $scope.closePreview=function(){
-	// 	$scope.preview=false
-	// 	$scope.temp_quiz=null
-	// }
 	$scope.updateQuiz = function() {
 	    var modified_quiz = angular.copy($scope.quiz);
 	    delete modified_quiz.class_name;

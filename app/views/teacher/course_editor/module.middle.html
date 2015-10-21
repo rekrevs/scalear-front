@@ -3,48 +3,6 @@
 		<h4><b><span translate>editor.module_editor</span>: </b>{{module.name}}</h4>
 	</div>
 </div>
-<!-- <div class="row" style="margin-bottom:10px">
-	<div class="small-12 columns">
-		<label class="size-1">
-			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name" open="module.new"></details-text>
-		</label>
-    </div>
-</div>
-<div class="row" style="margin-bottom:10px">
-	<div class="small-12 columns">
-		<label class="size-1">
-			<b><span translate>editor.details.appearance_date</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
-			<span ng-hide="module.appearance_time | visible" style="margin-left:5px">
-				<i class="fi-alert"></i><small class="subheader with-tiny-margin-left" ><span translate>invisible</span> {{module.appearance_time| fromNow}}</small>
-			</span>
-		</label>
-	</div>
-</div>
-<div class="row" style="margin-bottom:10px">
-	<div class="small-12 columns">
-		<input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin" />
-		<label class="size-1">
-			<b><span class="with-small-margin-left" translate>groups.has_due_date</span></b>
-			<span ng-show="module.due_date_enabled">:
-				<details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
-	        </span>
-		</label>
-	</div>
-</div>
-<div class="row" style="margin-bottom:10px">
-	<div class="small-12 columns">
-		<label class="size-1">
-			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></big-area>
-		</label>
-	</div>
-</div>
-<div class="row" style="margin-bottom:10px">
-	<div class="small-12 columns">
-		<label class="size-1">
-			<b><span translate>groups.student_link_module</span>:</b><span class="with-small-margin-left">{{link_url}}</span>
-		</label>
-	</div>
-</div> -->
 <br />
 <div class="row">
 	<div class="small-12 columns">
@@ -75,30 +33,13 @@
 	</div>	
 </div>
 <br />
-<div >
-	<!-- <center> -->
-		<!-- <button id="new_item"class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
-		<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button> -->
-		<div class="small-12 columns no-padding">
-			<div class="small-12 medium-4 columns">
-				<button class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>editor.button.add_content</span></button>
-			</div>
-			<div class="small-12 medium-8 columns left">
-				<p class="no-margin-bottom" translate>editor.home.choose_add</p>
-			</div>
+<div>
+	<div class="small-12 columns no-padding">
+		<div class="small-12 medium-4 columns">
+			<button class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>editor.button.add_content</span></button>
 		</div>
-	<!-- </center> -->
+		<div class="small-12 medium-8 columns left">
+			<p class="no-margin-bottom" translate>editor.home.choose_add</p>
+		</div>
+	</div>
 </div>
-<!-- <br />
-<div class="row">
-	<div class="small-12 columns"><b translate>groups.external_module_link</b></div>
-</div>
-<div class="small-12 columns no-padding left">
-	<br/>
-	<i ng-show="module.custom_links.length == 0" class="color-grey size-12" translate>empty</i>
-	<ul ui-sortable="listSortableOptions" ng-model='module.custom_links'>
-		<li class="group_links" ng-repeat="doc in module.custom_links">
-			<link-item link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />
-		</li>
-	</ul>	
-</div> -->

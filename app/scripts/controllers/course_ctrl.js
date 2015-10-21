@@ -54,7 +54,6 @@ angular.module('scalearAngularApp')
 	 			{course_id:id},
 	 			function(data){
 			 		$scope.course=data.course
-			 		// $scope.course.custom_links = data.links
 			 		$scope.course.modules=data.groups
 			 		$scope.module_obj ={}
 			 		$scope.items_obj ={lecture:{}, quiz:{}, customlink:{}}
@@ -79,7 +78,6 @@ angular.module('scalearAngularApp')
 		    	{course_id: id},
 		    	function(data){
 					$scope.course= JSON.parse(data.course);
-					// $scope.course.custom_links = data.links
 					$scope.next_item = data.next_item
 					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
 					$scope.course.markDone=function(module_id, item_id){
@@ -87,8 +85,6 @@ angular.module('scalearAngularApp')
 	                    var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, item_id)//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
 	                    if(item_index!=-1 && group_index!=-1)
 	                    	$rootScope.$broadcast("item_done", $scope.course.groups[group_index].items[item_index])
-	                        // $scope.course.groups[group_index].items[item_index].is_done= status
-	                        // $scope.lecture.is_done = data.done[2
 					}
 					deferred.resolve($scope); 
 				},

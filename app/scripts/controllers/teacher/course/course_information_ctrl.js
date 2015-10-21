@@ -29,7 +29,6 @@ angular.module('scalearAngularApp')
     delete modified_course.created_at;
     delete modified_course.updated_at;
     delete modified_course.unique_identifier;
-    // delete modified_course.custom_links;
     delete modified_course.modules;
     delete modified_course.selected_module;
 

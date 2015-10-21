@@ -573,9 +573,25 @@
     self.getSpeeds = function(){
       return player.getAvailablePlaybackRates();
     };
+
     self.setSpeed = function(speed){
       player.setPlaybackRate(speed)
     }
+
+    self.getAvailableQuality=function(){
+      return player.getAvailableQualityLevels()
+    }
+
+    self.getQuality=function(){
+      return player.getPlaybackQuality()
+    }
+
+    self.setQuality=function(quality){
+      player.stopVideo();
+      player.setPlaybackQuality(quality);
+      player.playVideo();
+    }
+
     self.destroy = function(){
       resetPlayer()
     }

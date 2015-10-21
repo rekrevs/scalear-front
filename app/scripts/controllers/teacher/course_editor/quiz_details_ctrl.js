@@ -4,35 +4,30 @@ angular.module('scalearAngularApp')
     .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$q', 'Quiz', '$log','$state',
         function($stateParams, $scope, $q, Quiz, $log, $state) {
 
-            $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
-
+            var unwatch_item = $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
                 if ($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]) {
                     $scope.quiz = $scope.items_obj["quiz"][$stateParams.quiz_id]                    
                     if($scope.quiz.due_date)
                         $scope.quiz.due_date_enabled =!isDueDateDisabled($scope.quiz.due_date)
-                    $scope.$watch('module_obj[' + $scope.quiz.group_id + ']',function(){ 
+                    unwatch_item()
+                    var unwatch_module =$scope.$watch('module_obj[' + $scope.quiz.group_id + ']',function(){ 
                         if ($scope.quiz.appearance_time_module) {
                             $scope.quiz.appearance_time = $scope.module_obj[$scope.quiz.group_id].appearance_time;
                         }
                         if(isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)){
-                            $scope.quiz.disable_module_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)
-                            // $log.debug("whne to diable controls here !!!!")
-                            // $log.debug($scope.module_obj[$scope.quiz.group_id].due_date)
-                            // $scope.quiz.due_date_module = false
+                            $scope.quiz.disable_module_due_controls = true
+                           
                         }
                         else{
                             $scope.quiz.disable_module_due_controls = false
                         }
 
-                        if ($scope.quiz.due_date_module) {
+                        if ($scope.quiz.due_date_module){
                             $scope.quiz.due_date = $scope.module_obj[$scope.quiz.group_id].due_date;
-                                
-                                // $scope.quiz.due_date_enabled = !isDueDateDisabled($scope.quiz.due_date)
-                            // }
                         }
+                        unwatch_module()
                     })
                     $scope.link_url=$state.href('course.module.courseware.quiz', {module_id: $scope.quiz.group_id, quiz_id:$scope.quiz.id}, {absolute: true}) 
-
                 }
             })
 
@@ -91,11 +86,7 @@ angular.module('scalearAngularApp')
 
 
             $scope.visible = function(appearance_time) {
-                if (new Date(appearance_time) <= new Date()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return (new Date(appearance_time) <= new Date())
             }
 
             $scope.validateQuiz = function(column, data) {

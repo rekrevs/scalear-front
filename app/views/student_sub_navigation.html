@@ -14,17 +14,12 @@
       <ul class="title-area right" ng-if="('**.courseware.lecture.**' | includedByState)">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="navigation.lectures" >
           <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
-            <div ng-show="!preview"><timeline-filters class="settings hide-for-small" /></div>
+            <div><timeline-filters class="settings hide-for-small" /></div>
             <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> <span translate>lectures.timeline</span></a>            
           </h1>
         </li>
       </ul>
       <top-bar-section>
-       <!-- <ul class="right" ng-show="preview_as_student">
-          <li>
-              <a class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="disablePreview()"><b translate class="color-red">exit_preview_as_student</b></a>
-          </li>
-        </ul> -->
         <div ng-show="course.warning_message" class="left">
           <h5 class="warning alert-box radius hide-for-portrait hide-for-small-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5>
         </div>
@@ -37,17 +32,6 @@
       <div class="left name">
         <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>
       </div>
-      <!-- <top-bar-section>
-        <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">            
-          <span step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="navigation_courses">
-            <div class="button-group" ng-init="initFilters()">
-              <button type="button" ng-click="updateCourseFilter('!!')" class="button tiny" ng-class="{active: course_filter == '!!'}" translate>all</button>
-              <button type="button" ng-click="updateCourseFilter(false)" class="button tiny" ng-class="{active: course_filter == false}" translate>current</button>
-              <button type="button" ng-click="updateCourseFilter(true)" class="button tiny" ng-class="{active: course_filter == true}" translate>finished</button>
-            </div>
-          </span>           
-        </div>
-      </top-bar-section> -->
     </top-bar>
   </div>
 </div>

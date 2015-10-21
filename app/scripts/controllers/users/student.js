@@ -8,9 +8,7 @@ angular.module('scalearAngularApp')
                 "role_ids": "2"
             }
             $scope.$watch('user.email', function(){
-                // if($scope.user.email){
                     $scope.user.screen_name = $filter('anonymous')((Math.random()*10) + $scope.user.email, 'student')  
-                // }
             })
             $scope.sign_up = function() {
                 $scope.sending = true;
@@ -23,14 +21,10 @@ angular.module('scalearAngularApp')
                     user: $scope.final_user
                 }, function() {
                     $scope.sending = false;
-                    //$log.debug("signed up");
-                    // $state.go("home");
                     $state.go('thanks_for_registering',{type:1});
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;
-                    //$log.debug($scope.user)
-                    //$log.debug("sign up failed")
                 })
             }
 

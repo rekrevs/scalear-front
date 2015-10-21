@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
       'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
       'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers},
       'enroll' : {method: 'POST', params: {action: 'enroll_to_course', course_id:null}, headers:headers},
-      'getModuleProgress': {method: 'GET', params: {action: 'module_progress_angular'}, headers:headers},
+      'getModuleProgress': {method: 'GET', ignoreLoadingBar: true, params: {action: 'module_progress_angular'}, headers:headers},
       'getTotalChart':{method:'GET', params:{action:'get_total_chart_angular'},headers:headers},
       'getCourseware':{method:'GET', params:{action:'courseware_angular'},headers:headers},
       'getEnrolledStudents':{method:'GET', params:{action:'enrolled_students'},headers:headers, isArray: true},
@@ -34,7 +34,6 @@ angular.module('scalearAngularApp')
       'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
-      // 'sortCourseLinks':{method: 'POST', headers:headers, params: {action: 'sort_course_links'}},
       'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}}
     });
 

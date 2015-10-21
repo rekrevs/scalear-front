@@ -3,44 +3,31 @@
 angular.module('scalearAngularApp')
   .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','SharedItem','$modalInstance','$translate', 'selected_module', 'selected_item', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,SharedItem,$modalInstance, $translate, selected_module, selected_item) {
     
-  		var init =function(){  	
-  			// $scope.item= selected_item
-        $log.debug(selected_module)
-        $scope.selected_module= selected_module
-        $scope.selected_item= selected_item
+  		var init =function(){ 
+        $scope.selected_module = selected_module
+        $scope.selected_item = selected_item
         $scope.deSelectAll($scope.selected_module)
-        $log.debug($scope.selected_item)
-        if($scope.selected_item){
+        if($scope.selected_item)
           $scope.selectItem($scope.selected_module, $scope.selected_item, null);
-        }
-        else{
+        else
           $scope.selectAll($scope.selected_module)
-        }
-  			// courses.getAllTeachers({course_id:null}, function(response){
-     //        // $scope.courses=JSON.parse(response.courses);
-     //        	$log.debug(response)
-	    //         $scope.teachers = response.teachers;
-	    //     });
   		}
-
 
   		$scope.shareItem= function(){
   			var selected = {modules:[], lectures:[], quizzes:[], customlinks:[]}
-  			// $scope.modules.forEach(function(module){
-  				if($scope.selected_module.selected)
-  					selected.modules.push($scope.selected_module.id)
-  				else
-  					$scope.selected_module.items.forEach(function(item){
-  						if(item.selected){
-                if(item.class_name == 'lecture')
-                  selected['lectures'].push(item.id)
-                else if (item.class_name == 'quiz')
-                  selected['quizzes'].push(item.id)
-                else if (item.class_name == 'customlink')
-                  selected['customlinks'].push(item.id)
-              }
-  					})
-  			// })
+				if($scope.selected_module.selected)
+					selected.modules.push($scope.selected_module.id)
+				else
+					$scope.selected_module.items.forEach(function(item){
+						if(item.selected){
+              if(item.class_name == 'lecture')
+                selected['lectures'].push(item.id)
+              else if (item.class_name == 'quiz')
+                selected['quizzes'].push(item.id)
+              else if (item.class_name == 'customlink')
+                selected['customlinks'].push(item.id)
+            }
+					})
 
         if(!selected.modules.length && !selected.lectures.length && !selected.quizzes.length && !selected.customlinks.length){
           $scope.errors = $translate('sharing.nothing_selected')
@@ -51,15 +38,14 @@ angular.module('scalearAngularApp')
           SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
           	function(){
                 $modalInstance.close();
-                // selectNone()
             },
             function(response){
-              // $log.debug(data)
               $scope.errors = response.data.errors
               $log.debug($scope.errors)
-            })
-          }
+            }
+          )
         }
+      }
 
       $scope.selectAll=function(module,event){
 	      module.selected = !module.selected
@@ -69,13 +55,13 @@ angular.module('scalearAngularApp')
         if(event)
     	   event.stopPropagation()
       }
+
       $scope.deSelectAll=function(module){
         module.selected = false
         module.items.forEach(function(item){
           item.selected=module.selected
         })
       }
-
 
       $scope.selectItem=function(module, item, event){
         if(event)

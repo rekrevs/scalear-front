@@ -11,7 +11,6 @@ angular.module('scalearAngularApp')
       	'getNotifications':{method: 'GET', ignoreLoadingBar: true, params: {action: 'notifications'}, headers: headers},
       	'acceptCourse':{method: 'POST', params: {action: 'accept_course'}, headers: headers},
       	'rejectCourse':{method: 'POST', params: {action: 'reject_course'}, headers: headers},
-        // 'createComment':{method: 'POST', params: {action: 'create_comment'}, headers: headers}
       });
 
 }]);

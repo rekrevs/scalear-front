@@ -36,7 +36,6 @@ angular.module('scalearAngularApp')
 	 		$scope.status=data.status;
 	 		$scope.correct=data.correct;
             $scope.next_item= data.next_item;
-            // $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 	 		$scope.alert_messages= data.alert_messages
             $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
 		  	$scope.quiz.questions.forEach(function(question,index){
@@ -51,7 +50,7 @@ angular.module('scalearAngularApp')
  	
  	init();
 
-    $scope.go_to_next_item = function(){
+    $scope.nextItem = function(){
         var next_state = "course.module.courseware." + $scope.next_item.class_name
         var s = $scope.next_item.class_name + "_id"
         var to = {}
@@ -65,20 +64,25 @@ angular.module('scalearAngularApp')
     	if($scope.form.$valid || action=="save") //validate only if submit.
     	{
     		$scope.submitted=false;
-    		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
-    			$scope.status=data.status;
-    			$scope.alert_messages= data.alert_messages;
-                $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
-                $scope.next_item= data.next_item;
-    			if(data.correct)
-    				$scope.correct=data.correct; 
-				
-                // var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
-                // var quiz_index= scalear_utils.getIndexById($scope.course.groups[group_index].quizzes, data.done[0])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-                // if(quiz_index!=-1 && group_index!=-1)
-                //     $scope.course.groups[group_index].quizzes[quiz_index].is_done= data.done[2]
-                $scope.course.markDone(data.done[1],data.done[0], data.done[2])
-    		});
+    		Quiz.saveStudentQuiz(
+                {
+                    quiz_id: $stateParams.quiz_id, 
+                    course_id: $stateParams.course_id
+                },
+                {
+                    student_quiz: $scope.studentAnswers, 
+                    commit: action
+                }, 
+                function(data){
+        			$scope.status=data.status;
+        			$scope.alert_messages= data.alert_messages;
+                    $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
+                    $scope.next_item= data.next_item;
+        			if(data.correct)
+        				$scope.correct=data.correct; 
+                    $scope.course.markDone(data.done[1],data.done[0], data.done[2])
+        		}
+            );
     	}
     	else{ // client validation error.
     		$scope.submitted=true;

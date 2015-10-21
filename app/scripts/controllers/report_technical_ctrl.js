@@ -6,22 +6,7 @@ angular.module('scalearAngularApp')
   $scope.issue_types=[{value:"system", text:$translate('feedback.system')}, {value:"content", text:$translate('feedback.course_content')}]//"ScalableLearning Website", "Course Content"]
   $scope.selected_type = $scope.issue_types[0];
 	$scope.hide_content = false;
-  // $scope.ok = function () {
-  // 	$log.debug($scope);
-  // 	if($scope.form.key.$valid)
-  // 	{
-  // 	$scope.form.processing=true;
-  // 	Course.enroll({},{unique_identifier : $scope.enrollment.key},function(data){
-  // 		$scope.form.processing=false;
-  // 		$modalInstance.close($scope.enrollment.key);	
-  // 	}, function(response){
-  // 		$scope.form.processing=false;
-  // 		$scope.form.server_error=response.data.errors.join();
-  // 	})
-  		
-  // 	}else
-  // 		$scope.form.submitted=true	
-  // };
+  
   $scope.send_technical = function(type, data, user) {
       if(!user){
         user = {name: $rootScope.current_user.full_name, email: $rootScope.current_user.email}

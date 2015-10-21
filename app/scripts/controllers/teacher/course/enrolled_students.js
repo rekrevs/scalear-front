@@ -15,56 +15,45 @@ angular.module('scalearAngularApp')
           function(students){
             $scope.students = students
             $scope.loading_students = false
-          },
-          function(){}
+          }
         )
 
         $scope.removeStudent = function(student){
-            $log.debug(student)
-//            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
-            //if(answer){
-            	student.removing=true;
-                Course.removeStudent(
-                    {
-                        course_id:$stateParams.course_id ,
-                        student: student.id
-                    },
-                    {},
-                    function(){
-                        $scope.students.splice($scope.students.indexOf(student), 1)
-                     },
-                    function(){
-                    	student.removing=false;
-                        $log.debug(value);
-                    })
-
-           // }
+          $log.debug(student)
+        	student.removing=true;
+            Course.removeStudent(
+              {
+                  course_id:$stateParams.course_id ,
+                  student: student.id
+              },
+              {},
+              function(){
+                  $scope.students.splice($scope.students.indexOf(student), 1)
+               },
+              function(){
+              	student.removing=false;
+                  $log.debug(value);
+              }
+            )
         }
 
         $scope.emailSingle=function(student){
-          $log.debug("HFGfsda")
           $scope.deSelectAll()
           $scope.toggleSelect(student)
           $scope.emailForm()
         }
 
-        // $scope.emailSingle=function(){
-        //   $log.debug("HFGfsda")
-        //   $scope.deSelectAll()
-        //   $scope.toggleSelect(student)
-        //   $scope.emailForm()
-        // }
         $scope.emailForm = function(){
-            var selected_students = $filter('filter')($scope.students, {'checked': true}, true)
-            $scope.emails = [];
-            selected_students.forEach(function(student){
-              $scope.emails.push(student.email);
-            })
-            batchEmailService.setEmails($scope.emails)
-            $modal.open({
-                templateUrl: '/views/teacher/course/send_emails.html',
-                controller: 'sendEmailsCtrl'
-            })
+          var selected_students = $filter('filter')($scope.students, {'checked': true}, true)
+          $scope.emails = [];
+          selected_students.forEach(function(student){
+            $scope.emails.push(student.email);
+          })
+          batchEmailService.setEmails($scope.emails)
+          $modal.open({
+            templateUrl: '/views/teacher/course/send_emails.html',
+            controller: 'sendEmailsCtrl'
+          })
         }
         $scope.selected = []
         $scope.toggleSelect = function(student){
@@ -72,12 +61,8 @@ angular.module('scalearAngularApp')
         }
         $scope.selectAll = function(){
           var filtered_students = $filter('filter')($scope.students, $scope.searchText)
-          // $log.debug('filtered students')
-          // $log.debug(filtered_students.length)
           filtered_students.forEach(function(item){
-            $log.debug('1')
             $filter('filter')($scope.students, {'id': item.id}, true)[0].checked = true;
-
           })
         }
         $scope.deSelectAll = function(){

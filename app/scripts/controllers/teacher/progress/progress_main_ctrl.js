@@ -49,9 +49,6 @@ angular.module('scalearAngularApp')
                     $('.student').tooltip({"placement": "left", container: 'body'})
                 })
 
-            },
-            function(){
-                //alert('Could not load data, please check your internet connection')
             }
         );
     } 
@@ -156,9 +153,6 @@ angular.module('scalearAngularApp')
                     "minValue":0
             },
             chartArea:{top: 10},
-            "vAxis": {
-                // "title": $translate("courses.statistics")
-            }
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)
 	  	return chart

@@ -1,19 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('appMessages', ['ErrorHandler',function(ErrorHandler) {
-
-            var directiveDefinitionObject = {
-            	 scope:{
-            		 status:"="
-            	 },
-            	 replace:true,
-            	 templateUrl: "/views/app_messages.html",
-                 link: function(scope, element) {
-                	 ErrorHandler.elementsList.push($(element));
-                 }
-            };
-            return directiveDefinitionObject;
+.directive('appMessages', ['ErrorHandler',function(ErrorHandler) {
+    return{
+        scope:{
+	       status:"="
+        },
+        replace:true,
+        templateUrl: "/views/app_messages.html",
+        link: function(scope, element) {
+	       ErrorHandler.elementsList.push($(element));
+        }
+    };
  }]).directive('errorMessage', ['$log',function($log) {			
     return {
     	restrict:"E",

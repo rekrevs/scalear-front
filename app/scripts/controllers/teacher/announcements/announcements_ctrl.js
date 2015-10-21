@@ -3,13 +3,11 @@
 angular.module('scalearAngularApp')
   .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window','Page','ContentNavigator',  function ($scope, Announcement, $stateParams, $translate ,$log, $window,Page, ContentNavigator) {
   	
-    $log.debug("in announcements");
     ContentNavigator.close()
     Page.setTitle('navigation.announcements')
   	$scope.disable_new = false;
 
-  	var init = function()
-  	{
+  	var init = function(){
   		Announcement.index(
         {course_id: $stateParams.course_id},
   			function(data){
@@ -20,7 +18,6 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.deleteAnnouncement=function(this_announcement){
-  		//if(confirm($translate('announcement_form.confirm_delete'))){
   		if(this_announcement.id){
 	  		Announcement.destroy(
           {
@@ -28,15 +25,10 @@ angular.module('scalearAngularApp')
             announcement_id: this_announcement.id
           },
           {}
-          // function(){
-  			     //  $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1)
-          //     $scope.disable_new = false;
-          // }
-          )
+        )
 	  	}
-  		    $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
-          $scope.disable_new = false;
-      //  }
+		    $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
+        $scope.disable_new = false;
   	}
   	
   	$scope.createAnnouncement= function(){
@@ -64,8 +56,6 @@ angular.module('scalearAngularApp')
             announcement_id:this_announcement.id 
           },
   			  function(data){
-            $log.debug("announcements data=");
-    				$log.debug(data);
     				this_announcement=data;
   			 }
   		  );

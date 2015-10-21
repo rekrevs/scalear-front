@@ -2,21 +2,19 @@
 
 angular.module('scalearAngularApp')
 .directive('quizList',function(){
-		return {
-			// transclude: true,
-			// replace:true,
-			restrict: 'E', 
-			templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
-			controller: 'lectureQuizListCtrl'
-		};
+	return {
+		restrict: 'E', 
+		templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
+		controller: 'lectureQuizListCtrl'
+	};
 })
 .directive('quiz',function(){
-		return {
-			transclude: true,
-			replace:true,
-			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
-		};
+	return {
+		transclude: true,
+		replace:true,
+		restrict: 'E', 
+		template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+	};
 }).directive('editPanel',['$timeout','$q','OnlineQuiz','$translate',function($timeout, $q, OnlineQuiz, $translate){
 	return {		
 		 restrict: 'E',
@@ -38,9 +36,7 @@ angular.module('scalearAngularApp')
 								'</div>'+
 							'</div>'+
 							'<delete_button size="big" action="deleteQuizButton(selected_quiz)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
-							// '<button class="button secondary tiny"  ng-click="exitBtn()" translate>lectures.delete_quiz</button>'+
 							'<button id="save_quiz_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
-							// '<div><span>Are you sure?</span></div>'
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs) {
@@ -109,29 +105,8 @@ angular.module('scalearAngularApp')
 			}
 		}
 	};
-}]).directive('dropdownList',function(){
-	return {
-		 scope: {
-		 	title:"@",
-		 	quiztype:'@',
-		 	list:"=",
-		 	action:"&"
-		 },
-		 restrict: 'E',
-		 template: 	//'<div>'+
-						'<a class="button tiny secondary dropdown" dropdown-toggle="#{{quiztype}}_list" href="" style="background-image: initial;">'+
-							'{{title}} '+
-							// '<span class="caret"></span>'+
-						'</a>'+
-						'<ul id="{{quiztype}}_list" class="f-dropdown" >'+
-				              '<li ng-repeat="item in list">'+
-				              		// '<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
-				              		'<a ng-hide="quiztype==\'invideo\' && item.only==\'html\'" href="" class="size-12 insertQuiz" ng-click="action()(quiztype,item.type)" translate>{{"lectures."+item.text}}</a>'+
-				              '</li>'+ 
-						'</ul>'//+
-				  	//'</div>'
-	};
-}).directive('answervideo', ['$compile',function($compile){
+}])
+.directive('answervideo', function(){
 	return {
 		 scope: {
 		 	quiz:"=",
@@ -148,35 +123,13 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='DRAG' />"+
 	 				"</div>"
 	};
-}]).directive('answer', ['$rootScope','$log','$timeout', function($rootScope,$log,$timeout){
+}).directive('answer', ['$rootScope','$log','$timeout', function($rootScope,$log,$timeout){
 	return {
-		 replace:true,
-		 restrict: 'E',
-		 templateUrl:'/views/teacher/course_editor/answer.html',
-
-		link: function(scope, element, attrs) {
-
-			//==FUNCTIONS==//
-			// var setAnswerLocation=function(){
-			// 	element.css('z-index', 5)
-			// 	$log.debug("setting answer location")
-			// 	var ontop=angular.element('.ontop');		
-			// 	var w = scope.data.width * ontop.width();
-			// 	var h = scope.data.height* (ontop.height());
-			// 	// var add_left= (w-13)/2.0
-			// 	// var add_top = (h-13)/2.0
-			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
-			// 	scope.xcoor = scope.data.xcoor
-			// 	scope.ycoor = scope.data.ycoor
-			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-			// 	// $log.debug(scope.xcoor+add_left)
-			// 	// $log.debug(scope.ycoor+add_top)
-			// }	
-
+ 		replace:true,
+	 	restrict: 'E',
+	 	templateUrl:'/views/teacher/course_editor/answer.html',
+		link: function(scope, element, attrs){
 			scope.setAnswerColor=function(){
-				$log.debug("image change")
-				$log.debug(scope.data.correct)
 				if(scope.quiz.question_type == "OCQ")
 					scope.imgName = scope.data.correct? scope.ocq_correct : scope.ocq_incorrect;
 				else
@@ -188,8 +141,6 @@ angular.module('scalearAngularApp')
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height());
 				scope.calculateSize()
-				$log.debug(element.position().left)				
-				$log.debug(element.position().top)				
 			}
 
 			scope.calculateSize=function(){
@@ -238,11 +189,6 @@ angular.module('scalearAngularApp')
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
-			
-			// $rootScope.$on("updatePosition",function(){
-			// 	$log.debug("event emiited updated position")
-			// 	setAnswerLocation()
-			// })	
 
 			scope.answerClass = "component dropped answer_img"	
 
@@ -254,21 +200,17 @@ angular.module('scalearAngularApp')
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
 								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>button.save_close</span></button>"+
-								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>button.remove</button>"+
 							"</form>"
 			else
 				template = "<form name='aform' >"+
 								"<label class='show-inline'><span translate>editor.correct</span> <span translate>editor.answer</span>"+
 								"<input id='correct_checkbox' class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
-								// "<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
-								// "<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label class='with-small-margin-top'>"+
 									"<span translate>editor.answer</span>"+
 									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>"+ 
 									"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 									"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
 								"</label>"+
-								// "<br />"+
 								"<label style='margin-top:10px'>"+
 									"<span translate>editor.explanation</span>"+
 									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>"+
@@ -276,15 +218,15 @@ angular.module('scalearAngularApp')
 								"</label>"+
 								"<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>"+
 								'<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>'+
-								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>button.remove</button>"+
 							"</form>"
 
            	scope.popover_options={
             	content: template,
             	html:true,
-            	// fullscreen:false,
-            	// topcut:true,
-            	container: 'body',
+            	placement:function(){
+					var placement= (scope.data.xcoor > 0.5)? "left":"right"
+					return scope.data.ycoor <0.3? "bottom": placement
+				},
             	instant_show:!scope.data.id
             }
             
@@ -292,7 +234,6 @@ angular.module('scalearAngularApp')
 				scope.updateValues();	
 			},true)
 
-            // setAnswerLocation()
 			scope.setAnswerColor()
 		}
 	};
@@ -302,12 +243,6 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 template: "<div>"+
 		 				"<div class='component dropped answer_drag' style='border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 20px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 					// "<div class='input-prepend'>"+
-		 					// 	"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} End</span>"+
-			 				// 	// "<h6 style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;margin:0' ng-style='{max_width: width, max_height: height}' ng-class='{error: !data.answer}' ng-model='data.answer' pop-over='popover_options' unique='true' >{{data.answer}}</h6>"+
-			 				// 	"<h6 class='no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}</h6>"+
-			 				// 	"<small class='error' ng-show='!data.answer' translate>error_message.required</small>"+
-		 					// "</div>"+
 		 					"<div>"+
 	 							"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>"+
 	 							"<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'>{{data.answer}}</h6>"+
@@ -320,27 +255,6 @@ angular.module('scalearAngularApp')
  					"</div>",
 
 		link: function(scope, element, attrs) {
-
-            // $rootScope.$watch("current_lang", function(){
-            //     scope.require_translated= $translate("error_message.required")
-            // });
-			//==FUNCTIONS==//
-			// var setAnswerLocation=function(){
-			// 	var ontop=angular.element('.ontop');
-			// 	scope.width  = scope.data.width * ontop.width();
-			// 	scope.height = scope.data.height* (ontop.height());
-			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())
-			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height()))
-			// 	// scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
-			// 	// scope.sub_ycoor = (scope.data.sub_ycoor * (ontop.height()))
-			// 	scope.xcoor = scope.data.xcoor
-			// 	scope.ycoor = scope.data.ycoor
-			// 	scope.sub_xcoor = scope.data.sub_xcoor 
-			// 	scope.sub_ycoor = scope.data.sub_ycoor
-			// 	scope.area_width= scope.width - 50
-			// 	scope.area_height= scope.height - 20
-			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-			// }
 
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');
@@ -365,16 +279,7 @@ angular.module('scalearAngularApp')
 				$timeout(function(){
 					element.find('textarea')[0].select()
 				})				
-			}	
-			// scope.selectField()	
-			//==========//	
-			
-			// $rootScope.$on("updatePosition",function(){
-			// 	$log.debug("event emiited updated position")
-			// 	setAnswerLocation()
-			// })	
-
-			// scope.dragClass = "" 
+			}
 
 			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
@@ -396,7 +301,6 @@ angular.module('scalearAngularApp')
 
 
 			var template = '<ul class="no-margin">'+
-							// "<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false'  color='dark' action='remove()'></delete_button></span>"+
 							'<label>'+
 								'<span translate>editor.drag.instruction</span>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.answer" />'+
@@ -409,29 +313,26 @@ angular.module('scalearAngularApp')
 								'<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
-							// "<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save_close</span></button>"+
 							"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>"+
 							'<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>'+
-							// '<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button" translate>button.remove</button>'+
 						'</ul>'
 
             scope.popover_options={
             	content: template,
             	html: true,
-            	// fullscreen:false
-            	topcut:true,
+            	placement:function(){
+					var placement= (scope.data.xcoor > 0.5)? "left":"right"
+					return scope.data.ycoor <0.3? "bottom": placement
+				},
             	instant_show:!scope.data.id
             }
 
             angular.element(element.children()[0]).resizable({
             	containment: ".videoborder",  
-            	// alsoResize: element.find('.area'), 
             	minHeight:40, 
             	minWidth:40,
 		  		stop: scope.calculateSize
         	});
-
-        	// setAnswerLocation()
 		}
 	};
 }]).directive('answerform',['$log','$translate',function($log, $translate){
@@ -480,23 +381,8 @@ angular.module('scalearAngularApp')
 
 			if(!scope.isSurvey()){
 				scope.quiz_types.push({value:"drag", text:$translate('content.questions.quiz_types.drag')})
-				// [
-				// 	{value:"MCQ", text:$translate('content.questions.quiz_types.mcq')},
-				// 	{value:"OCQ", text:$translate('content.questions.quiz_types.ocq')},
-				// 	{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')},
-				// ]
 			}
-			// else{
-			// 	scope.quiz_types=[
-			// 		{value:"MCQ", text:$translate('content.questions.survey_types.mcq')},
-			// 		{value:"OCQ", text:$translate('content.questions.survey_types.ocq')},
-			// 		{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
-			// 	]
-			// }
 
-			// 	scope.quiz_types.push('Free Text Question')
-			$log.debug("QUIZZ is ");
-			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()
 			scope.removeQuestion=scope.removeq()
 			element.find('input')[0].focus()
@@ -538,16 +424,14 @@ angular.module('scalearAngularApp')
 					"</ul>"+
 				"</div>",
 		link:function(scope){
-			scope.removeAnswer=scope.remove()
-			
+			scope.removeAnswer=scope.remove()		
 			
 			scope.updateValues= function(){
 				scope.values=0
 				for(var element in scope.quiz.answers)
 					if(scope.quiz.answers[element].correct)
 						scope.values+=1
-			}
-			
+			}			
 			
 			scope.radioChange=function(corr_ans){
 				scope.quiz.answers.forEach(function(ans){
@@ -559,7 +443,7 @@ angular.module('scalearAngularApp')
 			}
 			
 			scope.show = function(){
-				 return ("time" in scope.quiz)
+		 		return ("time" in scope.quiz)
 			}
 			
 			scope.$watch('quiz.answers', function(){
@@ -574,8 +458,7 @@ angular.module('scalearAngularApp')
 				items: '.drag-answer',
 				opacity: 0.4,
 				scroll: true
-		 	}
-			
+		 	}			
 		}
 	};
 }]).directive('htmlFreetext',function(){	
@@ -614,14 +497,10 @@ angular.module('scalearAngularApp')
 								"<input class='no-margin' required name='answer' type='text' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
 								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>"+
 							"</div>"+
-							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
 								"<label><span translate>editor.correct</span></label>"+
 								"<input class='valign-middle' ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
 							"</div>"+
-							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
-							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
-							// "</div>"+
 						"</div>"+
 						"<div class ='row collapse' ng-if='show() && !isSurvey()'>"+
 							"<div class='small-2 columns' style='padding: 10px 0;'>"+
@@ -650,14 +529,10 @@ angular.module('scalearAngularApp')
 								"<input class='no-margin' required name='answer' type='text' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
 								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>"+
 							"</div>"+
-							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
 								"<label><span translate>editor.correct</span></label>"+
 								"<input class='valign-middle' id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
 							"</div>"+
-							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
-							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
-							// "</div>"+
 						"</div>"+
 						"<div class ='row collapse' ng-if='show() && !isSurvey()'>"+
 							"<div class='small-2 columns' style='padding: 10px 0;'>"+
@@ -707,32 +582,9 @@ angular.module('scalearAngularApp')
       scope:{
         link:'&'
       },
-      templateUrl: "/views/teacher/course_editor/controls_teacher.html",
+      template: '<div class="linkDiv" tooltip="{{\'editor.tooltip.create_link_time\'|translate}}" pop-over="link_content" unique="false" highlight="true"></div>',
       link: function (scope, element) {
-// <<<<<<< HEAD
-//   	 	scope.toggleLink=function(event){
-//   	 		if(!scope.link_url){
-// 	            scope.link_url=scope.link()
-// 	            $timeout(function() {
-// 	                element.find('.video_link').select();
-// 	            });
-// 	            $(document).on("click", function (e) {
-// 		            if(e.target != element.children()[0] && e.target != element.children()[1]){
-// 		              scope.link_url=null
-// 		              scope.$apply()
-// 		              $(document).off("click")
-// 		            }         
-//          	 	});
-// 	        }
-// 	        else{
-// 	        	scope.link_url=null
-// 	        	$(document).off("click")  
-// 	        }
-
-		// scope.link_data= scope.link()
-	         
   	 	scope.selectLink=function(event){
-            // scope.link_url=scope.link()
             $timeout(function() {
                 element.find('.video_link').select();
             });
@@ -740,7 +592,6 @@ angular.module('scalearAngularApp')
         scope.link_content = {
         	content: "<b>Student link to time {{link().time| formattime:'hh:mm:ss'}} in this video</b><hr style='margin: 5px;'/><div style='word-break: break-all;'>{{link().url}}</div>",
         	html:true,
-        	// fullscreen:false,
         	placement: 'left'
         }
       }

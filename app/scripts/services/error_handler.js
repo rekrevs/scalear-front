@@ -11,8 +11,6 @@ angular.module('scalearAngularApp')
       .addClass(cl)
       .hide()
       .fadeIn('fast')
-      //.delay(time)
-      //.fadeOut('fast', function() { $(this).remove(); })
       .appendTo(x.elementsList)
       .text(content);
     }

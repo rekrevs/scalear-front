@@ -38,17 +38,17 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.pause()
     })
 
-    angular.element($window)
-    .bind('focus', function() {
-        if($scope.lecture_player.element && $scope.last_video_state)
-            $scope.lecture_player.controls.play()        
-    })
-    .bind('blur', function() {
-        if($scope.lecture_player.element){
-            $scope.last_video_state = !$scope.lecture_player.controls.paused()
-            $scope.lecture_player.controls.pause()
-        }            
-    });    
+    // angular.element($window)
+    // .bind('focus', function() {
+    //     if($scope.lecture_player.element && $scope.last_video_state)
+    //         $scope.lecture_player.controls.play()        
+    // })
+    // .bind('blur', function() {
+    //     if($scope.lecture_player.element){
+    //         $scope.last_video_state = !$scope.lecture_player.controls.paused()
+    //         $scope.lecture_player.controls.pause()
+    //     }            
+    // });    
 
     var initVariables=function(){
         $scope.studentAnswers = {}

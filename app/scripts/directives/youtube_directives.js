@@ -548,7 +548,7 @@ angular.module('scalearAngularApp')
 	  			scope.duration = scope.player.controls.getDuration() -1;	
 	  		})
 			scope.play_class = scope.is_mobile? "pause":"play";
-	      	scope.qualities = ["auto","small", "medium", "large"]
+	      	
 	   		scope.quality_names ={
 	   			"auto":"Auto",
 	   			"tiny":"144p",
@@ -558,22 +558,7 @@ angular.module('scalearAngularApp')
 	   			"hd720":"720p (HD)",
 	   			"hd1080":"1080p (HD)",
 	   			"highres":"High"
-			}
-	      	if(scope.player.controls.youtube){
-	            scope.speeds = scope.player.controls.getSpeeds();            
-	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-
-	            $timeout(function(){
-	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-	            	scope.chosen_quality = scope.player.controls.getQuality()
-	            },2000)
-	      	}
-	      	else{
-	      		scope.qualities = ["auto"]
-	      		scope.chosen_quality = scope.qualities[0]
-	            scope.speeds = [0.8,1,1.2,1.5,1.8]
-	            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
-	      	}	      	
+			}	      	
 
 			scope.setSpeed = function(speed){
 		        $log.debug('setting youtube speed to '+speed)
@@ -760,8 +745,27 @@ angular.module('scalearAngularApp')
 	  				scrollToItem(nearest_item.type, nearest_item.data.id)
 	  		}
 
+	      	if(scope.player.controls.youtube){
+	            scope.speeds = scope.player.controls.getSpeeds();            
+	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
+	            scope.qualities = ["auto","small", "medium", "large"]
+	            // scope.chosen_quality = scope.player.controls.getQuality()
+	            $timeout(function(){
+	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+	            	scope.setQuality(scope.chosen_quality)
+	            	scope.chosen_quality = scope.player.controls.getQuality()
+	            },2000)
+	      	}
+	      	else{
+	      		scope.qualities = ["auto"]
+	      		scope.chosen_quality = scope.qualities[0]
+	      		scope.setQuality(scope.chosen_quality)
+	            scope.speeds = [0.8,1,1.2,1.5,1.8]
+	            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+	      	}
+
 	  		scope.setSpeed(scope.chosen_speed)
-	  		scope.setQuality(scope.chosen_quality)
+	  		
 
 	        shortcut.add("Space",function(){
 	        	scope.play()				

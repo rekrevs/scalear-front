@@ -1,0 +1,20 @@
+<table class="table small-12 columns no-margin-bottom">
+	<tbody>
+		<tr ng-repeat="marker in marker_list| filter:'!!'|orderBy:'time'">
+			<td style="padding: 0.3625rem 0.3rem;">
+				<div class="small-12 columns no-padding">
+					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteMarker(marker)" padded="true" />
+						<!-- <div class="small-4 columns size-10">
+							<span translate>Marker</span>
+						</div> -->
+						<!-- <div class="small-4 left columns size-10" >
+							<span class="looks-like-a-link" ng-click="showMarker(marker)">{{marker.formatedTime}}</span>
+						</div> -->
+					<div class="small-11 columns" ng-init="marker.formatedTime = (marker.time|format)">
+						<span class="quiz_title color-blue2 looks-like-a-link" ng-click="showMarker(marker)" translate>Marked at {{marker.formatedTime}} </span>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>

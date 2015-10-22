@@ -44,6 +44,9 @@
 							</li>
 						</ul>						
 					</li>
+					<li ng-if="item.type=='inclass'" class="li_inner color-green">
+						<inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" />
+					</li>
 				</ul>
 			</div>
 			<div ng-if="module_item.class_name=='quiz'" ng-init='quiz=module_item' class="small-12 columns">

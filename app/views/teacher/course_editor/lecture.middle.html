@@ -29,7 +29,7 @@
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
-			        <progress-bar ng-if="!slow && lecture.url && video_ready && !editing_mode" player="lecture_player" seek="seek" class="text-left">
+			        <progress-bar ng-hide="editing_mode" ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>
@@ -40,6 +40,7 @@
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-show="!editing_mode">
 		<span ng-show="lecture.url!='none'" >
+			<button class="button small no-margin" ng-click="addMarker($event)" translate>editor.button.add_marker</button>
 			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" translate>editor.button.add_video_quiz</span></button>
 			<button class="button small no-margin" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
 		</span>

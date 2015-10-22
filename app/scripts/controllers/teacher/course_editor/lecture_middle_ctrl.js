@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q','DetailsNavigator', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q, DetailsNavigator) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q','DetailsNavigator','OnlineMarker', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q, DetailsNavigator, OnlineMarker){
 
     var unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
   		if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
     	msg: "error_message.got_some_errors"
     }
     $scope.hide_alerts=true;
-    $scope.play_pause_class = 'play'
+    // $scope.play_pause_class = 'play'
 
     shortcut.add("i",function() {       
        $scope.addQuestion()
@@ -32,6 +32,14 @@ angular.module('scalearAngularApp')
 
     $scope.$on("delete_online_quiz",function(ev, quiz){
     	$scope.deleteQuizButton(quiz)
+    })	
+
+    $scope.$on("show_online_marker",function(ev, marker){
+    	$scope.showOnlineMarker(marker)
+    })
+
+    $scope.$on("delete_online_marker",function(ev, marker){
+    	$scope.deleteOnlineMarker(marker)
     })	
 
  	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
@@ -55,16 +63,16 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.lecture_player.events.onPlay= function(){
-        $scope.play_pause_class = 'pause'
+        // $scope.play_pause_class = 'pause'
 		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
 			if($scope.editing_mode)
 				$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
-    $scope.lecture_player.events.onPause= function(){
-        $scope.play_pause_class = "play"
-    }
+    // $scope.lecture_player.events.onPause= function(){
+    //     $scope.play_pause_class = "play"
+    // }
 
  	$scope.lecture_player.events.onSlow=function(is_youtube){
  		$scope.is_youtube = is_youtube
@@ -137,7 +145,7 @@ angular.module('scalearAngularApp')
 			Lecture.newQuiz({
 				course_id: $stateParams.course_id,
 				lecture_id: $scope.lecture.id,
-				time: Math.floor($scope.lecture_player.controls.getTime()), 
+				time: $scope.lecture_player.controls.getTime(), 
 				quiz_type: quiz_type, 
 				ques_type: question_type
 			},
@@ -406,7 +414,6 @@ angular.module('scalearAngularApp')
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
 		closeQuizMode()
-		clearQuizVariables()
 		if(!$scope.last_details_state)
 			DetailsNavigator.close()
 	}
@@ -423,13 +430,11 @@ angular.module('scalearAngularApp')
 		$scope.hide_alerts = true;
 		$scope.submitted= false
 		$scope.quiz_layer.backgroundColor= ""
+		clearQuizVariables()
 	}
 
 	$scope.deleteQuizButton=function(quiz){
-		if($scope.selected_quiz == quiz){
-			closeQuizMode()
-			clearQuizVariables()
-		}
+		closeQuizMode()
 		$scope.deleteQuiz(quiz)
 	}
 
@@ -445,6 +450,42 @@ angular.module('scalearAngularApp')
 		$timeout(function(){
 			$scope.quiz_list.pop()				
 		})
+	}
+
+	$scope.addMarker=function(){
+		var insert_time= $scope.lecture_player.controls.getTime()
+		var duration = $scope.total_duration
+
+		if(insert_time < 1 )
+			insert_time = 1
+		if (insert_time >= duration -1)
+			insert_time = duration - 2
+		
+		$scope.lecture_player.controls.seek_and_pause(insert_time)
+
+		Lecture.newMarker({
+			course_id: $stateParams.course_id,
+			lecture_id: $scope.lecture.id,
+			time: $scope.lecture_player.controls.getTime(), 
+		},
+		function(data){
+			$scope.marker_list.push(data.marker)
+			DetailsNavigator.open()
+		})
+	}
+
+	$scope.showOnlineMarker=function(marker){
+		closeQuizMode()
+		$scope.lecture_player.controls.seek_and_pause(marker.time)
+	}
+
+	$scope.deleteOnlineMarker=function(marker){
+		OnlineMarker.destroy(
+			{online_markers_id: marker.id},{},
+			function(){
+				$scope.marker_list.splice($scope.marker_list.indexOf(marker), 1)
+			}
+		)
 	}
 
 }]);

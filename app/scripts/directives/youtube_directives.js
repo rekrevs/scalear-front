@@ -439,7 +439,7 @@ angular.module('scalearAngularApp')
 
 			$scope.resize.big = function(){
 				$log.debug("resizing big")
-				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+				var factor= $scope.aspect_ratio=="smallscreen"? 4.0/3.0 : 16.0/9.0;
 	            var win = angular.element($window) 
 				$scope.fullscreen = true
 				angular.element("body").css("overflow","hidden");
@@ -469,11 +469,11 @@ angular.module('scalearAngularApp')
 
 				var video=angular.copy(container)
 				video["height"]-=progressbar_height
-				video["width"]-="auto"
+				video["width"]="auto"
 				video["position"]=""
 
 
-				var video_height = window_height-progressbar_height;
+				var video_height = video["height"]
 				var video_width = video_height*factor
 				
 				var layer={}

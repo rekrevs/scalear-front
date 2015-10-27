@@ -284,6 +284,7 @@
 	min-height: 24%;
 	overflow-y: hidden;
 	background:beige;
+	z-index: 0;
 }
 /*.question_block_free_text{
 	position:relative;
@@ -389,7 +390,7 @@
 .main_content{
 	overflow-y:auto; 
 	overflow-x:hidden; 
-	height:79vh;
+	height:72vh;
 	/*height:100%; 
 	width:100%;*/
 	/*margin-left:20px;*/

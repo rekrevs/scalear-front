@@ -30,22 +30,24 @@ left: 12% !important;
 right: auto;
 width: 78%;
 }*/
+
 .content-containeropen.large-2, .content-containeropen.medium-4{
-  min-width: 300px !important;
-  max-width: 300px !important;
-  /*width: 300px !important;*/
+  min-width: 100%;
+  max-width: 100%;
+  /*width: 100% ;*/
 }
 .max-width-me{
-  max-width: calc(100% - 300px) !important;
+  max-width: 100%;
 }
 .content-containeropen.small-12{
-  max-width: none !important;
+  max-width: none;
 }
 .content-navigator-container{
-  width: 300px;
+  width: 100%;
   position: fixed;  
   /*overflow-y: hidden !important;*/
 }
+
 
 .content-navigator-bottom-container{
   border-top: 2px groove lightgray;
@@ -1975,6 +1977,56 @@ a.editable-click{
     max-width:127vh
 }
 
+/*in-calss connect circles*/
+.connected_circles li {
+  width: 7em;
+  height: 2em;
+  text-align: center;
+  line-height: 2em;
+  border-radius: 1em;
+  background: #5DA423;
+  margin: 0 1em;
+  display: inline-block;
+  color: white;
+  position: relative;
+  font-size: 14px
+}
+
+.connected_circles li::before{
+  content: '';
+  position: absolute;
+  top: .9em;
+  left: -4em;
+  width: 4em;
+  height: .2em;
+  background: #5DA423;
+  z-index: -1;
+}
+
+
+.connected_circles li:first-child::before {
+  display: none;
+}
+.connected_circles li:nth-child(2)::before {
+  display: none;
+}
+
+.connected_circles .active {
+  background: orange;
+}
+
+.connected_circles .active ~ li {
+  background: lightblue;
+}
+
+.connected_circles li.active::before  {
+  background: orange;
+}
+
+.connected_circles .active ~ li::before {
+  background: lightblue;
+}
+
 @media only screen and (orientation:landscape) and (device-width:768px){
   .ipad .land-medium-4 {
     position: relative;
@@ -2094,6 +2146,23 @@ a.editable-click{
 }
 
 @media only screen and (min-width:40.063em){
+  .content-containeropen.large-2, .content-containeropen.medium-4{
+    min-width: 300px ;
+    max-width: 300px ;
+    /*width: 300px ;*/
+  }
+  .max-width-me{
+    max-width: calc(100% - 300px) ;
+  }
+  .content-containeropen.small-12{
+    max-width: none ;
+  }
+  .content-navigator-container{
+    width: 300px;
+    position: fixed;  
+    /*overflow-y: hidden !important;*/
+  }
+
   .main-nav .top-bar, .main-nav .top-bar .name {
     height: 2rem !important;
     line-height:2rem;
@@ -2133,6 +2202,37 @@ a.editable-click{
 @media only screen and (max-width:15.063em){
   .hide-for-semi-small{
     display: none !important;
+  }
+}
+
+@media only screen and (max-device-width: 600px) {
+  .top-bar .name h1 a#home{
+    margin-top: 6px
+  }
+
+  .inclass_lecture .panel{
+    min-height: 250px;
+  }
+  .inclass_lecture .answer_choices{
+    height: 180px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .content-containeropen{
+    height: 80%;
+  }
+  .connected_circles li {
+    width: 6em;
+    height: 2em;
+    text-align: center;
+    line-height: 2em;
+    border-radius: 1em;
+    background: #5DA423;
+    margin: 0 0.3em;
+    display: inline-block;
+    color: white;
+    position: relative;
+    font-size: 10px
   }
 }
 

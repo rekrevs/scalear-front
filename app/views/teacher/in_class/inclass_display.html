@@ -30,11 +30,21 @@
                 </youtube>
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
-            <div ng-show="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'markers' || selected_timeline_item.type == 'inclass') " ng-class="question_block">
+            <div ng-show="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'markers' || selected_timeline_item.type == 'inclass')" ng-class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div ng-show="selected_timeline_item.data.type">{{selected_timeline_item.data.type}}:</div>
-                        <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
+                        <div style="padding-left:5px;">{{selected_timeline_item.data.title}} {{selected_timeline_item.type}}</div>
+                        <div ng-show="inclass_session_status" style="bottom: 15px;position: absolute;">
+                            <ul class="connected_circles">
+                              <li ng-class="{'active': inclass_session_status==0}" style="display:none">Start</li>
+                              <li ng-class="{'active': inclass_session_status==1}">Intro</li>
+                              <li ng-class="{'active': inclass_session_status==2}">Individual</li>
+                              <li ng-class="{'active': inclass_session_status==3}">Group</li>
+                              <li ng-class="{'active': inclass_session_status==4}">Discussion</li>
+                              <li ng-class="{'active': inclass_session_status==5}">End</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' && chart" ng-class="chart_class">

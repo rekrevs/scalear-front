@@ -19,8 +19,7 @@ angular.module('scalearAngularApp')
                 $scope.timeline = {}
                 $scope.timeline['lecture']={}
                 $log.debug("timeline")
-                for(var l in $scope.module_lectures)
-                {
+                for(var l in $scope.module_lectures){
                     var lec= $scope.module_lectures[l]
                     $scope.timeline['lecture'][lec.id] = new Timeline()
                     $scope.timeline['lecture'][lec.id].meta = lec

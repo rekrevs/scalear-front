@@ -1,0 +1,85 @@
+
+<br />
+<div class="small-12 column disable_selection"><h3>{{module.name}}<span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3></div>
+<div class="small-12 columns no-padding">
+	<ul class="connected_circles">
+	  <li ng-class="{'active': inclass_status==0}" style="display:none">Start</li>
+	  <li ng-class="{'active': inclass_status==1}">Intro</li>
+	  <li ng-class="{'active': inclass_status==2}">Individual</li>
+	  <li ng-class="{'active': inclass_status==3}">Group</li>
+	  <li ng-class="{'active': inclass_status==4}">Discussion</li>
+	  <li ng-class="{'active': inclass_status==5}">End</li>
+	</ul>
+</div>
+<div class="small-12 column disable_selection inclass_lecture" ng-if="inclass_status == 2 || inclass_status == 3">
+	<div class='panel small-12 column'>
+	    <div class="small-12 columns no-padding">
+	        <div class="small-12 medium-8 columns left">
+	        	<h3>
+	        		<b>{{quiz.question_title}}</b>
+	        	</h3>
+	        </div>
+	        <!-- <div class="show-for-medium-up small-8 columns left with-small-margin-bottom">
+        		<b>{{quiz.question_title}}</b>
+	        </div> -->
+	    </div>
+	    <hr />
+	    <div class="small-12 medium-8 columns answer_choices">
+	        <!-- <div class="small-12 column" ng-if='question.question_type == "Free Text Question"'>
+	            <textarea ng-model='studentAnswers[question.id]'></textarea>
+	        </div> -->
+	        <div class="small-12 columns" width='10px;' ng-if='quiz.question_type.toUpperCase()=="OCQ" || quiz.question_type.toUpperCase()=="MCQ"' ng-repeat='choice in quiz.answers'>
+	           <!--  <div class="small-12 columns" ng-if='question.question_type=="MCQ"' width='10px;'>
+	                <label class="with-margin-top">
+	                    <input class="left with-small-margin-right with-tiny-margin-top" atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})' ng-class="{error: submitted && !valid(question.id)}"/>
+	                    <div>{{answer.content}}</div>
+	                    <small class='error' ng-show='submitted && !valid(question.id)' translate>quizzes.must_choose_answer</small>
+	                </label>
+	            </div> -->
+
+                <label ng-init="choice.selected=false" class="with-margin-top">{{choice.answer}}
+                    <!-- <input class="left with-margin-right" atleastone ng-model='studentAnswers[quiz.id]' value='{{choice.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' ng-class="{error: submitted && !valid(quiz.id)}"/> -->
+                    <input type='radio' class="left with-margin-right" name='student_answer' ng-model='choice.selected' ng-value="true" ng-change='radioChange(choice)'  ng-class="{error: alert}" style="margin-top: 3px;"/>
+                    <small class='error' ng-show='alert' translate>{{alert_message}}</small>
+                </label>
+
+	           <!--  <div class="small-12 columns" ng-if='quiz.question_type=="OCQ"' width='10px;'>
+	                <label class="with-bigger-margin-top" ng-repeat="choice in quiz.answers">
+	                	<h4>{{choice.answer}}
+	                    <input class="left with-margin-right" name='ocq' type='radio' /></h4>
+	                </label>
+	            </div> -->
+	    	</div>
+		    <!-- <a class="right" ng-click="getInclassStudentStatus(inclass_status)">
+		    	<i class="fi-refresh"></i>
+		    	<span>Refresh</span>
+		    </a> -->
+		    
+		</div>
+		<i class="no-padding fi-check color-green right with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!done, 'blink_btn':blink}" ></i>
+	</div>
+	<span ng-hide="done">
+		<div class="small-12 medium-4 columns"><button class="button expand success no-margin" ng-click="sendAnswers()">Vote!</button></div>
+	</span>
+	<span ng-show="done">		
+		<div class="small-4 medium-2 columns no-padding left" ><button class="button expand success no-margin" ng-click="retry(inclass_status)">Retry</button></div>
+		<div class="small-8 medium-4 columns left" style="padding:0;padding-left:5px"><button class="button expand no-margin" ng-click="getInclassStudentStatus(inclass_status)">Next</button></div>
+	</span>
+</div>
+<div class="small-12 column disable_selection inclass_lecture" ng-if="inclass_status != 2 && inclass_status != 3">
+	<div class='panel small-12 column'>
+		<center>
+			<div style="margin: 100px 0;"><h5><b>{{messages[inclass_status]}}</b></h5></div>
+		</center>
+	</div>
+	<div class="small-12 medium-4 columns left">
+		<loading size="small" show="loading" /> 
+		<button class="button expand" ng-click="getInclassStudentStatus(inclass_status)">
+			<span ng-show="inclass_status==0">
+				<i class="fi-refresh"></i>
+				Refresh
+			</span>
+			<span ng-show="inclass_status>0">Next</span>
+		</button>
+	</div>
+</div>

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 	      notification: '=',
 	      type: '='
 	    },
-    	templateUrl: '/views/notification_item.html',
+    	templateUrl: '/views/teacher/notification/notification_item.html',
     	link: function(scope, element){
       		scope.accept = function(){
 		        Home.acceptCourse({},{invitation : scope.id},
@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
 	      notification: '=',
 	      type: '='
 	    },
-	    templateUrl: '/views/shared_item_notification.html',
+	    templateUrl: '/views/teacher/sharing/shared_item_notification.html',
 	    link: function(scope, element){
       		scope.accept = function(){
 		        SharedItem.accpetShared(

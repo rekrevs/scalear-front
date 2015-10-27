@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
 				course:"=",
 				message:"="
 			},
-			templateUrl: '/views/teacher_sub_navigation.html',
+			templateUrl: '/views/teacher/teacher_sub_navigation.html',
 			link: function(scope){
 				scope.ContentNavigator = ContentNavigator
 				scope.DetailsNavigator = DetailsNavigator
@@ -139,7 +139,7 @@ angular.module('scalearAngularApp')
 				course:"=",
 				message:"="
 			},
-			templateUrl: '/views/student_sub_navigation.html',
+			templateUrl: '/views/student/student_sub_navigation.html',
 			link: function(scope){
 				scope.ContentNavigator = ContentNavigator
 				scope.TimelineNavigator = TimelineNavigator				

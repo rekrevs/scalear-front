@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 	      notification: '=',
 	      type: '='
 	    },
-    	templateUrl: '/views/teacher/notification/notification_item.html',
+    	templateUrl: '/views/teacher/invitation/invitation_item.html',
     	link: function(scope, element){
       		scope.accept = function(){
 		        Home.acceptCourse({},{invitation : scope.id},

@@ -688,6 +688,31 @@ module.exports = function(grunt) {
 
                 }
             }],
+            server: [{
+                dest: '<%= yeoman.app %>/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        beta:false,
+                        debug: true,
+                        ga_token: "",
+                        host: 'https://scalear-staging2.herokuapp.com',
+                        redirection_url: 'https://scalear-staging2.herokuapp.com/#/',
+                        version: '3.16.11(' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
+                    },
+
+                }
+            }],
             coverageE2E:[{
                 dest: '<%= yeoman.coverageE2E %>/app/scripts/config.js',
                 wrap: '"use strict";\n\n <%= __ngModule %>',
@@ -733,7 +758,7 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:server',
-            'ngconstant:dev',
+            target=='staging'?'ngconstant:server':'ngconstant:dev',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',

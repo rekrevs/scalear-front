@@ -2210,14 +2210,14 @@ a.editable-click{
     margin-top: 6px
   }
 
-  .inclass_lecture .panel{
+  /*.inclass_lecture .panel{
     min-height: 250px;
   }
   .inclass_lecture .answer_choices{
     height: 180px;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-  }
+  }*/
   .content-containeropen{
     height: 80%;
   }

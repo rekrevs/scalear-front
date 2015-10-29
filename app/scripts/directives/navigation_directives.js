@@ -145,7 +145,7 @@ angular.module('scalearAngularApp')
 				scope.TimelineNavigator = TimelineNavigator				
 
 				scope.toggleNavigator=function(){
-					if(!$state.includes('course.content'))
+					if(!$state.includes('course.content_selector'))
 						ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
 

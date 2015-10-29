@@ -3,14 +3,13 @@
 angular.module('scalearAngularApp')
     .controller('studentInclassCtrl', ['$scope','ContentNavigator','MobileDetector','Module','$state','$log','$timeout', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $timeout) {
 
-        if(!MobileDetector.isPhone())
-            ContentNavigator.open()
+        // if(!MobileDetector.isPhone())
+        //     ContentNavigator.open()
 
-        $scope.messages=["No In-class Session Running", "Introduction", "Individual", "Group", "Discussion", "End"]
+        $scope.messages=["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
         $scope.module = $scope.module_obj[$state.params.module_id]
         console.log($scope)
         $scope.getInclassStudentStatus=function(status){
-            console.log("starting comet", status)
             $scope.loading = true
             Module.getInclassStudentStatus(
                 {
@@ -21,17 +20,13 @@ angular.module('scalearAngularApp')
                 },
                 function(data){
                     $scope.loading = false
-                    console.log("received status" ,data.status)
                     if(!status && data.status>0){
-                        console.log("first fetch, got quiz", data.quiz)
                         $scope.quiz = data.quiz
+                        $scope.group_quiz = angular.copy($scope.quiz)
                         $scope.lecture = data.lecture
                         $('.answer_choices input').attr('type',$scope.quiz.question_type =="MCQ"? "checkbox" :"radio")
                     }
-                    if(data.status == 3){
-                        $scope.done=false
-                        removeSelectedAnswer()
-                    }
+
                     $scope.inclass_status = data.status
                 }
             )
@@ -39,25 +34,18 @@ angular.module('scalearAngularApp')
 
         $scope.getInclassStudentStatus()
 
-        var removeSelectedAnswer=function(){
-            $scope.quiz.answers.forEach(function(ans){
+        var clearSelectedAnswer=function(quiz){
+            quiz.answers.forEach(function(ans){
                 ans.selected=false
             })
         }
 
-        $scope.radioChange=function(corr_ans){
-            if($scope.quiz.question_type == "OCQ"){
-              removeSelectedAnswer()
-              corr_ans.selected=true
-            }
-        }
-
-        $scope.sendAnswers=function(){
+        $scope.sendAnswers=function(quiz){            
             removeNotification()
             var selected_answers
-            if($scope.quiz.question_type == "OCQ" || $scope.quiz.question_type == "MCQ"){
+            if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ"){
                 selected_answers=[]
-                $scope.quiz.answers.forEach(function(answer){
+                quiz.answers.forEach(function(answer){
                     if(answer.selected)
                         selected_answers.push(answer.id)
                 })
@@ -66,30 +54,11 @@ angular.module('scalearAngularApp')
                     return      
                 }
 
-                if($scope.quiz.question_type == "OCQ" && selected_answers.length==1)
+                if(quiz.question_type == "OCQ" && selected_answers.length==1)
                     selected_answers = selected_answers[0]
             }
+            quiz.done = true
 
-            $scope.done = true
-            $scope.blink = true
-            $timeout(function(){
-                $scope.blink = false
-            }, 500)
-
-
-
-            // else{ //DRAG
-            //     selected_answers={}
-            //     selected_answers = $scope.studentAnswers[$scope.selected_quiz.id]
-            //     var count = 0
-            //     for (var el in selected_answers)
-            //         if(selected_answers[el])
-            //             count++
-            //     if(count<$scope.selected_quiz.online_answers.length){
-            //         showNotification("lectures.must_place_items")
-            //         return
-            //     }
-            // }
             // Lecture.saveOnline(
             //     {
             //         course_id:$state.params.course_id,
@@ -115,9 +84,20 @@ angular.module('scalearAngularApp')
             $scope.alert_message = ""
         }
 
-        $scope.retry=function(){
-            $scope.done= false
+        $scope.retry=function(quiz){
+            quiz.done= false
+            clearSelectedAnswer(quiz)
+        }
 
+        $scope.intToChar=function(n){
+            return String.fromCharCode(97 + n).toUpperCase()
+        }
+
+        $scope.selectAnswer=function(answer, quiz){
+            if($scope.quiz.question_type == "OCQ"){
+                clearSelectedAnswer(quiz)
+            }
+            answer.selected=true
         }
 
 

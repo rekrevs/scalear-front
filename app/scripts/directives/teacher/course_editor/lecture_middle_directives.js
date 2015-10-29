@@ -284,9 +284,11 @@ angular.module('scalearAngularApp')
 			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
-				scope.data.pos = max ==-Infinity? 0 : max+1
-				scope.list.push(scope.data.pos)
+				scope.data.pos = max ==-Infinity? -1 : max+1
+ 				scope.list.push(scope.data.pos)
 			}
+
+			scope.pos= parseInt(scope.data.pos)
 
 			if(!(scope.data.explanation instanceof Array)){
 				scope.data.explanation = []

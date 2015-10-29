@@ -29,7 +29,7 @@
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
-			        <progress-bar ng-if="!slow && lecture.url && video_ready && !editing_mode" player="lecture_player" seek="seek" class="text-left">
+			        <progress-bar ng-show="!editing_mode" ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>

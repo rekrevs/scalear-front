@@ -68,6 +68,7 @@ angular.module('scalearAngularApp')
       $scope.quality_set ='color-blue'
       $scope.counting = true;
       $scope.counting_finished=false
+      $scope.num_next_clicks = 0
     }
 
     var init = function(){
@@ -278,7 +279,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.nextQuiz = function(){
-      if($scope.inclass_session_status == 2){ 
+      $scope.num_next_clicks+=1
+      if($scope.inclass_session_status == 2 && $scope.selected_timeline_item.data.available.in_group){ 
         $scope.inclass_session_status = 3 
         updateInclassSession($scope.selected_timeline_item.data.quiz_id,3) //group status
         return
@@ -308,7 +310,7 @@ angular.module('scalearAngularApp')
                       updateInclassSession($scope.selected_timeline_item.data.quiz_id,4)
                     }
                   }
-                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                  // $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{
                   $scope.nextQuiz()
@@ -340,8 +342,14 @@ angular.module('scalearAngularApp')
                     $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
                 }
                 else if($scope.selected_timeline_item.type == "inclass"){
-                  $scope.inclass_session_status = 2 //individual status
-                  updateInclassSession($scope.selected_timeline_item.data.quiz_id, 2)
+                  if($scope.selected_timeline_item.data.available.in_self){
+                    $scope.inclass_session_status = 2 //individual status
+                    updateInclassSession($scope.selected_timeline_item.data.quiz_id, 2)
+                  }
+                  else if($scope.selected_timeline_item.data.available.in_group){
+                    $scope.inclass_session_status = 3 //group status
+                    updateInclassSession($scope.selected_timeline_item.data.quiz_id, 3)
+                  }
                 }
               }
               else{
@@ -385,7 +393,7 @@ angular.module('scalearAngularApp')
                 if($scope.timeline_itr > 0){
                   if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                     $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                    $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                    // $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                   }
                   else{             
                     $scope.prevQuiz()

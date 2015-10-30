@@ -5,7 +5,7 @@
                 </center>
             </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <span class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
+        <span class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{$scope.selected_item.name}}</span>
         <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px" >
             <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="button reall-tiny secondary"><i ng-class="play_pause_class" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="button reall-tiny secondary"><i ng-class="mute_class" /></button>
@@ -31,20 +31,31 @@
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
             <div ng-show="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'markers' || selected_timeline_item.type == 'inclass')" ng-class="question_block">
+                <div ng-show="inclass_session_status">
+                    <ul class="connected_circles">
+                      <!-- <li ng-class="{'active': inclass_session_status==0}" style="display:none">Start</li>
+                      <li ng-class="{'active': inclass_session_status==1}">Intro</li>
+                      <li ng-class="{'active': inclass_session_status==2}">Individual</li>
+                      <li ng-class="{'active': inclass_session_status==3}">Group</li>
+                      <li ng-class="{'active': inclass_session_status==4}">Discussion</li>
+                      <li ng-class="{'active': inclass_session_status==5}">End</li> -->
+                      <span ng-hide="$index==0" ng-repeat="item in timeline['lecture'][selected_item.id].items" >
+                        <li ng-if="!item.data && timeline['lecture'][selected_item.id].items[$index-1].type !='inclass'" class="small_circles" ng-class="{'active': num_next_clicks == $index}"></li>
+
+                        <li ng-if="item.data && item.type!='inclass' && timeline['lecture'][selected_item.id].items[$index-1].type !='inclass'" ng-class="{'active': num_next_clicks == $index}">{{item.data.title}}</li>
+
+                        <li ng-if="item.data && item.type=='inclass' && item.data.available.in_self" ng-class="{'active': num_next_clicks == $index && inclass_session_status==2}">Self</li>
+
+                        <li ng-if="item.data && item.type=='inclass' && item.data.available.in_group" ng-class="{'active': num_next_clicks == $index && inclass_session_status==3}">Group</li>
+
+                        <li ng-if="timeline['lecture'][selected_item.id].items[$index-1].type =='inclass'" ng-class="{'active': num_next_clicks == $index}">Disucssion</li>
+                      </span>
+                    </ul>
+                </div>
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div ng-show="selected_timeline_item.data.type">{{selected_timeline_item.data.type}}:</div>
-                        <div style="padding-left:5px;">{{selected_timeline_item.data.title}} {{selected_timeline_item.type}}</div>
-                        <div ng-show="inclass_session_status" style="bottom: 15px;position: absolute;">
-                            <ul class="connected_circles">
-                              <li ng-class="{'active': inclass_session_status==0}" style="display:none">Start</li>
-                              <li ng-class="{'active': inclass_session_status==1}">Intro</li>
-                              <li ng-class="{'active': inclass_session_status==2}">Individual</li>
-                              <li ng-class="{'active': inclass_session_status==3}">Group</li>
-                              <li ng-class="{'active': inclass_session_status==4}">Discussion</li>
-                              <li ng-class="{'active': inclass_session_status==5}">End</li>
-                            </ul>
-                        </div>
+                        <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
                     </div>
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' && chart" ng-class="chart_class">

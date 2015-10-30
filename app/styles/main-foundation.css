@@ -1983,48 +1983,91 @@ a.editable-click{
   height: 2em;
   text-align: center;
   line-height: 2em;
-  border-radius: 1em;
-  background: #5DA423;
+  
+  /*background: #5DA423;*/
   margin: 0 1em;
   display: inline-block;
-  color: white;
+  /*color: white;*/
   position: relative;
-  font-size: 14px
+  /*font-size: 14px*/
+
+  background: #cccccc;
+  color: rgba(0,0,0,0.5);
+  border: 1px solid #B9B9B9;
 }
 
 .connected_circles li::before{
   content: '';
   position: absolute;
   top: .9em;
-  left: -4em;
+  left: -3em;
   width: 4em;
-  height: .2em;
-  background: #5DA423;
+  height: 3px;
+  /*background: #5DA423;*/
   z-index: -1;
+
+  background: #cccccc;
 }
 
+.connected_circles li.small_circles{
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    top: 1px;
+    border-radius: 1em;
+}
+.connected_circles li.small_circles::before {
+    top: .4em;
+    height: 3px;
+}
 
-.connected_circles li:first-child::before {
+.connected_circles span:first-child li::before {
   display: none;
 }
-.connected_circles li:nth-child(2)::before {
+.connected_circles span:nth-child(2) li::before {
   display: none;
 }
+.connected_circles span:nth-child(2) li {
+  margin-left:0;
+}
 
-.connected_circles .active {
+/*.connected_circles span.active li {
+  background: orange;
+  border: 1px solid #DC8F02;
+}
+
+.connected_circles span.active li::before  {
   background: orange;
 }
 
-.connected_circles .active ~ li {
-  background: lightblue;
+.connected_circles span.active ~ span li {
+    background: #cccccc;
+    color: rgba(0,0,0,0.5);
+    border: 1px solid #B9B9B9;
+}
+
+.connected_circles span.active ~ span li::before {
+  background: #cccccc;
+}*/
+
+.connected_circles .active {
+  background: orange;
+  border: 1px solid #DC8F02;
+  color:white;
 }
 
 .connected_circles li.active::before  {
   background: orange;
 }
 
-.connected_circles .active ~ li::before {
-  background: lightblue;
+.connected_circles span>li.active ~ span li {
+  background: #cccccc;
+  color: rgba(0,0,0,0.5);
+  border: 1px solid #B9B9B9;
+}
+
+.connected_circles span>li.active ~ span li::before {
+  background: #cccccc;
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){

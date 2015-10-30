@@ -1980,9 +1980,9 @@ a.editable-click{
 /*in-calss connect circles*/
 .connected_circles li {
   width: 7em;
-  height: 2em;
+  height: 1.5em;
   text-align: center;
-  line-height: 2em;
+  line-height: 1.3em;
   
   /*background: #5DA423;*/
   margin: 0 1em;
@@ -1999,7 +1999,7 @@ a.editable-click{
 .connected_circles li::before{
   content: '';
   position: absolute;
-  top: .9em;
+  top: .5em;
   left: -3em;
   width: 4em;
   height: 3px;

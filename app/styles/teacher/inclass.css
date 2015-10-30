@@ -280,8 +280,8 @@
 .question_block{
 	position:relative;
 	border: 1px solid darkgrey; 
-	max-height: 24%;
-	min-height: 24%;
+	max-height: 21%;
+	min-height: 21%;
 	overflow-y: hidden;
 	background:beige;
 	z-index: 0;

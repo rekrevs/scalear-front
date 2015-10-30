@@ -68,7 +68,6 @@ angular.module('scalearAngularApp')
       $scope.quality_set ='color-blue'
       $scope.counting = true;
       $scope.counting_finished=false
-      $scope.num_next_clicks = 0
     }
 
     var init = function(){
@@ -279,7 +278,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.nextQuiz = function(){
-      $scope.num_next_clicks+=1
       if($scope.inclass_session_status == 2 && $scope.selected_timeline_item.data.available.in_group){ 
         $scope.inclass_session_status = 3 
         updateInclassSession($scope.selected_timeline_item.data.quiz_id,3) //group status
@@ -303,6 +301,8 @@ angular.module('scalearAngularApp')
                     }
                   }
                   else{
+                    console.log("empty marker fillin")
+                    $scope.selected_timeline_item = angular.copy($scope.selected_timeline_item)
                     $scope.selected_timeline_item.type = "markers"
                     $scope.selected_timeline_item.time = this_item.time
                     if($scope.inclass_session_status>=2){

@@ -1,17 +1,17 @@
 <table class="table small-12 columns no-margin-bottom">
 	<tbody>
-		<tr ng-repeat="marker in marker_list| filter:'!!'|orderBy:'time'">
+		<tr ng-repeat="marker in marker_list| filter:'!!'|orderBy:'time'" ng-class="{wheat: marker.id == selected_marker_id}">
 			<td style="padding: 0.3625rem 0.3rem;">
 				<div class="small-12 columns no-padding">
 					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteMarker(marker)" padded="true" />
-						<!-- <div class="small-4 columns size-10">
-							<span translate>Marker</span>
-						</div> -->
-						<!-- <div class="small-4 left columns size-10" >
+						<div class="small-4 columns size-10">
+							<span translate>editor.marker</span>
+						</div>
+						<div class="small-4 left columns size-10" ng-init="marker.formatedTime = (marker.time|format)">
 							<span class="looks-like-a-link" ng-click="showMarker(marker)">{{marker.formatedTime}}</span>
-						</div> -->
-					<div class="small-11 columns" ng-init="marker.formatedTime = (marker.time|format)">
-						<span class="quiz_title color-blue2 looks-like-a-link" ng-click="showMarker(marker)" translate>Marked at {{marker.formatedTime}} </span>
+						</div>
+					<div class="small-12 columns">
+						<span class="quiz_title color-blue2 looks-like-a-link" ng-click="showMarker(marker)">{{marker.title}}</span>
 					</div>
 				</div>
 			</td>

@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 		template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 	};
 })
-.directive('editPanel',['$timeout','$q','OnlineQuiz','$translate',function($timeout, $q, OnlineQuiz, $translate){
+.directive('quizEditPanel',['$timeout','$q','OnlineQuiz','$translate',function($timeout, $q, OnlineQuiz, $translate){
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+
@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
 							'</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Discussion Timer</span>:</div>'+
-								'<div class="small-3 left columns no-padding" >'+
+								'<div class="small-4 left columns no-padding" >'+
 									'<input  type="text" ng-init="selected_quiz.end_formatedTime = (selected_quiz.end_time|format)" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
@@ -170,7 +170,111 @@ angular.module('scalearAngularApp')
 						quiz.start_time = arrayToSeconds(quiz.start_formatedTime.split(':'))
 						quiz.end_time = arrayToSeconds(quiz.end_formatedTime.split(':'))
 						updateOnlineQuiz(quiz)
-						scope.saveBtn({exit:true})
+						scope.saveQuizBtn({exit:true})
+					}
+				})				
+			}
+		}
+	};
+}])
+.directive('markerEditPanel',['$timeout','$q','$translate','OnlineMarker',function($timeout, $q, $translate, OnlineMarker){
+	return {		
+		 restrict: 'E',
+		 template: '<div>'+
+						'<h6 class="row no-margin color-wheat wheat">'+
+							'<div style="margin-top:10px;text-align:left;margin-left:0;">'+
+								'<div class="small-12 columns" style="margin-bottom: 5px;"><span translate>editor.title</span>:</div>'+
+								'<div class="small-12 left columns" style="margin-bottom: 15px;">'+
+									'<input class="marker_name" type="text" ng-model="selected_marker.title" style="height: 30px;margin-bottom:0;">'+
+									'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
+								'</div>'+
+							'</div>'+
+							'<div style="margin-top:10px;text-align:left;margin-left:0;">'+
+								'<div class="small-12 columns" style="margin-bottom: 5px;"><span translate>editor.annotation</span>:</div>'+
+								'<div class="small-12 left columns" style="margin-bottom: 15px;">'+
+									'<input class="marker_annotation" type="text" ng-model="selected_marker.annotation" style="height: 30px;margin-bottom:0;">'+
+								'</div>'+
+							'</div>'+
+							'<div class="row" style="text-align:left;margin-left:0;">'+
+								'<div class="small-3 columns"><span translate>editor.marker_time</span>:</div>'+
+								'<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">'+
+									'<input class="marker_time" type="text" ng-init="selected_marker.formatedTime = (selected_marker.time|format)" ng-model="selected_marker.formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
+								'</div>'+
+							'</div>'+
+							'<delete_button size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
+							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_marker)" translate>events.done</button>'+ 
+						'</h6>'+
+					'</div>',
+		link: function(scope, element, attrs){
+
+			$timeout(function() {
+	            element.find('.marker_name').select();
+	        });
+
+        	var updateOnlineMarker=function(marker){
+				OnlineMarker.update(
+					{online_markers_id: marker.id},
+					{online_marker:{
+						time:marker.time, 
+						title:marker.title,
+						annotation:marker.annotation
+					}}
+				);
+			}
+
+		 	var validateTime=function(time) { 		
+				var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
+				if(int_regex.test(time)) { 
+				    var hhmm = time.split(':'); // split hours and minutes
+				    var hours = parseInt(hhmm[0]); // get hours and parse it to an int
+				    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
+				    var seconds = parseInt(hhmm[2]);
+				    // check if hours or minutes are incorrect
+				    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
+				    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
+			       		return $translate('editor.incorrect_format_time')
+				    }
+				    else if( (scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
+			       		return $translate('editor.time_outside_range')
+				    }
+				}
+			    else{
+			   		return $translate('editor.incorrect_format_time')
+			    }
+			}
+			
+			var validateName= function(marker){
+				var d = $q.defer();
+			    var online_marker={}
+			    online_marker.title=marker.title;
+			    OnlineMarker.validateName(
+			    	{online_markers_id: marker.id},
+			    	{online_marker:online_marker},
+			    	function(){
+						d.resolve()
+					},function(data){
+						if(data.status==422)
+						 	d.resolve(data.data.errors.join());
+						else
+							d.reject('Server Error');
+					}
+			    )
+			    return d.promise;
+			}
+
+			var arrayToSeconds=function(a){
+				return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) // minutes are worth 60 seconds. Hours are worth 60 minutes.
+			}
+
+			scope.saveEdit=function(marker){
+				validateName(marker).then(function(error){
+					scope.name_error = error
+					scope.time_error = validateTime(marker.formatedTime)
+					if(!(scope.name_error || scope.time_error) ){
+						marker.time = arrayToSeconds(marker.formatedTime.split(':'))
+						updateOnlineMarker(marker)
+						scope.closeMarkerMode()
 					}
 				})				
 			}

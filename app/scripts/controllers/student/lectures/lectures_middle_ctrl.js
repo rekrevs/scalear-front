@@ -210,6 +210,15 @@ angular.module('scalearAngularApp')
             })
         })
 
+        $scope.lecture.annotated_markers.forEach(function(marker){
+            $scope.lecture_player.controls.cue(marker.time,function(){
+                showAnnotation(marker.annotation)
+            })
+            $scope.lecture_player.controls.cue(marker.time+5,function(){
+                $scope.dismissAnnotation()
+            })
+        })
+
         duration_milestones.forEach(function(milestone){
             $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function(){
                 updateViewPercentage(milestone)
@@ -766,6 +775,14 @@ angular.module('scalearAngularApp')
         // $scope.last_fullscreen_state = null
         // $scope.last_video_state = null
         // $scope.last_timeline_state = null
+    }
+
+    $scope.dismissAnnotation=function(){
+        $scope.annotation = null
+    }
+
+    var showAnnotation=function(annotation){
+        $scope.annotation = annotation
     }
 
     init();

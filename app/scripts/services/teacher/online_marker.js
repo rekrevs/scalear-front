@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
     { 'update': { method: 'PUT', headers:headers},
       'destroy': { method: 'DELETE', headers:headers },
 	  'getMarkerList':{method:'GET', params:{action:'get_marker_list'}, headers:headers},
+	  'validateName':{method:'PUT', params:{action:'validate_name'}, headers:headers},
 	});
 
 }])

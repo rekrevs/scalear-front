@@ -20,10 +20,13 @@ angular.module('scalearAngularApp')
     	msg: "error_message.got_some_errors"
     }
     $scope.hide_alerts=true;
-    // $scope.play_pause_class = 'play'
 
     shortcut.add("i",function() {       
        $scope.addQuestion()
+    },{"disable_in_input" : true, 'propagate':false});
+
+    shortcut.add("m", function(){
+    	$scope.addOnlineMarker()
     },{"disable_in_input" : true, 'propagate':false});
 
     $scope.$on("show_online_quiz",function(ev, quiz){
@@ -39,7 +42,7 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on("delete_online_marker",function(ev, marker){
-    	$scope.deleteOnlineMarker(marker)
+    	$scope.deleteMarkerButton(marker)
     })	
 
  	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
@@ -99,7 +102,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.seeked=function(){
     	$log.debug("seeking")
         if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
-        	$scope.saveBtn({exit:true})
+        	$scope.saveQuizBtn({exit:true})
     	}
     }
 
@@ -166,10 +169,13 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.showOnlineQuiz= function(quiz){
+		if($scope.selected_marker && $scope.editing_mode){
+			$scope.closeMarkerMode()
+		}		
 		$scope.last_details_state = DetailsNavigator.getStatus()
 		if($scope.selected_quiz != quiz){
 			if($scope.editing_mode){
-				$scope.saveBtn({exit:true})
+				$scope.saveQuizBtn({exit:true})
 			}
 			$scope.hide_alerts = true;
 			$scope.submitted= false
@@ -179,20 +185,20 @@ angular.module('scalearAngularApp')
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 			if(quiz.quiz_type =="html"){
+				getHTMLData()
 				$log.debug("HTML quiz")
 				$scope.double_click_msg=""
 				$scope.quiz_layer.backgroundColor= "white"
 				$scope.quiz_layer.overflowX= 'hidden'
-	            $scope.quiz_layer.overflowY= 'auto'
-				getHTMLData()
+	            $scope.quiz_layer.overflowY= 'auto'				
 			}
-			else{ // invideo or survey quiz				
+			else{ // invideo or survey quiz	
+				getQuizData();
 				$scope.double_click_msg = "editor.messages.double_click_new_answer";
 				$scope.quiz_layer.backgroundColor="transparent"
 				$scope.quiz_layer.overflowX= ''
 				$scope.quiz_layer.overflowY= ''
-				$log.debug($scope.selected_quiz)
-				getQuizData();				
+				$log.debug($scope.selected_quiz)				
 			}
 		}
 	}
@@ -342,7 +348,7 @@ angular.module('scalearAngularApp')
 		// $scope.disable_save_button = true
 		var selected_quiz = angular.copy($scope.selected_quiz)
 		if(options && options.exit)
-				$scope.exitBtn()
+				$scope.exitQuizBtn()
 		Lecture.updateAnswers(
 			{
 				course_id:$stateParams.course_id,
@@ -377,7 +383,7 @@ angular.module('scalearAngularApp')
 		return true;
 	};
 	
-	$scope.saveBtn = function(options){
+	$scope.saveQuizBtn = function(options){
 		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && isFormValid())) && $scope.selected_quiz.answers.length){
 	 		$scope.submitted=false;
 	 		$scope.hide_alerts=true;
@@ -407,10 +413,8 @@ angular.module('scalearAngularApp')
 		}
 	}
 
-	$scope.exitBtn = function(){
-		$log.debug($scope.selected_quiz)
+	$scope.exitQuizBtn = function(){
 		if($scope.quiz_deletable){
-			$log.debug($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
 		closeQuizMode()
@@ -419,8 +423,7 @@ angular.module('scalearAngularApp')
 	}
 
 	var clearQuizVariables= function(){
-		$scope.selected_quiz={}	
-		// $scope.$parent.selected_quiz= {}
+		$scope.selected_quiz=null
 		$scope.$parent.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
 	}
@@ -452,7 +455,7 @@ angular.module('scalearAngularApp')
 		})
 	}
 
-	$scope.addMarker=function(){
+	$scope.addOnlineMarker=function(){
 		var insert_time= $scope.lecture_player.controls.getTime()
 		var duration = $scope.total_duration
 
@@ -469,14 +472,28 @@ angular.module('scalearAngularApp')
 			time: $scope.lecture_player.controls.getTime(), 
 		},
 		function(data){
+			$scope.showOnlineMarker(data.marker)
 			$scope.marker_list.push(data.marker)
 			DetailsNavigator.open()
 		})
 	}
 
 	$scope.showOnlineMarker=function(marker){
-		closeQuizMode()
-		$scope.lecture_player.controls.seek_and_pause(marker.time)
+		if($scope.selected_quiz && $scope.editing_mode)
+			$scope.saveQuizBtn({exit:true})
+		if($scope.selected_marker != marker){
+			if($scope.editing_mode)
+				$scope.closeMarkerMode()
+			$scope.editing_mode = true;
+			$scope.selected_marker = marker
+			$scope.$parent.$parent.selected_marker_id = marker.id
+			$scope.lecture_player.controls.seek_and_pause(marker.time)
+		}
+	}
+
+	$scope.deleteMarkerButton=function(marker){
+		$scope.closeMarkerMode()
+		$scope.deleteOnlineMarker(marker)
 	}
 
 	$scope.deleteOnlineMarker=function(marker){
@@ -488,6 +505,15 @@ angular.module('scalearAngularApp')
 		)
 	}
 
+	$scope.closeMarkerMode=function(){
+		$scope.editing_mode = false;
+		$scope.hide_alerts = true;
+		clearMarkerVariables()
+	}
+
+	var clearMarkerVariables= function(){
+		$scope.selected_marker=null
+		$scope.$parent.$parent.selected_marker_id = null
+	}
+
 }]);
-
-

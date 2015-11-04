@@ -40,8 +40,16 @@
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-show="!editing_mode">
 		<span ng-show="lecture.url!='none'" >
-			<button class="button small no-margin" ng-click="addOnlineMarker($event)" translate>editor.button.add_marker</button>
-			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" translate>editor.button.add_video_quiz</span></button>
+			<span tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+				<button class="button small no-margin" ng-click="addOnlineMarker($event)"  >
+					<span translate>editor.button.add_marker</span>
+				</button>
+			</span>
+			<span tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+				<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()">
+					<span translate>editor.button.add_video_quiz</span>
+				</button>
+			</span>
 			<button class="button small no-margin" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
 		</span>
 	</center>

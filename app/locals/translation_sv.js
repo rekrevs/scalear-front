@@ -399,7 +399,8 @@ var translation_sv={
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
-        click_add_question:"Klicka eller skriv i för att lägga till en fråga."
+        click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
+        click_add_marker:"Click or type 'm' to add a marker (t)"
     },
     drag:{
         start: "Start",

@@ -399,7 +399,8 @@ var translation_en={
         click_to_delete: "Click here to delete, click outside to close",
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
-        click_add_question:"Click or type i to add a question"
+        click_add_question:"Click or type 'i' to add a question",
+        click_add_marker:"Click or type 'm' to add a marker"
     },
     drag:{
         start: "Start",

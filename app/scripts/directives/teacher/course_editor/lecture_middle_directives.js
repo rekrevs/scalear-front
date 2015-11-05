@@ -5,14 +5,14 @@ angular.module('scalearAngularApp')
 	return {
 		restrict: 'E', 
 		templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
-		controller: 'lectureQuizListCtrl'
+		// controller: 'lectureQuizListCtrl'
 	};
 })
 .directive('markerList',function(){
 	return {
 		restrict: 'E', 
 		templateUrl: '/views/teacher/course_editor/lecture.middle.marker_list.html',
-		controller: 'lectureMarkerListCtrl'
+		// controller: 'lectureMarkerListCtrl'
 	};
 })
 .directive('quiz',function(){
@@ -36,27 +36,27 @@ angular.module('scalearAngularApp')
 									'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
 								'</div>'+
 							'</div>'+
-							'<div class="row" style="text-align:left;margin-left:0;">'+
-								'<div class="small-3 columns"><span translate>editor.start_time</span>:</div>'+
-								'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input class="quiz_start_time" type="text" ng-init="selected_quiz.start_formatedTime = (selected_quiz.start_time|format)" ng-model="selected_quiz.start_formatedTime" style="height: 30px;margin-bottom:0;">'+
-									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
-								'</div>'+
-							'</div>'+
-							'<div class="row" style="text-align:left;margin-left:0;">'+
-								'<div class="small-3 columns"><span translate>editor.quiz_time</span>:</div>'+
-								'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
-									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
-								'</div>'+
-							'</div>'+
-							'<div class="row" style="text-align:left;margin-left:0;">'+
-								'<div class="small-3 columns"><span translate>editor.end_time</span>:</div>'+
-								'<div class="small-3 left columns no-padding" style="margin-bottom: 10px;">'+
-									'<input class="quiz_end_time" type="text" ng-init="selected_quiz.end_formatedTime = (selected_quiz.end_time|format)" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
-									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
-								'</div>'+
-							'</div>'+
+							// '<div class="row" style="text-align:left;margin-left:0;">'+
+							// 	'<div class="small-3 columns"><span translate>editor.start_time</span>:</div>'+
+							// 	'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
+							// 		'<input class="quiz_start_time" type="text" ng-model="selected_quiz.start_formatedTime" style="height: 30px;margin-bottom:0;">'+
+							// 		'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
+							// 	'</div>'+
+							// '</div>'+
+							// '<div class="row" style="text-align:left;margin-left:0;">'+
+							// 	'<div class="small-3 columns"><span translate>editor.quiz_time</span>:</div>'+
+							// 	'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
+							// 		'<input class="quiz_time" type="text" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
+							// 		'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
+							// 	'</div>'+
+							// '</div>'+
+							// '<div class="row" style="text-align:left;margin-left:0;">'+
+							// 	'<div class="small-3 columns"><span translate>editor.end_time</span>:</div>'+
+							// 	'<div class="small-3 left columns no-padding" style="margin-bottom: 10px;">'+
+							// 		'<input class="quiz_end_time" type="text" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
+							// 		'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
+							// 	'</div>'+
+							// '</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 left columns" >'+
 									'<lable"><span>Online</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="false" ></lable>'+
@@ -67,28 +67,28 @@ angular.module('scalearAngularApp')
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Intro Timer</span>:</div>'+
 								'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input  type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<input  type="text" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Individual Timer</span>:</div>'+
 								'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input  type="text" ng-init="selected_quiz.start_formatedTime = (selected_quiz.start_time|format)" ng-model="selected_quiz.start_formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<input  type="text" ng-model="selected_quiz.start_formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Group Timer</span>:</div>'+
 								'<div class="small-3 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input  type="text" ng-init="selected_quiz.end_formatedTime = (selected_quiz.end_time|format)" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<input  type="text" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Discussion Timer</span>:</div>'+
-								'<div class="small-4 left columns no-padding" >'+
-									'<input  type="text" ng-init="selected_quiz.end_formatedTime = (selected_quiz.end_time|format)" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
+								'<div class="small-3 left columns no-padding" >'+
+									'<input  type="text" ng-model="selected_quiz.end_formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
@@ -162,13 +162,14 @@ angular.module('scalearAngularApp')
 			scope.saveEdit=function(quiz){
 				validateName(quiz).then(function(error){
 					scope.name_error = error
-					scope.time_error = validateTime(quiz.formatedTime)
-					scope.start_time_error = validateTime(quiz.start_formatedTime)
-					scope.end_time_error = validateTime(quiz.end_formatedTime)
-					if(!(scope.name_error || scope.time_error || scope.start_time_error || scope.end_time_error) ){
-						quiz.time = arrayToSeconds(quiz.formatedTime.split(':'))
-						quiz.start_time = arrayToSeconds(quiz.start_formatedTime.split(':'))
-						quiz.end_time = arrayToSeconds(quiz.end_formatedTime.split(':'))
+					// scope.time_error = validateTime(quiz.formatedTime)
+					// scope.start_time_error = validateTime(quiz.start_formatedTime)
+					// scope.end_time_error = validateTime(quiz.end_formatedTime)
+					// if(!(scope.name_error || scope.time_error || scope.start_time_error || scope.end_time_error) ){
+						// quiz.time = arrayToSeconds(quiz.formatedTime.split(':'))
+						// quiz.start_time = arrayToSeconds(quiz.start_formatedTime.split(':'))
+						// quiz.end_time = arrayToSeconds(quiz.end_formatedTime.split(':'))
+					if(!error){
 						updateOnlineQuiz(quiz)
 						scope.saveQuizBtn({exit:true})
 					}

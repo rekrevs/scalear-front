@@ -492,7 +492,9 @@ var translation_en={
         question:"@:global.question",
         confused:"@:global.confused",
         really_confused:"@:global.really_confused",
-        note:"@:global.note"
+        note:"@:global.note",
+        quiz:"@:global.quiz",
+        marker:"@:global.marker"
     },
     button:{
         ask_question: "Ask a Question",

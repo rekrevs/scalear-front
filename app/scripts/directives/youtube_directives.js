@@ -529,15 +529,19 @@ angular.module('scalearAngularApp')
 	    scope:{
 	        player:'=',
 	        seek: "&",
-	        timeline: '='
+	        timeline: '=',
+	        role: '&',
+	        editing:"="
 	    },
 	    templateUrl:"/views/progress_bar.html",
 	    link: function(scope, element, attrs){
+	    	scope.user_role = scope.role()
 	    	var player = scope.player.element
 			var progress_bar= angular.element('.progressBar');
 			var playhead= document.getElementsByClassName("playhead")[0]
 			var elapsed_bar = document.getElementsByClassName("elapsed")[0]
 			var onplayhead = false;
+			scope.progress_width  = $('.progressBar').width()
 	    	scope.current_time=0
 	    	scope.volume_class="mute";
 	        scope.quality=false;
@@ -648,10 +652,10 @@ angular.module('scalearAngularApp')
 			playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
 
 			player.on('timeupdate', function(){
-				if (onplayhead == false) {
+				if (onplayhead == false ){
 					scope.current_time = player.currentTime()
-					scope.elapsed_width = ((scope.current_time/scope.duration)*100)
-			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width - 0.2
+					scope.elapsed_width= ((scope.current_time/scope.duration)*100)
+			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width-0.2
 			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
 			    }
 				scope.$apply()
@@ -711,7 +715,7 @@ angular.module('scalearAngularApp')
 		        var element = angular.element('.progressBar');
 		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 		        scope.seek()(scope.duration*ratio)
-		        if(scope.timeline)
+		        if(scope.timeline && scope.user_role==2)
 		        	scrollToNearestEvent(scope.duration*ratio)
 	        }
 
@@ -745,14 +749,52 @@ angular.module('scalearAngularApp')
 	  				scrollToItem(nearest_item.type, nearest_item.data.id)
 	  		}
 
+	  		scope.calculateQuizBoundaries=function(event, meta, item){
+	  			meta.position.top = -4
+	  			item.start_location = (item.start_time/scope.duration)*scope.progress_width
+				item.end_location   = (item.end_time/scope.duration)*scope.progress_width
+				item.quiz_location  = (item.time/scope.duration)*scope.progress_width 
+	  		}
+
+	  		scope.calculateQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			if(meta.position.left > item.end_location)
+	  				meta.position.left = item.end_location
+	  			if(meta.position.left < item.start_location)
+	  				meta.position.left = item.start_location
+
+	  			item.time = (meta.position.left/scope.progress_width)*scope.duration
+	  			scope.seek()(item.time)
+	  		}	  		
+
+	  		scope.calculateStartQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			if(meta.position.left > item.quiz_location)
+	  				meta.position.left = item.quiz_location
+
+	  			item.start_time = (meta.position.left/scope.progress_width)*scope.duration
+	  			scope.seek()(item.start_time)
+	  		}
+
+	  		scope.calculateEndQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			if(meta.position.left < item.quiz_location)
+	  				meta.position.left = item.quiz_location
+
+	  			item.end_time = (meta.position.left/scope.progress_width)*scope.duration
+	  			scope.seek()(item.end_time)
+	  		}
+
+
 	      	if(scope.player.controls.youtube){
 	            scope.speeds = scope.player.controls.getSpeeds();            
 	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
 	            scope.qualities = ["auto","small", "medium", "large"]
 	            // scope.chosen_quality = scope.player.controls.getQuality()
+	            scope.setQuality(scope.chosen_quality)
 	            $timeout(function(){
 	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-	            	scope.setQuality(scope.chosen_quality)
+	            	// 
 	            	scope.chosen_quality = scope.player.controls.getQuality()
 	            },2000)
 	      	}

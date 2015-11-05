@@ -29,7 +29,7 @@
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
-			        <progress-bar ng-hide="editing_mode" ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left">
+			        <progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="current_user.roles[0].id" timeline="timeline" editing="editing_type">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>
@@ -40,13 +40,11 @@
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-show="!editing_mode">
 		<span ng-show="lecture.url!='none'" >
-			<span tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
-				<button class="button small no-margin" ng-click="addOnlineMarker($event)"  >
-					<span translate>editor.button.add_marker</span>
-				</button>
-			</span>
-			<span tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
-				<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()">
+			<button class="button small no-margin" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
+				<span translate>editor.button.add_marker</span>
+			</button>
+			<span lecture-questions-modal open-modal="openQuestionsModal">
+				<button id="new_question" class="button small no-margin" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
 					<span translate>editor.button.add_video_quiz</span>
 				</button>
 			</span>
@@ -54,9 +52,11 @@
 		</span>
 	</center>
 	<div class="small-12 small-centered columns">
-		<center ng-if="editing_mode" style="margin-bottom:10px">
-			<div><quiz-edit-panel ng-if="selected_quiz" /></div>			
-			<div><marker-edit-panel ng-if="selected_marker" /></div>
+		<center ng-if="editing_mode" style="margin-bottom:10px" >
+			<div ng-switch on='editing_type'>
+				<div ng-switch-when='quiz'><quiz-edit-panel /></div>			
+				<div ng-switch-when='marker'><marker-edit-panel /></div>
+			</div>
 			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
 	</div>

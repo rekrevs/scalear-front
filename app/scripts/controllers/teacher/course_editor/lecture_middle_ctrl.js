@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q','DetailsNavigator','OnlineMarker', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q, DetailsNavigator, OnlineMarker){
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q','DetailsNavigator','OnlineMarker','$filter','Timeline', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q, DetailsNavigator, OnlineMarker, $filter, Timeline){
 
     var unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
   		if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
 	        $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-	    	$scope.$parent.currentmodule = $scope.lecture.group_id
 	    	unwatch()
       	}
     })
@@ -45,7 +44,7 @@ angular.module('scalearAngularApp')
     	$scope.deleteMarkerButton(marker)
     })	
 
- 	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
+ 	$scope.$on("add_online_quiz",function(ev, quiz_type, question_type){
  		$scope.insertQuiz(quiz_type, question_type)
  	})
 
@@ -101,21 +100,27 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.seeked=function(){
     	$log.debug("seeking")
-        if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
-        	$scope.saveQuizBtn({exit:true})
-    	}
+     //    if($scope.editing_mode ){
+     //    	if($scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time))
+     //    		$scope.saveQuizBtn({exit:true})
+     //    	else if($scope.selected_marker && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_marker.time))
+     //    		$scope.closeMarkerMode()
+    	// }
     }
 
  	var checkQuizTimeConflict=function(time){
  		var new_time = time 
- 		$scope.quiz_list.forEach(function(quiz){
- 		    if(quiz.time == parseInt(new_time+1))
- 				new_time+= 3
- 			else if(quiz.time == parseInt(new_time)){
- 				new_time+= 2
- 			} 					
- 			else if(quiz.time == parseInt(new_time-1))
- 				new_time+= 1
+ 		$scope.timeline.items.forEach(function(item){
+ 			if(item.type =='quiz'){
+ 				var quiz = item.data
+	 		    if(quiz.time == parseInt(new_time+1))
+	 				new_time+= 3
+	 			else if(quiz.time == parseInt(new_time)){
+	 				new_time+= 2
+	 			} 					
+	 			else if(quiz.time == parseInt(new_time-1))
+	 				new_time+= 1
+	 		}
  		})
  		return new_time
  	}
@@ -148,7 +153,9 @@ angular.module('scalearAngularApp')
 			Lecture.newQuiz({
 				course_id: $stateParams.course_id,
 				lecture_id: $scope.lecture.id,
-				time: $scope.lecture_player.controls.getTime(), 
+				time: insert_time, 
+				start_time: insert_time - 1,
+				end_time: insert_time + 1,
 				quiz_type: quiz_type, 
 				ques_type: question_type
 			},
@@ -157,7 +164,7 @@ angular.module('scalearAngularApp')
 				// $log.debug(data)
 				$scope.editing_mode= false
 				$scope.showOnlineQuiz(data.quiz)
-				$scope.quiz_list.push(data.quiz)
+				$scope.timeline.add(data.quiz.time, 'quiz', data.quiz)
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
 				DetailsNavigator.open()
@@ -181,6 +188,10 @@ angular.module('scalearAngularApp')
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
+			$scope.selected_quiz.formatedTime = $filter('format')($scope.selected_quiz.time)
+			$scope.selected_quiz.start_formatedTime = $filter('format')($scope.selected_quiz.start_time)
+			$scope.selected_quiz.end_formatedTime = $filter('format')($scope.selected_quiz.end_time)
+			$scope.editing_type = 'quiz'
 			$scope.$parent.$parent.selected_quiz_id = quiz.id
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
@@ -310,10 +321,10 @@ angular.module('scalearAngularApp')
 		var deferred = $q.defer();
 		$scope.quiz_overlay = false
 		OnlineQuiz.destroy(
-			{online_quizzes_id: quiz.id},{},
+			{online_quizzes_id: quiz.data.id},{},
 			function(data){
 				$log.debug(data)
-				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
+				$scope.timeline.items.splice($scope.timeline.items.indexOf(quiz), 1)
 				deferred.resolve()
 				$scope.quiz_overlay = true
 			},
@@ -322,8 +333,6 @@ angular.module('scalearAngularApp')
 
 		return deferred.promise
 	}
-
-
 
 	$scope.addAnswer= function(ans,h,w,l,t){
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
@@ -432,6 +441,7 @@ angular.module('scalearAngularApp')
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
 		$scope.submitted= false
+		$scope.editing_type = null
 		$scope.quiz_layer.backgroundColor= ""
 		clearQuizVariables()
 	}
@@ -474,6 +484,7 @@ angular.module('scalearAngularApp')
 		function(data){
 			$scope.showOnlineMarker(data.marker)
 			$scope.marker_list.push(data.marker)
+			$scope.timeline.add(data.marker.time, "marker", data.marker)
 			DetailsNavigator.open()
 		})
 	}
@@ -486,6 +497,7 @@ angular.module('scalearAngularApp')
 				$scope.closeMarkerMode()
 			$scope.editing_mode = true;
 			$scope.selected_marker = marker
+			$scope.editing_type = 'marker'
 			$scope.$parent.$parent.selected_marker_id = marker.id
 			$scope.lecture_player.controls.seek_and_pause(marker.time)
 		}
@@ -501,6 +513,7 @@ angular.module('scalearAngularApp')
 			{online_markers_id: marker.id},{},
 			function(){
 				$scope.marker_list.splice($scope.marker_list.indexOf(marker), 1)
+                $scope.timeline.items.splice($scope.timeline.items.indexOf(marker), 1)
 			}
 		)
 	}
@@ -508,6 +521,7 @@ angular.module('scalearAngularApp')
 	$scope.closeMarkerMode=function(){
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
+		$scope.editing_type = null
 		clearMarkerVariables()
 	}
 

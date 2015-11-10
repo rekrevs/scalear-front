@@ -58,7 +58,13 @@ angular.module('scalearAngularApp')
 							// 	'</div>'+
 							// '</div>'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
-								'<div class="small-4 left columns" >'+
+								'<div class="small-11 left columns" >'+
+									'<lable"><span>Start time</span> <input class="inclass_choice" type="checkbox" ng-change="updateQuizStartTime()" ng-model="has_start"  ></lable>'+
+									'<lable style="padding-left:10px"><span>End time</span> <input class="inclass_choice" type="checkbox" ng-model="has_end" ng-change="updateQuizEndTime()" ></lable>'+
+								'</div>'+
+							'</div>'+
+							'<div class="row" style="text-align:left;margin-left:0;">'+
+								'<div class="small-11 left columns" >'+
 									'<lable"><span>Online</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="false" ></lable>'+
 									'<lable style="padding-left:10px"><span>Inclass</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="true" ></lable>'+
 								'</div>'+
@@ -98,6 +104,9 @@ angular.module('scalearAngularApp')
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs) {
+			scope.has_start= scope.selected_quiz.start_time!= scope.selected_quiz.time
+			scope.has_end  = scope.selected_quiz.end_time  != scope.selected_quiz.time
+
 			$timeout(function() {
 	            element.find('.quiz_name').select();
 	        });
@@ -175,6 +184,18 @@ angular.module('scalearAngularApp')
 					}
 				})				
 			}
+
+			scope.updateQuizStartTime=function(){
+				scope.selected_quiz.start_time = scope.selected_quiz.time
+				if(scope.has_start) 
+					scope.selected_quiz.start_time-=5
+			}
+
+			scope.updateQuizEndTime=function(){
+				scope.selected_quiz.end_time = scope.selected_quiz.time
+				if(scope.has_end) 
+					scope.selected_quiz.end_time+=5
+			}
 		}
 	};
 }])
@@ -199,86 +220,18 @@ angular.module('scalearAngularApp')
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-3 columns"><span translate>editor.marker_time</span>:</div>'+
 								'<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">'+
-									'<input class="marker_time" type="text" ng-init="selected_marker.formatedTime = (selected_marker.time|format)" ng-model="selected_marker.formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<input class="marker_time" type="text" ng-model="selected_marker.formatedTime" style="height: 30px;margin-bottom:0;">'+
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
 							'<delete_button size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
-							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_marker)" translate>events.done</button>'+ 
+							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>'+ 
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs){
-
 			$timeout(function() {
 	            element.find('.marker_name').select();
-	        });
-
-        	var updateOnlineMarker=function(marker){
-				OnlineMarker.update(
-					{online_markers_id: marker.id},
-					{online_marker:{
-						time:marker.time, 
-						title:marker.title,
-						annotation:marker.annotation
-					}}
-				);
-			}
-
-		 	var validateTime=function(time) { 		
-				var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
-				if(int_regex.test(time)) { 
-				    var hhmm = time.split(':'); // split hours and minutes
-				    var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-				    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-				    var seconds = parseInt(hhmm[2]);
-				    // check if hours or minutes are incorrect
-				    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
-				    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
-			       		return $translate('editor.incorrect_format_time')
-				    }
-				    else if( (scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
-			       		return $translate('editor.time_outside_range')
-				    }
-				}
-			    else{
-			   		return $translate('editor.incorrect_format_time')
-			    }
-			}
-			
-			var validateName= function(marker){
-				var d = $q.defer();
-			    var online_marker={}
-			    online_marker.title=marker.title;
-			    OnlineMarker.validateName(
-			    	{online_markers_id: marker.id},
-			    	{online_marker:online_marker},
-			    	function(){
-						d.resolve()
-					},function(data){
-						if(data.status==422)
-						 	d.resolve(data.data.errors.join());
-						else
-							d.reject('Server Error');
-					}
-			    )
-			    return d.promise;
-			}
-
-			var arrayToSeconds=function(a){
-				return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) // minutes are worth 60 seconds. Hours are worth 60 minutes.
-			}
-
-			scope.saveEdit=function(marker){
-				validateName(marker).then(function(error){
-					scope.name_error = error
-					scope.time_error = validateTime(marker.formatedTime)
-					if(!(scope.name_error || scope.time_error) ){
-						marker.time = arrayToSeconds(marker.formatedTime.split(':'))
-						updateOnlineMarker(marker)
-						scope.closeMarkerMode()
-					}
-				})				
-			}
+	        });       	
 		}
 	};
 }])
@@ -361,6 +314,10 @@ angular.module('scalearAngularApp')
 				scope.remove()
 				angular.element(element.children()[0]).popover('hide')
 			}
+
+			scope.answerDragStart=function(){
+				angular.element(element.children()[0]).popover('hide')
+			}
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
@@ -403,7 +360,8 @@ angular.module('scalearAngularApp')
 					var placement= (scope.data.xcoor > 0.5)? "left":"right"
 					return scope.data.ycoor <0.3? "bottom": placement
 				},
-            	instant_show:!scope.data.id
+            	instant_show:!scope.data.id,
+            	container: 'body',
             }
             
             scope.$watch('quiz.answers', function(){

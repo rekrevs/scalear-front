@@ -25,8 +25,8 @@
 									<loading size='small' show='true' style="position:relative;top:70px;" />
 								</span>	
 							</div>
-							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveQuizBtn()"/>
-							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveQuizBtn()"/>
+							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
 			        <progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="current_user.roles[0].id" timeline="timeline" editing="editing_type">
@@ -38,18 +38,36 @@
 	</div>
 </div>
 <div class="row with-small-margin-top disable_selection">
-	<center class="small-block-grid-3" ng-show="!editing_mode">
+	<center class="small-block-grid-3" >
 		<span ng-show="lecture.url!='none'" >
-			<button class="button small no-margin" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
+			<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
 				<span translate>editor.button.add_marker</span>
 			</button>
-			<span lecture-questions-modal open-modal="openQuestionsModal">
-				<button id="new_question" class="button small no-margin" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+			<span ng-show="!editing_mode" lecture-questions-modal open-modal="openQuestionsModal">
+				<button id="new_question" class="button small" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
 					<span translate>editor.button.add_video_quiz</span>
 				</button>
 			</span>
-			<button class="button small no-margin" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
-		</span>
+			<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
+				<button class="button small" ng-click="togglePreviewInclass()">
+					<span translate>Preview in-class</span>
+				</button>
+			</span>
+			<button class="button small" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
+		</span>      	
+	</center>
+	<center>
+		<div ng-if="filtered_timeline_items" style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
+			<ul  class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
+				<li style="display:none"></li>
+		  		<span ng-repeat="item in filtered_timeline_items" >
+		    		<li ng-if="!item.data.inclass_title" class="small_circles" ng-class="{'active': item == selected_inclass_item}" ng-style="{'background': item.data.background, 'color':item.data.color}"></li>
+		    		<li ng-if="item.data.inclass_title" ng-class="{'active': item == selected_inclass_item }" ng-style="{'background': item.data.background, 'color':item.data.color}">{{item.data.inclass_title}}</li>
+		      	</span>
+		    </ul>
+		    <button ng-click="inclassPrevItem()" class="button reall-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-previous" /></button>
+	        <button ng-click="inclassNextItem()" class="button reall-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-next" /></button>
+	    </div>
 	</center>
 	<div class="small-12 small-centered columns">
 		<center ng-if="editing_mode" style="margin-bottom:10px" >

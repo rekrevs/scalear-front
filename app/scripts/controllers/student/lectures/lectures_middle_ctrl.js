@@ -176,8 +176,8 @@ angular.module('scalearAngularApp')
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
-        if($scope.lecture_player.controls.youtube)
-            $scope.total_duration-=1
+        // if($scope.lecture_player.controls.youtube)
+        //     $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
             $scope.lecture_player.controls.cue(quiz.time-0.1, function() {                

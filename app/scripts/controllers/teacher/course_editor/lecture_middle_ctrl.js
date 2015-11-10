@@ -6,6 +6,8 @@ angular.module('scalearAngularApp')
     var unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
   		if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
 	        $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
+	        $scope.lecture.start_time=10
+     		$scope.lecture.end_time=20
 	    	unwatch()
       	}
     })
@@ -50,9 +52,9 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onMeta= function(){
         // update duration for all video types.
-        var duration = $scope.lecture_player.controls.getDuration()
-        if(Math.ceil($scope.lecture.duration) != Math.ceil(duration)){
-            $scope.lecture.duration=duration
+        $scope.total_duration=$scope.lecture_player.controls.getDuration()
+        if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.total_duration)){
+            $scope.lecture.duration=$scope.total_duration
             $scope.updateLecture();
         }
         $scope.slow = false
@@ -60,8 +62,7 @@ angular.module('scalearAngularApp')
  	$scope.lecture_player.events.onReady= function(){
  		$scope.video_ready = true
  		$scope.lecture_player.controls.pause()
-        $scope.lecture_player.controls.seek(0)
-    	$scope.total_duration=$scope.lecture_player.controls.youtube? $scope.lecture.duration - 1 : $scope.lecture.duration 
+        $scope.lecture_player.controls.seek(0)    	
  	}
 
 	$scope.lecture_player.events.onPlay= function(){
@@ -144,7 +145,7 @@ angular.module('scalearAngularApp')
 			if(insert_time < 1 )
 				insert_time = 1
 			insert_time = checkQuizTimeConflict(insert_time)
-			if (insert_time >= duration -1)
+			if (insert_time >= duration)
 				insert_time = duration - 2
 			
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
@@ -429,7 +430,8 @@ angular.module('scalearAngularApp')
 	}
 
 	var clearQuizVariables= function(){
-		$scope.selected_quiz.selected = false
+		if($scope.selected_quiz)
+			$scope.selected_quiz.selected = false
 		$scope.selected_quiz=null
 		$scope.$parent.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
@@ -470,7 +472,7 @@ angular.module('scalearAngularApp')
 
 		if(insert_time < 1 )
 			insert_time = 1
-		if (insert_time >= duration -1)
+		if (insert_time >= duration)
 			insert_time = duration - 2
 		
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
@@ -535,11 +537,11 @@ angular.module('scalearAngularApp')
 		    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
 		    var seconds = parseInt(hhmm[2]);
 		    // check if hours or minutes are incorrect
-		    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
+		    var calculated_duration=(hours*60*60)+(minutes*60)+(seconds);
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 	       		return $translate('editor.incorrect_format_time')
 		    }
-		    else if( ($scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
+		    else if( ($scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0 ){
 	       		return $translate('editor.time_outside_range')
 		    }
 		}

@@ -20,13 +20,14 @@ angular.module('scalearAngularApp')
 			id:'@',
 			player:'=',
 			autoplay:'@',
-            controls: '@'
+            controls: '@',
+            start:"=",
+            end:"="
 		},
         template:"<div><div ng-transclude></div></div>",
 		link: function(scope, element){
 
             scope.vq='hd720';
-            scope.start_time
 
             scope.$on('$destroy', function() {            	
                 scope.kill_popcorn();
@@ -55,7 +56,7 @@ angular.module('scalearAngularApp')
                 	player_controls.youtube = true
                 	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                 	player = Popcorn(video);
-                	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time, scope.autoplay, scope.controls)
+                	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start, scope.end, scope.autoplay, scope.controls)
                 	$log.debug(video.src)
                 }
                 else if(isVimeo(scope.url)){
@@ -84,7 +85,7 @@ angular.module('scalearAngularApp')
 				},15000, 1)
 			}
 
-			var formatYoutubeURL=function(url,vq,time, autoplay, controls){
+			var formatYoutubeURL=function(url,vq, start, end, autoplay, controls){
 				var short_url = isShortYoutube(url)
 				var base_url, query
 				if(short_url){
@@ -96,7 +97,7 @@ angular.module('scalearAngularApp')
 					base_url = splitted_url[0]
 					query = '&'+splitted_url[1]	
 				}//
-				return base_url+"?start="+time+"&vq="+vq+"&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
+				return base_url+"?start="+start+"&end="+end+"&vq="+vq+"&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
 			}
 
             scope.kill_popcorn = function(){
@@ -136,11 +137,20 @@ angular.module('scalearAngularApp')
 			}
 			
 			player_controls.getTime=function(){
-				return player.currentTime()
+				return player.currentTime() - scope.start
 			}
 
 			player_controls.getDuration=function(){
-				return player.duration()
+				console.log(scope.start, scope.end)
+				var duration
+				if(scope.start && scope.end)
+					duration =  scope.end - scope.start
+				else{
+					duration = player.duration()
+					if(scope.player.controls.youtube)
+						duration-=1
+				}
+				return duration
 			}
 
 			player_controls.readyState=function(){
@@ -148,12 +158,14 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.seek = function(time){
-				$log.debug("entering sekking")
+				$log.debug("entering sekking", time)
 				if(time<0)
-					time = 0
+					time = 0				
 				if(time > player_controls.getDuration())
 					time = player_controls.getDuration()
-				if(player_controls.readyState() == 0 && !(scope.start_time || scope.start_time == 0)){
+				time+=scope.start || 0
+				console.log("new time ", time)
+				if(player_controls.readyState() == 0 && !(scope.start || scope.start == 0)){
 					player.on("loadeddata", 
 					function(){
 						$log.debug("seek after load")
@@ -161,7 +173,7 @@ angular.module('scalearAngularApp')
 					});
 				}
 				else{
-					$log.debug("seeking now")
+					$log.debug("seeking now", time)
 					player.currentTime(time);
 				}
 				parent.focus()
@@ -174,7 +186,19 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.setStartTime=function(time){
-				scope.start_time = Math.round(time)
+				scope.start = time
+			}
+
+			player_controls.setEndTime=function(time){
+				scope.end = time
+			}
+
+			player_controls.getStartTime=function(){
+				return scope.start
+			}
+
+			player_controls.getEndTime=function(){
+				return scope.end 
 			}
 
 			player_controls.refreshVideo = function(){
@@ -550,7 +574,7 @@ angular.module('scalearAngularApp')
 	  		scope.chosen_speed=1
 	  		scope.is_mobile = $rootScope.is_mobile
 	  		$timeout(function(){
-	  			scope.duration = scope.player.controls.getDuration() -1;	
+	  			scope.duration = scope.player.controls.getDuration();
 	  		})
 			scope.play_class = scope.is_mobile? "pause":"play";
 	      	
@@ -642,57 +666,9 @@ angular.module('scalearAngularApp')
 				}
 			}
 
-			progress_bar.on('mouseenter', scope.showPlayhead);
-			progress_bar.on('mouseleave', scope.hidePlayhead);
-
-
-			player.on('timeupdate', function(){
-				if (onplayhead == false ){
-					scope.current_time = player.currentTime()
-					scope.elapsed_width= ((scope.current_time/scope.duration)*100)
-			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width-0.2
-			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
-			    }
-				scope.$apply()
-		    })
-
-		    player.on('ended',function(){
-		    	//for some reason youtube requires clicking the
-		    	//play button twice to play after video end
-		    	//simulating first click on play
-		    	scope.player.controls.seek(0)
-		        $timeout(function(){
-		        	scope.player.controls.play();
-		            scope.player.controls.pause();
-		            scope.play_class = "play";
-		        },1000)
-		    	
-		    	scope.$apply()
-		    })
-
-		    player.on('pause',function(){
-		    	scope.play_class = "play";
-		    	scope.$apply()
-		    })
-
-		    player.on('playing',function(){
-		    	scope.play_class = "pause";
-		    	scope.$apply()
-		    })
-
 	        scope.muteToggle = function(){
 	        	scope.volume_class=="mute"? scope.mute():scope.unmute()
 	        }
-
-	        var unwatchMute = scope.$watch("volume",function(){
-	            if(scope.volume){
-	                scope.player.controls.volume(scope.volume);
-	                if(scope.volume!=0)
-	                    scope.volume_class="mute";
-	                else
-	                    scope.volume_class="unmute";
-	            }
-	        });
 
 	        scope.mute= function(){
 	            scope.player.controls.mute();
@@ -803,6 +779,55 @@ angular.module('scalearAngularApp')
 	  			scope.seek()(quiz.time)
 	  			$rootScope.$broadcast("show_online_quiz", quiz)
 	  		}
+
+	  		var unwatchMute = scope.$watch("volume",function(){
+	            if(scope.volume){
+	                scope.player.controls.volume(scope.volume);
+	                if(scope.volume!=0)
+	                    scope.volume_class="mute";
+	                else
+	                    scope.volume_class="unmute";
+	            }
+	        });
+
+	  		progress_bar.on('mouseenter', scope.showPlayhead);
+			progress_bar.on('mouseleave', scope.hidePlayhead);
+
+
+			player.on('timeupdate', function(){
+				if (onplayhead == false ){
+					scope.current_time = scope.player.controls.getTime()
+					scope.elapsed_width= ((scope.current_time/scope.duration)*100)
+			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width-0.2
+			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
+			    }
+				scope.$apply()
+		    })
+
+		    player.on('ended',function(){
+		    	console.log("Video Ended")
+		    	//for some reason youtube requires clicking the
+		    	//play button twice to play after video end
+		    	//simulating first click on play
+		    	scope.player.controls.seek(0)
+		        $timeout(function(){
+		        	scope.player.controls.play();
+		            scope.player.controls.pause();
+		            scope.play_class = "play";
+		        },1000)
+		    	
+		    	scope.$apply()
+		    })
+
+		    player.on('pause',function(){
+		    	scope.play_class = "play";
+		    	scope.$apply()
+		    })
+
+		    player.on('playing',function(){
+		    	scope.play_class = "pause";
+		    	scope.$apply()
+		    })
 
 	      	if(scope.player.controls.youtube){
 	            scope.speeds = scope.player.controls.getSpeeds();            

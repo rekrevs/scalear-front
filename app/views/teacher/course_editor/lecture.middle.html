@@ -15,7 +15,7 @@
 		<form name="answer_form" novalidate >
 			<center>
 				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12">
-					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="flex-video widescreen" style="overflow:visible">
+					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
 						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
@@ -29,7 +29,7 @@
 							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
-			        <progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="current_user.roles[0].id" timeline="timeline" editing="editing_type">
+			        <progress-bar class="text-left" ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" role="current_user.roles[0].id" timeline="timeline" editing="editing_type">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>

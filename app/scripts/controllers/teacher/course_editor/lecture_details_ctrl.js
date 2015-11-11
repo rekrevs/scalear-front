@@ -266,4 +266,23 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("delete_online_marker", marker)
     }
 
+    $scope.startTrimVideo=function(){
+        $rootScope.$broadcast("start_trim_video")
+        $scope.trimming_video = true
+    }
+
+    $scope.closeTrimVideo=function(){
+        $rootScope.$broadcast("close_trim_video")
+        $scope.trimming_video = false
+    }
+
+    $scope.saveTrimVideo=function(){ 
+        $scope.lecture.start_time = Math.floor($scope.lecture.start_time)
+        $scope.lecture.end_time = Math.floor($scope.lecture.end_time)
+        $scope.updateLecture()
+        $scope.closeTrimVideo()
+        
+    }
+
+
 }]);

@@ -545,6 +545,10 @@ span.error, small.error{
   background: repeating-linear-gradient(45deg, rgb(96, 116, 188), rgb(96, 146, 188) 10px, rgb(70, 103, 152) 10px, rgb(70, 88, 152) 20px);
 }
 
+.repeating_green_pattern{
+  background: repeating-linear-gradient(45deg, rgb(140, 188, 96), rgb(110, 188, 96) 10px, rgb(79, 152, 70) 10px, rgb(98, 152, 70) 20px);
+}
+
 .color-gray, .color-gray-hover{
   color: gray !important;
 }
@@ -1320,7 +1324,8 @@ td.right-border{
     /*z-index: 5000;*/
     position: absolute;
     top: 0px;
-    border-radius: 2px
+    border-radius: 2px;
+    cursor: pointer;
 }
 .not-click .scrollable-if-tall{
   max-height: 90vh !important;
@@ -1929,7 +1934,14 @@ a.disabled, a.disabled:hover, li.disabled {
    pointer-events: none;
    cursor: default;
    /*background-color: rgba(0,0,0,.1) !important;*/
-   color: rgba(0,0,0,.4) !important;;
+   color: rgba(0,0,0,.4) !important;
+}
+
+div.disabled, div.disabled:hover{
+   /*pointer-events: none;*/
+   cursor: default;
+   background: rgba(0,0,0,.1) !important;
+   color: rgba(0,0,0,.4) !important;
 }
 
 .disable_selection{

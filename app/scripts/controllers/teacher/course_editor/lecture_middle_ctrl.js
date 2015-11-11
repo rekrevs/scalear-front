@@ -6,8 +6,6 @@ angular.module('scalearAngularApp')
     var unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
   		if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
 	        $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-	        $scope.lecture.start_time=10
-     		$scope.lecture.end_time=20
 	    	unwatch()
       	}
     })
@@ -50,6 +48,16 @@ angular.module('scalearAngularApp')
  		$scope.insertQuiz(quiz_type, question_type)
  	})
 
+ 	$scope.$on("start_trim_video",function(){
+ 		$scope.editing_type = 'video'
+ 	})
+
+ 	$scope.$on("close_trim_video",function(){
+ 		$scope.editing_type = null
+
+ 		$scope.refreshVideo()
+ 	})
+
     $scope.lecture_player.events.onMeta= function(){
         // update duration for all video types.
         $scope.total_duration=$scope.lecture_player.controls.getDuration()
@@ -88,6 +96,7 @@ angular.module('scalearAngularApp')
 
     $scope.refreshVideo=function(){
     	$scope.slow=false
+    	$scope.video_ready = false
     	var temp_url = $scope.lecture.url
     	$scope.lecture.url =""
     	$timeout(function(){

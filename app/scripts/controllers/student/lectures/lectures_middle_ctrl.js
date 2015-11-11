@@ -235,6 +235,10 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
+        else{
+            $scope.lecture_player.controls.seek(0)
+            $scope.lecture_player.controls.pause()
+        }
     }
 
     var updateViewPercentage = function(milestone) {
@@ -403,8 +407,10 @@ angular.module('scalearAngularApp')
     } 
 
     $scope.lecture_player.events.waiting=function(){
-        $scope.video_ready=true
-        $scope.show_progressbar=true
+        if($rootScope.is_mobile){
+            $scope.video_ready=true
+            $scope.show_progressbar=true
+        }
     }
 
     var showNotification=function(msg, sub_msg, middle_msg){

@@ -1,5 +1,5 @@
 <div id="controls" class="light-grey disable_selection">
-    <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;">
+    <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;" ng-class="{'disabled': editing=='video'}">
         <span ng-if="user_role==2">
             <div class="elapsed" ng-style="{width: elapsed_width + '%'}" ng-mouseenter="showPlayhead()" ng-mouseleave="hidePlayhead()"></div>
             <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head + '%' }" ></div>
@@ -14,9 +14,9 @@
 
             <div class="elapsed transparent" ng-style="{width: elapsed_width + '%'}" ></div>
             <div ng-show="!editing" class="playhead ease-in-out playhead_big" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div> 
-            <div ng-show="editing" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div> 
+            <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div> 
 
-            <span ng-repeat="element in timeline.items">
+            <span ng-repeat="element in timeline.items" ng-hide="editing=='video'">
                 <div ng-if="element.type=='marker'" class="progress-events" ng-style="{'left':((element['time']/duration)*100)-0.25+'%'}" style="z-index: 1;">
                     <span class="progress-events" style="background-color: lightgray;" tooltip="{{element.data.title}}"  tooltip-append-to-body="true"></span>
                 </div>
@@ -41,6 +41,17 @@
                     <div ng-hide="element.data.end_time == element.data.time" class="progress-events squarebrackets_right" ng-style="{'left':((element.data.end_time/duration)*100)+'%'}" style="top:-4px" tooltip="End time: {{element.data.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateEndQuizTime(element.data)', containment:'position'}"></div>
                 </div>
             </span>
+
+            <span ng-show="editing=='video'">
+                <div>
+                    <div class="progress-events repeating_green_pattern" ng-style="{'left':((video.start_time/duration)*100)+'%', 'width': (((video.end_time - video.start_time)/duration)*100)+'%'}" ></div>
+
+                    <div class="progress-events squarebrackets_left" ng-style="{'left':((video.start_time/duration)*100)+'%'}" style="top:-4px" tooltip="Start time: {{video.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateVideoBoundaries()', onDrag: 'calculateVideoStartTime()', containment:'position'}" ></div>
+
+                    <div class="progress-events squarebrackets_right" ng-style="{'left':((video.end_time/duration)*100)+'%'}" style="top:-4px" tooltip="End time: {{video.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateVideoBoundaries()', onDrag: 'calculateVideoEndTime()', containment:'position'}"></div>
+                </div>
+            </span>
+
         </span>
     </div>
     <div style="height: 27px;">
@@ -70,7 +81,7 @@
         <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
             <span class="hide-for-small-only">
                 <span style="float:left;color: rgb(100, 100, 100);">{{current_time|format:'h:mm:ss'}}</span>
-                <span class="hide-for-semi-medium"> / {{(duration || 0)|format:'h:mm:ss'}}</span>
+                <span class="hide-for-semi-medium"> / {{ (duration || 0) |format:'h:mm:ss'}}</span>
             </span>
         </div>
     </div>

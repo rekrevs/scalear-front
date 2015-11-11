@@ -1,19 +1,19 @@
 <span bindonce>
 	<span bindonce="overlay" bo-if="mode != 'content_navigator'" bo-class="{'delete-overlay': overlay}">
 		<span bo-if="!overlay" bindonce="text_mode">
-			 <div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
+	 		<div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
 		        <span class="form-controls-alert" style="margin:auto" >
 	           		<button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
 	            	<button bo-class="{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span bo-text="'button.cancel' | translate"></span></button>
 		        </span>
 			</div>
-			<span  bo-if="text_mode != true">
+			<span  bo-if="!text_mode">
 				<a class="delete delete_tip" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" ng-click="showDeletePopup(true, $event)">
 					<i bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
 					<i bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
 				</a>
 			</span>
-			<span bo-if="text_mode == true">
+			<span bo-if="text_mode">
 				<a class="button tiny alert delete no-margin" ng-hide="displayDeletePopup" ng-click="showDeletePopup(true, $event)" style="margin-left: 2px !important">
 					<span bo-text="'button.delete'| translate"></span>
 				</a>

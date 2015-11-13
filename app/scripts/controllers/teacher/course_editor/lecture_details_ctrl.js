@@ -109,9 +109,8 @@ angular.module('scalearAngularApp')
         delete modified_lecture.detected_aspect_ratio;
         delete modified_lecture.due_date_enabled
         delete modified_lecture.disable_module_due_controls
-
-        $log.debug(modified_lecture)
-
+        delete modified_lecture.timeline
+        
         Lecture.update({
                 course_id: $scope.lecture.course_id,
                 lecture_id: $scope.lecture.id

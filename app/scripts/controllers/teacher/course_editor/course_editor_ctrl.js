@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
 
     ContentNavigator.open()
     DetailsNavigator.open()
-    $scope.timeline = new Timeline()
+    // $scope.timeline = new Timeline()
     $scope.DetailsNavigator = DetailsNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.delayed_details_status = DetailsNavigator.getStatus()

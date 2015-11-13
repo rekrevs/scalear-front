@@ -188,13 +188,15 @@ angular.module('scalearAngularApp')
 			scope.updateQuizStartTime=function(){
 				scope.selected_quiz.start_time = scope.selected_quiz.time
 				if(scope.has_start) 
-					scope.selected_quiz.start_time-=5
+					scope.selected_quiz.start_time-5<0? 0 : scope.selected_quiz.start_time-=5
 			}
 
 			scope.updateQuizEndTime=function(){
 				scope.selected_quiz.end_time = scope.selected_quiz.time
-				if(scope.has_end) 
-					scope.selected_quiz.end_time+=5
+				if(scope.has_end){
+					var duration = scope.lecture_player.controls.getDuration()
+					scope.selected_quiz.end_time+5>duration? duration : scope.selected_quiz.end_time+=5
+				}
 			}
 		}
 	};

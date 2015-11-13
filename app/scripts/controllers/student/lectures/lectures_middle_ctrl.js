@@ -498,8 +498,8 @@ angular.module('scalearAngularApp')
                     $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
                 }
                 if(data.flag && data.msg!="ask"){ // confused before but not third time - very confused            
-                    var elem=$scope.timeline['lecture'][$state.params.lecture_id].searchById(data.id, "confused");
-                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem].data.very=true;            
+                    var elem_index=$scope.timeline['lecture'][$state.params.lecture_id].getIndexById(data.id, "confused");
+                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem_index].data.very=true;            
                 }
             }
         )

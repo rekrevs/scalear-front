@@ -1,9 +1,9 @@
 <table class="table small-12 columns no-margin-bottom">
 	<tbody>
-		<tr ng-repeat="marker in timeline.items| filter:{type:'marker'}|orderBy:'time'" ng-class="{wheat: marker.data.id == selected_marker_id}">
+		<tr ng-repeat="marker in lecture.timeline.items| filter:{type:'marker'}|orderBy:'time'" ng-class="{wheat: marker.data.id == selected_marker_id}">
 			<td style="padding: 0.3625rem 0.3rem;">
 				<div class="small-12 columns no-padding">
-					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteMarker(marker)" padded="true" />
+					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteMarker(marker.data)" padded="true" />
 					<span ng-click="showMarker(marker.data)">
 						<div class="small-4 columns size-10">
 							<span translate>editor.marker</span>

@@ -1,9 +1,9 @@
 <table class="table small-12 columns quiz_list no-margin-bottom">
 	<tbody>
-		<tr ng-repeat="quiz in timeline.items|filter:{type:'quiz'}|orderBy:'time'" ng-class="{wheat: quiz.data.id == selected_quiz_id}">
+		<tr ng-repeat="quiz in lecture.timeline.items|filter:{type:'quiz'}|orderBy:'time'" ng-class="{wheat: quiz.data.id == selected_quiz_id}">
 			<td style="padding: 0.3625rem 0.3rem;">
 				<div class="small-12 columns no-padding">
-					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz)" padded="true" />
+					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz.data)" padded="true" />
 					<span ng-click="showQuiz(quiz.data)">
 						<div class="small-4 columns size-10">
 							<span translate>{{(quiz.data.quiz_type=='survey'? 'editor.survey' : 'editor.quiz')}}</span>

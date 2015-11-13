@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils','OnlineQuiz','OnlineMarker', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils, OnlineQuiz, OnlineMarker) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils','OnlineQuiz','OnlineMarker','Timeline', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils, OnlineQuiz, OnlineMarker, Timeline) {
 
     var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
         if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -32,6 +32,7 @@ angular.module('scalearAngularApp')
                 module_unwatch() 
             })
             $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
+            $scope.lecture.timeline = new Timeline()
             getQuizList()
             getMarkerList()
         }
@@ -231,7 +232,7 @@ angular.module('scalearAngularApp')
             function(data){
                 $scope.$parent.$parent.quiz_list = data.quizList
                 data.quizList.forEach(function(quiz){
-                    $scope.timeline.add(quiz.time, "quiz", quiz)
+                    $scope.lecture.timeline.add(quiz.time, "quiz", quiz)
                 })
             }
         );  
@@ -252,7 +253,7 @@ angular.module('scalearAngularApp')
             function(data){
                 $scope.$parent.$parent.marker_list = data.markerList
                 data.markerList.forEach(function(marker){
-                    $scope.timeline.add(marker.time, "marker", marker)
+                    $scope.lecture.timeline.add(marker.time, "marker", marker)
                 })
             }
         );  

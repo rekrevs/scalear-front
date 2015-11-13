@@ -112,7 +112,7 @@
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
+  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items|filter:{type:'quiz'}).length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.quizzes</div>
@@ -120,7 +120,7 @@
     </accordion-heading>
     <quiz_list />
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="marker_list.length">
+  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items| filter:{type:'marker'}).length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.markers</div>

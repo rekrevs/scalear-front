@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
             }
             return time_index + 1
         }
-        this.searchById = function(id, type){
+        this.getIndexById = function(id, type){
             for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
                 if ( this.items[time_index].data.id == id && this.items[time_index].type==type) {
                     return time_index

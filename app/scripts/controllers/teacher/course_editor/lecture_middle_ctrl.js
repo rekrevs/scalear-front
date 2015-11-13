@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
 
  	var checkQuizTimeConflict=function(time){
  		var new_time = time 
- 		$scope.timeline.items.forEach(function(item){
+ 		$scope.lecture.timeline.items.forEach(function(item){
  			if(item.type =='quiz'){
  				var quiz = item.data
 	 		    if(quiz.time == parseInt(new_time+1))
@@ -149,13 +149,16 @@ angular.module('scalearAngularApp')
 			
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
 
+			// var start_time = insert_time - 5 < 0? 0 : insert_time - 5
+			// var end_time   = insert_time + 5 > duration-2? duration-2 : insert_time + 5
+
 			$scope.quiz_loading = true;
 			Lecture.newQuiz({
 				course_id: $stateParams.course_id,
 				lecture_id: $scope.lecture.id,
 				time: insert_time, 
-				start_time: insert_time - 1,
-				end_time: insert_time + 1,
+				start_time: insert_time,
+				end_time: insert_time,
 				quiz_type: quiz_type, 
 				ques_type: question_type
 			},
@@ -164,7 +167,7 @@ angular.module('scalearAngularApp')
 				// $log.debug(data)
 				$scope.editing_mode= false
 				$scope.showOnlineQuiz(data.quiz)
-				$scope.timeline.add(data.quiz.time, 'quiz', data.quiz)
+				$scope.lecture.timeline.add(data.quiz.time, 'quiz', data.quiz)
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
 				DetailsNavigator.open()
@@ -315,13 +318,14 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
+		console.log(quiz)
 		var deferred = $q.defer();
 		$scope.quiz_overlay = false
 		OnlineQuiz.destroy(
-			{online_quizzes_id: quiz.data.id},{},
+			{online_quizzes_id: quiz.id},{},
 			function(data){
 				$log.debug(data)
-				$scope.timeline.items.splice($scope.timeline.items.indexOf(quiz), 1)
+				$scope.lecture.timeline.items.splice($scope.lecture.timeline.getIndexById(quiz.id, 'quiz'), 1)
 				deferred.resolve()
 				$scope.quiz_overlay = true
 			},
@@ -429,7 +433,8 @@ angular.module('scalearAngularApp')
 	}
 
 	var clearQuizVariables= function(){
-		$scope.selected_quiz.selected = false
+		if($scope.selected_quiz)
+			$scope.selected_quiz.selected = false
 		$scope.selected_quiz=null
 		$scope.$parent.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
@@ -482,7 +487,7 @@ angular.module('scalearAngularApp')
 		},
 		function(data){
 			$scope.showOnlineMarker(data.marker)
-			$scope.timeline.add(data.marker.time, "marker", data.marker)
+			$scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
 			DetailsNavigator.open()
 		})
 	}
@@ -511,7 +516,7 @@ angular.module('scalearAngularApp')
 		OnlineMarker.destroy(
 			{online_markers_id: marker.data.id},{},
 			function(){
-                $scope.timeline.items.splice($scope.timeline.items.indexOf(marker), 1)
+                $scope.lecture.timeline.items.splice($scope.lecture.timeline.getIndexById(marker.id, 'marker'), 1)
 			}
 		)
 	}
@@ -609,7 +614,7 @@ angular.module('scalearAngularApp')
 	}
 
 	var openPreviewInclass=function(){
-		$scope.filtered_timeline_items = angular.copy($scope.timeline.getItemsBetweenTime($scope.selected_quiz.start_time, $scope.selected_quiz.end_time))
+		$scope.filtered_timeline_items = angular.copy($scope.lecture.timeline.getItemsBetweenTime($scope.selected_quiz.start_time, $scope.selected_quiz.end_time))
 		var quiz_index
 		for(var item_index = 0; item_index < $scope.filtered_timeline_items.length; item_index++){
 			var current_item = $scope.filtered_timeline_items[item_index]

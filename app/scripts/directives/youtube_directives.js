@@ -146,14 +146,14 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.getDuration=function(){
-				console.log(scope.start, scope.end)
-				var duration
-				if(scope.start && scope.end)
-					duration = scope.end - scope.start
-				else{
-					duration = player_controls.getRealDuration()
-				}
-				return duration				
+				// console.log(scope.start, scope.end)
+				// var duration
+				// if(scope.start && scope.end)
+				// 	duration = scope.end - scope.start
+				// else{
+				// 	duration = player_controls.getRealDuration()
+				// }
+				return scope.end - scope.start				
 			}
 
 			player_controls.readyState=function(){

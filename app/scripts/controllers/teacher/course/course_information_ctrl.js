@@ -94,13 +94,10 @@ angular.module('scalearAngularApp')
     $scope.teacher_forum = true
   }
 
-  $scope.updateTeacher = function(index){
+  $scope.updateTeacher = function(teacher){
     Course.updateTeacher(
       {course_id:$stateParams.course_id},
-      {
-        email:$scope.teachers[index].email, 
-        role_id:$scope.teachers[index].role
-      }
+      teacher
     );
   }
 
@@ -138,6 +135,13 @@ angular.module('scalearAngularApp')
   $scope.animateCopy=function(){
      $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
   }
+
+  $scope.updateTeacherEmailDiscussion=function(){
+
+  }
+
+
+
   $scope.getTeachers();
 
 }]);

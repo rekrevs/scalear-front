@@ -478,7 +478,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.dist %>',
-                    src: ['scripts/**/*.js', 'bower_components/**/*.js', 'styles/**/*.css', '**/*.html'],
+                    src: ['scripts/**/*.js', 'styles/**/*.css', 'images/**/*', 'external_documents/**/*'],
                     dest: '<%= yeoman.dist %>',
                     //ext: '.gz.js'
                 }, ]
@@ -789,7 +789,7 @@ module.exports = function(grunt) {
         'usemin',
         'htmlclean',
         'inline_angular_templates',
-        //'compress',
+        'compress',
         'clean:bower'
     ]);
 

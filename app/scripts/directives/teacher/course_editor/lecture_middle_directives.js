@@ -132,11 +132,11 @@ angular.module('scalearAngularApp')
 				    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
 				    var seconds = parseInt(hhmm[2]);
 				    // check if hours or minutes are incorrect
-				    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
+				    var calculated_duration=(hours*60*60)+(minutes*60)+(seconds);
 				    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 			       		return $translate('editor.incorrect_format_time')
 				    }
-				    else if( (scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
+				    else if( (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0 ){
 			       		return $translate('editor.time_outside_range')
 				    }
 				}

@@ -176,8 +176,8 @@ angular.module('scalearAngularApp')
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
-        if($scope.lecture_player.controls.youtube)
-            $scope.total_duration-=1
+        // if($scope.lecture_player.controls.youtube)
+        //     $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
             $scope.lecture_player.controls.cue(quiz.time-0.1, function() {                
@@ -234,6 +234,10 @@ angular.module('scalearAngularApp')
             $timeout(function(){
                 $scope.scrollIntoView()
             },500)
+        }
+        else{
+            $scope.lecture_player.controls.seek(0)
+            $scope.lecture_player.controls.pause()
         }
     }
 
@@ -403,8 +407,10 @@ angular.module('scalearAngularApp')
     } 
 
     $scope.lecture_player.events.waiting=function(){
-        $scope.video_ready=true
-        $scope.show_progressbar=true
+        if($rootScope.is_mobile){
+            $scope.video_ready=true
+            $scope.show_progressbar=true
+        }
     }
 
     var showNotification=function(msg, sub_msg, middle_msg){

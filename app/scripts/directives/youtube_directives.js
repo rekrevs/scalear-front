@@ -153,6 +153,8 @@ angular.module('scalearAngularApp')
 				// else{
 				// 	duration = player_controls.getRealDuration()
 				// }
+				console.log("video start:", scope.start)
+				console.log("video end:", scope.end)
 				return scope.end - scope.start				
 			}
 

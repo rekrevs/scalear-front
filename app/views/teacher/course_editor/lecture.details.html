@@ -36,7 +36,7 @@
           </div>
           <br />
           <div class="right">
-            <button ng-hide="trimming_video" class="button tiny no-margin " ng-click="startTrimVideo()">Trim Video</button>
+            <button ng-hide="trimming_video" class="button tiny no-margin " ng-click="startTrimVideo()" ng-disabled="lecture.url == 'none'">Trim Video</button>
           </div>
           <div ng-show="trimming_video" class="right">
             <button class="button tiny success no-margin" ng-click="saveTrimVideo()">Trim</button>

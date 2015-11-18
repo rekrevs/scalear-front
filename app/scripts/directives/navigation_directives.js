@@ -130,7 +130,7 @@ angular.module('scalearAngularApp')
 				setDetails(true)	
 			}
 		};
- }]).directive('studentNavigation', ['ContentNavigator','TimelineNavigator', function(ContentNavigator, TimelineNavigator) {
+ }]).directive('studentNavigation', ['ContentNavigator','TimelineNavigator','$state', function(ContentNavigator, TimelineNavigator, $state) {
            return{
 			replace:true,
 			restrict: "E",
@@ -145,7 +145,8 @@ angular.module('scalearAngularApp')
 				scope.TimelineNavigator = TimelineNavigator				
 
 				scope.toggleNavigator=function(){
-					ContentNavigator.setStatus(!ContentNavigator.getStatus())
+					if(!$state.includes('course.content_selector'))
+						ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
 
 				scope.toggleTimeline=function(){
@@ -153,7 +154,7 @@ angular.module('scalearAngularApp')
 				}
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope','Preview','$log', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope','Preview','$log','MobileDetector', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector){
   	return{
 	    restrict:'E',
 	    replace: true,
@@ -238,22 +239,31 @@ angular.module('scalearAngularApp')
 		  	scope.showModuleCourseware = function(module, event){
 		  		if((module.lectures.length + module.quizzes.length) > 0){
 			        if(!scope.currentmodule || scope.currentmodule.id != module.id){
-			          scope.currentmodule = module
-			          Module.getLastWatched(
-			            {
-			            	course_id: $stateParams.course_id, 
-			            	module_id: module.id
-			            }, 
-			            function(data){
-			              if(data.last_watched != -1){
-			                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-			                scope.currentitem = {id:data.last_watched}
-			              }
-			              else{
-			                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-			                scope.currentitem = {id:module.quizzes[0].id}
-			              }
-			          }) 
+			          	scope.currentmodule = module
+			          	if(!MobileDetector.isPhone()){
+				          	Module.getLastWatched(
+					            {
+					            	course_id: $stateParams.course_id, 
+					            	module_id: module.id
+					            }, 
+					            function(data){
+					              if(data.last_watched != -1){
+					                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+					                scope.currentitem = {id:data.last_watched}
+					              }
+					              else{
+					                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+					                scope.currentitem = {id:module.quizzes[0].id}
+					              }
+				          	}) 
+				      	}
+				      	else{
+			      		 	event.stopPropagation()
+				      		$timeout(function(){
+								ContentNavigator.close()
+							})
+							$state.go('course.module.student_inclass',{'module_id': module.id})
+				      	}
 			        }
 			        else
 			          event.stopPropagation()
@@ -262,19 +272,29 @@ angular.module('scalearAngularApp')
 			  		scope.currentmodule = null
 		  	}
 		               
-		  	scope.showItem = function(item, type){
+		  	scope.showItem = function(item, mode){
 		  		if($state.includes("**.progress.**") || $state.includes("**.progress_overview")){
 		  			if($state.includes("course.module.progress"))
 		  				$rootScope.$broadcast("scroll_to_item",item)
 		  		}
 		  		else{
-			 		var params = {'module_id': $state.params.module_id}  
-			 		$log.debug(item)  
-				    params[item.class_name.toLowerCase()+'_id'] = item.id
-				    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
-					if(!(type =='courseware' && item.class_name=='customlink')){
+			 		var params = {'module_id': item.group_id}  
+			 		$log.debug(item)
+			 		var item_type =item.class_name.toLowerCase()
+				    params[item_type+'_id'] = item.id
+					// if(MobileDetector.isPhone()){
+					// 	$timeout(function(){
+					// 		ContentNavigator.close()
+					// 	})
+					// 	if(mode =='courseware' && item_type == 'lecture'){
+					// 		item_type = 'inclass_lecture'
+					// 	}
+					// }
+				    $state.go('course.module.'+mode+'.'+item_type, params)
+					if(!(mode =='courseware' && item_type=='customlink')){
 				    	scope.currentitem = {id:item.id}
 					}
+
 				}
 		  	}
 

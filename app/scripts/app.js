@@ -298,7 +298,12 @@ angular.module('scalearAngularApp', [
                     return courseResolver.init($stateParams.course_id)
                 }]
             }
-        })           
+        })
+        .state('course.content_selector',{
+            url:'/content',
+            templateUrl: '/views/empty_view.html',
+            controller: 'contentSelectorCtrl',
+        })
         .state('course.module',{
             url:'/modules/:module_id',
             templateUrl: '/views/empty_view.html',
@@ -412,6 +417,11 @@ angular.module('scalearAngularApp', [
             url: '/lectures/:lecture_id?time',
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
+        })
+        .state('course.module.student_inclass', {
+            url: '/student_inclass',
+            templateUrl: '/views/student/inclass/inclass.html',
+            controller: 'studentInclassCtrl'
         })
         .state('course.module.courseware.quiz', {
             url: '/quizzes/:quiz_id',

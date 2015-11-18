@@ -210,6 +210,15 @@ angular.module('scalearAngularApp')
             })
         })
 
+        $scope.lecture.annotated_markers.forEach(function(marker){
+            $scope.lecture_player.controls.cue(marker.time,function(){
+                showAnnotation(marker.annotation)
+            })
+            $scope.lecture_player.controls.cue(marker.time+5,function(){
+                $scope.dismissAnnotation()
+            })
+        })
+
         duration_milestones.forEach(function(milestone){
             $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function(){
                 updateViewPercentage(milestone)
@@ -489,8 +498,8 @@ angular.module('scalearAngularApp')
                     $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
                 }
                 if(data.flag && data.msg!="ask"){ // confused before but not third time - very confused            
-                    var elem=$scope.timeline['lecture'][$state.params.lecture_id].search_by_id(data.id, "confused");
-                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem].data.very=true;            
+                    var elem_index=$scope.timeline['lecture'][$state.params.lecture_id].getIndexById(data.id, "confused");
+                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem_index].data.very=true;            
                 }
             }
         )
@@ -766,6 +775,14 @@ angular.module('scalearAngularApp')
         // $scope.last_fullscreen_state = null
         // $scope.last_video_state = null
         // $scope.last_timeline_state = null
+    }
+
+    $scope.dismissAnnotation=function(){
+        $scope.annotation = null
+    }
+
+    var showAnnotation=function(annotation){
+        $scope.annotation = annotation
     }
 
     init();

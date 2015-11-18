@@ -1,0 +1,128 @@
+<style>
+ul.connected_blocks{
+	margin:0;
+}
+.connected_blocks li{
+  width: 25%;
+  height: 2.4em;
+  text-align: center;
+  line-height: 2em;
+  margin: 0;
+  display: inline-block;
+  color: white;
+  position: relative;
+  font-size: 14px;
+  float:left;
+  padding: 3px;
+}
+.connected_blocks li.active{
+	border: 4px solid black;
+    padding: 0;
+}
+.inclass_lecture .panel{
+	margin-bottom: 8px;
+	cursor: pointer;
+	padding: 8px 0;
+}
+.rotate-90{
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+}
+.self_quiz .panel.selected{
+    background: #B3D0EA;
+    border: 2px solid #008CBA;
+}
+.group_quiz .panel.selected{
+    background: #B4EAC8;
+    border: 2px solid #43AC6A;
+}
+</style>
+<div class="small-12 column disable_selection"><h3><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3></div>
+<div class="small-12 columns no-padding">
+	<ul class="connected_blocks">
+		<li ng-class="{'active': inclass_status==1}" style="background:lightgrey;color:black">Intro</li>
+		<li ng-class="{'active': inclass_status==2}" style="background:#008CBA">Self</li>
+		<li ng-class="{'active': inclass_status==3}" style="background:#43AC6A">Group</li>
+		<li ng-class="{'active': inclass_status>=4}" style="background:darkorange">Discussion</li>
+	</ul>
+</div>
+<div class="small-12 column disable_selection inclass_lecture no-padding" ng-if="inclass_status >=2" style="margin-top: 15px;">
+	
+	<div ng-if="inclass_status==2 || (quiz.done && inclass_status>2)" class="small-12 columns self_quiz" style="padding:0 5px">
+		<div class="small-12 columns no-padding">
+			<div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 8px);position: absolute;">
+				<div class="rotate-90" style="top: 40%;position: relative;">Self</div>
+			</div>
+			<div class="small-11 column" style="padding:0 5px">
+				<div ng-hide="quiz.done && !choice.selected" class='panel small-12 column' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
+					<div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
+					<div class="small-10 column" style="padding: 0 5px;">{{choice.answer}} a big text to test alot fo long answer text</div>
+				</div>
+			</div>
+		</div>
+		<span ng-hide="quiz.done">
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Why?" style="height:50px" /></div>
+			<div class="small-12 medium-4 columns"><button class="button expand no-margin" ng-click="sendAnswers(quiz)">Vote!</button></div>
+		</span>
+		<span ng-show="quiz.done && inclass_status==2 ">
+			<div class="small-4 medium-2 columns no-padding left" >
+				<button class="button expand success no-margin" ng-click="retry(quiz)">Retry</button>
+			</div>
+			<div class="small-8 medium-4 columns left" style="padding:0;padding-left:5px">
+				<button class="button expand no-margin" ng-click="getInclassStudentStatus(inclass_status)">Next</button>
+			</div>
+		</span>
+	</div>
+
+	<div ng-if="inclass_status >= 3" class="small-12 columns group_quiz" style="padding:0 5px">
+		<div class="small-12 columns no-padding">
+			<div class="small-1 column no-padding" style="background:#43AC6A;color:white;height: calc(100% - 8px);position: absolute;">
+				<div class="rotate-90" style="top: 45%;position: relative;">Group</div>
+			</div>
+			<div class="small-11 column" style="padding:0 5px">
+				<div ng-hide="group_quiz.done && !choice.selected" class='panel small-12 column' ng-repeat='choice in group_quiz.answers' ng-click="selectAnswer(choice,group_quiz)" ng-class="{'selected': choice.selected}">
+					<div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
+					<div class="small-10 column" style="padding: 0 5px;">{{choice.answer}} a big text to test alot fo long answer text</div>
+				</div>
+			</div>
+		</div>
+		<span ng-hide="group_quiz.done">
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Why?" style="height:50px" /></div>
+			<div class="small-12 medium-4 columns"><button class="button expand success no-margin" ng-click="sendAnswers(group_quiz)">Vote!</button></div>
+		</span>
+		<span ng-show="group_quiz.done && inclass_status==3">
+			<div class="small-4 medium-2 columns no-padding left" >
+				<button class="button expand success no-margin" ng-click="retry(group_quiz)">Retry</button>
+			</div>
+			<div class="small-8 medium-4 columns left" style="padding:0;padding-left:5px">
+				<button class="button expand no-margin" ng-click="getInclassStudentStatus(inclass_status)">Next</button>
+			</div>
+		</span>
+	</div>
+
+	<div ng-if="inclass_status > 3">
+		<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Notes" style="height:50px" /></div>
+		<div class="small-12 medium-4 columns"><button class="button expand orange no-margin" ng-click="getInclassStudentStatus(inclass_status)">Save & Continue</button></div>
+	</div>
+
+</div>
+<div class="small-12 column disable_selection inclass_lecture" ng-if="inclass_status < 2">
+	<div class='small-12 column' style="height: 50vh;">
+		<center>
+			<div style="margin: 100px 0;"><h5><b>{{messages[inclass_status]}}</b></h5></div>
+		</center>
+	</div>
+	<div class="small-12 medium-4 columns left">
+		<loading size="small" show="loading" /> 
+		<button class="button expand" ng-click="getInclassStudentStatus(inclass_status)">
+			<span ng-show="inclass_status==0">
+				<i class="fi-refresh"></i>
+				Refresh
+			</span>
+			<span ng-show="inclass_status>0">Next</span>
+		</button>
+	</div>
+</div>

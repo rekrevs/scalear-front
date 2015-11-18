@@ -19,8 +19,7 @@ angular.module('scalearAngularApp')
                 $scope.timeline = {}
                 $scope.timeline['lecture']={}
                 $log.debug("timeline")
-                for(var l in $scope.module_lectures)
-                {
+                for(var l in $scope.module_lectures){
                     var lec= $scope.module_lectures[l]
                     $scope.timeline['lecture'][lec.id] = new Timeline()
                     $scope.timeline['lecture'][lec.id].meta = lec
@@ -45,8 +44,11 @@ angular.module('scalearAngularApp')
                     for(var i in lec.notes){
                         $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
                     }
+                    for(var i in lec.annotated_markers){
+                        $scope.timeline['lecture'][lec.id].add(lec.annotated_markers[i].time, "marker", lec.annotated_markers[i])
+                    }
                 }
-                $log.debug($scope.timeline)
+                $log.debug("timeline",$scope.timeline)
                 showModuleCourseware($scope.module_obj[$stateParams.module_id])
                 
             }

@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval) {
+  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval','OnlineQuiz', function ($scope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval,OnlineQuiz) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.in_class')
     $scope.inclass_player={}
     $scope.inclass_player.events={} 
+    
     $scope.time_parameters={
       quiz: 3,
       question: 2
@@ -21,7 +22,6 @@ angular.module('scalearAngularApp')
         screenfull.request();
         $scope.fullscreen = true;
         $scope.blurButtons();
-
         $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question;
         $scope.counter =  $scope.timer>0? 1 : 0;
         $scope.counting = true;
@@ -32,16 +32,22 @@ angular.module('scalearAngularApp')
             changeButtonsSize()
             $timeout(function(){
               $scope.adjustTextSize()
+              var video_width = angular.element('#inclass_video').height() * (16.0/9.0)
+              $scope.quiz_layer= {
+                  "width":video_width,
+                  "margin-left": (angular.element('#inclass_video').width() - video_width)/2.0
+              }
             })
             $scope.$apply()
-        })
+          }
+        )
 
         document.addEventListener(screenfull.raw.fullscreenchange, function () {
-            if(!screenfull.isFullscreen){  
-                $scope.fullscreen = false              
-                $scope.exitBtn()
-                $scope.$apply()
-            }
+          if(!screenfull.isFullscreen){  
+            $scope.fullscreen = false              
+            $scope.exitBtn()
+            $scope.$apply()
+          }
         });
   	};
 
@@ -78,14 +84,13 @@ angular.module('scalearAngularApp')
           for(var lec_id in $scope.lectures){
             $scope.timeline['lecture'][lec_id] = new Timeline()
             for(var type in $scope.lectures[lec_id]){
-              for(var it in $scope.lectures[lec_id][type] ){
+              for(var it in $scope.lectures[lec_id][type]){
                 $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
               }
-            }           
+            }
           }
+          console.log("timeline for inclass", $scope.timeline)
           getSurveyCharts()
-          
-         
         },  
         function(){}
       )
@@ -102,7 +107,7 @@ angular.module('scalearAngularApp')
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
           $scope.review_survey_count = data.review_survey_count
           $scope.timeline["survey"]={}
-          for (var survey_id in $scope.quizzes ){
+          for(var survey_id in $scope.quizzes){
             $scope.timeline["survey"][survey_id]=new Timeline()
             for(var q_idx in $scope.quizzes[survey_id].questions){
               var q_id = $scope.quizzes[survey_id].questions[q_idx].id
@@ -142,7 +147,6 @@ angular.module('scalearAngularApp')
 
 
     var openModal=function(){
-      $rootScope.changeError = true;
       angular.element("body").css("overflow","hidden");
       angular.element("#main").css("overflow","hidden");
       angular.element("html").css("overflow","hidden");
@@ -174,7 +178,8 @@ angular.module('scalearAngularApp')
       });
     }
 
-    $scope.exitBtn = function () {
+    $scope.exitBtn = function(){
+      exitInclassSession()
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()
@@ -182,7 +187,6 @@ angular.module('scalearAngularApp')
     };
 
     var cleanUp=function(){
-      $rootScope.changeError = false;
       angular.element("body").css("overflow","");
       angular.element("#main").css("overflow","");
       angular.element("html").css("overflow","");
@@ -218,13 +222,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.qualityBtn= function(){
-      var time = $scope.inclass_player.controls.getTime()
       if(!$scope.quality_set){
-        $scope.inclass_player.controls.changeQuality('hd720',time)
+        $scope.inclass_player.controls.changeQuality('hd720')
         $scope.quality_set='color-blue'
       }
       else{
-        $scope.inclass_player.controls.changeQuality(null,time)
+        $scope.inclass_player.controls.changeQuality('large')
         $scope.quality_set=null
 
       }
@@ -274,8 +277,12 @@ angular.module('scalearAngularApp')
         $scope.inclass_player.controls.pause()
     }
 
-
-    $scope.nextQuiz = function(){      
+    $scope.nextQuiz = function(){
+      if($scope.inclass_session_status == 2 && $scope.selected_timeline_item.data.available.in_group){ 
+        $scope.inclass_session_status = 3 
+        updateInclassSession($scope.selected_timeline_item.data.quiz_id,3) //group status
+        return
+      }
       if($scope.module && $scope.module.items){
         if($scope.item_itr < $scope.module.items.length){
           if($scope.module.items[$scope.item_itr]){
@@ -284,9 +291,26 @@ angular.module('scalearAngularApp')
             if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
               $scope.timeline_itr+=1 
               if($scope.timeline_itr!=0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id].items.length){
-                if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
-                  $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                var this_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                if(this_item != $scope.selected_timeline_item){
+                  if(!$scope.selected_timeline_item || !(this_item.type == 'markers' && !this_item.data)){
+                    $scope.selected_timeline_item = this_item
+                    if($scope.selected_timeline_item.type == 'markers' && $scope.selected_timeline_item.data){
+                      $scope.inclass_session_status = $scope.selected_timeline_item.data.status //start and end status
+                      updateInclassSession($scope.selected_timeline_item.data.quiz_id,$scope.inclass_session_status)
+                    }
+                  }
+                  else{
+                    console.log("empty marker fillin")
+                    $scope.selected_timeline_item = angular.copy($scope.selected_timeline_item)
+                    $scope.selected_timeline_item.type = "markers"
+                    $scope.selected_timeline_item.time = this_item.time
+                    if($scope.inclass_session_status>=2){
+                      $scope.inclass_session_status = 4 //discussion status
+                      updateInclassSession($scope.selected_timeline_item.data.quiz_id,4)
+                    }
+                  }
+                  // $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{
                   $scope.nextQuiz()
@@ -316,6 +340,16 @@ angular.module('scalearAngularApp')
                     $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
                   else
                     $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
+                }
+                else if($scope.selected_timeline_item.type == "inclass"){
+                  if($scope.selected_timeline_item.data.available.in_self){
+                    $scope.inclass_session_status = 2 //individual status
+                    updateInclassSession($scope.selected_timeline_item.data.quiz_id, 2)
+                  }
+                  else if($scope.selected_timeline_item.data.available.in_group){
+                    $scope.inclass_session_status = 3 //group status
+                    updateInclassSession($scope.selected_timeline_item.data.quiz_id, 3)
+                  }
                 }
               }
               else{
@@ -359,7 +393,7 @@ angular.module('scalearAngularApp')
                 if($scope.timeline_itr > 0){
                   if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                     $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                    $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                    // $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                   }
                   else{             
                     $scope.prevQuiz()
@@ -716,6 +750,23 @@ angular.module('scalearAngularApp')
         $scope.timer_interval = $interval($scope.timerCountdown,1000);
         $scope.counting = true;
       }
+  }
+
+  var updateInclassSession=function(quiz_id, status){
+    console.log("status update!",status)
+    OnlineQuiz.updateInclassSession(
+      {online_quizzes_id: quiz_id},
+      {status: status || 0},
+      function(){})
+  }
+
+  var exitInclassSession=function(){
+    Module.updateAllInclassSessions(
+      { course_id: $stateParams.course_id,
+        module_id: $stateParams.module_id 
+      },
+      {}
+    )
   }
 
   init();

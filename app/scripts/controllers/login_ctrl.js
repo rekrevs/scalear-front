@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
@@ -14,8 +14,9 @@ angular.module('scalearAngularApp')
       function(data){
         $log.debug("login success")
         $scope.sending = false;
-        $rootScope.$broadcast("get_current_courses")        
-        if( ($scope.is_mobile[0] && data.roles[0].id != 2 &&  $scope.is_mobile[0] == "iPad") || ($scope.is_mobile[0] && $scope.is_mobile[0] != "iPad") ){
+        $rootScope.$broadcast("get_current_courses") 
+        $scope.is_mobile= MobileDetector.isMobile()
+        if( $scope.is_mobile && ((data.roles[0].id != 2 && MobileDetector.isTablet()) ||  MobileDetector.isPhone)){
           ngDialog.open({
             template: 'mobileSupport',
             className: 'ngdialog-theme-default ngdialog-theme-custom',
@@ -41,15 +42,15 @@ angular.module('scalearAngularApp')
       $state.go("dashboard");
   }
 
-  var isMobile=function(){
-      // var iOS = false,
-      //     iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-      // for ( var i = 0; i < iDevice.length ; i++ ) {
-      //     if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-      // }
-      return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || []
-  }
-  $scope.is_mobile= isMobile()
+  // var isMobile=function(){
+  //     // var iOS = false,
+  //     //     iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+  //     // for ( var i = 0; i < iDevice.length ; i++ ) {
+  //     //     if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+  //     // }
+  //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || []
+  // }
+  
 
    
 }]);

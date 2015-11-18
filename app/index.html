@@ -73,7 +73,7 @@
                 <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
                 <br ng-hide="('**.course.**' | includedByState)"/>
-                <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
+                <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin">
                 </div>
                 <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
                 </div>
@@ -191,6 +191,7 @@
     <script src="scripts/services/teacher/lecture.js"></script>
     <script src="scripts/services/teacher/module.js"></script>
     <script src="scripts/services/teacher/online_quiz.js"></script>
+    <script src="scripts/services/teacher/online_marker.js"></script>
     <script src="scripts/services/teacher/quiz.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
@@ -208,6 +209,7 @@
     <script src="scripts/services/page.js"></script>
     <script src="scripts/services/scaltour.js"></script>
     <script src="scripts/services/util.js"></script>
+    <script src="scripts/services/is_mobile.js"></script>
     <script src="scripts/services/impersonate.js"></script>
     <script src="scripts/services/dashboard.js"></script>
     <script src="scripts/services/content_navigator.js"></script>
@@ -229,12 +231,14 @@
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
+
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>        
-    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/lecture_marker_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/customlink_details_ctrl.js"></script> 
@@ -261,9 +265,11 @@
 
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/student/course/course_information_ctrl.js"></script>
+    <script src="scripts/controllers/student/course/content_selector_ctrl.js"></script>
 
     <script src="scripts/controllers/student/lectures/courseware_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
+    <script src="scripts/controllers/student/inclass/student_inclass_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
 
     <script src="scripts/controllers/student/help/student_getting_started_ctrl.js"></script>

@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
 		'getQuizData': {method: 'GET', params: {action: 'get_old_data_angular'}, headers:headers},
 		'getHtmlData':{method:'GET', params:{action:'get_html_data_angular'}, headers:headers},
 		'newQuiz':{method: 'GET', params:{action: 'new_quiz_angular'}, headers:headers},
+		'newMarker':{method: 'GET', params:{action: 'new_marker'}, headers:headers},
 		'updateAnswers':{method:'POST', params:{action:'save_answers_angular'}, headers:headers},
 		'addAnswer':{method:'POST',ignoreLoadingBar: true, params:{action:'add_answer_angular'}}, headers:headers,
 		'removeAnswer':{method:'POST', ignoreLoadingBar: true, params:{action:'remove_answer_angular'}, headers:headers},

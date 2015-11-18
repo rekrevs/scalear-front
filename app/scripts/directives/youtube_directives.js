@@ -439,7 +439,7 @@ angular.module('scalearAngularApp')
 
 			$scope.resize.big = function(){
 				$log.debug("resizing big")
-				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+				var factor= $scope.aspect_ratio=="smallscreen"? 4.0/3.0 : 16.0/9.0;
 	            var win = angular.element($window) 
 				$scope.fullscreen = true
 				angular.element("body").css("overflow","hidden");
@@ -469,11 +469,11 @@ angular.module('scalearAngularApp')
 
 				var video=angular.copy(container)
 				video["height"]-=progressbar_height
-				video["width"]-="auto"
+				video["width"]="auto"
 				video["position"]=""
 
 
-				var video_height = window_height-progressbar_height;
+				var video_height = video["height"]
 				var video_width = video_height*factor
 				
 				var layer={}
@@ -529,15 +529,20 @@ angular.module('scalearAngularApp')
 	    scope:{
 	        player:'=',
 	        seek: "&",
-	        timeline: '='
+	        timeline: '=',
+	        role: '&',
+	        editing:"="
 	    },
 	    templateUrl:"/views/progress_bar.html",
 	    link: function(scope, element, attrs){
+	    	scope.user_role = scope.role()
 	    	var player = scope.player.element
 			var progress_bar= angular.element('.progressBar');
-			var playhead= document.getElementsByClassName("playhead")[0]
-			var elapsed_bar = document.getElementsByClassName("elapsed")[0]
+			var playhead= element.find('.playhead')//document.getElementsByClassName("playhead")[0]
+			var elapsed_bar = element.find('.elapsed')//document.getElementsByClassName("elapsed")[0]
 			var onplayhead = false;
+			scope.progress_bar = $('.progressBar')
+			scope.progress_width  = scope.progress_bar.width()
 	    	scope.current_time=0
 	    	scope.volume_class="mute";
 	        scope.quality=false;
@@ -586,20 +591,16 @@ angular.module('scalearAngularApp')
 			
 			scope.playHeadMouseDown=function(event) {
 				onplayhead = true;
-				scope.showPlayhead()
 				window.addEventListener('mousemove', scope.moveplayhead, true);
 				window.addEventListener('mouseup', scope.playHeadMouseUp, false);
 
 				window.addEventListener('touchmove', scope.moveplayhead, true);
 				window.addEventListener('touchend', scope.playHeadMouseUp, false);
-
-				scope.$apply()
 			}
 
 			scope.playHeadMouseUp=function(event){
 				if (onplayhead == true) {
 					onplayhead = false;
-					scope.hidePlayhead()
 					window.removeEventListener('mousemove', scope.moveplayhead, true);
 					window.removeEventListener('touchmove', scope.moveplayhead, true);
 
@@ -641,17 +642,15 @@ angular.module('scalearAngularApp')
 				}
 			}
 
-			elapsed_bar.addEventListener('mouseenter', scope.showPlayhead, false);
-			elapsed_bar.addEventListener('mouseleave', scope.hidePlayhead, false);
+			progress_bar.on('mouseenter', scope.showPlayhead);
+			progress_bar.on('mouseleave', scope.hidePlayhead);
 
-			playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
-			playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
 
 			player.on('timeupdate', function(){
-				if (onplayhead == false) {
+				if (onplayhead == false ){
 					scope.current_time = player.currentTime()
-					scope.elapsed_width = ((scope.current_time/scope.duration)*100)
-			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width - 0.2
+					scope.elapsed_width= ((scope.current_time/scope.duration)*100)
+			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width-0.2
 			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
 			    }
 				scope.$apply()
@@ -708,11 +707,14 @@ angular.module('scalearAngularApp')
 	        }
 
 	        scope.progressSeek = function(event){
-		        var element = angular.element('.progressBar');
-		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
-		        scope.seek()(scope.duration*ratio)
-		        if(scope.timeline)
-		        	scrollToNearestEvent(scope.duration*ratio)
+	        	if(!scope.skip_progress_seek){
+			        var element = angular.element('.progressBar');
+			        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
+			        scope.seek()(scope.duration*ratio)
+			        if(scope.timeline && scope.user_role==2)
+			        	scrollToNearestEvent(scope.duration*ratio)
+			    }
+			    scope.skip_progress_seek = false
 	        }
 
 	      	scope.showQuality = function(){
@@ -745,14 +747,71 @@ angular.module('scalearAngularApp')
 	  				scrollToItem(nearest_item.type, nearest_item.data.id)
 	  		}
 
+	  		scope.calculateQuizBoundaries=function(event, meta, item){
+	  			meta.position.top = -4
+	  			var progress_width  = scope.progress_bar.width()
+	  			item.data.start_location = (item.data.start_time/scope.duration)*progress_width
+				item.data.end_location   = (item.data.end_time/scope.duration)*progress_width
+				item.data.quiz_location  = (item.data.time/scope.duration)*progress_width 
+				
+				var next_quiz = scope.timeline.getNextByType(item)
+				var prev_quiz = scope.timeline.getPrevByType(item)
+				item.data.next_quiz_start = next_quiz? (next_quiz.data.start_time/scope.duration)*progress_width : progress_width 
+				item.data.prev_quiz_end = prev_quiz? (prev_quiz.data.end_time/scope.duration)*progress_width : 0
+	  		}
+
+	  		scope.calculateQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			if(meta.position.left > item.end_location)
+	  				meta.position.left = item.end_location
+	  			if(meta.position.left < item.start_location)
+	  				meta.position.left = item.start_location
+	  			item.time = (meta.position.left/scope.progress_bar.width())*scope.duration
+	  			meta.position.left -= 6
+	  			item.hide_quiz_answers = false
+	  			scope.seek()(item.time)
+	  		}	  		
+
+	  		scope.calculateStartQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			if(meta.position.left > item.quiz_location)
+	  				meta.position.left = item.quiz_location
+	  			if(meta.position.left < item.prev_quiz_end+5)
+	  				meta.position.left = item.prev_quiz_end+5
+
+	  			item.start_time = (meta.position.left/scope.progress_bar.width())*scope.duration
+	  			item.hide_quiz_answers = true
+	  			scope.seek()(item.start_time)
+	  		}
+
+	  		scope.calculateEndQuizTime=function(event, meta, item){
+	  			meta.position.top = -4
+	  			console.log(meta.position.left)
+	  			console.log(item.next_quiz_start)
+	  			if(meta.position.left < item.quiz_location)
+	  				meta.position.left = item.quiz_location
+	  			if(meta.position.left > item.next_quiz_start-5)
+	  				meta.position.left = item.next_quiz_start-5
+
+	  			item.end_time = (meta.position.left/scope.progress_bar.width())*scope.duration
+	  			item.hide_quiz_answers = true
+	  			scope.seek()(item.end_time)
+	  		}
+
+	  		scope.showQuiz=function(quiz){
+	  			scope.skip_progress_seek = true
+	  			scope.seek()(quiz.time)
+	  			$rootScope.$broadcast("show_online_quiz", quiz)
+	  		}
+
 	      	if(scope.player.controls.youtube){
 	            scope.speeds = scope.player.controls.getSpeeds();            
 	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
 	            scope.qualities = ["auto","small", "medium", "large"]
 	            // scope.chosen_quality = scope.player.controls.getQuality()
+	            scope.setQuality(scope.chosen_quality)
 	            $timeout(function(){
 	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-	            	scope.setQuality(scope.chosen_quality)
 	            	scope.chosen_quality = scope.player.controls.getQuality()
 	            },2000)
 	      	}
@@ -782,12 +841,9 @@ angular.module('scalearAngularApp')
 		   	scope.$on('$destroy', function(){
 	         	shortcut.remove("b");
 	      		shortcut.remove("Space");
+	      		progress_bar.off('mouseenter', scope.showPlayhead);
+				progress_bar.off('mouseleave', scope.hidePlayhead);
 				unwatchMute()
-				playhead.removeEventListener('mousedown', scope.playHeadMouseDown, false);
-				playhead.removeEventListener('touchstart', scope.playHeadMouseDown, false);
-
-				elapsed_bar.removeEventListener('mouseenter', scope.showPlayhead, false);
-				elapsed_bar.removeEventListener('mouseleave', scope.hidePlayhead, false);
 	      	});
 	    }
 	}

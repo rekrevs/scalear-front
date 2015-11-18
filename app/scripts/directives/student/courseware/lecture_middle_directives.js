@@ -544,4 +544,18 @@ angular.module('scalearAngularApp')
       }
     }
   };
+}]).directive('markersTimeline',['$filter', function($filter){
+  return{
+    restrict:"A",
+    scope:{
+      data:'&',
+      seek:'&'
+    },
+    templateUrl: '/views/student/lectures/markers_timeline.html',
+    link:function(scope, element, attrs){
+      scope.item = scope.data()
+      scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
+      
+    }
+  }
 }])

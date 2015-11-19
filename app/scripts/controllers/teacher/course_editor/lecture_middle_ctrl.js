@@ -524,7 +524,7 @@ angular.module('scalearAngularApp')
 
 	$scope.deleteOnlineMarker=function(marker){
 		OnlineMarker.destroy(
-			{online_markers_id: marker.data.id},{},
+			{online_markers_id: marker.id},{},
 			function(){
                 $scope.lecture.timeline.items.splice($scope.lecture.timeline.getIndexById(marker.id, 'marker'), 1)
 			}

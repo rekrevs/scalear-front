@@ -44,6 +44,9 @@ angular.module('scalearAngularApp')
         this.filterByType=function(type){
             return this.items.filter(function(item){return item.type==type})
         }
+        this.filterByNotType=function(type){
+            return this.items.filter(function(item){return item.type!=type})
+        }
         this.getNextItem=function(item){
             return this.items[this.items.indexOf(item)+1]
         }
@@ -59,8 +62,8 @@ angular.module('scalearAngularApp')
             return filtered[filtered.indexOf(item)-1]
         }
         this.getItemsBetweenTime=function(start_time, end_time){
-            return this.items.filter(function(item){
-                return (item.time >= start_time && item.time <= end_time) 
+            return this.items.filter(function(item, index){
+                return (item.time >= start_time && item.time <= end_time && index>0) 
             })
         }
     };

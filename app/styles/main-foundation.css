@@ -794,6 +794,8 @@ input.answer_input{
 
 .size-18 { font-size: 18px !important; }
 
+.size-20 { font-size: 20px !important;}
+
 .size-21 { font-size: 21px !important;}
 
 .size-24 { font-size: 24px; }
@@ -2030,7 +2032,7 @@ a.editable-click{
   /*color: white;*/
   position: relative;
   /*font-size: 14px;*/
-
+  margin-left: 2em;
   background: #cccccc;
   color: rgba(0,0,0,0.5);
   border: 1px solid #B9B9B9;
@@ -2041,7 +2043,7 @@ a.editable-click{
   position: absolute;
   top: .5em;
   left: -3em;
-  width: 4em;
+  width: 3em;
   height: 3px;
   /*background: #5DA423;*/
   z-index: -1;
@@ -2078,6 +2080,12 @@ a.editable-click{
   border: 2px solid black;
 }
 
+.inclass_connected_circles.connected_circles .active{
+  border: 2px solid #DC8F02;
+}
+.inclass_connected_circles.connected_circles li.active::before  {
+  background: #DC8F02;
+}
 .connected_circles li.active::before  {
   background: black;
 }

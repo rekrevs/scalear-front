@@ -78,11 +78,13 @@ angular.module('scalearAngularApp')
           angular.extend($scope, data)
           $scope.module= $scope.course.selected_module
           $log.debug("moduel ", $scope.course.selected_module)
-          if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
-            $scope.url = $scope.first_lecture+"&controls=1&fs=1&theme=light"
+          if($scope.progress_player.controls.isYoutube($scope.first_lecture.url)){
+            $scope.video_start = $scope.first_lecture.start_time
+            $scope.video_end = $scope.first_lecture.end_time
+            $scope.url = $scope.first_lecture.url+"&controls=1&fs=1&theme=light"
           }
           else{
-            $scope.url = $scope.first_lecture
+            $scope.url = $scope.first_lecture.url
           }
           
           $scope.timeline['lecture'] = {}
@@ -550,16 +552,18 @@ angular.module('scalearAngularApp')
     )
   }
 
-	$scope.seek=function(time, url){
-    $log.debug(url)
+	$scope.seek=function(time, video){
+    $log.debug(video.url)
     $log.debug($scope.url)
-    if($scope.url.indexOf(url) == -1){
-      if($scope.progress_player.controls.isYoutube(url)){
+    if($scope.url.indexOf(video.url) == -1){
+      if($scope.progress_player.controls.isYoutube(video.url)){
+        $scope.video_start= video.start_time
+        $scope.video_end  = video.end_time
         $scope.progress_player.controls.setStartTime(time)
-        $scope.url= url+"&controls=1&fs=1&theme=light"
+        $scope.url = video.url+"&controls=1&fs=1&theme=light"
       }
-      if($scope.progress_player.controls.isMP4(url)){
-        $scope.url= url
+      if($scope.progress_player.controls.isMP4(video.url)){
+        $scope.url= video.url
         $timeout(function(){
           $scope.progress_player.controls.seek_and_pause(time)
         })
@@ -731,7 +735,7 @@ angular.module('scalearAngularApp')
           time = $scope.selected_item.data[q_ind].post.time
           $log.debug(time)
         }  
-        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)
     }
   }
 

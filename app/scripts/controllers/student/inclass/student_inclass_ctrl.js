@@ -7,8 +7,7 @@ angular.module('scalearAngularApp')
         //     ContentNavigator.open()
 
         $scope.messages=["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
-        $scope.module = $scope.module_obj[$state.params.module_id]
-        console.log($scope)
+        $scope.module = $scope.course.selected_module
         $scope.getInclassStudentStatus=function(status){
             $scope.loading = true
             Module.getInclassStudentStatus(

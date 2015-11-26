@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
@@ -40,6 +40,18 @@ angular.module('scalearAngularApp')
     }
     else
       $state.go("dashboard");
+  }
+
+  $scope.samlLogin=function(idp){
+    Saml.Login(
+      {idp: idp},
+      function(){
+        
+      }, 
+      function(){
+
+      }
+    )
   }
 
   // var isMobile=function(){

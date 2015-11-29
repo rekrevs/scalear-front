@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
@@ -45,8 +45,8 @@ angular.module('scalearAngularApp')
   $scope.samlLogin=function(idp){
     Saml.Login(
       {idp: idp},
-      function(){
-        
+      function(resp){
+        $window.location.href= resp.saml_url
       }, 
       function(){
 

@@ -23,7 +23,7 @@
                         <!-- <div ng-if="selected_quiz.quiz_type == 'html'" >
                             <student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
                         </div> -->
-                        <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type != 'html'">
+                        <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type != 'html' && (inclass_session == 2 || inclass_session == 3)  ">
                             <student-answer-video ng-repeat="choice in selected_timeline_item.data.choices" data="choice" quiz="selected_timeline_item.data" student-answers="studentAnswers"/>
                         </div>
                     </quiz>

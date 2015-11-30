@@ -2103,6 +2103,7 @@ a.editable-click{
 .connected_circles.smaller_connected_circles li{
   width:5.5em;  
   font-size: 16px;
+  margin-left: 0
 }
 
 .connected_circles.smaller_connected_circles li::before{

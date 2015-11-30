@@ -812,6 +812,7 @@ angular.module('scalearAngularApp')
 
   var updateInclassSession=function(quiz_id, status){
     console.log("status update!",status)
+    $scope.inclass_session = status
     if(status>=0 && status<=5){
       OnlineQuiz.updateInclassSession(
         {online_quizzes_id: quiz_id},

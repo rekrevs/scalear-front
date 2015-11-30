@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
 	  'voteForReview':{method:'POST', params:{action:'vote_for_review'}, headers:headers},
 	  'unvoteForReview':{method:'POST', params:{action:'unvote_for_review'}, headers:headers},
 	  'hideResponses':{method:'POST', params:{action:'hide_responses'}, headers:headers},
-	  'updateInclassSession':{method:'POST', params:{action:'update_inclass_session'}, headers:headers}
+	  'updateInclassSession':{method:'POST', ignoreLoadingBar: true, params:{action:'update_inclass_session'}, headers:headers}
 	  
 	});
 

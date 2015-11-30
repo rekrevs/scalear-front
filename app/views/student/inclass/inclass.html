@@ -59,7 +59,7 @@ ul.connected_blocks{
 			<div class="small-11 column" style="padding:0 5px">
 				<div ng-hide="quiz.done && !choice.selected" class='panel small-12 column' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
 					<div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-					<div class="small-10 column" style="padding: 0 5px;">{{choice.answer}} a big text to test alot fo long answer text</div>
+					<div class="small-10 column" style="padding: 0 5px;">{{choice.answer}}</div>
 				</div>
 			</div>
 		</div>
@@ -107,8 +107,8 @@ ul.connected_blocks{
 		<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Notes" style="height:50px" /></div>
 		<div class="small-12 medium-4 columns"><button class="button expand orange no-margin" ng-click="getInclassStudentStatus(inclass_status)">Save & Continue</button></div>
 	</div>
-
 </div>
+
 <div class="small-12 column disable_selection inclass_lecture" ng-if="inclass_status < 2">
 	<div class='small-12 column' style="height: 50vh;">
 		<center>

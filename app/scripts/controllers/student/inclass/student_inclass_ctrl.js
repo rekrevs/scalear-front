@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
 
         $scope.messages=["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
         $scope.module = $scope.course.selected_module
-        $scope.getInclassStudentStatus=function(status){
+        $scope.getInclassStudentStatus=function(){
             $scope.loading = true
             Module.getInclassStudentStatus(
                 {
@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
             //     },
             //     function(data){
             //         displayResult(data)
-            //     }
+            //     } 
             // )
         }  
 

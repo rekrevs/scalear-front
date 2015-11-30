@@ -194,17 +194,24 @@ angular.module('scalearAngularApp')
 		}		
 		$scope.last_details_state = DetailsNavigator.getStatus()
 		if($scope.selected_quiz != quiz){
-			if($scope.editing_mode){
+			if($scope.editing_mode)
 				$scope.saveQuizBtn({exit:true})
-			}
 			$scope.hide_alerts = true;
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
 			$scope.selected_quiz.selected = true
 			$scope.selected_quiz.formatedTime = $filter('format')($scope.selected_quiz.time)
-			$scope.selected_quiz.start_formatedTime = $filter('format')($scope.selected_quiz.start_time)
-			$scope.selected_quiz.end_formatedTime = $filter('format')($scope.selected_quiz.end_time)
+			$scope.selected_quiz.start_formatedTime 	 = $filter('format')($scope.selected_quiz.start_time)
+			$scope.selected_quiz.end_formatedTime   	 = $filter('format')($scope.selected_quiz.end_time)
+			
+			if(!(quiz.inclass && quiz.inclass_session))
+				$scope.selected_quiz.inclass_session={intro:120,self:120,in_group:120,discussion:120}
+			$scope.selected_quiz.inclass_session.intro_formatedTime 	 = $filter('format')($scope.selected_quiz.inclass_session.intro)
+			$scope.selected_quiz.inclass_session.self_formatedTime  	 = $filter('format')($scope.selected_quiz.inclass_session.self)
+			$scope.selected_quiz.inclass_session.group_formatedTime 	 = $filter('format')($scope.selected_quiz.inclass_session.in_group)
+			$scope.selected_quiz.inclass_session.discussion_formatedTime = $filter('format')($scope.selected_quiz.inclass_session.discussion)
+
 			$scope.editing_type = 'quiz'
 			$scope.$parent.$parent.selected_quiz_id = quiz.id
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)

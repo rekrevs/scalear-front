@@ -338,7 +338,7 @@ angular.module('scalearAngularApp')
 
     var getSubItems=function(timeline, item){
       var start_time, end_time, filtered_timeline_items
-      if(item.type=="charts" || item.type=="quiz"){
+      if(item.type=="charts" || item.type=="inclass"){
         start_time = item.data.start_time 
         end_time = item.data.end_time
       }

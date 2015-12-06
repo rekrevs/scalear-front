@@ -282,15 +282,13 @@ angular.module('scalearAngularApp')
 			 		$log.debug(item)
 			 		var item_type =item.class_name.toLowerCase()
 				    params[item_type+'_id'] = item.id
-					// if(MobileDetector.isPhone()){
-					// 	$timeout(function(){
-					// 		ContentNavigator.close()
-					// 	})
-					// 	if(mode =='courseware' && item_type == 'lecture'){
-					// 		item_type = 'inclass_lecture'
-					// 	}
-					// }
-				    $state.go('course.module.'+mode+'.'+item_type, params)
+						// if(MobileDetector.isPhone()){
+						// 	$timeout(function(){
+						// 		ContentNavigator.close()
+						// 	})
+					if(!MobileDetector.isPhone()){
+			    		$state.go('course.module.'+mode+'.'+item_type, params)
+				    }
 					if(!(mode =='courseware' && item_type=='customlink')){
 				    	scope.currentitem = {id:item.id}
 					}

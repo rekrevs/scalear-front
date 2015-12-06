@@ -61,8 +61,9 @@
                         <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
                     </div>
                 </div>
-                <div ng-show="selected_timeline_item.type == 'charts' && chart" ng-class="chart_class">
-                    <div google-chart chart="chart" ></div>
+                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session == 4) && chart" ng-class="chart_class">
+                    <loading size="small" show="loading_chart" />
+                    <div google-chart chart="chart" on-ready="chartReady()"></div>
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">

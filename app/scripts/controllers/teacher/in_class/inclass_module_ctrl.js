@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
                   "margin-left": (angular.element('#inclass_video').width() - video_width)/2.0
               }
             })
-            $scope.$apply()
+            // $scope.$apply()
           }
         )
 
@@ -367,8 +367,18 @@ angular.module('scalearAngularApp')
     var goToSubItem=function(item){
       $scope.selected_timeline_sub_item = item
       $scope.seek(item.time)
-      if($scope.selected_timeline_item.type == 'inclass')
+      if($scope.selected_timeline_item.type == 'inclass'){
+        if(item.data.status == 4){
+          console.log("I will get the inclass chart")
+          $scope.loading_chart = true
+          OnlineQuiz.getChartData({online_quizzes_id: $scope.selected_timeline_item.data.quiz_id}, function(resp){
+              $scope.selected_timeline_item.data.answers = resp.chart
+              console.log("resp.chart", resp.chart)
+              $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{colors:['rgb(0, 140, 186)','rgb(67, 172, 106)']}, 'formatInclassQuizChartData')
+          })
+        }
         updateInclassSession($scope.selected_timeline_item.data.quiz_id, item.data.status)
+      }
     }
 
     $scope.nextSubItem=function(){
@@ -510,7 +520,7 @@ angular.module('scalearAngularApp')
         type: "ColumnChart",
         options :{
             "colors": ['green', 'gray'],
-            "isStacked": "true",
+            "isStacked": "false",
             "fill": 25,
             "height": 180,
             "backgroundColor": 'beige',
@@ -536,8 +546,8 @@ angular.module('scalearAngularApp')
    $scope.formatLectureChartData = function(data) {
     var formated_data = {}
     formated_data.cols =
-        [
-          {
+      [
+        {
             "label": $translate('global.students'),
             "type": "string"
         }, 
@@ -592,6 +602,60 @@ angular.module('scalearAngularApp')
             ]
         }
         formated_data.rows.push(row)
+    }
+    return formated_data
+  }
+
+
+  $scope.formatInclassQuizChartData = function(data) {
+    var formated_data = {}
+    formated_data.cols =
+      [
+        {
+            "label": $translate('global.students'),
+            "type": "string"
+        }, 
+        {
+            "label": 'Self',
+            "type": "number"
+        }, 
+         {
+          "type":"string",
+          "p":{
+            "role":"tooltip", 
+            "html": true
+          }
+        },
+        {
+            "label": 'Group',
+            "type": "number"
+        }, 
+        {
+          "type":"string",
+          "p":{
+            "role":"tooltip", 
+            "html": true
+          }
+        }
+      ]
+    formated_data.rows = []
+    for (var ind in data) {
+      var text = data[ind][2],
+      self_count = data[ind][0] || 0, 
+      group_count = data[ind][3] || 0,
+      self = Math.floor(( self_count /10) *100), 
+      group = Math.floor(( group_count /10) *100),      
+      tooltip_text = "<div style='padding:8px'><b>"+text+"</b><br>Self: "+self_count+", Group: "+group_count+"</div>"
+      var row = {
+          "c": [
+            {"v": text}, 
+            {"v": self}, 
+            {"v": tooltip_text},
+            {"v": group}, 
+            {"v": tooltip_text}
+          ]
+      }
+      formated_data.rows.push(row)
     }
     return formated_data
   }
@@ -827,6 +891,11 @@ angular.module('scalearAngularApp')
         module_id: $stateParams.module_id 
       },{}
     )
+  }
+
+  $scope.chartReady=function(){
+    $scope.loading_chart=false
+    $(window).resize()
   }
 
   init();

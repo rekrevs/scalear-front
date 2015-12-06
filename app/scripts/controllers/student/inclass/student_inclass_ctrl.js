@@ -1,14 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentInclassCtrl', ['$scope','ContentNavigator','MobileDetector','Module','$state','$log','$timeout', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $timeout) {
+    .controller('studentInclassCtrl', ['$scope','ContentNavigator','MobileDetector','Module','$state','$log','$timeout','Lecture','Page', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $timeout, Lecture, Page) {
 
+        Page.setTitle('In-class')
         // if(!MobileDetector.isPhone())
         //     ContentNavigator.open()
 
         $scope.messages=["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
         $scope.module = $scope.course.selected_module
-        $scope.getInclassStudentStatus=function(){
+        $scope.getInclassStudentStatus=function(status){
             $scope.loading = true
             Module.getInclassStudentStatus(
                 {
@@ -21,7 +22,9 @@ angular.module('scalearAngularApp')
                     $scope.loading = false
                     if(!status && data.status>0){
                         $scope.quiz = data.quiz
+                        $scope.quiz.in_group = false
                         $scope.group_quiz = angular.copy($scope.quiz)
+                        $scope.group_quiz.in_group = true
                         $scope.lecture = data.lecture
                         $('.answer_choices input').attr('type',$scope.quiz.question_type =="MCQ"? "checkbox" :"radio")
                     }
@@ -57,20 +60,20 @@ angular.module('scalearAngularApp')
                     selected_answers = selected_answers[0]
             }
             quiz.done = true
+            console.log(selected_answers)
+            console.log(quiz)
 
-            // Lecture.saveOnline(
-            //     {
-            //         course_id:$state.params.course_id,
-            //         lecture_id:$state.params.lecture_id
-            //     },
-            //     {
-            //         quiz: $scope.selected_quiz.id,
-            //         answer:selected_answers
-            //     },
-            //     function(data){
-            //         displayResult(data)
-            //     } 
-            // )
+            Lecture.saveOnline(
+                {
+                    course_id:$state.params.course_id,
+                    lecture_id:$scope.lecture.id
+                },
+                {
+                    quiz: quiz.id,
+                    answer:selected_answers,
+                    in_group: quiz.in_group
+                }
+            )
         }  
 
         $scope.showNotification=function(msg){

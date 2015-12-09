@@ -703,7 +703,7 @@ angular.module('scalearAngularApp')
 	        }
 
 	        scope.progressSeek = function(event){
-	        	if(!(scope.skip_progress_seek && scope.editing=='video')){
+	        	if(!(scope.skip_progress_seek && scope.editing=='quiz')){
 			        var element = angular.element('.progressBar');
 			        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 			        scope.seek()(scope.duration*ratio)
@@ -743,6 +743,18 @@ angular.module('scalearAngularApp')
 	  				scrollToItem(nearest_item.type, nearest_item.data.id)
 	  		}
 
+	  		var setupBoundaryHoverEffect=function(event, meta, item){
+	  			var progress_width  = scope.progress_bar.width()
+	  			var quiz_location  = ((item.time/scope.duration)*progress_width )
+	  			console.log(quiz_location, meta.position.left)
+	  			if(meta.position.left < quiz_location)
+	  				angular.element(event.target).toggleClass('squarebrackets_left_hover')
+	  			if(meta.position.left > quiz_location)
+	  				angular.element(event.target).toggleClass('squarebrackets_right_hover')
+	  			else
+	  				angular.element(event.target).find('.dot_circle').toggleClass('dot_circle_hover')
+	  		}
+
 	  		scope.calculateQuizBoundaries=function(event, meta, item){
 	  			meta.position.top = -4
 	  			var progress_width  = scope.progress_bar.width()
@@ -754,6 +766,7 @@ angular.module('scalearAngularApp')
 				var prev_quiz = scope.timeline.getPrevByType(item)
 				item.data.next_quiz_start = next_quiz? (next_quiz.data.start_time/scope.duration)*progress_width : progress_width 
 				item.data.prev_quiz_end = prev_quiz? (prev_quiz.data.end_time/scope.duration)*progress_width : 0
+				setupBoundaryHoverEffect(event, meta, item.data)
 	  		}
 
 	  		scope.calculateQuizTime=function(event, meta, item){
@@ -762,8 +775,7 @@ angular.module('scalearAngularApp')
 	  				meta.position.left = item.end_location
 	  			if(meta.position.left < item.start_location)
 	  				meta.position.left = item.start_location
-	  			item.time = (meta.position.left/scope.progress_bar.width())*scope.duration
-	  			meta.position.left -= 6
+	  			item.time = ((meta.position.left+6)/scope.progress_bar.width())*scope.duration
 	  			item.hide_quiz_answers = false
 	  			scope.seek()(item.time)
 	  		}	  		
@@ -792,6 +804,10 @@ angular.module('scalearAngularApp')
 	  			item.end_time = (meta.position.left/scope.progress_bar.width())*scope.duration
 	  			item.hide_quiz_answers = true
 	  			scope.seek()(item.end_time)
+	  		}
+
+	  		scope.cleanUpDrag=function(event, meta, item){
+				setupBoundaryHoverEffect(event, meta, item.data)
 	  		}
 
 	  		scope.calculateVideoBoundaries=function(event, meta){

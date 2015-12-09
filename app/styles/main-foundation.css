@@ -2155,6 +2155,13 @@ a.editable-click{
   bottom: -10px;
   left: 0px;
 }
+.squarebrackets_left:hover:before, .squarebrackets_left_hover:before {
+  top: -7px;
+  bottom: -15px;
+  border-left: 6px solid #FFCA68;
+  border-top: 7px solid #FFCA68;
+  border-bottom: 7px solid #FFCA68;
+}
 
 .squarebrackets_right:before {
   content: " ";
@@ -2166,6 +2173,24 @@ a.editable-click{
   top: -2px;
   bottom: -10px;
   right: 3px;
+}
+
+.squarebrackets_right:hover:before, .squarebrackets_right_hover:before{
+  top: -7px;
+  bottom: -15px;
+  border-right: 6px solid #FFCA68;
+  border-top: 7px solid #FFCA68;
+  border-bottom: 7px solid #FFCA68;
+}
+
+.progress-events .dot_circle{
+  line-height: 0;
+  float: left;
+  color: steelblue;
+}
+
+.progress-events .dot_circle:hover, .progress-events .dot_circle_hover{
+  color: #FFCA68;
 }
 
 .playhead_arrow{

@@ -32,13 +32,13 @@
                         <div class="progress-events repeating_orange_pattern" ng-style="{'left':((element.data.time/duration)*100)+'%', 'width': (((element.data.end_time - element.data.time)/duration)*100)+'%'}"></div>
                     </span>
 
-                    <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px" tooltip="Start time: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', containment:'position'}" ></div>
+                    <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px" tooltip="Start time: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', onStop: 'cleanUpDrag(element)', containment:'position'}" ></div>
 
-                    <div class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-1.1+'%'}" style="top:-4px;z-index:2" tooltip="Quiz time: {{element.data.time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element.data)', containment:'position'}" >
-                        <i class="size-16 fi-record" style="line-height: 0;float: left;color: steelblue;" ></i>
+                    <div class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-1.1+'%'}" style="top:-4px;z-index:2" tooltip="Quiz time: {{element.data.time|format}}" ng-click="element.data.hide_quiz_answers = false" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
+                        <i class="size-16 fi-record dot_circle" ></i>
                     </div>
 
-                    <div ng-hide="element.data.end_time == element.data.time" class="progress-events squarebrackets_right" ng-style="{'left':((element.data.end_time/duration)*100)+'%'}" style="top:-4px" tooltip="End time: {{element.data.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateEndQuizTime(element.data)', containment:'position'}"></div>
+                    <div ng-hide="element.data.end_time == element.data.time" class="progress-events squarebrackets_right" ng-style="{'left':((element.data.end_time/duration)*100)+'%'}" style="top:-4px" tooltip="End time: {{element.data.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateEndQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}"></div>
                 </div>
             </span>
 

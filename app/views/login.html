@@ -29,7 +29,7 @@
                                 <label class="left" translate>global.email</label>
                             </div>
                             <div class="small-12 medium-8 large-9 columns">
-                                <input placeholder="{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
+                                <input placeholder="{{'global.email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
                             </div>
                         </div>
 
@@ -113,6 +113,16 @@
         <span class="show-for-medium-only" translate>support.ipad</span>
         <span class="show-for-small-only"  translate>support.mobiles</span> 
         <span translate>support.issue_and_recommendation</span>
+    </div>
+    <div class="ngdialog-buttons mt">
+        <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Continue</button>
+    </div>
+</script>
+<script type="text/ng-template" id="samlSignup">
+    <div class="ngdialog-message">
+        <h2>Welcome {{saml.display_name}}</h2>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()"><span >Im new user</span></button>
+        <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog()"><span >Connect to an existing account</span></button>
     </div>
     <div class="ngdialog-buttons mt">
         <button type="button" class="ngdialog-button ngdialog-button-primary" ng-click="closeThisDialog()">Continue</button>

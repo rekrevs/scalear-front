@@ -7,6 +7,19 @@ angular.module('scalearAngularApp')
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
+  console.log($state.params)
+  if($state.params.attributes){
+    // $scope.saml=JSON.parse($state.params.attributes)
+    ngDialog.open({
+      template: 'samlSignup',
+      className: 'ngdialog-theme-default ngdialog-theme-custom',
+      scope: $scope
+      // preCloseCallback: function(value) {
+      //   next(data)
+      // }
+    });
+  }
+
   $scope.login = function(){
     $scope.sending = true;
     User.signIn({},
@@ -46,7 +59,8 @@ angular.module('scalearAngularApp')
     Saml.Login(
       {idp: idp},
       function(resp){
-        $window.location.href= resp.saml_url
+        console.log(resp.saml_url)
+         $(resp.saml_url).appendTo('body').submit();
       }, 
       function(){
 
@@ -54,15 +68,4 @@ angular.module('scalearAngularApp')
     )
   }
 
-  // var isMobile=function(){
-  //     // var iOS = false,
-  //     //     iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-  //     // for ( var i = 0; i < iDevice.length ; i++ ) {
-  //     //     if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-  //     // }
-  //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || []
-  // }
-  
-
-   
 }]);

@@ -220,7 +220,7 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/ie.html'
         })
         .state('login', {
-            url: '/users/login',
+            url: '/users/login?attributes',
             templateUrl: '/views/login.html',
             controller: 'LoginCtrl'
         })

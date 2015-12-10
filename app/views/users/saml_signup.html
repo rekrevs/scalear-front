@@ -1,0 +1,23 @@
+<center>
+    <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">        
+        <h2><span style="font-weight: 100;" translate>Welcome</span> {{saml_user.displayName}}</h2>
+        <h4><span style="font-weight: 200;">Signing in through</span> {{saml_user.norEduOrgAcronym}}</h4>
+        <br/>
+        <div class="small-12 medium-10 large-8 small-centered columns">
+        	<div class="row">
+                <div class="small-12 columns no-padding with-margin-bottom">
+                    <div class="small-6 columns" style="padding-right: 10px;padding-left: 0">
+                        <div class="button primary small-12 columns left  no-margin" style="padding:0;" ng-click="next(2)">
+                            <div style="padding: 22px 0px;">I'm a Student</div>
+                        </div>
+                    </div>
+                    <div class="small-6 columns no-padding">
+                        <div class="button primary small-12 columns left no-margin" style="padding:0;" ng-click="next(1)">
+                            <div style="padding: 22px 0px;">I'm a Teacher</div>
+                        </div>
+                    </div>
+                </div>
+        	</div>
+        </div>
+	</div>
+</center>

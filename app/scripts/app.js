@@ -57,7 +57,7 @@ angular.module('scalearAngularApp', [
     }
 
     $log.debug("lang is " + $rootScope.current_lang);
-    var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
+    var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing', 'saml_signup']
     var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
     var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
     var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -220,7 +220,7 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/ie.html'
         })
         .state('login', {
-            url: '/users/login?attributes',
+            url: '/users/login',
             templateUrl: '/views/login.html',
             controller: 'LoginCtrl'
         })
@@ -233,6 +233,11 @@ angular.module('scalearAngularApp', [
             url: '/users/student',
             templateUrl: '/views/users/signup.html',
             controller: 'UsersStudentCtrl'
+        })
+        .state('saml_signup', {
+            url: '/users/saml_signup',
+            templateUrl: '/views/users/saml_signup.html',
+            controller: 'UsersSamlCtrl'
         })
         .state('thanks_for_registering', {
             url: '/users/thanks?type',

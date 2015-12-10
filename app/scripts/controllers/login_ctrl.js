@@ -1,14 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
-  console.log($state.params)
-  if($state.params.attributes){
+
+  console.log($location)
+  $scope.saml = $location.$$search
+  console.log($scope.saml)
+  if(Object.keys($scope.saml).length){
     // $scope.saml=JSON.parse($state.params.attributes)
     ngDialog.open({
       template: 'samlSignup',

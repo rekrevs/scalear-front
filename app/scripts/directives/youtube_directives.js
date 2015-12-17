@@ -140,7 +140,7 @@ angular.module('scalearAngularApp')
 				return player.currentTime() - scope.start
 			}
 
-			player_controls.getRealDuration=function(){
+			player_controls.getAbsoluteDuration=function(){
 				var duration = player.duration()
 				return scope.player.controls.youtube? duration -1 : duration
 			}
@@ -151,7 +151,7 @@ angular.module('scalearAngularApp')
 				// if(scope.start && scope.end)
 				// 	duration = scope.end - scope.start
 				// else{
-				// 	duration = player_controls.getRealDuration()
+				// 	duration = player_controls.getAbsoluteDuration()
 				// }
 				console.log("video start:", scope.start)
 				console.log("video end:", scope.end)
@@ -590,7 +590,7 @@ angular.module('scalearAngularApp')
 	  			}
 	  			scope.$watch('editing',function(){
 	  				if(scope.editing=='video')
-	  					scope.duration = scope.player.controls.getRealDuration();
+	  					scope.duration = scope.player.controls.getAbsoluteDuration();
 	  				else
 	  					scope.duration = scope.player.controls.getDuration();
 	  			})

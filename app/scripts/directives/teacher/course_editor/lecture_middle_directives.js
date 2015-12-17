@@ -141,9 +141,9 @@ angular.module('scalearAngularApp')
 				    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 			       		return $translate('editor.incorrect_format_time')
 				    }
-				    else if( (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0 ){
-			       		return $translate('editor.time_outside_range')
-				    }
+				    // else if( (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0 ){
+			     //   		return $translate('editor.time_outside_range')
+				    // }
 				}
 			    else{
 			   		return $translate('editor.incorrect_format_time')
@@ -194,10 +194,6 @@ angular.module('scalearAngularApp')
 						quiz.inclass_session.discussion = arrayToSeconds(quiz.inclass_session.discussion_formatedTime.split(':'))
 						updateOnlineQuiz(quiz)
 						scope.saveQuizBtn({exit:true})
-					}
-					else
-					{
-						console.log("errors worrro worrrr",  scope.intro_timer_error)
 					}
 				})				
 			}

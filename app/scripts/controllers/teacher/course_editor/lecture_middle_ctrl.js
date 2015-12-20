@@ -49,13 +49,13 @@ angular.module('scalearAngularApp')
  	})
 
  	$scope.$on("start_trim_video",function(){
+ 		$scope.editing_mode = true
  		$scope.editing_type = 'video'
  	})
 
  	$scope.$on("close_trim_video",function(){
- 		$scope.editing_type = null
-
- 		$scope.refreshVideo()
+ 		saveTrimVideo()
+ 		
  	})
 
     $scope.lecture_player.events.onMeta= function(){
@@ -66,6 +66,7 @@ angular.module('scalearAngularApp')
             $scope.updateLecture();
         }
         $scope.slow = false
+        $scope.video_ready = false
     }
  	$scope.lecture_player.events.onReady= function(){
  		$scope.video_ready = true
@@ -76,9 +77,10 @@ angular.module('scalearAngularApp')
 	$scope.lecture_player.events.onPlay= function(){
         // $scope.play_pause_class = 'pause'
 		$scope.slow = false
-		var paused_time= $scope.lecture_player.controls.getTime()
-			if($scope.editing_mode)
-				$scope.lecture_player.controls.seek_and_pause(paused_time)
+		$scope.selected_quiz.hide_quiz_answers = true
+		// var paused_time= $scope.lecture_player.controls.getTime()
+		// if($scope.editing_mode)
+		// 	$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
     // $scope.lecture_player.events.onPause= function(){
@@ -687,5 +689,13 @@ angular.module('scalearAngularApp')
 		if(prev_index >= 0)
 			$scope.goToInclassItem($scope.filtered_timeline_items[prev_index])
 	}
+
+	var saveTrimVideo=function(){ 
+        $scope.lecture.start_time = Math.floor($scope.lecture.start_time)
+        $scope.lecture.end_time = Math.floor($scope.lecture.end_time)
+        $scope.editing_mode = false
+ 		$scope.editing_type = null
+ 		$scope.refreshVideo()
+    }
 
 }]);

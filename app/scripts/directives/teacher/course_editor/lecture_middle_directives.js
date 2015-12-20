@@ -256,6 +256,32 @@ angular.module('scalearAngularApp')
 		}
 	};
 }])
+.directive('videoEditPanel',['$rootScope',function($rootScope){
+	return {		
+		 restrict: 'E',
+		 template: '<div>'+
+						'<h6 class="row no-margin color-wheat wheat">'+
+							'<div style="margin:10px">Use the handlers above to trim video</div>'+
+							'<div>'+
+								'<div class="small-12 columns" style="margin-bottom:10px;">'+
+									'<div class="small-3 columns">Start Time</div>'+
+									'<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>'+
+								'</div>'+
+								'<div class="small-12 columns">'+
+									'<div class="small-3 columns">End Time</div>'+
+									'<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.end_time | format}}</div>'+
+								'</div>'+
+							'</div>'+
+							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="closeTrimVideo()" translate>events.done</button>'+ 
+						'</h6>'+
+					'</div>',
+		link: function(scope, element, attrs){
+			scope.closeTrimVideo=function(){
+		        $rootScope.$broadcast("close_trim_video")
+		    }    	
+		}
+	};
+}])
 .directive('answervideo', function(){
 	return {
 		 scope: {

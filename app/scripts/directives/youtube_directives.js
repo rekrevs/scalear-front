@@ -185,7 +185,7 @@ angular.module('scalearAngularApp')
 
 			}
 
-			player_controls.realSeek=function(time){
+			player_controls.absoluteSeek=function(time){
 				player.currentTime(time);
 			}
 
@@ -704,9 +704,10 @@ angular.module('scalearAngularApp')
 
 	        scope.progressSeek = function(event){
 	        	if(!(scope.skip_progress_seek && scope.editing=='quiz')){
-			        var element = angular.element('.progressBar');
-			        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
+			        var progress_bar = angular.element('.progressBar');
+			        var ratio = (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth(); 
 			        scope.seek()(scope.duration*ratio)
+			        hideAllQuizzesAnswers()
 			        if(scope.timeline && scope.user_role==2)
 			        	scrollToNearestEvent(scope.duration*ratio)
 			    }
@@ -828,7 +829,7 @@ angular.module('scalearAngularApp')
 
 	  			scope.video.start_time = (meta.position.left/scope.video.progress_width)*scope.duration
 	  			scope.player.controls.setStartTime(scope.video.start_time)
-	  			scope.player.controls.realSeek(scope.video.start_time)
+	  			scope.player.controls.absoluteSeek(scope.video.start_time)
 	  		}
 
 	  		scope.calculateVideoEndTime=function(event, meta){
@@ -841,13 +842,26 @@ angular.module('scalearAngularApp')
 
 	  			scope.video.end_time = (meta.position.left/scope.video.progress_width)*scope.duration
 	  			scope.player.controls.setEndTime(scope.video.end_time)
-	  			scope.player.controls.realSeek(scope.video.end_time)
+	  			scope.player.controls.absoluteSeek(scope.video.end_time)
+	  		}
+
+	  		scope.seekToQuiz=function(quiz){
+	  			quiz.hide_quiz_answers = false
+	  			scope.skip_progress_seek = true
+	  			scope.seek()(quiz.time)
+	  			scope.player.controls.pause()
 	  		}
 
 	  		scope.showQuiz=function(quiz){
-	  			scope.skip_progress_seek = true
-	  			scope.seek()(quiz.time)
+	  			scope.seekToQuiz(quiz)
 	  			$rootScope.$broadcast("show_online_quiz", quiz)
+	  		}
+
+	  		var hideAllQuizzesAnswers=function(){
+	  			scope.timeline.items.forEach(function(quiz){
+	  				if(quiz.data && quiz.data.selected)
+	  					quiz.data.hide_quiz_answers = true
+	  			})
 	  		}
 
 	  		var unwatchMute = scope.$watch("volume",function(){

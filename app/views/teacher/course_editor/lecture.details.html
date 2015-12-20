@@ -18,7 +18,7 @@
           <i class='fi-info' tooltip='{{"editor.tooltip.video_info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <big-area id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
+            <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
         </td>
       </tr>
 
@@ -26,27 +26,13 @@
         <td class="right-border small-4">Start/Stop</td>
         <td>
           <div class="with-small-margin-bottom">
-            <div class="small-2 columns size-12 no-padding" translate>Start:</div>
-            <div class="small-5 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;" ng-class="{'small-5':trimming_video, 'small-8':!trimming_video}">{{lecture.start_time | format}}</div>
-            <div ng-show="trimming_video" class="small-5 columns left">
-              <button  class="button tiny no-margin " ng-click="" ng-disabled="lecture.url == 'none'" style="padding-top: 0.325rem;padding-bottom: 0.325rem;">Reset</button>
-            </div>
+            <div class="small-3 columns size-12 no-padding" translate>Start:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>
           </div>
           <br />
           <div class="with-small-margin-bottom">
-            <div class="small-2 columns size-12 no-padding" translate>End:</div>
-            <div class="columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; color: #555;" ng-class="{'small-5':trimming_video, 'small-8':!trimming_video}">{{lecture.end_time | format}}</div>
-            <div ng-show="trimming_video" class="small-5 columns left">
-              <button  class="button tiny no-margin " ng-click="" ng-disabled="lecture.url == 'none'" style="padding-top: 0.325rem;padding-bottom: 0.325rem;">Reset</button>
-            </div>
-          </div>
-          <br />
-          <div class="right">
-            <button ng-hide="trimming_video" class="button tiny no-margin " ng-click="startTrimVideo()" ng-disabled="lecture.url == 'none'">Trim Video</button>
-          </div>
-          <div ng-show="trimming_video" class="right">
-            <button class="button tiny success no-margin" ng-click="saveTrimVideo()">Set Trim</button>
-            <!-- <button class="button tiny alert   no-margin" ng-click="cancelTrimVideo()">Cancel</button> -->
+            <div class="small-3 columns size-12 no-padding" translate>End:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; color: #555;">{{lecture.end_time | format}}</div>
           </div>
         </td>
       </tr>

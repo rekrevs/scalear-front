@@ -883,8 +883,9 @@ angular.module('scalearAngularApp')
 					scope.current_time = scope.player.controls.getTime()
 					console.log("scope.current_time ",scope.current_time )
 					scope.elapsed_width= ((scope.current_time/scope.duration)*100)
-			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : scope.elapsed_width-0.2
+			        scope.elapsed_head = scope.elapsed_width>0.5? scope.elapsed_width-0.45 : 0
 			        scope.elapsed_head = scope.elapsed_head>99.4? 99.4 : scope.elapsed_head
+			        console.log(scope.elapsed_head)
 			    }
 				scope.$apply()
 		    })

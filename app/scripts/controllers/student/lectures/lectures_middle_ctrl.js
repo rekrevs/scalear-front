@@ -211,12 +211,14 @@ angular.module('scalearAngularApp')
         })
 
         $scope.lecture.annotated_markers.forEach(function(marker){
-            $scope.lecture_player.controls.cue(marker.time,function(){
-                showAnnotation(marker.annotation)
-            })
-            $scope.lecture_player.controls.cue(marker.time+5,function(){
-                $scope.dismissAnnotation()
-            })
+            if(marker.annotation){
+                $scope.lecture_player.controls.cue(marker.time,function(){
+                    showAnnotation(marker.annotation)
+                })
+                $scope.lecture_player.controls.cue(marker.time+5,function(){
+                    $scope.dismissAnnotation()
+                })
+            }            
         })
 
         duration_milestones.forEach(function(milestone){

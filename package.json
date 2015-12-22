@@ -45,7 +45,7 @@
     "grunt-aws-s3": "~0.7.2",
     "grunt-ng-constant": "~0.4.7",
     "protractor": "~1.6.0",
-    "grunt-protractor-runner": "~1.1.0",
+    "grunt-protractor-runner": "~1.1.1",
     "grunt-protractor-coverage": "~0.2.9",
     "grunt-istanbul": "~0.3.0",
     "grunt-angular-translate": "~0.3.0"

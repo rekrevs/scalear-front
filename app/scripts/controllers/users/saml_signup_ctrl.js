@@ -16,10 +16,7 @@ angular.module('scalearAngularApp')
             user.name = $scope.saml_user.givenName
             user.last_name = $scope.saml_user.sn
             user.university = $scope.saml_user.o
-            if(role_id == 2)
-                user.screen_name = $filter('anonymous')((Math.random()*10) + user.email, 'student')  
-            else if(role_id == 1)
-                user.screen_name = user.name.charAt(0).toUpperCase()+user.name.slice(1).toLowerCase()+' '+user.last_name.charAt(0).toUpperCase()+' Teacher';
+            user.screen_name = $filter('anonymous')((Math.random()*10) + user.email, (role_id == 2? 'student' : 'teacher') )  
             console.log($scope.user)
             signup(user, role_id)
         }

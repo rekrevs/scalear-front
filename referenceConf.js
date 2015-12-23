@@ -1,17 +1,17 @@
 var params= {
     //local
-    frontend: 'http://0.0.0.0:9000/#',
-    admin_mail: 'admin@scalear.com',
-    teacher_mail:  'teacher1@sharklasers.com',
-    teacher2_mail: 'teacher2@sharklasers.com',
-    teacher3_mail: 'teacher3@sharklasers.com',
-    student_mail:  'studenttest@sharklasers.com',
-    student2_mail: 'studenttest2@sharklasers.com',
-    student3_mail: 'studenttest3@sharklasers.com',
-    student4_mail: 'studenttest4@sharklasers.com',
-    student5_mail: 'studenttest5@sharklasers.com',
-    admin_password:"password",
-    password: 'password',
+    // frontend: 'http://0.0.0.0:9000/#',
+    // admin_mail: 'admin@scalear.com',
+    // teacher_mail:  'teacher1@sharklasers.com',
+    // teacher2_mail: 'teacher2@sharklasers.com',
+    // teacher3_mail: 'teacher3@sharklasers.com',
+    // student_mail:  'studenttest@sharklasers.com',
+    // student2_mail: 'studenttest2@sharklasers.com',
+    // student3_mail: 'studenttest3@sharklasers.com',
+    // student4_mail: 'studenttest4@sharklasers.com',
+    // student5_mail: 'studenttest5@sharklasers.com',
+    // admin_password:"password",
+    // password: 'password',
     url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
     url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
     q_x:169,
@@ -20,16 +20,18 @@ var params= {
     q3_y:187,
 
     //staging
-    // frontend: 'http://staging.scalable-learning.com/#',
-    // admin_email: 'admin@scalable-learning.com',       
-    // teacher_mail: 'anyteacher@email.com',
-    // teacher2_mail: 'teacher2@sharklasers.com',
-    // teacher3_mail: 'teacher3@sharklasers.com',
-    // student_mail: 'student2@email.com',
-    // student_mail2: 'student3@email.com',
-    // student_mail3: 'student4@email.com',
-    // password: 'password',
-    // admin_password:"admin_account_password",
+    frontend: 'http://scalear-staging2.herokuapp.com/#',
+    admin_email:   'admin@scalable-learning.com',       
+    teacher_mail:  'teacher1@email.com',
+    teacher2_mail: 'teacher2@email.com',
+    teacher3_mail: 'teacher3@email.com',
+    student_mail:  'student1@email.com',
+    student2_mail: 'student2@email.com',
+    student3_mail: 'student3@email.com',
+    student4_mail: 'student4@email.com',
+    student5_mail: 'student5@email.com',
+    password: 'password',
+    admin_password:"admin_account_password",
 
     short_name: "csc-test",
     course_name: "aesting course 100",
@@ -119,22 +121,22 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js',
-        'test/e2e/spec/fill_course.spec.js',
+        // 'test/e2e/spec/create_course.spec.js',
+        // 'test/e2e/spec/fill_course.spec.js',
         'test/e2e/spec/course_information_validation.spec.js',
-        'test/e2e/spec/account_information_validation.spec.js',
-        'test/e2e/spec/enrollment_help.spec.js',
-        'test/e2e/spec/course_editor_basic.spec.js',
-        'test/e2e/spec/course_editor_copy.spec.js',
-        'test/e2e/spec/course_editor_sharing.spec.js',
-        'test/e2e/spec/module_statistics.spec.js',        
-        'test/e2e/spec/announcements.spec.js',
-        'test/e2e/spec/teacher-managment.spec.js',
-        'test/e2e/spec/students_solve_course.spec.js',
-        'test/e2e/spec/discussions.spec.js',
-        'test/e2e/spec/notes.spec.js',
-        // // 'test/e2e/spec/progress-module.spec.js'
-        'test/e2e/spec/delete_course.spec.js'
+        // 'test/e2e/spec/account_information_validation.spec.js',
+        // 'test/e2e/spec/enrollment_help.spec.js',
+        // 'test/e2e/spec/course_editor_basic.spec.js',
+        // 'test/e2e/spec/course_editor_copy.spec.js',
+        // 'test/e2e/spec/course_editor_sharing.spec.js',
+        // 'test/e2e/spec/module_statistics.spec.js',        
+        // 'test/e2e/spec/announcements.spec.js',
+        // 'test/e2e/spec/teacher-managment.spec.js',
+        // 'test/e2e/spec/students_solve_course.spec.js',
+        // 'test/e2e/spec/discussions.spec.js',
+        // 'test/e2e/spec/notes.spec.js',
+        // // // 'test/e2e/spec/progress-module.spec.js'
+        // 'test/e2e/spec/delete_course.spec.js'
    
    //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  
@@ -190,8 +192,8 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    // baseUrl: 'http://staging.scalable-learning.com/#',
-    baseUrl: 'http://0.0.0.0:9000/#',
+    // baseUrl: 'http://scalear-staging2.herokuapp.com/#',
+    baseUrl: params.frontend, //'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to

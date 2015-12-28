@@ -1,27 +1,28 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
+  $scope.swamid_list = SWAMID.list()
 
-  console.log($location)
-  $scope.saml = $location.$$search
-  console.log($scope.saml)
-  if(Object.keys($scope.saml).length){
-    // $scope.saml=JSON.parse($state.params.attributes)
-    ngDialog.open({
-      template: 'samlSignup',
-      className: 'ngdialog-theme-default ngdialog-theme-custom',
-      scope: $scope
-      // preCloseCallback: function(value) {
-      //   next(data)
-      // }
-    });
-  }
+  // console.log($location)
+  // $scope.saml = $location.$$search
+  // console.log($scope.saml)
+  // if(Object.keys($scope.saml).length){
+  //   // $scope.saml=JSON.parse($state.params.attributes)
+  //   ngDialog.open({
+  //     template: 'samlSignup',
+  //     className: 'ngdialog-theme-default ngdialog-theme-custom',
+  //     scope: $scope
+  //     // preCloseCallback: function(value) {
+  //     //   next(data)
+  //     // }
+  //   });
+  // }
 
   $scope.login = function(){
     $scope.sending = true;
@@ -62,7 +63,6 @@ angular.module('scalearAngularApp')
     Saml.Login(
       {idp: idp},
       function(resp){
-        console.log(resp.saml_url)
          $(resp.saml_url).appendTo('body').submit();
       }, 
       function(){

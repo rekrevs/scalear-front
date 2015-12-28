@@ -1,29 +1,53 @@
 <center>
-    <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">
-        
+    <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">        
+        <div class="row">
             <h2><span translate>global.welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h2>
             <br/>
-            <div class="small-12 medium-10 large-8 small-centered medium-centered large-centered columns">                
+        </div>
+        <div class="row">
+            <div class="small-12 medium-6 large-5 columns">
+                <div class="small-12 columns with-small-margin-bottom">
+                    <div class="button success small-12 columns left  no-margin" style="padding: 0;border: 1px solid grey;background-color: white;color: #D97883;" ng-click="samlLogin('https://weblogin.uu.se/idp/shibboleth')">
+                        <img src="http://www.swedcham.com.hk/wp-content/uploads/2015/10/629px-Uppsala_Universitet_Logo.svg_1.png" style="background: white;height: 60px;width: 60px;border: 1px solid #C7C7C7;" class="left">
+                        <div style="width: 75%;float: left;padding: 22px 0px;font-size: 12px;">Login with an <b>Uppsala</b> Account</div>
+                    </div>
+                </div>
+                <div class="small-12 columns with-small-margin-bottom">
+                    <div class="button success small-12 columns left no-margin" style="    padding: 0;border: 1px solid grey;background-color: #1A54A6;" ng-click="samlLogin('https://saml.sys.kth.se/idp/shibboleth')">
+                        <img src="http://www.time.polimi.it/wp-content/uploads/2014/10/logoSE-KTH.jpg" style="background: white;height: 60px;width: 60px;" class="left">
+                        <div style="width: 75%;float: left;padding: 22px 0;font-size: 12px;">Login with a <b>KTH</b> Account</div>
+                    </div>
+                </div> 
+                <div class="small-12 columns with-small-margin-bottom">
+                    <div class="button small-12 columns left no-margin" style="background-color: #EAAA18;padding: 0;border: 1px solid grey;" ng-click="samlLogin('kth')">
+                        <div dropdown-toggle="#signin_list" style="width: 100%;float: left;padding: 22px 0;font-size: 12px;">Login with <b>Other Swedish</b> Account</div>
+                    </div>
+                     <ul id="signin_list" class="dropdown-menu" style="margin-top: 60px;">
+                        <!-- <li style="margin:5px 0"><a>I'm a Teacher</a></li>
+                        <li role="separator" class="divider border-grey medium-opacity" style="border-top: 1px solid;"></li>
+                        <li style="margin:5px 0"><a >I'm a Student</a></li> -->
+                        <li ng-repeat="login_item in swamid_list" style="border-bottom: 1px solid rgba(128, 128, 128, 0.3);text-align:left">
+
+                            <div class="button small-12 columns left no-margin" style="    padding: 0;border: 1px solid grey;background-color:white" ng-click="samlLogin(login_item.entityID)">
+                                <img ng-src="{{login_item.logo.all.url || login_item.logo.en.url || login_item.logo.sv.url}}" style="background: white;height: 34px;width: 34px;" class="left">
+                                <div style="width: 88%;float: left;padding: 10px 0;font-size: 12px;color:black;text-align:left;padding-left:20px">{{login_item.displayName.en || login_item.displayName.sv }}</div>
+                            </div>
+
+                           <!--  <div style="width:25%"><img ng-src="{{login_item.logo.all.url || login_item.logo.en.url || login_item.logo.sv.url}}" style="background: white;height: 20px;" /></div>
+                            <div  style="width:75%">{{login_item.displayName.en || login_item.displayName.sv }}</div> -->
+                        </li>
+                    </ul>
+                </div> 
+            </div>
+            <div class="small-12 medium-6 large-7 columns">
+                <!-- <div class="small-12 columns no-padding with-margin-bottom">
+                    
+                </div> -->
                 <div class="small-12 medium-4 large-4 columns show-for-small-only">
                     <profile-image email="user.email" imagesize="175"></profile-image>
                 </div>
-                <div class="small-12 columns no-padding with-margin-bottom">
-                    <div class="small-6 columns" style="padding-right: 10px;padding-left: 0">
-                        <div class="button success small-12 columns left  no-margin" style="padding:0;border: 1px solid grey;" ng-click="samlLogin('uppsala')">
-                            <img src="http://www.swedcham.com.hk/wp-content/uploads/2015/10/629px-Uppsala_Universitet_Logo.svg_1.png" style="background: white;height: 60px;width: 60px;" class="left">
-                            <div style="width: 75%;float: left;padding: 22px 0px;font-size: 12px;">Login with an Uppsala Account</div>
-                        </div>
-                    </div>
-                    <div class="small-6 columns no-padding">
-                        <div class="button success small-12 columns left no-margin" style="font-size: 14px;padding:0;border: 1px solid grey;" ng-click="samlLogin('kth')">
-                            <img src="http://www.time.polimi.it/wp-content/uploads/2014/10/logoSE-KTH.jpg" style="background: white;height: 60px;width: 60px;" class="left">
-                            <div style="width: 75%;float: left;padding: 22px 0;font-size: 12px;">Login with a KTH Account</div>
-                        </div>
-                    </div>
-                </div>
                 <form class="row" ng-submit="login()" novalidate>
-                    <div class="small-12 medium-8 large-8 columns">
-                        
+                    <div class="small-12 medium-8 large-7 columns" style="border-left: 2px solid #CACACA;padding-right: 0;">                        
                         <div class="row">
                             <div class="small-12 medium-4 large-3 columns with-small-margin-top">
                                 <label class="left" translate>global.email</label>
@@ -43,7 +67,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="small-4 medium-6 large-6 columns with-small-margin-top">
+                            <div class="small-4 medium-6 large-7 columns with-small-margin-top">
                                 <label class="left" translate>account.remember_me</label>
                             </div>
                             <div class="small-1 medium-1 large-1 columns left">
@@ -69,41 +93,42 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="small-12 medium-8 large-8 columns">
-                                <button id="login_btn" type="submit" class="tiny expand button" translate>account.sign_in</button>
+                            <div class="small-12 medium-8 large-7 columns">
+                                <button id="login_btn" type="submit" class="tiny expand button success" translate>account.sign_in</button>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 0px;">
+                            <div class="small-12">
+                                <div class="row">
+                                    <div class="small-12 columns">
+                                        <label class="left" translate>navigation.help</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="small-12 columns">
+                                        <a class="left with-margin-left" ui-sref="forgot_password" id="forget_password" translate="account.password.forgot_password"></a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="small-12 column">
+                                        <a class="left with-margin-left with-tiny-margin-top" ui-sref="new_confirmation" id="resend_conf" translate="account.didnt_receive_confirmation"></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="small-12 medium-4 large-4 columns hide-for-small-only">
-                        <profile-image email="user.email" imagesize="175"></profile-image>
+                        <profile-image email="user.email" imagesize="150"></profile-image>
                     </div>
-                
-                <div ng-show="sending" class="small-12 with-margin-top columns">
-                    <loading size="small" show="sending"></loading>
-                </div>
-            </form> 
-        </div>
-        <div class="row">
-            <div class="small-8 small-centered with-margin-top columns">
-                <div class="row">
-                    <div class="small-12 columns">
-                        <label class="left" translate>navigation.help</label>
+                    
+                    <div ng-show="sending" class="small-12 with-margin-top columns">
+                        <loading size="small" show="sending"></loading>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="small-12 columns">
-                        <a class="left with-margin-left" ui-sref="forgot_password" id="forget_password" translate="account.password.forgot_password"></a>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="small-12 column">
-                        <a class="left with-margin-left with-tiny-margin-top" ui-sref="new_confirmation" id="resend_conf" translate="account.didnt_receive_confirmation"></a>
-                    </div>
-                </div>
-            </div>
+                </form> 
+            </div>        
         </div>
     </div>
 </center>

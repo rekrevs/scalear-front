@@ -402,6 +402,10 @@
 	margin-left: -260px;
 }
 
+.charts-tooltip{
+    z-index: 1006;
+}
+
 @media (max-width: 1024px) {
 	.module-title{
 		margin-left: 10px;	

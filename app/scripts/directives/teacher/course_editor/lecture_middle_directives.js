@@ -296,7 +296,8 @@ angular.module('scalearAngularApp')
 		 template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
 		 				"<answer ng-switch-when='MCQ' />"+
 		 				"<answer ng-switch-when='OCQ' />"+
-		 				"<drag ng-switch-when='DRAG' />"+
+		 				"<drag   ng-switch-when='DRAG' />"+
+		 				"<free_text ng-switch-when='FREE TEXT QUESTION' />"+
 	 				"</div>"
 	};
 }).directive('answer', ['$rootScope','$log','$timeout', function($rootScope,$log,$timeout){
@@ -507,10 +508,48 @@ angular.module('scalearAngularApp')
 					var placement= (scope.data.xcoor > 0.5)? "left":"right"
 					return scope.data.ycoor <0.3? "bottom": placement
 				},
-            	instant_show:!scope.data.id
+            	instant_show:!scope.data.id,
+            	container: 'body',
             }
 
             angular.element(element.children()[0]).resizable({
+            	containment: ".videoborder",  
+            	minHeight:40, 
+            	minWidth:40,
+		  		stop: scope.calculateSize
+        	});
+		}
+	};
+}]).directive('freeText', ['$log','$timeout', function($log, $timeout){
+	return {
+		 replace:true,
+		 restrict: 'E',
+		 template: "<div>"+
+		 				"<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 					"<div>"+
+	 							"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>Student Answer Here...</h6>"+
+	 						"</div>"+
+	 					"</div>"+
+ 					"</div>",
+
+		link: function(scope, element, attrs) {
+			scope.calculatePosition=function(){
+				var ontop= angular.element('.ontop');
+				var main = angular.element(element.children()[0])
+				scope.data.xcoor = parseFloat(main.position().left)/ontop.width();
+				scope.data.ycoor = parseFloat(main.position().top)/ ontop.height();
+				scope.calculateSize()
+			}
+			scope.calculateSize=function(){
+				var ontop=angular.element('.ontop');
+				var main = angular.element(element.children()[0])
+				scope.data.width= main.width()/ontop.width();
+				scope.data.height= main.height()/(ontop.height());
+			}
+
+			console.log(scope.data)
+
+			angular.element(element.children()[0]).resizable({
             	containment: ".videoborder",  
             	minHeight:40, 
             	minWidth:40,

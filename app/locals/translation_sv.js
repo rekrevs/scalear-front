@@ -503,6 +503,7 @@ var translation_sv={
         exit_fullscreen: "Gå ur helskärmsläge",
         fullscreen: "Helskärm",
         check_answer: "Kontrollera svaret",
+        submit: "@:button.submit",
     },
     tooltip:{
         unsolved_quiz: "Du måste ha svarat på quizen innan du kan hoppa till den",

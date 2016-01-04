@@ -503,6 +503,7 @@ var translation_en={
         exit_fullscreen: "Exit Fullscreen",
         fullscreen: "Fullscreen",
         check_answer: "Check Answer",
+        submit: "@:button.submit"
     },
     tooltip:{
         unsolved_quiz: "You have to complete the quiz as part of the video before you can jump to it",

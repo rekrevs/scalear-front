@@ -20,11 +20,11 @@
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/> -->
                 <youtube class="widescreen inclass_sceen" id="inclass_video" url="lecture_url" player="inclass_player" start="selected_item.start_time" end="selected_item.end_time">
                     <quiz ng-style="quiz_layer" style="z-index: 1;">
-                        <!-- <div ng-if="selected_quiz.quiz_type == 'html'" >
-                            <student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
-                        </div> -->
+                        <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type == 'html' && (inclass_session == 2 || inclass_session == 3)" >
+                            <student-answer-form submitted="submitted" quiz="selected_timeline_item.data" student-answers="studentAnswers"/>
+                        </div>
                         <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type != 'html' && (inclass_session == 2 || inclass_session == 3)  ">
-                            <student-answer-video ng-repeat="choice in selected_timeline_item.data.choices" data="choice" quiz="selected_timeline_item.data" student-answers="studentAnswers"/>
+                            <student-answer-video ng-repeat="choice in selected_timeline_item.data.online_answers" data="choice" quiz="selected_timeline_item.data" student-answers="studentAnswers"/>
                         </div>
                     </quiz>
                 </youtube>

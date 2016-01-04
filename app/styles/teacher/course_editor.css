@@ -142,7 +142,7 @@ label{
 	display:inline-block;
 }  
 
-.answer_div{
+/*.answer_div{
 	width: auto;
     height: 100%;
 	margin-left:10px;
@@ -153,7 +153,7 @@ label{
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
-}
+}*/
 
 .answer_img{
   width: 13px;
@@ -167,7 +167,7 @@ label{
   position: absolute;
 }
 
-.answer_div:before{
+/*.answer_div:before{
 	content: "Answers";
   position: absolute;
   top: -1px;
@@ -181,7 +181,7 @@ label{
   -webkit-border-radius: 4px 0 4px 0;
      -moz-border-radius: 4px 0 4px 0;
           border-radius: 4px 0 4px 0;
-}
+}*/
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
 .sortable li {  padding: 0.3em;  font-size: 1.4em; height: 50px; }
 

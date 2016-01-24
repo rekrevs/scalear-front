@@ -131,13 +131,13 @@ angular.module('scalearAngularApp')
 				}	
 			})
 
-			if(scope.answer.correct){
-				scope.radioChange(scope.answer);
-			}
+			// if(scope.answer.correct){
+			// 	scope.radioChange(scope.answer);
+			// }
 
-			scope.getName= function(){
-				return "ocq"+scope.index+scope.$index
-			}
+			// scope.getName= function(){
+			// 	return "ocq"+scope.index+scope.$index
+			// }
 		}
 	}
 	

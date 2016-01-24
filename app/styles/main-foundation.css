@@ -2240,4 +2240,9 @@ a.active{
   -webkit-border-radius: 0;
   border-radius: 0;
 }
+
+.ngdialog.ngdialog-theme-custom-video .ngdialog-content{
+  width:74%;
+}
+body.ngdialog-open { overflow: initial !important; } 
 /****************************/

@@ -686,12 +686,15 @@ angular.module('scalearAngularApp')
 	        }
 
 	        var unwatchMute = scope.$watch("volume",function(){
-	            if(scope.volume){
-	                scope.player.controls.volume(scope.volume);
-	                if(scope.volume!=0)
+	            if(scope.volume){	                
+	                if(scope.volume!=0){
+	                	if(scope.volume_class=="unmute")
+	                		scope.player.controls.unmute();
 	                    scope.volume_class="mute";
+	                }
 	                else
-	                    scope.volume_class="unmute";
+	                	scope.volume_class="unmute";
+                	scope.player.controls.volume(scope.volume);	                    
 	            }
 	        });
 

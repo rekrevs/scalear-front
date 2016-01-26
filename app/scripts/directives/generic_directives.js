@@ -207,7 +207,7 @@ angular.module('scalearAngularApp')
         }
         scope.animateCopy=function(){
            $('#enrollment_message').select()
-           $('#enrollment_message, #enrollment_message p').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+           $('#enrollment_message, #enrollment_message li').children().animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
         }
         $modal.open({
             templateUrl: '/views/modals/help_enroll.html',

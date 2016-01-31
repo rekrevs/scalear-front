@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', 'scalear_api', function ($scope, $log,Page, $rootScope, Home, $state, $location, scalear_api) { 
+  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', 'scalear_api','ngDialog', function ($scope, $log,Page, $rootScope, Home, $state, $location, scalear_api, ngDialog){
 	Page.setTitle('Welcome!')
   $scope.play_teacher= false
   $scope.play_student= false
@@ -25,10 +25,20 @@ angular.module('scalearAngularApp')
 
   $scope.playerTeacher=function(){
     $scope.play_teacher= true
+    ngDialog.open({
+      template: 'teacherIntro',
+      className: 'ngdialog-theme-default ngdialog-theme-custom ngdialog-theme-custom-video',
+      scope: $scope
+    });
   }
 
   $scope.playerStudent=function(){
     $scope.play_student= true
+    ngDialog.open({
+      template: 'studentIntro',
+      className: 'ngdialog-theme-default ngdialog-theme-custom ngdialog-theme-custom-video',
+      scope: $scope
+    });
   }
 
 

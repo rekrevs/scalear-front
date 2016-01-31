@@ -689,6 +689,18 @@ angular.module('scalearAngularApp')
 	        scope.muteToggle = function(){
 	        	scope.volume_class=="mute"? scope.mute():scope.unmute()
 	        }
+	        var unwatchMute = scope.$watch("volume",function(){
+	            if(scope.volume){	                
+	                if(scope.volume!=0){
+	                	if(scope.volume_class=="unmute")
+	                		scope.player.controls.unmute();
+	                    scope.volume_class="mute";
+	                }
+	                else
+	                	scope.volume_class="unmute";
+                	scope.player.controls.volume(scope.volume);	                    
+	            }
+	        });
 
 	        scope.mute= function(){
 	            scope.player.controls.mute();

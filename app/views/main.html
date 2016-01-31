@@ -171,7 +171,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 col-md-4  portfolio-item">
-                    <a ng-if="!play_teacher" ng-click="playerTeacher()" class="portfolio-link" data-toggle="modal" style="border: 1px solid;">
+                    <a ng-click="playerTeacher()" class="portfolio-link" data-toggle="modal" style="border: 1px solid;">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-play fa-3x"></i>
@@ -179,14 +179,13 @@
                         </div>
                         <img src="images/landing/teacher-video-graphic3.png" class="img-responsive" alt="">
                     </a>
-                    <div ng-if="play_teacher"><youtube  id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='1' controls='1' style="z-index: 1;"></div>
                     <div class="portfolio-caption">
                         <h4>Getting Started for Teachers </h4>
                         <p class="text-muted text-left">Learn how to create a course with interactive video quizzes, review your students’ performance and answer their questions, and choose material for use in-class.</p>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4 portfolio-item">
-                    <a ng-if="!play_student" ng-click="playerStudent()" class="portfolio-link" data-toggle="modal" style="border: 1px solid;">
+                    <a ng-click="playerStudent()" class="portfolio-link" data-toggle="modal" style="border: 1px solid;">
                         <div class="portfolio-hover">
                             <div class="portfolio-hover-content">
                                 <i class="fa fa-play fa-3x"></i>
@@ -194,7 +193,6 @@
                         </div>
                         <img src="images/landing/student-video-graphic1.png" class="img-responsive" alt="">
                     </a>
-                    <div ng-if="play_student"><youtube id="intro_video_student" class="flex-video widescreen with-light-border" url="scalear_api.student_welcom_video" autoplay='1' controls='1' style="z-index: 1;"></div>
                     <div class="portfolio-caption">
                         <h4>Getting Started for Students</h4>
                         <p class="text-muted text-left">Learn how to work with interactive online lectures, ask questions, take notes, and tips for how to learn the most with ScalableLearning.</p>
@@ -386,3 +384,15 @@
         <scalear_footer />
     </footer>
 </div>
+
+<script type="text/ng-template" id="teacherIntro">
+    <div>
+        <youtube id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='1' controls='1' style="z-index: 1;">
+    </div>
+</script>
+
+<script type="text/ng-template" id="studentIntro">
+    <div>
+        <youtube id="intro_video_student" class="flex-video widescreen with-light-border" url="scalear_api.student_welcom_video" autoplay='1' controls='1' style="z-index: 1;">
+    </div>
+</script>

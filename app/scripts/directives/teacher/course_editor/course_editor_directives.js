@@ -32,32 +32,36 @@ angular.module('scalearAngularApp')
             scope.remove=function(event){
                 event.preventDefault();
                 event.stopPropagation();
-                ngDialog.open({
-                    template:'\
-                        <div class="ngdialog-message">\
-                            <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
-                            <span>\
-                                <span translate>groups.delete_popup.delete_module</span>\
-                                <b>"'+scope.module.name+'"</b>\
-                                <span translate>groups.delete_popup.will_delete</span>\
-                                <span translate>groups.delete_popup.are_you_sure</span>\
-                            </span>\
-                        </div>\
-                        <div class="ngdialog-buttons">\
-                            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
-                            <button type="button" class="ngdialog-button ngdialog-button-alert delete_confirm" ng-click="delete()" translate>button.delete</button>\
-                        </div>',
-                    plain: true,
-                    className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
-                    showClose:false,
-                    controller: ['$scope', function($scope) {
-                        $scope.delete=function(){
-                            $rootScope.$broadcast("delete_module", scope.module)
-                            $scope.closeThisDialog()
-                        }
-                    }]
+                if(scope.module.items.length>0){
+                    ngDialog.open({
+                        template:'\
+                            <div class="ngdialog-message">\
+                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                                <span>\
+                                    <span translate>groups.delete_popup.delete_module</span>\
+                                    <b>"'+scope.module.name+'"</b>\
+                                    <span translate>groups.delete_popup.will_delete</span>\
+                                    <span translate>groups.delete_popup.are_you_sure</span>\
+                                </span>\
+                            </div>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-alert delete_confirm" ng-click="delete()" translate>button.delete</button>\
+                            </div>',
+                        plain: true,
+                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                        showClose:false,
+                        controller: ['$scope', function($scope) {
+                            $scope.delete=function(){
+                                $rootScope.$broadcast("delete_module", scope.module)
+                                $scope.closeThisDialog()
+                            }
+                        }]
 
-                });
+                    });
+                }
+                else
+                  $rootScope.$broadcast("delete_module", scope.module)  
             }
 
             scope.copy=function(){

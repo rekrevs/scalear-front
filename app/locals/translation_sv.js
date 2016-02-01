@@ -19,6 +19,7 @@ var translation_sv={
     duration: "Längd",
     video: "Video",
     videos: "videos",
+    inclass_video: "I klassrummet Video",
     customlink:"Länk",
     customlinks:"Länkar",
     title: "Titel",
@@ -153,6 +154,7 @@ var translation_sv={
   content_navigator:{
     customlink:"@:global.customlink",
     lecture:"@:global.lecture",
+    inclass_lecture:"@:global.inclass_lecture",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
     empty: "Kursen saknar innehåll",
@@ -393,7 +395,8 @@ var translation_sv={
     title:"@:global.title",
     annotation:"Annotation (t)",
     tooltip:{
-        invisible: "Inte synlig för eleverna. Kommer att synas på detta datum.",
+        invisible: "Inte synlig för eleverna.",
+        invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Studenter måste avsluta detta moment för att slutföra modulen",
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
@@ -792,6 +795,7 @@ var translation_sv={
     types:{
         customlink:"@:global.customlink",
         video: "@:global.video",
+        inclass_video: "@global.inclass_lecture",
         video_desc: "Du kan lägga till quizfrågor ovanpå videon.",
         quiz: "@:global.quiz",            
         survey: "@:global.survey",

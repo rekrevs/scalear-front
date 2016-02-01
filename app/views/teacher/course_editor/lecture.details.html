@@ -78,7 +78,7 @@
         </center>
         </td>
       </tr>
-      <tr id="bg_fix" style="height:130px">
+      <tr id="bg_fix" style="height:130px" ng-if="!lecture.inclass">
         <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
         <td class="small-8"> 
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
@@ -100,7 +100,7 @@
           </span>
         </td>
       </tr>
-      <tr style="height:130px">
+      <tr style="height:130px" ng-if="!lecture.inclass">
         <td class="right-border small-4"><span translate>editor.details.due_date</span></td>
         <td class="small-8">
           <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
@@ -125,6 +125,15 @@
           </div>
         </td>
       </tr>
+
+      <tr id="bg_fix" style="height:130px" ng-if="lecture.inclass">
+        <td class="right-border small-4"><span translate>Visibility</span></td>
+        <td class="small-8"> 
+          <input type="checkbox" ng-model="lecture.visible_to_student" ng-change="updateAppearanceDate();updateLecture()" class="no-margin">
+          <span class="size-12" translate>Visible to student</span>
+        </td>
+      </tr>
+
     </table>
   </accordion-group>
   <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items|filter:{type:'quiz'}).length">

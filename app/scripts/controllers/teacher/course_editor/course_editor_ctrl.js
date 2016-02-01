@@ -110,20 +110,24 @@ angular.module('scalearAngularApp')
 
     var addItemBytype = function(type,module_id){
         if(type=='video')
-             $scope.addLecture(module_id || $state.params.module_id)
+             $scope.addLecture(module_id || $state.params.module_id, false)
+        else if(type == 'inclass_video')
+            $scope.addLecture(module_id || $state.params.module_id, true)
         else if(type == 'link')
             $scope.addCustomLink(module_id || $state.params.module_id)            
         else
             $scope.addQuiz(module_id || $state.params.module_id, type)
     }
 
-    $scope.addLecture=function(module_id){
-    	$log.debug("adding lec "+ module_id)
-    	$log.debug($scope.modules)
+    $scope.addLecture=function(module_id, inclass){
     	$scope.item_loading=true
-    	Lecture.newLecture({course_id: $stateParams.course_id, group: module_id},
+    	Lecture.newLecture(
+            {
+                course_id: $stateParams.course_id, 
+                group: module_id,
+                inclass: inclass
+            },
 	    	function(data){
-	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.module_obj[module_id].items.push(data.lecture)
 	    	    $scope.items_obj["lecture"][data.lecture.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]

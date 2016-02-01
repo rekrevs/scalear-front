@@ -1,8 +1,9 @@
 <li class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;" context-menu data-target="item-menu" >
 	<div class="position-relative" style="height: 20px;" bindonce>
 		<delete_button class="with-tiny-margin-left right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true" style="padding-right: 2px;"/>
-		<img class="left handle" src="images/move2.png" bo-title='"editor.messages.drag_to_reorder"|translate' />
-		<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+		<img class="left handle" src="images/move2.png" bo-title='"editor.messages.drag_to_reorder"|translate' />		
+		<i bo-if="item.class_name == 'lecture' && !item.inclass" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+		<i bo-if="item.class_name == 'lecture' && item.inclass" class="fi-comment-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.inclass_lecture' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
 		<i bo-if="item.class_name == 'customlink'" class="fi-link with-tiny-margin-right left color-gray" bo-title="'content_navigator.customlink' | translate"></i>

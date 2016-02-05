@@ -9,18 +9,18 @@ angular.module('scalearAngularApp')
 
         $scope.messages=["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
         $scope.module = $scope.course.selected_module
-        $scope.getInclassStudentStatus=function(status){
+        $scope.getInclassStudentStatus=function(){
             $scope.loading = true
             Module.getInclassStudentStatus(
                 {
                     module_id: $state.params.module_id,
                     course_id: $state.params.course_id,
-                    status: status || 0,
+                    status:  $scope.inclass_status || 0,
                     quiz_id: $scope.quiz? $scope.quiz.id: -1
                 },
                 function(data){
                     $scope.loading = false
-                    if(!status && data.status>0){
+                    if(data.updated){
                         $scope.quiz = data.quiz
                         $scope.quiz.in_group = false
                         $scope.group_quiz = angular.copy($scope.quiz)

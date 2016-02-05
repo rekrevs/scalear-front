@@ -38,26 +38,24 @@
 	</div>
 </div>
 <div class="row with-small-margin-top disable_selection">
-	<center class="small-block-grid-3" >
-		<span ng-show="lecture.url!='none'" >
-			<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
-				<span translate>editor.button.add_marker</span>
+	<center class="small-block-grid-3" ng-hide="lecture.url=='none' || (editing_mode && editing_type=='video')">
+		<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
+			<span translate>editor.button.add_marker</span>
+		</button>
+		<span ng-show="!editing_mode" lecture-questions-modal open-modal="openQuestionsModal">
+			<button id="new_question" class="button small" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
+				<span translate>editor.button.add_video_quiz</span>
 			</button>
-			<span ng-show="!editing_mode" lecture-questions-modal open-modal="openQuestionsModal">
-				<button id="new_question" class="button small" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
-					<span translate>editor.button.add_video_quiz</span>
-				</button>
-			</span>
-			<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
-				<button class="button small" ng-click="togglePreviewInclass()">
-					<span translate>Preview in-class</span>
-				</button>
-			</span>
-			<button class="button small" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
-		</span>      	
+		</span>
+		<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
+			<button class="button small" ng-click="togglePreviewInclass()">
+				<span translate>Preview in-class</span>
+			</button>
+		</span>
+		<button class="button small" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
 	</center>
-	<center>
-		<div ng-if="filtered_timeline_items" style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
+	<center ng-if="filtered_timeline_items">
+		<div  style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
 			<ul  class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
 				<li style="display:none"></li>
 		  		<span ng-repeat="item in filtered_timeline_items" >
@@ -74,6 +72,7 @@
 			<div ng-switch on='editing_type'>
 				<div ng-switch-when='quiz'><quiz-edit-panel /></div>			
 				<div ng-switch-when='marker'><marker-edit-panel /></div>
+				<div ng-switch-when='video'><video-edit-panel /></div>
 			</div>
 			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>

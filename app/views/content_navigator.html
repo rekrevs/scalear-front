@@ -36,7 +36,10 @@
 									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
 									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
 									<div class="truncate-65 show-inline valign-middle left text-left" bo-text="item.name"></div>
-									<div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
+									<div class="no-padding text-right">
+										<small class="color-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></small>
+									</div>
+									<!-- <div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div> -->
 								</div>
 								<a bo-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
 									<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>

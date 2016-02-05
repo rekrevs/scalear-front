@@ -180,7 +180,7 @@ angular.module('scalearAngularApp')
         //     $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time-0.1, function() {                
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time-0.1), function() {                
                 $scope.seek(quiz.time)
                 $scope.lecture_player.controls.pause()
                 $scope.closeReviewNotify()
@@ -211,12 +211,14 @@ angular.module('scalearAngularApp')
         })
 
         $scope.lecture.annotated_markers.forEach(function(marker){
-            $scope.lecture_player.controls.cue(marker.time,function(){
-                showAnnotation(marker.annotation)
-            })
-            $scope.lecture_player.controls.cue(marker.time+5,function(){
-                $scope.dismissAnnotation()
-            })
+            if(marker.annotation){
+                $scope.lecture_player.controls.cue(marker.time,function(){
+                    showAnnotation(marker.annotation)
+                })
+                $scope.lecture_player.controls.cue(marker.time+5,function(){
+                    $scope.dismissAnnotation()
+                })
+            }            
         })
 
         duration_milestones.forEach(function(milestone){

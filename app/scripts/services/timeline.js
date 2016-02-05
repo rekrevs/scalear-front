@@ -66,5 +66,8 @@ angular.module('scalearAngularApp')
                 return (item.time >= start_time && item.time <= end_time && index>0) 
             })
         }
+        this.removeAllByType=function(type){
+            this.items = this.filterByNotType(type)
+        }
     };
 }]);

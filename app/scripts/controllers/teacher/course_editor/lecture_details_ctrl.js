@@ -134,15 +134,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateDueDate=function(){
+        var offset = 200
         var enabled = $scope.lecture.due_date_enabled
         var due_date = new Date($scope.lecture.due_date)
         var week = 7
+        var year = 0
         if(isDueDateDisabled($scope.lecture.due_date) && enabled) 
-            var years =  -200 
+            years =  -offset 
         else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)
-            var years  =  200
-        else
-            var years = 0
+            years  =  offset
         due_date.setFullYear(due_date.getFullYear()+ years)
 
         var appearance_date = new Date($scope.lecture.appearance_time)
@@ -155,6 +155,7 @@ angular.module('scalearAngularApp')
         $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
         $scope.lecture.due_date_module = !$scope.lecture.disable_module_due_controls && $scope.lecture.due_date_enabled
     }
+
     $scope.visible = function(appearance_time) {
         return new Date(appearance_time) <= new Date()
     }
@@ -175,10 +176,13 @@ angular.module('scalearAngularApp')
                 })
             }
             else{
-                $log.debug('type not initialized')  
+                $log.debug('type not initialized')
+                $scope.lecture.start_time = 0
+                $scope.lecture.end_time = $scope.lecture.duration  
                 $scope.updateLecture();
                 $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
             }
+            startTrimVideo()
         }        
     }
 
@@ -268,22 +272,8 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("delete_online_marker", marker)
     }
 
-    $scope.startTrimVideo=function(){
+    var startTrimVideo=function(){
         $rootScope.$broadcast("start_trim_video")
-        $scope.trimming_video = true
-    }
-
-    $scope.closeTrimVideo=function(){
-        $rootScope.$broadcast("close_trim_video")
-        $scope.trimming_video = false
-    }
-
-    $scope.saveTrimVideo=function(){ 
-        $scope.lecture.start_time = Math.floor($scope.lecture.start_time)
-        $scope.lecture.end_time = Math.floor($scope.lecture.end_time)
-        $scope.updateLecture()
-        $scope.closeTrimVideo()
-        
     }
 
 

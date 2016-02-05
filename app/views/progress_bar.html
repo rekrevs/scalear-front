@@ -1,8 +1,8 @@
 <div id="controls" class="light-grey disable_selection">
-    <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;" ng-class="{'disabled': editing=='video'}">
+    <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;" ng-class="{'disabled': editing=='video'}" ng-mouseenter="showPlayhead()" ng-mouseleave="hidePlayhead()">
         <span ng-if="user_role==2">
-            <div class="elapsed" ng-style="{width: elapsed_width + '%'}" ng-mouseenter="showPlayhead()" ng-mouseleave="hidePlayhead()"></div>
-            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head + '%' }" ></div>
+            <div class="elapsed" ng-style="{width: elapsed_width + '%'}" ></div>
+            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ></div>
             <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'lectures.timeline.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'lectures.timeline.confused' | translate}}" tooltip-append-to-body="true"></span>
@@ -11,7 +11,6 @@
             </div>
         </span>
         <span ng-if="user_role==1 || user_role==5">
-
             <div class="elapsed transparent" ng-style="{width: elapsed_width + '%'}" ></div>
             <div ng-show="!editing" class="playhead ease-in-out playhead_big" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div> 
             <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div> 
@@ -34,7 +33,7 @@
 
                     <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px" tooltip="Start time: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', onStop: 'cleanUpDrag(element)', containment:'position'}" ></div>
 
-                    <div class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-1.1+'%'}" style="top:-4px;z-index:2" tooltip="Quiz time: {{element.data.time|format}}" ng-click="element.data.hide_quiz_answers = false" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
+                    <div class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-1.1+'%'}" style="top:-4px;z-index:2" tooltip="Quiz time: {{element.data.time|format}}" ng-click="seekToQuiz(element.data)" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
                         <i class="size-16 fi-record dot_circle" ></i>
                     </div>
 
@@ -76,7 +75,7 @@
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()"></div>
         <span class="hide-for-small-down">
             <div id="volume" class="volumeDiv show-inline left" ng-class="volume_class" ng-click="muteToggle()"></div>
-            <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;"/>
+            <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;cursor: pointer;"/>
         </span>
         <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
             <span class="hide-for-small-only">

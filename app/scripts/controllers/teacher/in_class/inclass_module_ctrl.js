@@ -70,7 +70,14 @@ angular.module('scalearAngularApp')
     }
 
     var init = function(){
-      $scope.timeline = {}
+      $scope.timeline = { lecture:{}, survey:{} }
+      $scope.module = angular.copy($scope.course.selected_module)
+      $scope.module.items = []
+      getLectureCharts()    
+      getSurveyCharts()
+    }
+
+    var getLectureCharts = function(){
       Module.getModuleInclass(
         {
           course_id: $stateParams.course_id,
@@ -78,21 +85,22 @@ angular.module('scalearAngularApp')
         },
         function(data){
           $log.debug(data)
-          $scope.module = angular.copy($scope.course.selected_module)
+          $scope.inclass_quizzes_time = 0
           angular.extend($scope, data)
-          $scope.timeline['lecture'] = {}
           for(var lec_id in $scope.lectures){
             $scope.timeline['lecture'][lec_id] = {all: new Timeline(), filtered: new Timeline()}
             for(var type in $scope.lectures[lec_id]){
-              for(var it in $scope.lectures[lec_id][type]){
-                
+              for(var it in $scope.lectures[lec_id][type]){                
                 $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1]|| {})  
+                if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show)
+                  $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timer.intro + $scope.lectures[lec_id][type][it][1].timer.self + $scope.lectures[lec_id][type][it][1].timer.in_group + $scope.lectures[lec_id][type][it][1].timer.discussion)/60
               }
             }
             $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
-          }          
+          }
+          adjustModuleItems($scope.lectures, $scope.course.selected_module.items, $scope.module.items)
+          checkDisplayInclass()      
           console.log("timeline for inclass", $scope.timeline)
-          getSurveyCharts()
         },  
         function(){}
       )
@@ -108,7 +116,6 @@ angular.module('scalearAngularApp')
           $log.debug(data)
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
           $scope.review_survey_count = data.review_survey_count
-          $scope.timeline["survey"]={}
           for(var survey_id in $scope.quizzes){
             $scope.timeline["survey"][survey_id]={'filtered':new Timeline()}
             for(var q_idx in $scope.quizzes[survey_id].questions){
@@ -117,36 +124,46 @@ angular.module('scalearAngularApp')
               $scope.timeline['survey'][survey_id]['filtered'].add(0, type, $scope.quizzes[survey_id].answers[q_id])
             }
           }
-
-          adjustModuleItems()
-          
-          if($scope.review_question_count || $scope.review_quizzes_count || $scope.review_survey_count)
-            $scope.inclass_ready = true
-          $log.debug($scope.timeline)
+          adjustModuleItems($scope.quizzes, $scope.course.selected_module.items, $scope.module.items)
+          checkDisplayInclass()
         },
         function(){}
       )
     }
 
-    var adjustModuleItems=function(){
-      var lec_id = scalear_utils.getKeys($scope.lectures)
-      var survey_id = scalear_utils.getKeys($scope.quizzes)
-      for(var i=0; i<$scope.module.items.length; i++){
-        if ($scope.module.items[i].class_name == 'lecture'){          
-          if(lec_id.indexOf($scope.module.items[i].id.toString()) == -1){  
-            $scope.module.items.splice(i,1)
-            i-=1
-          }
-        }
-        else{
-          if(survey_id.indexOf($scope.module.items[i].id.toString()) == -1){
-            $scope.module.items.splice(i,1)
-            i-=1
-          }
-        }
-      }
+
+    var checkDisplayInclass=function(){
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_quizzes_count || $scope.review_survey_count || $scope.inclass_quizzes_count)
     }
 
+    var adjustModuleItems=function(obj, from, to){
+      var ids = scalear_utils.getKeys(obj)
+      for(var i in from)
+        if(ids.indexOf(from[i].id.toString()) != -1)
+          to.push(from[i])
+    }
+
+    $scope.updateHideQuiz = function(quiz) {
+      console.log(quiz)
+      var num = (quiz.data.show? -1 : 1)
+      if(quiz.type == "inclass"){
+        $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
+        $scope.inclass_quizzes_count+= num
+      }
+      else
+        $scope.review_quizzes_count+= num
+
+      Module.hideQuiz({
+        course_id: $stateParams.course_id,
+        module_id: $stateParams.module_id
+      },{
+        quiz: quiz.data.id,
+        hide: quiz.data.show
+      },
+      function(){
+        checkDisplayInclass()
+      })
+    }
 
     var openModal=function(){
       angular.element("body").css("overflow","hidden");
@@ -371,7 +388,7 @@ angular.module('scalearAngularApp')
         if(item.data.status == 4){
           console.log("I will get the inclass chart")
           $scope.loading_chart = true
-          OnlineQuiz.getChartData({online_quizzes_id: $scope.selected_timeline_item.data.quiz_id}, function(resp){
+          OnlineQuiz.getChartData({online_quizzes_id: $scope.selected_timeline_item.data.id}, function(resp){
               $scope.selected_timeline_item.data.answers = resp.chart
               console.log("resp.chart", resp.chart)
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{colors:['rgb(0, 140, 186)','rgb(67, 172, 106)']}, 'formatInclassQuizChartData')
@@ -382,7 +399,7 @@ angular.module('scalearAngularApp')
         else
           adjustQuizLayer()
 
-        updateInclassSession($scope.selected_timeline_item.data.quiz_id, item.data.status)
+        updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
       }
     }
 
@@ -427,9 +444,13 @@ angular.module('scalearAngularApp')
           $scope.timeline_itr+=1
           if($scope.timeline_itr > 0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id]['filtered'].items.length){
             var current_timeline_item = $scope.timeline[type][$scope.selected_item.id]['filtered'].items[$scope.timeline_itr]
+            if(current_timeline_item.data && !current_timeline_item.data.show){
+              $scope.nextItem()
+              return
+            }
             if(current_timeline_item != $scope.selected_timeline_item){
               if($scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass'){
-                updateInclassSession($scope.selected_timeline_item.data.quiz_id,0)
+                updateInclassSession($scope.selected_timeline_item.data.id,0)
               }
               $scope.selected_timeline_item = angular.copy(current_timeline_item)
               console.log("selected_timeline_item", $scope.selected_timeline_item)
@@ -482,9 +503,13 @@ angular.module('scalearAngularApp')
           $scope.timeline_itr-=1 
           if($scope.timeline_itr > 0){
             var current_timeline_item = $scope.timeline[type][$scope.selected_item.id]['filtered'].items[$scope.timeline_itr]
+            if(current_timeline_item.data && !current_timeline_item.data.show){
+              $scope.prevItem()
+              return
+            }
             if(current_timeline_item != $scope.selected_timeline_item){
               if($scope.selected_timeline_item.type == 'inclass'){
-                updateInclassSession($scope.selected_timeline_item.data.quiz_id,0)
+                updateInclassSession($scope.selected_timeline_item.data.id,0)
               }
               $scope.selected_timeline_item = angular.copy(current_timeline_item)
               if(type == 'lecture'){

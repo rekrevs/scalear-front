@@ -13,7 +13,7 @@
 			<br>
 		</center>
 
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" survey-count="review_survey_count"/>
+		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" survey-count="review_survey_count" inclass-quiz-time="inclass_quizzes_time" inclass-quiz-count="inclass_quizzes_count"/>
 	</div>
 		
 	<div class="main_content small-12 medium-12 large-9 columns">
@@ -33,8 +33,9 @@
 							</li>
 						</ul>						
 					</li>
-					<li ng-if="item.type=='charts'" class="li_inner color-green">
-						<inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" />
+					<li ng-if="item.type=='charts' || item.type=='inclass'" class="li_inner color-green">
+						<inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none"/>
+						<show_box value="item.data.show" action="updateHideQuiz(item)" text="global.visible" class="right"/>
 					</li>
 					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
 						<inner_title  type="'inclass.free_text_question' | translate" itemtitle="item.data.title"/>
@@ -44,9 +45,10 @@
 							</li>
 						</ul>						
 					</li>
-					<li ng-if="item.type=='inclass'" class="li_inner color-green">
-						<inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" />
-					</li>
+					<!-- <li ng-if="item.type=='inclass'" class="li_inner color-green">
+						<inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none"/>
+						<show_box value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="right"/>
+					</li> -->
 				</ul>
 			</div>
 			<div ng-if="module_item.class_name=='quiz'" ng-init='quiz=module_item' class="small-12 columns">

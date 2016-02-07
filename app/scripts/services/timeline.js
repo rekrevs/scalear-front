@@ -29,6 +29,9 @@ angular.module('scalearAngularApp')
                 }
             }
         }
+        this.removeById=function(id,type){
+            this.items.splice(this.getIndexById(id, type),1)
+        }
         this.getNearestEvent=function(time){
             var min = this.items[this.items.length - 1].time
             var nearest_event = this.items[this.items.length - 1]

@@ -51,7 +51,8 @@ var translation_en={
     correct: "Correct",
     incorrect: "Incorrect",
     warning:"Warning",
-    are_you_sure:"Are you sure you want to proceed?"
+    are_you_sure:"Are you sure you want to proceed?",
+    visible: "Visible",
   },
   mailer:{
     send_email: "Send An Email",

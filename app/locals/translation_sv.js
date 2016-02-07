@@ -51,7 +51,8 @@ var translation_sv={
     correct: "Korrekt",
     incorrect: "Felaktig",
     warning:"Varning",
-    are_you_sure:"Är du säker på att du vill fortsätta?"
+    are_you_sure:"Är du säker på att du vill fortsätta?",
+    visible: "Visible (t)",
   },
   mailer:{
     send_email: "Skicka ett mail",

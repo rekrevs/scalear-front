@@ -587,9 +587,11 @@
     }
 
     self.setQuality=function(quality){
-      player.stopVideo();
+      // player.stopVideo();
+      // player.pauseVideo();
       player.setPlaybackQuality(quality);
-      player.playVideo();
+      changeCurrentTime(getCurrentTime())
+      // player.playVideo();
     }
 
     self.destroy = function(){

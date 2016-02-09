@@ -29,7 +29,7 @@
                     <li>
                         <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
                         <div style="color: dimgrey; height: 18px;">{{teacher.status}}</div>
-                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" size="small" color='dark' action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" size="small" color='dark' overlaymode="true" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
                     </li>
                 </div>
             </div>

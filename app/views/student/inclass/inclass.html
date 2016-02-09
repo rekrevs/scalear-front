@@ -41,7 +41,7 @@ ul.connected_blocks{
 }
 </style>
 <div class="small-12 column disable_selection"><h3><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3></div>
-<div class="small-12 columns no-padding">
+<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
 	<ul class="connected_blocks">
 		<li ng-class="{'active': inclass_status==1}" style="background:lightgrey;color:black">Intro</li>
 		<li ng-class="{'active': inclass_status==2}" style="background:#008CBA">Self</li>
@@ -49,6 +49,7 @@ ul.connected_blocks{
 		<li ng-class="{'active': inclass_status>=4}" style="background:darkorange">Discussion</li>
 	</ul>
 </div>
+<alert ng-show="alert_message" type="'alert'" close="closeAlerts()" style="clear: both;margin:0">{{alert_message| translate}}</alert>
 <div class="small-12 column disable_selection inclass_lecture no-padding" ng-if="inclass_status >=2" style="margin-top: 15px;">
 	
 	<div ng-if="inclass_status==2 || (quiz.done && inclass_status>2)" class="small-12 columns self_quiz" style="padding:0 5px">
@@ -64,8 +65,8 @@ ul.connected_blocks{
 			</div>
 		</div>
 		<span ng-hide="quiz.done">
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Why?" style="height:50px" /></div>
-			<div class="small-12 medium-4 columns"><button class="button expand no-margin" ng-click="sendAnswers(quiz)">Vote!</button></div>
+			<div class="small-12 medium-8 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="self_note" /></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button></div>
 		</span>
 		<span ng-show="quiz.done && inclass_status==2 ">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -90,8 +91,8 @@ ul.connected_blocks{
 			</div>
 		</div>
 		<span ng-hide="group_quiz.done">
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><textarea placeholder="Why?" style="height:50px" /></div>
-			<div class="small-12 medium-4 columns"><button class="button expand success no-margin" ng-click="sendAnswers(group_quiz)">Vote!</button></div>
+			<div class="small-12 medium-8 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="group_note" /></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)">Vote!</button></div>
 		</span>
 		<span ng-show="group_quiz.done && inclass_status==3">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -126,3 +127,4 @@ ul.connected_blocks{
 		</button>
 	</div>
 </div>
+

@@ -77,7 +77,8 @@ angular.module('scalearAngularApp')
 	$scope.lecture_player.events.onPlay= function(){
         // $scope.play_pause_class = 'pause'
 		$scope.slow = false
-		$scope.selected_quiz.hide_quiz_answers = true
+		if($scope.selected_quiz)
+			$scope.selected_quiz.hide_quiz_answers = true
 		// var paused_time= $scope.lecture_player.controls.getTime()
 		// if($scope.editing_mode)
 		// 	$scope.lecture_player.controls.seek_and_pause(paused_time)

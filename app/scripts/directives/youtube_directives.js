@@ -676,10 +676,10 @@ angular.module('scalearAngularApp')
 		    	scope.$apply()
 		    })
 
-		    player.on('playing',function(){
-		    	scope.play_class = "pause";
-		    	scope.$apply()
-		    })
+		    // player.on('playing',function(){
+		    // 	scope.play_class = "pause";
+		    // 	scope.$apply()
+		    // })
 
 	        scope.muteToggle = function(){
 	        	scope.volume_class=="mute"? scope.mute():scope.unmute()
@@ -748,26 +748,53 @@ angular.module('scalearAngularApp')
 	  				scrollToItem(nearest_item.type, nearest_item.data.id)
 	  		}
 
-	      	if(scope.player.controls.youtube){
-	            scope.speeds = scope.player.controls.getSpeeds();            
-	            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-	            scope.qualities = ["auto","small", "medium", "large"]
-	            // scope.chosen_quality = scope.player.controls.getQuality()
-	            $timeout(function(){
-	            	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-	            	scope.setQuality(scope.chosen_quality)
-	            	scope.chosen_quality = scope.player.controls.getQuality()
-	            },2000)
-	      	}
-	      	else{
-	      		scope.qualities = ["auto"]
-	      		scope.chosen_quality = scope.qualities[0]
-	      		scope.setQuality(scope.chosen_quality)
-	            scope.speeds = [0.8,1,1.2,1.5,1.8]
-	            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
-	      	}
+	    //   	if(scope.player.controls.youtube){
+	    //         scope.speeds = scope.player.controls.getSpeeds();            
+	    //         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
+	    //         scope.qualities = ["auto","small", "medium", "large"]
+	    //         // scope.chosen_quality = scope.player.controls.getQuality()
+	    //         $timeout(function(){
+	    //         	scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+	    //         	scope.setQuality(scope.chosen_quality)
+	    //         	scope.chosen_quality = scope.player.controls.getQuality()
+	    //         },2000)
+	    //   	}
+	    //   	else{
+	    //   		scope.qualities = ["auto"]
+	    //   		scope.chosen_quality = scope.qualities[0]
+	    //   		scope.setQuality(scope.chosen_quality)
+	    //         scope.speeds = [0.8,1,1.2,1.5,1.8]
+	    //         scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+	    //   	}
 
-	  		scope.setSpeed(scope.chosen_speed)
+	  		// scope.setSpeed(scope.chosen_speed)
+
+  		player.on('playing',function(){
+	    	scope.chosen_quality = scope.player.controls.getQuality()
+	    	scope.play_class = "pause";
+	    	scope.$apply()
+	    })
+
+      	if(scope.player.controls.youtube){
+            scope.speeds = scope.player.controls.getSpeeds();            
+            scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
+            scope.qualities = ["auto","small", "medium", "large"]
+            // scope.chosen_quality = scope.player.controls.getQuality()
+           
+            $timeout(function(){
+           		scope.qualities = scope.player.controls.getAvailableQuality().reverse() 	
+            },2000)
+      	}
+      	else{
+            scope.speeds = [0.8,1,1.2,1.5,1.8]
+            scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+            scope.qualities = ["auto"]
+      		scope.chosen_quality = scope.qualities[0]
+      		// scope.setQuality(scope.chosen_quality)
+      	}
+
+  	 	scope.setQuality(scope.chosen_quality)
+  		scope.setSpeed(scope.chosen_speed)
 	  		
 
 	        shortcut.add("Space",function(){

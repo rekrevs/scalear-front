@@ -7,7 +7,7 @@
 <div class="small-12 columns">
   <h3>
     <i class="fi-torsos-all size-30"></i>
-    <span translate>enrolled_students</span>
+    <span>{{students.length}} </span><span translate>enrolled_students</span>
     <span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal(course)" style="vertical-align: middle;">
       <span translate>enrolled_students.help_enroll_student</span>
     </span>
@@ -53,8 +53,8 @@
                         <td><profile-image class="small-12" email="student.email" imagesize="165"style="margin-bottom: 5px;"></profile-image></td>
                         <td>{{student.full_name}}</td>
                         <td><a href="" send-email ng-click="emailSingle(student)">{{student.email}}</a></td>
-                        <td ng-if="delete_mode" class="text-center no-padding">
-                          <delete_button size="big" color='dark' action="removeStudent(student)" />
+                        <td ng-if="delete_mode" class="text-center no-padding" style="width: 10%;">
+                          <delete_button size="big" color='dark' action="removeStudent(student)" text="true" />
                       </td>
                       </tr>
                     </tbody>

@@ -122,16 +122,16 @@ angular.module('scalearAngularApp')
 
  	var checkQuizTimeConflict=function(time){
  		var new_time = time 
+
  		$scope.lecture.timeline.items.forEach(function(item){
  			if(item.type =='quiz'){
  				var quiz = item.data
 	 		    if(quiz.time == parseInt(new_time+1))
-	 				new_time+= 3
-	 			else if(quiz.time == parseInt(new_time)){
 	 				new_time+= 2
-	 			} 					
-	 			else if(quiz.time == parseInt(new_time-1))
+	 			else if(quiz.time == parseInt(new_time))
 	 				new_time+= 1
+	 			// else if(quiz.time == parseInt(new_time-1))
+	 			// 	new_time+= 1
 	 		}
  		})
  		return new_time

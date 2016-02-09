@@ -179,8 +179,13 @@ angular.module('scalearAngularApp')
         if($scope.lecture_player.controls.youtube)
             $scope.total_duration-=1
         var duration_milestones = [25, 75]
+        var quiz_time_offset = 0
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time-0.1, function() {                
+            if(quiz.time >= $scope.total_duration-2){
+                quiz.time = ($scope.total_duration-2) + quiz_time_offset
+                quiz_time_offset+=0.2
+            }
+            $scope.lecture_player.controls.cue(quiz.time - 0.1, function() {                
                 $scope.seek(quiz.time)
                 $scope.lecture_player.controls.pause()
                 $scope.closeReviewNotify()
@@ -226,6 +231,7 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
+
     }
 
     var updateViewPercentage = function(milestone) {
@@ -306,7 +312,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
-        $log.debug($scope.lecture_player)
         if($scope.lecture_player.controls.getTime() != time)
             clearQuiz()
         $scope.seek(time,lecture_id)

@@ -221,8 +221,8 @@ angular.module('scalearAngularApp')
                 $scope.video={}
                 $scope.video.title = data.items[0].snippet.title//data.entry.title.$t;
                 $scope.video.author =data.items[0].snippet.channelTitle//data.entry.author[0].name.$t;
-		        var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
-                $scope.lecture.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//data.entry.media$group.yt$duration.seconds
+		        // var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
+          //       $scope.lecture.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//data.entry.media$group.yt$duration.seconds
                 // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
                 d.resolve()                   
             });

@@ -24,6 +24,17 @@ angular.module('scalearAngularApp')
   //   });
   // }
 
+  $scope.hello=function(){
+    $("#signin_list").off("click")
+    $("#signin_list li").off("click")
+    // $("#signin_list").click(function(event){
+    //   console.log("hello")
+    //   event.preventDefault()
+    //   $("#signin_list").off("click")
+
+    // })
+  }
+
   $scope.login = function(){
     $scope.sending = true;
     User.signIn({},

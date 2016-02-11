@@ -263,6 +263,8 @@ var translation_en={
     school_email :"School Email",
     sign_up: "Sign up",
     sign_in: "Sign in",
+    login: "@:navigation.login",
+    join: "Join",
     remember_me: "Keep me logged in", 
     confirm_destroy: "Are you sure you want to cancel your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",

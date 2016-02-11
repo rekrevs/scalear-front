@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
         if(Math.ceil($scope.lecture.duration) != Math.ceil(duration)){
             $scope.lecture.duration=duration
             $scope.updateLecture();
+            $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
         }
         $scope.slow = false
     }

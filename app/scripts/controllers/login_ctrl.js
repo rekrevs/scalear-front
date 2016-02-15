@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
   $scope.swamid_list = SWAMID.list()
+
+  console.log($cookieStore.get("saml_provider"))
+
+  $scope.previous_provider = $cookieStore.get("saml_provider")
 
   // console.log($location)
   // $scope.saml = $location.$$search
@@ -24,16 +28,6 @@ angular.module('scalearAngularApp')
   //   });
   // }
 
-  $scope.hello=function(){
-    $("#signin_list").off("click")
-    $("#signin_list li").off("click")
-    // $("#signin_list").click(function(event){
-    //   console.log("hello")
-    //   event.preventDefault()
-    //   $("#signin_list").off("click")
-
-    // })
-  }
 
   $scope.login = function(){
     $scope.sending = true;
@@ -60,6 +54,10 @@ angular.module('scalearAngularApp')
     });
   }
 
+  $scope.join=function(){
+    $state.go("signup",  { input1 : $scope.user.email, input2: $scope.user.password})
+  }
+
   var next=function(user){
     if(!user.info_complete){
       $state.go("edit_account");
@@ -71,15 +69,16 @@ angular.module('scalearAngularApp')
   }
 
   $scope.samlLogin=function(idp){
-    Saml.Login(
-      {idp: idp},
-      function(resp){
-         $(resp.saml_url).appendTo('body').submit();
-      }, 
-      function(){
+    $cookieStore.put('saml_provider', idp)
+    // Saml.Login(
+    //   {idp: idp.entityID},
+    //   function(resp){
+    //      $(resp.saml_url).appendTo('body').submit();
+    //   }, 
+    //   function(){
 
-      }
-    )
+    //   }
+    // )
   }
 
 }]);

@@ -11,7 +11,7 @@
         margin: 0;
         margin-bottom: 5px
     }
-    .login-panel .button.saml{
+    .login-panel .button.saml, .button.login {
         background-color: #5da423;
     }
     .login-panel .button.oauth{
@@ -67,25 +67,30 @@
     .login-panel input{
         margin-bottom: 5px
     }
+    .login-panel li.button:hover{
+        background-color: #e7e7e7
+    }
 </style>
 <center>
-    <div class="small-4 small-centered column login-panel">        
+    <div class="small-10 medium-6 large-4 small-centered column login-panel">        
         <div class="row" style="margin-bottom: 10px;">
             <div class="small-12 columns">
                 <h3><span translate>global.welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h3>
             </div>
         </div>
+        <div class="row disable_selection" ng-if="previous_provider">
+            <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)">Login with {{previous_provider.displayName.en || previous_provider.displayName.sv }}</div>
+            <div class="line-through"><b>Or</b></div>
+        </div>        
         <div class="row disable_selection">
-            <div class="button dropdown small-10 small-centered columns saml" dropdown-toggle="#signin_list" ng-click="hello()">Login with School/University</div>
-            <div class="small-10 small-centered columns">
-                <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:95%"/>
-            </div>
-            <ul id="signin_list" class="dropdown-menu">
-                <li ng-repeat="login_item in swamid_list|filter:searchText|orderBy:'displayName.en'" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item.entityID)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
+            <div class="button dropdown small-10 small-centered columns saml" ng-click="show_providers=!show_providers">Login/Join with School/University</div>
+            <ul id="signin_list" ng-show="show_providers">
+                <li><input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:95%; border: none;" autofocus/></li>
+                <li ng-repeat="login_item in swamid_list|filter:searchText|orderBy:'displayName.en'" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
             </ul>
         </div>
 
-        <div class="line-through"><b>Or</b></div>
+        <!-- <div class="line-through"><b>Or</b></div>
 
         <div class="row disable_selection">
             <div class="button small-10 small-centered columns oauth">Login with Google</div>
@@ -93,7 +98,7 @@
         <div class="row disable_selection">
             <div class="button small-10 small-centered columns oauth">Login with Facebook</div>
         </div>
-
+ -->
         <div class="line-through"><b>Or</b></div>
 
         <div class="row">
@@ -160,10 +165,10 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <div class="small-8 columns no-padding-left">
-                                <button id="login_btn" type="submit" class="tiny expand button success" translate>account.login</button>
+                                <button id="login_btn" type="submit" class="tiny expand button login" translate>account.login</button>
                             </div>
                             <div class="small-4 columns no-padding">
-                                <button id="login_btn" type="submit" class="tiny expand button primary" translate>account.join</button>
+                                <button id="join_btn" class="tiny expand button primary" ng-click="join()" translate>account.join</button>
                             </div>
                         </div>
                        <!--  <div class="small-10 small-centered columns">

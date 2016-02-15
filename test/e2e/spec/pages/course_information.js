@@ -12,7 +12,7 @@ StudentCourseInformation.prototype = Object.create({},{
 		element(by.id('course_info')).click();
 		browser.driver.wait(function() {
 	      return browser.driver.getCurrentUrl().then(function(url) {
-	        return /information/.test(url);
+	        return /course_information/.test(url);
 	      });
 	    });
 	}},

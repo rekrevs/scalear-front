@@ -108,7 +108,7 @@
         </div>
         <div class="row disable_selection">
             <div class="small-10 small-centered columns">
-                <form ng-submit="login()" novalidate>                    
+                <form novalidate>                    
                     <!-- <div class="row" style="margin-bottom:10px"> -->
                         <div class="row">
                             <div class="small-12 small-centered columns">
@@ -165,7 +165,7 @@
                     <div class="row">
                         <div class="small-12 columns">
                             <div class="small-8 columns no-padding-left">
-                                <button id="login_btn" type="submit" class="tiny expand button login" translate>account.login</button>
+                                <button id="login_btn" class="tiny expand button login" ng-click="login()" translate>account.login</button>
                             </div>
                             <div class="small-4 columns no-padding">
                                 <button id="join_btn" class="tiny expand button primary" ng-click="join()" translate>account.join</button>

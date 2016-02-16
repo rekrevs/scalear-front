@@ -9,8 +9,6 @@ angular.module('scalearAngularApp')
 
   $scope.swamid_list = SWAMID.list()
 
-  console.log($cookieStore.get("saml_provider"))
-
   $scope.previous_provider = $cookieStore.get("saml_provider")
 
   // console.log($location)
@@ -70,15 +68,15 @@ angular.module('scalearAngularApp')
 
   $scope.samlLogin=function(idp){
     $cookieStore.put('saml_provider', idp)
-    // Saml.Login(
-    //   {idp: idp.entityID},
-    //   function(resp){
-    //      $(resp.saml_url).appendTo('body').submit();
-    //   }, 
-    //   function(){
+    Saml.Login(
+      {idp: idp.entityID},
+      function(resp){
+         $(resp.saml_url).appendTo('body').submit();
+      }, 
+      function(){
 
-    //   }
-    // )
+      }
+    )
   }
 
 }]);

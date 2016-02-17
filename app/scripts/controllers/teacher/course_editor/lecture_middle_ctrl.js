@@ -191,7 +191,7 @@ angular.module('scalearAngularApp')
 				$scope.quiz_loading = false;
 			})
 		})
-	}
+	}	
 
 	$scope.showOnlineQuiz= function(quiz){
 		if($scope.selected_marker && $scope.editing_mode){
@@ -243,7 +243,11 @@ angular.module('scalearAngularApp')
 
  	var getQuizData =function(){
 		Lecture.getQuizData(
-			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz": $scope.selected_quiz.id},
+			{
+				"course_id":$stateParams.course_id, 
+				"lecture_id":$scope.lecture.id ,
+				"quiz": $scope.selected_quiz.id
+			},
 			function(data){ //success
 				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
@@ -309,35 +313,45 @@ angular.module('scalearAngularApp')
 	}
 
  	$scope.addDoubleClickBind= function(event){
-	  if ($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers) {
- 		var answer_width, answer_height
- 		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
- 			answer_width = 150
- 			answer_height= 40
- 		}
- 		else{
- 			answer_width = 13
- 			answer_height= 13
- 		}
-	    var element = angular.element(event.target);
+  		if ($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers) {
 
-	    if(element.attr('id') =="ontop"){
-	    	$log.debug("adding on top ontop")
+	 		var answer_width, answer_height,
+	 		answer_text = "Answer "+($scope.selected_quiz.answers.length+1)
 
-	    	var left= event.pageX - element.offset().left - 6//event.offsetX - 6
-		  	var top = event.pageY - element.offset().top - 6 //event.offsetY - 6
+	 		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
+	 			answer_width = 150
+	 			answer_height= 40
+	 		}
+	 		else if($scope.selected_quiz.question_type.toLowerCase() == 'free text question'){
+	 			if($scope.selected_quiz.answers.length > 0)
+	 				return
+	 			answer_width = 250
+	 			answer_height= 100
+	 			answer_text=""
+	 		}
+	 		else{
+	 			answer_width = 13
+	 			answer_height= 13
+	 		}
+		    var element = angular.element(event.target);
 
-		  	var the_top = top / element.height();
-	      	var the_left= left / element.width()
-	     	var the_width = answer_width/element.width();
-	      	var the_height= answer_height/(element.height());
-	      	$scope.addAnswer("Answer "+($scope.selected_quiz.answers.length+1), the_height, the_width, the_left, the_top)
-	      	if (window.getSelection)
-		        window.getSelection().removeAllRanges();
-		    else if (document.selection)
-		        document.selection.empty();
-      	}
-	}
+		    if(element.attr('id') =="ontop"){
+		    	$log.debug("adding on top ontop")
+
+		    	var left= event.pageX - element.offset().left - 6//event.offsetX - 6
+			  	var top = event.pageY - element.offset().top - 6 //event.offsetY - 6
+
+			  	var the_top = top / element.height();
+		      	var the_left= left / element.width()
+		     	var the_width = answer_width/element.width();
+		      	var the_height= answer_height/(element.height());
+		      	$scope.addAnswer(answer_text, the_height, the_width, the_left, the_top)
+		      	if (window.getSelection)
+			        window.getSelection().removeAllRanges();
+			    else if (document.selection)
+			        document.selection.empty();
+	      	}
+		}
 	}
 
 	$scope.deleteQuiz=function(quiz){
@@ -379,19 +393,23 @@ angular.module('scalearAngularApp')
 	var updateAnswers=function(ans, quiz, options){
 		$log.debug("savingAll")
 		// $scope.disable_save_button = true
-		var selected_quiz = angular.copy($scope.selected_quiz)
+		// var selected_quiz = angular.copy($scope.selected_quiz)
 		if(options && options.exit)
 			$scope.exitQuizBtn()
 		Lecture.updateAnswers(
 			{
 				course_id:$stateParams.course_id,
 				lecture_id:$scope.lecture.id,
-				online_quiz_id: selected_quiz.id
+				online_quiz_id: quiz.id
 			},
-			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type},
+			{
+				answer: ans, 
+				quiz_title:quiz.question, 
+				match_type: quiz.match_type
+			},
 			function(){
 				if(!(options && options.exit))
-					selected_quiz.quiz_type =="invideo"? getQuizData() : getHTMLData()						
+					quiz.quiz_type =="invideo"? getQuizData() : getHTMLData()
 			},
 			function(){}
 		);
@@ -399,19 +417,21 @@ angular.module('scalearAngularApp')
 	
 	var isFormValid = function(){
 		var correct=0;
-		for( var element in $scope.selected_quiz.answers){
-			if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()==""){
-				$scope.alert.msg="editor.messages.provide_answer"
-				return false
+		if($scope.selected_quiz.question_type != "Free Text Question"){
+			for( var element in $scope.selected_quiz.answers){
+				if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()==""){
+					$scope.alert.msg="editor.messages.provide_answer"
+					return false
+				}
+				if($scope.selected_quiz.question_type.toUpperCase()=="DRAG")
+					correct=1
+				else	
+					correct= $scope.selected_quiz.answers[element].correct || correct;
 			}
-			if($scope.selected_quiz.question_type.toUpperCase()=="DRAG")
-				correct=1
-			else	
-				correct= $scope.selected_quiz.answers[element].correct || correct;
-		}
-		if(!correct && $scope.selected_quiz.quiz_type!='survey'){
-			$scope.alert.msg="editor.messages.quiz_no_answer"
-			return false
+			if(!correct && $scope.selected_quiz.quiz_type!='survey'){
+				$scope.alert.msg="editor.messages.quiz_no_answer"
+				// return false
+			}			
 		}
 		return true;
 	};

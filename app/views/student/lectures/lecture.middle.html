@@ -57,7 +57,7 @@
 								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>button.next</span></button>
 									</div>
 									<div ng-show="quiz_mode" class="right" style="position:relative;right:30%">
-										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" translate>lectures.button.check_answer</button>
+										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" >{{check_answer_title | translate}}</button>
 										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/> 
 									</div>									
 						    	</progress-bar>

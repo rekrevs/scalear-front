@@ -168,6 +168,7 @@ angular.module('scalearAngularApp')
                 "<div ng-switch-when='MCQ'><student-answer /></div>"+
                 "<div ng-switch-when='OCQ'><student-answer /></div>"+
                 "<div ng-switch-when='DRAG'><student-drag /></div>"+
+                "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>"+
               "</div>"
   }
 }]).directive('studentAnswer', ['$rootScope', '$translate','$log', function($rootScope, $translate, $log){
@@ -341,6 +342,14 @@ angular.module('scalearAngularApp')
       })
   	  setup()
       
+    }
+  }
+}]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
+  return {
+    restrict:'E',
+    template: '<textarea ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    link:function(scope,elem){
+
     }
   }
 }]).directive('studentTimeline', ['$timeout', 'ContentNavigator','TimelineFilter',function($timeout, ContentNavigator,TimelineFilter) {

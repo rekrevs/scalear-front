@@ -192,7 +192,7 @@ angular.module('scalearAngularApp')
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
                 $scope.quiz_mode = true
-                
+                $scope.check_answer_title = "lectures.button.check_answer"
                 if(quiz.quiz_type == 'html') {    
                     $log.debug("HTML quiz")
                     $scope.quiz_layer.backgroundColor = "white"
@@ -200,14 +200,18 @@ angular.module('scalearAngularApp')
                     $scope.quiz_layer.overflowY = 'auto'
                     if(quiz.question_type.toUpperCase() == "DRAG")
                         $scope.studentAnswers[quiz.id] = quiz.online_answers[0].answer;
-                    if(quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
-                        $scope.studentAnswers[quiz.id] = "";
                 }
                 else {
                     $scope.quiz_layer.backgroundColor = ""
                     $scope.quiz_layer.overflowX = ''
                     $scope.quiz_layer.overflowY = ''
                 }
+
+                if(quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
+                    $scope.studentAnswers[quiz.id] = "";
+
+                if(quiz.quiz_type == 'survey' || quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
+                    $scope.check_answer_title = "lectures.button.submit"
                 
                 $scope.last_quiz = quiz
                 $scope.backup_quiz = angular.copy(quiz)
@@ -583,6 +587,13 @@ angular.module('scalearAngularApp')
 
             if($scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
                 selected_answers = selected_answers[0]
+        }
+        else if($scope.selected_quiz.question_type == "Free Text Question"){
+            selected_answers= $scope.studentAnswers[$scope.selected_quiz.id]
+            if(!selected_answers){
+                showNotification("global.required")
+                return
+            }
         }
         else{ //DRAG
             selected_answers={}

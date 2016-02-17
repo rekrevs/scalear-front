@@ -1,18 +1,42 @@
 <div class="panel with-small-margin-top text-center time_estimate">
 	<div>
-		<h6 ng-style="{color: color}">
+		<h6 ng-style="{color: total_estimate_color}">
 			<span translate>inclass.time_estimate</span>:
 			<br />
 			<b>
-				<span>{{inclass_estimate || 0}}</span>
+				<span>{{total_inclass_estimate || 0}}</span>
 				<span translate>time.minutes</span>
 			</b>
 		</h6>
 	</div>
+	<hr>
 	<div>
 		<h6 class="size-14">
+			<span translate>In-class Problems Time</span>:
+			<br />
+			<span>
+				<span>{{inclass_estimate || 0}}</span>
+				<span translate>time.minutes</span>
+			</span>
+		</h6>
+		<h6 class="size-12">
+			(<span>{{inclass_quiz_count || 0}}</span>
+			<span >{{ (inclass_quiz_count>1? 'inclass.quizzes' : 'inclass.quiz')| translate | lowercase}}</span>)
+		</h6>
+	</div>	
+	<hr>
+	<div>
+		<h6 class="size-14">
+			<span translate>Review Time</span>:
+			<br />
+			<span>
+				<span>{{review_estimate || 0}}</span>
+				<span translate>time.minutes</span>
+			</span>
+		</h6>
+		<h6 class="size-12">
 			(<span>{{quiz_count || 0}}</span>
-			<span >{{'inclass.quizzes'| translate | lowercase}}</span>
+			<span >{{ (quiz_count>1? 'inclass.quizzes' : 'inclass.quiz')| translate | lowercase}}</span>
 			<span>, {{question_count || 0}}</span>
 			<span >{{'inclass.discussions' | translate | lowercase}}</span>
 			<span translate>global.and</span>

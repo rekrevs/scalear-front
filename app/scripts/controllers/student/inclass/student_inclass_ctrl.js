@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
             })
         }
 
-        $scope.sendAnswers=function(quiz){            
+        $scope.sendAnswers=function(quiz, note_text){            
             removeNotification()
             var selected_answers
             if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ"){
@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
                         selected_answers.push(answer.id)
                 })
                 if(selected_answers.length == 0){
-                    showNotification("lectures.choose_correct_answer")
+                    $scope.showNotification("lectures.choose_correct_answer")
                     return      
                 }
 
@@ -60,9 +60,12 @@ angular.module('scalearAngularApp')
                     selected_answers = selected_answers[0]
             }
             quiz.done = true
-            console.log(selected_answers)
+            $scope.saveQuizAnswer(quiz, selected_answers)
             console.log(quiz)
+            $scope.saveNote( (quiz.in_group? "In Class Group Note: ": "In Class Self Note: ") + note_text, Math.ceil(quiz.time) )
+        } 
 
+        $scope.saveQuizAnswer=function(quiz, selected_answers){
             Lecture.saveOnline(
                 {
                     course_id:$state.params.course_id,
@@ -74,15 +77,26 @@ angular.module('scalearAngularApp')
                     in_group: quiz.in_group
                 }
             )
-        }  
+        }
+
+        $scope.saveNote=function(note_text, time){
+            Lecture.saveNote(
+            {
+                course_id: $state.params.course_id,
+                lecture_id: $scope.lecture.id,
+                note_id: null
+            }, 
+            {
+                data: note_text,
+                time: time
+            });
+        } 
 
         $scope.showNotification=function(msg){
-            $scope.alert= true
             $scope.alert_message = msg
         }
 
         var removeNotification=function(){
-            $scope.alert= false
             $scope.alert_message = ""
         }
 

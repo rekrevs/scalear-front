@@ -19,6 +19,7 @@ var translation_en={
     duration: "Duration",
     video: "Video",
     videos: "Videos",
+    inclass_lecture: "In-class Video",
     customlink:"Link",
     customlinks:"Links",
     title: "Title",
@@ -50,7 +51,8 @@ var translation_en={
     correct: "Correct",
     incorrect: "Incorrect",
     warning:"Warning",
-    are_you_sure:"Are you sure you want to proceed?"
+    are_you_sure:"Are you sure you want to proceed?",
+    visible: "Visible",
   },
   mailer:{
     send_email: "Send An Email",
@@ -153,6 +155,7 @@ var translation_en={
   content_navigator:{
     customlink:"@:global.customlink",
     lecture:"@:global.lecture",
+    inclass_lecture:"@:global.inclass_lecture",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
     empty: "Empty Course",
@@ -393,7 +396,8 @@ var translation_en={
     title:"@:global.title",
     annotation:"Annotation",
     tooltip:{
-        invisible: "Not currently visible to students. Will be visible",
+        invisible: "Not currently visible to students.",
+        invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
         students_must_complete_required:"Students must complete this item to complete the module",
         click_to_delete: "Click here to delete, click outside to close",
@@ -792,6 +796,7 @@ var translation_en={
     types:{
         customlink:"@:global.customlink",
         video: "@:global.video",
+        inclass_video: "@:global.inclass_lecture",
         video_desc: "You can add quiz questions on top of the video.",
         quiz: "@:global.quiz",
         survey: "@:global.survey",

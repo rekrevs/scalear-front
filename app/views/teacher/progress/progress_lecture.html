@@ -12,7 +12,7 @@
 			<youtube id="progress_lec_video" url="url" player="progress_player" class="flex-video" style="z-index: 1;" controls="default" start="video_start" end="video_end">
 			</youtube>
 		</video_container>
-		<inclass_estimate time-quiz="time_parameters.quiz" time-question="time_parameters.question" quiz-count="review_quizzes_count" question-count="review_question_count" survey-count="review_survey_count"></inclass_estimate>
+		<inclass_estimate time-quiz="time_parameters.quiz" time-question="time_parameters.question" quiz-count="review_quizzes_count" question-count="review_question_count" survey-count="review_survey_count" inclass-quiz-time="inclass_quizzes_time" inclass-quiz-count="inclass_quizzes_count"></inclass_estimate>
 		<div class="row shortcuts size-10 hide-for-medium-down" >
 			<div class="shortcuts_label size-12">Shortcuts:</div>
 			<div>
@@ -37,7 +37,7 @@
 		</div>
 	</center>
 </div>
-<div class="small-12 medium-8 large-9 columns no-padding-right" style="max-height: 78vh; overflow-y: auto;">
+<div class="small-12 medium-8 large-9 columns no-padding-right" style="max-height: 76vh; overflow-y: auto;">
 	<div bindonce class="main_content" id="printarea">
 		<div >
 			<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')" >
@@ -199,7 +199,7 @@
 						<div class="row">
 							<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+')'" class="left small-10 columns" style="margin-right:5px"/>
 							<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+') - '+item.data.review+' students ('+percentage+'%) '+('progress.of_student_review' | translate)" color="color" class="small-10 columns left" style="margin-right:5px"/>
-							<show_box value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
+							<show_box value="item.data.hide" action="updateHideQuiz(item)" class="left"/>
 							<br/>
 						</div>
 						<div class="row no-margin" style="margin-left: 2px !important;"><div google-chart chart="chart" class="progress_chart small-12 columns" ></div></div>

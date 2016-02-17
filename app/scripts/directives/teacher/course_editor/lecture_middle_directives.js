@@ -63,12 +63,12 @@ angular.module('scalearAngularApp')
 									'<lable style="padding-left:10px"><span>End time</span> <input class="inclass_choice" type="checkbox" ng-model="has_end" ng-change="updateQuizEndTime()" ></lable>'+
 								'</div>'+
 							'</div>'+
-							'<div class="row" style="text-align:left;margin-left:0;">'+
-								'<div class="small-11 left columns" >'+
-									'<lable"><span>Online</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="false" ></lable>'+
-									'<lable style="padding-left:10px"><span>Inclass</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="true" ></lable>'+
-								'</div>'+
-							'</div>'+
+							// '<div class="row" style="text-align:left;margin-left:0;">'+
+							// 	'<div class="small-11 left columns" >'+
+							// 		'<lable"><span>Online</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="false" ></lable>'+
+							// 		'<lable style="padding-left:10px"><span>Inclass</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="true" ></lable>'+
+							// 	'</div>'+
+							// '</div>'+
 							'<span ng-show="selected_quiz.inclass">'+
 							'<div class="row" style="text-align:left;margin-left:0;">'+
 								'<div class="small-4 columns"><span translate>Intro Timer</span>:</div>'+
@@ -217,6 +217,13 @@ angular.module('scalearAngularApp')
 					scope.selected_quiz.end_time+caluclated_percent>duration? duration : scope.selected_quiz.end_time+=caluclated_percent
 				}
 			}
+
+			if(scope.selected_quiz.inclass){
+	        	scope.has_start = true
+	        	scope.has_end   = true
+	        	scope.updateQuizStartTime()
+	        	scope.updateQuizEndTime()
+	        }
 		}
 	};
 }])

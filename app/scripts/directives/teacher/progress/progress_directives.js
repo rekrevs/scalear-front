@@ -63,15 +63,17 @@ angular.module('scalearAngularApp')
 	    restrict: "E",
 	    scope: {
 	    	value:"=",
-	    	action:"&"
+	    	action:"&",
+	    	text:"@"
 	    },
 	    template:'<div style="margin-left:4px">'+
 					'<div class="left no-padding" style="margin-right:3px;margin-left:2px">'+
 						'<input class="show_inclass no-margin" type="checkbox" ng-model="value" ng-change="change()" />'+
 					'</div>'+
-					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>progress.button.show_in_class</div>'+
+					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" bindonce="label" bo-text="label | translate"></div>'+
 				'</div>', 
 	    link:function(scope,element){
+	    	scope.label = scope.text || 'progress.button.show_in_class'
 	    	scope.change=function(){
 	    	 	scope.action()
 	    	 	angular.element('input.show_inclass').blur()
@@ -100,7 +102,9 @@ angular.module('scalearAngularApp')
 	    	time_question:'=timeQuestion',
 	    	quiz_count:'=quizCount',
 	    	question_count:'=questionCount',
-	    	survey_count:'=surveyCount'
+	    	survey_count:'=surveyCount',
+	    	inclass_quiz_time:'=inclassQuizTime',
+	    	inclass_quiz_count:'=inclassQuizCount'
 	    },
 	    templateUrl:'/views/teacher/in_class/inclass_time_estimate.html', 
 	    link:function(scope){
@@ -125,8 +129,12 @@ angular.module('scalearAngularApp')
             	placement:"bottom"
             }
 
-            var estimateCalculator=function(){
+            var reviewEstimateCalculator=function(){
 		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question + scope.survey_count * scope.time_question
+		    }
+
+		    var inclassEstimateCalculator=function(){
+		    	return scope.inclass_quiz_time || 0
 		    }
 
 		    var getColor=function(estimate){
@@ -139,9 +147,11 @@ angular.module('scalearAngularApp')
 		    		return 'black'
 		    }
 
-            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count, survey_count]', function(newValues){
-  	 			scope.inclass_estimate = estimateCalculator()	
-  	 			scope.color= getColor(scope.inclass_estimate)
+            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count, survey_count, inclass_quiz_time]', function(newValues){
+  	 			scope.review_estimate = reviewEstimateCalculator()
+  	 			scope.inclass_estimate = inclassEstimateCalculator()
+  	 			scope.total_inclass_estimate = scope.review_estimate + scope.inclass_estimate
+  	 			scope.total_estimate_color= getColor(scope.total_inclass_estimate)
 			});
 	    }
     };

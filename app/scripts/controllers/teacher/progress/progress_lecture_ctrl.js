@@ -77,7 +77,6 @@ angular.module('scalearAngularApp')
         function(data){
           angular.extend($scope, data)
           $scope.module= $scope.course.selected_module
-          $log.debug("moduel ", $scope.course.selected_module)
           if($scope.progress_player.controls.isYoutube($scope.first_lecture.url)){
             $scope.video_start = $scope.first_lecture.start_time
             $scope.video_end = $scope.first_lecture.end_time
@@ -88,7 +87,7 @@ angular.module('scalearAngularApp')
           }
           
           $scope.timeline['lecture'] = {}
-
+          $scope.inclass_quizzes_time = 0
           for(var lec_id in $scope.lectures){
             $scope.timeline['lecture'][lec_id] = new Timeline()
             for(var type in $scope.lectures[lec_id]){
@@ -105,6 +104,9 @@ angular.module('scalearAngularApp')
                   }
                   else if(type=='charts'){
                     $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
+                    if($scope.lectures[lec_id][type][it][1].inclass && $scope.lectures[lec_id][type][it][1].hide){
+                      $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timer.intro + $scope.lectures[lec_id][type][it][1].timer.self + $scope.lectures[lec_id][type][it][1].timer.in_group + $scope.lectures[lec_id][type][it][1].timer.discussion)/60
+                    }
                   }
                   $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
                 }
@@ -311,22 +313,46 @@ angular.module('scalearAngularApp')
       $scope.inner_highlight_index = 0
     }
 
-  	$scope.updateHideQuiz = function(id, value) {
-  		if(value)
-  			$scope.review_quizzes_count--
-  		else
-  			$scope.review_quizzes_count++
+  	$scope.updateHideQuiz = function(quiz) {
+      var num = (quiz.data.hide? -1 : 1)
+      if(quiz.data.inclass){
+        $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
+        $scope.inclass_quizzes_count+= num
+      }
+      else
+        $scope.review_quizzes_count+= num
+      
         Module.hideQuiz({
-                course_id: $stateParams.course_id,
-                module_id: $stateParams.module_id
-            }, {
-                quiz: id,
-                hide: value
-            },
-            function() {},
-            function() {}
-        )
+          course_id: $stateParams.course_id,
+          module_id: $stateParams.module_id
+        }, 
+        {
+          quiz: quiz.data.id,
+          hide: quiz.data.hide
+        })
     }
+
+    //  $scope.updateHideQuiz = function(quiz, lec_id) {
+    //   console.log(quiz)
+    //   var num = (quiz.data.show? -1 : 1)
+    //   if(quiz.type == "inclass"){
+    //     $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
+    //     $scope.inclass_quizzes_count+= num
+    //   }
+    //   else
+    //     $scope.review_quizzes_count+= num
+
+    //   Module.hideQuiz({
+    //     course_id: $stateParams.course_id,
+    //     module_id: $stateParams.module_id
+    //   },{
+    //     quiz: quiz.data.id,
+    //     hide: quiz.data.show
+    //   },
+    //   function(){
+    //     checkDisplayInclass()
+    //   })
+    // }
 
     $scope.updateHideQuestion=function(id, value){
     	if(value)

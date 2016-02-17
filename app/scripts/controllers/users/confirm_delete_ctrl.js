@@ -8,16 +8,16 @@ angular.module('scalearAngularApp')
 	$scope.form={}
   $scope.user = user_new	
   $scope.ok = function () {
-  	if($scope.form.key.$valid){
-  	$scope.form.processing=true;
+  	if($scope.user.saml || $scope.form.key.$valid){
+    	$scope.form.processing=true;
       User.delete_account({password:$scope.enrollment.key}, {}, function() {
           $rootScope.current_user = null;
           $scope.form.processing=false;
           $modalInstance.close();
           $state.go('login')
       }, function(response) {
-          $scope.form.processing=false;
-          $scope.form.server_error=response.data.errors.join();
+        $scope.form.processing=false;
+        $scope.form.server_error=response.data.errors.join();
       })  		
   	}
     else

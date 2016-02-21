@@ -38,7 +38,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "NORDUnet",
-					      "en": "NORDUnet"
+					      "en": "NORDUnet",
+					      "id": "NORDUnet"
 					    },
 					    "name": {},
 					    "url": {
@@ -70,7 +71,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Gävle",
-					      "en": "University of Gävle"
+					      "en": "University of Gävle",
+					      "id": "University of Gävle"
 					    },
 					    "name": {
 					      "en": "HIG"
@@ -104,7 +106,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Gävle (Alumni)",
-					      "en": "University of Gävle (Alumni)"
+					      "en": "University of Gävle (Alumni)",
+					      "id": "University of Gävle (Alumni)"
 					    },
 					    "name": {
 					      "en": "HIGALUMNI"
@@ -122,7 +125,8 @@ angular.module('scalearAngularApp')
 					    "logo": {},
 					    "displayName": {
 					      "sv": "Linnéuniversitetet",
-					      "en": "Linnæus University"
+					      "en": "Linnæus University",
+					      "id": "Linnæus University"
 					    },
 					    "name": {
 					      "en": "LNU"
@@ -156,7 +160,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan Dalarna",
-					      "en": "Dalarna University"
+					      "en": "Dalarna University",
+					      "id": "Dalarna University"
 					    },
 					    "name": {
 					      "en": "DU"
@@ -190,7 +195,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Malmö högskola",
-					      "en": "Malmö University"
+					      "en": "Malmö University",
+					      "id": "Malmö University"
 					    },
 					    "name": {
 					      "en": "MAH"
@@ -214,7 +220,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Sveriges Lantbruksuniversitet",
-					      "en": "Swedish University of Agricultural Science"
+					      "en": "Swedish University of Agricultural Science",
+					      "id": "Swedish University of Agricultural Science"
 					    },
 					    "name": {
 					      "en": "Swedish University of Agricultural Science"
@@ -248,7 +255,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Linköpings Universitet",
-					      "en": "Linköping University"
+					      "en": "Linköping University",
+					      "id": "Linköping University"
 					    },
 					    "name": {
 					      "sv": "LiU",
@@ -268,7 +276,8 @@ angular.module('scalearAngularApp')
 					    "logo": {},
 					    "displayName": {
 					      "sv": "Luleå tekniska universitet",
-					      "en": "Lulea University of Technology"
+					      "en": "Lulea University of Technology",
+					      "id": "Lulea University of Technology"
 					    },
 					    "name": {
 					      "en": "LTU"
@@ -297,7 +306,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan Kristianstad",
-					      "en": "Kristianstad University Sweden"
+					      "en": "Kristianstad University Sweden",
+					      "id": "Kristianstad University Sweden"
 					    },
 					    "name": {
 					      "en": "HKR"
@@ -327,7 +337,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Stockholms universitet",
-					      "en": "Stockholm University"
+					      "en": "Stockholm University",
+					      "id": "Stockholm University"
 					    },
 					    "name": {
 					      "en": "SU"
@@ -351,7 +362,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Örebro universitet",
-					      "en": "Örebro University"
+					      "en": "Örebro University",
+					      "id": "Örebro University"
 					    },
 					    "name": {
 					      "en": "ORU"
@@ -385,7 +397,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Karlstads universitet",
-					      "en": "Karlstad University"
+					      "en": "Karlstad University",
+					      "id": "Karlstad University"
 					    },
 					    "name": {
 					      "en": "KAU"
@@ -414,7 +427,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Jönköping",
-					      "en": "Jönköping University"
+					      "en": "Jönköping University",
+					      "id": "Jönköping University"
 					    },
 					    "name": {
 					      "en": "HJ"
@@ -438,7 +452,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Kungliga biblioteket",
-					      "en": "National Library of Sweden"
+					      "en": "National Library of Sweden",
+					      "id": "National Library of Sweden"
 					    },
 					    "name": {
 					      "en": "KB"
@@ -467,7 +482,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Mittuniversitetet",
-					      "en": "Mid Sweden University"
+					      "en": "Mid Sweden University",
+					      "id": "Mid Sweden University"
 					    },
 					    "name": {
 					      "en": "MIUN"
@@ -501,7 +517,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Institutet för rymdfysik",
-					      "en": "Swedish Institute of Space Physics"
+					      "en": "Swedish Institute of Space Physics",
+					      "id": "Swedish Institute of Space Physics"
 					    },
 					    "name": {
 					      "en": "IRF"
@@ -535,7 +552,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Halmstad",
-					      "en": "Halmstad University"
+					      "en": "Halmstad University",
+					      "id": "Halmstad University"
 					    },
 					    "name": {
 					      "en": "HH"
@@ -548,7 +566,8 @@ angular.module('scalearAngularApp')
 					  {
 					    "displayName": {
 					      "sv": "Vetenskapsrådet",
-					      "en": "Vetenskapsrådet"
+					      "en": "Vetenskapsrådet",
+					      "id": "Vetenskapsrådet"
 					    },
 					    "name": {
 					      "en": "VR"
@@ -566,7 +585,8 @@ angular.module('scalearAngularApp')
 					    "logo": {},
 					    "displayName": {
 					      "sv": "Blekinge Tekniska Högskola - Personal",
-					      "en": "Blekinge Institute of Technology - Personnel"
+					      "en": "Blekinge Institute of Technology - Personnel",
+					      "id": "Blekinge Institute of Technology - Personnel"
 					    },
 					    "name": {
 					      "en": "BTH"
@@ -584,7 +604,8 @@ angular.module('scalearAngularApp')
 					    "logo": {},
 					    "displayName": {
 					      "sv": "Blekinge Tekniska Högskola - Studenter",
-					      "en": "Blekinge Institute of Technology - Students"
+					      "en": "Blekinge Institute of Technology - Students",
+					      "id": "Blekinge Institute of Technology - Students"
 					    },
 					    "name": {
 					      "en": "STUDENTS-BTH"
@@ -618,7 +639,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Mälardalens Högskola",
-					      "en": "Mälardalen University"
+					      "en": "Mälardalen University",
+					      "id": "Mälardalen University"
 					    },
 					    "name": {
 					      "en": "MDH"
@@ -647,7 +669,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Göteborgs Universitet",
-					      "en": "University of Gothenburg"
+					      "en": "University of Gothenburg",
+					      "id": "University of Gothenburg"
 					    },
 					    "name": {
 					      "en": "GU"
@@ -681,7 +704,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Konstfack",
-					      "en": "Konstfack"
+					      "en": "Konstfack",
+					      "id": "Konstfack"
 					    },
 					    "name": {
 					      "en": "Konstfack"
@@ -710,7 +734,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Röda Korsets Högskola",
-					      "en": "Swedish Red Cross University College"
+					      "en": "Swedish Red Cross University College",
+					      "id": "Swedish Red Cross University College"
 					    },
 					    "name": {
 					      "en": "The Red Cross University College"
@@ -739,7 +764,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Kungliga Musikhögskolan i Stockholm",
-					      "en": "Royal College of Music"
+					      "en": "Royal College of Music",
+					      "id": "Royal College of Music"
 					    },
 					    "name": {
 					      "en": "KMH"
@@ -768,7 +794,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Lunds universitet",
-					      "en": "Lund University"
+					      "en": "Lund University",
+					      "id": "Lund University"
 					    },
 					    "name": {
 					      "en": "LU"
@@ -792,7 +819,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Kungliga Vetenskapsakademien",
-					      "en": "The Royal Swedish Academy of Sciences"
+					      "en": "The Royal Swedish Academy of Sciences",
+					      "id": "The Royal Swedish Academy of Sciences"
 					    },
 					    "name": {
 					      "en": "KVA"
@@ -810,7 +838,8 @@ angular.module('scalearAngularApp')
 					    "logo": {},
 					    "displayName": {
 					      "sv": "Ersta Sköndal Högskola",
-					      "en": "Ersta Sköndal University College"
+					      "en": "Ersta Sköndal University College",
+					      "id": "Ersta Sköndal University College"
 					    },
 					    "name": {
 					      "sv": "Ersta Sköndal Högskola"
@@ -834,7 +863,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Karolinska Institutet",
-					      "en": "Karolinska Institutet"
+					      "en": "Karolinska Institutet",
+					      "id": "Karolinska Institutet"
 					    },
 					    "name": {
 					      "en": "KI"
@@ -868,7 +898,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Sophiahemmet Högskola",
-					      "en": "Sophiahemmet University"
+					      "en": "Sophiahemmet University",
+					      "id": "Sophiahemmet University"
 					    },
 					    "name": {
 					      "en": "SHH"
@@ -897,7 +928,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Borås",
-					      "en": "University of Borås"
+					      "en": "University of Borås",
+					      "id": "University of Borås"
 					    },
 					    "name": {
 					      "en": "HB"
@@ -931,7 +963,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan i Skövde",
-					      "en": "University of Skövde"
+					      "en": "University of Skövde",
+					      "id": "University of Skövde"
 					    },
 					    "name": {
 					      "en": "HIS"
@@ -960,7 +993,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Högskolan Väst",
-					      "en": "University West"
+					      "en": "University West",
+					      "id": "University West"
 					    },
 					    "name": {
 					      "sv": "HV",
@@ -986,7 +1020,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Gymnastik- och idrottshögskolan",
-					      "en": "The Swedish School of Sport and Health Sciences"
+					      "en": "The Swedish School of Sport and Health Sciences",
+					      "id": "The Swedish School of Sport and Health Sciences"
 					    },
 					    "name": {
 					      "en": "The Swedish School of sport and health sciences"
@@ -1020,7 +1055,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Uppsala universitet",
-					      "en": "Uppsala University"
+					      "en": "Uppsala University",
+					      "id": "2 Uppsala University"
 					    },
 					    "name": {
 					      "en": "UU"
@@ -1044,7 +1080,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Handelshögskolan i Stockholm",
-					      "en": "Stockholm School of Economics"
+					      "en": "Stockholm School of Economics",
+					      "id": "Stockholm School of Economics"
 					    },
 					    "name": {
 					      "en": "HHS"
@@ -1068,7 +1105,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Kungliga Tekniska högskolan (KTH)",
-					      "en": "KTH Royal Institute of Technology"
+					      "en": "KTH Royal Institute of Technology",
+					      "id": "1 KTH Royal Institute of Technology"
 					    },
 					    "name": {
 					      "en": "KTH"
@@ -1092,7 +1130,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "en": "SICS",
-					      "sv": "SICS"
+					      "sv": "SICS",
+					      "id": "SICS"
 					    },
 					    "name": {
 					      "en": "SICS"
@@ -1116,7 +1155,8 @@ angular.module('scalearAngularApp')
 					    },
 					    "displayName": {
 					      "sv": "Kungl. Konsthögskolan",
-					      "en": "Royal Institute of Art"
+					      "en": "Royal Institute of Art",
+					      "id": "Royal Institute of Art"
 					    },
 					    "name": {
 					      "en": "KKH"
@@ -1139,9 +1179,10 @@ angular.module('scalearAngularApp')
 					      }
 					    },
 					    "displayName": {
-					      "en": "Karolinska Institutet"
+					      "en": "Karolinska Institutet",
+					      "id": "Karolinska Institutet"
 					    },
-					    "name": {
+					  	"name": {
 					      "en": "KI"
 					    },
 					    "url": {
@@ -1157,6 +1198,7 @@ angular.module('scalearAngularApp')
 					    "displayName": {
 					        "sv": "Teologiska högskolan Stockholm",
 					        "en": "Stockholm School of Theology",
+					        "id": "Stockholm School of Theology",
 					    },
 					    "logo": {
 					      "all": {

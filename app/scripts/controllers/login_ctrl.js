@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
   $scope.swamid_list = SWAMID.list()
-
+  // $cookieStore.remove("saml_provider")
   $scope.previous_provider = $cookieStore.get("saml_provider")
 
   // console.log($location)
@@ -25,8 +25,13 @@ angular.module('scalearAngularApp')
   //     // }
   //   });
   // }
-
-
+  $scope.showProviders=function(){
+    $scope.show_providers=!$scope.show_providers
+    $timeout(function(){
+      $("#search").select()
+    })
+  }
+  
   $scope.login = function(){
     $scope.sending = true;
     User.signIn({},

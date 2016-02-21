@@ -3,13 +3,15 @@
         box-shadow: 0 1px 3px #5F5F5F;
         background: rgb(240, 240, 240);
         padding: 15px 0
-    }    
+    }
+    .login-panel .row div{
+        font-size: 14px;
+    }
     .login-panel .row div.button{
         border: 1px solid grey;
         padding: 10px 0;
-        font-size: 14px;
         margin: 0;
-        margin-bottom: 5px
+        margin-bottom: 8px
     }
     .login-panel .button.saml, .button.login {
         background-color: #5da423;
@@ -23,11 +25,12 @@
     .login-panel li{
         /*border-bottom: 1px solid rgba(128, 128, 128, 0.3);*/
         /*text-align:left;*/
-        border: 1px solid grey;
+        /*border: 1px solid grey;*/
         background-color:white;
         color:black;
         text-align:left;
         font-size:13px;
+        padding: 0.5rem;
     }
     .login-panel li a{
         font-size:10px;
@@ -47,7 +50,7 @@
         white-space: nowrap;
         width: 83%;
         font-size: 12px;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
     }
     .line-through:before,
     .line-through:after {
@@ -71,122 +74,130 @@
         background-color: #e7e7e7
     }
 </style>
-<center>
+<center class="disable_selection">
     <div class="small-10 medium-6 large-4 small-centered column login-panel">        
         <div class="row" style="margin-bottom: 10px;">
             <div class="small-12 columns">
                 <h3><span translate>global.welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h3>
             </div>
         </div>
-        <div class="row disable_selection" ng-if="previous_provider">
+        <div class="row" ng-if="previous_provider">
             <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)">Login with {{previous_provider.displayName.en || previous_provider.displayName.sv }}</div>
-            <div class="line-through"><b>Or</b></div>
+            <div class="line-through">or</div>
         </div>        
-        <div class="row disable_selection">
-            <div class="button dropdown small-10 small-centered columns saml" ng-click="show_providers=!show_providers">Login/Join with School/University</div>
+        <div class="row">
+            <div class="button dropdown small-10 small-centered columns saml" ng-click="showProviders()">Login/Join with School/University</div>
             <ul id="signin_list" ng-show="show_providers">
-                <li><input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:95%; border: none;" autofocus/></li>
-                <li ng-repeat="login_item in swamid_list|filter:searchText|orderBy:'displayName.en'" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
+                <li>
+                    <i class="fi-magnifying-glass size-18 left" style="margin: 4px;margin-right: 8px;"></i>
+                    <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:86%;border-radius:4px" autofocus/>
+                </li>
+                <li ng-repeat="login_item in swamid=(swamid_list|filter:searchText|orderBy:'displayName.id')" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
+                <li ng-show="!swamid.length" class="small-12 columns left no-margin muted" style="color:#999999;padding: 10px 30px;">If your school is not in this list, you can Login with a ScalableLearning account below</li>
             </ul>
         </div>
 
-        <!-- <div class="line-through"><b>Or</b></div>
+        <!-- <div class="line-through">or</div>
 
-        <div class="row disable_selection">
+        <div class="row">
             <div class="button small-10 small-centered columns oauth">Login with Google</div>
         </div>
-        <div class="row disable_selection">
+        <div class="row">
             <div class="button small-10 small-centered columns oauth">Login with Facebook</div>
         </div>
  -->
-        <div class="line-through"><b>Or</b></div>
+        <div class="line-through">or</div>
 
         <div class="row">
-            <div class="small-10 small-centered columns">
-                <h5>Login with Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h5>
-            </div>
+            <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml" ng-click="show_scalable_login=!show_scalable_login">Login/Join with ScalableLearning Account</div>
         </div>
-        <div class="row disable_selection">
-            <div class="small-10 small-centered columns">
-                <form novalidate>                    
-                    <!-- <div class="row" style="margin-bottom:10px"> -->
-                        <div class="row">
-                            <div class="small-12 small-centered columns">
-                                <input placeholder="{{'global.email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
+        <span ng-show="show_scalable_login">
+            <div class="row">
+                <div class="small-10 small-centered columns text-left" style="margin:5px 0">
+                    <div>Login with Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-10 small-centered columns">
+                    <form novalidate>                    
+                        <!-- <div class="row" style="margin-bottom:10px"> -->
+                            <div class="row">
+                                <div class="small-12 small-centered columns">
+                                    <input placeholder="{{'global.email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="small-12 small-centered columns">
+                                    <input placeholder="{{'account.password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional modern-input" name="user[password]" size="50" auto-fill-sync/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="small-7 columns">
+                                    <label class="left" translate>account.remember_me</label>
+                                    <input class="left" type="checkbox" ng-model="user.remember_me" style="margin: 4px 17px;">
+                                </div>
+                                <div class="small-4 columns no-padding-left">
+                                    <a type="button" class="really-tiny button secondary dropdown under-the-other text-left" dropdown-toggle="#languages_list" style="margin-bottom:0">{{'languages.'+current_lang | translate}}</a>
+                                    <ul id="languages_list" class="f-dropdown">
+                                        <li>
+                                            <a ng-click="$parent.changeLanguage('en')">
+                                                <img src="images/uk.png"/>
+                                                <span translate>languages.en</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a ng-click="$parent.changeLanguage('sv')">
+                                                <img src="images/sweden.png" />
+                                                <span translate>languages.sv</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                           <!--  <div class="small-3 columns no-padding left">
+                                <profile-image email="user.email" imagesize="200" class="left"></profile-image>
+                            </div> -->
+                        <!-- </div> -->
+
+                        <div class="row" style="margin-bottom:6px">
+                            <div class="small-12 columns">
+                                <div class="small-5 columns no-padding text-left">
+                                    <a ui-sref="forgot_password" id="forget_password" translate="account.password.forgot_password" style="font-size:14px"></a>
+                                </div>
+                                <div class="small-7 columns no-padding text-right">
+                                    <a ui-sref="new_confirmation" id="resend_conf" translate="account.didnt_receive_confirmation" style="font-size:14px"></a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="small-12 small-centered columns">
-                                <input placeholder="{{'account.password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional modern-input" name="user[password]" size="50" auto-fill-sync/>
+                            <div class="small-12 columns">
+                                <div class="small-8 columns no-padding-left">
+                                    <button id="login_btn" class="tiny expand button login" ng-click="login()" translate>account.login</button>
+                                </div>
+                                <div class="small-4 columns no-padding">
+                                    <button id="join_btn" class="tiny expand button primary" ng-click="join()" translate>account.join</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="small-7 columns">
-                                <label class="left" translate>account.remember_me</label>
-                                <input class="left" type="checkbox" ng-model="user.remember_me" style="margin: 4px 17px;">
-                            </div>
-                            <div class="small-4 columns no-padding-left">
-                                <a type="button" class="really-tiny button secondary dropdown under-the-other text-left" dropdown-toggle="#languages_list" style="margin-bottom:0">{{'languages.'+current_lang | translate}}</a>
-                                <ul id="languages_list" class="f-dropdown">
-                                    <li>
-                                        <a ng-click="$parent.changeLanguage('en')">
-                                            <img src="images/uk.png"/>
-                                            <span translate>languages.en</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a ng-click="$parent.changeLanguage('sv')">
-                                            <img src="images/sweden.png" />
-                                            <span translate>languages.sv</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                       <!--  <div class="small-3 columns no-padding left">
-                            <profile-image email="user.email" imagesize="200" class="left"></profile-image>
-                        </div> -->
-                    <!-- </div> -->
-
-                    <div class="row" style="margin-bottom:6px">
-                        <div class="small-12 columns">
-                            <div class="small-5 columns no-padding text-left">
-                                <a ui-sref="forgot_password" id="forget_password" translate="account.password.forgot_password" style="font-size:14px"></a>
-                            </div>
-                            <div class="small-7 columns no-padding text-right">
-                                <a ui-sref="new_confirmation" id="resend_conf" translate="account.didnt_receive_confirmation" style="font-size:14px"></a>
-                            </div>
-                        </div>
-                        
-                    </div>
-
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <div class="small-8 columns no-padding-left">
-                                <button id="login_btn" class="tiny expand button login" ng-click="login()" translate>account.login</button>
-                            </div>
-                            <div class="small-4 columns no-padding">
-                                <button id="join_btn" class="tiny expand button primary" ng-click="join()" translate>account.join</button>
-                            </div>
-                        </div>
-                       <!--  <div class="small-10 small-centered columns">
+                           <!--  <div class="small-10 small-centered columns">
+                                
+                            </div> -->
                             
-                        </div> -->
-                        
-                    </div>                   
+                        </div>                   
 
-                    <!-- <div class="small-12 medium-4 large-4 columns hide-for-small-only">
-                        <profile-image email="user.email" imagesize="150"></profile-image>
-                    </div>
-                    
-                    <div ng-show="sending" class="small-12 with-margin-top columns">
-                        <loading size="small" show="sending"></loading>
-                    </div> -->
-                </form>
+                        <!-- <div class="small-12 medium-4 large-4 columns hide-for-small-only">
+                            <profile-image email="user.email" imagesize="150"></profile-image>
+                        </div>
+                        
+                        <div ng-show="sending" class="small-12 with-margin-top columns">
+                            <loading size="small" show="sending"></loading>
+                        </div> -->
+                    </form>
+                </div>
             </div>
-        </div>
+        </span>
         <!-- <div class="row">
             <div class="small-10 small-centered columns">
                 <div class="row">

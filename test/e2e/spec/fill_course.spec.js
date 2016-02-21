@@ -67,6 +67,7 @@ describe("Filling Course",function(){
 			module.open()
 			module.open_content_items()
 			content_items.add_video()
+			sleep(5000)
 	        course_editor.rename_item("lecture1 video quizzes")
 	        course_editor.change_item_url(params.url1)
 	        video.wait_till_ready()

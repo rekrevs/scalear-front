@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 
   $scope.swamid_list = SWAMID.list()
   // $cookieStore.remove("saml_provider")
-  $scope.previous_provider = $cookieStore.get("saml_provider")
+  $scope.previous_provider = $cookieStore.get("login_provider")
 
   // console.log($location)
   // $scope.saml = $location.$$search
@@ -25,11 +25,30 @@ angular.module('scalearAngularApp')
   //     // }
   //   });
   // }
+  $scope.toggleProviders = function(){
+    $scope.show_providers? $scope.hideProviders() : $scope.showProviders()
+  }
+
   $scope.showProviders=function(){
-    $scope.show_providers=!$scope.show_providers
+    $scope.show_providers=true
     $timeout(function(){
       $("#search").select()
     })
+    shortcut.add("Enter", function(){
+      $scope.samlLogin($scope.swamid[0])
+    }) 
+  }
+
+  $scope.hideProviders=function(){
+    $scope.show_providers=false
+    shortcut.remove("Enter", function(){
+      $scope.samlLogin($scope.swamid[0])
+    }) 
+  }
+
+  $scope.showLoginForm=function(){
+    $scope.show_scalable_login=!$scope.show_scalable_login
+    $scope.hideProviders()
   }
   
   $scope.login = function(){
@@ -37,6 +56,7 @@ angular.module('scalearAngularApp')
     User.signIn({},
       {"user":$scope.user}, 
       function(data){
+        $cookieStore.put('login_provider', 'scalablelearning')
         $log.debug("login success")
         $scope.sending = false;
         $rootScope.$broadcast("get_current_courses") 
@@ -57,6 +77,8 @@ angular.module('scalearAngularApp')
     });
   }
 
+  
+
   $scope.join=function(){
     $state.go("signup",  { input1 : $scope.user.email, input2: $scope.user.password})
   }
@@ -72,7 +94,8 @@ angular.module('scalearAngularApp')
   }
 
   $scope.samlLogin=function(idp){
-    $cookieStore.put('saml_provider', idp)
+    $cookieStore.put('login_provider', idp)
+    $rootScope.busy_loading = true;
     Saml.Login(
       {idp: idp.entityID},
       function(resp){

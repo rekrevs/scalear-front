@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils','OnlineQuiz','OnlineMarker','Timeline', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils, OnlineQuiz, OnlineMarker, Timeline) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils','OnlineQuiz','OnlineMarker','Timeline','$modal', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils, OnlineQuiz, OnlineMarker, Timeline, $modal) {
 
     var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
         if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -193,7 +193,8 @@ angular.module('scalearAngularApp')
                 $scope.updateLecture();
                 $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
             }
-            startTrimVideo()
+            checkToTrim()
+            // startTrimVideo()
         }        
     }
 
@@ -283,8 +284,28 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("delete_online_marker", marker)
     }
 
-    var startTrimVideo=function(){
-        $rootScope.$broadcast("start_trim_video")
+    // var startTrimVideo=function(){
+    //     $rootScope.$broadcast("start_trim_video")
+    // }
+
+    var checkToTrim=function(){
+        $modal.open({
+            template: '<h4>Would you like to trim your video?</h4>'+
+                      '<div class="muted with-margin-bottom">With trimming, you can choose the start and stop times to show only a portion of the video to students. To change the trim times you have to re-add the video.</div>'+
+                      '<div class="right" >'+
+                        '<button class="button small with-margin-right no-margin-bottom" ng-click="cancel()" >Use Full Video</button>'+
+                        '<button class="button small success no-margin-bottom" ng-click="trim()" >Trim Video</button>'+
+                      '</div>',
+            controller: ['$scope', '$rootScope', '$modalInstance',function($scope, $rootScope, $modalInstance){
+                $scope.trim=function(){
+                    $rootScope.$broadcast("start_trim_video")
+                    $modalInstance.close();
+                }
+                $scope.cancel=function(){
+                    $modalInstance.dismiss('cancel');
+                }
+            }]
+        });
     }
 
 

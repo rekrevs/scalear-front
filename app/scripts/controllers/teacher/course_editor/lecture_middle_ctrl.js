@@ -54,8 +54,7 @@ angular.module('scalearAngularApp')
  	})
 
  	$scope.$on("close_trim_video",function(){
- 		saveTrimVideo()
- 		
+ 		saveTrimVideo() 		
  	})
 
     $scope.lecture_player.events.onMeta= function(){

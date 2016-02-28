@@ -134,7 +134,7 @@ angular.module('scalearAngularApp')
 		    }
 
 		    var inclassEstimateCalculator=function(){
-		    	return scope.inclass_quiz_time || 0
+		    	return Math.round(scope.inclass_quiz_time) || 0
 		    }
 
 		    var getColor=function(estimate){

@@ -606,6 +606,14 @@ span.error, small.error{
   color: #a9c567 !important;
 }
 
+.color-olive{
+  color: #a9c567 !important;
+}
+
+.color-orange{
+  color: #faa732 !important;
+}
+
 .dark-text{
   color: #222222 !important;
 }
@@ -722,6 +730,11 @@ input.answer_input{
 .ipad input.answer_input{
   width: 100%;
   max-width: none;
+}
+
+input[type="checkbox"]{
+    height: 14px;
+    width: 14px;
 }
 
 /*@media only screen and (max-width:40.063em) {

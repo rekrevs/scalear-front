@@ -589,6 +589,27 @@ angular.module('scalearAngularApp')
         })
       })
 
+      var repositionQuizHandles=function () {
+        if (scope.editing == 'video') {
+          $(".squarebrackets_left").css("left", ((scope.video.start_time / scope.duration) * 100) + '%')
+          $(".squarebrackets_right").css("left", ((scope.video.end_time / scope.duration) * 100) + '%')
+          $(".repeating_green_pattern").css("left", ((scope.video.start_time / scope.duration) * 100) + '%')
+        } else if (scope.editing == 'quiz') {
+          var current_quiz = scope.timeline.items.filter(function(item) {
+            return item.data && item.data.selected
+          })[0]
+          $(".squarebrackets_left").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
+          $(".squarebrackets_right").css("left", ((current_quiz.data.end_time / scope.duration) * 100) + '%')
+          $(".quiz_circle").css("left", ((current_quiz.data.time / scope.duration) * 100) - 0.51 + '%')
+          $(".repeating_grey_pattern").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
+          $(".repeating_orange_pattern").css("left", ((current_quiz.data.time / scope.duration) * 100) + '%')
+        }
+      }
+
+      $(window).resize(repositionQuizHandles)
+
+      $rootScope.$on('details_navigator_change',repositionQuizHandles)
+
       scope.play_class = scope.is_mobile ? "pause" : "play";
 
       scope.quality_names = {
@@ -793,7 +814,6 @@ angular.module('scalearAngularApp')
           meta.position.left = item.quiz_location - offset
         if (meta.position.left < item.prev_quiz_end + offset)
           meta.position.left = item.prev_quiz_end + offset
-
         item.start_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
         scope.seek()(item.start_time)
@@ -806,7 +826,6 @@ angular.module('scalearAngularApp')
           meta.position.left = item.quiz_location + offset
         if (meta.position.left > item.next_quiz_start - offset)
           meta.position.left = item.next_quiz_start - offset
-
         item.end_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
         scope.seek()(item.end_time)
@@ -958,6 +977,7 @@ angular.module('scalearAngularApp')
         progress_bar.off('mouseenter', scope.showPlayhead);
         progress_bar.off('mouseleave', scope.hidePlayhead);
         unwatchMute()
+        $(window).off('resize', repositionQuizHandles)
       });
     }
   }

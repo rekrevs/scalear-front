@@ -14,7 +14,7 @@ body {
 }*/
 .container {
 padding-bottom: 25px;
-padding-top: 45px; 
+padding-top: 45px;
 }
 .footer {
   width:100%;
@@ -44,7 +44,7 @@ width: 78%;
 }
 .content-navigator-container{
   width: 100%;
-  position: fixed;  
+  position: fixed;
   /*overflow-y: hidden !important;*/
 }
 
@@ -262,7 +262,7 @@ li{
 }*/
 
 .add-item{
-  padding: 2px; 
+  padding: 2px;
   cursor: pointer;
   color: #2d2d2d;
   height: 20px;
@@ -330,7 +330,7 @@ li{
 }
 
  .varticaldeletecontainer{
-  width: 95px; 
+  width: 95px;
   float: right;
 }
 /***********************/
@@ -355,18 +355,18 @@ footer{
 	color: rgba(255, 255, 255, 0.5) !important;
 }
 .description > small{
-  color: rgba(255, 255, 255, 0.5) !important; 
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 .dark-description{
   margin-top: -15px !important;
   color: rgba(0, 0, 0, 0.5) !important;
 }
 .dark-description > small{
-  color: rgba(0, 0, 0, 0.5) !important; 
+  color: rgba(0, 0, 0, 0.5) !important;
 }
 .sub-header{
 	/*background-color: transparent !important; */
-	width: 100%; 
+	width: 100%;
 	/*top: 45px !important; */
 	/*height: 30px !important;*/
 	position:fixed !important;
@@ -390,8 +390,8 @@ footer{
 }
 
 .has-description{
-	height: 45px !important; 
-	line-height: 30px !important; 
+	height: 45px !important;
+	line-height: 30px !important;
 	padding: 0px 15px !important;
 }
 .sub-header-component:hover{
@@ -409,7 +409,7 @@ span.error, small.error{
 .reveal-modal{
 	height: 80%;
 	/*top: 4.25rem;*/
-	overflow-y: auto; 
+	overflow-y: auto;
 
 }
 .thumbactive{
@@ -461,7 +461,7 @@ span.error, small.error{
   background-color: #207d99 !important;
 }
 .dark-green{
-  background-color: #3f7018 !important; 
+  background-color: #3f7018 !important;
 }
 
 .light-grey, .light-grey-hover{
@@ -584,7 +584,7 @@ span.error, small.error{
 .color-dark-grey{
   color: #696969 !important;
 }
-.color-maroon{	
+.color-maroon{
 	color: maroon !important;
 }
 .color-coral{
@@ -636,17 +636,17 @@ span.error, small.error{
 .calendar_color.done_late{
   background-color: #fccab1;
   color: #d26717;
-  border-color: initial;  
+  border-color: initial;
 }
 .calendar_color.not_done{
   background-color: #d1ddf0;
   color: #546d8e;
-  border-color: initial;  
+  border-color: initial;
 }
 .calendar_color.not_done_late{
   background-color: #ecb8bf;
   color: #9c4d59;
-  border-color: initial;  
+  border-color: initial;
 }
 
 /*Border Colors*/
@@ -723,7 +723,7 @@ select{
 }
 
 input.answer_input{
-  width: 2%; 
+  width: 2%;
   max-width: 12px;
 }
 
@@ -800,7 +800,7 @@ input[type="checkbox"]{
 .size-12 { font-size: 12px; }
 
 .size-13 { font-size: 13px; }
-      
+
 .size-14 { font-size: 14px !important; }
 
 .size-16 { font-size: 16px !important; }
@@ -850,13 +850,13 @@ font-weight: 300 !important
   width: 70%;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 .truncate-65{
   width: 65%;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 .break-word{
   overflow-wrap: break-word;
@@ -872,19 +872,19 @@ font-weight: 300 !important
 
 /*PADDING & MARGINS*/
 .no-padding{
-	padding: 0px !important; 
+	padding: 0px !important;
 }
 .no-padding-top{
-  padding-top: 0px !important; 
+  padding-top: 0px !important;
 }
 .no-padding-bottom{
-  padding-bottom: 0px !important; 
+  padding-bottom: 0px !important;
 }
 .no-padding-right{
-  padding-right: 0px !important; 
+  padding-right: 0px !important;
 }
 .no-padding-left{
-  padding-left: 0px !important; 
+  padding-left: 0px !important;
 }
 .no-margin{
 	margin: 0px !important;
@@ -1059,22 +1059,22 @@ font-weight: 300 !important
 	overflow: hidden !important;
 }
 .overflow-y-auto{
-	overflow-y: auto !important; 
+	overflow-y: auto !important;
 }
 .overflow-x-auto{
-	overflow-x: auto !important; 
+	overflow-x: auto !important;
 }
 .overflow-y-hidden{
-	overflow-y: hidden !important; 
+	overflow-y: hidden !important;
 }
 .overflow-x-hidden{
-	overflow-x: hidden !important; 
+	overflow-x: hidden !important;
 }
 .overflow-y-visible{
-	overflow-y: visible !important; 
+	overflow-y: visible !important;
 }
 .overflow-x-visible{
-	overflow-x: visible !important; 
+	overflow-x: visible !important;
 }
 /*Table*/
 td.right-border{
@@ -1127,7 +1127,7 @@ td.right-border{
   display: block;
   padding: 0.5rem;
   color: #555555;
-} 
+}
 
 .speech-bubble-up::before{
   width: 0px;
@@ -1208,7 +1208,7 @@ td.right-border{
   width: auto;
     height: 100%;
   margin-left:10px;
-  margin-bottom:20px; 
+  margin-bottom:20px;
   position: relative;
   padding: 39px 19px 14px;
   border: 1px solid #ddd;
@@ -1223,7 +1223,7 @@ td.right-border{
 }
 .top-bar{
   z-index: 11 !important;
- 
+
 }
 /*.main-nav .top-bar, .main-nav .top-bar .name {
    height: 2rem;
@@ -1272,7 +1272,7 @@ td.right-border{
   content:url("/images/arrow-down-menu-dark-icon.png");
 }
 
-.dark-medium-grey-hover:hover .arrow_down_icon:before, 
+.dark-medium-grey-hover:hover .arrow_down_icon:before,
 .dark-medium-grey-blue-hover:hover .arrow_down_icon:before{
   content:url("/images/arrow-down-menu-white-icon.png");
 }
@@ -1317,7 +1317,7 @@ td.right-border{
   padding:0!important;
   background: white !important;
   max-height: 66vh;
-  
+
 }
 .details_accordian .overflow-auto .content{
   overflow: auto;
@@ -1373,7 +1373,7 @@ td.right-border{
 }
 .not-click .scrollable-if-tall{
   max-height: 90vh !important;
-  overflow-y: auto !important; 
+  overflow-y: auto !important;
 }
 .tooltip{
   padding: 0.25rem;
@@ -1483,7 +1483,7 @@ label{
 	cursor: text;
 }
 .teachers-column{
-	padding: 10px; 
+	padding: 10px;
 	min-width: 210px;
 	width: 210px;
   position: absolute;
@@ -1579,7 +1579,7 @@ label{
     text-align: center;
 }
 .message{
-	text-align:center;	
+	text-align:center;
 }
 
 .errorMessage, .messagesList{
@@ -1721,7 +1721,7 @@ label{
 
 h2 .editable-click{
 	color: #5da423 !important;
-  border-bottom: none !important; 
+  border-bottom: none !important;
 }
 
 /*Video styles*/
@@ -1729,12 +1729,12 @@ h2 .editable-click{
 	/*padding-bottom: 53.7%;*/
   /*padding-bottom: 53.25% !important;*/
   padding-bottom: 56.25%;
-  
+
 }
 
 .flex-video{
   padding-top: 0;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   z-index:1;
 }
 
@@ -1810,7 +1810,7 @@ textarea.editable-input{
 /*DATEPICKER STYLING*/
 .no-specific-width{
   width: auto !important;
-  max-width: none !important; 
+  max-width: none !important;
 }
 
 /*POPOVER STYLING*/
@@ -1999,11 +1999,11 @@ div.disabled, div.disabled:hover{
 
 
 a.editable-empty{
-  border-bottom: none !important; 
+  border-bottom: none !important;
 }
 
 a.editable-click{
-  border-bottom: none !important; 
+  border-bottom: none !important;
 }
 
 .settings-menu-item{
@@ -2067,7 +2067,7 @@ a.editable-click{
   height: 1.5em;
   text-align: center;
   line-height: 1.3em;
-  
+
   /*background: #5DA423;*/
   /*margin: 0 1em;*/
   display: inline-block;
@@ -2143,7 +2143,7 @@ a.editable-click{
 }*/
 
 .connected_circles.smaller_connected_circles li{
-  width:5.5em;  
+  width:5.5em;
   font-size: 16px;
   margin-left: 0
 }
@@ -2214,7 +2214,7 @@ a.editable-click{
   padding: 4px;
   top: -2px;
   bottom: -10px;
-  right: 3px;
+  right: 0px;
 }
 
 .squarebrackets_right:hover:before, .squarebrackets_right_hover:before{
@@ -2238,7 +2238,7 @@ a.editable-click{
 @media only screen and (orientation:landscape) and (device-width:768px){
   .ipad .land-medium-4 {
     position: relative;
-    width: 33.33333%; 
+    width: 33.33333%;
   }
   .ipad .land-medium-5{
     position: relative;
@@ -2250,21 +2250,21 @@ a.editable-click{
   }
   .ipad .land-medium-8 {
     position: relative;
-    width: 66.66667%; 
+    width: 66.66667%;
   }
   .ipad .land-medium-11 {
     position: relative;
-    width: 95.66667%; 
+    width: 95.66667%;
   }
   .ipad .land-medium-12 {
     position: relative;
-    width: 100%; 
+    width: 100%;
   }
 
   .ipad .land-no-padding{
-    padding: 0px !important; 
+    padding: 0px !important;
   }
-  
+
   .ipad .land-height{
     height: 80vh !important;
     -webkit-overflow-scrolling: touch;
@@ -2277,7 +2277,7 @@ a.editable-click{
   .ipad .land-uncentered{
     margin-left: 0;
     margin-right: 0;
-    float: left; 
+    float: left;
   }
 
   .ipad .button.small{
@@ -2301,7 +2301,7 @@ a.editable-click{
 @media only screen and (orientation:portrait) and (device-width:768px){
   .ipad .portrait-medium-11{
     position: relative;
-    width: 91.66667%; 
+    width: 91.66667%;
   }
 
   .ipad .portrait-medium-12{
@@ -2317,7 +2317,7 @@ a.editable-click{
   }
 
   .ipad .portrait-no-padding{
-    padding: 0px !important; 
+    padding: 0px !important;
   }
 
   .ipad .portrait-medium-height{
@@ -2367,7 +2367,7 @@ a.editable-click{
   }
   .content-navigator-container{
     width: 300px;
-    position: fixed;  
+    position: fixed;
     /*overflow-y: hidden !important;*/
   }
 
@@ -2384,11 +2384,11 @@ a.editable-click{
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;
-  }  
+  }
 }
 
 @media only screen and (min-width:84.063em) {
-  
+
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;
@@ -2454,31 +2454,31 @@ a.active{
     -webkit-animation-duration: 0.3s;
     -webkit-animation-timing-function: linear;
     -webkit-animation-iteration-count: 3;
-    
+
     -moz-animation-name: blinker;
     -moz-animation-duration: 0.3s;
     -moz-animation-timing-function: linear;
     -moz-animation-iteration-count: 3;
-    
+
     animation-name: blinker;
     animation-duration: 0.3s;
     animation-timing-function: linear;
     animation-iteration-count: 3;
 }
 
-@-moz-keyframes blinker {  
+@-moz-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
 
-@-webkit-keyframes blinker {  
+@-webkit-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
 
-@keyframes blinker {  
+@keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
@@ -2552,5 +2552,5 @@ a.active{
 .ngdialog.ngdialog-theme-custom-video .ngdialog-content{
   width:74%;
 }
-body.ngdialog-open { overflow: initial !important; } 
+body.ngdialog-open { overflow: initial !important; }
 /****************************/

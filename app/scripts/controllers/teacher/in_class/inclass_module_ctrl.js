@@ -419,7 +419,10 @@ angular.module('scalearAngularApp')
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
       console.log("getSubItems item start end", item, start_time, end_time)
-      return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
+      if(item.type == "inclass")
+        return timeline.getItemsBetweenTime(start_time, end_time)
+      else
+        return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
     }
 
     var setupSubItems = function(sub_items) {

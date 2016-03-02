@@ -93,8 +93,14 @@ angular.module('scalearAngularApp')
           var splitted_url = url.split('?')
           base_url = splitted_url[0]
           query = '&' + splitted_url[1]
-        } //
-        return base_url + "?start=" + start + "&end=" + end + "&vq=" + vq + "&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=" + autoplay + "&controls=" + controls + "&origin=https://www.youtube.com&theme=light" + query;
+        }
+        if (start)
+          query += "&start=" + start
+        if (end)
+          query += "&end=" + end
+        if(vq)
+          query += "&vq=" + vq
+        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
       }
 
       scope.kill_popcorn = function() {
@@ -191,7 +197,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.setStartTime = function(time) {
-        scope.start = time
+        scope.start = Math.round(time)
       }
 
       player_controls.setEndTime = function(time) {
@@ -589,7 +595,7 @@ angular.module('scalearAngularApp')
         })
       })
 
-      var repositionQuizHandles=function () {
+      var repositionQuizHandles = function() {
         if (scope.editing == 'video') {
           $(".squarebrackets_left").css("left", ((scope.video.start_time / scope.duration) * 100) + '%')
           $(".squarebrackets_right").css("left", ((scope.video.end_time / scope.duration) * 100) + '%')
@@ -608,7 +614,7 @@ angular.module('scalearAngularApp')
 
       $(window).resize(repositionQuizHandles)
 
-      $rootScope.$on('details_navigator_change',repositionQuizHandles)
+      $rootScope.$on('details_navigator_change', repositionQuizHandles)
 
       scope.play_class = scope.is_mobile ? "pause" : "play";
 
@@ -805,8 +811,7 @@ angular.module('scalearAngularApp')
           meta.position.left = item.end_location - end_offset
         if (meta.position.left < item.start_location + start_offset)
           meta.position.left = item.start_location + start_offset
-        // meta.position.left -= 10
-        item.time = ( (meta.position.left + 5) / scope.progress_bar.width()) * scope.duration
+        item.time = ((meta.position.left + 5) / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = false
         scope.seek()(item.time)
       }
@@ -814,7 +819,7 @@ angular.module('scalearAngularApp')
       scope.calculateStartQuizTime = function(event, meta, item) {
         meta.position.top = -4
         var start_offset = 5
-        var end_offset = 1
+        var end_offset = (scope.quiz_circle_width / 2) + 1
         if (meta.position.left > item.quiz_location - end_offset)
           meta.position.left = item.quiz_location - end_offset
         if (meta.position.left < item.prev_quiz_end + start_offset)
@@ -826,7 +831,7 @@ angular.module('scalearAngularApp')
 
       scope.calculateEndQuizTime = function(event, meta, item) {
         meta.position.top = -4
-        var start_offset = scope.quiz_circle_width
+        var start_offset = (scope.quiz_circle_width / 2) + 1
         var end_offset = 5
         if (meta.position.left > item.next_quiz_start - end_offset)
           meta.position.left = item.next_quiz_start - end_offset
@@ -919,10 +924,10 @@ angular.module('scalearAngularApp')
       })
 
       player.on('ended', function() {
-        console.log("Video Ended")
-          //for some reason youtube requires clicking the
-          //play button twice to play after video end
-          //simulating first click on play
+
+        //for some reason youtube requires clicking the
+        //play button twice to play after video end
+        //simulating first click on play
         scope.player.controls.seek(0)
         $timeout(function() {
           scope.player.controls.play();

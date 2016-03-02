@@ -150,8 +150,8 @@ angular.module('scalearAngularApp')
         // else{
         //  duration = player_controls.getAbsoluteDuration()
         // }
-        console.log("video start:", scope.start)
-        console.log("video end:", scope.end)
+
+
         return scope.end - scope.start
       }
 
@@ -166,7 +166,7 @@ angular.module('scalearAngularApp')
         if (time > player_controls.getDuration())
           time = player_controls.getDuration()
         time += scope.start || 0
-        console.log("new time ", time)
+
         if (player_controls.readyState() == 0 && !(scope.start || scope.start == 0)) {
           player.on("loadeddata",
             function() {
@@ -773,7 +773,7 @@ angular.module('scalearAngularApp')
       var setupBoundaryHoverEffect = function(event, meta, item) {
         var progress_width = scope.progress_bar.width()
         var quiz_location = ((item.time / scope.duration) * progress_width)
-        console.log(quiz_location, meta.position.left)
+
         if (meta.position.left < quiz_location)
           angular.element(event.target).toggleClass('squarebrackets_left_hover')
         if (meta.position.left > quiz_location)
@@ -785,6 +785,7 @@ angular.module('scalearAngularApp')
       scope.calculateQuizBoundaries = function(event, meta, item) {
         meta.position.top = -4
         var progress_width = scope.progress_bar.width()
+        scope.quiz_circle_width = $(".quiz_circle").width()
         item.data.start_location = (item.data.start_time / scope.duration) * progress_width
         item.data.end_location = (item.data.end_time / scope.duration) * progress_width
         item.data.quiz_location = (item.data.time / scope.duration) * progress_width
@@ -798,22 +799,26 @@ angular.module('scalearAngularApp')
 
       scope.calculateQuizTime = function(event, meta, item) {
         meta.position.top = -4
-        if (meta.position.left > item.end_location)
-          meta.position.left = item.end_location
-        if (meta.position.left < item.start_location)
-          meta.position.left = item.start_location
-        item.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
+        var start_offset = 1
+        var end_offset = scope.quiz_circle_width
+        if (meta.position.left > item.end_location - end_offset)
+          meta.position.left = item.end_location - end_offset
+        if (meta.position.left < item.start_location + start_offset)
+          meta.position.left = item.start_location + start_offset
+        // meta.position.left -= 10
+        item.time = ( (meta.position.left + 5) / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = false
         scope.seek()(item.time)
       }
 
       scope.calculateStartQuizTime = function(event, meta, item) {
         meta.position.top = -4
-        var offset = 5
-        if (meta.position.left > item.quiz_location - offset)
-          meta.position.left = item.quiz_location - offset
-        if (meta.position.left < item.prev_quiz_end + offset)
-          meta.position.left = item.prev_quiz_end + offset
+        var start_offset = 5
+        var end_offset = 1
+        if (meta.position.left > item.quiz_location - end_offset)
+          meta.position.left = item.quiz_location - end_offset
+        if (meta.position.left < item.prev_quiz_end + start_offset)
+          meta.position.left = item.prev_quiz_end + start_offset
         item.start_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
         scope.seek()(item.start_time)
@@ -821,11 +826,12 @@ angular.module('scalearAngularApp')
 
       scope.calculateEndQuizTime = function(event, meta, item) {
         meta.position.top = -4
-        var offset = 5
-        if (meta.position.left < item.quiz_location + offset)
-          meta.position.left = item.quiz_location + offset
-        if (meta.position.left > item.next_quiz_start - offset)
-          meta.position.left = item.next_quiz_start - offset
+        var start_offset = scope.quiz_circle_width
+        var end_offset = 5
+        if (meta.position.left > item.next_quiz_start - end_offset)
+          meta.position.left = item.next_quiz_start - end_offset
+        if (meta.position.left < item.quiz_location + start_offset)
+          meta.position.left = item.quiz_location + start_offset
         item.end_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
         scope.seek()(item.end_time)

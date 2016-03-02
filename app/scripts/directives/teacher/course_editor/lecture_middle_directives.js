@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
   .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate', function($timeout, $q, OnlineQuiz, $translate) {
     return {
       restrict: 'E',
-      templateUrl:'/views/teacher/course_editor/quiz_edit_panel.html' ,
+      templateUrl: '/views/teacher/course_editor/quiz_edit_panel.html',
       link: function(scope, element, attrs) {
         scope.has_start = scope.selected_quiz.start_time != scope.selected_quiz.time
         scope.has_end = scope.selected_quiz.end_time != scope.selected_quiz.time
@@ -69,8 +69,6 @@ angular.module('scalearAngularApp')
             return $translate('editor.incorrect_format_time')
           }
         }
-
-
 
         var validateName = function(quiz) {
           var d = $q.defer();
@@ -125,9 +123,6 @@ angular.module('scalearAngularApp')
               updateOnlineQuiz(quiz)
               scope.saveQuizBtn({ exit: true })
             }
-
-
-
             // scope.start_time_error = validateTime(quiz.start_formatedTime)
             // scope.end_time_error = validateTime(quiz.end_formatedTime)
             // if(!(scope.name_error || scope.time_error || scope.start_time_error || scope.end_time_error) ){
@@ -136,33 +131,6 @@ angular.module('scalearAngularApp')
             // quiz.end_time = arrayToSeconds(quiz.end_formatedTime.split(':'))
 
           })
-        }
-
-        scope.updateQuizStartTime = function() {
-          scope.selected_quiz.start_time = scope.selected_quiz.time
-          if (scope.has_start) {
-            var duration = scope.lecture_player.controls.getDuration()
-            var percent = 5
-            var caluclated_percent = (percent * duration) / 100
-            scope.selected_quiz.start_time - caluclated_percent < 0 ? 0 : scope.selected_quiz.start_time -= caluclated_percent
-          }
-        }
-
-        scope.updateQuizEndTime = function() {
-          scope.selected_quiz.end_time = scope.selected_quiz.time
-          if (scope.has_end) {
-            var duration = scope.lecture_player.controls.getDuration()
-            var percent = 5
-            var caluclated_percent = (percent * duration) / 100
-            scope.selected_quiz.end_time + caluclated_percent > duration ? duration : scope.selected_quiz.end_time += caluclated_percent
-          }
-        }
-
-        if (scope.selected_quiz.inclass) {
-          scope.has_start = true
-          scope.has_end = true
-          scope.updateQuizStartTime()
-          scope.updateQuizEndTime()
         }
       }
     };

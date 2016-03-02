@@ -160,18 +160,27 @@ angular.module('scalearAngularApp')
 
         $scope.lecture_player.controls.seek_and_pause(insert_time)
 
-        // var start_time = insert_time - 5 < 0? 0 : insert_time - 5
-        // var end_time   = insert_time + 5 > duration-2? duration-2 : insert_time + 5
+        var start_time = insert_time
+        var end_time = insert_time
+
+        if ($scope.lecture.inclass) {
+          var offset = 5
+          var caluclated_offset = (offset * duration) / 100
+
+          start_time = (start_time - caluclated_offset < 0) ? 0 : start_time - caluclated_offset
+          end_time = (end_time + caluclated_offset > duration - 1) ? duration - 1 : end_time + caluclated_offset
+        }
 
         $scope.quiz_loading = true;
         Lecture.newQuiz({
             course_id: $stateParams.course_id,
             lecture_id: $scope.lecture.id,
             time: insert_time,
-            start_time: insert_time,
-            end_time: insert_time,
+            start_time: start_time,
+            end_time: end_time,
             quiz_type: quiz_type,
-            ques_type: question_type
+            ques_type: question_type,
+            inclass: $scope.lecture.inclass
           },
           function(data) { //success
             $log.debug(data);

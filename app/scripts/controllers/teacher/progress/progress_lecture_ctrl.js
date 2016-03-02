@@ -314,7 +314,7 @@ angular.module('scalearAngularApp')
     }
 
   	$scope.updateHideQuiz = function(quiz) {
-      var num = (quiz.data.hide? -1 : 1)
+      var num = (quiz.data.show? -1 : 1)
       if(quiz.data.inclass){
         $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
         $scope.inclass_quizzes_count+= num
@@ -328,7 +328,7 @@ angular.module('scalearAngularApp')
         }, 
         {
           quiz: quiz.data.id,
-          hide: quiz.data.hide
+          hide: quiz.data.show
         })
     }
 

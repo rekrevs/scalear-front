@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
           player_controls.youtube = true
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           player = Popcorn(video);
-          video.src = formatYoutubeURL(scope.url, scope.vq, scope.start, scope.end, scope.autoplay, scope.controls)
+          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           $log.debug("vimeo")
@@ -197,19 +197,19 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.setStartTime = function(time) {
-        scope.start = Math.round(time)
+        scope.video_start = Math.round(time)
       }
 
       player_controls.setEndTime = function(time) {
-        scope.end = time
+        scope.video_end = time
       }
 
       player_controls.getStartTime = function() {
-        return scope.start
+        return scope.video_start
       }
 
       player_controls.getEndTime = function() {
-        return scope.end
+        return scope.video_end
       }
 
       player_controls.refreshVideo = function() {

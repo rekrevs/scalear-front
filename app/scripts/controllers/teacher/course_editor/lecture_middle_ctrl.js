@@ -311,7 +311,7 @@ angular.module('scalearAngularApp')
 
     $scope.addDoubleClickBind = function(event) {
       if ($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers) {
-        var answer_width, answer_height
+        var answer_width, answer_height,
         answer_text = "Answer "+($scope.selected_quiz.answers.length+1)
 
         if ($scope.selected_quiz.question_type.toLowerCase() == 'drag') {

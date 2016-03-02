@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
       $scope.hide_questions = false
       $scope.dark_buttons = "dark_button"
       $scope.fullscreen = false
-      $scope.selected_item = null
+      $scope.selected_item = {start_time:0}
       $scope.selected_timeline_item = null
       $scope.quality_set = 'color-blue'
       $scope.counting = true;

@@ -2,7 +2,9 @@
 var Link = require('./link');
 var SubHeader = require('./sub_header')
 var sub_header = new SubHeader
-
+var Video = require('./video');
+var video = new Video();
+var sleep = require('../lib/utils').sleep;
 var CourseEditor = function () {};
 
 CourseEditor.prototype = Object.create({}, {
@@ -85,7 +87,18 @@ CourseEditor.prototype = Object.create({}, {
 		element(by.id('url')).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(url)
 			element(by.className('check')).click()
+			video.wait_till_ready()
+			element(by.css('[ng-click="cancel()"]')).click()
 		})
+	}},
+	change_item_url_link:{value: function(url){
+		element(by.id('url')).click()
+		sleep(5000)
+		// .then(function(){
+			// element(by.css('[e-rows="5"]')).clear().sendKeys(url)
+			// element(by.className('editable-input')).clear().sendKeys(url)
+			// element(by.className('check')).click()
+		// })
 	}},
 	sort_links:{value:function(){
 		var handle_1 = this.module_link(1).field.element(by.className('handle')) 

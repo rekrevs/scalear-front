@@ -45,16 +45,18 @@ describe("Teacher in the course editor", function(){
 		module.open_content_items()
 		content_items.add_link()
 		expect(module.items.count()).toEqual(7)
-		// course_editor.rename_item("link1")
-		course_editor.change_item_url_link("http://google.com")
-		// expect(module.item(7).name).toEqual("link1")
 
-		// module.open_content_items()
-		// content_items.add_link()
-		// expect(module.items.count()).toEqual(8)
-		// course_editor.rename_item("link2")
-		// course_editor.change_item_url_link("http://helloworld2.com")
-		// expect(module.item(8).name).toEqual("link2")
+		//exchange change_item_url with rename_item incase error is rasied 
+		course_editor.change_item_url("http://google.com")
+		course_editor.rename_item("link1")
+		expect(module.item(7).name).toEqual("link1")
+
+		module.open_content_items()
+		content_items.add_link()
+		expect(module.items.count()).toEqual(8)
+		course_editor.change_item_url("http://helloworld2.com")
+		course_editor.rename_item("link2")
+		expect(module.item(8).name).toEqual("link2")
 	})
 
 	// it('should sort items inside modules', function(){

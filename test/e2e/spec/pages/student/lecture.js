@@ -111,9 +111,11 @@ LecturePage.prototype=Object.create({},{
 	next:{value:function(){this.next_button.click()}},
 	notification:{get:function(){return element(by.tagName("notification")).getText()}},
 	wait_for_quiz:{value:function(){
-		var check_answer_button = this.check_answer_button
+		// var quiz_layer = this.quiz_layer
+		var check_button = this.check_answer_button
 		browser.driver.wait(function() {
-	        return check_answer_button.isDisplayed().then(function(disp) {
+	        return check_button.isDisplayed().then(function(disp) {
+
 	            return disp;
 	        }, 100000);
 	    });

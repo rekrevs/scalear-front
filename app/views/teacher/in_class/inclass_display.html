@@ -32,7 +32,7 @@
                 </youtube>
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1" />
             </div>
-            <div>
+            <div ng-hide="hide_questions">
                 <ul class="inclass_connected_circles connected_circles">
                     <li style="display:none"></li>
                     <span ng-repeat="item in selected_timeline_item.sub_items">
@@ -49,6 +49,9 @@
                     <loading size="small" show="loading_chart" />
                     <div google-chart chart="chart" on-ready="chartReady()"></div>
                 </div>
+                <center ng-show="stage_counter" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;" class="original_chart">
+                    <div >{{stage_counter | format}}</div>
+                </center>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <div>

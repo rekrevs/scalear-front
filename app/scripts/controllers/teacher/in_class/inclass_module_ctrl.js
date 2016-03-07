@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
       $scope.hide_questions = false
       $scope.dark_buttons = "dark_button"
       $scope.fullscreen = false
-      $scope.selected_item = {start_time:0}
+      $scope.selected_item = { start_time: 0 }
       $scope.selected_timeline_item = null
       $scope.quality_set = 'color-blue'
       $scope.counting = true;
@@ -426,7 +426,7 @@ angular.module('scalearAngularApp')
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
       console.log("getSubItems item start end", item, start_time, end_time)
-      if(item.type == "inclass")
+      if (item.type == "inclass")
         return timeline.getItemsBetweenTime(start_time, end_time)
       else
         return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
@@ -463,6 +463,9 @@ angular.module('scalearAngularApp')
           adjustQuizLayer($scope.selected_timeline_item.data.quiz_type)
         else
           adjustQuizLayer()
+
+        setStageTimer(item.data.timer)
+        startStageTimer()
 
         updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
       }
@@ -948,6 +951,27 @@ angular.module('scalearAngularApp')
         $scope.timer_interval = $interval($scope.timerCountdown, 1000);
         $scope.counting = true;
       }
+    }
+
+    var StageTimerCountdown = function(argument) {
+      ($scope.stage_counter == 0) ? cancelStageTimer(): $scope.stage_counter--;
+    }
+
+    $scope.toggleStageTimer = function(argument) {
+      (!$scope.stage_timer) ? startStageTimer(): cancelStageTimer()
+    }
+
+    var startStageTimer = function(argument) {
+      $scope.stage_timer = $interval(StageTimerCountdown, 1000);
+    }
+
+    var cancelStageTimer = function(argument) {
+      $interval.cancel($scope.stage_timer);
+      $scope.stage_timer = null
+    }
+
+    var setStageTimer = function(count) {
+      $scope.stage_counter = count
     }
 
     var updateInclassSession = function(quiz_id, status) {

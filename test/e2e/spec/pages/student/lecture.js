@@ -66,6 +66,9 @@ Lecture.prototype = Object.create({}, {
 		this.note_area.sendKeys(text)
 		this.note_area.sendKeys(protractor.Key.ENTER)
 	}},
+	edit_note:{value:function(num){
+		this.note(num).element(by.className('ng-binding')).click()
+	}},
 	delete_note:{value:function(num){
 		this.note(num).element(by.className('delete')).click()
 		this.note(num).element(by.className('alert')).click()

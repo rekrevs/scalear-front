@@ -94,7 +94,7 @@ CourseEditor.prototype = Object.create({}, {
 	change_item_url_link:{value: function(url){
 		element(by.id('url')).click()
 		.then(function(){
-			element(by.css('[e-rows="5"]')).clear().sendKeys(url)
+			// element(by.css('[e-rows="5"]')).clear().sendKeys(url)
 			element(by.className('editable-input')).clear().sendKeys(url)
 			element(by.className('check')).click()
 		})

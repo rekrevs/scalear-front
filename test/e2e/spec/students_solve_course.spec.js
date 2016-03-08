@@ -26,57 +26,57 @@ var student_quiz = new StudentQuiz()
 
 describe("Solve Course",function(){
 	describe("Teacher",function(){
-		xit("should login as teacher",function(){
+		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher_mail, params.password)
 		})
 		var navigator = new ContentNavigator(1)
-		xit("should open course",function(){
+		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
 	    })	
-		xit("should go to edit mode",function(){
+		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
 		})    
-		xit("should open first quiz in first module",function(){
+		it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-    	xit('should make quiz not in order', function(){
+    	it('should make quiz not in order', function(){
 			course_editor.change_quiz_inorder()
 		})
-		xit('make quiz not required', function(){
+		it('make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
-		xit("should increase retries number",function(){
+		it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
-		xit("should open second lecture in second module",function(){
+		it("should open second lecture in second module",function(){
 	    	navigator.module(2).open()
 	    	navigator.module(2).item(2).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-		xit('should make lecture not in order', function(){
+		it('should make lecture not in order', function(){
 			course_editor.open_lecture_settings()
 	        course_editor.change_lecture_inorder()
 	    })
-		xit("should open first quiz in second module",function(){
+		it("should open first quiz in second module",function(){
 	    	navigator.module(2).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-		xit('should make quiz not required', function(){
+		it('should make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
-		xit("should increase retries number",function(){
+		it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
 
-		xit("should logout",function(){
+		it("should logout",function(){
 			header.logout()
 		})
 	})
@@ -102,18 +102,18 @@ describe("Solve Course",function(){
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ quiz', function(){
+			it('should expect MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ quiz",function(){
+			it("should answer MCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.mark_answer(3)
 				student_lec.check_answer()
 			})
-			xit("should check that it is correct",function(){
+			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 1")
@@ -128,73 +128,73 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 3")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
 				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ quiz', function(){
+			it('should expect OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ quiz",function(){
+			it("should answer OCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
-				expect(student_lec.notification).toContain("Correct")
+			it("should check that it is incorrect",function(){
+				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(1)
-				expect(student_lec.explanation_title).toContain("Correct")
+				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
 				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect DRAG quiz', function(){
+			it('should expect DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer DRAG quiz",function(){
+			it("should answer DRAG quiz",function(){
 				student_lec.drag_answer(1)
 				student_lec.drag_answer(2)
 				student_lec.drag_answer(3)
 				student_lec.check_answer()
 			})
-			xit("should check that it is correct",function(){
+			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
 				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones 100 %', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -202,92 +202,93 @@ describe("Solve Course",function(){
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
 
-			xit('should go to the second lecture', function(){
+			it('should go to the second lecture', function(){
 				student_lec.next()
 			})
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text MCQ quiz', function(){
+			it('should expect Text MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text MCQ quiz",function(){
+			it("should answer Text MCQ quiz",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(2)
 				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
+				sleep(10000)
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text OCQ quiz', function(){
+			it('should expect Text OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text OCQ quiz",function(){
+			it("should answer Text OCQ quiz",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check that it is correct",function(){
+			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(2)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text DRAG quiz', function(){
+			it('should expect Text DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text DRAG quiz",function(){
+			it("should answer Text DRAG quiz",function(){
 				student_lec.answer_text_drag_incorrect()
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -295,28 +296,28 @@ describe("Solve Course",function(){
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
 
-			xit('should go to the Third lecture', function(){
+			it('should go to the Third lecture', function(){
 				student_lec.next()
 			})
 
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ Survey', function(){
+			it('should expect MCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ Survey",function(){
+			it("should answer MCQ Survey",function(){
 				student_lec.mark_answer(1)
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check thank you message",function(){
+			it("should check thank you message",function(){
 				expect(student_lec.notification).toContain("Thank you for your answer")
 			})
-			xit("should check that there is no popover",function(){
+			it("should check that there is no popover",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 				student_lec.show_explanation(2)
@@ -325,22 +326,22 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ Survey', function(){
+			it('should expect OCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ Survey",function(){
+			it("should answer OCQ Survey",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check thank you message",function(){
+			it("should check thank you message",function(){
 				expect(student_lec.notification).toContain("Thank you for your answer")
 			})
-			xit("should check that there is no popover",function(){
+			it("should check that there is no popover",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 				student_lec.show_explanation(2)
@@ -348,246 +349,246 @@ describe("Solve Course",function(){
 				student_lec.show_explanation(3)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
-			xit('should go to the first quiz', function(){
+			it('should go to the first quiz', function(){
 				student_lec.next()
 			})
-		 	xit('should check number of attempts',function(){
+		 	it('should check number of attempts',function(){
 		        expect(student_quiz.status).toContain(0+"/"+2)
 		    })
 
-			xit('should check submit button enabled',function(){
+			it('should check submit button enabled',function(){
 		        expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
-			xit("should check for optional tag",function(){
+			it("should check for optional tag",function(){
 		    	expect(student_quiz.optional_tag.isDisplayed()).toBe(true)
     			expect(student_quiz.optional_tag.getText()).toEqual("Optional")
 		    })
 
-			xit('should answer mcq incorrect', function(){
+			it('should answer mcq incorrect', function(){
 				student_quiz.question(2).mark_answer(2)
 				student_quiz.question(2).mark_answer(3)
 			})
-			xit('should answer ocq incorrect', function(){
+			it('should answer ocq incorrect', function(){
 				student_quiz.question(4).mark_answer(2)
 			})
-			xit('should answer free question', function(){
+			it('should answer free question', function(){
 				student_quiz.question(5).type_free_text('free answer')
 			})
-			xit('should answer match question', function(){
+			it('should answer match question', function(){
 				student_quiz.question(6).type_free_text('mat answer')
 			})
-			xit('should answer drag incorrect', function(){
+			it('should answer drag incorrect', function(){
 				scroll_bottom()
 				student_quiz.question(7).drag_answer_incorrect()
 			})
-			xit('should submit quiz',function(){
+			it('should submit quiz',function(){
 				student_quiz.submit();
 			})
-			xit("should check for results",function(){
+			it("should check for results",function(){
 				expect(student_quiz.incorrect.count()).toEqual(4)
 				expect(student_quiz.under_review.count()).toEqual(1)
 			})
-			xit('should check quiz status after submit',function(){
+			it('should check quiz status after submit',function(){
 		        scroll_top()
 		        expect(student_quiz.status).toContain(1+"/"+2)
 				expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
 
-			xit('should answer mcq correct', function(){
+			it('should answer mcq correct', function(){
 				student_quiz.question(2).mark_answer(1)
 				student_quiz.question(2).mark_answer(2)
 			})
-			xit('should answer ocq incorrect', function(){
+			it('should answer ocq incorrect', function(){
 				student_quiz.question(4).mark_answer(1)
 			})
-			xit('should answer free question', function(){
+			it('should answer free question', function(){
 				student_quiz.question(5).type_free_text('free answer')
 			})
-			xit('should answer match question', function(){
+			it('should answer match question', function(){
 				student_quiz.question(6).type_free_text('match answer')
 			})
-			xit('should answer drag incorrect', function(){
+			it('should answer drag incorrect', function(){
 				scroll_bottom()
 				student_quiz.question(7).drag_answer_correct()
 			})
-			xit('should submit quiz',function(){
+			it('should submit quiz',function(){
 				student_quiz.submit();
 			})
-			xit("should check for results",function(){
+			it("should check for results",function(){
 				expect(student_quiz.incorrect.count()).toEqual(0)
 				expect(student_quiz.correct.count()).toEqual(4)
 				expect(student_quiz.under_review.count()).toEqual(1)
 			})
-			xit('should check quiz status after submit',function(){
+			it('should check quiz status after submit',function(){
 		        scroll_top()
-		        expect(student_quiz.retries).toContain('Used up all 2 attempts')
+		        expect(student_quiz.retries).toContain('Used up all 2attempts')
 		        expect(student_quiz.warning_msg).toContain("You've submitted the quiz and have no more attempts left")
 				expect(student_quiz.submit_button.isEnabled()).toBe(false)
 		    })
 
-			xit("should go to second quiz",function(){
+			it("should go to second quiz",function(){
 				student_quiz.next()
 			})
-			xit('should check number of attempts',function(){
+			it('should check number of attempts',function(){
 		        expect(student_quiz.status).toContain(0+"/"+1)
 		    })
 
-			xit('should check submit button enabled',function(){
+			it('should check submit button enabled',function(){
 		        expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
-			xit("should check for optional tag",function(){
+			it("should check for optional tag",function(){
 		    	expect(student_quiz.optional_tag.isPresent()).toBe(false)
 		    })
-			xit('should answer mcq incorrect', function(){
+			it('should answer mcq incorrect', function(){
 				student_quiz.question(2).mark_answer(1)
 				student_quiz.question(2).mark_answer(3)
 			})
-			xit('should answer ocq correct', function(){
+			it('should answer ocq correct', function(){
 				student_quiz.question(4).mark_answer(2)
 			})
-			xit('should answer free question', function(){
+			it('should answer free question', function(){
 				student_quiz.question(5).type_free_text('second free answer')
 			})
-			xit('should answer match question', function(){
+			it('should answer match question', function(){
 				student_quiz.question(6).type_free_text("shouldn't match answer")
 			})
-			xit('should answer drag correct', function(){
+			it('should answer drag correct', function(){
 				scroll_bottom()
 				student_quiz.question(7).drag_answer_correct()
 			})
-			xit('should submit quiz',function(){
+			it('should submit quiz',function(){
 				student_quiz.submit();
 			})
-			xit("should check for results",function(){
+			it("should check for results",function(){
 				expect(student_quiz.incorrect.count()).toEqual(2)
 				expect(student_quiz.correct.count()).toEqual(2)
 				expect(student_quiz.under_review.count()).toEqual(1)
 			})
-			xit('should check quiz status after submit',function(){
+			it('should check quiz status after submit',function(){
 		        scroll_top()
-		        expect(student_quiz.retries).toContain('Used up all 1 attempts')
+		        expect(student_quiz.retries).toContain('Used up all 1attempts')
 		        expect(student_quiz.warning_msg).toContain("You've submitted the quiz and have no more attempts left")
 				expect(student_quiz.submit_button.isEnabled()).toBe(false)
 		    })
-			xit("should go to first survey",function(){
+			it("should go to first survey",function(){
 				student_quiz.next()
 			})
-			xit('should answer mcq incorrect', function(){
+			it('should answer mcq incorrect', function(){
 				student_quiz.question(2).mark_answer(1)
 				student_quiz.question(2).mark_answer(2)
 			})
-			xit('should answer ocq correct', function(){
+			it('should answer ocq correct', function(){
 				student_quiz.question(4).mark_answer(2)
 			})
-			xit('should answer free question', function(){
+			it('should answer free question', function(){
 				student_quiz.question(5).type_free_text('first student free answer')
 			})
-			xit('should submit the survey',function(){
+			it('should submit the survey',function(){
 				student_quiz.save()
 				navigator.set_status(1)
 			})
 		})
 		describe("Second Module",function(){
-			xit("should navigate to second module",function(){
+			it("should navigate to second module",function(){
 				navigator.open()
 				navigator.module(2).open()
 				navigator.close()
 			})
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ quiz', function(){
+			it('should expect MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ quiz",function(){
+			it("should answer MCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ quiz', function(){
+			it('should expect OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ quiz",function(){
+			it("should answer OCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()				
+				video.pause()				
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect DRAG quiz', function(){
+			it('should expect DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer DRAG quiz",function(){
+			it("should answer DRAG quiz",function(){
 				student_lec.drag_answer(1,2)
 				student_lec.drag_answer(2,3)
 				student_lec.drag_answer(3,1)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -596,97 +597,97 @@ describe("Solve Course",function(){
 		        navigator.set_status(1)
 			})
 
-			xit("should navigate to second lectue in second module",function(){
+			it("should navigate to second lectue in second module",function(){
 				navigator.open()
 				navigator.module(2).item(2).open()
 				navigator.close()
 			})
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text MCQ quiz', function(){
+			it('should expect Text MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text MCQ quiz",function(){
+			it("should answer Text MCQ quiz",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(2)
 				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text OCQ quiz', function(){
+			it('should expect Text OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text OCQ quiz",function(){
+			it("should answer Text OCQ quiz",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check that it is correct",function(){
+			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
-			xit("should check explanation",function(){
+			it("should check explanation",function(){
 				student_lec.show_explanation(2)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text DRAG quiz', function(){
+			it('should expect Text DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text DRAG quiz",function(){
+			it("should answer Text DRAG quiz",function(){
 				student_lec.answer_text_drag_incorrect()
 				student_lec.check_answer()
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -695,30 +696,30 @@ describe("Solve Course",function(){
 		        navigator.set_status(1)
 			})
 
-			xit("should navigate to third lectue in second module",function(){
+			it("should navigate to third lectue in second module",function(){
 				navigator.open()
 				navigator.module(2).item(3).open()
 				navigator.close()
 			})
 
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ Survey', function(){
+			it('should expect MCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ Survey",function(){
+			it("should answer MCQ Survey",function(){
 				student_lec.mark_answer(1)
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check thank you message",function(){
+			it("should check thank you message",function(){
 				expect(student_lec.notification).toContain("Thank you for your answer")
 			})
-			xit("should check that there is no popover",function(){
+			it("should check that there is no popover",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 				student_lec.show_explanation(2)
@@ -727,22 +728,22 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ Survey', function(){
+			it('should expect OCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ Survey",function(){
+			it("should answer OCQ Survey",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit("should check thank you message",function(){
+			it("should check thank you message",function(){
 				expect(student_lec.notification).toContain("Thank you for your answer")
 			})
-			xit("should check that there is no popover",function(){
+			it("should check that there is no popover",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 				student_lec.show_explanation(2)
@@ -750,7 +751,7 @@ describe("Solve Course",function(){
 				student_lec.show_explanation(3)
 				expect(student_lec.explanation_popover.isPresent()).toEqual(false)
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -762,91 +763,86 @@ describe("Solve Course",function(){
 			})
 		})
 	})
-<<<<<<< HEAD
-	xdescribe("Second Student",function(){
-		it("should login", function(){
-=======
 	describe("Second Student",function(){
-		xit("should login", function(){
->>>>>>> temp_branch
+		it("should login", function(){
 			login_page.sign_in(params.student2_mail, params.password)
 		})
 		var navigator = new ContentNavigator(1)
-		xit('should open first course', function(){
+		it('should open first course', function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
 		describe("First Module",function(){
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ quiz', function(){
+			it('should expect MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ quiz",function(){
+			it("should answer MCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.mark_answer(3)
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ quiz', function(){
+			it('should expect OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ quiz",function(){
+			it("should answer OCQ quiz",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect DRAG quiz', function(){
+			it('should expect DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer DRAG quiz",function(){
+			it("should answer DRAG quiz",function(){
 				student_lec.drag_answer(1)
 				student_lec.drag_answer(2)
 				student_lec.drag_answer(3)
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -854,68 +850,68 @@ describe("Solve Course",function(){
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
 
-			xit('should go to the second lecture', function(){
+			it('should go to the second lecture', function(){
 				student_lec.next()
 			})
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text MCQ quiz', function(){
+			it('should expect Text MCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text MCQ quiz",function(){
+			it("should answer Text MCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.mark_answer(3)
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.request_review_inclass()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text OCQ quiz', function(){
+			it('should expect Text OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text OCQ quiz",function(){
+			it("should answer Text OCQ quiz",function(){
 				student_lec.mark_answer(1)
 				student_lec.check_answer()
 			})
-			xit('wait for the voting question', function(){
+			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.play()
+				video.pause()
 				student_lec.wait_for_vote()
 			})
-			xit('should request that the question not be reviewed in class', function(){
+			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
 
-			xit("should seek video to 29%",function(){
+			it("should seek video to 29%",function(){
 				video.play()
 				video.seek(29)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect Text DRAG quiz', function(){
+			it('should expect Text DRAG quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer Text DRAG quiz",function(){
+			it("should answer Text DRAG quiz",function(){
 				student_lec.answer_text_drag_correct()
 				student_lec.check_answer()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -923,37 +919,37 @@ describe("Solve Course",function(){
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
 
-			xit('should go to the Third lecture', function(){
+			it('should go to the Third lecture', function(){
 				student_lec.next()
 			})
 
-			xit("should seek video to 9%",function(){
+			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect MCQ Survey', function(){
+			it('should expect MCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer MCQ Survey",function(){
+			it("should answer MCQ Survey",function(){
 				student_lec.mark_answer(1)
 				student_lec.check_answer()
 			})
 
-			xit("should seek video to 19%",function(){
+			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
 				student_lec.wait_for_quiz()
 			})
-			xit('should expect OCQ Survey', function(){
+			it('should expect OCQ Survey', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-			xit("should answer OCQ Survey",function(){
+			it("should answer OCQ Survey",function(){
 				student_lec.mark_answer(2)
 				student_lec.check_answer()
 			})
-			xit('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -962,29 +958,29 @@ describe("Solve Course",function(){
 				navigator.set_status(1)
 			})
 
-			xit("should navigate to second quiz in first module",function(){
+			it("should navigate to second quiz in first module",function(){
 				navigator.open()
 				navigator.module(1).item(5).open()
 				navigator.close()
 			})
-			xit('should answer mcq incorrect', function(){
+			it('should answer mcq incorrect', function(){
 				student_quiz.question(2).mark_answer(1)
 				student_quiz.question(2).mark_answer(2)
 			})
-			xit('should answer ocq correct', function(){
+			it('should answer ocq correct', function(){
 				student_quiz.question(4).mark_answer(1)
 			})
-			xit('should answer free question', function(){
+			it('should answer free question', function(){
 				student_quiz.question(5).type_free_text('second second free answer')
 			})
-			xit('should answer match question', function(){
+			it('should answer match question', function(){
 				student_quiz.question(6).type_free_text('match answer')
 			})
-			xit('should answer drag correct', function(){
+			it('should answer drag correct', function(){
 				scroll_bottom()
 				student_quiz.question(7).drag_answer_correct()
 			})
-			xit('should submit quiz',function(){
+			it('should submit quiz',function(){
 				student_quiz.submit();
 				navigator.set_status(1)
 			})
@@ -1030,30 +1026,30 @@ describe("Solve Course",function(){
 	  //           expect(student_lec.lecture(2).editable_discussion.isPresent()).toEqual(false)
 	  //           expect(student_lec.lecture(2).items.count()).toEqual(5)
 			// })
-			xit("should logout",function(){
+			it("should logout",function(){
 				header.logout()
 			})			
 		})
 	})
 	// describe("First Student",function(){
-	// 	xit("should login", function(){
+	// 	it("should login", function(){
 	// 		login_page.sign_in(params.student_mail, params.password)
 	// 	})
 	// 	var navigator = new ContentNavigator(0)
-	// 	xit('should open first course', function(){
+	// 	it('should open first course', function(){
 	// 		course_list.open()
 	// 		course_list.open_course(1)
 	// 	})
-	// 	xit('should open third lecture in first module', function(){
+	// 	it('should open third lecture in first module', function(){
 	// 		navigator.open()
 	// 		navigator.module(1).open()
 	// 		navigator.module(1).item(3).open()
 	// 		navigator.close()
 	// 	})
-	// 	xit('should seek to 25%', function(){
+	// 	it('should seek to 25%', function(){
 	// 		video.seek(25)
 	// 	})
-	// 	xit('should add a really confused', function(){
+	// 	it('should add a really confused', function(){
 	// 		expect(student_lec.lecture(3).confused.count()).toEqual(0)
  //            student_lec.add_really_confused()
  //            expect(student_lec.lecture(3).confused.count()).toEqual(1)

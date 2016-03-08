@@ -1,8 +1,14 @@
 <div class="announcement-box panel no-padding">
-	<div>
-		<delete_button class="right with-tiny-margin-right" size="big" color='dark' action="deleteannouncement(announcement)" ng-hide="announcement.show"/>
+	<!-- <div>
+		<delete_button  size="big" color='dark' action="deleteannouncement(announcement)" ng-hide="announcement.show"/>
 		</delete_button>
+	</div> -->
+	
+	<div >
+		<delete_button class="right with-margin-right" size="big" text="
+		false" overlaymode="false" action="deleteannouncement(announcement)" ng-hide="announcement.show"/>
 	</div>
+	
 	<div class="time-label uppercase blue color-white">
 		<small>{{announcement.created_at | fromNow}}</small>
 	</div>	

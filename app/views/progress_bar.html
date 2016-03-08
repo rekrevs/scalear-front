@@ -33,7 +33,7 @@
 
                     <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px;" tooltip="Start time: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', onStop: 'cleanUpDrag(element)', containment:'position'}" ></div>
 
-                    <div class="progress-events quiz_circle" ng-style="{'left':((element.data.time/duration)*100)-1.15+'%'}" style="top:-4px;z-index:2;opacity:1" tooltip="Quiz time: {{element.data.time|format}}" ng-click="seekToQuiz(element.data)" data-drag='element.data.inclass' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
+                    <div class="progress-events quiz_circle" ng-style="{'left':((element.data.time/duration)*100)-1.15+'%'}" style="top:-4px;z-index:2;opacity:1" tooltip="Quiz time: {{element.data.time|format}}" ng-click="seekToQuiz(element.data)" data-drag='element.data.inclass' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
                         <i class="size-16 fi-record dot_circle" ></i>
                     </div>
 

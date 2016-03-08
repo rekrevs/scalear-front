@@ -157,7 +157,6 @@ angular.module('scalearAngularApp')
         //  duration = player_controls.getAbsoluteDuration()
         // }
 
-
         return scope.end - scope.start
       }
 
@@ -201,7 +200,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.setEndTime = function(time) {
-        scope.video_end = time
+        scope.video_end = Math.round(time)
       }
 
       player_controls.getStartTime = function() {
@@ -210,6 +209,22 @@ angular.module('scalearAngularApp')
 
       player_controls.getEndTime = function() {
         return scope.video_end
+      }
+
+      player_controls.setVideoStartTime = function(time) {
+        scope.start = Math.round(time)
+      }
+
+      player_controls.setVideoEndTime = function(time) {
+        scope.end = Math.round(time)
+      }
+
+      player_controls.getVideoStartTime = function() {
+        return scope.start
+      }
+
+      player_controls.getVideoEndTime = function() {
+        return scope.end
       }
 
       player_controls.refreshVideo = function() {
@@ -584,8 +599,8 @@ angular.module('scalearAngularApp')
       $timeout(function() {
         scope.duration = scope.player.controls.getDuration();
         scope.video = {
-          start_time: scope.player.controls.getStartTime(),
-          end_time: scope.player.controls.getEndTime(),
+          start_time: scope.player.controls.getVideoStartTime(),
+          end_time: scope.player.controls.getVideoEndTime(),
         }
         scope.$watch('editing', function() {
           if (scope.editing == 'video')
@@ -813,23 +828,24 @@ angular.module('scalearAngularApp')
         var start_offset = 1
         var end_offset = scope.quiz_circle_width
 
-        if (meta.position.left > item.end_location - end_offset){
-          if(item.has_end)
-            meta.position.left = item.end_location - end_offset
+        if (meta.position.left > item.data.end_location - end_offset){
+          if(item.data.has_end)
+            meta.position.left = item.data.end_location - end_offset
           else
-            meta.position.left = item.quiz_location - 6
+            meta.position.left = item.data.quiz_location - 6
         }
 
-        if (meta.position.left < item.start_location + start_offset){
-          if(item.has_start)
-            meta.position.left = item.start_location + start_offset
+        if (meta.position.left < item.data.start_location + start_offset){
+          if(item.data.has_start)
+            meta.position.left = item.data.start_location + start_offset
           else
-            meta.position.left = item.quiz_location - 6
+            meta.position.left = item.data.quiz_location - 6
         }
 
         item.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
-        item.hide_quiz_answers = false
-        scope.seek()(item.time)
+        item.data.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
+        item.data.hide_quiz_answers = false
+        scope.seek()(item.data.time)
 
       }
 
@@ -880,7 +896,7 @@ angular.module('scalearAngularApp')
           meta.position.left = scope.video.end_location - offset
 
         scope.video.start_time = (meta.position.left / scope.video.progress_width) * scope.duration
-        scope.player.controls.setStartTime(scope.video.start_time)
+        scope.player.controls.setVideoStartTime(scope.video.start_time)
         scope.player.controls.absoluteSeek(scope.video.start_time)
       }
 
@@ -893,7 +909,7 @@ angular.module('scalearAngularApp')
           meta.position.left = scope.video.progress_width
 
         scope.video.end_time = (meta.position.left / scope.video.progress_width) * scope.duration
-        scope.player.controls.setEndTime(scope.video.end_time)
+        scope.player.controls.setVideoEndTime(scope.video.end_time)
         scope.player.controls.absoluteSeek(scope.video.end_time)
       }
 

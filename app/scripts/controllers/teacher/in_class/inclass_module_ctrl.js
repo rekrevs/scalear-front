@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
       screenfull.request();
       $scope.fullscreen = true;
       $scope.blurButtons();
-      $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question;
+      $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question + $scope.inclass_quizzes_time;
       $scope.counter = $scope.timer > 0 ? 1 : 0;
       $scope.counting = true;
       $scope.timerCountdown()
@@ -274,6 +274,7 @@ angular.module('scalearAngularApp')
       $scope.removeShortcuts()
       resetVariables()
       $interval.cancel($scope.timer_interval);
+      cancelStageTimer()
     }
 
     $scope.playBtn = function() {
@@ -464,10 +465,18 @@ angular.module('scalearAngularApp')
         else
           adjustQuizLayer()
 
-        setStageTimer(item.data.timer)
-        startStageTimer()
-
-        updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
+        if(item.data.timer){
+          cancelStageTimer()
+          setStageTimer(item.data.timer)
+          var unwatch = $scope.$watch("loading_video",function (val) {
+            if (!val) {
+              startStageTimer()
+              unwatch()
+            }
+          })
+        }
+        if(item.data.status && typeof item.data.status === "number")
+          updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
       }
     }
 
@@ -966,8 +975,10 @@ angular.module('scalearAngularApp')
     }
 
     var cancelStageTimer = function(argument) {
-      $interval.cancel($scope.stage_timer);
-      $scope.stage_timer = null
+      if ($scope.stage_timer){
+        $interval.cancel($scope.stage_timer);
+        $scope.stage_timer = null
+      }
     }
 
     var setStageTimer = function(count) {

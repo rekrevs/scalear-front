@@ -25,7 +25,7 @@
             </a>
             <center><h6 translate>content.questions.types.mcq</h6></center>
         </div>
-        <div class="large-2 medium-4 small-6 columns">
+        <div class="large-2 medium-4 small-6 columns" ng-hide="lecture.inclass">
             <a id='drag' type="button" class="th violet" ng-class="{thumbactive: question_type == 'drag'}" ng-model="question_type" ng-click="addQuiz('invideo','drag')" >
                 <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_symbol.png">
             </a>
@@ -53,13 +53,13 @@
             </a>
             <center><h6 translate>content.questions.types.mcq</h6></center>
         </div>
-        <div class="large-2 medium-3 small-6 with-small-margin-top columns">
+        <div class="large-2 medium-3 small-6 with-small-margin-top columns" ng-hide="lecture.inclass">
             <a id='drag_text' type="button" class="th olive" ng-class="{thumbactive: question_type == 'drag_html'}" ng-model="question_type" ng-click="addQuiz('html','drag')" >
                 <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_symbol.png">
             </a>
             <center><h6 translate>content.questions.types.drag</h6></center>
         </div>
-        <div class="large-2 medium-3 small-6 with-small-margin-top columns">
+        <div class="large-2 medium-3 small-6 with-small-margin-top columns" ng-hide="lecture.inclass">
             <a id='free_text' type="button" class="th olive" ng-class="{thumbactive: question_type == 'text_html'}" ng-model="question_type" ng-click="addQuiz('html','Free Text Question')" >
                 <img style="margin: 10%; width: 80%; height: 80%;" src="/images/text_symbol.png">
             </a>
@@ -89,7 +89,7 @@
         </div>
         <div class="large-2 medium-0 small-0 with-small-margin-top columns">
         </div>
-    </div> 
+    </div>
 </div>
 
 <div class="modal-footer clear-both">

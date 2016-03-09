@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
                 scope.module.items.forEach(function(item){
                     if(item.duration){
                         total_calculated_time += parseInt(item.duration)
-                    } 
+                    }
                 })
                 scope.module.total_time = total_calculated_time
             }
@@ -93,7 +93,7 @@ angular.module('scalearAngularApp')
             })
             scope.remove=function(event){
                 event.stopPropagation()
-                event.preventDefault() 
+                event.preventDefault()
                 $rootScope.$broadcast("delete_item", scope.item)
             }
 
@@ -127,12 +127,12 @@ angular.module('scalearAngularApp')
         templateUrl: '/views/teacher/course_editor/module.html',
         link: function(scope,element) {
             scope.module = scope.data()
-            var calculateTime=function(){                
+            var calculateTime=function(){
                 var total_calculated_time = 0
                 scope.module.items.forEach(function(item){
                     if(item.duration){
                         total_calculated_time += parseInt(item.duration)
-                    } 
+                    }
                 })
                 scope.module.total_time = total_calculated_time
             }
@@ -276,7 +276,8 @@ angular.module('scalearAngularApp')
 }]).directive('lectureQuestionsModal', ['$modal',function($modal){
     return{
         scope:{
-            openModal:"="
+            openModal:"=",
+            data:"="
         },
         restrict: 'A',
         replace: true,
@@ -285,10 +286,12 @@ angular.module('scalearAngularApp')
                 $modal.open({
                     templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                     controller: ModalInstanceCtrl,
-                    windowClass: 'large'
+                    windowClass: 'large',
+                    scope:$scope
                 })
             }
             var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
+                $scope.lecture = $scope.data
                 $scope.addQuiz=function(quiz_type, question_type){
                     $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
                     $modalInstance.close()
@@ -296,5 +299,6 @@ angular.module('scalearAngularApp')
               $scope.cancel = $modalInstance.dismiss
             }]
         }]
+
     }
 }])

@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
       screenfull.request();
       $scope.fullscreen = true;
       $scope.blurButtons();
-      $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question;
+      $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question + $scope.inclass_quizzes_time;
       $scope.counter = $scope.timer > 0 ? 1 : 0;
       $scope.counting = true;
       $scope.timerCountdown()
@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
       $scope.hide_questions = false
       $scope.dark_buttons = "dark_button"
       $scope.fullscreen = false
-      $scope.selected_item = {start_time:0}
+      $scope.selected_item = { start_time: 0 }
       $scope.selected_timeline_item = null
       $scope.quality_set = 'color-blue'
       $scope.counting = true;
@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
               for (var it in $scope.lectures[lec_id][type]) {
                 $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if (type == "inclass" && $scope.lectures[lec_id][type][it][1].show)
-                  $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timer.intro + $scope.lectures[lec_id][type][it][1].timer.self + $scope.lectures[lec_id][type][it][1].timer.in_group + $scope.lectures[lec_id][type][it][1].timer.discussion) / 60
+                  $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion) / 60
               }
             }
             $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
           console.log(quiz)
           var num = (quiz.data.show ? -1 : 1)
           if (quiz.type == "inclass") {
-            $scope.inclass_quizzes_time += num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion) / 60
+            $scope.inclass_quizzes_time += num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion) / 60
             $scope.inclass_quizzes_count += num
           } else
             $scope.review_quizzes_count += num
@@ -274,6 +274,7 @@ angular.module('scalearAngularApp')
       $scope.removeShortcuts()
       resetVariables()
       $interval.cancel($scope.timer_interval);
+      cancelStageTimer()
     }
 
     $scope.playBtn = function() {
@@ -369,15 +370,18 @@ angular.module('scalearAngularApp')
 
     var setupInclassQuiz = function(sub_items) {
       var quiz_index
+      var timers
       for (var item_index = 0; item_index < sub_items.length; item_index++) {
         var current_item = sub_items[item_index]
         current_item.data.background = "lightgrey"
         current_item.data.color = "black"
         if (current_item.type == 'inclass') {
+          timers = current_item.data.timers
           current_item.data.inclass_title = 'Self'
           current_item.data.status = 2
           current_item.data.background = "#008CBA"
           current_item.data.color = "white"
+          current_item.data.timer = timers.self
 
           var start_item = { time: current_item.data.start_time, type: 'marker', data: { time: current_item.data.start_time, status: 1 } }
           var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }
@@ -389,12 +393,15 @@ angular.module('scalearAngularApp')
           group_quiz.data.inclass_title = 'Group'
           group_quiz.data.status = 3
           group_quiz.data.background = "#43AC6A"
+          group_quiz.data.timer = timers.in_group
           quiz_index = ++item_index
           sub_items.splice(quiz_index, 0, group_quiz);
           continue;
         }
         if (quiz_index == item_index - 1) {
           current_item.data.inclass_title = 'Discussion'
+          console.log(current_item)
+          current_item.data.timer = timers.discussion
           current_item.data.status = 4
         }
         if (item_index > quiz_index) {
@@ -405,6 +412,7 @@ angular.module('scalearAngularApp')
       sub_items[0].data.inclass_title = "Intro"
       sub_items[0].data.background = "lightgrey"
       sub_items[0].data.color = "black"
+      sub_items[0].data.timer = timers.intro
       console.log("done", sub_items)
       return sub_items
     }
@@ -419,7 +427,7 @@ angular.module('scalearAngularApp')
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
       console.log("getSubItems item start end", item, start_time, end_time)
-      if(item.type == "inclass")
+      if (item.type == "inclass")
         return timeline.getItemsBetweenTime(start_time, end_time)
       else
         return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
@@ -457,7 +465,18 @@ angular.module('scalearAngularApp')
         else
           adjustQuizLayer()
 
-        updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
+        if(item.data.timer){
+          cancelStageTimer()
+          setStageTimer(item.data.timer)
+          var unwatch = $scope.$watch("loading_video",function (val) {
+            if (!val) {
+              startStageTimer()
+              unwatch()
+            }
+          })
+        }
+        if(item.data.status && typeof item.data.status === "number")
+          updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
       }
     }
 
@@ -941,6 +960,29 @@ angular.module('scalearAngularApp')
         $scope.timer_interval = $interval($scope.timerCountdown, 1000);
         $scope.counting = true;
       }
+    }
+
+    var StageTimerCountdown = function(argument) {
+      ($scope.stage_counter == 0) ? cancelStageTimer(): $scope.stage_counter--;
+    }
+
+    $scope.toggleStageTimer = function(argument) {
+      (!$scope.stage_timer) ? startStageTimer(): cancelStageTimer()
+    }
+
+    var startStageTimer = function(argument) {
+      $scope.stage_timer = $interval(StageTimerCountdown, 1000);
+    }
+
+    var cancelStageTimer = function(argument) {
+      if ($scope.stage_timer){
+        $interval.cancel($scope.stage_timer);
+        $scope.stage_timer = null
+      }
+    }
+
+    var setStageTimer = function(count) {
+      $scope.stage_counter = count
     }
 
     var updateInclassSession = function(quiz_id, status) {

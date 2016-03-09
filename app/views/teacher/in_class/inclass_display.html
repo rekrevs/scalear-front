@@ -10,7 +10,10 @@
         </center>
     </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <span class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{selected_item.name}}</span>
+        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray;width:44%;">{{selected_item.name}}</div>
+        <div ng-show="(inclass_session < 2 || inclass_session > 3)" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
+            <div >{{stage_counter | format}}</div>
+        </div>
         <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px">
             <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="button reall-tiny secondary"><i ng-class="play_pause_class" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="button reall-tiny secondary"><i ng-class="mute_class" /></button>
@@ -32,7 +35,7 @@
                 </youtube>
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1" />
             </div>
-            <div>
+            <div ng-hide="hide_questions">
                 <ul class="inclass_connected_circles connected_circles">
                     <li style="display:none"></li>
                     <span ng-repeat="item in selected_timeline_item.sub_items">
@@ -45,9 +48,12 @@
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                     <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
                 </div>
-                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session == 4) && chart" ng-class="chart_class">
+                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
                     <div google-chart chart="chart" on-ready="chartReady()"></div>
+                </div>
+                <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="original_chart">
+                    <center>{{stage_counter | format}}</center>
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">

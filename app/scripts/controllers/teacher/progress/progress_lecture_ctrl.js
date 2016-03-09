@@ -85,7 +85,7 @@ angular.module('scalearAngularApp')
           else{
             $scope.url = $scope.first_lecture.url
           }
-          
+
           $scope.timeline['lecture'] = {}
           $scope.inclass_quizzes_time = 0
           for(var lec_id in $scope.lectures){
@@ -105,27 +105,27 @@ angular.module('scalearAngularApp')
                   else if(type=='charts'){
                     $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
                     if($scope.lectures[lec_id][type][it][1].inclass && $scope.lectures[lec_id][type][it][1].hide){
-                      $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timer.intro + $scope.lectures[lec_id][type][it][1].timer.self + $scope.lectures[lec_id][type][it][1].timer.in_group + $scope.lectures[lec_id][type][it][1].timer.discussion)/60
+                      $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion)/60
                     }
                   }
-                  $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
+                  $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])
                 }
-           }           
+           }
           }
-          $log.debug($scope.timeline)          
-        },  
-        function(){}        
-      )      
+          $log.debug($scope.timeline)
+        },
+        function(){}
+      )
     }
-  
+
 
  	var getModuleCharts = function(){
     Module.getModuleCharts(
-        {             
+        {
             course_id: $stateParams.course_id,
             module_id:$stateParams.module_id
         },
-        function(data){ 
+        function(data){
         	$scope.timeline["module"]= new Timeline()
         	$scope.timeline["module"].add(0, 'module', data.module_data)
         },
@@ -136,7 +136,7 @@ angular.module('scalearAngularApp')
 	var getQuizCharts = function(){
 
     Module.getQuizCharts(
-      {             
+      {
           course_id: $stateParams.course_id,
           module_id:$stateParams.module_id
       },
@@ -144,14 +144,14 @@ angular.module('scalearAngularApp')
         $log.debug(resp)
         var quizzes=resp.quizzes
       	$scope.timeline['quiz'] ={}
-  	 		
+
         for(var quiz_id in quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
   	 			for(var q_index in quizzes[quiz_id].questions){
             var q_id = quizzes[quiz_id].questions[q_index].id
             var data = quizzes[quiz_id].charts[q_id] || quizzes[quiz_id].free_question[q_id]
             data.type = quizzes[quiz_id].questions[q_index].type
-            data.id = q_id  
+            data.id = q_id
             data.quiz_type='quiz'
             data.title=quizzes[quiz_id].questions[q_index].question
             var type = quizzes[quiz_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
@@ -167,7 +167,7 @@ angular.module('scalearAngularApp')
 
     var getSurveyCharts = function(){
       Module.getSurveyCharts(
-        {             
+        {
             course_id: $stateParams.course_id,
             module_id:$stateParams.module_id
         },
@@ -186,9 +186,9 @@ angular.module('scalearAngularApp')
               $scope.review_survey_reply_count[survey_id][q_id]=0
               var data = surveys[survey_id].charts[q_id] || surveys[survey_id].free_question[q_id]
               data.type = surveys[survey_id].questions[q_index].type
-              data.id = q_id  
+              data.id = q_id
               data.quiz_type='survey'
-              
+
               var type = surveys[survey_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
               if(type=="free_question"){
                 data.answers.forEach(function(answer){
@@ -216,8 +216,8 @@ angular.module('scalearAngularApp')
   	$scope.manageHighlight=function(x){
       // resizePlayerSmall()
   		var divs = angular.element('.ul_item')
-		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')	
-		  angular.element('li.highlight').removeClass('highlight')	
+		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')
+		  angular.element('li.highlight').removeClass('highlight')
       $scope.highlight_index = $scope.highlight_index+x
       if($scope.highlight_index < 0)
         $scope.highlight_index = 0
@@ -273,7 +273,7 @@ angular.module('scalearAngularApp')
       $scope.selected_item =item
       var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
-        var id=parent_div.attr('id').split('_') 
+        var id=parent_div.attr('id').split('_')
         $scope.selected_item.lec_id = id[1]
       }
   		$scope.inner_highlight_index = 0
@@ -283,7 +283,7 @@ angular.module('scalearAngularApp')
           angular.element('li.highlight').removeClass('highlight')
         $scope.inner_highlight_index = ul.find('li.li_item').index(inner_li[0])
         angular.element(inner_li[0]).addClass('highlight')
-        $scope.highlight_level = 2        
+        $scope.highlight_level = 2
       }
       seekToItem()
   	}
@@ -299,8 +299,8 @@ angular.module('scalearAngularApp')
       })
     }
 
-    var removeHightlight=function(){  
-      resizePlayerSmall() 
+    var removeHightlight=function(){
+      resizePlayerSmall()
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
@@ -308,7 +308,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.resetHighlightVariables=function(){
-      removeHightlight()      
+      removeHightlight()
       $scope.highlight_index = -1
       $scope.inner_highlight_index = 0
     }
@@ -316,16 +316,16 @@ angular.module('scalearAngularApp')
   	$scope.updateHideQuiz = function(quiz) {
       var num = (quiz.data.show? -1 : 1)
       if(quiz.data.inclass){
-        $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
+        $scope.inclass_quizzes_time+= num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion)/60
         $scope.inclass_quizzes_count+= num
       }
       else
         $scope.review_quizzes_count+= num
-      
+
         Module.hideQuiz({
           course_id: $stateParams.course_id,
           module_id: $stateParams.module_id
-        }, 
+        },
         {
           quiz: quiz.data.id,
           hide: quiz.data.show
@@ -336,7 +336,7 @@ angular.module('scalearAngularApp')
     //   console.log(quiz)
     //   var num = (quiz.data.show? -1 : 1)
     //   if(quiz.type == "inclass"){
-    //     $scope.inclass_quizzes_time+= num * (quiz.data.timer.intro + quiz.data.timer.self + quiz.data.timer.in_group + quiz.data.timer.discussion)/60
+    //     $scope.inclass_quizzes_time+= num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion)/60
     //     $scope.inclass_quizzes_count+= num
     //   }
     //   else
@@ -427,9 +427,9 @@ angular.module('scalearAngularApp')
         },
         {
           hide:{
-            id:answer.id, 
+            id:answer.id,
             hide: answer.hide
-          }                
+          }
         },
         function(){
           $log.debug(answer.hide)
@@ -449,9 +449,9 @@ angular.module('scalearAngularApp')
         },
         {
           hide:{
-            id:id, 
+            id:id,
             hide: value
-          }                
+          }
         }
       )
     }
@@ -485,11 +485,11 @@ angular.module('scalearAngularApp')
       var text = discussion.temp_response
       discussion.temp_response = null
       Forum.createComment(
-        {comment: {content: text, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
+        {comment: {content: text, post_id:discussion.id, lecture_id:discussion.lecture_id}},
         function(response){
           $log.debug(response)
           response.comment.hide=false
-          discussion.comments.push(response)          
+          discussion.comments.push(response)
           angular.element('ul.highlight .feedback textarea').blur()
         },function(){}
       )
@@ -529,10 +529,10 @@ angular.module('scalearAngularApp')
   }
 
 
-  $scope.deletePost=function(items, index){    
+  $scope.deletePost=function(items, index){
      var discussion = items[index]
      Forum.deletePost(
-      {post_id: discussion.post.id}, 
+      {post_id: discussion.post.id},
       function(){
         items.splice(index,1)
       },
@@ -543,10 +543,10 @@ angular.module('scalearAngularApp')
 
   $scope.deleteComment=function(comment, discussion){
     Forum.deleteComment(
-      {comment_id: comment.comment.id, post_id: discussion.id}, 
+      {comment_id: comment.comment.id, post_id: discussion.id},
       function(){
         discussion.comments.splice(discussion.comments.indexOf(comment),1)
-      }, 
+      },
       function(){}
     )
   }
@@ -740,11 +740,11 @@ angular.module('scalearAngularApp')
   //       ]
   //   formated_data.rows = []
   //   for (var ind in data) {
-  //       var row = 
-  //       {"c": 
+  //       var row =
+  //       {"c":
   //           [
-  //             {"v": data[ind][2]}, 
-  //             {"v": data[ind][0]} 
+  //             {"v": data[ind][2]},
+  //             {"v": data[ind][0]}
   //           ]
   //       }
   //       formated_data.rows.push(row)
@@ -754,13 +754,13 @@ angular.module('scalearAngularApp')
 
   var seekToItem=function(){
     $log.debug("seeking to item",$scope.selected_item )
-    if($scope.selected_item && $scope.selected_item.time>=0 && $scope.lectures[$scope.selected_item.lec_id]){          
-        var time = $scope.selected_item.time             
+    if($scope.selected_item && $scope.selected_item.time>=0 && $scope.lectures[$scope.selected_item.lec_id]){
+        var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion"){
           var q_ind = $scope.inner_highlight_index
           time = $scope.selected_item.data[q_ind].post.time
           $log.debug(time)
-        }  
+        }
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)
     }
   }
@@ -792,7 +792,7 @@ angular.module('scalearAngularApp')
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){
-      if($scope.selected_item && ($scope.selected_item.type == "free_question" || $scope.selected_item.type == "discussion")) 
+      if($scope.selected_item && ($scope.selected_item.type == "free_question" || $scope.selected_item.type == "discussion"))
           if($scope.inner_highlight_index >= 0){
             if($scope.selected_item.data.answers)
               $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
@@ -836,7 +836,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Space",function(){
-      if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){          
+      if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){
           resizePlayerLarge()
       }
       else
@@ -848,7 +848,7 @@ angular.module('scalearAngularApp')
     shortcut.add("m",function(){
       $log.debug($scope.selected_item)
       $log.debug($scope.selected_item.data.quiz_type)
-      if($scope.selected_item){        
+      if($scope.selected_item){
   			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index
   				$scope.selected_item.data[q_ind].post.hide = !$scope.selected_item.data[q_ind].post.hide
@@ -875,7 +875,7 @@ angular.module('scalearAngularApp')
               var q_ind = $scope.inner_highlight_index
               $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item,$scope.selected_item.data.answers[q_ind])
               $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-              
+
             }
           }
           else if($scope.selected_item.data.quiz_type == 'Quiz'){
@@ -898,9 +898,9 @@ angular.module('scalearAngularApp')
       resizePlayerSmall()
       if($scope.selected_item.type == 'discussion'){
         $scope.selected_item.data.forEach(function(discussion){
-          discussion.post.show_feedback = false; 
+          discussion.post.show_feedback = false;
           discussion.post.temp_response=null
-        })        
+        })
       }else if($scope.selected_item.type == "free_question"){
         $scope.selected_item.data.answers.forEach(function(answer){
           answer.show_feedback = false;
@@ -974,7 +974,7 @@ angular.module('scalearAngularApp')
   }
 
   $scope.calculateReviewPercent=function(review_count, students_count){
-    return Math.ceil(review_count/students_count*100) || 0 
+    return Math.ceil(review_count/students_count*100) || 0
   }
 
   $scope.getReviewColor=function(percent){
@@ -996,10 +996,10 @@ angular.module('scalearAngularApp')
   }
 
 	$scope.getKeys = function( obj ) {
-		return Object.keys ? Object.keys( obj ) : (function( obj ) {			
+		return Object.keys ? Object.keys( obj ) : (function( obj ) {
 			var list = [];
-			for (var item in obj ) 
-				if ( hasOwn.call( obj, item ) ) 
+			for (var item in obj )
+				if ( hasOwn.call( obj, item ) )
 					list.push( item );
 			return list;
 		})( obj );

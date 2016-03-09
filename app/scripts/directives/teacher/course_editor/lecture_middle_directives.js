@@ -28,8 +28,28 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/quiz_edit_panel.html',
       link: function(scope, element, attrs) {
-        scope.has_start = scope.selected_quiz.start_time != scope.selected_quiz.time
-        scope.has_end = scope.selected_quiz.end_time != scope.selected_quiz.time
+        scope.selected_quiz.has_start = scope.selected_quiz.start_time != scope.selected_quiz.time
+        scope.selected_quiz.has_end = scope.selected_quiz.end_time != scope.selected_quiz.time
+
+        scope.updateQuizStartTime = function() {
+          scope.selected_quiz.start_time = scope.selected_quiz.time
+          if (scope.selected_quiz.has_start) {
+            var duration = scope.lecture_player.controls.getDuration()
+            var percent = 5
+            var caluclated_percent = (percent * duration) / 100
+            scope.selected_quiz.start_time  = (scope.selected_quiz.start_time - caluclated_percent < 0) ? 0 : scope.selected_quiz.start_time - caluclated_percent
+          }
+        }
+
+				scope.updateQuizEndTime = function() {
+          scope.selected_quiz.end_time = scope.selected_quiz.time
+          if (scope.selected_quiz.has_end) {
+            var duration = scope.lecture_player.controls.getDuration()
+            var percent = 5
+            var caluclated_percent = (percent * duration) / 100
+            scope.selected_quiz.end_time = (scope.selected_quiz.end_time + caluclated_percent > duration) ? duration : scope.selected_quiz.end_time + caluclated_percent
+          }
+        }
 
         $timeout(function() {
           element.find('.quiz_name').select();

@@ -30,7 +30,8 @@ InvideoQuiz.prototype = Object.create({}, {
 	text_answers:{get:function(){return element.all(by.name("answer"))}},
 	text_explanation:{get:function(){return element.all(by.model("answer.explanation"))}},
 	text_correct_checkbox:{get:function(){return element.all(by.model('answer.correct'))}},
-	quizzes:{get:function(){return element.all(by.repeater("quiz in quiz_list"))}},
+	// quizzes:{get:function(){return element.all(by.repeater("quiz in quiz_list"))}},
+	quizzes:{get:function(){return element.all(by.repeater("quiz in lecture.timeline.items"))}},	
 	quiz:{value:function(num){return this.quizzes.get(num-1)}},
 	count:{get:function(){return this.quizzes.count()}},
 	create:{value:function(quiz_type_button){	
@@ -49,8 +50,16 @@ InvideoQuiz.prototype = Object.create({}, {
 	add_answer:{value:function(x,y,correct,explanation){
 		browser.driver.actions().mouseMove(this.quiz_layer).perform();
 		browser.driver.actions().mouseMove(this.quiz_layer,{x: x, y: y}).perform()
-		browser.driver.actions().doubleClick().perform()		
+		browser.driver.actions().doubleClick().perform()	
 	}},
+
+	add_answer_drag:{value:function(x,y,correct,explanation){
+		browser.driver.actions().mouseMove(this.quiz_layer).perform();
+		browser.driver.actions().mouseMove(this.quiz_layer,{x: x, y: y}).perform()
+		browser.driver.actions().doubleClick().perform()	
+		element(by.css('[ng-click="save()"]')).click()
+	}},
+
 	add_text_answer:{value:function(){
 		this.add_answer_button.click()
 	}},	

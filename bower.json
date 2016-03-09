@@ -35,7 +35,7 @@
     "moment": "2.8.1",
     "angular-img-fallback": "~0.0.2",
     "angular-scroll": "~0.6.2",
-    "angular-truncate": "git@github.com:lorenooliveira/ng-text-truncate.git#v2.0",
+    "angular-truncate": "https://github.com/lorenooliveira/ng-text-truncate.git#v2.0",
     "fastclick": "~1.0.6",
     "ng-clip": "~0.2.6",
     "zeroclipboard": "~2.2.0",

@@ -210,7 +210,10 @@ angular.module('scalearAngularApp')
             return
         $scope.hide_alerts = true;
         $scope.submitted = false
-        $scope.editing_mode = true;
+        $scope.editing_mode = false;
+        $timeout(function () {
+          $scope.editing_mode = true;
+        })
         $scope.selected_quiz = quiz
         $scope.selected_quiz.selected = true
         $scope.selected_quiz.formatedTime = $filter('format')($scope.selected_quiz.time)
@@ -507,7 +510,8 @@ angular.module('scalearAngularApp')
           time: $scope.lecture_player.controls.getTime(),
         },
         function(data) {
-          // $scope.showOnlineMarker(data.marker)
+          if(!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
+            $scope.showOnlineMarker(data.marker)
           $scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
           DetailsNavigator.open()
         })
@@ -521,7 +525,10 @@ angular.module('scalearAngularApp')
       if ($scope.selected_marker != marker) {
         if ($scope.editing_mode)
           $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
-        $scope.editing_mode = true;
+        $scope.editing_mode = false;
+        $timeout(function () {
+           $scope.editing_mode = true;
+        })
         $scope.selected_marker = marker
         $scope.selected_marker.formatedTime = $filter('format')($scope.selected_marker.time)
         $scope.editing_type = 'marker'

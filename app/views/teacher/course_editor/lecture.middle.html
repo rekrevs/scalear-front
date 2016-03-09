@@ -42,7 +42,7 @@
 		<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
 			<span translate>editor.button.add_marker</span>
 		</button>
-		<span ng-show="!editing_mode" lecture-questions-modal open-modal="openQuestionsModal" data="lecture">
+		<span ng-show="!editing_mode || (editing_mode && editing_type=='marker')" lecture-questions-modal open-modal="openQuestionsModal" data="lecture">
 			<button id="new_question" class="button small" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
 				<span translate>editor.button.add_video_quiz</span>
 			</button>

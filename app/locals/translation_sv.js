@@ -38,7 +38,7 @@ var translation_sv={
     answer: "Svar",
     free_text_question: "Fritext-fråga",
     confused: "Förvirrad",
-    really_confused: "Verkligen förvirrad", 
+    really_confused: "Verkligen förvirrad",
     search: "Sök",
     new_course: "Skapa ny kurs",
     required: "Nödvändig",
@@ -82,16 +82,16 @@ var translation_sv={
     days: "dagar",
     ago: "sedan",
   },
-  tooltip:{    
+  tooltip:{
     list_view: "Listvy",
-    grid_view: "Rutnätsvy",    
+    grid_view: "Rutnätsvy",
   },
   button:{
     yes: 'Ja',
     no: 'Nej',
     next: "Nästa",
     submit: "Skicka in",
-    save: "Spara", 
+    save: "Spara",
     save_close: "Spara och stäng",
     close: "Stäng",
     delete: "Radera",
@@ -378,7 +378,7 @@ var translation_sv={
     survey:"@:global.survey",
     course_editor: "Redigera kurs",
     link_editor:"Redigera länk",
-    video_editor:"Redigera video", 
+    video_editor:"Redigera video",
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",
     quiz_editor: "Redigera Quiz",
@@ -445,11 +445,11 @@ var translation_sv={
         due_date: "Färdigdatum",
         quizzes:"@:global.quizzes",
         student_link_module:"Student-länk till modulen",
-        has_due_date: "Har färdigdatum", 
+        has_due_date: "Har färdigdatum",
         required:"@:global.required",
         in_order: "I ordning",
-        retries: "försök", 
-        student_link_quiz:"Student-länk till quiz"       
+        retries: "försök",
+        student_link_quiz:"Student-länk till quiz"
     },
     popover:{
         shown_in_graph: "Visas i resultatdiagram",
@@ -473,7 +473,7 @@ var translation_sv={
         please_choose_one_answer: "Välj minst ett svar",
         finish_before_proceeding:"Se klart tidigare videos innan du fortsätter",
         really_confused_use_question: "Du kan ställa en fråga så att läraren kan hjälpa dig.",
-    },    
+    },
     timeline:{
         timeline: "Tidslinje",
         slides: "Bilder",
@@ -500,9 +500,9 @@ var translation_sv={
         click_or_type_smallscreen: "Klicka eller skriv F för att gå ur helskärmsläge",
     },
     correct: "@:global.correct",
-    incorrect: "@:global.incorrect",    
-    confused: "@:global.confused", 
-    really_confused: "@:global.really_confused",   
+    incorrect: "@:global.incorrect",
+    confused: "@:global.confused",
+    really_confused: "@:global.really_confused",
     hover_for_details: "Peka på alternativen för mer information",
     click_for_details: "@:lectures.hover_for_details",
     multiple_correct: "Det kan finnas flera rätta svar",
@@ -589,10 +589,10 @@ var translation_sv={
         view_course_graph: "Visa slutförandestatus för alla videos och quizzar i kursen.",
     }
   },
-  quizzes:{    
+  quizzes:{
     used_up_all: "Använt upp alla",
     attempts: "försök",
-    attempt_number: "Försök nummer", 
+    attempt_number: "Försök nummer",
     must_choose_answer: "Måste välja minst ett svar",
     optional:"@:global.optional",
     already_submitted: "Du har lämnat in",
@@ -662,7 +662,7 @@ var translation_sv={
             click_to_copy: "Klicka för att kopiera",
         }
     },
-    list:{   
+    list:{
         finished: 'Avslutad',
         all_finished: 'Avslutade',
         all: "Alla",
@@ -699,6 +699,7 @@ var translation_sv={
     new:{
         button:{
             create_course: "Skapa kurs",
+            unselect:"Avmarkera"
         },
         copy_from_existing: "Kopiera data från befintlig kurs",
     },
@@ -707,7 +708,7 @@ var translation_sv={
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",
     short_name: "Kortnamn",
-    time_zone: "Tidszon",    
+    time_zone: "Tidszon",
     course_code: "Kurskod",
     course_name: "Kursens namn",
   },
@@ -755,7 +756,7 @@ var translation_sv={
         getting_started: "Komma igång",
         student:"För studenter",
         teacher:"För lärare",
-    },   
+    },
     feedback: "Ge feedback",
     teacher_forum: "Lärarforum",
     instruction_manual: "Bruksanvisning",
@@ -780,7 +781,7 @@ var translation_sv={
         customlink:"@:global.customlink",
         video: "@:global.video",
         video_desc: "Du kan lägga till quizfrågor ovanpå videon.",
-        quiz: "@:global.quiz",            
+        quiz: "@:global.quiz",
         survey: "@:global.survey",
         link_desc: "Länk till andra webbplatser eller sidor.",
         quiz_or_survey: "Quiz eller enkät",

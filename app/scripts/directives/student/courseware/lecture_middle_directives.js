@@ -46,12 +46,14 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
-							"<label >{{quiz.question}}:</label>"+
+							"<label style='font-size: 15px;padding-bottom: 10px;font-weight: bold;'>{{quiz.question}}:</label>"+
 							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'lectures.answer' : 'lectures.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
 					"</div></ng-form>",
-		link: function(scope, iElm, iAttrs, controller) {}
+		link: function(scope, iElm, iAttrs, controller) {
+      scope.studentAnswers = scope.studentAnswers || {}
+    }
 	};
 }]).directive('studentHtmlAnswer',['$log',function($log){
 	return {
@@ -129,13 +131,13 @@ angular.module('scalearAngularApp')
 				}	
 			})
 
-			if(scope.answer.correct){
-				scope.radioChange(scope.answer);
-			}
+			// if(scope.answer.correct){
+			// 	scope.radioChange(scope.answer);
+			// }
 
-			scope.getName= function(){
-				return "ocq"+scope.index+scope.$index
-			}
+			// scope.getName= function(){
+			// 	return "ocq"+scope.index+scope.$index
+			// }
 		}
 	}
 	
@@ -544,4 +546,18 @@ angular.module('scalearAngularApp')
       }
     }
   };
+}]).directive('markersTimeline',['$filter', function($filter){
+  return{
+    restrict:"A",
+    scope:{
+      data:'&',
+      seek:'&'
+    },
+    templateUrl: '/views/student/lectures/markers_timeline.html',
+    link:function(scope, element, attrs){
+      scope.item = scope.data()
+      scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
+      
+    }
+  }
 }])

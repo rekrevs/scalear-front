@@ -159,7 +159,8 @@ angular.module('scalearAngularApp')
     }
 }).filter("capitalize", function(){
   return function(s){
-    return s[0].toUpperCase() + s.slice(1);
+    if(s && s.length > 0 )
+      return s[0].toUpperCase() + s.slice(1);
   }
 }).filter("anonymous", function(){
   return function(s, role){

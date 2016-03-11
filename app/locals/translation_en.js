@@ -35,6 +35,8 @@ var translation_en={
     quizzes: "Quizzes",
     survey: "Survey",
     surveys: "Surveys",
+    marker: "Marker",
+    markers: "Markers",
     answer: "Answer",
     free_text_question: "Free Text Question",
     confused: "Confused",
@@ -368,14 +370,18 @@ var translation_en={
     explanation: "Explanation",
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
+    marker_time: "Marker Time",
+    start_time: "Start Time",
+    end_time: "End Time",
     incorrect_format_time: "Incorrect Format for Time",
     cannot_delete_alteast_one_answer: "Cannot delete, there must be alteast one answer",
     time_outside_range: "Time Outside Video Range",
     header: "Header",
     answer:"@:global.answer",
     type: "Type",
-    quiz:"@:global.quiz",
+    quiz:"@:global.quiz",    
     survey:"@:global.survey",
+    marker: "@:global.marker",
     course_editor: "Course Editor",
     link_editor:"Link Editor",
     video_editor:"Video Editor",
@@ -384,6 +390,8 @@ var translation_en={
     quiz_editor: "Quiz Editor",
     survey_editor: "Survey Editor",
     module_editor:"Module Editor",
+    title:"@:global.title",
+    annotation:"Annotation",
     tooltip:{
         invisible: "Not currently visible to students. Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
@@ -391,7 +399,8 @@ var translation_en={
         click_to_delete: "Click here to delete, click outside to close",
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
-        click_add_question:"Click or type i to add a question"
+        click_add_question:"Click or type 'i' to add a question",
+        click_add_marker:"Click or type 'm' to add a marker"
     },
     drag:{
         start: "Start",
@@ -444,6 +453,7 @@ var translation_en={
         appearance_date: "Appearance Date",
         due_date: "Due Date",
         quizzes:"@:global.quizzes",
+        markers: "Markers",
         student_link_module:"Student link to module",
         has_due_date: "has due date",
         required:"@:global.required",
@@ -457,6 +467,7 @@ var translation_en={
     },
     button:{
         add_video_quiz: "Add Video Quiz Here",
+        add_marker: "Add Marker",
         show_all_quizzes: "Show All Quizzes",
         add_content: "Add Content",
         add_answer: "Add Answer",
@@ -481,7 +492,9 @@ var translation_en={
         question:"@:global.question",
         confused:"@:global.confused",
         really_confused:"@:global.really_confused",
-        note:"@:global.note"
+        note:"@:global.note",
+        quiz:"@:global.quiz",
+        marker:"@:global.marker"
     },
     button:{
         ask_question: "Ask a Question",

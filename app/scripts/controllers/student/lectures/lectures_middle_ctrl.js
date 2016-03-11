@@ -176,8 +176,8 @@ angular.module('scalearAngularApp')
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
-        if($scope.lecture_player.controls.youtube)
-            $scope.total_duration-=1
+        // if($scope.lecture_player.controls.youtube)
+        //     $scope.total_duration-=1
         var duration_milestones = [25, 75]
         var quiz_time_offset = 0
         $scope.lecture.online_quizzes.forEach(function(quiz) {
@@ -185,7 +185,7 @@ angular.module('scalearAngularApp')
                 quiz.time = ($scope.total_duration-2) + quiz_time_offset
                 quiz_time_offset+=0.2
             }
-            $scope.lecture_player.controls.cue(quiz.time - 0.1, function() {                
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time-0.1), function(){
                 $scope.seek(quiz.time)
                 $scope.lecture_player.controls.pause()
                 $scope.closeReviewNotify()
@@ -215,6 +215,17 @@ angular.module('scalearAngularApp')
             })
         })
 
+        $scope.lecture.annotated_markers.forEach(function(marker){
+            if(marker.annotation){
+                $scope.lecture_player.controls.cue(marker.time,function(){
+                    showAnnotation(marker.annotation)
+                })
+                $scope.lecture_player.controls.cue(marker.time+5,function(){
+                    $scope.dismissAnnotation()
+                })
+            }            
+        })
+
         duration_milestones.forEach(function(milestone){
             $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function(){
                 updateViewPercentage(milestone)
@@ -231,7 +242,10 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
-
+        else{
+            $scope.lecture_player.controls.seek(0)
+            $scope.lecture_player.controls.pause()
+        }
     }
 
     var updateViewPercentage = function(milestone) {
@@ -399,8 +413,10 @@ angular.module('scalearAngularApp')
     } 
 
     $scope.lecture_player.events.waiting=function(){
-        $scope.video_ready=true
-        $scope.show_progressbar=true
+        if($rootScope.is_mobile){
+            $scope.video_ready=true
+            $scope.show_progressbar=true
+        }
     }
 
     var showNotification=function(msg, sub_msg, middle_msg){
@@ -494,8 +510,8 @@ angular.module('scalearAngularApp')
                     $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
                 }
                 if(data.flag && data.msg!="ask"){ // confused before but not third time - very confused            
-                    var elem=$scope.timeline['lecture'][$state.params.lecture_id].search_by_id(data.id, "confused");
-                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem].data.very=true;            
+                    var elem_index=$scope.timeline['lecture'][$state.params.lecture_id].getIndexById(data.id, "confused");
+                    $scope.timeline['lecture'][$state.params.lecture_id].items[elem_index].data.very=true;            
                 }
             }
         )
@@ -771,6 +787,14 @@ angular.module('scalearAngularApp')
         // $scope.last_fullscreen_state = null
         // $scope.last_video_state = null
         // $scope.last_timeline_state = null
+    }
+
+    $scope.dismissAnnotation=function(){
+        $scope.annotation = null
+    }
+
+    var showAnnotation=function(annotation){
+        $scope.annotation = annotation
     }
 
     init();

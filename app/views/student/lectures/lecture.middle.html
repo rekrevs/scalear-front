@@ -25,7 +25,7 @@
 							</center>
 						</span>
 						<video_container ng-if="passed_requirments" ng-class="container_class"screenfull active="fullscreen" style="width:100%;height:100%">
-								<youtube class="widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' ng-style="video_layer" style="margin: 0 auto;">
+								<youtube class="widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer" style="margin: 0 auto;">
 									<quiz ng-show="show_progressbar" ng-style="quiz_layer"  resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;">
 										<!-- ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready) || video_end" -->
 										<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
@@ -41,10 +41,17 @@
 										<div ng-if="selected_quiz.quiz_type != 'html'">
 										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
 										</div>
-										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;"><b><span translate>global.note</span>:</b> <span translate>lectures.messages.did_not_get_credit</span></div>
+										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;">
+											<b><span translate>global.note</span>:</b>
+											<span translate>lectures.messages.did_not_get_credit</span>
+										</div>
+										<div ng-show="annotation" style="position: absolute;bottom: 0;min-width: 50%;border: 1px groove #e6e6e6;padding: 5px;z-index: 1;font-size: 14px;border-radius: 5px;" class=" transparent-darkblue-hover ">
+											<a ng-click="dismissAnnotation()"><i class="color-white size-14 fi-x" style="top: 0;position: absolute;margin: 5px;float: right;right: 0;line-height: 0;"></i></a>
+											<div class="color-white" style="width: 97%;font-size:2.4vh"><b>{{annotation}}</b></div>
+										</div>
 									</quiz>
 								</youtube>
-								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]">
+								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="current_user.roles[0].id">
 									<div ng-show="video_end" style="position: relative;top: -78px;left: 47%;z-index:1031">
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>button.replay</button>
 								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>button.next</span></button>

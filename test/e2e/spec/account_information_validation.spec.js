@@ -9,13 +9,13 @@ var	info = new AccountInformation();
 var header = new Header()
 var params = browser.params;
 
-var screen_name = "teacher1"
-var fname = "teacher1"
-var lname = "sharklasers.com"
-var mail = "teacher1@sharklasers.com"
-var univer = "shark"
-var biog = "This is my biography it contains everything about me"
-var webs = "www.website.com"
+var screen_name = "test_teacher1"
+var fname = "teacher"
+var lname = "1"
+var mail = "teacher1@email.com"
+var univer = "test univerisity"
+// var biog = "This is my biography it contains everything about me"
+// var webs = "www.website.com"
 var password = "password"
 
 var screen_name_new = "screen teacher 001"
@@ -23,8 +23,8 @@ var fname_new = "Test_1"
 var lname_new = "teacher_1"
 var mail_new = "teacher1_1@email.com"
 var univer_new = "uni_1"
-var biog_new = "text w text_1"
-var webs_new = ".com_1"
+// var biog_new = "text w text_1"
+// var webs_new = ".com_1"
 var password_new = "password_1"
 
 describe("Check Teacher account information", function(){

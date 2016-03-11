@@ -298,7 +298,12 @@ angular.module('scalearAngularApp', [
                     return courseResolver.init($stateParams.course_id)
                 }]
             }
-        })           
+        })
+        .state('course.content_selector',{
+            url:'/content',
+            templateUrl: '/views/empty_view.html',
+            controller: 'contentSelectorCtrl',
+        })
         .state('course.module',{
             url:'/modules/:module_id',
             templateUrl: '/views/empty_view.html',
@@ -413,6 +418,11 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })
+        .state('course.module.student_inclass', {
+            url: '/student_inclass',
+            templateUrl: '/views/student/inclass/inclass.html',
+            controller: 'studentInclassCtrl'
+        })
         .state('course.module.courseware.quiz', {
             url: '/quizzes/:quiz_id',
             templateUrl: '/views/student/lectures/quiz.middle.html',
@@ -470,17 +480,17 @@ angular.module('scalearAngularApp', [
         })
         .state('show_shared', {
           url: '/show_shared',
-          templateUrl: '/views/shared.html',
+          templateUrl: '/views/teacher/shared/shared.html',
           controller: 'sharedCtrl'
         })
         .state('student_getting_started', {
           url: '/help/student/getting_started',
-          templateUrl: '/views/help/student_getting_started.html',
+          templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
         })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',
-          templateUrl: '/views/help/teacher_getting_started.html',
+          templateUrl: '/views/teacher/help/teacher_getting_started.html',
           controller: 'TeacherGettingStartedCtrl'
         })
 }])

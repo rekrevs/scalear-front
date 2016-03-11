@@ -1,27 +1,27 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval) {
+  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval','OnlineQuiz', function ($scope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval,OnlineQuiz) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.in_class')
     $scope.inclass_player={}
     $scope.inclass_player.events={} 
+    
     $scope.time_parameters={
       quiz: 3,
       question: 2
     } 
 
-  	$scope.display = function () {
+    $scope.display = function () {
         resetVariables()
         openModal()
         changeButtonsSize()
         $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
-        $scope.setQuizShortcuts()
+        $scope.setInclassShortcuts()
         screenfull.request();
         $scope.fullscreen = true;
         $scope.blurButtons();
-
         $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question;
         $scope.counter =  $scope.timer>0? 1 : 0;
         $scope.counting = true;
@@ -32,18 +32,22 @@ angular.module('scalearAngularApp')
             changeButtonsSize()
             $timeout(function(){
               $scope.adjustTextSize()
+              var video_width = angular.element('#inclass_video').height() * (16.0/9.0)
+              $scope.quiz_layer.width = video_width
+              $scope.quiz_layer.marginLeft =  (angular.element('#inclass_video').width() - video_width)/2.0
             })
-            $scope.$apply()
-        })
+            // $scope.$apply()
+          }
+        )
 
         document.addEventListener(screenfull.raw.fullscreenchange, function () {
-            if(!screenfull.isFullscreen){  
-                $scope.fullscreen = false              
-                $scope.exitBtn()
-                $scope.$apply()
-            }
+          if(!screenfull.isFullscreen){  
+            $scope.fullscreen = false              
+            $scope.exitBtn()
+            $scope.$apply()
+          }
         });
-  	};
+    };
 
     var resetVariables=function(){
       $scope.play_pause_class = "fi-play"
@@ -62,6 +66,7 @@ angular.module('scalearAngularApp')
       $scope.quality_set ='color-blue'
       $scope.counting = true;
       $scope.counting_finished=false
+      $scope.quiz_layer = {}
     }
 
     var init = function(){
@@ -73,19 +78,21 @@ angular.module('scalearAngularApp')
         },
         function(data){
           $log.debug(data)
+          $scope.module = angular.copy($scope.course.selected_module)
           angular.extend($scope, data)
           $scope.timeline['lecture'] = {}
           for(var lec_id in $scope.lectures){
-            $scope.timeline['lecture'][lec_id] = new Timeline()
+            $scope.timeline['lecture'][lec_id] = {all: new Timeline(), filtered: new Timeline()}
             for(var type in $scope.lectures[lec_id]){
-              for(var it in $scope.lectures[lec_id][type] ){
-                $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
+              for(var it in $scope.lectures[lec_id][type]){
+                
+                $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1]|| {})  
               }
-            }           
-          }
+            }
+            $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
+          }          
+          console.log("timeline for inclass", $scope.timeline)
           getSurveyCharts()
-          
-         
         },  
         function(){}
       )
@@ -102,12 +109,12 @@ angular.module('scalearAngularApp')
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
           $scope.review_survey_count = data.review_survey_count
           $scope.timeline["survey"]={}
-          for (var survey_id in $scope.quizzes ){
-            $scope.timeline["survey"][survey_id]=new Timeline()
+          for(var survey_id in $scope.quizzes){
+            $scope.timeline["survey"][survey_id]={'filtered':new Timeline()}
             for(var q_idx in $scope.quizzes[survey_id].questions){
               var q_id = $scope.quizzes[survey_id].questions[q_idx].id
               var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[survey_id].questions[q_idx].type : 'charts'
-              $scope.timeline['survey'][survey_id].add(0, type, $scope.quizzes[survey_id].answers[q_id])
+              $scope.timeline['survey'][survey_id]['filtered'].add(0, type, $scope.quizzes[survey_id].answers[q_id])
             }
           }
 
@@ -142,7 +149,6 @@ angular.module('scalearAngularApp')
 
 
     var openModal=function(){
-      $rootScope.changeError = true;
       angular.element("body").css("overflow","hidden");
       angular.element("#main").css("overflow","hidden");
       angular.element("html").css("overflow","hidden");
@@ -174,7 +180,8 @@ angular.module('scalearAngularApp')
       });
     }
 
-    $scope.exitBtn = function () {
+    $scope.exitBtn = function(){
+      exitInclassSession()
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()
@@ -182,7 +189,6 @@ angular.module('scalearAngularApp')
     };
 
     var cleanUp=function(){
-      $rootScope.changeError = false;
       angular.element("body").css("overflow","");
       angular.element("#main").css("overflow","");
       angular.element("html").css("overflow","");
@@ -218,13 +224,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.qualityBtn= function(){
-      var time = $scope.inclass_player.controls.getTime()
       if(!$scope.quality_set){
-        $scope.inclass_player.controls.changeQuality('hd720',time)
+        $scope.inclass_player.controls.changeQuality('hd720')
         $scope.quality_set='color-blue'
       }
       else{
-        $scope.inclass_player.controls.changeQuality(null,time)
+        $scope.inclass_player.controls.changeQuality('large')
         $scope.quality_set=null
 
       }
@@ -232,7 +237,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek=function(time){
-      $scope.inclass_player.controls.seek(time)
+      if($scope.selected_item.url){
+        if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
+          if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
+            $scope.inclass_player.controls.setStartTime(time)
+          $scope.lecture_url= $scope.selected_item.url
+          if($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
+            $timeout(function(){
+              $scope.inclass_player.controls.seek(time)
+            })
+          }
+         
+        }
+        else{
+          $scope.inclass_player.controls.seek(time)
+        }
+      }
     }
 
     $scope.skip=function(skip_time){
@@ -274,146 +294,224 @@ angular.module('scalearAngularApp')
         $scope.inclass_player.controls.pause()
     }
 
+    var setupInclassQuiz=function(sub_items){
+      var quiz_index
+      for(var item_index = 0; item_index < sub_items.length; item_index++){
+        var current_item = sub_items[item_index]
+        current_item.data.background = "lightgrey"
+        current_item.data.color = "black"
+        if(current_item.type=='inclass'){
+          current_item.data.inclass_title ='Self'
+          current_item.data.status = 2
+          current_item.data.background = "#008CBA"
+          current_item.data.color = "white"
+          
+          var start_item = {time:current_item.data.start_time, type:'marker', data: {time: current_item.data.start_time, status: 1}}
+          var end_item = {time:current_item.data.end_time, type:'marker', data: {time: current_item.data.end_time, status: 5}}
+          sub_items.splice(0, 0, start_item);
+          item_index++
+          sub_items.splice(sub_items.length, 0, end_item);
 
-    $scope.nextQuiz = function(){      
-      if($scope.module && $scope.module.items){
-        if($scope.item_itr < $scope.module.items.length){
-          if($scope.module.items[$scope.item_itr]){
-            $scope.selected_item = $scope.module.items[$scope.item_itr]
-            var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-            if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
-              $scope.timeline_itr+=1 
-              if($scope.timeline_itr!=0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id].items.length){
-                if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
-                  $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+          var group_quiz = angular.copy(current_item)
+          group_quiz.data.inclass_title ='Group'
+          group_quiz.data.status = 3
+          group_quiz.data.background = "#43AC6A"
+          quiz_index = ++item_index
+          sub_items.splice(quiz_index, 0, group_quiz);
+          continue;
+        }
+        if(quiz_index == item_index-1){
+          current_item.data.inclass_title ='Discussion'
+          current_item.data.status = 4
+        }
+        if(item_index>quiz_index){
+          current_item.data.background = "darkorange"
+          current_item.data.color = "white"
+        }
+      }
+      sub_items[0].data.inclass_title = "Intro"
+      sub_items[0].data.background = "lightgrey"
+      sub_items[0].data.color = "black"
+      console.log("done", sub_items)
+      return sub_items
+    }
+
+    var getSubItems=function(timeline, item){
+      var start_time, end_time, filtered_timeline_items
+      if(item.type=="charts" || item.type=="inclass"){
+        start_time = item.data.start_time 
+        end_time = item.data.end_time
+      }
+      else{
+        start_time = (item.time-15 < $scope.selected_item.start_time)? $scope.selected_item.start_time : item.time-15
+        end_time = (item.time+15 > $scope.selected_item.end_time)? $scope.selected_item.end_time : item.time+15
+      }
+      console.log("getSubItems item start end",item, start_time, end_time )
+      return timeline.getItemsBetweenTime(start_time, end_time)    
+    }
+
+    var setupSubItems=function(sub_items){
+      for(var item_index = 0; item_index < sub_items.length; item_index++){
+        var current_item = sub_items[item_index]
+        current_item.data.background = "lightgrey"
+        current_item.data.color = "black"
+        if(current_item.type!="markers"){
+          console.log("current_item.type", current_item.type)
+          sub_items[item_index].data.inclass_title = current_item.type=="charts"? "Quiz" : "Question"
+        }         
+      }
+      console.log("after setup SubItems",sub_items)
+      return sub_items
+    }
+
+    var goToSubItem=function(item){
+      $scope.selected_timeline_sub_item = item
+      $scope.seek(item.time)
+      if($scope.selected_timeline_item.type == 'inclass'){
+        if(item.data.status == 4){
+          console.log("I will get the inclass chart")
+          $scope.loading_chart = true
+          OnlineQuiz.getChartData({online_quizzes_id: $scope.selected_timeline_item.data.quiz_id}, function(resp){
+              $scope.selected_timeline_item.data.answers = resp.chart
+              console.log("resp.chart", resp.chart)
+              $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{colors:['rgb(0, 140, 186)','rgb(67, 172, 106)']}, 'formatInclassQuizChartData')
+          })
+        }
+        if(item.data.status == 2 || item.data.status == 3)
+          adjustQuizLayer($scope.selected_timeline_item.data.quiz_type)
+        else
+          adjustQuizLayer()
+
+        updateInclassSession($scope.selected_timeline_item.data.quiz_id, item.data.status)
+      }
+    }
+
+    $scope.nextSubItem=function(){
+      if($scope.isBlackScreenOn()){
+        $scope.hideBlackScreen()
+      }
+      if($scope.selected_item.class_name == 'lecture'){
+        var next_index = $scope.selected_timeline_item.sub_items.indexOf($scope.selected_timeline_sub_item) + 1
+        if(next_index < $scope.selected_timeline_item.sub_items.length){
+          goToSubItem($scope.selected_timeline_item.sub_items[next_index])
+          return
+        }
+      }
+      $scope.nextItem()
+    }
+
+    $scope.prevSubItem=function(){
+      if($scope.isBlackScreenOn()){
+        $scope.hideBlackScreen()
+      }
+      if($scope.selected_item.class_name == 'lecture'){
+        var prev_index = $scope.selected_timeline_item.sub_items.indexOf($scope.selected_timeline_sub_item) - 1
+        if(prev_index >= 0){
+          goToSubItem($scope.selected_timeline_item.sub_items[prev_index])
+          return
+        }
+      }
+      $scope.prevItem()
+    }
+
+    $scope.nextItem = function(){      
+      if($scope.item_itr < 0 ){
+        $scope.item_itr = 0
+        $scope.timeline_itr+=1
+      }
+      console.log("next items", $scope.timeline_itr)
+      if($scope.item_itr >= 0 && $scope.item_itr < $scope.module.items.length){
+        $scope.selected_item = $scope.module.items[$scope.item_itr]
+        var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
+        if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
+          $scope.timeline_itr+=1
+          if($scope.timeline_itr > 0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id]['filtered'].items.length){
+            var current_timeline_item = $scope.timeline[type][$scope.selected_item.id]['filtered'].items[$scope.timeline_itr]
+            if(current_timeline_item != $scope.selected_timeline_item){
+              if($scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass'){
+                updateInclassSession($scope.selected_timeline_item.data.quiz_id,0)
+              }
+              $scope.selected_timeline_item = angular.copy(current_timeline_item)
+              console.log("selected_timeline_item", $scope.selected_timeline_item)
+              if(type == 'lecture'){
+                $scope.selected_timeline_item.sub_items = getSubItems($scope.timeline[type][$scope.selected_item.id]['all'], current_timeline_item)
+                console.log("returned subitems", $scope.selected_timeline_item.sub_items)
+                var current_timeline_index
+                
+                if($scope.selected_timeline_item.type == 'inclass'){
+                  current_timeline_index = 0
+                  $scope.selected_timeline_item.sub_items = setupInclassQuiz($scope.selected_timeline_item.sub_items)
                 }
                 else{
-                  $scope.nextQuiz()
-                  return
+                  current_timeline_index = $scope.selected_timeline_item.sub_items.indexOf(current_timeline_item)
+                  $scope.selected_timeline_item.sub_items = setupSubItems($scope.selected_timeline_item.sub_items)
                 }
-                             
-                if($scope.selected_item.url){
-                  if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                    if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
-                      $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
-                    $scope.lecture_url= $scope.selected_item.url
-                    if ($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
-                      $timeout(function(){
-                        $scope.seek($scope.selected_timeline_item.time)
-                      })
-                    }
-                  }
-                  else{
-                    $timeout(function(){
-                      $scope.seek($scope.selected_timeline_item.time)
-                    })
-                  }
-                }
-
-                if($scope.selected_timeline_item.type == "charts"){
-                  if(type == 'lecture')
-                    $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
-                  else
-                    $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
-                }
+                goToSubItem($scope.selected_timeline_item.sub_items[current_timeline_index])                      
               }
-              else{
-                $scope.item_itr+=1
-                $scope.timeline_itr=0
-                $scope.nextQuiz()
-              }
+              if($scope.selected_timeline_item.type == "charts")
+                $scope.chart = (type == 'lecture')? $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
             }
           }
           else{
             $scope.item_itr+=1
-            $scope.timeline_itr=0
-            $scope.nextQuiz()
+            $scope.timeline_itr = $scope.item_itr<$scope.module.items.length? 0 : $scope.timeline_itr
+            $scope.nextItem()
           }
         }
-        else
-          $scope.showBlackScreen('inclass.blackscreen_done')
-      }
-
-      $timeout(function(){
-        $scope.adjustTextSize()
-      })
-      $scope.blurButtons()
-
-      $log.debug("timeline item")
-      $log.debug($scope.selected_timeline_item)
-    }
-
-    $scope.prevQuiz = function(){
-      if($scope.isBlackScreenOn()){
-        $scope.hideBlackScreen()
       }
       else{
-        if($scope.module && $scope.module.items){
-          if($scope.item_itr >= 0){
-            if($scope.module.items[$scope.item_itr]){
-              $scope.selected_item = $scope.module.items[$scope.item_itr]
-              var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-              if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
-                $scope.timeline_itr-=1 
-                if($scope.timeline_itr > 0){
-                  if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
-                    $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                    $scope.lecture_name = $scope.module.items[$scope.item_itr].name
-                  }
-                  else{             
-                    $scope.prevQuiz()
-                    return
-                  }
-                               
-                  if($scope.selected_item.url){
-                    if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                      $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
-                      $scope.lecture_url= $scope.selected_item.url
-                    }
-                    else{
-                      $timeout(function(){
-                        $scope.seek($scope.selected_timeline_item.time)
-                      })
-                    }
-                  }
+        $scope.item_itr = $scope.module.items.length
+        $scope.showBlackScreen('inclass.blackscreen_done')
+      }
 
-                  if($scope.selected_timeline_item.type == "charts"){
-                    if(type == 'lecture')
-                      $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
-                    else
-                      $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
-                  }
+      $timeout(function(){
+        $scope.adjustTextSize()
+      })
 
+      $scope.blurButtons()
+    }
+
+    $scope.prevItem = function(){
+      if($scope.item_itr >= $scope.module.items.length)
+        $scope.item_itr=$scope.module.items.length - 1
+      console.log("prevItem", $scope.timeline_itr)
+      if($scope.item_itr >= 0){
+        $scope.selected_item = $scope.module.items[$scope.item_itr]
+        var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
+        if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
+          $scope.timeline_itr-=1 
+          if($scope.timeline_itr > 0){
+            var current_timeline_item = $scope.timeline[type][$scope.selected_item.id]['filtered'].items[$scope.timeline_itr]
+            if(current_timeline_item != $scope.selected_timeline_item){
+              if($scope.selected_timeline_item.type == 'inclass'){
+                updateInclassSession($scope.selected_timeline_item.data.quiz_id,0)
+              }
+              $scope.selected_timeline_item = angular.copy(current_timeline_item)
+              if(type == 'lecture'){
+                $scope.selected_timeline_item.sub_items = getSubItems($scope.timeline[type][$scope.selected_item.id]['all'], current_timeline_item)
+                console.log("returned subitems", $scope.selected_timeline_item.sub_items)
+                var current_timeline_index
+                if($scope.selected_timeline_item.type == 'inclass'){
+                  current_timeline_index = 0
+                  $scope.selected_timeline_item.sub_items = setupInclassQuiz($scope.selected_timeline_item.sub_items)
                 }
                 else{
-                  $scope.item_itr-=1
-                  if($scope.module.items[$scope.item_itr])
-                  $scope.selected_item = $scope.module.items[$scope.item_itr]
-                  var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-                  if($scope.item_itr < 0){
-                    $scope.timeline_itr= 0
-                  }
-                  else
-                    $scope.timeline_itr= $scope.timeline[type][$scope.selected_item.id].items.length
-
-                  $scope.prevQuiz()
+                  current_timeline_index = $scope.selected_timeline_item.sub_items.indexOf(current_timeline_item)
+                  $scope.selected_timeline_item.sub_items = setupSubItems($scope.selected_timeline_item.sub_items)
                 }
+                goToSubItem($scope.selected_timeline_item.sub_items[current_timeline_index])                      
               }
+              if($scope.selected_timeline_item.type == "charts")
+                $scope.chart = (type == 'lecture')? $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
             }
-            else{
-                $scope.item_itr-=1
-                if($scope.module.items[$scope.item_itr])
-                  $scope.selected_item = $scope.module.items[$scope.item_itr]
-                var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-                if($scope.item_itr < 0){
-                  $scope.timeline_itr= 0
-                }
-                else
-                  $scope.timeline_itr= $scope.timeline[type][$scope.selected_item.id].items.length
-
-                $scope.prevQuiz()
-            }
+          }
+          else{
+            $scope.item_itr-=1
+            if($scope.module.items[$scope.item_itr])
+              $scope.selected_item = $scope.module.items[$scope.item_itr]
+            var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
+            $scope.timeline_itr= $scope.item_itr < 0? 0 : $scope.timeline[type][$scope.selected_item.id]['filtered'].items.length
+            $scope.prevItem()
           }
         }
       }
@@ -423,12 +521,25 @@ angular.module('scalearAngularApp')
       $scope.blurButtons()
     }
 
-     $scope.createChart = function(data, options, formatter) {
+    var adjustQuizLayer=function(quiz_type){
+        if(quiz_type == 'html') {    
+          $scope.quiz_layer.backgroundColor = "white"
+          $scope.quiz_layer.overflowX = 'hidden'
+          $scope.quiz_layer.overflowY = 'auto'
+        }
+        else {
+          $scope.quiz_layer.backgroundColor = ""
+          $scope.quiz_layer.overflowX = ''
+          $scope.quiz_layer.overflowY = ''
+        }
+    }
+
+    $scope.createChart = function(data, options, formatter) {
       var chart = {
         type: "ColumnChart",
         options :{
             "colors": ['green', 'gray'],
-            "isStacked": "true",
+            "isStacked": "false",
             "fill": 25,
             "height": 180,
             "backgroundColor": 'beige',
@@ -454,8 +565,8 @@ angular.module('scalearAngularApp')
    $scope.formatLectureChartData = function(data) {
     var formated_data = {}
     formated_data.cols =
-        [
-          {
+      [
+        {
             "label": $translate('global.students'),
             "type": "string"
         }, 
@@ -514,6 +625,60 @@ angular.module('scalearAngularApp')
     return formated_data
   }
 
+
+  $scope.formatInclassQuizChartData = function(data) {
+    var formated_data = {}
+    formated_data.cols =
+      [
+        {
+            "label": $translate('global.students'),
+            "type": "string"
+        }, 
+        {
+            "label": 'Self',
+            "type": "number"
+        }, 
+         {
+          "type":"string",
+          "p":{
+            "role":"tooltip", 
+            "html": true
+          }
+        },
+        {
+            "label": 'Group',
+            "type": "number"
+        }, 
+        {
+          "type":"string",
+          "p":{
+            "role":"tooltip", 
+            "html": true
+          }
+        }
+      ]
+    formated_data.rows = []
+    for (var ind in data) {
+      var text = data[ind][2],
+      self_count = data[ind][0] || 0, 
+      group_count = data[ind][3] || 0,
+      self = Math.floor(( self_count /10) *100), 
+      group = Math.floor(( group_count /10) *100),      
+      tooltip_text = "<div style='padding:8px'><b>"+text+"</b><br>Self: "+self_count+", Group: "+group_count+"</div>"
+      var row = {
+          "c": [
+            {"v": text}, 
+            {"v": self}, 
+            {"v": tooltip_text},
+            {"v": group}, 
+            {"v": tooltip_text}
+          ]
+      }
+      formated_data.rows.push(row)
+    }
+    return formated_data
+  }
+
   $scope.formatSurveyChartData = function(data){
     var formated_data ={}
     formated_data.cols=
@@ -536,29 +701,40 @@ angular.module('scalearAngularApp')
     return formated_data
   }
 
-  $scope.setQuizShortcuts=function(){
+  $scope.setInclassShortcuts=function(){
     $scope.removeShortcuts()
-    shortcut.add("Page_up",function() {       
-       $scope.prevQuiz()
-       $scope.$apply()
-    },{"disable_in_input" : false, 'propagate':false});
 
     shortcut.add("Right",function() {
-       $scope.nextQuiz()
+       $scope.nextSubItem()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
     shortcut.add("Page_down",function() {
-      $scope.nextQuiz()
+      $scope.nextSubItem()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
     shortcut.add("Left",function() {
-       $scope.prevQuiz()
+       $scope.prevSubItem()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
-     shortcut.add("z",function() {
+    shortcut.add("Page_up",function() {       
+       $scope.prevSubItem()
+       $scope.$apply()
+    },{"disable_in_input" : false, 'propagate':false});
+    
+    shortcut.add("Up",function() {       
+       $scope.prevItem()
+       $scope.$apply()
+    },{"disable_in_input" : false, 'propagate':false});
+
+    shortcut.add("Down",function() {
+      $scope.nextItem()
+       $scope.$apply()
+    },{"disable_in_input" : false, 'propagate':false});
+
+    shortcut.add("z",function() {
       if($scope.video_class=='original_video')
         $scope.setZoomClass()
       else
@@ -566,7 +742,7 @@ angular.module('scalearAngularApp')
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
-     shortcut.add("b",function() {
+    shortcut.add("b",function() {
        $scope.toggleBlackScreen('inclass.blackscreen_close')
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
@@ -585,7 +761,6 @@ angular.module('scalearAngularApp')
        $scope.muteBtn()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
-
   }
 
   $scope.removeShortcuts=function(){
@@ -716,6 +891,30 @@ angular.module('scalearAngularApp')
         $scope.timer_interval = $interval($scope.timerCountdown,1000);
         $scope.counting = true;
       }
+  }
+
+  var updateInclassSession=function(quiz_id, status){
+    console.log("status update!",status)
+    $scope.inclass_session = status
+    if(status>=0 && status<=5){
+      OnlineQuiz.updateInclassSession(
+        {online_quizzes_id: quiz_id},
+        {status: status}
+      )
+    }
+  }
+
+  var exitInclassSession=function(){
+    Module.updateAllInclassSessions(
+      { course_id: $stateParams.course_id,
+        module_id: $stateParams.module_id 
+      },{}
+    )
+  }
+
+  $scope.chartReady=function(){
+    $scope.loading_chart=false
+    $(window).resize()
   }
 
   init();

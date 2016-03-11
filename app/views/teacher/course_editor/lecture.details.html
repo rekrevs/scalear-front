@@ -18,7 +18,22 @@
           <i class='fi-info' tooltip='{{"editor.tooltip.video_info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <big-area id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
+            <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
+        </td>
+      </tr>
+
+      <tr>
+        <td class="right-border small-4">Start/Stop</td>
+        <td>
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>Start:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>
+          </div>
+          <br />
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>End:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; color: #555;">{{lecture.end_time | format}}</div>
+          </div>
         </td>
       </tr>
       <tr>
@@ -112,12 +127,20 @@
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
+  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items|filter:{type:'quiz'}).length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.quizzes</div>
       </div>              
     </accordion-heading>
     <quiz_list />
+  </accordion-group>
+  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items| filter:{type:'marker'}).length">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div class="show-inline" translate>editor.details.markers</div>
+      </div>              
+    </accordion-heading>
+    <marker_list />
   </accordion-group>
 </accordion>

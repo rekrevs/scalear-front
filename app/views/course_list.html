@@ -42,10 +42,8 @@
 				  	</ul>
                     
                     <!-- Button for adding new course -->
-				    <a class="button tiny right green" ng-hide="!courses" ui-sref="new_course" translate>courses.list.button.new_course</a><br />
+				    <a class="button tiny right green" ui-sref="new_course" translate>courses.list.button.new_course</a><br />
 				</div> 
-                
-                
                 
 			</span>
             
@@ -57,6 +55,8 @@
 		<div ng-show="courses && !courses.length">
 			<center  style="height:70px">
 				<h5 class="muted" translate>courses.list.messages.no_courses</h5>
+                <br>
+                <a class="button tiny green" ui-sref="new_course" translate>courses.list.button.new_course</a>
 			</center>
 		</div>
 		<br />

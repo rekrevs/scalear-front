@@ -173,7 +173,8 @@ angular.module('scalearAngularApp')
 
     $scope.updateLectureUrl= function(){
         $scope.lecture.aspect_ratio = "widescreen"
-        if($scope.lecture.url){
+        $scope.lecture.url = $scope.lecture.url.trim()
+        if($scope.lecture.url && $scope.lecture.url!="none" && $scope.lecture.url!="http://"){
             var type = $scope.isYoutube($scope.lecture.url)
             if(type){
                 $log.debug('type initialized')
@@ -196,6 +197,8 @@ angular.module('scalearAngularApp')
             checkToTrim()
             // startTrimVideo()
         }
+        else
+          $scope.lecture.url = "none"
     }
 
     $scope.updateSlidesUrl = function() {

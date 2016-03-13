@@ -475,7 +475,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.deleteQuizButton = function(quiz) {
-      closeQuizMode()
+      if($scope.selected_quiz == quiz)
+        closeQuizMode()
       $scope.deleteQuiz(quiz)
     }
 
@@ -538,7 +539,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.deleteMarkerButton = function(marker) {
-      $scope.closeMarkerMode()
+      if($scope.selected_marker == marker)
+        $scope.closeMarkerMode()
       $scope.deleteOnlineMarker(marker)
     }
 

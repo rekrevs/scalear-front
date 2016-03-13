@@ -292,8 +292,12 @@ angular.module('scalearAngularApp')
             }
             var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
                 $scope.lecture = $scope.data
+                $scope.submitting = false
                 $scope.addQuiz=function(quiz_type, question_type){
-                    $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
+                    if(!$scope.submitting){
+                        $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
+                        $scope.submitting = true
+                    }
                     $modalInstance.close()
                 }
               $scope.cancel = $modalInstance.dismiss

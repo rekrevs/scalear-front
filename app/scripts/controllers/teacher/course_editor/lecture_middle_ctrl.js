@@ -253,13 +253,22 @@ angular.module('scalearAngularApp')
     var getQuizData = function() {
       Lecture.getQuizData({ "course_id": $stateParams.course_id, "lecture_id": $scope.lecture.id, "quiz": $scope.selected_quiz.id },
         function(data) { //success
-          $log.debug(data)
-          $scope.selected_quiz.answers = data.answers
-          $log.debug($scope.selected_quiz)
-          if ($scope.selected_quiz.question_type.toLowerCase() == "drag") {
-            $scope.allPos = mergeDragPos(data.answers)
-            $log.debug($scope.allPos)
-          }
+          $scope.selected_quiz.answers= data.answers
+					if($scope.selected_quiz.question_type.toLowerCase()=="drag")
+						$scope.allPos=mergeDragPos(data.answers)
+
+					if($scope.selected_quiz.question_type.toLowerCase() == "free text question"){
+						var answer_width = 250
+			 			var answer_height= 100
+			 			var element = angular.element("#ontop")
+			 			var top = element.height() / 3
+			 			var left = element.width() / 4
+						var the_top = top / element.height()
+		      	var the_left= left / element.width()
+			     	var the_width = answer_width/element.width();
+		      	var the_height= answer_height/(element.height());
+		      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
+	      	}
         },
         function() {}
       );

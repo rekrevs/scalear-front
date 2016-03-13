@@ -461,7 +461,7 @@ angular.module('scalearAngularApp')
       template: "<div>" +
         "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div>" +
-        "<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>Student Answer Here...</h6>" +
+				"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
         "</div>" +
         "</div>" +
         "</div>",

@@ -121,22 +121,22 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/create_course.spec.js',
-        // 'test/e2e/spec/fill_course.spec.js',
-        'test/e2e/spec/course_information_validation.spec.js',
-        // 'test/e2e/spec/account_information_validation.spec.js',
-        // 'test/e2e/spec/enrollment_help.spec.js',
-        // 'test/e2e/spec/course_editor_basic.spec.js',
-        // 'test/e2e/spec/course_editor_copy.spec.js',
-        // 'test/e2e/spec/course_editor_sharing.spec.js',
-        // 'test/e2e/spec/module_statistics.spec.js',        
-        // 'test/e2e/spec/announcements.spec.js',
-        // 'test/e2e/spec/teacher-managment.spec.js',
-        // 'test/e2e/spec/students_solve_course.spec.js',
-        // 'test/e2e/spec/discussions.spec.js',
-        // 'test/e2e/spec/notes.spec.js',
-        // // // 'test/e2e/spec/progress-module.spec.js'
-        // 'test/e2e/spec/delete_course.spec.js'
+        'test/e2e/spec/create_course.spec.js', // Done
+        'test/e2e/spec/fill_course.spec.js',// Done
+        'test/e2e/spec/course_information_validation.spec.js',// Done
+        'test/e2e/spec/account_information_validation.spec.js',// Done
+        'test/e2e/spec/enrollment_help.spec.js',// Done
+        'test/e2e/spec/course_editor_basic.spec.js',// Done
+        'test/e2e/spec/course_editor_copy.spec.sj',// Done
+        'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        'test/e2e/spec/module_statistics.spec.js', // Done      
+        'test/e2e/spec/announcements.spec.js',  // 
+        'test/e2e/spec/teacher-managment.spec.js',// Done
+        'test/e2e/spec/students_solve_course.spec.js', //Done
+        'test/e2e/spec/notes.spec.js',
+        'test/e2e/spec/discussions.spec.js',  //Done
+        // 'test/e2e/spec/progress-module.spec.js'
+        'test/e2e/spec/delete_course.spec.js'
    
    //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  

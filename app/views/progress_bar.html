@@ -16,7 +16,7 @@
             <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.75 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
 
             <span ng-repeat="element in timeline.items" ng-hide="editing=='video'">
-                <div ng-if="element.type=='marker'" class="progress-events" ng-style="{'left':((element['time']/duration)*100)-0.25+'%'}" style="z-index: 1;">
+                <div ng-if="element.type=='marker'" class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-0.25+'%'}" style="z-index: 1;">
                     <span class="progress-events" style="background-color: lightgray;" tooltip="{{element.data.title}}"  tooltip-append-to-body="true"></span>
                 </div>
 

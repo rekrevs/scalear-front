@@ -313,8 +313,8 @@ angular.module('scalearAngularApp')
       $scope.inner_highlight_index = 0
     }
 
-  	$scope.updateHideQuiz = function(quiz) {
-      var num = (quiz.data.show? -1 : 1)
+  	$scope.updateHideQuiz = function(quiz, hide) {
+      var num = (hide? -1 : 1)
       if(quiz.data.inclass){
         $scope.inclass_quizzes_time+= num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion)/60
         $scope.inclass_quizzes_count+= num
@@ -328,31 +328,9 @@ angular.module('scalearAngularApp')
         },
         {
           quiz: quiz.data.id,
-          hide: quiz.data.show
+          hide: hide
         })
     }
-
-    //  $scope.updateHideQuiz = function(quiz, lec_id) {
-    //   console.log(quiz)
-    //   var num = (quiz.data.show? -1 : 1)
-    //   if(quiz.type == "inclass"){
-    //     $scope.inclass_quizzes_time+= num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion)/60
-    //     $scope.inclass_quizzes_count+= num
-    //   }
-    //   else
-    //     $scope.review_quizzes_count+= num
-
-    //   Module.hideQuiz({
-    //     course_id: $stateParams.course_id,
-    //     module_id: $stateParams.module_id
-    //   },{
-    //     quiz: quiz.data.id,
-    //     hide: quiz.data.show
-    //   },
-    //   function(){
-    //     checkDisplayInclass()
-    //   })
-    // }
 
     $scope.updateHideQuestion=function(id, value){
     	if(value)

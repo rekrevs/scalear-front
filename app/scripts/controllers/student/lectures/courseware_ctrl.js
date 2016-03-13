@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('coursewareCtrl', ['$scope','$stateParams', '$log','Module','Timeline','Page','$state', function ($scope, $stateParams, $log, Module, Timeline, Page, $state) {
-	
+
 	Page.setTitle('navigation.lectures');
   	Page.startTour();
 
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
     	$log.debug("items are")
     	$log.debug($scope.module_items)
 	    Module.getStudentModule(
-	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, 
+	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id},
             function(data){
                 $scope.module_lectures= JSON.parse(data.module_lectures);
 
@@ -44,13 +44,13 @@ angular.module('scalearAngularApp')
                     for(var i in lec.notes){
                         $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
                     }
-                    for(var i in lec.annotated_markers){
-                        $scope.timeline['lecture'][lec.id].add(lec.annotated_markers[i].time, "marker", lec.annotated_markers[i])
+                    for(var i in lec.titled_markers){
+                        $scope.timeline['lecture'][lec.id].add(lec.titled_markers[i].time, "marker", lec.titled_markers[i])
                     }
                 }
                 $log.debug("timeline",$scope.timeline)
                 showModuleCourseware($scope.module_obj[$stateParams.module_id])
-                
+
             }
         );
 	}
@@ -62,9 +62,9 @@ angular.module('scalearAngularApp')
 	        if(!$state.params.lecture_id && !$state.params.quiz_id){
 	          Module.getLastWatched(
 	            {
-	            	course_id: $stateParams.course_id, 
+	            	course_id: $stateParams.course_id,
 	            	module_id: module.id
-	            }, 
+	            },
 	            function(data){
 	              if(data.last_watched != -1){
 	                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
@@ -72,11 +72,11 @@ angular.module('scalearAngularApp')
 	              else{
 	                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
 	              }
-	          }) 
-	        } 
+	          })
+	        }
 	    }
 	    else
-	    	$state.go('course.course_information')	
+	    	$state.go('course.course_information')
   	}
 
 }]);

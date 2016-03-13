@@ -3,14 +3,14 @@
 angular.module('scalearAngularApp')
 .directive('quizList',function(){
 	return {
-		restrict: 'E', 
+		restrict: 'E',
 		templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
 		// controller: 'lectureQuizListCtrl'
 	};
 })
 .directive('markerList',function(){
 	return {
-		restrict: 'E', 
+		restrict: 'E',
 		templateUrl: '/views/teacher/course_editor/lecture.middle.marker_list.html',
 		// controller: 'lectureMarkerListCtrl'
 	};
@@ -19,12 +19,12 @@ angular.module('scalearAngularApp')
 	return {
 		transclude: true,
 		replace:true,
-		restrict: 'E', 
+		restrict: 'E',
 		template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 	};
 })
 .directive('quizEditPanel',['$timeout','$q','OnlineQuiz','$translate',function($timeout, $q, OnlineQuiz, $translate){
-	return {		
+	return {
 		 restrict: 'E',
 		 template: '<div id="editing">'+
 						'<h6 class="row no-margin color-wheat wheat">'+
@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
 							'</div>'+
 							'</span>'+
 							'<delete_button size="big" action="deleteQuizButton(selected_quiz)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
-							'<button id="save_quiz_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
+							'<button id="save_quiz_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs) {
@@ -115,9 +115,9 @@ angular.module('scalearAngularApp')
 				OnlineQuiz.update(
 					{online_quizzes_id: quiz.id},
 					{online_quiz:{
-						time:quiz.time, 
-						start_time:quiz.start_time, 
-						end_time:quiz.end_time, 
+						time:quiz.time,
+						start_time:quiz.start_time,
+						end_time:quiz.end_time,
 						question:quiz.question,
 						inclass: quiz.inclass
 					},
@@ -129,9 +129,9 @@ angular.module('scalearAngularApp')
 				);
 			}
 
-		 	var validateTime=function(time) { 		
+		 	var validateTime=function(time) {
 				var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
-				if(int_regex.test(time)) { 
+				if(int_regex.test(time)) {
 				    var hhmm = time.split(':'); // split hours and minutes
 				    var hours = parseInt(hhmm[0]); // get hours and parse it to an int
 				    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
@@ -149,7 +149,7 @@ angular.module('scalearAngularApp')
 			   		return $translate('editor.incorrect_format_time')
 			    }
 			}
-			
+
 			var validateName= function(quiz){
 				var d = $q.defer();
 			    var doc={}
@@ -195,7 +195,7 @@ angular.module('scalearAngularApp')
 						updateOnlineQuiz(quiz)
 						scope.saveQuizBtn({exit:true})
 					}
-				})				
+				})
 			}
 
 			scope.updateQuizStartTime=function(){
@@ -221,7 +221,7 @@ angular.module('scalearAngularApp')
 	};
 }])
 .directive('markerEditPanel',['$timeout','$q','$translate','OnlineMarker',function($timeout, $q, $translate, OnlineMarker){
-	return {		
+	return {
 		 restrict: 'E',
 		 template: '<div>'+
 						'<h6 class="row no-margin color-wheat wheat">'+
@@ -246,18 +246,18 @@ angular.module('scalearAngularApp')
 								'</div>'+
 							'</div>'+
 							'<delete_button size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
-							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>'+ 
+							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>'+
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs){
 			$timeout(function() {
 	            element.find('.marker_name').select();
-	        });       	
+	        });
 		}
 	};
 }])
 .directive('videoEditPanel',['$rootScope',function($rootScope){
-	return {		
+	return {
 		 restrict: 'E',
 		 template: '<div>'+
 						'<h6 class="row no-margin color-wheat wheat">'+
@@ -272,13 +272,13 @@ angular.module('scalearAngularApp')
 									'<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.end_time | format}}</div>'+
 								'</div>'+
 							'</div>'+
-							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="closeTrimVideo()" translate>events.done</button>'+ 
+							'<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="closeTrimVideo()" translate>events.done</button>'+
 						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs){
 			scope.closeTrimVideo=function(){
 		        $rootScope.$broadcast("close_trim_video")
-		    }    	
+		    }
 		}
 	};
 }])
@@ -314,14 +314,14 @@ angular.module('scalearAngularApp')
 			}
 
 			scope.calculatePosition=function(){
-				var ontop=angular.element('.ontop');		
+				var ontop=angular.element('.ontop');
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height());
 				scope.calculateSize()
 			}
 
 			scope.calculateSize=function(){
-				var ontop=angular.element('.ontop');	
+				var ontop=angular.element('.ontop');
 				scope.data.width= element.width()/ontop.width();
 				scope.data.height= element.height()/(ontop.height());
 			}
@@ -335,14 +335,14 @@ angular.module('scalearAngularApp')
 					corr_ans.correct=true
 					$rootScope.$emit("radioChange")
 				}
-				
+
 			}
 			scope.selectField=function(){
 				$timeout(function(){
 					var elem = element.find('textarea')[0]
 					if(elem)
 						elem.select()
-				})				
+				})
 			}
 			scope.updateValues= function(){
 				scope.values=0
@@ -366,17 +366,17 @@ angular.module('scalearAngularApp')
 			scope.answerDragStart=function(){
 				angular.element(element.children()[0]).popover('hide')
 			}
-	
+
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
 
-			scope.answerClass = "component dropped answer_img"	
+			scope.answerClass = "component dropped answer_img"
 
 			var template =""
 			if(scope.quiz.quiz_type == 'survey')
-				template = "<form name='aform'>"+								
-								"<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>"+ 
+				template = "<form name='aform'>"+
+								"<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>"+
 								"<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
@@ -388,7 +388,7 @@ angular.module('scalearAngularApp')
 								"<input id='correct_checkbox' class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
 								"<label class='with-small-margin-top'>"+
 									"<span translate>editor.answer</span>"+
-									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>"+ 
+									"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>"+
 									"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 									"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>"+
 								"</label>"+
@@ -411,9 +411,9 @@ angular.module('scalearAngularApp')
             	instant_show:!scope.data.id,
             	container: 'body',
             }
-            
+
             scope.$watch('quiz.answers', function(){
-				scope.updateValues();	
+				scope.updateValues();
 			},true)
 
 			scope.setAnswerColor()
@@ -455,15 +455,15 @@ angular.module('scalearAngularApp')
 				$log.debug(scope.area_width+", "+scope.area_height)
 				scope.data.width= main.width()/ontop.width();
 				scope.data.height= main.height()/(ontop.height());
-			}	
+			}
 
 			scope.selectField=function(){
 				$timeout(function(){
 					element.find('textarea')[0].select()
-				})				
+				})
 			}
 
-			if(scope.data.pos == null){	
+			if(scope.data.pos == null){
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				scope.data.pos = max ==-Infinity? -1 : max+1
@@ -488,11 +488,11 @@ angular.module('scalearAngularApp')
 							'<label>'+
 								'<span translate>editor.drag.instruction</span>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.answer" />'+
-							'</label>'+	
+							'</label>'+
 							'<label>'+
 								'<span translate>editor.drag.correct</span>:'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
-							'</label>'+							
+							'</label>'+
 							'<label ng-repeat=\'num in list|filter:"!"+data.pos\' >'+
 								'<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
@@ -513,8 +513,8 @@ angular.module('scalearAngularApp')
             }
 
             angular.element(element.children()[0]).resizable({
-            	containment: ".videoborder",  
-            	minHeight:40, 
+            	containment: ".videoborder",
+            	minHeight:40,
             	minWidth:40,
 		  		stop: scope.calculateSize
         	});
@@ -527,7 +527,7 @@ angular.module('scalearAngularApp')
 		 template: "<div>"+
 		 				"<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div>"+
-	 							"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>Student Answer Here...</h6>"+
+	 							"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
 	 						"</div>"+
 	 					"</div>"+
  					"</div>",
@@ -550,8 +550,8 @@ angular.module('scalearAngularApp')
 			console.log(scope.data)
 
 			angular.element(element.children()[0]).resizable({
-            	containment: ".videoborder",  
-            	minHeight:40, 
+            	containment: ".videoborder",
+            	minHeight:40,
             	minWidth:40,
 		  		stop: scope.calculateSize
         	});
@@ -573,8 +573,8 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		templateUrl: '/views/teacher/course_editor/answer_forum.html',
-		link: function(scope, element, iAttrs) {			
-			
+		link: function(scope, element, iAttrs) {
+
 			scope.isSurvey = function(){
 				if(scope.subtype)
 					return scope.subtype.toUpperCase()=="SURVEY"
@@ -584,7 +584,7 @@ angular.module('scalearAngularApp')
 			scope.isFreeText = function(){
 				return (scope.quiz.question_type=="Free Text Question")
 			}
-			
+
 			scope.isNormalQuiz = function(){
 				return "content" in scope.quiz
 			}
@@ -594,7 +594,7 @@ angular.module('scalearAngularApp')
 				{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
 			]
 			scope.match_types =[
-				{value:'Free Text', text:$translate('content.questions.quiz_types.free_text')}, 
+				{value:'Free Text', text:$translate('content.questions.quiz_types.free_text')},
 				{value:'Match Text', text:$translate('content.questions.quiz_types.match_text')}
 			]
 			$log.debug(scope.quiz)
@@ -627,8 +627,8 @@ angular.module('scalearAngularApp')
 					if(element.find('input')[all_inputs.length])
 						element.find('input')[all_inputs.length].focus()
 				}
-			},{"disable_in_input" : false, 'propagate':true});			
-			
+			},{"disable_in_input" : false, 'propagate':true});
+
 		}
 	};
 }]).directive('htmlanswer',['$log',function($log){
@@ -637,7 +637,7 @@ angular.module('scalearAngularApp')
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
 					"<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
-					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
+					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<ul  ng-switch-when='DRAG' class='no-padding-top'>"+
 						"<h5 class='no-margin-top'><small translate>editor.messages.random_answers</small></h5>"+
 						"<span ui-sortable ng-model='quiz.answers'>"+
@@ -646,30 +646,30 @@ angular.module('scalearAngularApp')
 					"</ul>"+
 				"</div>",
 		link:function(scope){
-			scope.removeAnswer=scope.remove()		
-			
+			scope.removeAnswer=scope.remove()
+
 			scope.updateValues= function(){
 				scope.values=0
 				for(var element in scope.quiz.answers)
 					if(scope.quiz.answers[element].correct)
 						scope.values+=1
-			}			
-			
+			}
+
 			scope.radioChange=function(corr_ans){
 				scope.quiz.answers.forEach(function(ans){
 					ans.correct=false
 				})
 				corr_ans.correct=true
-				
+
 				scope.updateValues();
 			}
-			
+
 			scope.show = function(){
 		 		return ("time" in scope.quiz)
 			}
-			
+
 			scope.$watch('quiz.answers', function(){
-				scope.updateValues();	
+				scope.updateValues();
 			},true)
 
 			scope.answers_sortable_options={
@@ -680,10 +680,10 @@ angular.module('scalearAngularApp')
 				items: '.drag-answer',
 				opacity: 0.4,
 				scroll: true
-		 	}			
+		 	}
 		}
 	};
-}]).directive('htmlFreetext',function(){	
+}]).directive('htmlFreetext',function(){
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
@@ -704,11 +704,11 @@ angular.module('scalearAngularApp')
 					"</div>"+
 				"</ng-form>"
 	}
-	
-}).directive('htmlMcq',function(){	
+
+}).directive('htmlMcq',function(){
 	return{
 		restrict:'E',
-		template:"<div class='small-12 no-padding columns'>"+ 
+		template:"<div class='small-12 no-padding columns'>"+
 					"<delete_button class='right with-small-margin-top' size='small' mode='content_navigator' color='dark' action='removeAnswer($index, quiz)' />"+
 					"<ng-form name='aform'>"+
 						"<div class='row collapse'>"+
@@ -736,11 +736,11 @@ angular.module('scalearAngularApp')
 				"</div>"+
 				"<hr style='margin: 10px 0;'/>"
 	}
-	
+
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<div class='small-12 no-padding columns'>"+ 
+		template:"<div class='small-12 no-padding columns'>"+
 					"<ng-form name='aform'>"+
 						"<delete_button class='right with-small-margin-top' mode='content_navigator' size='small' color='dark' action='removeAnswer($index, quiz)' />"+
 						"<div class='row collapse'>"+
@@ -771,19 +771,19 @@ angular.module('scalearAngularApp')
 			if(scope.answer.correct)
 				scope.radioChange(scope.answer)
 		}
-	}	
+	}
 }).directive('htmlDrag',function(){
 	return {
 		restrict:'E',
 		replace:true,
 		templateUrl: '/views/teacher/course_editor/html_drag.html'
 	}
-	
+
 }).directive('atleastone', ['$log', function($log) {
 	return {
 		require: 'ngModel',
 		link: function(scope, elm, attrs, ctrl) {
-		
+
 			scope.validate = function(value) {
 				if (scope.values<1) {
 					$log.debug("errorrr");

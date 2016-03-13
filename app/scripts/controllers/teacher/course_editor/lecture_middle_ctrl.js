@@ -13,14 +13,14 @@ angular.module('scalearAngularApp')
     $scope.quiz_layer={}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
-    
+
     $scope.alert={
-    	type:"alert", 
+    	type:"alert",
     	msg: "error_message.got_some_errors"
     }
     $scope.hide_alerts=true;
 
-    shortcut.add("i",function() {       
+    shortcut.add("i",function() {
        $scope.addQuestion()
     },{"disable_in_input" : true, 'propagate':false});
 
@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on("delete_online_quiz",function(ev, quiz){
     	$scope.deleteQuizButton(quiz)
-    })	
+    })
 
     $scope.$on("show_online_marker",function(ev, marker){
     	$scope.showOnlineMarker(marker)
@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on("delete_online_marker",function(ev, marker){
     	$scope.deleteMarkerButton(marker)
-    })	
+    })
 
  	$scope.$on("add_online_quiz",function(ev, quiz_type, question_type){
  		$scope.insertQuiz(quiz_type, question_type)
@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
 
  	$scope.$on("close_trim_video",function(){
  		saveTrimVideo()
- 		
+
  	})
 
     $scope.lecture_player.events.onMeta= function(){
@@ -71,7 +71,7 @@ angular.module('scalearAngularApp')
  	$scope.lecture_player.events.onReady= function(){
  		$scope.video_ready = true
  		$scope.lecture_player.controls.pause()
-        $scope.lecture_player.controls.seek(0)    	
+        $scope.lecture_player.controls.seek(0)
  	}
 
 	$scope.lecture_player.events.onPlay= function(){
@@ -121,7 +121,7 @@ angular.module('scalearAngularApp')
     }
 
  	var checkQuizTimeConflict=function(time){
- 		var new_time = time 
+ 		var new_time = time
  		$scope.lecture.timeline.items.forEach(function(item){
  			if(item.type =='quiz'){
  				var quiz = item.data
@@ -129,7 +129,7 @@ angular.module('scalearAngularApp')
 	 				new_time+= 3
 	 			else if(quiz.time == parseInt(new_time)){
 	 				new_time+= 2
-	 			} 					
+	 			}
 	 			else if(quiz.time == parseInt(new_time-1))
 	 				new_time+= 1
 	 		}
@@ -158,7 +158,7 @@ angular.module('scalearAngularApp')
 			insert_time = checkQuizTimeConflict(insert_time)
 			if (insert_time >= duration)
 				insert_time = duration - 2
-			
+
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 			// var start_time = insert_time - 5 < 0? 0 : insert_time - 5
@@ -168,10 +168,10 @@ angular.module('scalearAngularApp')
 			Lecture.newQuiz({
 				course_id: $stateParams.course_id,
 				lecture_id: $scope.lecture.id,
-				time: insert_time, 
+				time: insert_time,
 				start_time: insert_time,
 				end_time: insert_time,
-				quiz_type: quiz_type, 
+				quiz_type: quiz_type,
 				ques_type: question_type
 			},
 			function(data){ //success
@@ -183,17 +183,17 @@ angular.module('scalearAngularApp')
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
 				DetailsNavigator.open()
-			}, 
+			},
 			function(){ //error
 				$scope.quiz_loading = false;
 			})
 		})
-	}	
+	}
 
 	$scope.showOnlineQuiz= function(quiz){
 		if($scope.selected_marker && $scope.editing_mode){
 			$scope.saveMarkerBtn($scope.selected_marker, {exit:true})
-		}		
+		}
 		$scope.last_details_state = DetailsNavigator.getStatus()
 		if($scope.selected_quiz != quiz){
 			if($scope.editing_mode)
@@ -206,7 +206,7 @@ angular.module('scalearAngularApp')
 			$scope.selected_quiz.formatedTime = $filter('format')($scope.selected_quiz.time)
 			$scope.selected_quiz.start_formatedTime 	 = $filter('format')($scope.selected_quiz.start_time)
 			$scope.selected_quiz.end_formatedTime   	 = $filter('format')($scope.selected_quiz.end_time)
-			
+
 			if(!(quiz.inclass && quiz.inclass_session))
 				$scope.selected_quiz.inclass_session={intro:120,self:120,in_group:120,discussion:120}
 			$scope.selected_quiz.inclass_session.intro_formatedTime 	 = $filter('format')($scope.selected_quiz.inclass_session.intro)
@@ -224,15 +224,15 @@ angular.module('scalearAngularApp')
 				$scope.double_click_msg=""
 				$scope.quiz_layer.backgroundColor= "white"
 				$scope.quiz_layer.overflowX= 'hidden'
-	            $scope.quiz_layer.overflowY= 'auto'				
+	            $scope.quiz_layer.overflowY= 'auto'
 			}
-			else{ // invideo or survey quiz	
+			else{ // invideo or survey quiz
 				getQuizData();
 				$scope.double_click_msg = "editor.messages.double_click_new_answer";
 				$scope.quiz_layer.backgroundColor="transparent"
 				$scope.quiz_layer.overflowX= ''
 				$scope.quiz_layer.overflowY= ''
-				$log.debug($scope.selected_quiz)				
+				$log.debug($scope.selected_quiz)
 			}
 		}
 	}
@@ -240,18 +240,27 @@ angular.module('scalearAngularApp')
  	var getQuizData =function(){
 		Lecture.getQuizData(
 			{
-				"course_id":$stateParams.course_id, 
+				"course_id":$stateParams.course_id,
 				"lecture_id":$scope.lecture.id ,
 				"quiz": $scope.selected_quiz.id
 			},
 			function(data){ //success
-				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
-				$log.debug($scope.selected_quiz)
-				if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
+				if($scope.selected_quiz.question_type.toLowerCase()=="drag")
 					$scope.allPos=mergeDragPos(data.answers)
-					$log.debug($scope.allPos)
-				}
+
+				if($scope.selected_quiz.question_type.toLowerCase() == "free text question"){
+					var answer_width = 250
+		 			var answer_height= 100
+		 			var element = angular.element("#ontop")
+		 			var top = element.height() / 3
+		 			var left = element.width() / 4
+					var the_top = top / element.height()
+	      	var the_left= left / element.width()
+		     	var the_width = answer_width/element.width();
+	      	var the_height= answer_height/(element.height());
+	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
+      	}
 			},
 			function(){}
 		);
@@ -260,7 +269,7 @@ angular.module('scalearAngularApp')
 	var getHTMLData=function(){
 		Lecture.getHtmlData(
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
-			function(data){ //success	
+			function(data){ //success
 				$log.debug($scope.selected_quiz.question_type)
 				if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
 					$log.debug(data)
@@ -273,8 +282,8 @@ angular.module('scalearAngularApp')
 				else{
 					$scope.selected_quiz.answers= data.answers
 					if(!$scope.selected_quiz.answers.length)
-						$scope.addHtmlAnswer()				
-				}			
+						$scope.addHtmlAnswer()
+				}
 			},
 			function(){}
 		);
@@ -289,7 +298,7 @@ angular.module('scalearAngularApp')
 		return all_pos
 	}
 
-	
+
 	$scope.addHtmlAnswer=function(ans){
 		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","lecture", $scope.selected_quiz.id)
 		$scope.selected_quiz.answers.push($scope.new_answer)
@@ -301,11 +310,11 @@ angular.module('scalearAngularApp')
 				$rootScope.show_alert="error";
 		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
 		      	$timeout(function(){
-		      		$rootScope.show_alert="";	
+		      		$rootScope.show_alert="";
 		      	},4000);
 			}
 		else
-			$scope.selected_quiz.answers.splice(index, 1);			
+			$scope.selected_quiz.answers.splice(index, 1);
 	}
 
  	$scope.addDoubleClickBind= function(event){
@@ -378,7 +387,7 @@ angular.module('scalearAngularApp')
 		    $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 		}
 	}
-	
+
 	$scope.removeAnswer = function(index){
 		$scope.selected_quiz.answers.splice(index, 1);
 		 if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
@@ -399,8 +408,8 @@ angular.module('scalearAngularApp')
 				online_quiz_id: quiz.id
 			},
 			{
-				answer: ans, 
-				quiz_title:quiz.question, 
+				answer: ans,
+				quiz_title:quiz.question,
 				match_type: quiz.match_type
 			},
 			function(){
@@ -410,7 +419,7 @@ angular.module('scalearAngularApp')
 			function(){}
 		);
 	}
-	
+
 	var isFormValid = function(){
 		var correct=0;
 		if($scope.selected_quiz.question_type != "Free Text Question"){
@@ -421,17 +430,17 @@ angular.module('scalearAngularApp')
 				}
 				if($scope.selected_quiz.question_type.toUpperCase()=="DRAG")
 					correct=1
-				else	
+				else
 					correct= $scope.selected_quiz.answers[element].correct || correct;
 			}
 			if(!correct && $scope.selected_quiz.quiz_type!='survey'){
 				$scope.alert.msg="editor.messages.quiz_no_answer"
 				// return false
-			}			
+			}
 		}
 		return true;
 	};
-	
+
 	$scope.saveQuizBtn = function(options){
 		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && isFormValid())) && $scope.selected_quiz.answers.length){
 	 		$scope.submitted=false;
@@ -442,7 +451,7 @@ angular.module('scalearAngularApp')
 				$scope.selected_quiz.answers.forEach(function(ans){
 					if(ans.id && obj.id==null){
 						obj.id = ans.id
-						return 
+						return
 					}
 				})
 				data=[obj]
@@ -497,14 +506,14 @@ angular.module('scalearAngularApp')
 	$scope.createVideoLink=function(){
 		var time=Math.floor($scope.lecture_player.controls.getTime())
 		return {url:$state.href('course.module.courseware.lecture', {module_id:$scope.lecture.group_id, lecture_id: $scope.lecture.id, time:time}, {absolute: true}), time:time}
-	}	
+	}
 
 	$scope.openQuizList=function(ev){
 		DetailsNavigator.open()
 		angular.element(ev.target).blur()
 		$scope.quiz_list.push({})
 		$timeout(function(){
-			$scope.quiz_list.pop()				
+			$scope.quiz_list.pop()
 		})
 	}
 
@@ -516,13 +525,13 @@ angular.module('scalearAngularApp')
 			insert_time = 1
 		if (insert_time >= duration)
 			insert_time = duration - 2
-		
+
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		Lecture.newMarker({
 			course_id: $stateParams.course_id,
 			lecture_id: $scope.lecture.id,
-			time: $scope.lecture_player.controls.getTime(), 
+			time: $scope.lecture_player.controls.getTime(),
 		},
 		function(data){
 			$scope.showOnlineMarker(data.marker)
@@ -564,16 +573,16 @@ angular.module('scalearAngularApp')
 		OnlineMarker.update(
 			{online_markers_id: marker.id},
 			{online_marker:{
-				time:marker.time, 
+				time:marker.time,
 				title:marker.title,
 				annotation:marker.annotation
 			}}
 		);
 	}
 
- 	var validateTime=function(time) { 		
+ 	var validateTime=function(time) {
 		var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
-		if(int_regex.test(time)) { 
+		if(int_regex.test(time)) {
 		    var hhmm = time.split(':'); // split hours and minutes
 		    var hours = parseInt(hhmm[0]); // get hours and parse it to an int
 		    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
@@ -591,7 +600,7 @@ angular.module('scalearAngularApp')
 	   		return $translate('editor.incorrect_format_time')
 	    }
 	}
-	
+
 	var validateMarker= function(marker){
 		var d = $q.defer();
 	    var online_marker={}
@@ -627,7 +636,7 @@ angular.module('scalearAngularApp')
 				if(!(options && options.exit))
 					$scope.closeMarkerMode()
 			}
-		})						
+		})
 	}
 
 	$scope.closeMarkerMode=function(){
@@ -644,7 +653,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.togglePreviewInclass=function(){
-		$scope.filtered_timeline_items? closePreviewInclass() : openPreviewInclass()			
+		$scope.filtered_timeline_items? closePreviewInclass() : openPreviewInclass()
 	}
 
 	var closePreviewInclass=function(){
@@ -663,7 +672,7 @@ angular.module('scalearAngularApp')
             	current_item.data.inclass_title ='Self'
             	current_item.data.background = "#008CBA"
 				current_item.data.color = "white"
-				
+
 				var start_item = {time:current_item.data.start_time, type:'marker', data: {time: current_item.data.start_time}}
 				var end_item = {time:current_item.data.end_time, type:'marker', data: {time: current_item.data.end_time}}
 				$scope.filtered_timeline_items.splice(0, 0, start_item);
@@ -710,7 +719,7 @@ angular.module('scalearAngularApp')
 			$scope.goToInclassItem($scope.filtered_timeline_items[prev_index])
 	}
 
-	var saveTrimVideo=function(){ 
+	var saveTrimVideo=function(){
         $scope.lecture.start_time = Math.floor($scope.lecture.start_time)
         $scope.lecture.end_time = Math.floor($scope.lecture.end_time)
         $scope.editing_mode = false

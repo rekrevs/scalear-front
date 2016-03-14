@@ -266,6 +266,8 @@ var translation_sv = {
     school_email: "E-post-adress",
     sign_up: "Registrera dig",
     sign_in: "Logga in",
+    login: "@:navigation.login",
+    join: "Join (t)",
     remember_me: "Förbli inloggad",
     confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
     confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",

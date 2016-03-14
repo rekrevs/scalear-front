@@ -101,13 +101,13 @@
 			<!-- NOT LOGGED IN -->
 			<ul ng-if="!user.roles[0].id"  class="right">
 				<li has-dropdown>
-					<a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_signup' | includedByState) || ('teacher_signup' | includedByState)}" translate>account.sign_up</a>
-					<ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">
+					<!-- <a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_signup' | includedByState) || ('teacher_signup' | includedByState) || ('signup' | includedByState)}" ui-sref="signup" translate>account.sign_up</a> -->
+					<!-- <ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">
 						<li><a class="lighter-grey dark-text"  ui-sref-active="nav-item-active" ui-sref="student_signup" ><span translate>navigation.register.student</span></a></li>
 						<li><a class="lighter-grey dark-text"  ui-sref-active="nav-item-active" ui-sref="teacher_signup" translate>navigation.register.teacher</a></li>
-					</ul>
+					</ul> -->
 				</li>
-				<li><a class="white-with-hover color-gray-hover size-16-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate ng-click="closeMenu($event)">navigation.login</a></li>
+				<li><a class="white-with-hover color-gray-hover size-16-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate ng-click="closeMenu($event)">Login/Join</a></li>
 				<li has-dropdown>
 					<a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" translate>navigation.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">

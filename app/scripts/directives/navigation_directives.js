@@ -19,13 +19,13 @@ angular.module('scalearAngularApp')
 				})
 
 				scope.logout = function() {
-	                $rootScope.logging_out = true;
+	                $rootScope.busy_loading = true;
 	                $timeout(function() {
 	                    User.sign_out({}, function() {
 	                        $rootScope.show_alert = "";
 	                        $rootScope.current_user = null
 	                        $state.go("login");
-	                        $rootScope.logging_out = false;
+	                        $rootScope.busy_loading = false;
 	                    });
 	                }, 200);
 	            }

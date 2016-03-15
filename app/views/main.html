@@ -33,10 +33,10 @@
                         <a class="font-small page-scroll" href="#started">Getting Started</a>
                     </li>
                     <li>
-                        <a id="login" class="font-small visible-xs visible-sm visible-md visible-lg" ng-click='goTo("login")'>Sign In</a>
+                        <a id="login" class="font-small btn btn-golden " ui-sref="login">Sign In/Up</a>
                     </li>
-                    <li>
-                        <a class="font-small visible-md visible-lg btn btn-golden" dropdown-toggle="#signup_list_small">
+                    <!-- <li>
+                        <a class="font-small visible-md visible-lg btn btn-golden" ui-sref="signup">
                             <span>Sign Up</span>
                             <span class="caret"></span>
                         </a>
@@ -45,8 +45,7 @@
                             <li role="separator" class="divider" style="margin:0"></li>
                             <li><a ui-sref="student_signup" class="signup_list_item">I'm a Student</a></li>
                         </ul>
-                    </li>
-
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -60,16 +59,16 @@
                         <img src="images/landing/sl-logo-transparent2.png" style="width: 80%;">
                     </div>
                     <div class="intro-heading" style="padding: 0px 16%;">Active Learning Online And In-class</div>                    
-                    <a class="btn btn-xl" ng-click='goTo("login")'>Sign In</a>
-                    <a class="btn btn-xl btn-golden" dropdown-toggle="#signup_list">
+                    <a class="btn btn-xl btn-golden" ui-sref="login">Sign In or Sign Up</a>
+                    <!-- <a class="btn btn-xl btn-golden" ui-sref="signup">
                         <span>Sign Up</span>
                         <span class="caret"></span>
-                    </a>
-                     <ul id="signup_list" class="dropdown-menu" style="padding:0">
+                    </a> -->
+                    <!--  <ul id="signup_list" class="dropdown-menu" style="padding:0">
                         <li><a ui-sref="teacher_signup" class="signup_list_item">I'm a Teacher</a></li>
                         <li role="separator" class="divider" style="margin:0"></li>
                         <li><a ui-sref="student_signup" class="signup_list_item">I'm a Student</a></li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>

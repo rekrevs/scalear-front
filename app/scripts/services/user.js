@@ -17,7 +17,8 @@ angular.module('scalearAngularApp')
         'update_account':{method:'PUT', headers:headers},
         'delete_account':{method:'delete', headers:headers},
         'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers},
-        'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers}
+        'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers},
+        'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
       });
 
 }]);

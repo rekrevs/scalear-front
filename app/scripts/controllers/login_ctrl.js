@@ -1,17 +1,62 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout) {
   
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
 
+  $scope.swamid_list = SWAMID.list()
+  // $cookieStore.remove("saml_provider")
+  $scope.previous_provider = $cookieStore.get("login_provider")
+
+  // console.log($location)
+  // $scope.saml = $location.$$search
+  // console.log($scope.saml)
+  // if(Object.keys($scope.saml).length){
+  //   // $scope.saml=JSON.parse($state.params.attributes)
+  //   ngDialog.open({
+  //     template: 'samlSignup',
+  //     className: 'ngdialog-theme-default ngdialog-theme-custom',
+  //     scope: $scope
+  //     // preCloseCallback: function(value) {
+  //     //   next(data)
+  //     // }
+  //   });
+  // }
+  $scope.toggleProviders = function(){
+    $scope.show_providers? $scope.hideProviders() : $scope.showProviders()
+  }
+
+  $scope.showProviders=function(){
+    $scope.show_providers=true
+    $timeout(function(){
+      $("#search").select()
+    })
+    shortcut.add("Enter", function(){
+      $scope.samlLogin($scope.swamid[0])
+    }) 
+  }
+
+  $scope.hideProviders=function(){
+    $scope.show_providers=false
+    shortcut.remove("Enter", function(){
+      $scope.samlLogin($scope.swamid[0])
+    }) 
+  }
+
+  $scope.showLoginForm=function(){
+    $scope.show_scalable_login=!$scope.show_scalable_login
+    $scope.hideProviders()
+  }
+  
   $scope.login = function(){
     $scope.sending = true;
     User.signIn({},
       {"user":$scope.user}, 
       function(data){
+        $cookieStore.put('login_provider', 'scalablelearning')
         $log.debug("login success")
         $scope.sending = false;
         $rootScope.$broadcast("get_current_courses") 
@@ -32,6 +77,12 @@ angular.module('scalearAngularApp')
     });
   }
 
+  
+
+  $scope.join=function(){
+    $state.go("signup",  { input1 : $scope.user.email, input2: $scope.user.password})
+  }
+
   var next=function(user){
     if(!user.info_complete){
       $state.go("edit_account");
@@ -42,15 +93,18 @@ angular.module('scalearAngularApp')
       $state.go("dashboard");
   }
 
-  // var isMobile=function(){
-  //     // var iOS = false,
-  //     //     iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-  //     // for ( var i = 0; i < iDevice.length ; i++ ) {
-  //     //     if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-  //     // }
-  //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || []
-  // }
-  
+  $scope.samlLogin=function(idp){
+    $cookieStore.put('login_provider', idp)
+    $rootScope.busy_loading = true;
+    Saml.Login(
+      {idp: idp.entityID},
+      function(resp){
+         $(resp.saml_url).appendTo('body').submit();
+      }, 
+      function(){
 
-   
+      }
+    )
+  }
+
 }]);

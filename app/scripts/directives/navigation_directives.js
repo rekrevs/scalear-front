@@ -236,9 +236,9 @@ angular.module('scalearAngularApp')
 				}
 		 	}
 
-		 	scope.showModuleCourseware = function(module, event){
-		 		if(!scope.currentmodule || scope.currentmodule.id != module.id){
-		 			scope.currentmodule = module
+		  	scope.showModuleCourseware = function(module, event){
+			        if(!scope.currentmodule || scope.currentmodule.id != module.id){
+			          	scope.currentmodule = module
 		 			if(MobileDetector.isPhone()){
 		 				event.stopPropagation()
 	      		$timeout(function(){
@@ -247,28 +247,28 @@ angular.module('scalearAngularApp')
 						$state.go('course.module.student_inclass',{'module_id': module.id})
 					}
 					else if((module.lectures.length + module.quizzes.length) > 0){
-						Module.getLastWatched(
-            {
-            	course_id: $stateParams.course_id,
-            	module_id: module.id
-            },
-            function(data){
-              if(data.last_watched != -1){
-                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-                scope.currentitem = {id:data.last_watched}
-              }
-              else{
-                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-                scope.currentitem = {id:module.quizzes[0].id}
-              }
-        		})
-					}
+				          	Module.getLastWatched(
+					            {
+					            	course_id: $stateParams.course_id,
+					            	module_id: module.id
+					            },
+					            function(data){
+					              if(data.last_watched != -1){
+					                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+					                scope.currentitem = {id:data.last_watched}
+					              }
+					              else{
+					                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+					                scope.currentitem = {id:module.quizzes[0].id}
+					              }
+				          	})
+				      	}
 					else
 			  		scope.currentmodule = null
-		 		}
-		 		else
-          event.stopPropagation()
-		 	}
+			        }
+			        else
+			          event.stopPropagation()
+			  	}
 
 		  	scope.showItem = function(item, mode){
 		  		if($state.includes("**.progress.**") || $state.includes("**.progress_overview")){
@@ -276,22 +276,22 @@ angular.module('scalearAngularApp')
 		  				$rootScope.$broadcast("scroll_to_item",item)
 		  		}
 		  		else{
-			 		var params = {'module_id': item.group_id}
-			 		$log.debug(item)
-			 		var item_type =item.class_name.toLowerCase()
-				    params[item_type+'_id'] = item.id
-						// if(MobileDetector.isPhone()){
-						// 	$timeout(function(){
-						// 		ContentNavigator.close()
-						// 	})
-					if(!MobileDetector.isPhone()){
-			    		$state.go('course.module.'+mode+'.'+item_type, params)
-				    }
-					if(!(mode =='courseware' && item_type=='customlink')){
-				    	scope.currentitem = {id:item.id}
-					}
+				 		var params = {'module_id': item.group_id}
+				 		$log.debug(item)
+				 		var item_type =item.class_name.toLowerCase()
+					    params[item_type+'_id'] = item.id
+							// if(MobileDetector.isPhone()){
+							// 	$timeout(function(){
+							// 		ContentNavigator.close()
+							// 	})
+						if(!MobileDetector.isPhone()){
+				    		$state.go('course.module.'+mode+'.'+item_type, params)
+					    }
+						if(!(mode =='courseware' && item_type=='customlink')){
+					    	scope.currentitem = {id:item.id}
+						}
 
-				}
+					}
 		  	}
 
 		 	scope.showModule=function(module, event){
@@ -321,9 +321,11 @@ angular.module('scalearAngularApp')
 				$rootScope.$broadcast('add_module')
 			}
 
-			scope.paste=function(){
+			scope.paste=function(event, module_id){
 				if(scope.clipboard.type == 'module')
 					$rootScope.$broadcast('paste_item')
+				else
+					$rootScope.$broadcast('paste_item', module_id)
 			}
 
 			scope.scrollIntoView=function(module){
@@ -331,7 +333,7 @@ angular.module('scalearAngularApp')
 				if($('#module_'+module.id).length){
 					$('.modules_container').scrollToThis('#module_'+module.id, {offsetTop: $('.modules_container').offset().top, duration: 400});
 				}
-		    }
+	    }
 
 		  	scope.goToCourseInfoStudent=function(){
 			  	scope.currentmodule = null

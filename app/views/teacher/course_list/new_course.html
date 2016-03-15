@@ -39,9 +39,9 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
-    <div class="small-12 medium-8 large-9 columns right">        
+    <div class="small-12 medium-8 large-9 columns right">
         <h3 class="show-for-small ng-binding"><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
         <div class="title color-green with-margin-bottom small-12 columns no-padding">
             <span class="small-4 columns no-padding">
@@ -109,9 +109,14 @@
             <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
         </p>
         <h5 translate class="subheader">courses.new.copy_from_existing</h5>
-        <p>
-            <select ng-model="import_from" ng-options="element.id as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
-        </p>
+        <div class="row with-margin-bottom">
+            <div class="small-10 columns">
+                <select ng-model="import_from" ng-options="element.id as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
+            </div>
+            <div ng-show="import_from" class="small-2 columns" style="margin-top: 3px;">
+                <button type="button" class="button secondary tiny" ng-click="import_from=''" ><span translate>courses.new.button.unselect</span></button>
+            </div>
+        </div>
         <button ng-disabled="submitting || image_not_found" type="submit" class="button success right"><span translate>courses.new.button.create_course</span></button>
     </div>
 </form>

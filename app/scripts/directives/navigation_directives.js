@@ -27,9 +27,9 @@ angular.module('scalearAngularApp')
 	                        $state.go("login");
 	                        $rootScope.logging_out = false;
 	                    });
-	                }, 200);  
+	                }, 200);
 	            }
-				
+
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
 				}
@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 					if(!angular.element(event.target).closest('li').hasClass("back"))
 						$timeout(function(){
 							angular.element('.toggle-topbar').click();
-						})							
+						})
 				}
 
 				scope.disablePreview=function(){
@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
 				}
 
 				scope.goToEditor=function(){
-					$state.includes("**.module.**")? $state.go("course.module.course_editor.overview") : $state.go("course.course_editor")					
+					$state.includes("**.module.**")? $state.go("course.module.course_editor.overview") : $state.go("course.course_editor")
 				}
 
 				scope.goToProgress=function(){
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
 
 				scope.print=function(){
 					$rootScope.$broadcast('print')
-				}	
+				}
 
 				scope.updateProgressItemFilter=function(type){
 					if(type =='lecture_quizzes'){
@@ -125,9 +125,9 @@ angular.module('scalearAngularApp')
 				scope.updateProgressFilter=function(type){
 					scope.progress_filter[type] = !scope.progress_filter[type]
 					$rootScope.$broadcast('progress_filter_update', scope.progress_filter)
-				}	
+				}
 
-				setDetails(true)	
+				setDetails(true)
 			}
 		};
  }]).directive('studentNavigation', ['ContentNavigator','TimelineNavigator','$state', function(ContentNavigator, TimelineNavigator, $state) {
@@ -142,7 +142,7 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/student/student_sub_navigation.html',
 			link: function(scope){
 				scope.ContentNavigator = ContentNavigator
-				scope.TimelineNavigator = TimelineNavigator				
+				scope.TimelineNavigator = TimelineNavigator
 
 				scope.toggleNavigator=function(){
 					if(!$state.includes('course.content_selector'))
@@ -178,7 +178,7 @@ angular.module('scalearAngularApp')
 			  	else{
 			  		scope.currentmodule = null
 			  		scope.currentitem = null
-			  	} 
+			  	}
 	   	  	})
 
 		  	$rootScope.$watch('clipboard', function(){
@@ -198,8 +198,8 @@ angular.module('scalearAngularApp')
 		   				$timeout(function(){
 					   		item.blink = false
 					   	}, 1000)
-		   			}	   			
-		   		},time)		   
+		   			}
+		   		},time)
 	   		})
 
 	   	  	scope.moduleSortableOptions={
@@ -229,7 +229,7 @@ angular.module('scalearAngularApp')
 					var group_id=ui.item.scope().item.group_id
 					var items=ui.item.scope().$parent.module.items
 					Lecture.saveSort(
-						{course_id:$state.params.course_id, 
+						{course_id:$state.params.course_id,
 						 group: group_id},
 						{items: items}
 					);
@@ -243,9 +243,9 @@ angular.module('scalearAngularApp')
 			          	if(!MobileDetector.isPhone()){
 				          	Module.getLastWatched(
 					            {
-					            	course_id: $stateParams.course_id, 
+					            	course_id: $stateParams.course_id,
 					            	module_id: module.id
-					            }, 
+					            },
 					            function(data){
 					              if(data.last_watched != -1){
 					                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
@@ -255,7 +255,7 @@ angular.module('scalearAngularApp')
 					                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
 					                scope.currentitem = {id:module.quizzes[0].id}
 					              }
-				          	}) 
+				          	})
 				      	}
 				      	else{
 			      		 	event.stopPropagation()
@@ -271,29 +271,28 @@ angular.module('scalearAngularApp')
 			  	else
 			  		scope.currentmodule = null
 		  	}
-		               
+
 		  	scope.showItem = function(item, mode){
 		  		if($state.includes("**.progress.**") || $state.includes("**.progress_overview")){
 		  			if($state.includes("course.module.progress"))
 		  				$rootScope.$broadcast("scroll_to_item",item)
 		  		}
 		  		else{
-			 		var params = {'module_id': item.group_id}  
-			 		$log.debug(item)
-			 		var item_type =item.class_name.toLowerCase()
-				    params[item_type+'_id'] = item.id
-						// if(MobileDetector.isPhone()){
-						// 	$timeout(function(){
-						// 		ContentNavigator.close()
-						// 	})
-					if(!MobileDetector.isPhone()){
-			    		$state.go('course.module.'+mode+'.'+item_type, params)
-				    }
-					if(!(mode =='courseware' && item_type=='customlink')){
-				    	scope.currentitem = {id:item.id}
+				 		var params = {'module_id': item.group_id}
+				 		$log.debug(item)
+				 		var item_type =item.class_name.toLowerCase()
+					    params[item_type+'_id'] = item.id
+							// if(MobileDetector.isPhone()){
+							// 	$timeout(function(){
+							// 		ContentNavigator.close()
+							// 	})
+						if(!MobileDetector.isPhone()){
+				    		$state.go('course.module.'+mode+'.'+item_type, params)
+					    }
+						if(!(mode =='courseware' && item_type=='customlink')){
+					    	scope.currentitem = {id:item.id}
+						}
 					}
-
-				}
 		  	}
 
 		 	scope.showModule=function(module, event){
@@ -312,7 +311,7 @@ angular.module('scalearAngularApp')
 		    	$timeout(function(){
 		    		scope.scrollIntoView(module)
 		    	})
-		    	
+
 		    }
 
 		    scope.preview=function(){
@@ -321,11 +320,13 @@ angular.module('scalearAngularApp')
 
 		    scope.addModule=function(){
 				$rootScope.$broadcast('add_module')
-			}	
+			}
 
-			scope.paste=function(){
+			scope.paste=function(event, module_id){
 				if(scope.clipboard.type == 'module')
 					$rootScope.$broadcast('paste_item')
+				else
+					$rootScope.$broadcast('paste_item', module_id)
 			}
 
 			scope.scrollIntoView=function(module){
@@ -333,12 +334,12 @@ angular.module('scalearAngularApp')
 				if($('#module_'+module.id).length){
 					$('.modules_container').scrollToThis('#module_'+module.id, {offsetTop: $('.modules_container').offset().top, duration: 400});
 				}
-		    }
+	    }
 
 		  	scope.goToCourseInfoStudent=function(){
 			  	scope.currentmodule = null
 			  	$state.go("course.course_information")
-		  	}  	
+		  	}
 	   	}
   	}
 }]).directive("timelineFilters",['$rootScope', '$log', 'TimelineFilter', function($rootScope, $log, TimelineFilter){

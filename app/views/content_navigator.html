@@ -1,4 +1,4 @@
-<div bindonce ng-switch="mode" class="content-navigator-container disable_selection ease_in_out" ng-class="{'content-containeropen small-12 medium-4 large-2 columns no-padding no-margin': open_navigator}">	
+<div bindonce ng-switch="mode" class="content-navigator-container disable_selection ease_in_out" ng-class="{'content-containeropen small-12 medium-4 large-2 columns no-padding no-margin': open_navigator}">
 	<span ng-switch-when="courseware">
 		<div class="modules_container" style="height:100%;overflow:auto">
 			<accordion class="accordion no-margin">
@@ -7,7 +7,7 @@
 						<accordion-heading class="accordion-heading">
 						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
 							<div class="show-inline" translate>navigation.course_information</div>
-						</div>		
+						</div>
 						</accordion-heading>
 					</accordion-group>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
@@ -60,11 +60,11 @@
 				<li ng-show="clipboard.type == 'module'">
 					<div class="divider border-grey medium-opacity"></div>
 					<a ng-click='paste($event)' translate>context_menu.paste</a>
-				</li>			
+				</li>
 			</ul>
 			<accordion class="accordion no-margin">
 				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
-					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
+					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}" context-menu data-target="module-menu">
 						<accordion-heading class="accordion-heading">
 							<module_edit data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" />
 						</accordion-heading>
@@ -74,11 +74,16 @@
 		            		</li>
 		            	</span>
 		            	<button id="new_item" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>
+		            	<ul class="module-menu dropdown-menu text-left" bindonce>
+										<li><a ng-click='copy($event)'  bo-text="'context_menu.copy'| translate"></a></li>
+										<li ng-show="clipboard.type"><a ng-click='paste($event, module.id)' bo-text="'context_menu.paste'| translate"></a></li>
+										<li><a ng-click='share($event)' bo-text="'context_menu.share'| translate"></a></li>
+									</ul>
 					</accordion-group>
 				</span>
 			</accordion>
 			<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>content_navigator.empty</span>...</i>
-		</div>		
+		</div>
 		<center class="content-navigator-bottom-container">
 			<button id="add_module" class="button small green no-margin left" ng-click="addModule()" translate>editor.button.add_module</button>
 			<button class="button small orange no-margin right" ng-click="preview()" style="width: 43%;padding: 7px 20px;" translate>editor.button.preview_student</button>

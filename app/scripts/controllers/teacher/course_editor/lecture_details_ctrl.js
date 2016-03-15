@@ -12,32 +12,32 @@ angular.module('scalearAngularApp')
                 if(video_id)
                     getYoutubeDetails(video_id[1]);
             }
-            if($scope.lecture.due_date) 
-                $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
-            
-            item_unwatch()      
-            var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
-                if ($scope.lecture.appearance_time_module) { 
-                    $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
-                } 
+            if($scope.lecture.due_date)
+                $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
+
+            item_unwatch()
+            var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){
+                if ($scope.lecture.appearance_time_module) {
+                    $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time;
+                }
                 if(isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)){
                     $scope.lecture.disable_module_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)
                 }
                 else{
                     $scope.lecture.disable_module_due_controls = false
                 }
-                if ($scope.lecture.due_date_module) { 
-                    $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
+                if ($scope.lecture.due_date_module) {
+                    $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date;
                 }
-                module_unwatch() 
+                module_unwatch()
             })
-            $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
+            $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true})
             $scope.lecture.timeline = new Timeline()
             getQuizList()
-            getMarkerList()
+            // getMarkerList()
         }
     })
-    
+
     $scope.is_youtube = false
 
     $scope.validateLecture = function(column, data) {
@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
                 lecture_id: $scope.lecture.id
             },
             lecture,
-            function() {                        
+            function() {
                 if(column == 'url'){
                     var type = $scope.isYoutube(data)
                     $log.debug(type)
@@ -76,17 +76,17 @@ angular.module('scalearAngularApp')
                         }).error(function(){
                             d.reject($translate('editor.details.vidoe_not_exist'));
                             return d.promise
-                        }); 
+                        });
                     }
                     else if(isMP4(lecture.url))
-                        d.resolve() 
-                    else 
-                        d.reject($translate('editor.details.incompatible_link'))                  
+                        d.resolve()
+                    else
+                        d.reject($translate('editor.details.incompatible_link'))
                 }
                 else{
                     d.resolve()
                 }
-            }, 
+            },
             function(data) {
                 $log.debug(data.status);
                 $log.debug(data);
@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
         delete modified_lecture.due_date_enabled
         delete modified_lecture.disable_module_due_controls
         delete modified_lecture.timeline
-        
+
         Lecture.update({
                 course_id: $scope.lecture.course_id,
                 lecture_id: $scope.lecture.id
@@ -123,7 +123,7 @@ angular.module('scalearAngularApp')
                 $scope.lecture.due_date = data.lecture.due_date
             },
             function() {
-                
+
             }
         );
     }
@@ -139,8 +139,8 @@ angular.module('scalearAngularApp')
         var due_date = new Date($scope.lecture.due_date)
         var week = 7
         var year = 0
-        if(isDueDateDisabled($scope.lecture.due_date) && enabled) 
-            years =  -offset 
+        if(isDueDateDisabled($scope.lecture.due_date) && enabled)
+            years =  -offset
         else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)
             years  =  offset
         due_date.setFullYear(due_date.getFullYear()+ years)
@@ -160,15 +160,15 @@ angular.module('scalearAngularApp')
         return new Date(appearance_time) <= new Date()
     }
 
-    $scope.updateLectureUrl= function(){                
+    $scope.updateLectureUrl= function(){
         $scope.lecture.aspect_ratio = "widescreen"
         if($scope.lecture.url){
             var type = $scope.isYoutube($scope.lecture.url)
             if(type){
-                $log.debug('type initialized')  
+                $log.debug('type initialized')
                 if(!isFinalUrl($scope.lecture.url))
-                    $scope.lecture.url = "https://www.youtube.com/watch?v="+type[1];                                         
-                getYoutubeDetails(type[1]).then(function(){   
+                    $scope.lecture.url = "https://www.youtube.com/watch?v="+type[1];
+                getYoutubeDetails(type[1]).then(function(){
                     $scope.lecture.start_time = 0
                     $scope.lecture.end_time = $scope.lecture.duration
                     $scope.updateLecture();
@@ -178,12 +178,12 @@ angular.module('scalearAngularApp')
             else{
                 $log.debug('type not initialized')
                 $scope.lecture.start_time = 0
-                $scope.lecture.end_time = $scope.lecture.duration  
+                $scope.lecture.end_time = $scope.lecture.duration
                 $scope.updateLecture();
                 $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
             }
-            startTrimVideo()
-        }        
+            // startTrimVideo()
+        }
     }
 
     $scope.updateSlidesUrl = function() {
@@ -198,7 +198,7 @@ angular.module('scalearAngularApp')
     var isMP4= function(url){
         return url.match(/(.*mp4$)/);
     }
-    
+
     $scope.isYoutube= function(url){
         var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
         if(!match)
@@ -223,8 +223,8 @@ angular.module('scalearAngularApp')
                 $scope.video.author =data.items[0].snippet.channelTitle//data.entry.author[0].name.$t;
 		        var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
                 $scope.lecture.duration = $scope.lecture.duration || (duration.hour*(60*60)+duration.minute*(60)+duration.second)//data.entry.media$group.yt$duration.seconds
-                // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
-                d.resolve()                   
+                // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
+                d.resolve()
             });
 
         return d.promise;
@@ -240,7 +240,7 @@ angular.module('scalearAngularApp')
                     $scope.lecture.timeline.add(quiz.time, "quiz", quiz)
                 })
             }
-        );  
+        );
     }
 
     $scope.showQuiz=function(quiz){
@@ -261,20 +261,20 @@ angular.module('scalearAngularApp')
                     $scope.lecture.timeline.add(marker.time, "marker", marker)
                 })
             }
-        );  
+        );
     }
 
-    $scope.showMarker=function(marker){
-        $rootScope.$broadcast("show_online_marker", marker)
-    }
+    // $scope.showMarker=function(marker){
+    //     $rootScope.$broadcast("show_online_marker", marker)
+    // }
 
-    $scope.deleteMarker=function(marker){
-        $rootScope.$broadcast("delete_online_marker", marker)
-    }
+    // $scope.deleteMarker=function(marker){
+    //     $rootScope.$broadcast("delete_online_marker", marker)
+    // }
 
-    var startTrimVideo=function(){
-        $rootScope.$broadcast("start_trim_video")
-    }
+    // var startTrimVideo=function(){
+    //     $rootScope.$broadcast("start_trim_video")
+    // }
 
 
 }]);

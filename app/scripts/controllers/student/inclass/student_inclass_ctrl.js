@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
             })
         }
 
-        $scope.sendAnswers=function(quiz){            
+        $scope.sendAnswers=function(quiz){
             removeNotification()
             var selected_answers
             if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ"){
@@ -53,15 +53,15 @@ angular.module('scalearAngularApp')
                 })
                 if(selected_answers.length == 0){
                     showNotification("lectures.choose_correct_answer")
-                    return      
+                    return
                 }
 
                 if(quiz.question_type == "OCQ" && selected_answers.length==1)
                     selected_answers = selected_answers[0]
             }
             quiz.done = true
-            console.log(selected_answers)
-            console.log(quiz)
+
+
 
             Lecture.saveOnline(
                 {
@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
                     in_group: quiz.in_group
                 }
             )
-        }  
+        }
 
         $scope.showNotification=function(msg){
             $scope.alert= true

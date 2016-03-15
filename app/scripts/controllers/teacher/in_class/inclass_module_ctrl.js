@@ -181,7 +181,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.exitBtn = function(){
-      exitInclassSession()
+      // exitInclassSession()
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()

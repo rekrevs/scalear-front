@@ -30,7 +30,7 @@
                 </youtube>
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
-            <div>
+            <!-- <div>
                 <ul class="inclass_connected_circles connected_circles">
                     <li style="display:none"></li>
                     <span ng-repeat="item in selected_timeline_item.sub_items" >
@@ -38,7 +38,7 @@
                         <li ng-if="item.data.inclass_title" ng-class="{'active': item == selected_timeline_sub_item }" class="size-20" ng-style="{'background': item.data.background, 'color':item.data.color}">{{item.data.inclass_title}}</li>
                     </span>
                 </ul>
-            </div>
+            </div> -->
             <!-- <div ng-show="inclass_session_status">
                 <ul class="connected_circles">
                   <span ng-hide="$index==0" ng-repeat="item in timeline['lecture'][selected_item.id].items" >
@@ -96,7 +96,7 @@
                             <p style="font-size:20px; margin:0">{{question.answer}}</p>
                             <i ng-show="question.response" style="padding-left: 30px;color: steelblue;font-size:20px">{{question.response}}</i>
                         </li>
-                    </ul>               
+                    </ul>
                 </div>
                 <hr>
             </div>
@@ -107,7 +107,7 @@
         <div class="bottom-left left">
             <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
         </div>
-        <div class="bottom-middle">           
+        <div class="bottom-middle">
             <button ng-class="button_class" ng-click="prevSubItem()" class="button reall-tiny secondary" ><i class="fi-previous" /></button>
              <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <span>{{button_names[5]}} </span><i class="fi-rewind" />
@@ -115,10 +115,10 @@
              <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <i class="fi-fast-forward" /><span> {{button_names[5]}}</span>
             </button>
-            <button ng-class="button_class" ng-click="nextSubItem()" class="button reall-tiny secondary" ><i class="fi-next" /></button>          
+            <button ng-class="button_class" ng-click="nextSubItem()" class="button reall-tiny secondary" ><i class="fi-next" /></button>
         </div>
         <div class="bottom-right no-padding-top right">
-            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button> 
+            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button>
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[6]}}</span></button>
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[7]}}</span></button>
             <span ng-hide="selected_item.class_name=='quiz'" >

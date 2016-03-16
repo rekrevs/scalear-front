@@ -207,9 +207,10 @@ exports.config = {
     onPrepare: function() {
         browser.driver.manage().window().maximize();
         browser.driver.get(params.frontend);
-        browser.driver.sleep(10000);
-        browser.driver.findElement(by.id('login')).click();
-        browser.driver.sleep(10000);
+        browser.driver.wait(function() {
+            return element(by.id('login')).isPresent()
+        }, 30000)
+        element(by.id('login')).click();
     },
 
     // The params object will be passed directly to the protractor instance,

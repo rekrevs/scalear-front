@@ -127,8 +127,8 @@ exports.config = {
         'test/e2e/spec/account_information_validation.spec.js',// Done
         'test/e2e/spec/enrollment_help.spec.js',// Done
         'test/e2e/spec/course_editor_basic.spec.js',// Done
-        'test/e2e/spec/course_editor_copy.spec.sj',// Done
-        'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        'test/e2e/spec/course_editor_copy.spec.js',// Done
+        'test/e2e/spec/course_editor_sharing.spec.js',// Done
         'test/e2e/spec/module_statistics.spec.js', // Done
         'test/e2e/spec/announcements.spec.js',  //
         'test/e2e/spec/teacher-managment.spec.js',// Done
@@ -207,9 +207,9 @@ exports.config = {
     onPrepare: function() {
         browser.driver.manage().window().maximize();
         browser.driver.get(params.frontend);
-        browser.driver.sleep(1000);
+        browser.driver.sleep(10000);
         browser.driver.findElement(by.id('login')).click();
-        browser.driver.sleep(1000);
+        browser.driver.sleep(10000);
     },
 
     // The params object will be passed directly to the protractor instance,

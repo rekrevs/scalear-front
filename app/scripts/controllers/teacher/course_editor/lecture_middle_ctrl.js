@@ -249,7 +249,7 @@ angular.module('scalearAngularApp')
 				if($scope.selected_quiz.question_type.toLowerCase()=="drag")
 					$scope.allPos=mergeDragPos(data.answers)
 
-				if($scope.selected_quiz.question_type.toLowerCase() == "free text question"){
+				if($scope.selected_quiz.question_type.toLowerCase() == "free text question" && $scope.selected_quiz.answers.length==0){
 					var answer_width = 250
 		 			var answer_height= 100
 		 			var element = angular.element("#ontop")
@@ -318,7 +318,7 @@ angular.module('scalearAngularApp')
 	}
 
  	$scope.addDoubleClickBind= function(event){
-  		if ($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers) {
+  		if ($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers && $scope.selected_quiz.question_type.toLowerCase() != 'free text question') {
 
 	 		var answer_width, answer_height,
 	 		answer_text = "Answer "+($scope.selected_quiz.answers.length+1)
@@ -326,13 +326,6 @@ angular.module('scalearAngularApp')
 	 		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
 	 			answer_width = 150
 	 			answer_height= 40
-	 		}
-	 		else if($scope.selected_quiz.question_type.toLowerCase() == 'free text question'){
-	 			if($scope.selected_quiz.answers.length > 0)
-	 				return
-	 			answer_width = 250
-	 			answer_height= 100
-	 			answer_text=""
 	 		}
 	 		else{
 	 			answer_width = 13

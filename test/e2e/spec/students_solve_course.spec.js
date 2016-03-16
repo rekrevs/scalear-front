@@ -428,7 +428,7 @@ describe("Solve Course",function(){
 			})
 			it('should check quiz status after submit',function(){
 		        scroll_top()
-		        expect(student_quiz.retries).toContain('Used up all 2attempts')
+		        expect(student_quiz.retries).toContain('Used up all 2 attempts')
 		        expect(student_quiz.warning_msg).toContain("You've submitted the quiz and have no more attempts left")
 				expect(student_quiz.submit_button.isEnabled()).toBe(false)
 		    })
@@ -473,7 +473,7 @@ describe("Solve Course",function(){
 			})
 			it('should check quiz status after submit',function(){
 		        scroll_top()
-		        expect(student_quiz.retries).toContain('Used up all 1attempts')
+		        expect(student_quiz.retries).toContain('Used up all 1 attempts')
 		        expect(student_quiz.warning_msg).toContain("You've submitted the quiz and have no more attempts left")
 				expect(student_quiz.submit_button.isEnabled()).toBe(false)
 		    })

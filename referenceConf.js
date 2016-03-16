@@ -1,6 +1,6 @@
 var params= {
     //local
-    // frontend: 'http://0.0.0.0:9000/#',
+    frontend: 'http://0.0.0.0:9000/#/users/login',
     // admin_mail: 'admin@scalear.com',
     // teacher_mail:  'teacher1@sharklasers.com',
     // teacher2_mail: 'teacher2@sharklasers.com',
@@ -20,7 +20,7 @@ var params= {
     q3_y:187,
 
     //staging
-    frontend: 'http://scalear-staging2.herokuapp.com/#',
+    // frontend: 'http://scalear-staging2.herokuapp.com/#/users/login',
     admin_email:   'admin@scalable-learning.com',       
     teacher_mail:  'teacher1@email.com',
     teacher2_mail: 'teacher2@email.com',
@@ -135,8 +135,8 @@ exports.config = {
         'test/e2e/spec/students_solve_course.spec.js', //Done
         'test/e2e/spec/notes.spec.js',
         'test/e2e/spec/discussions.spec.js',  //Done
-        // 'test/e2e/spec/progress-module.spec.js'
-        'test/e2e/spec/delete_course.spec.js'
+        // // // // 'test/e2e/spec/progress-module.spec.js'
+        // 'test/e2e/spec/delete_course.spec.js'
    
    //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  

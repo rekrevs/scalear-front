@@ -138,7 +138,7 @@ angular.module('scalearAngularApp')
         var enabled = $scope.lecture.due_date_enabled
         var due_date = new Date($scope.lecture.due_date)
         var week = 7
-        var year = 0
+        var years = 0
         if(isDueDateDisabled($scope.lecture.due_date) && enabled)
             years =  -offset
         else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)

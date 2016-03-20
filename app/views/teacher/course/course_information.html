@@ -21,15 +21,22 @@
         <h4 translate class="subheader" page-name="navigation.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.information.taught_by</h4>
         <br />
         <div>
-            <div class="small-12 large-6 left columns with-margin-bottom" ng-repeat="teacher in teachers">
+            <div class="small-12 large-6 left columns with-margin-bottom" ng-repeat="teacher in teachers" style="height: 100px;">
                 <profile-image class="small-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
                 <div class="small-10 columns with-small-padding-left">
                     <li class="break-text">{{teacher.name+' '+teacher.last_name}}</li>
                     <li class="email break-text">{{teacher.email}}</li>
                     <li>
-                        <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
-                        <div style="color: dimgrey; height: 18px;">{{teacher.status}}</div>
-                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" size="small" color='dark' overlaymode="true" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+                        <details-select value="teacher.role" options="roles" save="updateTeacher(teacher)" column="role" style="width: 120px;" />
+                    </li>
+                    <li ng-show="teacher.status">
+                        <div style="color: dimgrey; height: 18px;">{{teacher.status | capitalize}}</div>
+                    </li>
+                    <li ng-if="current_user.id==teacher.id">
+                        <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span>Receive email when a student asks a question</span></label>
+                    </li>
+                    <li>
+                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
                     </li>
                 </div>
             </div>
@@ -82,7 +89,7 @@
             <div class="with-small-margin-bottom">
                 <i class="fi-key size-18"></i>
                 <small translate>courses.information.enrollment_key</small>
-                <div tooltip="{{courses.information.click_to_copy | translate}}">
+                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}">
                     <div id="enrollment_key" clip-click="animateCopy()" clip-copy="course.unique_identifier" >{{course.unique_identifier}}</div>
                 </div>
             </div>

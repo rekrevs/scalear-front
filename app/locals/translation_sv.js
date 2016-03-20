@@ -19,6 +19,7 @@ var translation_sv={
     duration: "Längd",
     video: "Video",
     videos: "videos",
+    inclass_video: "I klassrummet Video",
     customlink:"Länk",
     customlinks:"Länkar",
     title: "Titel",
@@ -35,6 +36,8 @@ var translation_sv={
     quizzes: "Quiz-frågor",
     survey: "Enkät",
     surveys: "Enkäter",
+    marker: "Marker (t)",
+    markers: "Markers (t)",
     answer: "Svar",
     free_text_question: "Fritext-fråga",
     confused: "Förvirrad",
@@ -48,7 +51,8 @@ var translation_sv={
     correct: "Korrekt",
     incorrect: "Felaktig",
     warning:"Varning",
-    are_you_sure:"Är du säker på att du vill fortsätta?"
+    are_you_sure: "Är du säker på att du vill fortsätta?",
+    visible: "Visible (t)",
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -151,6 +155,7 @@ var translation_sv={
   content_navigator:{
     customlink:"@:global.customlink",
     lecture:"@:global.lecture",
+    inclass_lecture: "@:global.inclass_lecture",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
     empty: "Kursen saknar innehåll",
@@ -261,6 +266,8 @@ var translation_sv={
     school_email:"E-post-adress",
     sign_up: "Registrera dig",
     sign_in: "Logga in",
+    login: "@:navigation.login",
+    join: "Join (t)",
     remember_me: "Förbli inloggad",
     confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
     confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
@@ -359,15 +366,20 @@ var translation_sv={
     review: "Genomgång i klassrummet",
     survey:"@:survey",
     time_estimate:"Tidsuppskattning för genomgång",
+    total_inclass_time: "Total In-Class Time (t)",
     time_per_quiz: "Tid per quiz",
     time_per_question: "Tid per fråga",
     display_content: "Visa I-klassinnehåll",
     choose_module: "Välj en modul för att visa utvalt material i klassrummet",
+    change_defaults: "change defaults (t)",
   },
   editor:{
     explanation: "Förklaring",
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
+    marker_time: "Marker Time (t)",
+    start_time: "Start Time (t)",
+    end_time: "End Time (t)",
     incorrect_format_time: "Felaktigt format på tiden",
     time_outside_range: "Tid utanför videons speltid",
     cannot_delete_alteast_one_answer: "Kan inte ta bort; det måste finnas minst ett svar",
@@ -376,6 +388,7 @@ var translation_sv={
     type: "Typ",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
+    marker: "@:global.marker",
     course_editor: "Redigera kurs",
     link_editor:"Redigera länk",
     video_editor:"Redigera video",
@@ -384,14 +397,18 @@ var translation_sv={
     quiz_editor: "Redigera Quiz",
     survey_editor: "Redigera Enkät",
     module_editor: "Redigera Modul",
+    title:"@:global.title",
+    annotation:"Annotation (t)",
     tooltip:{
-        invisible: "Inte synlig för eleverna. Kommer att synas på detta datum.",
+      invisible: "Inte synlig för eleverna.",
+      invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Studenter måste avsluta detta moment för att slutföra modulen",
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
-        click_add_question:"Klicka eller skriv i för att lägga till en fråga."
+        click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
+        click_add_marker:"Click or type 'm' to add a marker (t)"
     },
     drag:{
         start: "Start",
@@ -444,6 +461,7 @@ var translation_sv={
         appearance_date: "Publiceringsdatum",
         due_date: "Färdigdatum",
         quizzes:"@:global.quizzes",
+        markers: "Markers (t)",
         student_link_module:"Student-länk till modulen",
         has_due_date: "Har färdigdatum",
         required:"@:global.required",
@@ -457,6 +475,7 @@ var translation_sv={
     },
     button:{
         add_video_quiz: "Lägg till video-quiz här",
+        add_marker: "Add Marker (t)",
         show_all_quizzes: "Visa alla quizzar",
         add_content: "Lägg till Innehåll",
         add_answer: "Lägg till svar",
@@ -481,7 +500,9 @@ var translation_sv={
         question:"@:global.question",
         confused:"@:global.confused",
         really_confused:"@:global.really_confused",
-        note:"@:global.note"
+        note:"@:global.note",
+        quiz:"@:global.quiz",
+        marker:"@:global.marker"
     },
     button:{
         ask_question: "Ställ en fråga",
@@ -490,6 +511,7 @@ var translation_sv={
         exit_fullscreen: "Gå ur helskärmsläge",
         fullscreen: "Helskärm",
         check_answer: "Kontrollera svaret",
+      submit: "@:button.submit",
     },
     tooltip:{
         unsolved_quiz: "Du måste ha svarat på quizen innan du kan hoppa till den",
@@ -780,6 +802,7 @@ var translation_sv={
     types:{
         customlink:"@:global.customlink",
         video: "@:global.video",
+      inclass_video: "@global.inclass_lecture",
         video_desc: "Du kan lägga till quizfrågor ovanpå videon.",
         quiz: "@:global.quiz",
         survey: "@:global.survey",

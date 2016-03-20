@@ -41,6 +41,8 @@ angular.module('scalearAngularApp')
             'getSurveyChartsInclass':{method:'GET', params:{action:'get_survey_charts_inclass'},headers:headers},
             'getSurveyCharts':{method:'GET', params:{action:'get_survey_charts'},headers:headers},
             'getLastWatched':{method: 'GET', params:{action: 'last_watched'}, headers:headers},
-            'sortGroupLinks':{method: 'POST', headers:headers, params: {action: 'sort_group_links'}}
+            'sortGroupLinks':{method: 'POST', headers:headers, params: {action: 'sort_group_links'}},
+            'getInclassStudentStatus':{method: 'GET', ignoreLoadingBar: true, headers:headers, params: {action: 'get_inclass_student_status'}},
+            'updateAllInclassSessions':{method: 'POST', ignoreLoadingBar: true, headers:headers, params: {action: 'update_all_inclass_sessions'}}
       });
 }])

@@ -4,8 +4,6 @@ angular.module('scalearAngularApp')
   .controller('SaveAccountCtrl',['$scope','$modalInstance','User','$log','$window','$rootScope','$state', 'user_new', function ($scope, $modalInstance, User, $log, $window,$rootScope, $state, user_new) {
 
     $window.scrollTo(0, 0);
-    $scope.enrollment={}
-    $scope.form={}  
     $scope.user = user_new
     $scope.update_account = function(){
         $log.debug($scope.user);
@@ -15,8 +13,6 @@ angular.module('scalearAngularApp')
             user: $scope.user
         }, function() {
             $scope.sending = false;
-            $scope.show_settings = false;
-            $log.debug($rootScope.current_user.info_complete)
             $rootScope.show_alert = "";
             if($rootScope.current_user.intro_watched == false){
                 $state.go('confirmed')
@@ -32,6 +28,7 @@ angular.module('scalearAngularApp')
             }
         })
     }
+
     $scope.cancel = function(){
         $scope.user.current_password = null;
         $modalInstance.dismiss('cancel');

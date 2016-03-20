@@ -22,6 +22,7 @@ describe("Teacher", function(){
 		course_info.open()
 		var enrollment_key = course_info.enrollmentkey
 		header.logout()
+		// browser.pause();
 		login_page.sign_in(params.student_mail, params.password)
 		header.join_course(enrollment_key)
 		header.logout()

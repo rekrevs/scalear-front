@@ -11,6 +11,20 @@ angular.module('scalearAngularApp')
   // $cookieStore.remove("saml_provider")
   $scope.previous_provider = $cookieStore.get("login_provider")
 
+  // console.log($location)
+  // $scope.saml = $location.$$search
+  // console.log($scope.saml)
+  // if(Object.keys($scope.saml).length){
+  //   // $scope.saml=JSON.parse($state.params.attributes)
+  //   ngDialog.open({
+  //     template: 'samlSignup',
+  //     className: 'ngdialog-theme-default ngdialog-theme-custom',
+  //     scope: $scope
+  //     // preCloseCallback: function(value) {
+  //     //   next(data)
+  //     // }
+  //   });
+  // }
   $scope.toggleProviders = function(){
     $scope.show_providers? $scope.hideProviders() : $scope.showProviders()
   }
@@ -21,7 +35,9 @@ angular.module('scalearAngularApp')
       $("#search").select()
     })
     shortcut.add("Enter", function(){
-      $scope.samlLogin($scope.swamid[0])
+      if($scope.swamid[0])
+        $scope.samlLogin($scope.swamid[0])
+
     })
   }
 
@@ -88,7 +104,12 @@ angular.module('scalearAngularApp')
          $(resp.saml_url).appendTo('body').submit();
       },
       function(){
-
+        $rootScope.busy_loading = false;
+        $rootScope.show_alert = "error";
+        ErrorHandler.showMessage('Could not reach provider', 'errorMessage', 8000);
+        $timeout(function() {
+            $rootScope.show_alert = "";
+        }, 4000);
       }
     )
   }

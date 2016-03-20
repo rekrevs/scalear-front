@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/:lang/saml/:action', {lang:$translate.uses()},
-      { 
+      {
       	'Login': { method: 'GET', params: {action: 'saml_signin'}, headers: headers },
       });
 
@@ -849,31 +849,31 @@ angular.module('scalearAngularApp')
 					    },
 					    "entityID": "https://idp.esh.se/idp/shibboleth"
 					  },
-					  {
-					    "description": {
-					      "sv": "Identity Provider för Karolinska Institutet.",
-					      "en": "Identity Provider for Karolinska Institutet."
-					    },
-					    "logo": {
-					      "all": {
-					        "url": "https://kiidp.ki.se/images/ki_logo_292x146.png",
-					        "height": "146",
-					        "width": "292"
-					      }
-					    },
-					    "displayName": {
-					      "sv": "Karolinska Institutet",
-					      "en": "Karolinska Institutet",
-					      "id": "Karolinska Institutet"
-					    },
-					    "name": {
-					      "en": "KI"
-					    },
-					    "url": {
-					      "en": "http://www.ki.se"
-					    },
-					    "entityID": "https://kiidp.ki.se/idp/shibboleth"
-					  },
+					  // {
+					  //   "description": {
+					  //     "sv": "Identity Provider för Karolinska Institutet.",
+					  //     "en": "Identity Provider for Karolinska Institutet."
+					  //   },
+					  //   "logo": {
+					  //     "all": {
+					  //       "url": "https://kiidp.ki.se/images/ki_logo_292x146.png",
+					  //       "height": "146",
+					  //       "width": "292"
+					  //     }
+					  //   },
+					  //   "displayName": {
+					  //     "sv": "Karolinska Institutet",
+					  //     "en": "Karolinska Institutet",
+					  //     "id": "Karolinska Institutet"
+					  //   },
+					  //   "name": {
+					  //     "en": "KI"
+					  //   },
+					  //   "url": {
+					  //     "en": "http://www.ki.se"
+					  //   },
+					  //   "entityID": "https://kiidp.ki.se/idp/shibboleth"
+					  // },
 					  {
 					    "description": {
 					      "sv": "Identity Provider för Sophiahemmet Högskola.",

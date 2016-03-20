@@ -92,7 +92,7 @@
             <div class="line-through">or</div>
 
             <div class="row">
-                <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml" ng-click="showLoginForm()">Use a ScalableLearning Account</div>
+                <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml use_scalable_button" ng-click="showLoginForm()">Use a ScalableLearning Account</div>
             </div>
             <span ng-show="show_scalable_login" ng-click="hideProviders()">
                 <div class="row">
@@ -164,7 +164,7 @@
                 </div>
             </span>
         </span>
-        <span ng-show="previous_provider">
+        <span ng-show="previous_provider" class="previous_provider">
             <span ng-show="previous_provider=='scalablelearning'">
                 <div class="row">
                     <div class="small-10 small-centered columns text-left" style="margin:5px 0">

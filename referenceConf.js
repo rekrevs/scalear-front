@@ -1,6 +1,6 @@
 var params= {
     //local
-    frontend: 'http://0.0.0.0:9000/#/users/login',
+    frontend: 'http://0.0.0.0:9000/#',
     // admin_mail: 'admin@scalear.com',
     // teacher_mail:  'teacher1@sharklasers.com',
     // teacher2_mail: 'teacher2@sharklasers.com',
@@ -20,18 +20,28 @@ var params= {
     q3_y:187,
 
     //staging
-    // frontend: 'http://scalear-staging2.herokuapp.com/#/users/login',
+    // frontend: 'http://scalear-staging2.herokuapp.com/#/',
     admin_email:   'admin@scalable-learning.com',       
     teacher_mail:  'teacher1@email.com',
     teacher2_mail: 'teacher2@email.com',
     teacher3_mail: 'teacher3@email.com',
+    // teacher4_mail: '3ezxpw+1acrwb96urr7ftatsbvhwmiv@sharklasers.com',
     student_mail:  'student1@email.com',
     student2_mail: 'student2@email.com',
     student3_mail: 'student3@email.com',
     student4_mail: 'student4@email.com',
     student5_mail: 'student5@email.com',
     password: 'password',
+    teacher4_password: 'password1234',
     admin_password:"admin_account_password",
+    guerrillamail_url: "https://www.guerrillamail.com/inbox",
+//    guerrillamail_user: "scalable235@sharklasers.com",
+    guerrillamail_user: Math.floor(10000*Math.random()+1)+"@sharklasers.com",
+    guerrillamail_password: "password1234",
+    guerrillamail_first_name: "student",
+    guerrillamail_last_name: "4",
+    guerrillamail_sch_uni_name: "Nile University",
+
 
     short_name: "csc-test",
     course_name: "aesting course 100",
@@ -121,20 +131,21 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js', // Done
-        'test/e2e/spec/fill_course.spec.js',// Done
-        'test/e2e/spec/course_information_validation.spec.js',// Done
-        'test/e2e/spec/account_information_validation.spec.js',// Done
-        'test/e2e/spec/enrollment_help.spec.js',// Done
-        'test/e2e/spec/course_editor_basic.spec.js',// Done
-        'test/e2e/spec/course_editor_copy.spec.sj',// Done
-        'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
-        'test/e2e/spec/module_statistics.spec.js', // Done      
-        'test/e2e/spec/announcements.spec.js',  // 
-        'test/e2e/spec/teacher-managment.spec.js',// Done
-        'test/e2e/spec/students_solve_course.spec.js', //Done
-        'test/e2e/spec/notes.spec.js',
-        'test/e2e/spec/discussions.spec.js',  //Done
+        // 'test/e2e/spec/create_course.spec.js', // Done
+        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/course_information_validation.spec.js',// Done
+        // 'test/e2e/spec/account_information_validation.spec.js',// Done
+        // 'test/e2e/spec/enrollment_help.spec.js',// Done
+        'test/e2e/spec/email_notification.spec.js',  
+        // 'test/e2e/spec/course_editor_basic.spec.js',// Done
+        // 'test/e2e/spec/course_editor_copy.spec.sj',// Done
+        // 'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        // 'test/e2e/spec/module_statistics.spec.js', // Done      
+        // 'test/e2e/spec/announcements.spec.js',  // 
+        // 'test/e2e/spec/teacher-managment.spec.js',// Done
+        // 'test/e2e/spec/students_solve_course.spec.js', //Done
+        // 'test/e2e/spec/notes.spec.js',
+        // 'test/e2e/spec/discussions.spec.js',  //Done
         // // // // 'test/e2e/spec/progress-module.spec.js'
         // 'test/e2e/spec/delete_course.spec.js'
    
@@ -207,9 +218,9 @@ exports.config = {
     onPrepare: function() {
         browser.driver.manage().window().maximize();
         browser.driver.get(params.frontend);
-        browser.driver.sleep(1000);
+        browser.driver.sleep(3000);
         browser.driver.findElement(by.id('login')).click();
-        browser.driver.sleep(1000);
+        browser.driver.sleep(3000);
     },
 
     // The params object will be passed directly to the protractor instance,

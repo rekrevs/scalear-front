@@ -33,6 +33,10 @@ CourseInformation.prototype = Object.create({}, {
 	invite_button:{get:function(){return element(by.id('invite'))}},
 	invite:{value:function(){this.invite_button.click()}},
 	delete_teacher_button:{get:function(){return element(by.id("delete_teacher"))}},
+	receive_email_button:{get:function(){return element(by.model('teacher.email_discussion'))}},
+	receive_email_button_click:{value:function(){
+		this.receive_email_button.click();
+	}},
 	open:{value:function(){
 		sub_header.open_course_info()
 		browser.driver.wait(function() {

@@ -665,6 +665,7 @@ var translation_sv={
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
         taught_by: "Undervisas av",
+        receive_email:"Receive email when a student asks a question (t)",
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",

@@ -1,14 +1,15 @@
 var translation_en={
   global:{
     name: "Name",
-    email: "Email",   
-    at: "at",    
-    edit: "Edit",    
-    empty:"Empty",    
+    email: "Email",
+    at: "at",
+    edit: "Edit",
+    empty:"Empty",
     back: "Back",
     pref_language: "Language Preference",
-    welcome: "Welcome to ",
-    or: "or", 
+    welcome: "Welcome",
+    to:"to",
+    or: "or",
     and: "and",
     from:"from",
     preview_student: "Preview as Student",
@@ -62,7 +63,7 @@ var translation_en={
   error_message:{
     connected: "Connected",
     cant_connect_to_server: "Cannot connect to server",
-    invalid_email: "Invalid Email",    
+    invalid_email: "Invalid Email",
     got_some_errors: "Please correct the errors above",
     required:"@:global.required",
     invalid_input: "Invalid Input",
@@ -84,7 +85,7 @@ var translation_en={
     days: "days",
     ago: "ago",
   },
-  tooltip:{    
+  tooltip:{
     list_view: "List View",
     grid_view: "Grid View",
   },
@@ -105,7 +106,7 @@ var translation_en={
     replay: "Replay",
     retry: "Retry",
     reply: "Reply",
-    hide: "Hide",    
+    hide: "Hide",
   },
   support:{
     ipad:"iPad support is currently in beta.",
@@ -218,7 +219,7 @@ var translation_en={
   },
   feedback:{
     like_to_comment: "I’d like to comment on",
-    what_you_think: "Let us know what you think",    
+    what_you_think: "Let us know what you think",
     instructions:"The best way for us to make ScalableLearning better is through feedback from our users. Please send us any comments or questions or problems you may have and we’ll do our best to get back to you as soon as possible.",
     provide_desciption: "Please provide more description",
     provide_email_name: "Please make sure that you provided your name and email address",
@@ -248,7 +249,7 @@ var translation_en={
         password_confirmation: "Password confirmation",
         password: "Password",
         current_password: "Current Password",
-    },  
+    },
     confirmation_token:"Confirmation Token",
     resend_confirmation: "Resend confirmation instructions",
     didnt_receive_confirmation: "Re-send confirmation email",
@@ -265,10 +266,19 @@ var translation_en={
     sign_in: "Sign in",
     login: "@:navigation.login",
     join: "Join",
-    remember_me: "Keep me logged in", 
+    remember_me: "Keep me logged in",
     confirm_destroy: "Are you sure you want to cancel your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
-    required_marked: "Required fields are marked with *"
+    required_marked: "Required fields are marked with *",
+    use_school: "Use your School/University Account",
+    school_not_listed: "If your school is not in this list, you can Login with a ScalableLearning account below",
+    use_scalable: "Use a ScalableLearning Account",
+    login_with:"Login with",
+    other_login:"Other login options",
+    sign_through:"Signing in through",
+    im_student:"I'm a Student",
+    im_teacher:"I'm a Teacher",
+    back: "@:global.back"
   },
   events:{
     due:"Due",
@@ -368,7 +378,7 @@ var translation_en={
     display_content: "Display In-class Content",
     choose_module: "Choose a module to display selected materials In-class",
   },
-  editor:{        
+  editor:{
     explanation: "Explanation",
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
@@ -381,7 +391,7 @@ var translation_en={
     header: "Header",
     answer:"@:global.answer",
     type: "Type",
-    quiz:"@:global.quiz",    
+    quiz:"@:global.quiz",
     survey:"@:global.survey",
     marker: "@:global.marker",
     course_editor: "Course Editor",
@@ -420,7 +430,7 @@ var translation_en={
         for_help:"For help uploading videos",
         for_help_continue: "See 'Getting Started' in the Help menu",
         double_click_new_answer: "Double-click on the video to add a new answer.",
-        drag_to_reorder: "Drag to reorder",        
+        drag_to_reorder: "Drag to reorder",
     },
     home:{
         choose_module: "Choose a module to the left view and edit its contents.",
@@ -477,7 +487,7 @@ var translation_en={
         add_header: "Add Header",
         add_module: "Add Module",
         preview_student:"@:global.preview_student"
-    }    
+    }
   },
   lectures:{
     messages:{
@@ -488,8 +498,8 @@ var translation_en={
         really_confused_use_question: "You could ask a question so the teacher can help you.",
     },
     timeline:{
-        timeline: "Timeline", 
-        slides: "Slides", 
+        timeline: "Timeline",
+        slides: "Slides",
         description:"@:global.description",
         question:"@:global.question",
         confused:"@:global.confused",
@@ -520,7 +530,7 @@ var translation_en={
     really_confused: "@:global.really_confused",
     hover_for_details: "Hover for details",
     click_for_details: "Click for details",
-    multiple_correct: "There may be multiple correct answers", 
+    multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",
     answer_question: "Please answer the question",
@@ -549,7 +559,7 @@ var translation_en={
     finished_not_on_time: "Finished Not on Time",
     not_finished: "Not Finished",
     grade: "Grade",
-    course_graph_desc: "Lecture and quiz completion percentages for all students",    
+    course_graph_desc: "Lecture and quiz completion percentages for all students",
     based_on_invideo: "Based on in-video questions answered",
     button:{
         hide:"@:button.hide",
@@ -604,10 +614,10 @@ var translation_en={
         view_course_graph: "View a percentage graph of overall lectures and quizzes completion.",
     }
   },
-  quizzes:{    
+  quizzes:{
     used_up_all: "Used up all",
     attempts: "attempts",
-    attempt_number: "Attempt number", 
+    attempt_number: "Attempt number",
     must_choose_answer: "Must choose at least one answer",
     optional:"@:global.optional",
     already_submitted: "You've submitted the",
@@ -617,7 +627,7 @@ var translation_en={
         partial:"Partial",
         correct:"@:global.correct",
         incorrect:"@:global.incorrect",
-    }  
+    }
   },
   enrollment:{
     enter_enrollment: "Please Enter Enrollment Key",
@@ -677,11 +687,11 @@ var translation_en={
             click_to_copy: "Click to Copy",
         }
     },
-    list:{     
+    list:{
         finished: 'Finished',
         all_finished: '@:courses.list.finished',
         all: "All",
-        current:"Current",        
+        current:"Current",
         duration:"@:global.duration",
         lectures:"@:global.lectures",
         quizzes:"@:global.quizzes",
@@ -698,7 +708,7 @@ var translation_en={
             enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         },
         tooltip:{
-            unenroll: "Unenroll", 
+            unenroll: "Unenroll",
         },
         delete_popup:{
             warning:"@:global.warning",
@@ -721,8 +731,8 @@ var translation_en={
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",
-    short_name: "Short Name",    
-    time_zone: "Course Timezone",    
+    short_name: "Short Name",
+    time_zone: "Course Timezone",
     course_code: "Course Code",
     course_name: "Course Name",
   },
@@ -770,7 +780,7 @@ var translation_en={
         getting_started: "Getting Started",
         student:"For Students",
         teacher:"For Teachers",
-    },  
+    },
     feedback: "Feedback",
     teacher_forum: "Teacher Forum",
     instruction_manual: "Instruction Manual",

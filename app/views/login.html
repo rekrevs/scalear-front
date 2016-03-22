@@ -73,31 +73,33 @@
     <div class="small-10 medium-6 large-4 small-centered column login-panel">
         <div class="row" style="margin-bottom: 10px;">
             <div class="small-12 columns">
-                <h3><span translate>global.welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h3>
+                <h3><span translate>global.welcome</span>
+                <span translate>global.to</span>
+                Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h3>
             </div>
         </div>
 
         <span ng-show="!previous_provider">
             <div class="row" >
-                <div class="button dropdown small-10 small-centered columns saml" ng-click="toggleProviders()">Use your School/University Account</div>
+                <div class="button dropdown small-10 small-centered columns saml" ng-click="toggleProviders()" translate>account.use_school</div>
                 <ul id="signin_list" ng-show="show_providers">
                     <li>
                         <i class="fi-magnifying-glass size-18 left" style="margin: 4px;margin-right: 8px;"></i>
                         <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:86%;border-radius:4px" autofocus/>
                     </li>
                     <li ng-repeat="login_item in swamid=(swamid_list|filter:{ 'displayName.id': searchText}|orderBy:'displayName.id')" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
-                    <li ng-show="!swamid.length" class="small-12 columns left no-margin muted" style="color:#999999;padding: 10px 30px;">If your school is not in this list, you can Login with a ScalableLearning account below</li>
+                    <li ng-show="!swamid.length" class="small-12 columns left no-margin muted" style="color:#999999;padding: 10px 30px;" translate>account.school_not_listed</li>
                 </ul>
             </div>
-            <div class="line-through">or</div>
+            <div class="line-through" translate>global.or</div>
 
             <div class="row">
-                <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml" ng-click="showLoginForm()">Use a ScalableLearning Account</div>
+                <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml" ng-click="showLoginForm()" translate>account.use_scalable</div>
             </div>
             <span ng-show="show_scalable_login" ng-click="hideProviders()">
                 <div class="row">
                     <div class="small-10 small-centered columns text-left" style="margin:5px 0">
-                        <div>Login with Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
+                        <div><span translate>account.login_with</span> Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
                     </div>
                 </div>
                 <div class="row">
@@ -168,7 +170,7 @@
             <span ng-show="previous_provider=='scalablelearning'">
                 <div class="row">
                     <div class="small-10 small-centered columns text-left" style="margin:5px 0">
-                        <div>Login with Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
+                        <div><span translate>account.login_with</span> Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
                     </div>
                 </div>
                 <div class="row">
@@ -230,12 +232,12 @@
             </span>
             <span ng-show="previous_provider!='scalablelearning'">
                 <div class="row">
-                    <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)">Login with {{previous_provider.displayName.en || previous_provider.displayName.sv }}</div>
+                    <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)"><span translate>account.login_with</span> {{previous_provider.displayName.en || previous_provider.displayName.sv }}</div>
                 </div>
             </span>
-            <div class="line-through">or</div>
+            <div class="line-through" translate>global.or</div>
             <div class="row">
-                <div class="button small-10 small-centered columns saml" ng-click="previous_provider=null">Other login options</div>
+                <div class="button small-10 small-centered columns saml" ng-click="previous_provider=null" ><span translate>account.other_login</span></div>
             </div>
         </span>
     </div>

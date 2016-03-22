@@ -1,9 +1,9 @@
 <center>
-    <wizard on-finish="signUp()" hide-indicators="true">         
-        <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">     
-            <wz-step> 
-                <h2><span style="font-weight: 100;" translate>Welcome</span> {{saml_user.displayName}}</h2>
-                <h4 ng-show="is_saml"><span style="font-weight: 200;">Signing in through</span> {{saml_user.norEduOrgAcronym}}</h4>
+    <wizard on-finish="signUp()" hide-indicators="true">
+        <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">
+            <wz-step>
+                <h2><span style="font-weight: 100;" translate>global.welcome</span> {{saml_user.displayName}}</h2>
+                <h4 ng-show="is_saml"><span style="font-weight: 200;" translate>account.sign_through</span> {{saml_user.norEduOrgAcronym}}</h4>
                 <br/>
                 <div class="row">
                     <div class="small-12 medium-10 large-8 small-centered columns">
@@ -11,12 +11,12 @@
                             <div class="small-12 columns no-padding with-margin-bottom">
                                 <div class="small-6 columns" style="padding-right: 10px;padding-left: 0">
                                     <div class="button primary small-12 columns left  no-margin" style="padding:0;" ng-click="setupScreenName(2)" wz-next>
-                                        <div style="padding: 22px 0px;">I'm a Student</div>
+                                        <div style="padding: 22px 0px;" translate>account.im_student</div>
                                     </div>
                                 </div>
                                 <div class="small-6 columns no-padding">
                                     <div class="button primary small-12 columns left no-margin" style="padding:0;" ng-click="setupScreenName(1)" wz-next>
-                                        <div style="padding: 22px 0px;">I'm a Teacher</div>
+                                        <div style="padding: 22px 0px;" translate>account.im_teacher</div>
                                     </div>
                                 </div>
                             </div>
@@ -85,14 +85,14 @@
                         <div class="row">
                             <div class="small-12 columns no-padding" style="margin-top:30px">
                                 <div class="small-6 columns">
-                                    <button type="submit" ng-disabled="sending" class="button left secondary no-margin" wz-previous translate>Back</button>
+                                    <button type="submit" ng-disabled="sending" class="button left secondary no-margin" wz-previous translate>account.back</button>
                                 </div>
                                 <div class="small-6 columns">
                                     <button type="submit" ng-disabled="sending" class="button right success no-margin" wz-finish translate>account.sign_up</button>
                                 </div>
                             </div>
                         </div>
-                    </div>                     
+                    </div>
                 </div>
             </wz-step>
         </div>

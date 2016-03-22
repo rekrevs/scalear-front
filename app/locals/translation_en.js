@@ -7,7 +7,8 @@ var translation_en={
     empty:"Empty",
     back: "Back",
     pref_language: "Language Preference",
-    welcome: "Welcome to ",
+    welcome: "Welcome",
+    to:"to",
     or: "or",
     and: "and",
     from:"from",
@@ -268,7 +269,16 @@ var translation_en={
     remember_me: "Keep me logged in",
     confirm_destroy: "Are you sure you want to cancel your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
-    required_marked: "Required fields are marked with *"
+    required_marked: "Required fields are marked with *",
+    use_school: "Use your School/University Account",
+    school_not_listed: "If your school is not in this list, you can Login with a ScalableLearning account below",
+    use_scalable: "Use a ScalableLearning Account",
+    login_with:"Login with",
+    other_login:"Other login options",
+    sign_through:"Signing in through",
+    im_student:"I'm a Student",
+    im_teacher:"I'm a Teacher",
+    back: "@:global.back"
   },
   events:{
     due:"Due",

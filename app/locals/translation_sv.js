@@ -7,7 +7,8 @@ var translation_sv={
     empty:"Fältet är tomt",
     back: "Tillbaka",
     pref_language: "Språkinställning",
-    welcome: "Välkommen till ",
+    welcome: "Välkommen",
+    to:"till",
     or: "eller",
     and: "och",
     from:"från",
@@ -268,7 +269,16 @@ var translation_sv={
     remember_me: "Förbli inloggad",
     confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
     confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
-    required_marked: "Obligatoriska fält är markerade med *"
+    required_marked: "Obligatoriska fält är markerade med *",
+    use_school: "Use your School/University Account (t)",
+    school_not_listed: "If your school is not in this list, you can Login with a ScalableLearning account below (t)",
+    use_scalable: "Use a ScalableLearning Account (t)",
+    login_with:"Login with (t)",
+    other_login:"Other login options (t)",
+    sign_through:"Signing in through (t)",
+    im_student:"I'm a Student (t)",
+    im_teacher:"I'm a Teacher (t)",
+    back: "@:global.back"
   },
   events:{
     due: "Förfaller",

@@ -35,8 +35,8 @@ var translation_sv={
     quizzes: "Quiz-frågor",
     survey: "Enkät",
     surveys: "Enkäter",
-    marker: "Marker (t)",
-    markers: "Markers (t)",
+    marker: "Markering",
+    markers: "Markeringar",
     answer: "Svar",
     free_text_question: "Fritext-fråga",
     confused: "Förvirrad",
@@ -370,9 +370,9 @@ var translation_sv={
     explanation: "Förklaring",
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
-    marker_time: "Marker Time (t)",
-    start_time: "Start Time (t)",
-    end_time: "End Time (t)",
+    marker_time: "Markeringens tid",
+    start_time: "Start-tid",
+    end_time: "Slut-tid",
     incorrect_format_time: "Felaktigt format på tiden",
     time_outside_range: "Tid utanför videons speltid",
     cannot_delete_alteast_one_answer: "Kan inte ta bort; det måste finnas minst ett svar",
@@ -391,7 +391,7 @@ var translation_sv={
     survey_editor: "Redigera Enkät",
     module_editor: "Redigera Modul",
     title:"@:global.title",
-    annotation:"Annotation (t)",
+    annotation:"Annotering",
     tooltip:{
         invisible: "Inte synlig för eleverna. Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
@@ -400,7 +400,7 @@ var translation_sv={
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
-        click_add_marker:"Click or type 'm' to add a marker (t)"
+        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering"
     },
     drag:{
         start: "Start",
@@ -453,7 +453,7 @@ var translation_sv={
         appearance_date: "Publiceringsdatum",
         due_date: "Färdigdatum",
         quizzes:"@:global.quizzes",
-        markers: "Markers (t)",
+        markers: "Markeringar",
         student_link_module:"Student-länk till modulen",
         has_due_date: "Har färdigdatum",
         required:"@:global.required",
@@ -467,7 +467,7 @@ var translation_sv={
     },
     button:{
         add_video_quiz: "Lägg till video-quiz här",
-        add_marker: "Add Marker (t)",
+        add_marker: "Lägg till markering",
         show_all_quizzes: "Visa alla quizzar",
         add_content: "Lägg till Innehåll",
         add_answer: "Lägg till svar",
@@ -665,7 +665,7 @@ var translation_sv={
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
         taught_by: "Undervisas av",
-        receive_email:"Receive email when a student asks a question (t)",
+        receive_email:"Få notifiering via email när student ställer fråga",
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",

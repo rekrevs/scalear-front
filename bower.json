@@ -53,6 +53,8 @@
   },
   "resolutions": {
     "jquery": "2.x",
-    "angular": "1.2.0"
+    "angular": "1.2.0",
+    "screenfull": "~1.1.1",
+    "moment": "2.8.1"
   }
 }

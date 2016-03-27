@@ -34,8 +34,10 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('exit_preview',function(){
-        if($scope.lecture_player.element)
+        if($scope.lecture_player.element){
+            $scope.skip_pause_update= true
             $scope.lecture_player.controls.pause()
+        }
     })
 
     // angular.element($window)
@@ -193,6 +195,7 @@ angular.module('scalearAngularApp')
                 $scope.selected_quiz = quiz
                 $scope.quiz_mode = true
                 $scope.check_answer_title = "lectures.button.check_answer"
+
                 if(quiz.quiz_type == 'html') {
                     $log.debug("HTML quiz")
                     $scope.quiz_layer.backgroundColor = "white"
@@ -212,7 +215,7 @@ angular.module('scalearAngularApp')
 
                 if(quiz.quiz_type == 'survey' || quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
                     $scope.check_answer_title = "lectures.button.submit"
-                
+
                 $scope.last_quiz = quiz
                 $scope.backup_quiz = angular.copy(quiz)
                 $scope.$apply()
@@ -388,12 +391,14 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onPause= function(){
-        $log.debug("pausing")
-        var current_time = $scope.lecture_player.controls.getTime()
-        var percent_view = Math.round(((current_time/$scope.total_duration)*100))
-        $log.debug("current watched: "+percent_view)
-        $scope.submitPause(current_time, $scope.quiz_mode);
-        updateViewPercentage(percent_view)
+        if(!$scope.skip_pause_update){
+            $log.debug("pausing")
+            var current_time = $scope.lecture_player.controls.getTime()
+            var percent_view = Math.round(((current_time/$scope.total_duration)*100))
+            $log.debug("current watched: "+percent_view)
+            $scope.submitPause(current_time, $scope.quiz_mode);
+            updateViewPercentage(percent_view)
+        }
     }
 
     $scope.lecture_player.events.onEnd= function() {

@@ -20,8 +20,8 @@ var params= {
     q3_y:187,
 
     //staging
-    // frontend: 'http://scalear-staging2.herokuapp.com/#/',
-    admin_email:   'admin@scalable-learning.com',       
+    // frontend: 'http://scalear-staging2.herokuapp.com/#',
+    admin_email:   'admin@scalable-learning.com',
     teacher_mail:  'teacher1@email.com',
     teacher2_mail: 'teacher2@email.com',
     teacher3_mail: 'teacher3@email.com',
@@ -131,38 +131,37 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/create_course.spec.js', // Done
-        // 'test/e2e/spec/fill_course.spec.js',// Done
-        // 'test/e2e/spec/course_information_validation.spec.js',// Done
-        // 'test/e2e/spec/account_information_validation.spec.js',// Done
-        // 'test/e2e/spec/enrollment_help.spec.js',// Done
-        'test/e2e/spec/email_notification.spec.js',  
-        // 'test/e2e/spec/course_editor_basic.spec.js',// Done
-        // 'test/e2e/spec/course_editor_copy.spec.sj',// Done
-        // 'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
-        // 'test/e2e/spec/module_statistics.spec.js', // Done      
-        // 'test/e2e/spec/announcements.spec.js',  // 
-        // 'test/e2e/spec/teacher-managment.spec.js',// Done
-        // 'test/e2e/spec/students_solve_course.spec.js', //Done
-        // 'test/e2e/spec/notes.spec.js',
-        // 'test/e2e/spec/discussions.spec.js',  //Done
-        // // // // 'test/e2e/spec/progress-module.spec.js'
-        // 'test/e2e/spec/delete_course.spec.js'
-   
-   //{{reviewed}}  
-        // 'test/e2e/spec/init-progress-data.spec.js', //  
-        // 'test/e2e/spec/account-info-validation.spec.js',//    
+        'test/e2e/spec/create_course.spec.js', // Done
+        'test/e2e/spec/fill_course.spec.js',// Done
+        'test/e2e/spec/course_information_validation.spec.js',// Done
+        'test/e2e/spec/account_information_validation.spec.js',// Done
+        'test/e2e/spec/enrollment_help.spec.js',// Done
+        'test/e2e/spec/course_editor_basic.spec.js',// Done
+        'test/e2e/spec/course_editor_copy.spec.js',// Done
+        'test/e2e/spec/course_editor_sharing.spec.js',// Done
+        'test/e2e/spec/module_statistics.spec.js', // Done
+        'test/e2e/spec/announcements.spec.js',  //
+        'test/e2e/spec/teacher-managment.spec.js',// Done
+        'test/e2e/spec/students_solve_course.spec.js', //Done
+        'test/e2e/spec/notes.spec.js',
+        'test/e2e/spec/discussions.spec.js',  //Done
+        // 'test/e2e/spec/progress-module.spec.js'
+        'test/e2e/spec/delete_course.spec.js'
+
+   //{{reviewed}}
+        // 'test/e2e/spec/init-progress-data.spec.js', //
+        // 'test/e2e/spec/account-info-validation.spec.js',//
         // 'test/e2e/spec/copying.spec.js', //
         // 'test/e2e/spec/course-editor-basic.spec.js', //
         // 'test/e2e/spec/create-announcements.spec.js', //
         // 'test/e2e/spec/dashboard.spec.js', //
         // 'test/e2e/spec/enrollment-help.spec.js', //
         // 'test/e2e/spec/module-statistics.spec.js'
-        // 'test/e2e/spec/discussions.spec.js', // 
-        // 'test/e2e/spec/notes.spec.js', //        
+        // 'test/e2e/spec/discussions.spec.js', //
+        // 'test/e2e/spec/notes.spec.js', //
         // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
         // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //       
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //
         // 'test/e2e/spec/normal-quiz.spec.js', //
         // 'test/e2e/spec/normal-survey.spec.js', //
         // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
@@ -172,14 +171,14 @@ exports.config = {
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
         // 'test/e2e/spec/sharing.spec.js',//
-        // 'test/e2e/spec/teacher-managment.spec.js', //        
-        // 'test/e2e/spec/student-lectures.spec.js', //  
+        // 'test/e2e/spec/teacher-managment.spec.js', //
+        // 'test/e2e/spec/student-lectures.spec.js', //
 
         // 'test/e2e/spec/timeline.spec.js',
         // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
         // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
         // 'test/e2e/spec/enrolled-students.spec.js',//
-        // 
+        //
         // 'test/e2e/spec/progress-main.spec.js', //
         // 'test/e2e/spec/progress-module.spec.js', //
         // 'test/e2e/spec/inclass.spec.js',
@@ -218,9 +217,10 @@ exports.config = {
     onPrepare: function() {
         browser.driver.manage().window().maximize();
         browser.driver.get(params.frontend);
-        browser.driver.sleep(3000);
-        browser.driver.findElement(by.id('login')).click();
-        browser.driver.sleep(3000);
+        browser.driver.wait(function() {
+            return element(by.id('login')).isPresent()
+        }, 30000)
+        element(by.id('login')).click();
     },
 
     // The params object will be passed directly to the protractor instance,

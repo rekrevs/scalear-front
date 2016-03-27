@@ -678,6 +678,7 @@ var translation_en={
         discussion_forum_link: "Discussion Forum Link",
         enrollment_key: "Enrollment Key",
         taught_by: "Taught by",
+        receive_email:"Receive email when a student asks a question",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",

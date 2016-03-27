@@ -1,12 +1,12 @@
 <br />
 <center><loading size="big" show="!course"></loading></center>
 <div ng-show="course" class="small-12 columns">
-    <div class="small-9 columns" style="border-right: 1px solid lightgrey">        
+    <div class="small-9 columns" style="border-right: 1px solid lightgrey">
        <h2 class="title color-editable-blue">
-            <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
+            <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text>
             <span>&nbsp;|&nbsp;</span>
             <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
-        </h2> 
+        </h2>
         <hr />
         <h4 class="subheader with-margin-bottom" page-name="navigation.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase" translate>courses.information.description</h4>
         <p style="font-weight: 200;">
@@ -33,7 +33,7 @@
                         <div style="color: dimgrey; height: 18px;">{{teacher.status | capitalize}}</div>
                     </li>
                     <li ng-if="current_user.id==teacher.id">
-                        <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span>Receive email when a student asks a question</span></label>
+                        <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_email</span></label>
                     </li>
                     <li>
                         <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
@@ -42,7 +42,7 @@
             </div>
             <br />
             <div class="small-12 columns no-padding">
-            <br />                
+            <br />
                 <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny" ng-class="{'alert': !in_delete, 'success': in_delete}">{{toggle_message | translate}}</button>
                 <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.information.button.add_teacher</button>
                 <form name='email_form' ng-show="teacher_forum" novalidate>
@@ -65,9 +65,9 @@
                         </div>
                         <div>
                             <a id="invite" ng-click="saveTeacher()" class="button success tiny right" translate>courses.information.button.invite</a>
-                            <a class="button alert tiny right with-tiny-margin-right" ng-click="removeNewTeacher()" translate>button.cancel</a> 
+                            <a class="button alert tiny right with-tiny-margin-right" ng-click="removeNewTeacher()" translate>button.cancel</a>
                         </div>
-                    </div>                    
+                    </div>
                 </form>
             </div>
         </div>

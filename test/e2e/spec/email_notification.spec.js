@@ -191,14 +191,14 @@ describe("Discussion Part 1" , function(){
 	})
 
 	describe("guerrillamail Teacher",function(){
-		it("should open guerrillamail website",function(){
+		xit("should open guerrillamail website",function(){
 			guerrilla_mail_page.open_url(params.guerrillamail_url)
 		})
-		it("should change guerrillamail email ",function(){
+		xit("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.guerrillamail_user)
 			sleep(11000)
 		})				
-		it("should check mails count ",function(){
+		xit("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
 		})
 		it("should open scalable learning website ",function(){

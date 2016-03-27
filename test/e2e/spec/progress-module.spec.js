@@ -43,9 +43,9 @@ var modules_items = {
 					],
 					'free_text':[],
 					'discussion':[
-						{title: 'Private Question', type:'private', time:roundToNearestQuarter(15, total_duration), likes:0, flags:0, screen_name:'studenttest1'},
-						{title: 'Public Question', type:'public', time:roundToNearestQuarter(35, total_duration), likes:2, flags:1, screen_name:'studenttest1'},
-						{title: 'private question by second student', type:'private', time:roundToNearestQuarter(40, total_duration), likes:0, flags:0, screen_name:'studenttest2'}
+						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:'Student 874'},
+						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:'Student 874'},
+						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:'Student 1444'}
 					],
 					'confused':[],
 					},
@@ -53,9 +53,9 @@ var modules_items = {
 					'name':'lecture2 text quizzes', 
 					'duration': '00:04:47',
 					'questions': [
-						{title:'MCQ TEXT QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
-						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration)}, 
-						{title:'DRAG TEXT QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration)}
+						{title:'MCQ TEXT QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration), vote_count:2, vote_percent:67},
+						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34}, 
+						{title:'DRAG TEXT QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration), vote_count:1, vote_percent:34}
 					],
 					'free_text':[],
 					'discussion':[],
@@ -193,6 +193,10 @@ var comment1 = {title: "second comment", likes:2, flags:1, screen_name:'Student-
 var comment2 = {title: "teacher can reply to discussions", likes:0, flags:0, screen_name:teacher_name}
 var comment3 = {title: "still can add many comments", likes:0, flags:0, screen_name:teacher_name}
 
+// module_progress = Module 1, 2 , 3 level(1)
+// module item =  lecture , normal quizes level ( 2 )
+
+
 describe("check course review", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
@@ -209,112 +213,158 @@ describe("check course review", function(){
 		describe('First Module Progress Page', function(){
 			it("should open first moduel",function(){
 				navigator.module(1).open()
+				element(by.className('module-review')).click()
+				 // sleep(1000)
 			})
 			it('should have a video container', function(){
-				expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
+				expect(element(by.id('progress_lec_video')).isPresent()).toEqual(true)
 			})
-			// it('should display the module progress chart showing that the two students finished on time', function(){
-			// 	expect(module_progress.getModuleChartValueAt(1)).toBe('1')
-			// 	refresh()
-			// 	expect(module_progress.getModuleChartValueAt(4)).toBe('2')
-			// })
-			// it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
-			// 	expect(module_progress.module_items.count()).toBe(modules_items['New Module'].length)
-			// 	modules_items['New Module'].forEach(function(item, i){
-			// 		var total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
-			// 		expect(module_progress.module_item(i+1).items.count()).toBe(total)
-			// 		var summary = "("
-			// 		if(item.duration)
-			// 			summary+=item.duration+', '
-			// 		summary+=(item.questions.length+item.free_text.length) +' Questions)'
-			// 		var main_title = item.name+" "+ summary
-			// 		expect(module_progress.module_item(i+1).title).toContain(main_title)
-			// 	})
-			// })
+			it('should display the module progress chart showing that the two students finished on time', function(){
+				expect(module_progress.getModuleChartValueAt(1)).toBe('1')
+				refresh()
+				expect(module_progress.getModuleChartValueAt(4)).toBe('2')
+			})
+			it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
+				expect(module_progress.module_items.count()).toBe(modules_items['New Module'].length)
+				modules_items['New Module'].forEach(function(item, i){
+					var total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
+					expect(module_progress.module_item(i+1).items.count()).toBe(total)
+					var summary = "("
+					if(item.duration)
+						summary+=item.duration+', '
+					summary+=(item.questions.length+item.free_text.length) +' Questions)'
+					var main_title = item.name+" "+ summary
+					expect(module_progress.module_item(i+1).title).toContain(main_title)
+				})
+			})
 			describe('First lecture',function(){
 				it('should display correct quiz titles',function(){					
 					var question = modules_items['New Module'][0].questions[0]
-					expect(module_progress.module_item(1).quiz_title(1)).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
-					
+					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(1).quiz(1).show_inclass_click()
+					expect(module_progress.module_item(1).quiz(1).show_inclass_box.isSelected()).toEqual(true)  
+
 					var question = modules_items['New Module'][0].questions[1]
-					expect(module_progress.module_item(1).quiz_title(2)).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(1).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(1).quiz(2).show_inclass_click()
+					expect(module_progress.module_item(1).quiz(2).show_inclass_box.isSelected()).toEqual(true)  	
 					
 					var question = modules_items['New Module'][0].questions[2]
-					expect(module_progress.module_item(1).quiz_title(3)).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(1).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(1).quiz(3).show_inclass_click()
+					expect(module_progress.module_item(1).quiz(3).show_inclass_box.isSelected()).toEqual(true)  	
+				})
+				it('should display correct total In-Class time',function(){
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')	
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(1)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(3)).toBe('2')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(4)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(2)).toBe('1')
+					// Quiz 3
+					refresh()
+					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(1)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(2)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(3)).toBe('2')
+				})
+				it('should have correct discussion titles and content',function(){
+					// Discussion 1
+					var discussion = modules_items['New Module'][0].discussion[0]
+					expect(module_progress.module_item(1).discussion(1).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(1).discussion_student_name).toEqual(discussion.screen_name+':')
+					expect(module_progress.module_item(1).discussion(1).discussion_student_content).toEqual(discussion.title)		
+					expect(module_progress.module_item(1).discussion(1).discussion_student_private.isDisplayed()).toEqual(true)				
+					module_progress.module_item(1).discussion(1).show_inclass_click()
+					expect(module_progress.module_item(1).discussion(1).show_inclass_box.isSelected()).toEqual(true)  	
+					// Discussion 2
+					var discussion = modules_items['New Module'][0].discussion[1]
+					expect(module_progress.module_item(1).discussion(2).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(2).discussion_student_name).toEqual(discussion.screen_name+':')
+					expect(module_progress.module_item(1).discussion(2).discussion_student_content).toEqual(discussion.title)		
+					expect(module_progress.module_item(1).discussion(2).discussion_student_flags).toEqual(discussion.flags)
+					expect(module_progress.module_item(1).discussion(2).discussion_student_likes).toEqual(discussion.likes)		
+					expect(module_progress.module_item(1).discussion(2).discussion_student_public.isDisplayed()).toEqual(true)				
+					module_progress.module_item(1).discussion(2).show_inclass_click()
+					expect(module_progress.module_item(1).discussion(2).show_inclass_box.isSelected()).toEqual(true)  	
+					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(2)})
+				
+					// Discussion 3
+					var discussion = modules_items['New Module'][0].discussion[2]
+					expect(module_progress.module_item(1).discussion(3).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(3).discussion_student_name).toEqual(discussion.screen_name+':')
+					expect(module_progress.module_item(1).discussion(3).discussion_student_content).toEqual(discussion.title)		
+					expect(module_progress.module_item(1).discussion(3).discussion_student_private.isDisplayed()).toEqual(true)				
+					module_progress.module_item(1).discussion(3).show_inclass_click()
+					expect(module_progress.module_item(1).discussion(3).show_inclass_box.isSelected()).toEqual(true)  	
+				})
+				it('should display correct total In-Class time',function(){
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n15 minutes')	
+					module_progress.module_item(1).quiz(1).show_inclass_click()
+					module_progress.module_item(1).quiz(2).show_inclass_click()
+					module_progress.module_item(1).quiz(3).show_inclass_click()
+					module_progress.module_item(1).discussion(1).show_inclass_click()
+					module_progress.module_item(1).discussion(2).show_inclass_click()
+					module_progress.module_item(1).discussion(3).show_inclass_click()
+				})
+				it('should be able to add a replay to discussion',function(){
+					module_progress.module_item(1).discussion(2).reply("reply")
+					// module_progress.module_item(1).discussion(2).replies_count().then(function(coun){expect(coun).toEqual(3)})					
+					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(3)})					
+				})
+				it('should be able to delete discussion', function(){
+					module_progress.module_item(1).discussion(2).delete_discussion()
+				})
+
+			})
+			describe('Second lecture',function(){
+				it('should display correct quiz titles',function(){					
+					var question = modules_items['New Module'][1].questions[0]
+					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(2).quiz(1).show_inclass_click()
+					expect(module_progress.module_item(2).quiz(1).show_inclass_box.isSelected()).toEqual(true)  	
+					module_progress.module_item(2).quiz(1).show_inclass_click()
+
+					var question = modules_items['New Module'][1].questions[1]
+					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(2).quiz(2).show_inclass_click()
+					expect(module_progress.module_item(2).quiz(2).show_inclass_box.isSelected()).toEqual(true)  	
+					module_progress.module_item(2).quiz(2).show_inclass_click()
+					
+					var question = modules_items['New Module'][1].questions[2]
+					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					module_progress.module_item(2).quiz(3).show_inclass_click()
+					expect(module_progress.module_item(2).quiz(3).show_inclass_box.isSelected()).toEqual(true)  	
+					module_progress.module_item(2).quiz(3).show_inclass_click()
 				})
 			})
+		})
+		it("should logout",function(){
+			header.logout()
 		})
 	})
 })
 
-
 // describe('First Module Progress Page', function(){
-
 // 	describe('First lecture',function(){
-// 		
-// 		it('should display quiz statistics correct',function(){
-// 			progress.checkQuizChart(0,0,1,2)
-// 			progress.checkQuizChart(0,1,4,1)
-// 			progress.checkQuizChart(0,2,1,2)
-// 			ptor.navigate().refresh();
-// 			progress.checkQuizChart(0,1,2,1)
-// 			progress.checkQuizChart(0,2,2,2)
-// 			ptor.navigate().refresh();
-// 			progress.checkQuizChart(0,0,3,2)
-// 			progress.checkQuizChart(0,2,3,2)
-// 		})
-// 		it('should have correct discussion titles and content',function(){
-// 			progress.checkDiscussionTitle(0,0,modules_items['New Module'])
-// 			progress.checkDiscussionContent(0,0,modules_items['New Module'])
-// 		})
+// 		it('should display quiz statistics correct',function(){})
+// 		it('should have correct discussion titles and content',function(){})
 // 		it('should have correct confused titles',function(){
 // 			progress.checkConfusedTitle(0,0,modules_items['New Module'])
 // 		})
-// 		it('should be able to show quiz inclass and have correct time estimate',function(){
-// 			progress.checkTimeEstimate(0)
-// 			progress.showVideoQuizInclass(0,0)
-// 			progress.checkTimeEstimate(3)
-// 			progress.showVideoQuizInclass(0,1)
-// 			progress.checkTimeEstimate(6)
-// 			progress.showVideoQuizInclass(0,2)
-// 			progress.checkTimeEstimate(9)
-// 			progress.hideVideoQuizInclass(0,0)
-// 			progress.checkTimeEstimate(6)
-// 			progress.hideVideoQuizInclass(0,1)
-// 			progress.checkTimeEstimate(3)
-// 			progress.hideVideoQuizInclass(0,2)
-// 			progress.checkTimeEstimate(0)
-// 		})
-// 		it('should be able to show disussion inclass and have correct time estimate',function(){
-// 			progress.checkTimeEstimate(0)
-// 			progress.showDiscussionInclass(0,0)
-// 			progress.checkTimeEstimate(2)
-// 			progress.hideDiscussionInclass(0,0)
-// 			progress.checkTimeEstimate(0)
-// 		})
-// 		it('should be able to show video quizzes and disussion inclass and have correct time estimate',function(){
-// 			progress.checkTimeEstimate(0)
-// 			progress.showDiscussionInclass(0,0)
-// 			progress.checkTimeEstimate(2)
-// 			progress.showVideoQuizInclass(0,0)
-// 			progress.checkTimeEstimate(5)
-// 			progress.hideDiscussionInclass(0,0)
-// 			progress.checkTimeEstimate(3)
-// 			progress.hideVideoQuizInclass(0,0)
-// 			progress.checkTimeEstimate(0)
-// 		})
-
-// 		it('should be able to add a replay to discussion',function(){			
-// 			progress.addReplyToDiscussion(0,0,comment1.title)
-// 			progress.checkDiscussionComment(0,0,0,comment1)
-// 			progress.addReplyToDiscussion(0,0,comment2.title)
-// 			progress.checkDiscussionComment(0,0,1,comment2)
-// 		})
-// 		it('should be able to delete discussion', function(){
-// 			progress.deleteDiscussionComment(0,0,0)
-// 			progress.checkDiscussionComment(0,0,0,comment2)
-// 			progress.deleteDiscussionComment(0,0,0)
-// 		})
+// 		it('should be able to show quiz inclass and have correct time estimate',function(){})
+// 		it('should be able to show disussion inclass and have correct time estimate',function(){})
+// 		it('should be able to show video quizzes and disussion inclass and have correct time estimate',function(){})
+// 		it('should be able to add a replay to discussion',function(){})
+// 		it('should be able to delete discussion', function(){})
 // 	})
 // 	describe('Second Lecture',function(){
 // 		it('should display correct quiz titles',function(){

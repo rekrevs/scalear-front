@@ -19,8 +19,6 @@ var Discussion = function(elem){
 }
 
 Discussion.prototype = Object.create({}, {
-	// module_chart:{get:function(){return this.field.element(by.className('progress_chart'))}},
-	// module_chart_columns:{get:function(){return this.module_chart.element(by.tagName('svg')).all(by.tagName('g'))}},
 	discussion_title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
 	discussion_student_name:{get:function(){return this.field.element(by.className('disc_screen_name')).getText()}},
 	discussion_student_content:{get:function(){return this.field.element(by.className('disc_content')).getText()}},
@@ -34,8 +32,7 @@ Discussion.prototype = Object.create({}, {
 	reply_text_area:{get:function(){return this.field.element(by.css('[ng-model="discussion.post.temp_response"]'))}},
 	reply_text_box:{get:function(){return this.field.element(by.css('[ng-click="sendComment(discussion.post);discussion.post.show_feedback = false"]'))}},
 	delete_button:{get:function(){return this.field.element(by.css('[ng-click="deletePost(item.data, $index)"]'))}},
-	delete_discussion:{value:function(){return this.delete_button.click()}},
-	
+	delete_discussion:{value:function(){return this.delete_button.click()}},	
 	reply:{value:function(keys){
 		this.reply_button.click()
 		this.reply_text_area.clear().sendKeys(keys)
@@ -43,18 +40,41 @@ Discussion.prototype = Object.create({}, {
 	}},
 	comments_count:{value:function(){
 		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count() 
-	 }}//,
-	// replies_count:{value:function(){
-	// 	return this.field.all(by.className("comment_screen_name")).count() 
-	// }}
-
-	// getModuleChartValueAt:{value:function(column){
-	// 	this.module_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
-	// 	return this.module_chart_columns.last().all(by.tagName('text')).last().getText()
-	// }}
+	 }}
 })
 
-
+var Freetextquestion = function(elem){
+	this.field = elem
+}
+Freetextquestion.prototype = Object.create({}, {
+	title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
+	answers:{get:function(){return this.field.all(by.repeater('answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict'))}},
+	answer:{value:function(val){return this.answers.get(val-1).element(by.css('[style="width: 70%;"]')).getText()}},
+	clickonRelated:{value:function(val){return this.answers.get(val-1).element(by.css('[ng-click="quiz.filtered_user = answer.user_id;quiz.filter_strict=true"]')).click()}},
+	grade:{value:function(val){return this.answers.get(val-1).element(by.className('editable-click')).getText()}},
+	grade_change:{value:function(val,num){
+		this.answers.get(val-1).element(by.className('editable-click')).click();
+		this.answers.get(val-1).all(by.tagName('option')).get(num-1).click()
+	}},
+	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+	answers_count:{value:function(){
+		return this.field.all(by.repeater('answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict')).count() 
+	}},
+	reply_button:{get:function(){return this.field.element(by.css('[ng-click="answer.show_feedback = true"]'))}},
+	reply_text_area:{get:function(){return this.field.element(by.css('[ng-model="answer.temp_response"]'))}},
+	reply_text_box:{get:function(){return this.field.element(by.css('[ng-click="sendFeedback(answer);answer.show_feedback = false"]'))}},
+	delete_button:{get:function(){return this.field.element(by.css('[ng-click="deleteFeedback(answer)"]'))}},
+	delete_reply:{value:function(){return this.delete_button.click()}},
+	reply:{value:function(keys){
+		this.reply_button.click()
+		this.reply_text_area.clear().sendKeys(keys)
+		this.reply_text_box.click()
+	}},
+	comments_count:{value:function(){
+		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count() 
+	 }}
+})
 
 var ModuleItem = function(elem){
 	this.field = elem
@@ -63,10 +83,22 @@ var ModuleItem = function(elem){
 ModuleItem.prototype = Object.create({}, {
 	items:{get:function(){ return this.field.all(by.className('ul_item'))}},
 	title:{get:function(){return this.field.element(by.className("title")).getText()}},
+	// lecture 
 	quizzes:{get:function(){return this.field.all(by.className('color-green'))}},
 	quiz:{value:function(val){return new Quiz(this.quizzes.get(val-1)) }},
 	discussions:{get:function(){return this.field.all(by.className('color-coral'))}},
 	discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
+	// quiz  and survey 
+	question_quizzes:{get:function(){return this.field.all(by.className('color-blue'))}},
+	question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},	
+	freetextquestions:{get:function(){return this.field.all(by.className('color-coral'))}},
+	freetextquestion:{value:function(val){return new Freetextquestion(this.freetextquestions.get(val-1)) }},
+	makevisible:{value:function(){this.field.element(by.css('[ng-click="makeSurveyVisible(quiz, true)"]')).click()}},
+	hidevisible:{value:function(){this.field.element(by.css('[ng-click="makeSurveyVisible(quiz, false)"]')).click()}},
+	suveryresults:{get:function(){return element(by.css('[ng-if="current_survey.visible"]'))}},
+	clickonSeeall:{value:function(val){return this.field.element(by.css('[ng-show="quiz.filtered_user"]')).click()}},
+	// questiongrade:{value:function(val){return element.all(by.repeater("question in quiz.questions")).get(val-1).element(by.className('right')).getText()}}	
+
 })
 
 var Student = function(elem){

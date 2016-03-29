@@ -11,6 +11,8 @@ var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
 var ModuleProgress = require('./pages/module_progress');
+var StudentQuiz = require('./pages/student/quiz');
+var StudentLecture = require('./pages/student/lecture');
 
 var params = browser.params;
 var header = new Header()
@@ -24,6 +26,8 @@ var quiz = new NormalQuiz();
 var content_items= new ContentItems()
 var navigator = new ContentNavigator(1)
 var module_progress = new ModuleProgress()
+var student_quiz = new StudentQuiz()
+var student_lec = new StudentLecture()
 
 var student_names = ['studenttest2 sharklasers', 'student test']
 var teacher_name = "teacher1" 
@@ -81,7 +85,7 @@ var modules_items = {
 					],
 					'free_text':[
 						{title:'free question', answers:[{title:'free answer', grade:'Under Review'}]},
-						{title:'match question', answers:[{title:'match answer', grade:'Good'}]},
+						{title:'match question', answers:[{title:'match answer', grade:'Correct'}]},
 					],
 					'discussion':[],
 					'confused':[]
@@ -95,7 +99,7 @@ var modules_items = {
 					],
 					'free_text':[
 						{title:'free question', answers:[{title:'second free answer', grade:'Under Review'},{title:'second second free answer', grade:'Under Review'}]},
-						{title:'match question',answers:[{title:"shouldn't match answer", grade:'Wrong'},{title:"match answer", grade:'Good'}]},
+						{title:'match question',answers:[{title:"shouldn't match answer", grade:'Incorrect'},{title:"match answer", grade:'Correct'}]},
 					],
 					'discussion':[],
 					'confused':[],
@@ -209,12 +213,10 @@ describe("check course review", function(){
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()
 		})
-
 		describe('First Module Progress Page', function(){
 			it("should open first moduel",function(){
 				navigator.module(1).open()
 				element(by.className('module-review')).click()
-				 // sleep(1000)
 			})
 			it('should have a video container', function(){
 				expect(element(by.id('progress_lec_video')).isPresent()).toEqual(true)
@@ -317,7 +319,6 @@ describe("check course review", function(){
 				})
 				it('should be able to add a replay to discussion',function(){
 					module_progress.module_item(1).discussion(2).reply("reply")
-					// module_progress.module_item(1).discussion(2).replies_count().then(function(coun){expect(coun).toEqual(3)})					
 					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(3)})					
 				})
 				it('should be able to delete discussion', function(){
@@ -325,25 +326,413 @@ describe("check course review", function(){
 				})
 
 			})
-			describe('Second lecture',function(){
+			describe('Second Lecture',function(){
 				it('should display correct quiz titles',function(){					
 					var question = modules_items['New Module'][1].questions[0]
 					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
 					module_progress.module_item(2).quiz(1).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(1).show_inclass_box.isSelected()).toEqual(true)  	
-					module_progress.module_item(2).quiz(1).show_inclass_click()
 
 					var question = modules_items['New Module'][1].questions[1]
 					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
 					module_progress.module_item(2).quiz(2).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(2).show_inclass_box.isSelected()).toEqual(true)  	
-					module_progress.module_item(2).quiz(2).show_inclass_click()
 					
 					var question = modules_items['New Module'][1].questions[2]
 					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
 					module_progress.module_item(2).quiz(3).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(3).show_inclass_box.isSelected()).toEqual(true)  	
+				})
+				it('should display correct total In-Class time',function(){
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')	
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(1)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(3)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(5)).toBe('1')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(4)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1')
+					// Quiz 3
+					refresh()
+					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(1)).toBe('2')
+				})
+				it('should display correct total In-Class time',function(){
+					module_progress.module_item(2).quiz(1).show_inclass_click()
+					module_progress.module_item(2).quiz(2).show_inclass_click()
 					module_progress.module_item(2).quiz(3).show_inclass_click()
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+				})
+			})
+			describe('Third Lecture',function(){
+				it('should display correct quiz titles',function(){					
+					var question = modules_items['New Module'][2].questions[0]
+					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')	
+					module_progress.module_item(3).quiz(1).show_inclass_click()
+					expect(module_progress.module_item(3).quiz(1).show_inclass_box.isSelected()).toEqual(true)  	
+
+					var question = modules_items['New Module'][2].questions[1]
+					expect(module_progress.module_item(3).quiz(2).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')	
+					module_progress.module_item(3).quiz(2).show_inclass_click()
+					expect(module_progress.module_item(3).quiz(2).show_inclass_box.isSelected()).toEqual(true)  						
+				})
+				it('should display correct total In-Class time',function(){
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')	
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(4)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(5)).toBe('1')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(5)).toBe('2')
+				})
+				it('should display correct total In-Class time',function(){
+					module_progress.module_item(3).quiz(1).show_inclass_click()
+					module_progress.module_item(3).quiz(2).show_inclass_click()
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+				})
+			})
+			describe('Quiz 1',function(){
+				it('should display correct quiz titles',function(){					
+					var question = modules_items['New Module'][3].questions[0]
+					expect(module_progress.module_item(4).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+					var question = modules_items['New Module'][3].questions[1]
+					expect(module_progress.module_item(4).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+					var question = modules_items['New Module'][3].questions[2]
+					expect(module_progress.module_item(4).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
+					//  Quiz 3
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(1)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')				
+				})
+				it('should have correct freetext answer',function(){
+					var discussion = modules_items['New Module'][3].free_text[0]
+					module_progress.module_item(4).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+					expect(module_progress.module_item(4).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(4).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
+					expect(module_progress.module_item(4).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
+					module_progress.module_item(4).freetextquestion(1).grade_change(1, 2)
+					expect(module_progress.module_item(4).freetextquestion(1).grade(1)).toEqual("Incorrect")
+					module_progress.module_item(4).freetextquestion(1).grade_change(1, 1)
+					expect(module_progress.module_item(4).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
+
+					var discussion = modules_items['New Module'][3].free_text[1]
+					module_progress.module_item(4).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+					expect(module_progress.module_item(4).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(4).freetextquestion(2).answer(1)).toEqual(discussion.answers[0].title)
+					expect(module_progress.module_item(4).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
+					module_progress.module_item(4).freetextquestion(2).grade_change(1, 2)
+					expect(module_progress.module_item(4).freetextquestion(2).grade(1)).toEqual("Incorrect")
+					module_progress.module_item(4).freetextquestion(2).grade_change(1, 4)
+					expect(module_progress.module_item(4).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
+				})
+			})
+			describe('Quiz 2',function(){
+				it('should display correct quiz titles',function(){					
+					var question = modules_items['New Module'][4].questions[0]
+					expect(module_progress.module_item(5).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+					var question = modules_items['New Module'][4].questions[1]
+					expect(module_progress.module_item(5).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+					var question = modules_items['New Module'][4].questions[2]
+					expect(module_progress.module_item(5).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(1)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(5)).toBe('1')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(5)).toBe('1')
+					//  Quiz 3
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(1)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2)).toBe('2')
+					refresh()
+					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')				
+				})
+				it('should have correct freetext answer',function(){
+					var discussion = modules_items['New Module'][4].free_text[0]
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})										
+					expect(module_progress.module_item(5).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(5).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
+					module_progress.module_item(5).freetextquestion(1).grade_change(1, 2)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(1)).toEqual("Incorrect")
+					module_progress.module_item(5).freetextquestion(1).grade_change(1, 1)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(1)).toEqual(discussion.answers[1].grade)
+
+					expect(module_progress.module_item(5).freetextquestion(1).answer(2)).toEqual(discussion.answers[1].title)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual(discussion.answers[1].grade)
+					module_progress.module_item(5).freetextquestion(1).grade_change(2, 2)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual("Incorrect")
+					module_progress.module_item(5).freetextquestion(1).grade_change(2, 1)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual(discussion.answers[1].grade)
+
+					var discussion = modules_items['New Module'][4].free_text[1]
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})										
+					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(5).freetextquestion(2).answer(1)).toEqual(discussion.answers[0].title)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
+					module_progress.module_item(5).freetextquestion(2).grade_change(1, 4)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(1)).toEqual("Correct")
+					module_progress.module_item(5).freetextquestion(2).grade_change(1, 2)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
+
+					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(5).freetextquestion(2).answer(2)).toEqual(discussion.answers[1].title)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
+					module_progress.module_item(5).freetextquestion(2).grade_change(2, 2)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual("Incorrect")
+					module_progress.module_item(5).freetextquestion(2).grade_change(2, 4)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
+				})
+				it('should click on related button ',function(){
+					module_progress.module_item(5).freetextquestion(1).clickonRelated(1)
+					var discussion = modules_items['New Module'][4].free_text[0]
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+					
+					var discussion = modules_items['New Module'][4].free_text[1]
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+				})
+				it('should check related answers to student',function(){
+					module_progress.module_item(5).clickonSeeall()
+					var discussion = modules_items['New Module'][4].free_text[0]
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})										
+					
+					var discussion = modules_items['New Module'][4].free_text[1]
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})															
+				})
+				it('should have change grade of answer for student 2',function(){
+					var discussion = modules_items['New Module'][4].free_text[0]
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual(discussion.answers[1].grade)
+					module_progress.module_item(5).freetextquestion(1).grade_change(2, 2)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual("Incorrect")
+
+					var discussion = modules_items['New Module'][4].free_text[1]
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
+					module_progress.module_item(5).freetextquestion(2).grade_change(2, 2)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual("Incorrect")
+				})
+				it("should logout",function(){
+					header.logout()
+				})
+				describe('Student 2',function(){
+					it("login in",function(){
+						login_page.sign_in(params.student2_mail, params.password)
+					})
+					it("should open quiz 2 in first module ",function(){
+						course_list.open()
+						course_list.open_course(1)
+						navigator.module(1).open()
+						navigator.module(1).item(5).open()
+					})
+					it("should check that grade of quiz",function(){					
+						expect(student_quiz.incorrect.count()).toEqual(3)
+						expect(student_quiz.correct.count()).toEqual(2)
+					})
+					it("should logout",function(){
+						header.logout()
+					})
+				})
+				it("teacher should login",function(){
+					login_page.sign_in(params.teacher_mail, params.password)
+				})
+				it("should open course",function(){
+					course_list.open()
+					course_list.open_course(1)
+				})
+				it("should go to review mode",function(){
+					sub_header.open_review_mode()
+				})
+				it("should open first moduel",function(){
+					navigator.module(1).open()
+					element(by.className('module-review')).click()
+				})	
+				it('should revert the grade of answer for student 2',function(){
+					var discussion = modules_items['New Module'][4].free_text[0]
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual("Incorrect")
+					module_progress.module_item(5).freetextquestion(1).grade_change(2, 1)
+					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual(discussion.answers[1].grade)
+
+					var discussion = modules_items['New Module'][4].free_text[1]
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual("Incorrect")
+					module_progress.module_item(5).freetextquestion(2).grade_change(2, 4)
+					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
+				})
+			})
+			describe('Survey',function(){  
+				it('should display correct Survey titles',function(){					
+					var question = modules_items['New Module'][5].questions[0]
+					expect(module_progress.module_item(6).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+
+					var question = modules_items['New Module'][5].questions[1]
+					expect(module_progress.module_item(6).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+				})
+				it('should display quiz statistics correct',function(){
+					//  Quiz 1
+					refresh()
+					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
+					refresh()
+					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(2)).toBe('1')
+					// Quiz 2
+					refresh()
+					expect(module_progress.module_item(6).question_quiz(2).getModuleChartValueAt(2)).toBe('1')
+				})
+				it('should display freetext question statistics correct',function(){
+					var discussion = modules_items['New Module'][5].free_text[0]
+					module_progress.module_item(6).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+					expect(module_progress.module_item(6).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(6).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
+					module_progress.module_item(6).question_quiz(1).show_inclass_click()
+					module_progress.module_item(6).question_quiz(2).show_inclass_click()
+					module_progress.module_item(6).freetextquestion(1).show_inclass_click()					
+				})
+				it('should display correct total In-Class time',function(){
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')	
+					module_progress.module_item(6).question_quiz(1).show_inclass_click()
+					module_progress.module_item(6).question_quiz(2).show_inclass_click()
+					module_progress.module_item(6).freetextquestion(1).show_inclass_click()					
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+				})
+				it('should be able to add a replay to discussion',function(){
+					module_progress.module_item(6).freetextquestion(1).reply("reply")
+				})
+				it('should be able to delete a replay to  discussion', function(){
+					module_progress.module_item(6).freetextquestion(1).delete_reply()
+				})
+				it('should make survey visible to students',function(){
+					module_progress.module_item(6).makevisible()
+				})
+
+				it("should logout",function(){
+					header.logout()
+				})
+				describe('Student 2',function(){
+					it(" login in",function(){
+						login_page.sign_in(params.student2_mail, params.password)
+					})
+					it("should open first moduel",function(){
+						course_list.open()
+						course_list.open_course(1)
+						navigator.module(1).open()
+						navigator.module(1).item(6).open()
+					})
+					it(" check that survey is visible",function(){					
+						expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(true)
+					})
+					it("should logout",function(){
+						header.logout()
+					})
+				})
+				it("teacher should login",function(){
+					login_page.sign_in(params.teacher_mail, params.password)
+				})
+				it("should open course",function(){
+					course_list.open()
+					course_list.open_course(1)
+				})
+				it("should go to review mode",function(){
+					sub_header.open_review_mode()
+				})
+				it("should open first moduel",function(){
+					navigator.module(1).open()
+					element(by.className('module-review')).click()
+				})
+				it('should hide surveyresults',function(){
+					module_progress.module_item(6).hidevisible()
+				})
+				it("should logout",function(){
+					header.logout()
+				})
+				describe('Student 2',function(){
+					it(" login in",function(){
+						login_page.sign_in(params.student2_mail, params.password)
+					})
+					it("should open first moduel",function(){
+						course_list.open()
+						course_list.open_course(1)
+						navigator.module(1).open()
+						navigator.module(1).item(6).open()
+					})
+					it(" check that survey is not visible",function(){					
+						expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(false)
+					})
+					it('should open first lecture in first module', function(){
+						navigator.module(1).open()
+						navigator.module(1).item(1).open()
+					})
+					it("should open timeline",function(){
+						student_lec.open_timeline()
+					})
+					it("should delete discussion post",function(){
+						student_lec.lecture(1).discussion(1).delete()
+						expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+						expect(student_lec.lecture(1).items.count()).toEqual(3)
+					})
+					it("should logout",function(){
+						// student_lec.open_timeline()
+						header.logout()
+					})
+				})
+				describe('Student 1',function(){
+					it(" login in",function(){
+						login_page.sign_in(params.student_mail, params.password)
+					})
+					it('should open first lecture in first module', function(){
+						course_list.open()
+						course_list.open_course(1)
+						navigator.module(1).open()
+						navigator.module(1).item(1).open()
+					})
+					// it("should open timeline",function(){
+					// 	// student_lec.open_timeline()
+					// })
+					it("should delete discussion post",function(){
+						student_lec.lecture(1).discussion(1).delete()
+						expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+						expect(student_lec.lecture(1).items.count()).toEqual(3)
+					})
+					it("should logout",function(){
+						student_lec.open_timeline()
+						header.logout()
+					})
+				})
+				it("teacher should login",function(){
+					login_page.sign_in(params.teacher_mail, params.password)
 				})
 			})
 		})

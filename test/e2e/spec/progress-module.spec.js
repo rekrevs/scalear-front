@@ -678,61 +678,63 @@ describe("check course review", function(){
 				it("should logout",function(){
 					header.logout()
 				})
-				describe('Student 2',function(){
-					it(" login in",function(){
-						login_page.sign_in(params.student2_mail, params.password)
+				describe('Revert disussion',function(){
+					describe('Student 2',function(){
+						it(" login in",function(){
+							login_page.sign_in(params.student2_mail, params.password)
+						})
+						it("should open first moduel",function(){
+							course_list.open()
+							course_list.open_course(1)
+							navigator.module(1).open()
+							navigator.module(1).item(6).open()
+						})
+						it(" check that survey is not visible",function(){					
+							expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(false)
+						})
+						it('should open first lecture in first module', function(){
+							navigator.module(1).open()
+							navigator.module(1).item(1).open()
+						})
+						it("should open timeline",function(){
+							student_lec.open_timeline()
+						})
+						it("should delete discussion post",function(){
+							student_lec.lecture(1).discussion(1).delete()
+							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+							expect(student_lec.lecture(1).items.count()).toEqual(3)
+						})
+						it("should logout",function(){
+							// student_lec.open_timeline()
+							header.logout()
+						})
 					})
-					it("should open first moduel",function(){
-						course_list.open()
-						course_list.open_course(1)
-						navigator.module(1).open()
-						navigator.module(1).item(6).open()
+					describe('Student 1',function(){
+						it(" login in",function(){
+							login_page.sign_in(params.student_mail, params.password)
+						})
+						it('should open first lecture in first module', function(){
+							course_list.open()
+							course_list.open_course(1)
+							navigator.module(1).open()
+							navigator.module(1).item(1).open()
+						})
+						// it("should open timeline",function(){
+						// 	// student_lec.open_timeline()
+						// })
+						it("should delete discussion post",function(){
+							student_lec.lecture(1).discussion(1).delete()
+							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+							expect(student_lec.lecture(1).items.count()).toEqual(3)
+						})
+						it("should logout",function(){
+							student_lec.open_timeline()
+							header.logout()
+						})
 					})
-					it(" check that survey is not visible",function(){					
-						expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(false)
+					it("teacher should login",function(){
+						login_page.sign_in(params.teacher_mail, params.password)
 					})
-					it('should open first lecture in first module', function(){
-						navigator.module(1).open()
-						navigator.module(1).item(1).open()
-					})
-					it("should open timeline",function(){
-						student_lec.open_timeline()
-					})
-					it("should delete discussion post",function(){
-						student_lec.lecture(1).discussion(1).delete()
-						expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-						expect(student_lec.lecture(1).items.count()).toEqual(3)
-					})
-					it("should logout",function(){
-						// student_lec.open_timeline()
-						header.logout()
-					})
-				})
-				describe('Student 1',function(){
-					it(" login in",function(){
-						login_page.sign_in(params.student_mail, params.password)
-					})
-					it('should open first lecture in first module', function(){
-						course_list.open()
-						course_list.open_course(1)
-						navigator.module(1).open()
-						navigator.module(1).item(1).open()
-					})
-					// it("should open timeline",function(){
-					// 	// student_lec.open_timeline()
-					// })
-					it("should delete discussion post",function(){
-						student_lec.lecture(1).discussion(1).delete()
-						expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-						expect(student_lec.lecture(1).items.count()).toEqual(3)
-					})
-					it("should logout",function(){
-						student_lec.open_timeline()
-						header.logout()
-					})
-				})
-				it("teacher should login",function(){
-					login_page.sign_in(params.teacher_mail, params.password)
 				})
 			})
 		})

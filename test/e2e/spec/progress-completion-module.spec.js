@@ -265,4 +265,48 @@ describe("Course Completion", function(){
 })
 
 
-
+describe("Course Graph", function(){
+	describe("Teacher", function(){
+		it("should login",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
+		it("should open course",function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		it("should go to review mode",function(){
+			sub_header.open_review_mode()
+		})
+		describe('First Module Progress Page', function(){
+			it("should open first moduel",function(){
+				// navigator.module(1).open()
+				element(by.className('course-graph')).click()
+				expect(browser.driver.getCurrentUrl()).toContain('graph')
+			})
+			it ("should check number of students", function(){
+				sleep(5000)
+				module_progress.module_graph().students_count().then(function(coun){expect(coun).toEqual(3)})
+			})
+			it ("should check student 1 data ", function(){
+				// expect(module_progress.getGraphChartValueAt(0)).toEqual('Student 2')
+			//})
+				expect(module_progress.module_graph().student(1).name).toContain('Student 2')
+				expect(module_progress.module_graph().student(1).quiz).toContain('50%')
+				expect(module_progress.module_graph().student(1).video).toContain('50%')
+			})	
+			it ("should check student 2 data ", function(){
+				expect(module_progress.module_graph().student(2).name).toContain('Student 3')
+				expect(module_progress.module_graph().student(2).quiz).toContain('0%')
+				expect(module_progress.module_graph().student(2).video).toContain('0%')
+			})
+			it ("should check student 3 data ", function(){
+				expect(module_progress.module_graph().student(3).name).toContain('Test Student')
+				expect(module_progress.module_graph().student(3).quiz).toContain('50%')
+				expect(module_progress.module_graph().student(3).video).toContain('100%')
+			})			
+		})	
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+})

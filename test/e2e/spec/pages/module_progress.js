@@ -116,23 +116,40 @@ Student.prototype = Object.create({}, {
 		element(by.className('popover')).all(by.className('ng-pristine')).get(num-1).click()
 		this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).click() 
 	}},
-	// column_item_click:{value:function(val,num){ 
-	// 	this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).click()
-	// 	return element(by.className('popover')).all(by.className('ng-pristine')).count() 
-	// }},
-
-
 })
 
 
-var ModuleTable = function(elem){
+var ModuleCompletionTable = function(elem){
 	this.field = elem
 }
 
-ModuleTable.prototype = Object.create({}, {
+ModuleCompletionTable.prototype = Object.create({}, {
 	students:{get:function(){return this.field.all(by.repeater("student in students")) }},
 	students_count:{value:function(){return this.field.all(by.repeater("student in students")).count() }},
-	student:{value:function(val){return new Student(this.students.get(val-1)) }}
+	student:{value:function(val){return new Student(this.students.get(val-1)) }},
+})
+
+
+
+var Graphstudent = function(elem){
+	this.field = elem
+}
+
+Graphstudent.prototype = Object.create({}, {
+		name:{get:function(){return this.field.all(by.tagName('td')).get(0).getInnerHtml()}},
+		quiz:{get:function(){return this.field.all(by.tagName('td')).get(1).getInnerHtml()}},
+		video:{get:function(){return this.field.all(by.tagName('td')).get(2).getInnerHtml()}},
+})
+
+
+var ModuleGraphTable = function(elem){
+	this.field = elem
+}
+
+ModuleGraphTable.prototype = Object.create({}, {
+	students:{get:function(){return this.field.all(by.tagName("tr")) }},
+	students_count:{value:function(){return this.field.all(by.tagName("tr")).count() }},
+	student:{value:function(val){return new Graphstudent(this.students.get(val-1)) }},
 })
 
 
@@ -147,12 +164,20 @@ ModuleProgress.prototype = Object.create({}, {
 	time_estimate:{get:function(){return element(by.className('time_estimate'))}},
 	time_estimate_total_time:{get:function(){return this.time_estimate.element(by.css('[ng-style="{color: total_estimate_color}"]')).getText()}},
 	module_completion_table:{get:function(){return element(by.className('table_matrix_height'))}},
-	module_completion:{value:function(){return new ModuleTable(this.module_completion_table)}},	
+	module_completion:{value:function(){return new ModuleCompletionTable(this.module_completion_table)}},
+	module_graph_table:{get:function(){return element(by.tagName('tbody'))}},
+	// module_graph_table:{get:function(){return element(by.css('[on-ready="loading_total_charts=false"]')).element(by.tagName("table"))}},
+	module_graph:{value:function(){return new ModuleGraphTable(this.module_graph_table)}},
+		
 	check_module_finished:{value:function(val){return element.all(by.css('[ng-show="module_done"]')).get(val-1).getAttribute('class')}},
 	getModuleChartValueAt:{value:function(column){
 		this.module_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
 		return this.module_chart_columns.last().all(by.tagName('text')).last().getText()
-	}}
+	}},
+	// getGraphChartValueAt:{value:function(column){
+	// 	element(by.tagName('svg')).all(by.tagName('g')).first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
+	// 	return element(by.tagName('svg')).all(by.tagName('g')).last().all(by.tagName('text')).last().getText()
+	// }}
 });
 
 module.exports = ModuleProgress;

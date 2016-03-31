@@ -25,7 +25,6 @@ var params= {
     teacher_mail:  'teacher1@email.com',
     teacher2_mail: 'teacher2@email.com',
     teacher3_mail: 'teacher3@email.com',
-    // teacher4_mail: '3ezxpw+1acrwb96urr7ftatsbvhwmiv@sharklasers.com',
     student_mail:  'student1@email.com',
     student2_mail: 'student2@email.com',
     student3_mail: 'student3@email.com',
@@ -36,7 +35,8 @@ var params= {
     admin_password:"admin_account_password",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
 //    guerrillamail_user: "scalable235@sharklasers.com",
-    guerrillamail_user: Math.floor(10000*Math.random()+1)+"@sharklasers.com",
+    guerrillamail_user: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    guerrillamail_student: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
     guerrillamail_password: "password1234",
     guerrillamail_first_name: "student",
     guerrillamail_last_name: "4",
@@ -144,12 +144,13 @@ exports.config = {
         // 'test/e2e/spec/teacher-managment.spec.js',// Done
         // 'test/e2e/spec/students_solve_course.spec.js', //Done
         // 'test/e2e/spec/notes.spec.js',   //Done
+        // 'test/e2e/spec/discussions.spec.js',  //Done
 
-        'test/e2e/spec/discussions.spec.js',  //Done
-        'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/progress-completion-module.spec.js',
-
+        // 'test/e2e/spec/progress-module.spec.js',
+        'test/e2e/spec/progress-completion-module.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',  // Done
+        // 'test/e2e/spec/add_delete_user.spec.js',  // Done
+
         // 'test/e2e/spec/delete_course.spec.js'
    
    //{{reviewed}}  

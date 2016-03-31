@@ -60,7 +60,7 @@ GuerrillaMail.prototype = Object.create({}, {
 	sign_teacher_button:{get:function(){return element(by.css('[ng-click="setupScreenName(1)"]'))}},
 
 	sign_up:{value:function(){
-		element(by.css('[ng-click="previous_provider=null"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="previous_provider=null"]')).click()}})
+		element(by.css('[ng-click="previous_provider=null"]')).isPresent().then(function(result) {if (result) {element(by.css('[ng-click="previous_provider=null"]')).click()}})
 		element(by.css('[ng-click="showLoginForm()"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="showLoginForm()"]')).click()}})
 		element(by.id('login')).isDisplayed().then(function(result) {if (result) {element(by.id('login')).click()}})
 		var login_obj = this

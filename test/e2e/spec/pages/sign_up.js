@@ -45,16 +45,23 @@ Signup.prototype = Object.create({}, {
 
 	sign_up_button:{get:function(){return element(by.id('join_btn'))}},
 	sign_teacher_button:{get:function(){return element(by.css('[ng-click="setupScreenName(1)"]'))}},
-
-	sign_up:{value:function(){
-		element(by.css('[ng-click="previous_provider=null"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="previous_provider=null"]')).click()}})
+	sign_student_button:{get:function(){return element(by.css('[ng-click="setupScreenName(2)"]'))}},
+	sign_up:{value:function(val){
+		element(by.css('[ng-click="previous_provider=null"]')).isPresent().then(function(result) {if (result) { element(by.css('[ng-click="previous_provider=null"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="previous_provider=null"]')).click()}}) }})
+		
 		element(by.css('[ng-click="showLoginForm()"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="showLoginForm()"]')).click()}})
 		element(by.id('login')).isDisplayed().then(function(result) {if (result) {element(by.id('login')).click()}})
 		var login_obj = this
 		login_obj.sign_up_button.isDisplayed().then(function(result) {
 		    if (result) {
 		    	login_obj.sign_up_button.click()
-		    	login_obj.sign_teacher_button.click();
+		    	if (val == 'teacher'){
+		    		login_obj.sign_teacher_button.click();
+		    	}
+		    	else {
+			    	login_obj.sign_student_button.click();	
+		    	}
+
 			 }
 		})
 	}},

@@ -1,7 +1,9 @@
 {
   "name": "scalear-angular",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "netlify-cli": "^1.0.2"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",

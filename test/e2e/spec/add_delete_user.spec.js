@@ -69,7 +69,7 @@ describe("Sign up Teacher ",function(){
 		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
-				sleep(10000) 
+				sleep(12000) 
 				browser.getAllWindowHandles().then(function (handles) {
 					var thridWindowHandle = handles[2];
 					var secondWindowHandle = handles[1];
@@ -91,6 +91,80 @@ describe("Sign up Teacher ",function(){
 		})
 		it("should check course information page ",function(){
 			sleep(3000)
+			expect(browser.driver.getCurrentUrl()).toContain('confirmed')	
+		    signup_page.skip_button()
+			sleep(5000)
+			expect(browser.driver.getCurrentUrl()).toContain('courses')	
+		})
+		it("should logout",function(){
+            header.logout()
+        })
+    })
+})
+describe("Sign up Student ",function(){
+	describe("guerrillamail",function(){
+		it("should sign up as student",function(){
+
+			sleep(4000)
+			signup_page.sign_up('student')
+			signup_page.create(params.guerrillamail_student, params.guerrillamail_password , params.guerrillamail_sch_uni_name , params.guerrillamail_last_name , params.guerrillamail_first_name )
+		})
+		it("should check url thanks pages",function(){
+			sleep(6000)
+			expect(browser.driver.getCurrentUrl()).toContain('thanks')
+		})
+		it("should open guerrillamail website",function(){
+			// browser.actions().sendKeys(protractor.Key.chord(protractor.Key.CONTROL, "n")).perform();
+			browser.getAllWindowHandles().then(function (handles) {
+				var secondWindowHandle = handles[1];
+				var firstWindowHandle = handles[0];
+
+				browser.switchTo().window(secondWindowHandle)
+					.then(function () {
+				    	guerrilla_mail_page.open_url(params.guerrillamail_url)    
+					})
+				});
+			})
+		
+
+		// })
+		it("should change guerrillamail email ",function(){
+			guerrilla_mail_page.change_mail_name(params.guerrillamail_student)
+			sleep(31000)
+		})				
+		it("should check mails count ",function(){
+			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
+		})
+		it("should open the last mail ",function(){
+			 guerrilla_mail_page.open_last_mail()
+			 sleep(6000)
+		})
+		describe("Guerrilla website tab ",function(){
+			it("should confirm the mail",function(){
+				guerrilla_mail_page.confirm_email()
+				sleep(12000) 
+				browser.getAllWindowHandles().then(function (handles) {
+					var thridWindowHandle = handles[2];
+					var secondWindowHandle = handles[1];
+					var firstWindowHandle = handles[0];
+					browser.switchTo().window(firstWindowHandle)
+					.then(function () {
+						guerrilla_mail_page.open_url(params.frontend)
+						browser.switchTo().window(thridWindowHandle) })
+					.then(function () {
+						browser.close(); //close the current browser
+					}).then(function(){
+						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
+						.then(function(){
+							sleep(1000)
+						});
+					});
+				})
+			})
+		})
+		it("should check course information page ",function(){
+			sleep(3000)
+			browser.ignoreSynchronization = false;
 			expect(browser.driver.getCurrentUrl()).toContain('confirmed')	
 		    signup_page.skip_button()
 			sleep(5000)
@@ -146,16 +220,30 @@ describe("Teacher Management",function(){
             expect(browser.driver.getCurrentUrl()).toContain('information')
         })
         it("should mark email receive button ",function(){
-        	// expect()
             course_info.receive_email_button_click()
         })
+        it('should get the enrollment key and enroll students 1', function(){
+			browser.ignoreSynchronization = false;
+			course_info.open()
+			var enrollment_key = course_info.enrollmentkey
+			// console.log(enrollmentkey.getText())
+			header.logout()
+        	sleep(5000)
+			login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
+			sleep(5000)
+			expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+			sleep(5000)
+			header.join_course(enrollment_key)
+		})
+
         it("should logout",function(){
             header.logout()
         })
     })
+
     describe("Student1",function(){
     	it("should login", function(){    		
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
@@ -176,7 +264,7 @@ describe("Teacher Management",function(){
 describe("Discussion Part 1" , function(){
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -235,7 +323,7 @@ describe("Discussion Part 1" , function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.guerrillamail_user)
-			sleep(20000)
+			sleep(30000)
 		})				
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
@@ -279,7 +367,7 @@ describe("Discussion Part 1" , function(){
 describe("Discussion Part 2" , function(){
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -325,6 +413,8 @@ describe("Revert Changes",function(){
 	describe("Teacher1",function(){
 		it("should open scalable learning website",function(){
 			guerrilla_mail_page.open_url(params.frontend)
+			browser.ignoreSynchronization = false;
+
         })
  		var navigator = new ContentNavigator(1)
 		it("should login",function(){
@@ -343,25 +433,9 @@ describe("Revert Changes",function(){
             header.logout()
         })
 	})
-	describe("guerrillamail teacher",function(){
-		it("should login",function(){
-            login_page.sign_in(params.guerrillamail_user, params.guerrillamail_password)
-       })
-        it("should check that course has been removed",function(){
-        	course_list.open()
-        	expect(course_list.courses.count()).toEqual(0)
-        })
-        it("should delete teacher account",function(){
-            header.open_account_information()
-            header.delete_user(params.guerrillamail_password)
-        })
-        // it("should logout",function(){
-        //     header.logout()
-        // })
-	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -389,8 +463,30 @@ describe("Revert Changes",function(){
 			header.logout()
 		})		
 	} )
+	describe("guerrillamail teacher",function(){
+		it("should login",function(){
+            login_page.sign_in(params.guerrillamail_user, params.guerrillamail_password)
+       })
+        it("should check that course has been removed",function(){
+        	course_list.open()
+        	expect(course_list.courses.count()).toEqual(0)
+        })
+        it("should delete teacher account",function(){
+            header.open_account_information()
+            header.delete_user(params.guerrillamail_password)
+        })
+	})
+	describe("guerrillamail student",function(){
+		it("should login",function(){
+            login_page.sign_in(params.guerrillamail_student, params.guerrillamail_password)
+       })
+        it("should delete teacher account",function(){
+            header.open_account_information()
+            header.delete_user(params.guerrillamail_password)
+        })
+	})
 })
-describe("guerrillamail Teacher",function(){
+describe("guerrillamail website",function(){
 	it("should open guerrillamail website",function(){
 		browser.getAllWindowHandles().then(function (handles) {
 		var secondWindowHandle = handles[1];

@@ -17,6 +17,9 @@ Header.prototype= Object.create({}, {
 	shared_button:{get:function(){return element(by.id("view_shared"))}},
 	calendar_button:{get:function(){return element(by.id("calendar_button"))}},
 	all_courses:{get:function(){return element(by.id("course_list"))}},
+	account_information:{get:function(){return element(by.id("account_information"))}},
+
+	
 	open_shared:{value:function(){
 		this.show_courses_menu()
 		this.shared_button.click()
@@ -28,6 +31,10 @@ Header.prototype= Object.create({}, {
 	open_courses:{value:function(){
 		this.show_courses_menu() 
 		this.all_courses.click()
+	}},
+	open_account_information:{value:function(){
+		this.show_account_menu() 
+		this.account_information.click()
 	}},
 	logout: {value:function(){
 		this.show_account_menu()
@@ -43,6 +50,12 @@ Header.prototype= Object.create({}, {
 	accept_share_notification:{value:function(num){this.share_notifications.get(num-1).element(by.className('success')).click()}},
 	reject_invitation_notification:{value:function(num){this.invitation_notifications.get(num-1).element(by.className('alert')).click()}},
 	accept_invitation_notification:{value:function(num){this.invitation_notifications.get(num-1).element(by.className('success')).click()}},
+	delete_user:{value:function(password){
+		element(by.css('[ng-click="confirmDelete()"]')).click()
+		element(by.id('del_con_pwd')).sendKeys(password)
+		element(by.id('del_ok_btn')).click()
+			
+	}},
 })
 
 module.exports = Header;

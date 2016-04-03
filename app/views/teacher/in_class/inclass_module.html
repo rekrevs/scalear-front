@@ -41,6 +41,10 @@
                         <inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none" />
                         <show_box value="item.data.show" action="updateHideQuiz(item)" text="global.visible" class="right" />
                     </li>
+                    <li ng-if="item.type=='primary_marker'" class="li_inner color-gray" >
+                        <inner_title type="'inclass.'+item.type.toLowerCase() | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none" />
+                        <show_box value="item.data.show" action="updateHideMarker(item)" text="global.visible" class="right" />
+                    </li>
                     <li ng-if="item.type=='free_question'" class="li_inner color-coral">
                         <inner_title type="'inclass.free_text_question' | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none" />
                         <show_box value="item.data.show" action="updateHideQuiz(item)" text="global.visible" class="right" />

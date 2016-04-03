@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz','OnlineMarker', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.in_class')
     $scope.inclass_player = {}
@@ -90,9 +90,13 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for (var type in $scope.lectures[lec_id]) {
               for (var it in $scope.lectures[lec_id][type]) {
-                $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
+                if (type == "markers" && $scope.lectures[lec_id][type][it][1].title)
+                  $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
+                else
+                  $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if (type == "inclass" && $scope.lectures[lec_id][type][it][1].show)
                   $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion) / 60
+
               }
             }
             $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
@@ -161,6 +165,16 @@ angular.module('scalearAngularApp')
 
           checkDisplayInclass()
         })
+    }
+
+    $scope.updateHideMarker = function(marker) {
+      OnlineMarker.updateHide({
+          online_markers_id: marker.data.id,
+        }, {
+          hide: marker.data.show
+        },
+        function(){}
+      )
     }
 
     $scope.updateHideResponseOnlineQuiz = function(answer) {
@@ -418,7 +432,7 @@ angular.module('scalearAngularApp')
     }
 
     var getSubItems = function(timeline, item) {
-      var start_time, end_time, filtered_timeline_items
+      var start_time, end_time
       if (item.type == "charts" || item.type == "inclass") {
         start_time = item.data.start_time
         end_time = item.data.end_time
@@ -427,7 +441,18 @@ angular.module('scalearAngularApp')
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
       console.log("getSubItems item start end", item, start_time, end_time)
-      if (item.type == "inclass")
+      if(item.type == "primary_marker"){
+        var sub_items = [item]
+        var current_item_index = timeline.items.indexOf(item)
+        for(var i = current_item_index+1; i < timeline.items.length; i++){
+          if(timeline.items[i].type== "markers")
+            sub_items.push(timeline.items[i])
+          else
+           break;
+        }
+        return sub_items
+      }
+      else if (item.type == "inclass")
         return timeline.getItemsBetweenTime(start_time, end_time)
       else
         return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
@@ -440,7 +465,12 @@ angular.module('scalearAngularApp')
         current_item.data.color = "black"
         if (current_item.type != "markers") {
           console.log("current_item.type", current_item.type)
-          sub_items[item_index].data.inclass_title = (current_item.type != "discussion") ? "Quiz" : "Question"
+          if(current_item.type == "primary_marker")
+            sub_items[item_index].data.inclass_title = "Marker"
+          else if(current_item.type == "discussion")
+            sub_items[item_index].data.inclass_title = "Question"
+          else
+            sub_items[item_index].data.inclass_title = "Quiz"
         }
       }
       console.log("after setup SubItems", sub_items)

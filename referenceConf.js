@@ -147,12 +147,13 @@ exports.config = {
         // 'test/e2e/spec/discussions.spec.js',  //Done
 
         // 'test/e2e/spec/progress-module.spec.js',
-        'test/e2e/spec/progress-completion-module.spec.js',
+        // 'test/e2e/spec/progress-completion-module.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',  // Done
         // 'test/e2e/spec/add_delete_user.spec.js',  // Done
-
-        // 'test/e2e/spec/delete_course.spec.js'
+        'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
    
+        // 'test/e2e/spec/delete_course.spec.js'
+        
    //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  
         // 'test/e2e/spec/account-info-validation.spec.js',//    

@@ -58,6 +58,9 @@ CourseEditor.prototype = Object.create({}, {
 			element(by.className('check')).click()
 		})
 	}},
+	get_module_name:{value: function(){
+		return element(by.tagName('details-text')).getText()
+	}},
 	// add_lecture: {value: function(){
 	// 	this.new_item_button.click()
 	// 	this.video_item.click()
@@ -77,19 +80,34 @@ CourseEditor.prototype = Object.create({}, {
 	// add_module_link:{value:function(){
 	// 	element(by.id('add_module_link')).click()
 	// }},
+	open_video_settings:{value: function(){
+		element(by.id('video_settings')).click()
+	}},
 	rename_item:{value: function(name){
 		element(by.id('item_name')).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(name)
 			element(by.className('check')).click()
 		})
 	}},
+	get_item_name:{value: function(){
+		return element(by.id('item_name')).getText()
+	}},
 	change_item_url:{value: function(url){
 		element(by.id('url')).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(url)
 			element(by.className('check')).click()
-			video.wait_till_ready()
-			element(by.css('[ng-click="cancel()"]')).click()
+			// video.wait_till_ready()
+			element(by.css('[ng-click="cancel()"]')).isDisplayed().then(function(result){
+				if(result){
+					element(by.css('[ng-click="cancel()"]')).click()
+					sleep(1000)
+					browser.refresh();					
+				}
+			})
 		})
+	}},
+	get_item_url:{value: function(){
+		return element(by.id('url')).getText()
 	}},
 	change_item_url_link:{value: function(url){
 		element(by.id('url')).click()

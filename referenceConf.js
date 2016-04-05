@@ -22,15 +22,21 @@ var params= {
     //staging
     // frontend: 'http://scalear-staging2.herokuapp.com/#/',
     admin_email:   'admin@scalable-learning.com',       
-    teacher_mail:  'teacher1@email.com',
-    teacher2_mail: 'teacher2@email.com',
-    teacher3_mail: 'teacher3@email.com',
-    student_mail:  'student1@email.com',
-    student2_mail: 'student2@email.com',
-    student3_mail: 'student3@email.com',
-    student4_mail: 'student4@email.com',
-    student5_mail: 'student5@email.com',
-    password: 'password',
+    // teacher_mail:  'teacher1@email.com',
+    // teacher2_mail: 'teacher2@email.com',
+    // teacher3_mail: 'teacher3@email.com',
+    // student_mail:  'student1@email.com',
+    // student2_mail: 'student2@email.com',
+    // student3_mail: 'student3@email.com',
+    // student4_mail: 'student4@email.com',
+    // student5_mail: 'student5@email.com',
+    // password: 'password',
+    teacher_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    password: 'password1234',
     teacher4_password: 'password1234',
     admin_password:"admin_account_password",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
@@ -131,7 +137,8 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/create_course.spec.js', // Done
+        'test/e2e/spec/add_user.spec.js',  // Done
+        'test/e2e/spec/create_course.spec.js', // Done
         // 'test/e2e/spec/fill_course.spec.js',// Done
         // 'test/e2e/spec/course_information_validation.spec.js',// Done
         // 'test/e2e/spec/account_information_validation.spec.js',// Done
@@ -149,10 +156,10 @@ exports.config = {
         // 'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/progress-completion-module.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',  // Done
-        // 'test/e2e/spec/add_delete_user.spec.js',  // Done
-        'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
+        // 'test/e2e/spec/validations.spec.js', //  
    
-        // 'test/e2e/spec/delete_course.spec.js'
+        'test/e2e/spec/delete_course.spec.js',
+        'test/e2e/spec/delete_user.spec.js',  // Done
         
    //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  

@@ -1,6 +1,50 @@
 var params= {
     //local
     frontend: 'http://0.0.0.0:9000/#',
+     //staging
+    // frontend: 'http://scalear-staging2.herokuapp.com/#/',
+
+
+    url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+    url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+    q_x:169,
+    q1_y:127,
+    q2_y:157,
+    q3_y:187,
+
+
+    admin_email:   'admin@scalable-learning.com',
+    admin_password:"admin_account_password",
+
+    teacher_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    password: 'password1234',
+
+
+    // guerrillamail_password: "password1234",
+    guerrillamail_url: "https://www.guerrillamail.com/inbox",
+    guerrillamail_first_name: "student",
+    guerrillamail_last_name: "4",
+    guerrillamail_sch_uni_name: "Nile University",
+
+    short_name: "csc-test",
+    course_name: "aesting course 100",
+    course_duration: '19',
+    discussion_link: 'www.testing-link.com',
+    image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
+    course_description: 'too many words',
+    prerequisites: '1- course 1 2- course 2 3- course 3',
+
+
+    // teacher4_password: 'password1234',
+    //
+
+
+
     // admin_mail: 'admin@scalear.com',
     // teacher_mail:  'teacher1@sharklasers.com',
     // teacher2_mail: 'teacher2@sharklasers.com',
@@ -12,44 +56,15 @@ var params= {
     // student5_mail: 'studenttest5@sharklasers.com',
     // admin_password:"password",
     // password: 'password',
-    url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
-    url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
-    q_x:169,
-    q1_y:127,
-    q2_y:157,
-    q3_y:187,
-
-    //staging
-    // frontend: 'http://scalear-staging2.herokuapp.com/#',
-    admin_email:   'admin@scalable-learning.com',
-    teacher_mail:  'teacher1@email.com',
-    teacher2_mail: 'teacher2@email.com',
-    teacher3_mail: 'teacher3@email.com',
-    student_mail:  'student1@email.com',
-    student2_mail: 'student2@email.com',
-    student3_mail: 'student3@email.com',
-    student4_mail: 'student4@email.com',
-    student5_mail: 'student5@email.com',
-    password: 'password',
-    teacher4_password: 'password1234',
-    admin_password:"admin_account_password",
-    guerrillamail_url: "https://www.guerrillamail.com/inbox",
-//    guerrillamail_user: "scalable235@sharklasers.com",
-    guerrillamail_user: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    guerrillamail_student: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    guerrillamail_password: "password1234",
-    guerrillamail_first_name: "student",
-    guerrillamail_last_name: "4",
-    guerrillamail_sch_uni_name: "Nile University",
-
-
-    short_name: "csc-test",
-    course_name: "aesting course 100",
-    course_duration: '19',
-    discussion_link: 'www.testing-link.com',
-    image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
-    course_description: 'too many words',
-    prerequisites: '1- course 1 2- course 2 3- course 3',
+     // teacher_mail:  'teacher1@email.com',
+    // teacher2_mail: 'teacher2@email.com',
+    // teacher3_mail: 'teacher3@email.com',
+    // student_mail:  'student1@email.com',
+    // student2_mail: 'student2@email.com',
+    // student3_mail: 'student3@email.com',
+    // student4_mail: 'student4@email.com',
+    // student5_mail: 'student5@email.com',
+    // password: 'password',
 }
 
 
@@ -131,26 +146,34 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
+        'test/e2e/spec/add_user.spec.js',  // Done
         'test/e2e/spec/create_course.spec.js', // Done
-        'test/e2e/spec/fill_course.spec.js',// Done
-        'test/e2e/spec/course_information_validation.spec.js',// Done
-        'test/e2e/spec/account_information_validation.spec.js',// Done
-        'test/e2e/spec/enrollment_help.spec.js',// Done
-        'test/e2e/spec/course_editor_basic.spec.js',// Done
-        'test/e2e/spec/course_editor_copy.spec.js',// Done
-        'test/e2e/spec/course_editor_sharing.spec.js',// Done
-        'test/e2e/spec/module_statistics.spec.js', // Done
-        'test/e2e/spec/announcements.spec.js',  //
-        'test/e2e/spec/teacher-managment.spec.js',// Done
-        'test/e2e/spec/students_solve_course.spec.js', //Done
-        'test/e2e/spec/notes.spec.js',
-        'test/e2e/spec/discussions.spec.js',  //Done
-        'test/e2e/spec/progress-module.spec.js',
-        'test/e2e/spec/delete_course.spec.js'
+        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/course_information_validation.spec.js',// Done
+        // 'test/e2e/spec/account_information_validation.spec.js',// Done
+        // 'test/e2e/spec/enrollment_help.spec.js',// Done
+        // 'test/e2e/spec/course_editor_basic.spec.js',// Done
+        // 'test/e2e/spec/course_editor_copy.spec.sj',// Done
+        // 'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        // 'test/e2e/spec/module_statistics.spec.js', // Done
+        // 'test/e2e/spec/announcements.spec.js',  //
+        // 'test/e2e/spec/teacher-managment.spec.js',// Done
+        // 'test/e2e/spec/students_solve_course.spec.js', //Done
+        // 'test/e2e/spec/notes.spec.js',   //Done
+        // 'test/e2e/spec/discussions.spec.js',  //Done
+
+        // 'test/e2e/spec/progress-module.spec.js',
+        // 'test/e2e/spec/progress-completion-module.spec.js',
+        // 'test/e2e/spec/email_notification.spec.js',  // Done
+        // 'test/e2e/spec/validations.spec.js', //
+
+        'test/e2e/spec/delete_course.spec.js',
+        'test/e2e/spec/delete_user.spec.js',  // Done
 
    //{{reviewed}}
         // 'test/e2e/spec/init-progress-data.spec.js', //
         // 'test/e2e/spec/account-info-validation.spec.js',//
+
         // 'test/e2e/spec/copying.spec.js', //
         // 'test/e2e/spec/course-editor-basic.spec.js', //
         // 'test/e2e/spec/create-announcements.spec.js', //

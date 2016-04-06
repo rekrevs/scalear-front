@@ -34,7 +34,7 @@ describe("Sign up Teacher ",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
 			signup_page.sign_up('teacher')
-			signup_page.create(params.guerrillamail_user, params.guerrillamail_password , params.guerrillamail_sch_uni_name , params.guerrillamail_last_name , params.guerrillamail_first_name )
+			signup_page.create(params.teacher3_mail, params.password , params.guerrillamail_sch_uni_name , params.guerrillamail_last_name , params.guerrillamail_first_name )
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -48,17 +48,17 @@ describe("Sign up Teacher ",function(){
 
 				browser.switchTo().window(secondWindowHandle)
 					.then(function () {
-				    	guerrilla_mail_page.open_url(params.guerrillamail_url)    
+				    	guerrilla_mail_page.open_url(params.guerrillamail_url)
 					})
 				});
 			})
-		
+
 
 		// })
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.guerrillamail_user)
+			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
 			sleep(31000)
-		})				
+		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
@@ -69,7 +69,7 @@ describe("Sign up Teacher ",function(){
 		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
-				sleep(10000) 
+				sleep(10000)
 				browser.getAllWindowHandles().then(function (handles) {
 					var thridWindowHandle = handles[2];
 					var secondWindowHandle = handles[1];
@@ -91,10 +91,10 @@ describe("Sign up Teacher ",function(){
 		})
 		it("should check course information page ",function(){
 			sleep(3000)
-			expect(browser.driver.getCurrentUrl()).toContain('confirmed')	
+			expect(browser.driver.getCurrentUrl()).toContain('confirmed')
 		    signup_page.skip_button()
 			sleep(5000)
-			expect(browser.driver.getCurrentUrl()).toContain('courses')	
+			expect(browser.driver.getCurrentUrl()).toContain('courses')
 		})
 		it("should logout",function(){
             header.logout()
@@ -122,7 +122,7 @@ describe("Teacher Management",function(){
 			course_info.add_teacher()
 			expect(course_info.email_field.isDisplayed()).toEqual(true);
 			expect(course_info.role_field.isDisplayed()).toEqual(true);
-			course_info.type_email(params.guerrillamail_user)
+			course_info.type_email(params.teacher3_mail)
 			course_info.select_role(2)
 			course_info.invite()
 			expect(course_info.teachers.count()).toEqual(2)
@@ -133,8 +133,8 @@ describe("Teacher Management",function(){
         })
     })
     describe("guerrillamail Teacher",function(){
-        it("should login",function(){        	
-            login_page.sign_in(params.guerrillamail_user, params.guerrillamail_password)
+        it("should login",function(){
+            login_page.sign_in(params.teacher3_mail, params.password)
         })
         it('should accept invitation to course', function(){
             header.show_notification()
@@ -154,14 +154,14 @@ describe("Teacher Management",function(){
         })
     })
     describe("Student1",function(){
-    	it("should login", function(){    		
+    	it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			course_info.student.open()			
+			course_info.student.open()
 		})
 		it("should check number of teacher ",function(){
 			expect(course_info.teachers.count()).toEqual(2)
@@ -228,32 +228,32 @@ describe("Discussion Part 1" , function(){
 
 				browser.switchTo().window(secondWindowHandle)
 					.then(function () {
-				    	guerrilla_mail_page.open_url(params.guerrillamail_url)    
+				    	guerrilla_mail_page.open_url(params.guerrillamail_url)
 					})
 				});
 			// guerrilla_mail_page.open_url(params.guerrillamail_url)
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.guerrillamail_user)
+			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
 			sleep(20000)
-		})				
+		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
 		})
 		// it("should open scalable learning website ",function(){
-		    
+
 		//     guerrilla_mail_page.open_url(params.frontend)
 		//     // browser.ignoreSynchronization = false;
 
 		// })
-        it("should login",function(){        	
+        it("should login",function(){
 			browser.getAllWindowHandles().then(function (handles) {
 				var secondWindowHandle = handles[1];
 				var firstWindowHandle = handles[0];
 
 				browser.switchTo().window(firstWindowHandle)
 					.then(function () {
-						login_page.sign_in(params.guerrillamail_user, params.guerrillamail_password)    
+						login_page.sign_in(params.teacher3_mail, params.password)
 					})
 				});
         })
@@ -270,7 +270,7 @@ describe("Discussion Part 1" , function(){
         it("should logout",function(){
             header.logout()
         })
-    
+
 
     })
 
@@ -345,7 +345,7 @@ describe("Revert Changes",function(){
 	})
 	describe("guerrillamail teacher",function(){
 		it("should login",function(){
-            login_page.sign_in(params.guerrillamail_user, params.guerrillamail_password)
+            login_page.sign_in(params.teacher3_mail, params.password)
        })
         it("should check that course has been removed",function(){
         	course_list.open()
@@ -353,7 +353,7 @@ describe("Revert Changes",function(){
         })
         it("should delete teacher account",function(){
             header.open_account_information()
-            header.delete_user(params.guerrillamail_password)
+            header.delete_user(params.password)
         })
         // it("should logout",function(){
         //     header.logout()
@@ -387,7 +387,7 @@ describe("Revert Changes",function(){
 		it("should logout",function(){
 			student_lec.close_timeline()
 			header.logout()
-		})		
+		})
 	} )
 })
 describe("guerrillamail Teacher",function(){
@@ -398,15 +398,15 @@ describe("guerrillamail Teacher",function(){
 
 		browser.switchTo().window(secondWindowHandle)
 			.then(function () {
-		    	guerrilla_mail_page.open_url(params.guerrillamail_url)    
+		    	guerrilla_mail_page.open_url(params.guerrillamail_url)
 			})
 		});
 		// guerrilla_mail_page.open_url(params.guerrillamail_url)
 	})
 	it("should change guerrillamail email ",function(){
-		guerrilla_mail_page.change_mail_name(params.guerrillamail_user)
+		guerrilla_mail_page.change_mail_name(params.teacher3_mail)
 		sleep(11000)
-	})				
+	})
 	it("should check mails count ",function(){
 		 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
 	})

@@ -16,20 +16,23 @@ var params= {
     admin_email:   'admin@scalable-learning.com',
     admin_password:"admin_account_password",
 
-    teacher_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    teacher2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    teacher3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    student_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    student2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    student3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher_mail:  "ta"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher2_mail: "tb"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher3_mail: "tc"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student_mail:  "sc"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student2_mail: "sa"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student3_mail: "sb"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
     password: 'password1234',
 
 
-    // guerrillamail_password: "password1234",
+    guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
     guerrillamail_first_name: "student",
+    teacher_first_name: "teacher",
+    student_name: "Student",
+    
     guerrillamail_last_name: "4",
-    guerrillamail_sch_uni_name: "Nile University",
+    guerrillamail_sch_uni_name: "test univerisity",
 
     short_name: "csc-test",
     course_name: "aesting course 100",
@@ -56,9 +59,9 @@ var params= {
     // student5_mail: 'studenttest5@sharklasers.com',
     // admin_password:"password",
     // password: 'password',
-     // teacher_mail:  'teacher1@email.com',
+    //  teacher_mail:  'teacher1@email.com',
     // teacher2_mail: 'teacher2@email.com',
-    // teacher3_mail: 'teacher3@email.com',
+    // // teacher3_mail: 'teacher3@email.com',
     // student_mail:  'student1@email.com',
     // student2_mail: 'student2@email.com',
     // student3_mail: 'student3@email.com',
@@ -148,24 +151,24 @@ exports.config = {
     specs: [
         'test/e2e/spec/add_user.spec.js',  // Done
         'test/e2e/spec/create_course.spec.js', // Done
-        // 'test/e2e/spec/fill_course.spec.js',// Done
-        // 'test/e2e/spec/course_information_validation.spec.js',// Done
-        // 'test/e2e/spec/account_information_validation.spec.js',// Done
-        // 'test/e2e/spec/enrollment_help.spec.js',// Done
-        // 'test/e2e/spec/course_editor_basic.spec.js',// Done
-        // 'test/e2e/spec/course_editor_copy.spec.sj',// Done
-        // 'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
-        // 'test/e2e/spec/module_statistics.spec.js', // Done
-        // 'test/e2e/spec/announcements.spec.js',  //
-        // 'test/e2e/spec/teacher-managment.spec.js',// Done
-        // 'test/e2e/spec/students_solve_course.spec.js', //Done
-        // 'test/e2e/spec/notes.spec.js',   //Done
-        // 'test/e2e/spec/discussions.spec.js',  //Done
+        'test/e2e/spec/fill_course.spec.js',// Done
+        'test/e2e/spec/email_notification.spec.js',  // Done
+        'test/e2e/spec/course_information_validation.spec.js',// Done
+        'test/e2e/spec/account_information_validation.spec.js',// Done
+        'test/e2e/spec/enrollment_help.spec.js',// Done
+        'test/e2e/spec/course_editor_basic.spec.js',// Done
+        'test/e2e/spec/course_editor_copy.spec.sj',// Done
+        'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        'test/e2e/spec/module_statistics.spec.js', // Done
+        'test/e2e/spec/announcements.spec.js',  //
+        'test/e2e/spec/teacher-managment.spec.js',// Done
+        'test/e2e/spec/students_solve_course.spec.js', //Done
+        'test/e2e/spec/notes.spec.js',   //Done
+        'test/e2e/spec/discussions.spec.js',  //Done
 
-        // 'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/progress-completion-module.spec.js',
-        // 'test/e2e/spec/email_notification.spec.js',  // Done
-        // 'test/e2e/spec/validations.spec.js', //
+        'test/e2e/spec/progress-module.spec.js',
+        'test/e2e/spec/progress-completion-module.spec.js',
+        'test/e2e/spec/validations.spec.js', //
 
         'test/e2e/spec/delete_course.spec.js',
         'test/e2e/spec/delete_user.spec.js',  // Done

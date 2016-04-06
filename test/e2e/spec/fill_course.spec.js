@@ -464,9 +464,11 @@ describe("Filling Course",function(){
 		// /////////////////////////////////////
 
 		it("should open first lecture in second module",function(){
+			browser.refresh()
 			navigator.module(2).open()
 			navigator.module(2).item(1).open()
 			navigator.close()
+
 		})
 
 		it("should add video quizzes",function(){

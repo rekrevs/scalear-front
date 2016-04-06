@@ -35,9 +35,9 @@ describe("Check Teacher account information", function(){
 		info.open()
 		expect(info.firstname).toEqual(fname);
 		expect(info.lastname).toEqual(lname);
-		expect(info.email).toEqual(mail);
+		expect(info.email).toEqual(params.teacher_mail);
 		expect(info.university).toEqual(univer);
-		expect(info.screenname).toEqual(screen_name);
+		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs);
 		// expect(info.bio).toEqual(biog);
 	})
@@ -56,11 +56,11 @@ describe("Check Teacher account information", function(){
 	})
 
 	it("should check for new info", function(){
-		expect(info.firstname).toEqual(fname_new);
-		expect(info.lastname).toEqual(lname_new);
-		expect(info.email).toEqual(mail);
+		expect(info.firstname).toEqual(params.teacher_first_name);
+		expect(info.lastname).toEqual("1");
+		expect(info.email).toEqual(teacher_first_name);
 		expect(info.university).toEqual(univer_new);
-		expect(info.screenname).toEqual(screen_name_new);
+		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs_new);
 		// expect(info.bio).toEqual(biog_new);
 	})
@@ -68,9 +68,9 @@ describe("Check Teacher account information", function(){
 	it("should change to old info", function(){
 		info.type_firstname(fname)
 		info.type_lastname(lname)
-		info.type_email(mail)
+		info.type_email(params.teacher_mail)
 		info.type_university(univer)
-		info.type_screenname(screen_name)
+		info.type_screenname(params.teacher_mail)
 		// info.type_link(webs)
 		// info.type_bio(biog)
 		info.save('password')
@@ -81,9 +81,9 @@ describe("Check Teacher account information", function(){
 	it("should check for old info", function(){
 		expect(info.firstname).toEqual(fname);
 		expect(info.lastname).toEqual(lname);
-		expect(info.email).toEqual(mail);
+		expect(info.email).toEqual(params.teacher_mail);
 		expect(info.university).toEqual(univer);
-		expect(info.screenname).toEqual(screen_name);
+		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs);
 		// expect(info.bio).toEqual(biog);
 	})

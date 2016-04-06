@@ -103,6 +103,9 @@ describe("Revert Changes",function(){
 		it("should delete second teacher",function(){
 			course_info.delete_teacher(2)
 		})
+		it("should delete second teacher",function(){
+			course_info.delete_teacher(1)
+		})
 		it("should logout",function(){
             header.logout()
         })

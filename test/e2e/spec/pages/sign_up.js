@@ -29,15 +29,20 @@ Signup.prototype = Object.create({}, {
 	password_confrimation: { get: function () { return this.password_confrimation_field.getAttribute('value')}},
 	type_password_confrimation: { value: function (keys) { return this.password_confrimation_field.clear().sendKeys(keys)}},
 
+	onlinename_field:{get: function(){return element(by.model('user.screen_name'))}},
+	onlinename: { get: function () { return this.onlinename_field.getAttribute('value')}},
+	type_onlinename: { value: function (keys) { return this.onlinename_field.clear().sendKeys(keys)}},
+
 	sign_up_user_button:{get:function(){return element(by.buttonText("Sign up")) }},
 	
-	create:{value :function(email, password,university,last,first){
+	create:{value :function(email, password,university,last,first,onlinename){
 		this.type_firstname(first)
 		this.type_lastname(last)
 		this.type_email(email)
 		this.type_university(university)
 		this.type_password(password)
 		this.type_password_confrimation([password])
+		this.type_onlinename(onlinename)
 		this.sign_up_user_button.click()
 	}},
 

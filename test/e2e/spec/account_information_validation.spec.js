@@ -58,8 +58,8 @@ describe("Check Teacher account information", function(){
 	it("should check for new info", function(){
 		expect(info.firstname).toEqual(params.teacher_first_name);
 		expect(info.lastname).toEqual("1");
-		expect(info.email).toEqual(teacher_first_name);
-		expect(info.university).toEqual(univer_new);
+		expect(info.email).toEqual(params.teacher_mail);
+		expect(info.university).toEqual(univer);
 		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs_new);
 		// expect(info.bio).toEqual(biog_new);

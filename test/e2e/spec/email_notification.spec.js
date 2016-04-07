@@ -30,11 +30,11 @@ var new_course = new NewCourse()
 var video = new Video();
 
 
-describe("Sign up Teacher ",function(){
-	describe("guerrillamail",function(){
+describe("Email Notification Sign up Teacher ",function(){
+	describe("guerrillamail website",function(){
 		it("should sign up as teacher",function(){
 			signup_page.sign_up('teacher')
-			signup_page.create(params.teacher3_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name , params.teacher3_mail)
+			signup_page.create(params.teacher3_mail, params.guerrillamail_password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name , params.teacher3_mail)
 					// signup_page.create(params.teacher2_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name,"test_teacher2" )
 		})
 		it("should check url thanks pages",function(){
@@ -58,7 +58,7 @@ describe("Sign up Teacher ",function(){
 		// })
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
-			sleep(51000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
@@ -85,6 +85,7 @@ describe("Sign up Teacher ",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -136,7 +137,7 @@ describe("Teacher Management",function(){
     })
     describe("guerrillamail Teacher",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher3_mail, params.password)
+            login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
         })
         it('should accept invitation to course', function(){
             header.show_notification()
@@ -255,7 +256,7 @@ describe("Discussion Part 1" , function(){
 
 				browser.switchTo().window(firstWindowHandle)
 					.then(function () {
-						login_page.sign_in(params.teacher3_mail, params.password)
+						login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
 					})
 				});
         })
@@ -341,16 +342,16 @@ describe("Revert Changes",function(){
 		it("should delete second teacher",function(){
 			course_info.delete_teacher(2)
 		})
-		it("should delete second teacher",function(){
-			course_info.delete_teacher(1)
-		})
+		// it("should delete second teacher",function(){
+		// 	course_info.delete_teacher(1)
+		// })
 		it("should logout",function(){
             header.logout()
         })
 	})
 	describe("guerrillamail teacher",function(){
 		it("should login",function(){
-            login_page.sign_in(params.teacher3_mail, params.password)
+            login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
        })
         it("should check that course has been removed",function(){
         	course_list.open()
@@ -380,6 +381,7 @@ describe("Revert Changes",function(){
 		})
 		it("should open timeline",function(){
 			student_lec.open_timeline()
+			sleep(5000)
 		})
 		it("should delete discussion post",function(){
 			student_lec.lecture(1).discussion(1).delete()

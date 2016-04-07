@@ -82,7 +82,7 @@ describe("Module Completion", function(){
 			})
 			it ("should check student 3 data ", function(){
 				expect(module_progress.module_completion().student(3).name).toEqual('Test Student')
-				expect(module_progress.module_completion().student(3).email).toEqual(params.student1_mail)
+				expect(module_progress.module_completion().student(3).email).toEqual(params.student_mail)
 				expect(module_progress.module_completion().student(3).column_item(1)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('3/3 quizzes solved')
 				expect(module_progress.module_completion().student(3).column_item(2)).toContain('Finished_on_Time.png')

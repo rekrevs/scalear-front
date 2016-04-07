@@ -34,6 +34,7 @@ describe("Sign up Teacher 1",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
 			console.log(params.teacher_mail)
+			// browser.refresh()
 			signup_page.sign_up('teacher')
 			signup_page.create(params.teacher_mail, params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher_mail)
 		})
@@ -61,6 +62,7 @@ describe("Sign up Teacher 1",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
 		it("should open the last mail ",function(){
+			 sleep(10000)
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
@@ -82,6 +84,7 @@ describe("Sign up Teacher 1",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -105,6 +108,7 @@ describe("Sign up teacher 2",function(){
 		it("should sign up as teacher",function(){
 			sleep(4000)
 			// consloe.log(params.teacher2_mail)
+			// browser.refresh()
 			signup_page.sign_up('teacher')
 			signup_page.create(params.teacher2_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name, params.teacher2_mail)
 		})
@@ -131,6 +135,7 @@ describe("Sign up teacher 2",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
 		it("should open the last mail ",function(){
+			 sleep(10000)
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
@@ -152,6 +157,7 @@ describe("Sign up teacher 2",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -176,7 +182,8 @@ describe("Sign up Student 1",function(){
 		it("should sign up as student",function(){
 
 			sleep(4000)
-			consloe.log(params.student_mail)
+			// consloe.log(params.student_mail)
+			// browser.refresh()
 			signup_page.sign_up('student')
 			signup_page.create(params.student_mail, params.password , 'uni' , params.student_name , "Test" , params.student_mail )
 		})
@@ -203,6 +210,7 @@ describe("Sign up Student 1",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
 		it("should open the last mail ",function(){
+			 sleep(10000)
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
@@ -224,6 +232,7 @@ describe("Sign up Student 1",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -247,8 +256,9 @@ describe("Sign up Student 2",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as student",function(){
 
-			sleep(4000)
-			consloe.log(params.student2_mail)
+			// sleep(4000)
+			// consloe.log(params.student2_mail)
+			// browser.refresh()
 			signup_page.sign_up('student')
 			signup_page.create(params.student2_mail, params.password , "uni" , "2" , params.student_name ,params.student2_mail )
 		})
@@ -275,6 +285,7 @@ describe("Sign up Student 2",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
 		it("should open the last mail ",function(){
+			 sleep(10000)
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
@@ -296,6 +307,7 @@ describe("Sign up Student 2",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -319,8 +331,9 @@ describe("Sign up Student 3",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as student",function(){
 
-			sleep(4000)
-			consloe.log(params.student3_mail)
+			// sleep(4000)
+			// consloe.log(params.student3_mail)
+			// browser.refresh()
 			signup_page.sign_up('student')
 			signup_page.create(params.student3_mail, params.password , "uni" , "3" , params.student_name , params.student3_mail )
 		})
@@ -347,6 +360,7 @@ describe("Sign up Student 3",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
 		})
 		it("should open the last mail ",function(){
+			 sleep(10000)
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
@@ -368,6 +382,7 @@ describe("Sign up Student 3",function(){
 					}).then(function(){
 						browser.switchTo().window(firstWindowHandle) //Switch to previous tab
 						.then(function(){
+							browser.ignoreSynchronization = false;
 							sleep(1000)
 						});
 					});
@@ -384,6 +399,22 @@ describe("Sign up Student 3",function(){
 		})
 		it("should logout",function(){
             header.logout()
+        })
+        it("should close guerrillamail website",function(){
+    		browser.getAllWindowHandles().then(function (handles) {
+				var secondWindowHandle = handles[1];
+				var firstWindowHandle = handles[0];
+				browser.switchTo().window(secondWindowHandle)
+				.then(function () {
+					browser.close(); //close the current browser
+				}).then(function(){
+					browser.switchTo().window(firstWindowHandle) //Switch to previous tab
+					.then(function(){
+						browser.ignoreSynchronization = false;
+						sleep(1000)
+					});
+				});
+			})
         })
     })
 })

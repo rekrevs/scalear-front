@@ -47,9 +47,9 @@ var modules_items = {
 					],
 					'free_text':[],
 					'discussion':[
-						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:student_mail},
-						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:student_mail},
-						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:student2_mail}
+						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:params.student_mail},
+						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:params.student_mail},
+						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:params.student2_mail}
 					],
 					'confused':[],
 					},

@@ -125,9 +125,9 @@ angular.module('scalearAngularApp')
         player.mute();
       }
 
-            player_controls.volume = function(val){
-                player.volume(val);
-            }
+      player_controls.volume = function(val){
+          player.volume(val);
+      }
 
       player_controls.unmute = function(){
         player.unmute();
@@ -166,9 +166,9 @@ angular.module('scalearAngularApp')
         $log.debug("entering sekking", time)
         if(time<0)
           time = 0
+        time+=scope.start || 0
         if(time > player_controls.getDuration())
           time = player_controls.getDuration()
-        time+=scope.start || 0
 
         if(player_controls.readyState() == 0 && !(scope.start || scope.start == 0)){
           player.on("loadeddata",

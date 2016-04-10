@@ -34,7 +34,7 @@ describe("Email Notification Sign up Teacher ",function(){
 	describe("guerrillamail website",function(){
 		it("should sign up as teacher",function(){
 			signup_page.sign_up('teacher')
-			signup_page.create(params.teacher3_mail, params.guerrillamail_password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name , params.teacher3_mail)
+			signup_page.create(params.teacher3_mail, params.guerrillamail_password , params.guerrillamail_sch_uni_name , "3" , params.teacher_first_name , params.teacher3_mail)
 					// signup_page.create(params.teacher2_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name,"test_teacher2" )
 		})
 		it("should check url thanks pages",function(){
@@ -221,9 +221,6 @@ describe("Discussion Part 1" , function(){
 	})
 
 	describe("guerrillamail Teacher",function(){
-
-
-
 		it("should open guerrillamail website",function(){
 			browser.getAllWindowHandles().then(function (handles) {
 				var secondWindowHandle = handles[1];
@@ -238,7 +235,7 @@ describe("Discussion Part 1" , function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
@@ -273,10 +270,7 @@ describe("Discussion Part 1" , function(){
         it("should logout",function(){
             header.logout()
         })
-
-
     })
-
 })
 
 describe("Discussion Part 2" , function(){

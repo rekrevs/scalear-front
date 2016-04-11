@@ -699,7 +699,7 @@ describe("check course review", function(){
 						it("should open timeline",function(){
 							student_lec.open_timeline()
 						})
-						it("should delete discussion post",function(){
+						xit("should delete discussion post",function(){
 							student_lec.lecture(1).discussion(1).delete()
 							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 							expect(student_lec.lecture(1).items.count()).toEqual(3)

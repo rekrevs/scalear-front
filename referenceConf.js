@@ -150,8 +150,8 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/create_course.spec.js', // Done
-        // 'test/e2e/spec/fill_course.spec.js',// Done
+        'test/e2e/spec/create_course.spec.js', // Done
+        'test/e2e/spec/fill_course.spec.js',// Done
         'test/e2e/spec/course_information_validation.spec.js',// Done
         'test/e2e/spec/account_information_validation.spec.js',// Done
         'test/e2e/spec/enrollment_help.spec.js',// Done

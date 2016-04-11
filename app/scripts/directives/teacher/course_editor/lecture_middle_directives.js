@@ -133,7 +133,10 @@ angular.module('scalearAngularApp')
               } else {
                 scope.time_error = validateTime(quiz.formatedTime, true)
                 if (!scope.time_error) {
-                  quiz.time = quiz.start_time = quiz.end_time = arrayToSeconds(quiz.formatedTime.split(':'))
+                  var fraction = quiz.time % 1
+                  var new_time = arrayToSeconds(quiz.formatedTime.split(':'))
+                  if(quiz.time != new_time + fraction)
+                    quiz.time = quiz.start_time = quiz.end_time = new_time
                   error = false
                 }
               }

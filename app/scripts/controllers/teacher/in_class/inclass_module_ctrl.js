@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz','OnlineMarker', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.in_class')
     $scope.inclass_player = {}
@@ -173,7 +173,7 @@ angular.module('scalearAngularApp')
         }, {
           hide: marker.data.show
         },
-        function(){}
+        function() {}
       )
     }
 
@@ -441,18 +441,17 @@ angular.module('scalearAngularApp')
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
       console.log("getSubItems item start end", item, start_time, end_time)
-      if(item.type == "primary_marker"){
+      if (item.type == "primary_marker") {
         var sub_items = [item]
         var current_item_index = timeline.items.indexOf(item)
-        for(var i = current_item_index+1; i < timeline.items.length; i++){
-          if(timeline.items[i].type== "markers")
+        for (var i = current_item_index + 1; i < timeline.items.length; i++) {
+          if (timeline.items[i].type == "markers")
             sub_items.push(timeline.items[i])
           else
-           break;
+            break;
         }
         return sub_items
-      }
-      else if (item.type == "inclass")
+      } else if (item.type == "inclass")
         return timeline.getItemsBetweenTime(start_time, end_time)
       else
         return timeline.getItemsBetweenTimeByType(start_time, end_time, 'markers').concat(item)
@@ -465,11 +464,12 @@ angular.module('scalearAngularApp')
         current_item.data.color = "black"
         if (current_item.type != "markers") {
           console.log("current_item.type", current_item.type)
-          if(current_item.type == "primary_marker")
-            sub_items[item_index].data.inclass_title = "Marker"
-          else if(current_item.type == "discussion")
+          // if (current_item.type == "primary_marker")
+          //   sub_items[item_index].data.inclass_title = "Marker"
+          // else
+          if (current_item.type == "discussion")
             sub_items[item_index].data.inclass_title = "Question"
-          else
+          else if (current_item.type != "primary_marker")
             sub_items[item_index].data.inclass_title = "Quiz"
         }
       }
@@ -479,7 +479,14 @@ angular.module('scalearAngularApp')
 
     var goToSubItem = function(item) {
       $scope.selected_timeline_sub_item = item
+
+      if(item.type == "primary_marker")
+        $scope.hideQuestionBox()
+      else if(item.type != "markers")
+        $scope.showQuestionBox()
+
       $scope.seek(item.time)
+
       if ($scope.selected_timeline_item.type == 'inclass') {
         if (item.data.status == 4) {
           console.log("I will get the inclass chart")
@@ -495,17 +502,17 @@ angular.module('scalearAngularApp')
         else
           adjustQuizLayer()
 
-        if(item.data.timer){
+        if (item.data.timer) {
           cancelStageTimer()
           setStageTimer(item.data.timer)
-          var unwatch = $scope.$watch("loading_video",function (val) {
+          var unwatch = $scope.$watch("loading_video", function(val) {
             if (!val) {
               startStageTimer()
               unwatch()
             }
           })
         }
-        if(item.data.status && typeof item.data.status === "number")
+        if (item.data.status && typeof item.data.status === "number")
           updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
       }
     }
@@ -837,13 +844,13 @@ angular.module('scalearAngularApp')
         $scope.$apply()
       }, { "disable_in_input": false, 'propagate': false });
 
-      shortcut.add("z", function() {
-        if ($scope.video_class == 'original_video')
-          $scope.setZoomClass()
-        else
-          $scope.setOriginalClass()
-        $scope.$apply()
-      }, { "disable_in_input": false, 'propagate': false });
+      // shortcut.add("z", function() {
+      //   if ($scope.video_class == 'original_video')
+      //     $scope.setZoomClass()
+      //   else
+      //     $scope.setOriginalClass()
+      //   $scope.$apply()
+      // }, { "disable_in_input": false, 'propagate': false });
 
       shortcut.add("b", function() {
         $scope.toggleBlackScreen('inclass.blackscreen_close')
@@ -872,7 +879,7 @@ angular.module('scalearAngularApp')
       shortcut.remove("Right")
       shortcut.remove("Left")
       shortcut.remove("b")
-      shortcut.remove("z")
+        // shortcut.remove("z")
       shortcut.remove("h")
       shortcut.remove("Space")
       shortcut.remove("m")
@@ -896,29 +903,35 @@ angular.module('scalearAngularApp')
     }
 
     $scope.setOriginalClass = function() {
-      $scope.video_class = 'original_video'
       $scope.question_class = 'original_question'
       $scope.chart_class = 'original_chart'
       $scope.student_question_class = 'original_student_question'
       $scope.question_block = 'question_block'
-      showQuestions()
-      $scope.blurButtons()
+      $scope.showQuestionBox()
     }
 
     $scope.toggleHideQuestions = function() {
-      $scope.hide_questions = !$scope.hide_questions
-      $scope.hide_text = $scope.hide_questions ? $scope.button_names[4] : $scope.button_names[3]
-      if ($scope.question_class == 'original_question')
-        $scope.video_class = $scope.hide_questions ? 'zoom_video' : 'original_video'
+      if($scope.hide_questions)
+        $scope.showQuestionBox()
+      else
+        $scope.hideQuestionBox()
+    }
+
+    $scope.showQuestionBox = function() {
+      $scope.hide_questions = false
+      $scope.hide_text =  $scope.button_names[3]
+      $scope.video_class = 'original_video'
       $scope.blurButtons()
       $timeout(function() {
         $scope.adjustTextSize()
       })
     }
 
-    var showQuestions = function() {
-      $scope.hide_questions = false
-      $scope.hide_text = $scope.button_names[3]
+    $scope.hideQuestionBox = function() {
+      $scope.hide_questions = true
+      $scope.hide_text =  $scope.button_names[4]
+      $scope.video_class = 'zoom_video'
+      $scope.blurButtons()
     }
 
     var changeButtonsSize = function() {
@@ -1005,7 +1018,7 @@ angular.module('scalearAngularApp')
     }
 
     var cancelStageTimer = function(argument) {
-      if ($scope.stage_timer){
+      if ($scope.stage_timer) {
         $interval.cancel($scope.stage_timer);
         $scope.stage_timer = null
       }

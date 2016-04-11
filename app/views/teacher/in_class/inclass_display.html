@@ -10,7 +10,7 @@
         </center>
     </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray;width:44%;">{{selected_item.name}}</div>
+        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray;width:44%;">{{selected_item.name}}<span ng-if="selected_timeline_item.type == 'primary_marker'">: {{selected_timeline_item.data.title}}</span></div>
         <div ng-show="(inclass_session < 2 || inclass_session > 3)" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
             <div >{{stage_counter | format}}</div>
         </div>
@@ -35,7 +35,7 @@
                 </youtube>
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1" />
             </div>
-            <div ng-hide="hide_questions">
+            <div>
                 <ul class="inclass_connected_circles connected_circles">
                     <li style="display:none"></li>
                     <span ng-repeat="item in selected_timeline_item.sub_items">

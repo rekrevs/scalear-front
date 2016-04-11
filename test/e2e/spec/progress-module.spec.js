@@ -47,9 +47,9 @@ var modules_items = {
 					],
 					'free_text':[],
 					'discussion':[
-						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:'Student 874'},
-						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:'Student 874'},
-						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:'Student 1444'}
+						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:params.student_mail},
+						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:params.student_mail},
+						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:params.student2_mail}
 					],
 					'confused':[],
 					},
@@ -361,7 +361,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 3
 					refresh()
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(1)).toBe('2')
+					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1')
 				})
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(2).quiz(1).show_inclass_click()
@@ -699,11 +699,16 @@ describe("check course review", function(){
 						it("should open timeline",function(){
 							student_lec.open_timeline()
 						})
-						it("should delete discussion post",function(){
+						xit("should delete discussion post",function(){
 							student_lec.lecture(1).discussion(1).delete()
 							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 							expect(student_lec.lecture(1).items.count()).toEqual(3)
 						})
+						// it("should delete discussion post",function(){
+						// 	student_lec.lecture(1).discussion(2).delete()
+						// 	expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+						// 	expect(student_lec.lecture(1).items.count()).toEqual(3)
+						// })
 						it("should logout",function(){
 							// student_lec.open_timeline()
 							header.logout()

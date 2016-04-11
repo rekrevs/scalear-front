@@ -97,6 +97,7 @@ describe("Solve Course",function(){
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
+				browser.refresh()
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)

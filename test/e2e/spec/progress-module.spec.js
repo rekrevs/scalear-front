@@ -361,7 +361,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 3
 					refresh()
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(1)).toBe('2')
+					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1')
 				})
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(2).quiz(1).show_inclass_click()
@@ -704,6 +704,11 @@ describe("check course review", function(){
 							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 							expect(student_lec.lecture(1).items.count()).toEqual(3)
 						})
+						// it("should delete discussion post",function(){
+						// 	student_lec.lecture(1).discussion(2).delete()
+						// 	expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+						// 	expect(student_lec.lecture(1).items.count()).toEqual(3)
+						// })
 						it("should logout",function(){
 							// student_lec.open_timeline()
 							header.logout()

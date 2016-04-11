@@ -150,7 +150,6 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/add_user.spec.js',  // Done
         'test/e2e/spec/create_course.spec.js', // Done
         'test/e2e/spec/fill_course.spec.js',// Done
         'test/e2e/spec/course_information_validation.spec.js',// Done
@@ -164,7 +163,6 @@ exports.config = {
         'test/e2e/spec/teacher-managment.spec.js',// Done
         'test/e2e/spec/students_solve_course.spec.js', //Done
         'test/e2e/spec/notes.spec.js',   //Done
-        // 'test/e2e/spec/email_notification.spec.js',  // Done
         'test/e2e/spec/discussions.spec.js',  //Done
 
         'test/e2e/spec/progress-module.spec.js',
@@ -172,6 +170,14 @@ exports.config = {
         'test/e2e/spec/validations.spec.js', //
         
         'test/e2e/spec/delete_course.spec.js',
+
+
+        // to test email features locall
+
+        // 'test/e2e/spec/add_user.spec.js',  // Done
+        // 'test/e2e/spec/create_course.spec.js', // Done
+        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/email_notification.spec.js',  // Done
         // 'test/e2e/spec/delete_user.spec.js',  // Done
 
    //{{reviewed}}

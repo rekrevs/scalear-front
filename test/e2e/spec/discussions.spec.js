@@ -33,6 +33,7 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
 			navigator.close()
+			browser.refresh()
 		})
 		it("should seek to 15%",function(){
 			video.seek(15)

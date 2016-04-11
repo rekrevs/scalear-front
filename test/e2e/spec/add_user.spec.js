@@ -56,7 +56,7 @@ describe("Sign up Teacher 1",function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.teacher_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
@@ -129,7 +129,7 @@ describe("Sign up teacher 2",function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.teacher2_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
@@ -204,7 +204,7 @@ describe("Sign up Student 1",function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.student_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
@@ -279,7 +279,7 @@ describe("Sign up Student 2",function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.student2_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})
@@ -354,7 +354,7 @@ describe("Sign up Student 3",function(){
 		})
 		it("should change guerrillamail email ",function(){
 			guerrilla_mail_page.change_mail_name(params.student3_mail)
-			sleep(20000)
+			sleep(120000)
 		})
 		it("should check mails count ",function(){
 			 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(2)})

@@ -51,7 +51,9 @@ ul.connected_blocks {
 }
 </style>
 <div class="small-12 column disable_selection">
-  <h3><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3></div>
+	<h3 ng-if="inclass_status>=2"><b>Q.</b> {{quiz.question_title}}</h3>
+  <h3 ng-if="inclass_status<2"><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3>
+</div>
 <div class="small-12 columns no-padding" style="margin-bottom: 10px;">
   <ul class="connected_blocks">
     <li ng-class="{'active': inclass_status==1}" style="background:lightgrey;color:black">Intro</li>
@@ -142,7 +144,7 @@ ul.connected_blocks {
   <wizard hide-indicators="true">
     <wz-step wz-title="noclass">
       <div style="top: 50px;position: relative;padding:0 10px">
-        <h2>No In-class Session Running</h2>
+        <h2>The in-class session has not started</h2>
         <p>Please try again later or click on the 'Refresh' button below</p>
         <button type="submit" ng-disabled="loading" class="button no-margin" ng-click="getInclassStudentStatus()">
           <i class="fi-refresh"></i> Refresh
@@ -152,12 +154,20 @@ ul.connected_blocks {
     </wz-step>
     <wz-step wz-title="intro">
       <div style="top: 50px;position: relative;padding:0 10px">
-        <h2>Please wait for the teacher to introduce the problem</h2>
+        <h2>The in-class question has not started</h2>
         <p>Click on 'Next' when the question shows up</p>
         <button type="submit" ng-disabled="loading" class="button no-margin" ng-click="getInclassStudentStatus()" translate>Next</button>
         <loading size="small" show="loading" />
       </div>
     </wz-step>
+    <!-- <wz-step wz-title="intro">
+      <div style="top: 50px;position: relative;padding:0 10px">
+        <h2>Please wait for the teacher to introduce the problem</h2>
+        <p>Click on 'Next' when the question shows up</p>
+        <button type="submit" ng-disabled="loading" class="button no-margin" ng-click="getInclassStudentStatus()" translate>Next</button>
+        <loading size="small" show="loading" />
+      </div>
+    </wz-step> -->
     <wz-step wz-title="self">
         <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
           <div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 2px);position: absolute;">
@@ -171,7 +181,7 @@ ul.connected_blocks {
           </div>
         </div>
         <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-          <textarea placeholder="Notes..." style="height:55px" ng-model="self_note" />
+          <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="self_note" />
         </div>
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
           <button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button>
@@ -198,6 +208,7 @@ ul.connected_blocks {
         </div>
         <br /><br /><br />
         <loading size="small" show="loading"  />
+        <alert ng-show="show_wait" type="'secondary'" style="clear: both;margin:0">Please wait for the teacher to continue.</alert>
       </div>
     </wz-step>
     <wz-step wz-title="group">
@@ -213,7 +224,7 @@ ul.connected_blocks {
         </div>
       </div>
       <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-        <textarea placeholder="Notes..." style="height:55px" ng-model="group_note" />
+        <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="group_note" />
       </div>
       <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
         <button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)" >Vote!</button>
@@ -251,6 +262,7 @@ ul.connected_blocks {
         </div>
         <br /><br /><br />
         <loading size="small" show="loading"  />
+        <alert ng-show="show_wait" type="'secondary'" style="clear: both;margin:0">Please wait for the teacher to continue.</alert>
       </div>
     </wz-step>
     <wz-step wz-title="discussion">

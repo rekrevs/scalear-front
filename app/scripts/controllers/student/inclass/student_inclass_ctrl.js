@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
       //     ContentNavigator.open()
     var self_answers = $cookieStore.get('self_answers') || []
     var group_answers = $cookieStore.get('group_answers') || []
-    $scope.messages = ["No In-class Session Running", "Please wait for the teacher to introduce the problem.", "Individual", "Group", "Discussion", "End"]
+    // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
     $scope.module = $scope.course.selected_module
     $scope.getInclassStudentStatus = function() {
@@ -32,7 +32,8 @@ angular.module('scalearAngularApp')
             if (self_answers.length > 0) {
               self_answers.forEach(function(answer) {
                 $scope.quiz.answers.filter(function(a) {
-                  return a.id == answer.id })[0].selected = true
+                  return a.id == answer.id
+                })[0].selected = true
               })
               if (data.status == 2)
                 force_state_to = "self_answered"
@@ -40,7 +41,8 @@ angular.module('scalearAngularApp')
             if (group_answers.length > 0) {
               group_answers.forEach(function(answer) {
                 $scope.group_quiz.answers.filter(function(a) {
-                  return a.id == answer.id })[0].selected = true
+                  return a.id == answer.id
+                })[0].selected = true
               })
               if (data.status == 3)
                 force_state_to = "group_answered"
@@ -50,6 +52,12 @@ angular.module('scalearAngularApp')
           if ($scope.inclass_status != data.status) {
             $scope.inclass_status = data.status
             WizardHandler.wizard().goTo(force_state_to || states[$scope.inclass_status])
+          }
+          else if($scope.inclass_status == 2 || $scope.inclass_status == 3){
+            $scope.show_wait = true
+            $timeout(function () {
+               $scope.show_wait = false
+            }, 5000)
           }
         }
       )
@@ -78,7 +86,7 @@ angular.module('scalearAngularApp')
             selected_answers.push(answer.id)
         })
         if (selected_answers.length == 0) {
-          $scope.showNotification("lectures.choose_correct_answer")
+          $scope.showNotification("lectures.messages.please_choose_an_answer")
           return
         }
 

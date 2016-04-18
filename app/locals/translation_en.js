@@ -501,6 +501,7 @@ var translation_en={
         thank_you_answer: "Thank you for your answer",
         did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
         please_choose_one_answer: "Please Choose at least one answer",
+        please_choose_an_answer: "Please choose your answer(s).",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         really_confused_use_question: "You could ask a question so the teacher can help you.",
     },

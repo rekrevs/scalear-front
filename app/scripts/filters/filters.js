@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
       formatted_time = formatted_time.replace('ss', sec);
       formatted_time = formatted_time.replace('s', sec*1+""); // check for single second formatting
       return formatted_time;
-    } 
+    }
     else {
       return hr + ':' + min + ':' + sec;
     }
@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
         min = 1
         sec = 0
       }
-      if (hr == 0){ 
+      if (hr == 0){
         format =format.replace('hh:', "").replace('h:', "")
       }
       else if(hr < 10){ hr  = "0" + hr; }
@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
 
     angular.forEach(input, function(elem,key){
       if(elem.show)
-        result[key] = elem  
+        result[key] = elem
     });
     return result;
   }
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
     var result = [];
     angular.forEach(input, function(elem,key){
       if(!elem.student_hide)
-        result.push(elem) 
+        result.push(elem)
     });
     return result;
   }
@@ -186,5 +186,13 @@ return function(items) {
   return function(appearance_time) {
      if(appearance_time)
       return new Date(appearance_time) <= new Date()
+  };
+}).filter('inclassMenuFilter', function() {
+  return function(items) {
+    return items.filter(function (item) {
+      if(item.data)
+        return (item.type!='discussion')? item.data.show : true
+      return false
+    })
   };
 });

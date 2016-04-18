@@ -501,6 +501,7 @@ var translation_sv={
         thank_you_answer: "Tack för ditt svar",
         did_not_get_credit: "Videon ej markerad som sedd. För att markeras som sedd måste hela videon ses och frågorna besvaras (men inte nödvändigtvis rätt!).",
         please_choose_one_answer: "Välj minst ett svar",
+        please_choose_an_answer: "Please choose your answer(s). (t)",
         finish_before_proceeding:"Se klart tidigare videos innan du fortsätter",
         really_confused_use_question: "Du kan ställa en fråga så att läraren kan hjälpa dig.",
     },

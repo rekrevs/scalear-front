@@ -47,6 +47,14 @@ angular.module('scalearAngularApp')
           $scope.$apply()
         }
       });
+      for (var lec_id in $scope.lectures) {
+        var inclass_questions = $scope.timeline['lecture'][lec_id]['filtered'].filterByType('inclass')
+        if(inclass_questions.length > 0){
+          updateInclassSession(inclass_questions[0].data.id, 1)
+          break;
+        }
+      }
+
     };
 
     var resetVariables = function() {
@@ -94,8 +102,9 @@ angular.module('scalearAngularApp')
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
                 else
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
-                if (type == "inclass" && $scope.lectures[lec_id][type][it][1].show)
+                if (type == "inclass" && $scope.lectures[lec_id][type][it][1].show){
                   $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion) / 60
+                }
 
               }
             }
@@ -480,7 +489,7 @@ angular.module('scalearAngularApp')
     var goToSubItem = function(item) {
       $scope.selected_timeline_sub_item = item
 
-      if(item.type == "primary_marker")
+      if(item.type == "primary_marker" && $scope.selected_timeline_item.type != 'inclass')
         $scope.hideQuestionBox()
       else if(item.type != "markers")
         $scope.showQuestionBox()
@@ -545,12 +554,17 @@ angular.module('scalearAngularApp')
       $scope.prevItem()
     }
 
-    $scope.skipToItem = function(module_item, timeline_itr) {
-      $scope.item_itr = module_item
-      $scope.selected_item = $scope.module.items[$scope.item_itr]
-      $scope.timeline_itr = timeline_itr
-
-      goToItem(angular.noop)
+    $scope.skipToItem = function(module_item, timeline_item, type) {
+      $scope.item_itr = $scope.module.items.indexOf(module_item)//module_item
+      $scope.selected_item = module_item//$scope.module.items[$scope.item_itr]
+      if(!timeline_item){
+        $scope.timeline_itr = 0
+        $scope.nextItem()
+      }
+      else{
+        $scope.timeline_itr = $scope.timeline[type][module_item.id]['filtered'].items.indexOf(timeline_item)//timeline_itr
+        goToItem(angular.noop)
+      }
     }
 
     var goToItem = function(callback) {
@@ -568,7 +582,7 @@ angular.module('scalearAngularApp')
       }
       if (current_timeline_item != $scope.selected_timeline_item) {
         if ($scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass') {
-          updateInclassSession($scope.selected_timeline_item.data.id, 0)
+          updateInclassSession($scope.selected_timeline_item.data.id, 1)
         }
         $scope.selected_timeline_item = angular.copy(current_timeline_item)
         console.log("selected_timeline_item", $scope.selected_timeline_item)
@@ -613,6 +627,9 @@ angular.module('scalearAngularApp')
       } else {
         $scope.item_itr = $scope.module.items.length
         $scope.showBlackScreen('inclass.blackscreen_done')
+        if ($scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass') {
+          updateInclassSession($scope.selected_timeline_item.data.id, 1)
+        }
       }
 
       $timeout(function() {

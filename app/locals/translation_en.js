@@ -72,6 +72,7 @@ var translation_en={
     you_are_not_authorized: "You are not authorized to see requested page",
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",
+    change_password_confirmation: "You have successfully changed your password.",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -264,6 +265,7 @@ var translation_en={
     link: "Website",
     security: "Security",
     online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
+    password_comment: "Enter a new password to change your password.",
     school_email :"School Email",
     sign_up: "Sign up",
     sign_in: "Sign in",
@@ -531,6 +533,7 @@ var translation_en={
         click_or_type_confused: "Click or type C to say confused",
         click_or_type_fullscreen: "Click or type F to enter fullscreen",
         click_or_type_smallscreen: "Click or type F to enter smallscreen",
+        video_shortcut: "Type J for rewind 10s OR K for play/pause OR L for fast forward 10s",
     },
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",

@@ -188,6 +188,22 @@ angular.module('scalearAngularApp')
         $timeout(function() {
           element.find('.marker_name').select();
         });
+
+        var maker_enter_tab_click = function() {
+          if($("input.marker_name").is(':focus')){
+            $("input.marker_annotation").focus()  
+          }
+          else if($("input.marker_annotation").is(':focus')){
+           $("input.marker_time").focus()  
+          }
+        }
+
+        shortcut.add("Enter", function(){
+          maker_enter_tab_click()
+        }, {"disable_in_input" : false});      
+        shortcut.add("Tab", function(){
+          maker_enter_tab_click()
+        }, {"disable_in_input" : false});    
       }
     };
   }])

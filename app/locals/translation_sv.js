@@ -72,6 +72,7 @@ var translation_sv={
     you_are_not_authorized: "Du har inte behörighet att visa den begärda sidan",
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",
+    change_password_confirmation: "You have successfully changed your password.(t)",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -264,6 +265,7 @@ var translation_sv={
     link: "Hemsida",
     security: "Säkerhet",
     online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Du kan ändra det till vad du vill.)',
+    password_comment: "Enter a new password to change your password.(t)",
     school_email:"E-post-adress",
     sign_up: "Registrera dig",
     sign_in: "Logga in",
@@ -531,6 +533,7 @@ var translation_sv={
         click_or_type_confused: "Klicka eller skriv C för att säga att du är förvirrad",
         click_or_type_fullscreen: "Klicka eller skriv F för att gå till helskärmsläge",
         click_or_type_smallscreen: "Klicka eller skriv F för att gå ur helskärmsläge",
+        video_shortcut: "Type J for rewind 10s OR K for play/pause OR L for fast forward 10s(t)",
     },
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",

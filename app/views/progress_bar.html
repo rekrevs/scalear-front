@@ -72,7 +72,7 @@
             </ul>
         </div>
         <div ng-transclude></div>
-        <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()"></div>
+        <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}"  translate></div>
         <span class="hide-for-small-down">
             <div id="volume" class="volumeDiv show-inline left" ng-class="volume_class" ng-click="muteToggle()"></div>
             <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;cursor: pointer;"/>

@@ -213,105 +213,105 @@ angular.module('scalearAngularApp')
       $('.main_content').parent().scrollToThis(angular.element(elem),{offsetTop : top});
     }
 
-  	$scope.manageHighlight=function(x){
-      // resizePlayerSmall()
-  		var divs = angular.element('.ul_item')
-		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')
-		  angular.element('li.highlight').removeClass('highlight')
-      $scope.highlight_index = $scope.highlight_index+x
-      if($scope.highlight_index < 0)
-        $scope.highlight_index = 0
-      else if ($scope.highlight_index >divs.length-1)
-        $scope.highlight_index = divs.length-1
-	    var ul = angular.element(divs[$scope.highlight_index])
-	    ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
-      $scope.highlight_level = 1
-	    angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
-	    var parent_div = ul.closest('div')
-      if(parent_div.attr('id')){
-        var id=parent_div.attr('id').split('_')
-        $scope.selected_item = $scope.timeline[id[0]][id[1]].items[ul.attr('index')]
-        $scope.selected_item.lec_id = id[1]
-      }
-      else
-        $scope.selected_item =null
-      scrollToItem(divs[$scope.highlight_index])
-	    $scope.inner_highlight_index = 0
-      setupRemoveHightlightEvent()
-      seekToItem()
-  	}
+  	// $scope.manageHighlight=function(x){
+   //    // resizePlayerSmall()
+  	// 	var divs = angular.element('.ul_item')
+		 //  angular.element(divs[$scope.highlight_index]).removeClass('highlight')
+		 //  angular.element('li.highlight').removeClass('highlight')
+   //    $scope.highlight_index = $scope.highlight_index+x
+   //    if($scope.highlight_index < 0)
+   //      $scope.highlight_index = 0
+   //    else if ($scope.highlight_index >divs.length-1)
+   //      $scope.highlight_index = divs.length-1
+	  //   var ul = angular.element(divs[$scope.highlight_index])
+	  //   ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+   //    $scope.highlight_level = 1
+	  //   angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+	  //   var parent_div = ul.closest('div')
+   //    if(parent_div.attr('id')){
+   //      var id=parent_div.attr('id').split('_')
+   //      $scope.selected_item = $scope.timeline[id[0]][id[1]].items[ul.attr('index')]
+   //      $scope.selected_item.lec_id = id[1]
+   //    }
+   //    else
+   //      $scope.selected_item =null
+   //    scrollToItem(divs[$scope.highlight_index])
+	  //   $scope.inner_highlight_index = 0
+   //    setupRemoveHightlightEvent()
+   //    seekToItem()
+  	// }
 
-  	$scope.manageInnerHighlight=function(x){
-  		var inner_ul= angular.element('ul.highlight').find('ul')
-  		if(inner_ul.length){
-  			var inner_li = inner_ul.find('li').not('.no_highlight')
-  			if(angular.element('li.highlight').length)
-  				angular.element('li.highlight').removeClass('highlight')
-        $scope.inner_highlight_index = $scope.inner_highlight_index+x
-        if($scope.inner_highlight_index < 0)
-          $scope.inner_highlight_index = 0
-        else if ($scope.inner_highlight_index >inner_li.length-1){
-          $scope.manageHighlight(1)
-          return
-        }
-  			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
-        $scope.highlight_level = 2
-  		}
-      scrollToItem(inner_li[$scope.inner_highlight_index])
-	    seekToItem()
-  	}
+  	// $scope.manageInnerHighlight=function(x){
+  	// 	var inner_ul= angular.element('ul.highlight').find('ul')
+  	// 	if(inner_ul.length){
+  	// 		var inner_li = inner_ul.find('li').not('.no_highlight')
+  	// 		if(angular.element('li.highlight').length)
+  	// 			angular.element('li.highlight').removeClass('highlight')
+   //      $scope.inner_highlight_index = $scope.inner_highlight_index+x
+   //      if($scope.inner_highlight_index < 0)
+   //        $scope.inner_highlight_index = 0
+   //      else if ($scope.inner_highlight_index >inner_li.length-1){
+   //        $scope.manageHighlight(1)
+   //        return
+   //      }
+  	// 		angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
+   //      $scope.highlight_level = 2
+  	// 	}
+   //    scrollToItem(inner_li[$scope.inner_highlight_index])
+	  //   seekToItem()
+  	// }
 
-  	$scope.highlight=function(ev,item){
-  		var ul = angular.element(ev.target).closest('ul.ul_item')
-  		var divs = angular.element('.ul_item')
-      $(".highlight").removeClass("highlight");
-  		$scope.highlight_index = divs.index(ul)
-  		angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
-      angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
-      $scope.highlight_level = 1
-      setupRemoveHightlightEvent()
-      $scope.selected_item =item
-      var parent_div = ul.closest('div')
-      if(parent_div.attr('id')){
-        var id=parent_div.attr('id').split('_')
-        $scope.selected_item.lec_id = id[1]
-      }
-  		$scope.inner_highlight_index = 0
-      var inner_li= angular.element(ev.target).closest('li.li_item')
-      if(inner_li.length){
-        if(angular.element('li.highlight').length)
-          angular.element('li.highlight').removeClass('highlight')
-        $scope.inner_highlight_index = ul.find('li.li_item').index(inner_li[0])
-        angular.element(inner_li[0]).addClass('highlight')
-        $scope.highlight_level = 2
-      }
-      seekToItem()
-  	}
+  	// $scope.highlight=function(ev,item){
+  	// 	var ul = angular.element(ev.target).closest('ul.ul_item')
+  	// 	var divs = angular.element('.ul_item')
+   //    $(".highlight").removeClass("highlight");
+  	// 	$scope.highlight_index = divs.index(ul)
+  	// 	angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+   //    angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+   //    $scope.highlight_level = 1
+   //    setupRemoveHightlightEvent()
+   //    $scope.selected_item =item
+   //    var parent_div = ul.closest('div')
+   //    if(parent_div.attr('id')){
+   //      var id=parent_div.attr('id').split('_')
+   //      $scope.selected_item.lec_id = id[1]
+   //    }
+  	// 	$scope.inner_highlight_index = 0
+   //    var inner_li= angular.element(ev.target).closest('li.li_item')
+   //    if(inner_li.length){
+   //      if(angular.element('li.highlight').length)
+   //        angular.element('li.highlight').removeClass('highlight')
+   //      $scope.inner_highlight_index = ul.find('li.li_item').index(inner_li[0])
+   //      angular.element(inner_li[0]).addClass('highlight')
+   //      $scope.highlight_level = 2
+   //    }
+   //    seekToItem()
+  	// }
 
-   var setupRemoveHightlightEvent=function(){
-    $log.debug("adding")
-      $(document).click(function(e){
-        if(angular.element(e.target).find('.inner_content').length){
-          removeHightlight()
+   // var setupRemoveHightlightEvent=function(){
+   //  $log.debug("adding")
+   //    $(document).click(function(e){
+   //      if(angular.element(e.target).find('.inner_content').length){
+   //        removeHightlight()
 
-           $(document).off('click');
-        }
-      })
-    }
+   //         $(document).off('click');
+   //      }
+   //    })
+   //  }
 
-    var removeHightlight=function(){
-      resizePlayerSmall()
-      $(".highlight").removeClass("highlight");
-      angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
-      $scope.highlight_level = 0
-      $log.debug("removing")
-    }
+   //  var removeHightlight=function(){
+   //    resizePlayerSmall()
+   //    $(".highlight").removeClass("highlight");
+   //    angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
+   //    $scope.highlight_level = 0
+   //    $log.debug("removing")
+   //  }
 
-    $scope.resetHighlightVariables=function(){
-      removeHightlight()
-      $scope.highlight_index = -1
-      $scope.inner_highlight_index = 0
-    }
+   //  $scope.resetHighlightVariables=function(){
+   //    removeHightlight()
+   //    $scope.highlight_index = -1
+   //    $scope.inner_highlight_index = 0
+   //  }
 
   	$scope.updateHideQuiz = function(quiz, hide) {
       var num = (hide? -1 : 1)
@@ -782,36 +782,36 @@ angular.module('scalearAngularApp')
           }
     },{"disable_in_input" : true, "propagate":false});
 
-	  shortcut.add("Down",function(){
-      if($scope.highlight_level <= 1)
-		    $scope.manageHighlight(1)
-      else
-        $scope.manageInnerHighlight(1)
-      $scope.$apply()
-    },{"disable_in_input" : true, "propagate":false});
-    shortcut.add("Up",function(){
-      if($scope.highlight_level <= 1)
-		    $scope.manageHighlight(-1)
-      else
-        $scope.manageInnerHighlight(-1)
-      $scope.$apply()
-    },{"disable_in_input" : true, "propagate":false});
+	  // shortcut.add("Down",function(){
+   //    if($scope.highlight_level <= 1)
+		 //    $scope.manageHighlight(1)
+   //    else
+   //      $scope.manageInnerHighlight(1)
+   //    $scope.$apply()
+   //  },{"disable_in_input" : true, "propagate":false});
+   //  shortcut.add("Up",function(){
+   //    if($scope.highlight_level <= 1)
+		 //    $scope.manageHighlight(-1)
+   //    else
+   //      $scope.manageInnerHighlight(-1)
+   //    $scope.$apply()
+   //  },{"disable_in_input" : true, "propagate":false});
 
-    shortcut.add("Right",function(){
-      if($scope.highlight_level == 0)
-        $scope.manageHighlight(0)
-      else
-		    $scope.manageInnerHighlight(0)
-      $scope.$apply()
-    },{"disable_in_input" : true, "propagate":false});
+   //  shortcut.add("Right",function(){
+   //    if($scope.highlight_level == 0)
+   //      $scope.manageHighlight(0)
+   //    else
+		 //    $scope.manageInnerHighlight(0)
+   //    $scope.$apply()
+   //  },{"disable_in_input" : true, "propagate":false});
 
-    shortcut.add("Left",function(){
-      if($scope.highlight_level <= 1)
-        removeHightlight()
-      else
-		    $scope.manageHighlight(0)
-      $scope.$apply()
-    },{"disable_in_input" : true, "propagate":false});
+   //  shortcut.add("Left",function(){
+   //    if($scope.highlight_level <= 1)
+   //      removeHightlight()
+   //    else
+		 //    $scope.manageHighlight(0)
+   //    $scope.$apply()
+   //  },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Space",function(){
       if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){

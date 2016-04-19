@@ -188,7 +188,7 @@ ul.connected_blocks {
         </div>
     </wz-step>
     <wz-step wz-title="self_answered">
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
           <div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 40%;position: relative;">Self</div>
@@ -201,9 +201,9 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
-          <div class="small-4 columns no-padding">
+          <div class="small-4 columns no-padding-right">
             <button class="button expand secondary no-margin" wz-previous>Retry</button>
           </div>
           <div class="small-8 columns" style="padding:0;padding-left:5px">
@@ -211,7 +211,7 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row with-margin-top">
+      <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
           <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
@@ -238,7 +238,7 @@ ul.connected_blocks {
       </div>
     </wz-step>
     <wz-step wz-title="group_answered">
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
           <div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 40%;position: relative;">Self</div>
@@ -251,7 +251,7 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns no-padding group_quiz">
           <div class="small-1 column no-padding" style="background:#43AC6A;color:white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 45%;position: relative;">Group</div>
@@ -264,7 +264,7 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
           <div class="small-4 columns no-padding">
             <button class="button expand secondary no-margin" wz-previous>Retry</button>
@@ -274,7 +274,7 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row with-margin-top">
+      <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
           <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
@@ -283,7 +283,7 @@ ul.connected_blocks {
     </wz-step>
     <wz-step wz-title="discussion">
       <h2>Discussion</h2>
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
           <div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 40%;position: relative;">Self</div>
@@ -296,7 +296,7 @@ ul.connected_blocks {
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns no-padding group_quiz">
           <div class="small-1 column no-padding" style="background:#43AC6A;color:white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 40%;position: relative;">Group</div>
@@ -312,7 +312,7 @@ ul.connected_blocks {
       <!-- <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
         <textarea placeholder="Notes..." style="height:55px" ng-model="group_note" />
       </div> -->
-      <div class="row">
+      <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
           <button class="button expand orange no-margin" ng-disabled="loading" ng-click="getInclassStudentStatus()">Continue</button>
           <loading size="small" show="loading"  />

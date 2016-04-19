@@ -11,7 +11,7 @@
     </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
         <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray;width:44%;">{{selected_item.name}}<span ng-if="selected_timeline_item.type == 'primary_marker'">: {{selected_timeline_item.data.title}}</span></div>
-        <div ng-show="(inclass_session == 1 || inclass_session == 4) && selected_timeline_item.type=='inclass'" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
+        <div ng-show="(inclass_session == 1 || inclass_session >= 4) && selected_timeline_item.type=='inclass'" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
             <div >{{stage_counter | format}}</div>
         </div>
         <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px">

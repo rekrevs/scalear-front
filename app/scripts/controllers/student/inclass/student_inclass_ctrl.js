@@ -5,10 +5,10 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('In-class')
       // if(!MobileDetector.isPhone())
-      //     ContentNavigator.open()
+    ContentNavigator.close()
     var self_answers = $cookieStore.get('self_answers') || []
     var group_answers = $cookieStore.get('group_answers') || []
-    // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
+      // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
     $scope.module = $scope.course.selected_module
     $scope.getInclassStudentStatus = function() {
@@ -31,18 +31,22 @@ angular.module('scalearAngularApp')
             var force_state_to
             if (self_answers.length > 0) {
               self_answers.forEach(function(answer) {
-                $scope.quiz.answers.filter(function(a) {
+                var filtered_answers = $scope.quiz.answers.filter(function(a) {
                   return a.id == answer.id
-                })[0].selected = true
+                })
+                if(filtered_answers.length)
+                  filtered_answers[0].selected = true
               })
               if (data.status == 2)
                 force_state_to = "self_answered"
             }
             if (group_answers.length > 0) {
               group_answers.forEach(function(answer) {
-                $scope.group_quiz.answers.filter(function(a) {
+                var filtered_answers =$scope.group_quiz.answers.filter(function(a) {
                   return a.id == answer.id
-                })[0].selected = true
+                })
+                if(filtered_answers.length)
+                  filtered_answers[0].selected = true
               })
               if (data.status == 3)
                 force_state_to = "group_answered"
@@ -52,11 +56,10 @@ angular.module('scalearAngularApp')
           if ($scope.inclass_status != data.status) {
             $scope.inclass_status = data.status
             WizardHandler.wizard().goTo(force_state_to || states[$scope.inclass_status])
-          }
-          else if($scope.inclass_status == 2 || $scope.inclass_status == 3){
+          } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
             $scope.show_wait = true
-            $timeout(function () {
-               $scope.show_wait = false
+            $timeout(function() {
+              $scope.show_wait = false
             }, 5000)
           }
         }
@@ -96,7 +99,8 @@ angular.module('scalearAngularApp')
       quiz.done = true
       $scope.saveQuizAnswer(quiz, selected_answers)
       console.log(quiz)
-      $scope.saveNote((quiz.in_group ? "In Class Group Note: " : "In Class Self Note: ") + note_text, Math.ceil(quiz.time))
+      if(note_text)
+        $scope.saveNote((quiz.in_group ? "In Class Group Note: " : "In Class Self Note: ") + note_text, Math.ceil(quiz.time))
       WizardHandler.wizard().next()
     }
 

@@ -660,7 +660,6 @@ angular.module('scalearAngularApp')
 
     var openPreviewInclass = function() {
       $scope.filtered_timeline_items = angular.copy($scope.lecture.timeline.getItemsBetweenTime($scope.selected_quiz.start_time, $scope.selected_quiz.end_time))
-      var quiz_index
       for (var item_index = 0; item_index < $scope.filtered_timeline_items.length; item_index++) {
         var current_item = $scope.filtered_timeline_items[item_index]
         current_item.data.background = "lightgrey"
@@ -671,24 +670,25 @@ angular.module('scalearAngularApp')
           current_item.data.color = "white"
 
           var start_item = { time: current_item.data.start_time, type: 'marker', data: { time: current_item.data.start_time } }
-          var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time } }
           $scope.filtered_timeline_items.splice(0, 0, start_item);
           item_index++
-          $scope.filtered_timeline_items.splice($scope.filtered_timeline_items.length, 0, end_item);
 
           var group_quiz = angular.copy(current_item)
           group_quiz.data.inclass_title = 'Group'
           group_quiz.data.background = "#43AC6A"
-          quiz_index = ++item_index
-          $scope.filtered_timeline_items.splice(quiz_index, 0, group_quiz);
+          $scope.filtered_timeline_items.splice(++item_index, 0, group_quiz);
+
+          var discussion = angular.copy(current_item)
+
+          discussion.data.inclass_title = 'Discussion'
+          discussion.data.background = "darkorange"
+          discussion.data.color = "white"
+          $scope.filtered_timeline_items.splice(++item_index, 0, discussion);
+          if(current_item.data.time < current_item.data.end_time){
+            var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time } }
+            $scope.filtered_timeline_items.splice($scope.filtered_timeline_items.length, 0, end_item);
+          }
           continue;
-        }
-        if (quiz_index == item_index - 1) {
-          current_item.data.inclass_title = 'Discussion'
-        }
-        if (item_index > quiz_index) {
-          current_item.data.background = "darkorange"
-          current_item.data.color = "white"
         }
       }
       $scope.filtered_timeline_items[0].data.inclass_title = "Intro"

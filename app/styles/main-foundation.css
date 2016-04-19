@@ -225,7 +225,10 @@ li{
   text-align: left !important;
   /*padding: 2px !important;*/
   margin: 0px 0px 0px 0px !important;
-  cursor: pointer !important;
+}
+
+.accordion-group .content > li{
+  cursor: pointer;
 }
 /*.accordion-group .content > ul:hover, .currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;

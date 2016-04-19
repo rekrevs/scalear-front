@@ -392,7 +392,6 @@ angular.module('scalearAngularApp')
     }
 
     var setupInclassQuiz = function(sub_items) {
-      var quiz_index
       var timers
       for (var item_index = 0; item_index < sub_items.length; item_index++) {
         var current_item = sub_items[item_index]
@@ -407,29 +406,29 @@ angular.module('scalearAngularApp')
           current_item.data.timer = timers.self
 
           var start_item = { time: current_item.data.start_time, type: 'marker', data: { time: current_item.data.start_time, status: 1 } }
-          var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }
           sub_items.splice(0, 0, start_item);
           item_index++
-          sub_items.splice(sub_items.length, 0, end_item);
 
           var group_quiz = angular.copy(current_item)
           group_quiz.data.inclass_title = 'Group'
           group_quiz.data.status = 3
           group_quiz.data.background = "#43AC6A"
           group_quiz.data.timer = timers.in_group
-          quiz_index = ++item_index
-          sub_items.splice(quiz_index, 0, group_quiz);
+          sub_items.splice(++item_index, 0, group_quiz);
+
+          var discussion = angular.copy(current_item)
+          discussion.data.inclass_title = 'Discussion'
+          discussion.data.status = 4
+          discussion.data.background = "darkorange"
+          discussion.data.color = "white"
+          discussion.data.timer = timers.discussion
+          sub_items.splice(++item_index, 0, discussion);
+
+          if(current_item.time < current_item.data.end_time){
+            var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }
+            sub_items.splice(sub_items.length, 0, end_item);
+          }
           continue;
-        }
-        if (quiz_index == item_index - 1) {
-          current_item.data.inclass_title = 'Discussion'
-          console.log(current_item)
-          current_item.data.timer = timers.discussion
-          current_item.data.status = 4
-        }
-        if (item_index > quiz_index) {
-          current_item.data.background = "darkorange"
-          current_item.data.color = "white"
         }
       }
       sub_items[0].data.inclass_title = "Intro"
@@ -1022,19 +1021,19 @@ angular.module('scalearAngularApp')
       }
     }
 
-    var StageTimerCountdown = function(argument) {
+    var StageTimerCountdown = function() {
       ($scope.stage_counter == 0) ? cancelStageTimer(): $scope.stage_counter--;
     }
 
-    $scope.toggleStageTimer = function(argument) {
+    $scope.toggleStageTimer = function() {
       (!$scope.stage_timer) ? startStageTimer(): cancelStageTimer()
     }
 
-    var startStageTimer = function(argument) {
+    var startStageTimer = function() {
       $scope.stage_timer = $interval(StageTimerCountdown, 1000);
     }
 
-    var cancelStageTimer = function(argument) {
+    var cancelStageTimer = function() {
       if ($scope.stage_timer) {
         $interval.cancel($scope.stage_timer);
         $scope.stage_timer = null

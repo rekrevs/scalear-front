@@ -941,6 +941,7 @@ angular.module('scalearAngularApp')
       $timeout(function() {
         $scope.adjustTextSize()
       })
+      $(window).resize()
     }
 
     $scope.hideQuestionBox = function() {
@@ -948,6 +949,7 @@ angular.module('scalearAngularApp')
       $scope.hide_text =  $scope.button_names[4]
       $scope.video_class = 'zoom_video'
       $scope.blurButtons()
+      $(window).resize()
     }
 
     var changeButtonsSize = function() {

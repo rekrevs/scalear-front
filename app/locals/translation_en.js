@@ -264,6 +264,7 @@ var translation_en={
     link: "Website",
     security: "Security",
     online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
+    avatar_comment: 'You can change your account image on ',
     school_email :"School Email",
     sign_up: "Sign up",
     sign_in: "Sign in",

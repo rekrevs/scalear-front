@@ -232,6 +232,17 @@ angular.module('scalearAngularApp')
         reverseSize(drag_elem)
       }
 
+      scope.convertPositionToPercent=function (event, ui) {
+        var drag_elem = angular.element(ui.helper[0])
+        var ontop = angular.element('.ontop');
+        var left = drag_elem.position().left
+        var top  = drag_elem.position().top
+        drag_elem.css({
+          'left':(left/ontop.width())*100 + '%',
+          'top': (top/ontop.height())*100 + '%'
+        })
+      }
+
       scope.adjustDrag=function(event, ui){
         var drag_elem = angular.element(ui.helper[0])
         var ontop = angular.element('.ontop');

@@ -729,6 +729,7 @@ angular.module('scalearAngularApp')
 
       var unwatchMute = scope.$watch("volume", function() {
         if (scope.volume) {
+          $cookieStore.put('volume', scope.volume)
           if (scope.volume != 0) {
             if (scope.volume_class == "unmute")
               scope.player.controls.unmute();
@@ -743,12 +744,14 @@ angular.module('scalearAngularApp')
         scope.player.controls.mute();
         scope.volume_class = "unmute";
         scope.volume = 0;
+        $cookieStore.put('volume', scope.volume)
       }
 
       scope.unmute = function() {
         scope.player.controls.unmute();
         scope.volume_class = "mute";
         scope.volume = 0.8;
+        $cookieStore.put('volume', scope.volume)
       }
 
       scope.progressSeek = function(event) {
@@ -985,6 +988,7 @@ angular.module('scalearAngularApp')
       if (scope.player.controls.youtube) {
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
+        scope.volume = $cookieStore.get('volume') || 0.8
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
 
@@ -994,6 +998,7 @@ angular.module('scalearAngularApp')
       } else {
         scope.speeds = [0.8, 1, 1.2, 1.5, 1.8]
         scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+        scope.volume = $cookieStore.get('volume') || 0.8
         scope.qualities = ["auto"]
         scope.chosen_quality = scope.qualities[0]
           // scope.setQuality(scope.chosen_quality)

@@ -977,7 +977,8 @@ angular.module('scalearAngularApp')
       })
 
       player.on('playing', function() {
-        scope.chosen_quality = scope.player.controls.getQuality()
+        if (scope.player.controls.youtube)
+          scope.chosen_quality = scope.player.controls.getQuality()
         scope.play_class = "pause";
         scope.$apply()
       })
@@ -991,6 +992,7 @@ angular.module('scalearAngularApp')
         $timeout(function() {
           scope.qualities = scope.player.controls.getAvailableQuality().reverse()
         }, 2000)
+        scope.setQuality(scope.chosen_quality)
       } else {
         scope.speeds = [0.8, 1, 1.2, 1.5, 1.8]
         scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
@@ -999,7 +1001,6 @@ angular.module('scalearAngularApp')
           // scope.setQuality(scope.chosen_quality)
       }
 
-      scope.setQuality(scope.chosen_quality)
       scope.setSpeed(scope.chosen_speed)
 
 

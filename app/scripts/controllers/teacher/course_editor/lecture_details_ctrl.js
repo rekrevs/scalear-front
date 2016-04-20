@@ -185,16 +185,20 @@ angular.module('scalearAngularApp')
                     $scope.lecture.end_time = $scope.lecture.duration
                     $scope.updateLecture();
                     $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
+                    checkToTrim()
                 })
             }
             else{
+              var video = $('video')
+              video.bind('loadeddata', function(e) {
                 $log.debug('type not initialized')
                 $scope.lecture.start_time = 0
-                $scope.lecture.end_time = $scope.lecture.duration
+                $scope.lecture.end_time = e.target.duration || 0
                 $scope.updateLecture();
                 $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
+              });
             }
-            checkToTrim()
+
             // startTrimVideo()
         }
         else

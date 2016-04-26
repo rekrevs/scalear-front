@@ -98,6 +98,9 @@
                     <small translate>courses.information.discussion_forum_link</small>
                     <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
                 </div>
+                <div>
+                    <label><input type="checkbox" ng-model="email_due_date" ng-change="updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></label>
+                </div>
             </div>
         </div>
     </div>    

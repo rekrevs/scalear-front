@@ -14,6 +14,11 @@ angular.module('scalearAngularApp')
                     $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
             }
         )
+        Course.getStudentDueDateEmail({course_id: $stateParams.course_id},
+            function(data){
+                $scope.email_due_date = data.email_due_date
+            }
+        )
         getAnnouncements()
     }
 
@@ -40,6 +45,13 @@ angular.module('scalearAngularApp')
         var start_chunk = shortString(link, chunk_length, false);
         var end_chunk = shortString(link, chunk_length, true);
         return start_chunk + ".." + end_chunk;
+    }
+
+    $scope.updateStudentDueDateEmail = function(email_due_date){
+        Course.updateStudentDueDateEmail(
+          {course_id:$stateParams.course_id},
+          {email_due_date:email_due_date}
+        );
     }
 
     var shortString = function(s, l, reverse){

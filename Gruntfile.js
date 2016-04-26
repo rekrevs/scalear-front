@@ -400,7 +400,13 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    configFile: "referenceConf.js", // Target-specific config file
+                    configFile: "referenceConf-dev.js", // Target-specific config file
+                    args: {} // Target-specific arguments
+                }
+            },
+            staging: {
+                options: {
+                    configFile: "referenceConf-staging.js", // Target-specific config file
                     args: {} // Target-specific arguments
                 }
             },

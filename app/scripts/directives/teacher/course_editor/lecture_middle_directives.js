@@ -318,7 +318,8 @@ angular.module('scalearAngularApp')
           "<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>" +
           "<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>" +
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
-          "<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>button.save_close</span></button>" +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
+          '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
           "</form>"
         else
           template = "<form name='aform' >" +
@@ -363,7 +364,7 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       template: "<div>" +
         "<div class='component dropped answer_drag' style='border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 20px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
-        "<div>" +
+        "<div >" +
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
         "<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'>{{data.answer}}</h6>" +
         "</div>" +
@@ -421,6 +422,12 @@ angular.module('scalearAngularApp')
             ans.explanation[scope.data.pos] = ""
         })
 
+        scope.close = function() {
+          scope.save()
+          console.log(element)
+          angular.element(element.find('h6')).popover('hide')
+        }
+
 
         var template = '<ul class="no-margin">' +
           '<label>' +
@@ -435,7 +442,7 @@ angular.module('scalearAngularApp')
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
           '<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
-          "<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>" +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>' +
           '</ul>'
 
@@ -446,7 +453,8 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id
+          instant_show: !scope.data.id,
+          container: 'body'
         }
 
         angular.element(element.children()[0]).resizable({

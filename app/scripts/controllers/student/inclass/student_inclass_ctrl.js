@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
             $scope.group_quiz.in_group = true
             $scope.lecture = data.lecture
             $('.answer_choices input').attr('type', $scope.quiz.question_type == "MCQ" ? "checkbox" : "radio")
-            var force_state_to
+            // var force_state_to
             if (self_answers.length > 0) {
               self_answers.forEach(function(answer) {
                 var filtered_answers = $scope.quiz.answers.filter(function(a) {
@@ -37,8 +37,8 @@ angular.module('scalearAngularApp')
                 if(filtered_answers.length)
                   filtered_answers[0].selected = true
               })
-              if (data.status == 2)
-                force_state_to = "self_answered"
+              // if (data.status == 2)
+              //   force_state_to = "self_answered"
             }
             if (group_answers.length > 0) {
               group_answers.forEach(function(answer) {
@@ -48,14 +48,14 @@ angular.module('scalearAngularApp')
                 if(filtered_answers.length)
                   filtered_answers[0].selected = true
               })
-              if (data.status == 3)
-                force_state_to = "group_answered"
+              // if (data.status == 3)
+              //   force_state_to = "group_answered"
             }
           }
 
           if ($scope.inclass_status != data.status) {
             $scope.inclass_status = data.status
-            WizardHandler.wizard().goTo(force_state_to || states[$scope.inclass_status])
+            WizardHandler.wizard().goTo(states[$scope.inclass_status]) //force_state_to ||
           } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
             $scope.show_wait = true
             $timeout(function() {

@@ -79,10 +79,13 @@ angular.module('scalearAngularApp')
     });
   }
 
-
-
   $scope.join=function(){
-    $state.go("signup",  { input1 : $scope.user.email, input2: $scope.user.password})
+    User.userExist(
+    {email: $scope.user.email},
+    function (resp) {
+      $state.go("signup",  { input1 : $scope.user.email, input2: $scope.user.password})
+    })
+
   }
 
   var next=function(user){

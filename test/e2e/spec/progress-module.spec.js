@@ -361,7 +361,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 3
 					refresh()
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1')
+					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('2')
 				})
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(2).quiz(1).show_inclass_click()

@@ -190,20 +190,38 @@ angular.module('scalearAngularApp')
         });
 
         var maker_enter_tab_click = function() {
+
           if($("input.marker_name").is(':focus')){
+            console.log("1")
             $("input.marker_annotation").focus()  
           }
           else if($("input.marker_annotation").is(':focus')){
+            console.log("2")
            $("input.marker_time").focus()  
           }
+          else if($("input.marker_time").is(':focus')){
+            console.log("3")
+           $("#save_marker_button").focus()  
+          }
+          else if($("#save_marker_button").is(':focus')){
+            console.log("4")
+           $("#save_marker_button").click()  
+          }
         }
-
+        var removeShortcuts=function(){
+          shortcut.remove("Enter");
+          shortcut.remove("Tab");
+        }
         shortcut.add("Enter", function(){
           maker_enter_tab_click()
         }, {"disable_in_input" : false});      
         shortcut.add("Tab", function(){
           maker_enter_tab_click()
         }, {"disable_in_input" : false});    
+        scope.$on('$destroy', function() {
+          console.log("destroy");
+          removeShortcuts()
+        });
       }
     };
   }])

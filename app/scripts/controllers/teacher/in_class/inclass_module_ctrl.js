@@ -556,6 +556,7 @@ angular.module('scalearAngularApp')
     $scope.skipToItem = function(module_item, timeline_item, type) {
       $scope.item_itr = $scope.module.items.indexOf(module_item)//module_item
       $scope.selected_item = module_item//$scope.module.items[$scope.item_itr]
+
       if(!timeline_item){
         $scope.timeline_itr = 0
         $scope.nextItem()

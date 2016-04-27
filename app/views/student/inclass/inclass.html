@@ -213,7 +213,7 @@ ul.connected_blocks {
       <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
           <div class="small-4 columns no-padding-right">
-            <button class="button expand secondary no-margin" wz-previous>Retry</button>
+            <button class="button expand secondary no-margin" ng-click="retry('self')">Retry</button>
           </div>
           <div class="small-8 columns" style="padding:0;padding-left:5px">
             <button class="button expand no-margin" ng-disabled="loading" ng-click="getInclassStudentStatus()">Next</button>
@@ -223,7 +223,7 @@ ul.connected_blocks {
       <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
-          <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
+          <alert ng-show="wait_alert_message" type="'secondary'">{{wait_alert_message}}</alert>
         </div>
       </div>
     </wz-step>
@@ -282,7 +282,7 @@ ul.connected_blocks {
       <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
           <div class="small-4 columns no-padding">
-            <button class="button expand secondary no-margin" wz-previous>Retry</button>
+            <button class="button expand secondary no-margin" ng-click="retry('group')">Retry</button>
           </div>
           <div class="small-8 columns" style="padding:0;padding-left:5px">
             <button class="button expand success no-margin" ng-disabled="loading" ng-click="getInclassStudentStatus()">Next</button>
@@ -292,7 +292,7 @@ ul.connected_blocks {
       <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
-          <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
+          <alert ng-show="wait_alert_message" type="'secondary'">{{wait_alert_message}}</alert>
         </div>
       </div>
     </wz-step>

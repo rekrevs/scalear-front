@@ -407,6 +407,13 @@
     z-index: 1006;
 }
 
+#content_list li {
+    font-size: 10px;
+}
+#content_list li.active {
+    background: rgba(128, 128, 128, 0.29)
+}
+
 @media (max-width: 1024px) {
 	.module-title{
 		margin-left: 10px;

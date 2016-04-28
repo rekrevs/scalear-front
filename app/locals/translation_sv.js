@@ -533,7 +533,7 @@ var translation_sv={
         click_or_type_confused: "Klicka eller skriv C för att säga att du är förvirrad",
         click_or_type_fullscreen: "Klicka eller skriv F för att gå till helskärmsläge",
         click_or_type_smallscreen: "Klicka eller skriv F för att gå ur helskärmsläge",
-        video_shortcut: "Type J for rewind 10s OR K for play/pause OR L for fast forward 10s(t)",
+        video_shortcut: "press J to rewind 10s or K for play/pause or L for fast forward 10s(t)",
     },
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",

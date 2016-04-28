@@ -533,7 +533,7 @@ var translation_en={
         click_or_type_confused: "Click or type C to say confused",
         click_or_type_fullscreen: "Click or type F to enter fullscreen",
         click_or_type_smallscreen: "Click or type F to enter smallscreen",
-        video_shortcut: "Type J for rewind 10s OR K for play/pause OR L for fast forward 10s",
+        video_shortcut: "press J to rewind 10s or K for play/pause or L for fast forward 10s",
     },
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",

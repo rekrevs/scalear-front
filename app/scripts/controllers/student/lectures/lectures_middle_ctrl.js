@@ -68,7 +68,7 @@ angular.module('scalearAngularApp')
         $scope.show_progressbar = false
         $scope.quiz_percentage =  "0 / 0 "
         $scope.watched_percentage = 0
-        $scope.play_pause_flag = 0
+        // $scope.play_pause_flag = 0
         removeShortcuts()
     }
 
@@ -473,8 +473,9 @@ angular.module('scalearAngularApp')
         $scope.seek(time-10)
     }
     $scope.play_pause=function(){
-        $scope.play_pause_flag? $scope.lecture_player.controls.play() : $scope.lecture_player.controls.pause()
-        $scope.play_pause_flag? $scope.play_pause_flag = 0 : $scope.play_pause_flag = 1
+        $scope.lecture_player.controls.paused()? $scope.lecture_player.controls.play() : $scope.lecture_player.controls.pause()
+        // $scope.play_pause_flag? $scope.play_pause_flag = 0 : $scope.play_pause_flag = 1
+
     }
 
     $scope.fast_forward=function(){

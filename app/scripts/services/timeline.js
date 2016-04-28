@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
       }
       this.getItemsBetweenTimeByType = function(start_time, end_time, type) {
         return this.filterByType(type).filter(function(item, index) {
-          return (item.time >= start_time && item.time <= end_time && index > 0)
+          return (item.time >= start_time && item.time <= end_time)
         }).sort(function(a, b) {
           return a.time - b.time
         });

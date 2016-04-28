@@ -1,10 +1,10 @@
 <div bindonce id="student-accordion" ng-class="{
-'land-height medium-height-small large-height-big small-height-big portrait-medium-height':delayed_timeline_open, 
+'land-height medium-height-small large-height-big small-height-big portrait-medium-height':delayed_timeline_open,
 'no-height': !delayed_timeline_open,
 'land-medium-12':ContentNavigator.status,
 'land-medium-4':!ContentNavigator.status
-}" class="student_timeline lightgrey timeline_container ease_in_out large-5 small-12  portrait-medium-12 columns no-padding-right portrait-no-padding no-padding-left">    
-    <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id'> 
+}" class="student_timeline lightgrey timeline_container ease_in_out large-5 small-12  portrait-medium-12 columns no-padding-right portrait-no-padding no-padding-left">
+    <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id' ng-if="!(!(l.appearance_time | visible) && l.inclass)">
         <span bo-if="l.class_name =='lecture'">
             <h5  ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id, 'light-grey-hover':l.id != lecture.id }" style="cursor:pointer; margin: 0px;padding-left:15px" class="truncate">
                 <b bo-text="l.name"></b>
@@ -21,7 +21,7 @@
                         <a bo-href="l.slides | formatURL" style="word-wrap: break-word;" bo-text="l.slides | formatURL"></a>
                     </p>
                 </span>
-            </div>            
+            </div>
             <table class="table table-striped no-border no-margin" style="border-spacing: 0.1em; width: 100%;" ng-repeat="item in timeline[l.id].items | filter:filterType">
                 <tbody class="with-small-padding-left" name="quiz-timeline-item" quiz_timeline bo-if="item.type=='quiz'" data='item' seek='seek()' bo-id='"quiz_"+item.data.id' />
                 <tbody class="with-small-padding-left lightgrey-with-hover" name="confused-timeline-item" confused_timeline bo-if="item.type=='confused'" data='item' seek='seek()' bo-id='"confused_"+item.data.id' />

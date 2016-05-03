@@ -1,95 +1,176 @@
-<div ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" screenfull active="fullscreen" >
-    <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen" >
-                <center>
-                    <b style="position: absolute;top: 95%;left: 40%;"><span>{{blackscreen_msg | translate}}</span></b>
-                </center>
-            </div>
+<style>
+#content_list li {
+    font-size: 10px;
+}
+</style>
+<div ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" screenfull active="fullscreen">
+    <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen">
+        <center>
+            <b style="position: absolute;top: 95%;left: 40%;"><span>{{blackscreen_msg | translate}}</span></b>
+        </center>
+    </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <span class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
-        <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px" >
+        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray;width:44%;">{{selected_item.name}}<span ng-if="selected_timeline_item.type == 'primary_marker'">: {{selected_timeline_item.data.title}}</span></div>
+        <div ng-show="(inclass_session == 1 || inclass_session >= 4) && selected_timeline_item.type=='inclass'" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
+            <div >{{stage_counter | format}}</div>
+        </div>
+        <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px">
             <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="button reall-tiny secondary"><i ng-class="play_pause_class" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="button reall-tiny secondary"><i ng-class="mute_class" /></button>
             <button ng-class="button_class+' '+dark_buttons+' '+quality_set" ng-click="qualityBtn()" class="button reall-tiny secondary" style="font-weight:bolder">HD</button>
         </div>
     </div>
-    <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;" >
-        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;background:black" >
-            <div class="inclass_sceen" ng-class="video_class"  >
-                <div class="ontop inclass_sceen" style="position:absolute"></div>
-                <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
-                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
+    <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;">
+        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;background:black;z-index: 0;">
+            <div class="inclass_sceen" ng-class="video_class">
+                <youtube class="widescreen inclass_sceen" id="inclass_video" url="lecture_url" player="inclass_player" start="selected_item.start_time" end="selected_item.end_time">
+                    <quiz ng-style="quiz_layer" style="z-index: 1;">
+                        <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type == 'html' && (inclass_session == 2 || inclass_session == 3)">
+                            <student-answer-form submitted="submitted" quiz="selected_timeline_item.data" student-answers="studentAnswers" />
+                        </div>
+                        <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type != 'html' && (inclass_session == 2 || inclass_session == 3)  ">
+                            <student-answer-video ng-repeat="choice in selected_timeline_item.data.online_answers" data="choice" quiz="selected_timeline_item.data" student-answers="studentAnswers" />
+                        </div>
+                    </quiz>
+                </youtube>
+                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1" />
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
-                <div>
-                    <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                        <div >{{selected_timeline_item.data.type}}:</div>
-                        <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
-                    </div>
+            <div>
+                <ul class="inclass_connected_circles connected_circles">
+                    <li style="display:none"></li>
+                    <span ng-repeat="item in selected_timeline_item.sub_items">
+                        <li ng-if="!item.data.inclass_title" class="small_circles size-20" ng-class="{'active': item == selected_timeline_sub_item}" ng-style="{'background': item.data.background, 'color':item.data.color}"></li>
+                        <li ng-if="item.data.inclass_title" ng-class="{'active': item == selected_timeline_sub_item }" class="size-20" ng-style="{'background': item.data.background, 'color':item.data.color}">{{item.data.inclass_title}}</li>
+                    </span>
+                </ul>
+            </div>
+            <div ng-show="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')" ng-class="question_block">
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
+                    <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
                 </div>
-                <div ng-show="chart" ng-class="chart_class">
-                    <div google-chart chart="chart" ></div>
+                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
+                    <loading size="small" show="loading_chart" />
+                    <div google-chart chart="chart" on-ready="chartReady()"></div>
+                </div>
+                <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="original_chart">
+                    <center>{{stage_counter | format}}</center>
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                        <div >Question:</div>
-                        <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" style="padding-left:5px;"><span>{{question.post.content}}</span><span class="color-dark-grey" ng-repeat="comment in question.post.comments" ><br /><i style="padding-left:15px">{{comment.comment.content}}</i></span></div>
+                        <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
+                            <span>{{question.post.content}}</span>
+                            <span class="color-dark-grey" ng-repeat="comment in question.post.comments" ng-show="comment.comment.hide"><br />
+                                <i style="padding-left:15px">{{comment.comment.content}}</i>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                        <div >{{selected_timeline_item.data.type}}:</div>
-                        <div style="padding-left:5px;"><span>{{selected_timeline_item.data.title}}</span><span class="color-dark-grey" ng-repeat="answer in selected_timeline_item.data.answers" ><br /><i style="padding-left:5px">{{answer.online_answer}}</i></span></div>
+                        <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
+                        <div style="padding-left:5px;">
+                            <span>{{selected_timeline_item.data.title}}</span>
+                            <span class="color-dark-grey" ng-repeat="answer in selected_timeline_item.data.answers" ng-show="answer.hide">
+                                <br />
+                                <i style="padding-left:5px">{{answer.online_answer}}</i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="!hide_questions && selected_timeline_item.type == 'primary_marker'" ng-class="question_block">
+                <div>
+                    <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
+                        <div style="padding-left:5px;">
+                            <span>{{selected_timeline_item.data.title}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow: auto;">
             <div style="background:white;">
                 <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;">{{selected_timeline_item.data.title}}</div>
                 <div ng-if="selected_timeline_item.type == 'charts'">
-                    <div google-chart chart="chart" ></div>
+                    <div google-chart chart="chart"></div>
                 </div>
                 <div ng-if="selected_timeline_item.type == 'Free Text Question'" style="padding-left:30px">
                     <ul style="padding:5px;color:black;font-weight:normal">
                         <li ng-repeat="question in selected_timeline_item.data.answers" style="list-style: disc;">
                             <p style="font-size:20px; margin:0">{{question.answer}}</p>
-                            <i ng-show="question.response" style="padding-left: 30px;color: steelblue;font-size:20px">{{question.response}}</i>
+                            <i ng-show="question.response" style="padding-left: 30px;
+                            color:steelblue;font-size:20px">{{question.response}}</i>
                         </li>
-                    </ul>               
+                    </ul>
                 </div>
                 <hr>
             </div>
         </div>
     </div>
-
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;left:0">
         <div class="bottom-left left">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()" class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
         </div>
-        <div class="bottom-middle">           
-            <button ng-class="button_class" ng-click="prevQuiz()" class="button reall-tiny secondary" ><i class="fi-previous" /></button>
-             <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
+        <div class="bottom-middle">
+            <button ng-class="button_class" ng-click="prevSubItem()" class="button reall-tiny secondary"><i class="fi-previous" /></button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <span>{{button_names[5]}} </span><i class="fi-rewind" />
             </button>
-             <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
+            <button ng-class="button_class+' '+dark_buttons" class="button reall-tiny secondary drop-top" style="padding: 3px 10px;" dropdown-toggle="#content_list">
+                <i class="fi-list-bullet" />
+            </button>
+            <ul id="content_list" class="f-dropdown text-left" style="overflow:auto;margin-top: -275px;height: 250px;max-width: 300px;padding: 12px;">
+                <div ng-repeat="module_item in module.items">
+                    <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="skipToItem(module_item)">
+                        <div>{{module_item.name}} {{module_item.show}}</div>
+                    </a>
+                    <div ng-if="module_item.class_name=='lecture'">
+                        <li ng-repeat="item in timeline['lecture'][module_item.id]['filtered'].items|inclassMenuFilter" ng-click="skipToItem(module_item, item, 'lecture')" >
+                            <div ng-if="item.type=='discussion'">
+                                <b translate>inclass.discussion</b>:
+                                <div ng-if="item.data.length == 1">
+                                    <div style="padding: 0 5px;">{{item.data[0].post.content}}</div>
+                                </div>
+                                <ol ng-if="item.data.length > 1">
+                                    <li ng-repeat="discussion in item.data|filter:{'post.hide':true}">
+                                        <div style="padding: 0 5px;">{{discussion.post.content}}</div>
+                                    </li>
+                                </ol>
+                            </div>
+                            <div ng-if="item.type!='discussion'">
+                                <div style="padding: 0 5px;">
+                                    <b>{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
+                                    {{item.data.title}}
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                    <div ng-if="module_item.class_name=='quiz'">
+                        <li ng-repeat="item in timeline['survey'][module_item.id]['filtered'].items|filter:{'data':'!!'}" ng-click="skipToItem(module_item, item, 'survey')">
+                            <div style="padding: 0 5px;">
+                                <b><span translate>inclass.survey</span>:</b>
+                                {{item.data.title}}
+                            </div>
+                        </li>
+                    </div>
+                </div>
+            </ul>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <i class="fi-fast-forward" /><span> {{button_names[5]}}</span>
             </button>
-            <button ng-class="button_class" ng-click="nextQuiz()" class="button reall-tiny secondary" ><i class="fi-next" /></button>          
+            <button ng-class="button_class" ng-click="nextSubItem()" class="button reall-tiny secondary"><i class="fi-next" /></button>
         </div>
         <div class="bottom-right no-padding-top right">
-            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button> 
-            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[6]}}</span></button>
-            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished"; ng-click="togglePause()"><span translate>{{button_names[7]}}</span></button>
-            <span ng-hide="selected_item.class_name=='quiz'" >
+            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button>
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished" ; ng-click="togglePause()"><span translate>{{button_names[6]}}</span></button>
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished" ; ng-click="togglePause()"><span translate>{{button_names[7]}}</span></button>
+            <span ng-hide="selected_item.class_name=='quiz'">
                 <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" class="button reall-tiny secondary">{{hide_text}}</button>
             </span>
         </div>
     </div>
-</div>
-<div class="large-12 left row">
 </div>

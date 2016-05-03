@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator','scalear_api',function($scope, $timeout, $state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate, $cookieStore, Course, ScalTour, ContentNavigator, scalear_api) {
+    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator','scalear_api','MobileDetector',function($scope, $timeout, $state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate, $cookieStore, Course, ScalTour, ContentNavigator, scalear_api, MobileDetector) {
 
             FastClick.attach(document.body);
             $scope.Page = Page;
@@ -63,16 +63,16 @@ angular.module('scalearAngularApp')
             }
             
 
-            var isMobile=function(){
-                var iOS = false,
-                    iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-                for ( var i = 0; i < iDevice.length ; i++ ) {
-                    if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-                }
-                return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-            }
+            // var isMobile=function(){
+            //     var iOS = false,
+            //         iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+            //     for ( var i = 0; i < iDevice.length ; i++ ) {
+            //         if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+            //     }
+            //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+            // }
 
-            $rootScope.is_mobile= isMobile()
+            $rootScope.is_mobile= MobileDetector.isMobile()
             $scope.changeLanguage($translate.uses());
             getCurrentCourses()
 

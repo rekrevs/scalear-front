@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
       deletecourse: '=',
       filterteacher: '='
     },
-    templateUrl: '/views/teacher_course_item.html',
+    templateUrl: '/views/teacher/course_list/teacher_course_item.html',
     link: function(scope){}
   };
 }]).directive('courseItem', ['ErrorHandler',function(ErrorHandler) {
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
       teachers: '=',
       unenroll:'='
     },
-    templateUrl: '/views/courseItem.html',
+    templateUrl: '/views/student/course_list/student_course_item.html',
     link: function(scope){}
   };
 }]).directive('userItem', ['ErrorHandler',function(ErrorHandler) {
@@ -210,7 +210,7 @@ angular.module('scalearAngularApp')
            $('#enrollment_message, #enrollment_message li').children().animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
         }
         $modal.open({
-            templateUrl: '/views/modals/help_enroll.html',
+            templateUrl: '/views/teacher/course/help_enroll.html',
             scope: scope
         })
       }

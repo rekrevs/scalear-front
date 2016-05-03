@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
 		scope: {
 			module: "&"
 		},
-		templateUrl: "/views/module_progress_check.html",
+		templateUrl: "/views/student/lectures/module_progress_check.html",
 		link: function(scope, element){
 			var total = scope.module().items.filter(function(item){return item.graded}).length
 			var optional = (total==0)

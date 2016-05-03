@@ -31,7 +31,10 @@ Module.prototype = Object.create({}, {
 		this.field.element(by.className('delete')).click()
 		this.field.element(by.className('alert')).click()
 		sleep(1000);
-		element(by.className('delete_confirm')).click()		
+
+		// element(by.className('delete_confirm')).click()		
+element(by.css('[ng-click="action({event:$event});showDeletePopup(false, $event)"]'))
+		// element(by.buttonText("Delete")).click()		
 	}},
 	copy:{value:function(){
 		right_click(this.name_field)

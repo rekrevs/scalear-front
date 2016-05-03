@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
         },
         link:function(scope,element,attrs){
             scope.preview_as_student = $rootScope.preview_as_student
+            scope.ask_button_clicked = false
             scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
             scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
             $('.text_block').focus();
@@ -25,7 +26,7 @@ angular.module('scalearAngularApp')
                         $rootScope.current_user.discussion_pref = scope.privacy.value;                                
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
-
+                    scope.ask_button_clicked = true
                     Forum.createPost(
                         {post: 
                             {

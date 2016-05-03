@@ -988,7 +988,12 @@ angular.module('scalearAngularApp')
       if (scope.player.controls.youtube) {
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-        scope.volume = $cookieStore.get('volume') || 0.8
+        if ($cookieStore.get('volume') != null){
+          scope.volume = $cookieStore.get('volume') 
+        }
+        else{
+          scope.volume =  0.8 
+        }
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
 

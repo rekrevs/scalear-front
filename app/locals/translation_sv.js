@@ -234,7 +234,6 @@ var translation_sv={
     no_access: "I can't access my account(t)",
     question_before_sign: "I have a question before I sign up(t)",
     request_feature: "I want to request a feature(t)",
-    billing_question: "I have a billing question(t)",
     no_email: "I'm not receiving emails(t)",
     confused: "I'm confused about how something works(t)",
     bug: "I think something is broken(t)",

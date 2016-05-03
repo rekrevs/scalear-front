@@ -234,7 +234,6 @@ var translation_en={
     no_access: "I can't access my account",
     question_before_sign: "I have a question before I sign up",
     request_feature: "I want to request a feature",
-    billing_question: "I have a billing question",
     no_email: "I'm not receiving emails",
     confused: "I'm confused about how something works",
     bug: "I think something is broken",

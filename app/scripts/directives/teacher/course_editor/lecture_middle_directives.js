@@ -180,7 +180,7 @@ angular.module('scalearAngularApp')
         '<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>' +
         '</div>' +
         '</div>' +
-        '<delete_button size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
+        '<delete_button id="delete_marker_button" size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
         '<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>' +
         '</h6>' +
         '</div>',
@@ -189,23 +189,24 @@ angular.module('scalearAngularApp')
           element.find('.marker_name').select();
         });
 
-        var maker_enter_tab_click = function() {
+        var maker_enter_tab_click = function(tab_enter) {
 
           if($("input.marker_name").is(':focus')){
-            console.log("1")
             $("input.marker_annotation").focus()  
           }
           else if($("input.marker_annotation").is(':focus')){
-            console.log("2")
            $("input.marker_time").focus()  
           }
           else if($("input.marker_time").is(':focus')){
-            console.log("3")
            $("#save_marker_button").focus()  
           }
           else if($("#save_marker_button").is(':focus')){
-            console.log("4")
-           $("#save_marker_button").click()  
+            if(tab_enter == 'enter'){
+             $("#save_marker_button").click()  
+            }
+            else{
+              $("#delete_marker_button").find('a').focus()
+            }
           }
         }
         var removeShortcuts=function(){
@@ -213,10 +214,10 @@ angular.module('scalearAngularApp')
           shortcut.remove("Tab");
         }
         shortcut.add("Enter", function(){
-          maker_enter_tab_click()
+          maker_enter_tab_click("enter")
         }, {"disable_in_input" : false});      
         shortcut.add("Tab", function(){
-          maker_enter_tab_click()
+          maker_enter_tab_click("tab")
         }, {"disable_in_input" : false});    
         scope.$on('$destroy', function() {
           console.log("destroy");

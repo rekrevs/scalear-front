@@ -1,17 +1,10 @@
 var params= {
     //local
     frontend: 'http://0.0.0.0:9000/#',
-    admin_mail: 'admin@scalear.com',
-    teacher_mail:  'teacher1@sharklasers.com',
-    teacher2_mail: 'teacher2@sharklasers.com',
-    teacher3_mail: 'teacher3@sharklasers.com',
-    student_mail:  'studenttest@sharklasers.com',
-    student2_mail: 'studenttest2@sharklasers.com',
-    student3_mail: 'studenttest3@sharklasers.com',
-    student4_mail: 'studenttest4@sharklasers.com',
-    student5_mail: 'studenttest5@sharklasers.com',
-    admin_password:"password",
-    password: 'password',
+     //staging
+    // frontend: 'http://scalear-staging2.herokuapp.com/#/',
+
+
     url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
     url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
     q_x:169,
@@ -19,17 +12,24 @@ var params= {
     q2_y:157,
     q3_y:187,
 
-    //staging
-    // frontend: 'http://staging.scalable-learning.com/#',
-    // admin_email: 'admin@scalable-learning.com',       
-    // teacher_mail: 'anyteacher@email.com',
-    // teacher2_mail: 'teacher2@sharklasers.com',
-    // teacher3_mail: 'teacher3@sharklasers.com',
-    // student_mail: 'student2@email.com',
-    // student_mail2: 'student3@email.com',
-    // student_mail3: 'student4@email.com',
-    // password: 'password',
-    // admin_password:"admin_account_password",
+
+    admin_email:   'admin@scalable-learning.com',
+    admin_password:"admin_account_password",
+
+    teacher_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    teacher3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student_mail:  Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student2_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    student3_mail: Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    password: 'password1234',
+
+
+    // guerrillamail_password: "password1234",
+    guerrillamail_url: "https://www.guerrillamail.com/inbox",
+    guerrillamail_first_name: "student",
+    guerrillamail_last_name: "4",
+    guerrillamail_sch_uni_name: "Nile University",
 
     short_name: "csc-test",
     course_name: "aesting course 100",
@@ -38,6 +38,33 @@ var params= {
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
     prerequisites: '1- course 1 2- course 2 3- course 3',
+
+
+    // teacher4_password: 'password1234',
+    //
+
+
+
+    // admin_mail: 'admin@scalear.com',
+    // teacher_mail:  'teacher1@sharklasers.com',
+    // teacher2_mail: 'teacher2@sharklasers.com',
+    // teacher3_mail: 'teacher3@sharklasers.com',
+    // student_mail:  'studenttest@sharklasers.com',
+    // student2_mail: 'studenttest2@sharklasers.com',
+    // student3_mail: 'studenttest3@sharklasers.com',
+    // student4_mail: 'studenttest4@sharklasers.com',
+    // student5_mail: 'studenttest5@sharklasers.com',
+    // admin_password:"password",
+    // password: 'password',
+     // teacher_mail:  'teacher1@email.com',
+    // teacher2_mail: 'teacher2@email.com',
+    // teacher3_mail: 'teacher3@email.com',
+    // student_mail:  'student1@email.com',
+    // student2_mail: 'student2@email.com',
+    // student3_mail: 'student3@email.com',
+    // student4_mail: 'student4@email.com',
+    // student5_mail: 'student5@email.com',
+    // password: 'password',
 }
 
 
@@ -119,37 +146,45 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js',
-        'test/e2e/spec/fill_course.spec.js',
-        'test/e2e/spec/course_information_validation.spec.js',
-        'test/e2e/spec/account_information_validation.spec.js',
-        'test/e2e/spec/enrollment_help.spec.js',
-        'test/e2e/spec/course_editor_basic.spec.js',
-        'test/e2e/spec/course_editor_copy.spec.js',
-        'test/e2e/spec/course_editor_sharing.spec.js',
-        'test/e2e/spec/module_statistics.spec.js',        
-        'test/e2e/spec/announcements.spec.js',
-        'test/e2e/spec/teacher-managment.spec.js',
-        'test/e2e/spec/students_solve_course.spec.js',
-        'test/e2e/spec/discussions.spec.js',
-        'test/e2e/spec/notes.spec.js',
-        // // 'test/e2e/spec/progress-module.spec.js'
-        'test/e2e/spec/delete_course.spec.js'
-   
-   //{{reviewed}}  
-        // 'test/e2e/spec/init-progress-data.spec.js', //  
-        // 'test/e2e/spec/account-info-validation.spec.js',//    
+        'test/e2e/spec/add_user.spec.js',  // Done
+        'test/e2e/spec/create_course.spec.js', // Done
+        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/course_information_validation.spec.js',// Done
+        // 'test/e2e/spec/account_information_validation.spec.js',// Done
+        // 'test/e2e/spec/enrollment_help.spec.js',// Done
+        // 'test/e2e/spec/course_editor_basic.spec.js',// Done
+        // 'test/e2e/spec/course_editor_copy.spec.sj',// Done
+        // 'test/e2e/spec/courcouse_editor_sharing.spec.js',// Done
+        // 'test/e2e/spec/module_statistics.spec.js', // Done
+        // 'test/e2e/spec/announcements.spec.js',  //
+        // 'test/e2e/spec/teacher-managment.spec.js',// Done
+        // 'test/e2e/spec/students_solve_course.spec.js', //Done
+        // 'test/e2e/spec/notes.spec.js',   //Done
+        // 'test/e2e/spec/discussions.spec.js',  //Done
+
+        // 'test/e2e/spec/progress-module.spec.js',
+        // 'test/e2e/spec/progress-completion-module.spec.js',
+        // 'test/e2e/spec/email_notification.spec.js',  // Done
+        // 'test/e2e/spec/validations.spec.js', //
+
+        'test/e2e/spec/delete_course.spec.js',
+        'test/e2e/spec/delete_user.spec.js',  // Done
+
+   //{{reviewed}}
+        // 'test/e2e/spec/init-progress-data.spec.js', //
+        // 'test/e2e/spec/account-info-validation.spec.js',//
+
         // 'test/e2e/spec/copying.spec.js', //
         // 'test/e2e/spec/course-editor-basic.spec.js', //
         // 'test/e2e/spec/create-announcements.spec.js', //
         // 'test/e2e/spec/dashboard.spec.js', //
         // 'test/e2e/spec/enrollment-help.spec.js', //
         // 'test/e2e/spec/module-statistics.spec.js'
-        // 'test/e2e/spec/discussions.spec.js', // 
-        // 'test/e2e/spec/notes.spec.js', //        
+        // 'test/e2e/spec/discussions.spec.js', //
+        // 'test/e2e/spec/notes.spec.js', //
         // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
         // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //       
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //
         // 'test/e2e/spec/normal-quiz.spec.js', //
         // 'test/e2e/spec/normal-survey.spec.js', //
         // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
@@ -159,14 +194,14 @@ exports.config = {
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
         // 'test/e2e/spec/sharing.spec.js',//
-        // 'test/e2e/spec/teacher-managment.spec.js', //        
-        // 'test/e2e/spec/student-lectures.spec.js', //  
+        // 'test/e2e/spec/teacher-managment.spec.js', //
+        // 'test/e2e/spec/student-lectures.spec.js', //
 
         // 'test/e2e/spec/timeline.spec.js',
         // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
         // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
         // 'test/e2e/spec/enrolled-students.spec.js',//
-        // 
+        //
         // 'test/e2e/spec/progress-main.spec.js', //
         // 'test/e2e/spec/progress-module.spec.js', //
         // 'test/e2e/spec/inclass.spec.js',
@@ -190,8 +225,8 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    // baseUrl: 'http://staging.scalable-learning.com/#',
-    baseUrl: 'http://0.0.0.0:9000/#',
+    // baseUrl: 'http://scalear-staging2.herokuapp.com/#',
+    baseUrl: params.frontend, //'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -205,9 +240,10 @@ exports.config = {
     onPrepare: function() {
         browser.driver.manage().window().maximize();
         browser.driver.get(params.frontend);
-        browser.driver.sleep(1000);
-        browser.driver.findElement(by.id('login')).click();
-        browser.driver.sleep(1000);
+        browser.driver.wait(function() {
+            return element(by.id('login')).isPresent()
+        }, 30000)
+        element(by.id('login')).click();
     },
 
     // The params object will be passed directly to the protractor instance,

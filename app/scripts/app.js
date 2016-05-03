@@ -27,7 +27,8 @@ angular.module('scalearAngularApp', [
     'dcbImgFallback',
     'ngClipboard',
     'ngTextTruncate',
-    'ngDialog'
+    'ngDialog',
+    'mgo-angular-wizard'
 ]).constant('headers', {
     withCredentials: true,
     'X-Requested-With': 'XMLHttpRequest'
@@ -57,7 +58,7 @@ angular.module('scalearAngularApp', [
     }
 
     $log.debug("lang is " + $rootScope.current_lang);
-    var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
+    var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing', 'signup']
     var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
     var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
     var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -234,6 +235,12 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/users/signup.html',
             controller: 'UsersStudentCtrl'
         })
+        .state('signup', {
+            url: '/users/signup',
+            templateUrl: '/views/users/unified_signup.html',
+            controller: 'UsersSignUpCtrl',
+            params : { input1: null, input2: null }
+        })
         .state('thanks_for_registering', {
             url: '/users/thanks?type',
             templateUrl: '/views/users/thanks.html',
@@ -298,7 +305,12 @@ angular.module('scalearAngularApp', [
                     return courseResolver.init($stateParams.course_id)
                 }]
             }
-        })           
+        })
+        .state('course.content_selector',{
+            url:'/content',
+            templateUrl: '/views/empty_view.html',
+            controller: 'contentSelectorCtrl',
+        })
         .state('course.module',{
             url:'/modules/:module_id',
             templateUrl: '/views/empty_view.html',
@@ -413,6 +425,11 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })
+        .state('course.module.student_inclass', {
+            url: '/student_inclass',
+            templateUrl: '/views/student/inclass/inclass.html',
+            controller: 'studentInclassCtrl'
+        })
         .state('course.module.courseware.quiz', {
             url: '/quizzes/:quiz_id',
             templateUrl: '/views/student/lectures/quiz.middle.html',
@@ -470,17 +487,17 @@ angular.module('scalearAngularApp', [
         })
         .state('show_shared', {
           url: '/show_shared',
-          templateUrl: '/views/shared.html',
+          templateUrl: '/views/teacher/shared/shared.html',
           controller: 'sharedCtrl'
         })
         .state('student_getting_started', {
           url: '/help/student/getting_started',
-          templateUrl: '/views/help/student_getting_started.html',
+          templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
         })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',
-          templateUrl: '/views/help/teacher_getting_started.html',
+          templateUrl: '/views/teacher/help/teacher_getting_started.html',
           controller: 'TeacherGettingStartedCtrl'
         })
 }])

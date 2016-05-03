@@ -1,17 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state','ContentNavigator', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state, ContentNavigator) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state','ContentNavigator', '$window','MobileDetector', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state, ContentNavigator,$window, MobileDetector) {
  	angular.extend($scope.$parent, course_data)
  	if($state.includes("**.course")){
 	 	if($rootScope.current_user.roles[0].id == 2){
-	 		if($scope.next_item.module != -1 ){
-		        var params = {'module_id': $scope.next_item.module}    
-		        params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
-		        $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
-		    }
-		    else
-		    	$state.go('course.course_information', {course_id:$scope.course.id})
+	 		if(MobileDetector.isPhone() && angular.element($window).width() < 700 /*ipad 768x1024 */){
+	 			$state.go('course.content_selector', {course_id:$scope.course.id})
+	 		}
+	 		else{
+		 		if($scope.next_item.module != -1){
+			        var params = {'module_id': $scope.next_item.module}    
+			        params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
+			        $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
+			    }
+			    else
+			    	$state.go('course.course_information', {course_id:$scope.course.id})
+			}
 	 	}
 	 	else
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})

@@ -9,14 +9,8 @@ var	info = new AccountInformation();
 var header = new Header()
 var params = browser.params;
 
-var screen_name = "teacher1@email.com"
-var fname = "teacher"
-var lname = "1"
-var mail = "teacher1@email.com"
-var univer = "test univerisity"
 // var biog = "This is my biography it contains everything about me"
 // var webs = "www.website.com"
-var password = "password"
 
 var screen_name_new = "screen teacher 001"
 var fname_new = "Test_1"
@@ -33,10 +27,10 @@ describe("Check Teacher account information", function(){
 	})
 	it("should check for info", function(){
 		info.open()
-		expect(info.firstname).toEqual(fname);
-		expect(info.lastname).toEqual(lname);
+		expect(info.firstname).toEqual(params.teacher_fname);
+		expect(info.lastname).toEqual(params.teacher_lname);
 		expect(info.email).toEqual(params.teacher_mail);
-		expect(info.university).toEqual(univer);
+		expect(info.university).toEqual(params.teacher_univer);
 		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs);
 		// expect(info.bio).toEqual(biog);
@@ -66,10 +60,10 @@ describe("Check Teacher account information", function(){
 	})
 
 	it("should change to old info", function(){
-		info.type_firstname(fname)
-		info.type_lastname(lname)
+		info.type_firstname(params.teacher_fname)
+		info.type_lastname(params.teacher_lname)
 		// info.type_email(params.teacher_mail)
-		info.type_university(univer)
+		info.type_university(params.teacher_univer)
 		info.type_screenname(params.teacher_mail)
 		// info.type_link(webs)
 		// info.type_bio(biog)
@@ -79,10 +73,10 @@ describe("Check Teacher account information", function(){
 	})
 
 	it("should check for old info", function(){
-		expect(info.firstname).toEqual(fname);
-		expect(info.lastname).toEqual(lname);
+		expect(info.firstname).toEqual(params.teacher_fname);
+		expect(info.lastname).toEqual(params.teacher_lname);
 		expect(info.email).toEqual(params.teacher_mail);
-		expect(info.university).toEqual(univer);
+		expect(info.university).toEqual(params.teacher_univer);
 		expect(info.screenname).toEqual(params.teacher_mail);
 		// expect(info.link).toEqual(webs);
 		// expect(info.bio).toEqual(biog);

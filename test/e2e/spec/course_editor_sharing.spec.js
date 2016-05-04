@@ -24,7 +24,7 @@ var navigator = new ContentNavigator(1)
 var content_items= new ContentItems()
 
 describe("Sharing a module",function(){
-    describe("Teacher1",function(){  
+    xdescribe("Teacher1",function(){  
         it("should login as teacher",function(){
             login_page.sign_in(params.teacher_mail, params.password)
         })      
@@ -52,7 +52,7 @@ describe("Sharing a module",function(){
             header.logout()
         })
     })
-    describe("Teacher2",function(){
+    xdescribe("Teacher2",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher2_mail, params.password)
         })
@@ -102,7 +102,7 @@ describe("Sharing a module",function(){
             header.logout()
         })
     })
-    describe("Teacher2",function(){
+    xdescribe("Teacher2",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher2_mail, params.password)
         })
@@ -145,7 +145,7 @@ describe("Sharing a module",function(){
     })
 })
 
-describe("Sharing a non existing module",function(){
+xdescribe("Sharing a non existing module",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher_mail, params.password)
@@ -260,7 +260,7 @@ describe("Sharing a non existing module",function(){
         })
     })
 })
-describe("Sharing single items",function(){
+xdescribe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher_mail, params.password)
@@ -402,7 +402,7 @@ describe("Sharing single items",function(){
         })
     })
 })
-describe("Rollback changes",function(){
+xdescribe("Rollback changes",function(){
     describe("Teacher2",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher2_mail, params.password)

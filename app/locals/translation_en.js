@@ -696,6 +696,7 @@ var translation_en={
         enrollment_key: "Enrollment Key",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
+        receive_due_date_email: "Receive email for due dates of lectures or quizzes",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",

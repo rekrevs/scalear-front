@@ -696,6 +696,7 @@ var translation_sv={
         enrollment_key: "Kursnyckel",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
+        receive_due_date_email: "Receive email for due dates of lectures or quizzes(t)",
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",

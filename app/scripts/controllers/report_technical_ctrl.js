@@ -5,9 +5,22 @@ angular.module('scalearAngularApp')
 
   $scope.issue_types=[{value:"system", text:$translate('feedback.system')}, {value:"content", text:$translate('feedback.course_content')}]//"ScalableLearning Website", "Course Content"]
   $scope.selected_type = $scope.issue_types[0];
+
+  $scope.issue_scalable_website_types=[{value:"none", text:$translate('feedback.none')},{value:"no_access", text:$translate('feedback.no_access')},{value:"question_before_sign", text:$translate('feedback.question_before_sign')},{value:"request_feature", text:$translate('feedback.request_feature')},{value:"no_email", text:$translate('feedback.no_email')},{value:"confused", text:$translate('feedback.confused')},{value:"bug", text:$translate('feedback.bug')},{value:"other", text:$translate('feedback.other')}]
+  $scope.selected_scalable_website_type = $scope.issue_scalable_website_types[0];
+
+  $scope.hide_issue_scalable_website_types = false;
 	$scope.hide_content = false;
-  
-  $scope.send_technical = function(type, data, user) {
+  $scope.selected_scalable_website_type_enable = function(type){
+    if(type["value"] == "system"){
+        $scope.hide_issue_scalable_website_types = false;
+    }
+    else{
+      $scope.hide_issue_scalable_website_types = true;
+    }
+
+  }
+  $scope.send_technical = function(type, website_type, data, user) {
       if(!user){
         user = {name: $rootScope.current_user.full_name, email: $rootScope.current_user.email}
       }
@@ -22,6 +35,7 @@ angular.module('scalearAngularApp')
                   name: user.name,
                   email: user.email,
                   issue_type: type.value,
+                  issue_website_type: website_type.text,
                   course: $stateParams.course_id || -1,
                   module: $stateParams.module_id || -1,
                   lecture: $stateParams.lecture_id || -1,
@@ -51,6 +65,7 @@ angular.module('scalearAngularApp')
 
   $scope.cancel = function () {
     $scope.selected_type=$scope.issue_types[0];
+    $scope.selected_scalable_website_type=$scope.issue_scalable_website_types[0];
     $scope.technical_data =null
     $scope.no_text=null
     $modalInstance.dismiss('cancel');

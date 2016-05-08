@@ -66,6 +66,9 @@ angular.module('scalearAngularApp')
         $scope.lecture = null
         $scope.video_ready=false
         $scope.show_progressbar = false
+        $scope.quiz_percentage =  "0 / 0 "
+        $scope.watched_percentage = 0
+        // $scope.play_pause_flag = 0
         removeShortcuts()
     }
 
@@ -117,6 +120,18 @@ angular.module('scalearAngularApp')
             $scope.toggleFullscreen();
             $scope.$apply()
         }, {"disable_in_input" : true});
+        shortcut.add("j", function(){
+            $scope.rewind();
+            $scope.$apply()
+        }, {"disable_in_input" : true});
+        shortcut.add("k", function(){
+            $scope.play_pause();
+            $scope.$apply()
+        }, {"disable_in_input" : true});
+        shortcut.add("l", function(){
+            $scope.fast_forward();
+            $scope.$apply()
+        }, {"disable_in_input" : true});
     }
 
     var removeShortcuts=function(){
@@ -124,6 +139,9 @@ angular.module('scalearAngularApp')
         shortcut.remove("q");
         shortcut.remove("n");
         shortcut.remove("f");
+        shortcut.remove("j");
+        shortcut.remove("k");
+        shortcut.remove("l");
     }
 
     var goToLecture=function(id){
@@ -180,7 +198,7 @@ angular.module('scalearAngularApp')
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
         // if($scope.lecture_player.controls.youtube)
         //     $scope.total_duration-=1
-        var duration_milestones = [25, 75]
+        var duration_milestones = [0, 25, 75]
         var quiz_time_offset = 0
         $scope.lecture.online_quizzes.forEach(function(quiz) {
             if(quiz.time >= $scope.total_duration-2){
@@ -272,6 +290,9 @@ angular.module('scalearAngularApp')
             else if(milestone == 100)
             $scope.not_done_msg = true
             $log.debug("Watched:"+data.watched+"%"+" solved:"+data.quizzes_done[0]+" total:"+data.quizzes_done[1])
+            $scope.quiz_percentage = data.quizzes_done[0]+" / "+data.quizzes_done[1]
+            $scope.watched_percentage = data.watched
+                
         })
     }
 
@@ -444,9 +465,22 @@ angular.module('scalearAngularApp')
             window.onmousemove = null
         }
     }
-
     $scope.toggleFullscreen=function(){
         $scope.fullscreen? goSmallScreen() : goFullscreen()
+    }
+    $scope.rewind=function(){
+        var time=$scope.lecture_player.controls.getTime()
+        $scope.seek(time-10)
+    }
+    $scope.play_pause=function(){
+        $scope.lecture_player.controls.paused()? $scope.lecture_player.controls.play() : $scope.lecture_player.controls.pause()
+        // $scope.play_pause_flag? $scope.play_pause_flag = 0 : $scope.play_pause_flag = 1
+
+    }
+
+    $scope.fast_forward=function(){
+        var time=$scope.lecture_player.controls.getTime()
+        $scope.seek(time+10)
     }
 
     var goFullscreen=function(){

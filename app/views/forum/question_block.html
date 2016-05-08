@@ -17,7 +17,7 @@
                 <select ng-model='privacy' ng-disabled="item.data.isEdit" ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
             <td ng-if="!item.data.isEdit" stlye="padding:0">
-                <button  ng-disabled="preview_as_student" type="button" class="button tiny" ng-click="postQuestion(item)" translate>discussion.button.ask</button>
+                <button  ng-disabled="preview_as_student  || ask_button_clicked" type="button" class="button tiny" ng-click="postQuestion(item)" translate>discussion.button.ask</button>
                 <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>discussion.button.cancel</button>
             </td>
             <td ng-if="item.data.isEdit">

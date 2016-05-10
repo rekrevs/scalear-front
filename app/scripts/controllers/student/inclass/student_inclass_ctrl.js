@@ -11,59 +11,67 @@ angular.module('scalearAngularApp')
       // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
     $scope.module = $scope.course.selected_module
-    $scope.getInclassStudentStatus = function() {
-      $scope.loading = true
-      Module.getInclassStudentStatus({
+
+
+    var getLatestStatus = function (success) {
+       Module.getInclassStudentStatus({
           module_id: $state.params.module_id,
           course_id: $state.params.course_id,
           status: $scope.inclass_status || 0,
           quiz_id: $scope.quiz ? $scope.quiz.id : -1
         },
-        function(data) {
-          $scope.loading = false
-          if (data.updated) {
-            $scope.quiz = data.quiz
-            $scope.quiz.in_group = false
-            $scope.group_quiz = angular.copy($scope.quiz)
-            $scope.group_quiz.in_group = true
-            $scope.lecture = data.lecture
-            $('.answer_choices input').attr('type', $scope.quiz.question_type == "MCQ" ? "checkbox" : "radio")
-            var force_state_to
-            if (self_answers.length > 0) {
-              self_answers.forEach(function(answer) {
-                var filtered_answers = $scope.quiz.answers.filter(function(a) {
-                  return a.id == answer.id
-                })
-                if(filtered_answers.length)
-                  filtered_answers[0].selected = true
-              })
-              if (data.status == 2)
-                force_state_to = "self_answered"
-            }
-            if (group_answers.length > 0) {
-              group_answers.forEach(function(answer) {
-                var filtered_answers =$scope.group_quiz.answers.filter(function(a) {
-                  return a.id == answer.id
-                })
-                if(filtered_answers.length)
-                  filtered_answers[0].selected = true
-              })
-              if (data.status == 3)
-                force_state_to = "group_answered"
-            }
-          }
+        success
+      )
+    }
 
-          if ($scope.inclass_status != data.status) {
-            $scope.inclass_status = data.status
-            WizardHandler.wizard().goTo(force_state_to || states[$scope.inclass_status])
-          } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
-            $scope.show_wait = true
-            $timeout(function() {
-              $scope.show_wait = false
-            }, 5000)
+    $scope.getInclassStudentStatus = function() {
+      $scope.loading = true
+      getLatestStatus(function(data) {
+        $scope.loading = false
+        if (data.updated) {
+          $scope.quiz = data.quiz
+          $scope.quiz.in_group = false
+          $scope.group_quiz = angular.copy($scope.quiz)
+          $scope.group_quiz.in_group = true
+          $scope.lecture = data.lecture
+          $('.answer_choices input').attr('type', $scope.quiz.question_type == "MCQ" ? "checkbox" : "radio")
+          // var force_state_to
+          if (self_answers.length > 0) {
+            self_answers.forEach(function(answer) {
+              var filtered_answers = $scope.quiz.answers.filter(function(a) {
+                return a.id == answer.id
+              })
+              if(filtered_answers.length)
+                filtered_answers[0].selected = true
+            })
+            // if (data.status == 2)
+            //   force_state_to = "self_answered"
+          }
+          if (group_answers.length > 0) {
+            group_answers.forEach(function(answer) {
+              var filtered_answers =$scope.group_quiz.answers.filter(function(a) {
+                return a.id == answer.id
+              })
+              if(filtered_answers.length)
+                filtered_answers[0].selected = true
+            })
+            // if (data.status == 3)
+            //   force_state_to = "group_answered"
           }
         }
-      )
+
+        if ($scope.inclass_status != data.status) {
+          $scope.inclass_status = data.status
+          WizardHandler.wizard().goTo(states[$scope.inclass_status]) //force_state_to ||
+          if($scope.inclass_status < 2)
+            emptyPreservedAnswers()
+        } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
+          $scope.showWaitNotification("Please wait for the teacher to continue.")
+          $timeout(function() {
+            $scope.removeWaitNotification()
+          }, 5000)
+        }
+      })
     }
 
     $scope.getInclassStudentStatus()
@@ -134,6 +142,14 @@ angular.module('scalearAngularApp')
       $scope.alert_message = ""
     }
 
+     $scope.showWaitNotification = function(msg) {
+      $scope.wait_alert_message = msg
+    }
+
+    $scope.removeWaitNotification = function() {
+      $scope.wait_alert_message = ""
+    }
+
     $scope.retry = function(quiz) {
       quiz.done = false
       clearSelectedAnswer(quiz)
@@ -141,6 +157,16 @@ angular.module('scalearAngularApp')
 
     $scope.intToChar = function(n) {
       return String.fromCharCode(97 + n).toUpperCase()
+    }
+
+    var emptyPreservedAnswers=function(){
+      $cookieStore.remove('self_answers')
+      $cookieStore.remove('group_answers')
+    }
+
+    var preserveSelectedAnswered=function(self_answers, group_answers){
+      $cookieStore.put('self_answers', self_answers)
+      $cookieStore.put('group_answers', group_answers)
     }
 
     $scope.selectAnswer = function(answer, quiz) {
@@ -162,11 +188,21 @@ angular.module('scalearAngularApp')
         }
         answer.selected = false
       }
-      $cookieStore.remove('self_answers')
-      $cookieStore.remove('group_answers')
-      $cookieStore.put('self_answers', self_answers)
-      $cookieStore.put('group_answers', group_answers)
-      console.log(self_answers, group_answers)
+      emptyPreservedAnswers()
+      preserveSelectedAnswered(self_answers, group_answers)
+    }
+
+    $scope.retry=function (type) {
+      getLatestStatus(function(data) {
+        if((type =='self' &&  data.status == 3) || (type =='group' &&  data.status == 4)){
+          $scope.showWaitNotification("Please click on 'Next' to continue.")
+          $timeout(function() {
+            $scope.removeWaitNotification()
+          }, 5000)
+        }
+        else
+          WizardHandler.wizard().previous()
+      })
     }
 
 

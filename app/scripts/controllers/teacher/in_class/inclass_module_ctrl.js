@@ -556,6 +556,7 @@ angular.module('scalearAngularApp')
     $scope.skipToItem = function(module_item, timeline_item, type) {
       $scope.item_itr = $scope.module.items.indexOf(module_item)//module_item
       $scope.selected_item = module_item//$scope.module.items[$scope.item_itr]
+
       if(!timeline_item){
         $scope.timeline_itr = 0
         $scope.nextItem()
@@ -777,6 +778,11 @@ angular.module('scalearAngularApp')
           "html": true
         }
       }, {
+        "type": "string",
+        "p": {
+          "role": "style",
+        }
+      },{
         "label": 'Group',
         "type": "number"
       }, {
@@ -784,6 +790,11 @@ angular.module('scalearAngularApp')
         "p": {
           "role": "tooltip",
           "html": true
+        }
+      },{
+        "type": "string",
+        "p": {
+          "role": "style",
         }
       }]
       formated_data.rows = []
@@ -793,14 +804,17 @@ angular.module('scalearAngularApp')
           group_count = data[ind][3] || 0,
           self = Math.floor((self_count / 10) * 100),
           group = Math.floor((group_count / 10) * 100),
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>Self: " + self_count + ", Group: " + group_count + "</div>"
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>Self: " + self_count + ", Group: " + group_count + "</div>",
+          style = (data[ind][1] == 'green')? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
             { "v": text },
             { "v": self },
             { "v": tooltip_text },
+            { "v": style },
             { "v": group },
-            { "v": tooltip_text }
+            { "v": tooltip_text },
+            { "v": style }
           ]
         }
         formated_data.rows.push(row)

@@ -107,7 +107,7 @@ angular.module('scalearAngularApp', [
     $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from){
         if($tour.isActive()){
             $tour.end();
-        }             
+        }
 
         UserSession.getRole().then(function(result){
             var s = 1;
@@ -122,10 +122,10 @@ angular.module('scalearAngularApp', [
             else{
                 if($rootScope.current_user && to.name === 'home'){
                     $state.go("dashboard")
-                } 
+                }
                 else if(!$rootScope.current_user && to.name === 'home'){
                     $state.go("landing")
-                }   
+                }
                 if(to.name === 'confirmed'){
                     if(from.name === 'show_confirmation'){
                         $state.go("confirmed")
@@ -145,11 +145,11 @@ angular.module('scalearAngularApp', [
                 } else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
                     $state.go("course_list");
                     s = 0;
-                } 
+                }
                 else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
                     $state.go("course_list");
                     s = 0;
-                } 
+                }
                 else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 1)// teacher going to home, redirected to courses page
                     $state.go("course_list");
                 else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
@@ -190,7 +190,7 @@ angular.module('scalearAngularApp', [
         .preferredLanguage('en')
         .useCookieStorage()
 
-    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
+    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
@@ -280,7 +280,7 @@ angular.module('scalearAngularApp', [
             url: '/privacy',
             templateUrl: '/views/privacy.html',
             controller: 'PrivacyCtrl'
-        })            
+        })
         .state('faq', {
             url: '/faq',
             templateUrl: '/views/faq.html',
@@ -487,7 +487,7 @@ angular.module('scalearAngularApp', [
         })
         .state('show_shared', {
           url: '/show_shared',
-          templateUrl: '/views/teacher/shared/shared.html',
+          templateUrl: '/views/teacher/sharing/shared.html',
           controller: 'sharedCtrl'
         })
         .state('student_getting_started', {

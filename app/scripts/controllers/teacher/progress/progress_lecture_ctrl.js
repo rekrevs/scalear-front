@@ -224,9 +224,11 @@ angular.module('scalearAngularApp')
       else if ($scope.highlight_index >divs.length-1)
         $scope.highlight_index = divs.length-1
 	    var ul = angular.element(divs[$scope.highlight_index])
-	    ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+	    // ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+      ul.addClass("highlight").addClass('full-opacity')
       $scope.highlight_level = 1
-	    angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+	    // angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+      angular.element('.ul_item').not('.highlight').removeClass('full-opacity')
 	    var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_')
@@ -266,8 +268,10 @@ angular.module('scalearAngularApp')
   		var divs = angular.element('.ul_item')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
-  		angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
-      angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+  		// angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+    //   angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
+      angular.element(ul).addClass("highlight").addClass('full-opacity')
+      angular.element('.ul_item').not('.highlight').removeClass('full-opacity')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
       $scope.selected_item =item
@@ -302,7 +306,8 @@ angular.module('scalearAngularApp')
     var removeHightlight=function(){
       resizePlayerSmall()
       $(".highlight").removeClass("highlight");
-      angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
+      // angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
+      angular.element('.ul_item').addClass('full-opacity')
       $scope.highlight_level = 0
       $log.debug("removing")
     }

@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/:lang/users/:id/:action', {lang:$translate.uses()},
-      { 
+      {
         'getCurrentUser': { method: 'GET', headers: headers , ignoreLoadingBar: true, params: {action: 'get_current_user'}},
         'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
         'sign_out': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
         'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers},
         'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers},
         'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
+        'userExist': { method: 'GET', headers: headers , params: {action: 'user_exist'}},
       });
 
 }]);

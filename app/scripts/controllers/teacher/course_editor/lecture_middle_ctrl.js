@@ -518,19 +518,25 @@ angular.module('scalearAngularApp')
       if (insert_time >= duration)
         insert_time = duration - 2
 
-      $scope.lecture_player.controls.seek_and_pause(insert_time)
+      var same_markers = $scope.lecture.timeline.getItemsBetweenTimeByType(insert_time, insert_time,"marker")
 
-      Lecture.newMarker({
-          course_id: $stateParams.course_id,
-          lecture_id: $scope.lecture.id,
-          time: $scope.lecture_player.controls.getTime(),
-        },
-        function(data) {
-          if (!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
-            $scope.showOnlineMarker(data.marker)
-          $scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
-          DetailsNavigator.open()
-        })
+      if(same_markers.length > 0){
+        $scope.showOnlineMarker(same_markers[0].data)
+      }
+      else{
+        $scope.lecture_player.controls.seek_and_pause(insert_time)
+        Lecture.newMarker({
+            course_id: $stateParams.course_id,
+            lecture_id: $scope.lecture.id,
+            time: $scope.lecture_player.controls.getTime(),
+          },
+          function(data) {
+            if (!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
+              $scope.showOnlineMarker(data.marker)
+            $scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
+            DetailsNavigator.open()
+          })
+      }
     }
 
     $scope.showOnlineMarker = function(marker) {
@@ -624,14 +630,20 @@ angular.module('scalearAngularApp')
       validateMarker(marker).then(function(error) {
         $scope.title_error = error
         $scope.time_error = validateTime(marker.formatedTime)
-        if (!($scope.title_error || $scope.time_error)) {
+        if (!($scope.title_error || $scope.time_error)){
           var fraction = marker.time % 1
           var new_time = arrayToSeconds(marker.formatedTime.split(':'))
           if (marker.time != new_time + fraction)
             marker.time  = new_time
-          updateOnlineMarker(marker)
-          if (!(options && options.exit))
-            $scope.closeMarkerMode()
+          var same_markers = $scope.lecture.timeline.getItemsBetweenTimeByType(marker.time, marker.time,"marker")
+          if(same_markers.length > 0 && same_markers[0].data.id != marker.id){
+            $scope.alert.msg = "There is another marker at the same time"
+            $scope.hide_alerts = false;
+          }else{
+            updateOnlineMarker(marker)
+            if (!(options && options.exit))
+              $scope.closeMarkerMode()
+          }
         }
       })
     }

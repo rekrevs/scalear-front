@@ -49,6 +49,9 @@ ul.connected_blocks {
   background: #B4EAC8;
   border: 2px solid #43AC6A;
 }
+.choice{
+  cursor: pointer;
+}
 </style>
 <div class="small-12 column disable_selection">
 	<h3 ng-if="inclass_status>=2"><b>Q.</b> {{quiz.question_title}}</h3>
@@ -140,7 +143,7 @@ ul.connected_blocks {
 		</button>
 	</div>
 </div> -->
-<center>
+<center class="disable_selection">
   <wizard hide-indicators="true">
     <wz-step wz-title="noclass">
       <div style="top: 50px;position: relative;padding:0 10px">
@@ -169,22 +172,28 @@ ul.connected_blocks {
       </div>
     </wz-step> -->
     <wz-step wz-title="self">
-        <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
+        <div class="row no-margin">
+          <div class="small-12 medium-8 medium-push-2 columns no-padding self_quiz">
           <div class="small-1 column no-padding" style="background: #008CBA;color: white;height: calc(100% - 2px);position: absolute;">
             <div class="rotate-90" style="top: 40%;position: relative;">Self</div>
           </div>
           <div class="small-11 column" style="padding:0 5px">
-            <div class='panel small-12 column' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
+            <div class='panel small-12 column choice' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
               <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
               <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
             </div>
           </div>
+          </div>
         </div>
-        <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-          <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="self_note" />
+        <div class="row no-margin">
+          <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
+            <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="self_note" />
+          </div>
         </div>
-        <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-          <button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button>
+        <div class="row no-margin">
+          <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
+            <button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button>
+          </div>
         </div>
     </wz-step>
     <wz-step wz-title="self_answered">
@@ -204,7 +213,7 @@ ul.connected_blocks {
       <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
           <div class="small-4 columns no-padding-right">
-            <button class="button expand secondary no-margin" wz-previous>Retry</button>
+            <button class="button expand secondary no-margin" ng-click="retry('self')">Retry</button>
           </div>
           <div class="small-8 columns" style="padding:0;padding-left:5px">
             <button class="button expand no-margin" ng-disabled="loading" ng-click="getInclassStudentStatus()">Next</button>
@@ -214,27 +223,33 @@ ul.connected_blocks {
       <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
-          <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
+          <alert ng-show="wait_alert_message" type="'secondary'">{{wait_alert_message}}</alert>
         </div>
       </div>
     </wz-step>
     <wz-step wz-title="group">
-      <div class="small-12 medium-8 medium-push-2 columns no-padding group_quiz">
-        <div class="small-1 column no-padding" style="background:#43AC6A;color:white;height: calc(100% - 2px);position: absolute;">
-          <div class="rotate-90" style="top: 45%;position: relative;">Group</div>
-        </div>
-        <div class="small-11 column" style="padding:0 5px">
-          <div class='panel small-12 column' ng-repeat='choice in group_quiz.answers' ng-click="selectAnswer(choice,group_quiz)" ng-class="{'selected': choice.selected}">
-            <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-            <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+      <div class="row no-margin">
+        <div class="small-12 medium-8 medium-push-2 columns no-padding group_quiz">
+          <div class="small-1 column no-padding" style="background:#43AC6A;color:white;height: calc(100% - 2px);position: absolute;">
+            <div class="rotate-90" style="top: 45%;position: relative;">Group</div>
+          </div>
+          <div class="small-11 column" style="padding:0 5px">
+            <div class='panel small-12 column choice' ng-repeat='choice in group_quiz.answers' ng-click="selectAnswer(choice,group_quiz)" ng-class="{'selected': choice.selected}">
+              <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
+              <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-        <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="group_note" />
+      <div class="row no-margin">
+        <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
+          <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="group_note" />
+        </div>
       </div>
-      <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-        <button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)" >Vote!</button>
+      <div class="row no-margin">
+        <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
+          <button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)" >Vote!</button>
+        </div>
       </div>
     </wz-step>
     <wz-step wz-title="group_answered">
@@ -267,7 +282,7 @@ ul.connected_blocks {
       <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px auto">
           <div class="small-4 columns no-padding">
-            <button class="button expand secondary no-margin" wz-previous>Retry</button>
+            <button class="button expand secondary no-margin" ng-click="retry('group')">Retry</button>
           </div>
           <div class="small-8 columns" style="padding:0;padding-left:5px">
             <button class="button expand success no-margin" ng-disabled="loading" ng-click="getInclassStudentStatus()">Next</button>
@@ -277,7 +292,7 @@ ul.connected_blocks {
       <div class="row no-margin with-margin-top">
         <div class="small-12 medium-6 medium-centered columns">
           <loading size="small" show="loading"  />
-          <alert ng-show="show_wait" type="'secondary'">Please wait for the teacher to continue.</alert>
+          <alert ng-show="wait_alert_message" type="'secondary'">{{wait_alert_message}}</alert>
         </div>
       </div>
     </wz-step>

@@ -1,8 +1,3 @@
-<style>
-#content_list li {
-    font-size: 10px;
-}
-</style>
 <div ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" screenfull active="fullscreen">
     <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen">
         <center>
@@ -126,10 +121,10 @@
             <ul id="content_list" class="f-dropdown text-left" style="overflow:auto;margin-top: -275px;height: 250px;max-width: 300px;padding: 12px;">
                 <div ng-repeat="module_item in module.items">
                     <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="skipToItem(module_item)">
-                        <div>{{module_item.name}} {{module_item.show}}</div>
+                        <div>{{module_item.name}}</div>
                     </a>
                     <div ng-if="module_item.class_name=='lecture'">
-                        <li ng-repeat="item in timeline['lecture'][module_item.id]['filtered'].items|inclassMenuFilter" ng-click="skipToItem(module_item, item, 'lecture')" >
+                        <li ng-repeat="item in timeline['lecture'][module_item.id]['filtered'].items|inclassMenuFilter" ng-click="skipToItem(module_item, item, 'lecture')" ng-class="{'active': selected_timeline_item.data.id == item.data.id}">
                             <div ng-if="item.type=='discussion'">
                                 <b translate>inclass.discussion</b>:
                                 <div ng-if="item.data.length == 1">
@@ -143,7 +138,7 @@
                             </div>
                             <div ng-if="item.type!='discussion'">
                                 <div style="padding: 0 5px;">
-                                    <b>{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
+                                    <b ng-if="item.data.type !='marker'">{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
                                     {{item.data.title}}
                                 </div>
                             </div>

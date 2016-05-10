@@ -74,6 +74,11 @@
 				</form>	
 				<div ng-show="!fullscreen && passed_requirments" class="row no-margin with-tiny-margin-top">
 					<center class="small-block-grid-3">
+					<div style="display:inline-block" class=" small with-tiny-margin-bottom">
+						<div><small>Watched:{{watched_percentage}}%</small></div>
+						<div><small>{{ quiz_percentage}}quizzes</small></div>
+					</div>
+						
 						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
 						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
 						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>

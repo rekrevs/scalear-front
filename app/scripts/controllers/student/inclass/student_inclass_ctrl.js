@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$timeout', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $timeout, Lecture, Page, WizardHandler, $cookieStore) {
 
-    Page.setTitle('In-class')
+    //Page.setTitle('In-class')
       // if(!MobileDetector.isPhone())
     ContentNavigator.close()
     var self_answers = $cookieStore.get('self_answers') || []
@@ -11,7 +11,10 @@ angular.module('scalearAngularApp')
       // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
     $scope.module = $scope.course.selected_module
-
+    
+    Page.setTitle($scope.module.name + ': ' +
+                  'In-class' + ' - ' + 
+                  $scope.course.name);
 
     var getLatestStatus = function (success) {
        Module.getInclassStudentStatus({

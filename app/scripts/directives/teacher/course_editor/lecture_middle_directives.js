@@ -211,6 +211,9 @@ angular.module('scalearAngularApp')
               $("#delete_marker_button").find('a').focus()
             }
           }
+          else if($("#delete_marker_button").find('a').is(':focus')){
+              $("input.marker_name").focus()
+          }
         }
         var removeShortcuts=function(){
           shortcut.remove("Enter");

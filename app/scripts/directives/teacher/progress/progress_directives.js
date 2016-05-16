@@ -14,10 +14,12 @@ angular.module('scalearAngularApp')
         show_popover: '=showPopover',
         remaining: "&",
         scrolldisabled: "=",
-        modstatus: "="
+        modstatus: "=",
+        export:"&"
       },
       templateUrl: '/views/teacher/progress/progress_matrix.html',
       link: function(scope, element) {
+        scope.exportProgress = scope.export()
         if (scope.show_popover) {
           var template = "<div style='font-size:14px; color: black;'>" +
             "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px'><span translate>progress.popover.original</span> " +

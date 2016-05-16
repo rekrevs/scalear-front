@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Course', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope','$translate',function ($resource, $http, $stateParams, scalear_api, headers, $rootScope ,$translate) {    
+.factory('Course', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope','$translate',function ($resource, $http, $stateParams, scalear_api, headers, $rootScope ,$translate) {
 
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/:lang/courses/:course_id/:action', {course_id:$stateParams.course_id, lang:$translate.uses()},
@@ -36,7 +36,8 @@ angular.module('scalearAngularApp')
       'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
-      'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}}
+      'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}},
+      'exportModuleProgress':{method: 'GET', headers:headers, params: {action: 'export_modules_progress'}}
     });
 
 }])

@@ -187,12 +187,12 @@ ul.connected_blocks {
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-            <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="self_note" />
+            <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="note.self" />
           </div>
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-            <button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button>
+            <button class="button expand no-margin" ng-click="sendAnswers(quiz, note.self)">Vote!</button>
           </div>
         </div>
     </wz-step>
@@ -243,12 +243,12 @@ ul.connected_blocks {
       </div>
       <div class="row no-margin">
         <div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0">
-          <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="group_note" />
+          <textarea placeholder="Why did you choose that answer?" style="height:55px" ng-model="note.group" />
         </div>
       </div>
       <div class="row no-margin">
         <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-          <button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)" >Vote!</button>
+          <button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, note.group)" >Vote!</button>
         </div>
       </div>
     </wz-step>

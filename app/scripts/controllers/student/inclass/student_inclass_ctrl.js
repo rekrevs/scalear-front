@@ -12,7 +12,6 @@ angular.module('scalearAngularApp')
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
     $scope.module = $scope.course.selected_module
 
-
     var getLatestStatus = function (success) {
        Module.getInclassStudentStatus({
           module_id: $state.params.module_id,
@@ -58,13 +57,16 @@ angular.module('scalearAngularApp')
             // if (data.status == 3)
             //   force_state_to = "group_answered"
           }
+          $scope.note = $scope.last_note = {self:'', group:''}
         }
 
         if ($scope.inclass_status != data.status) {
           $scope.inclass_status = data.status
           WizardHandler.wizard().goTo(states[$scope.inclass_status]) //force_state_to ||
-          if($scope.inclass_status < 2)
+          if($scope.inclass_status < 2){
             emptyPreservedAnswers()
+            $scope.note = $scope.last_note = {self:'', group:''}
+          }
         } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
           $scope.showWaitNotification("Please wait for the teacher to continue.")
           $timeout(function() {
@@ -107,8 +109,8 @@ angular.module('scalearAngularApp')
       quiz.done = true
       $scope.saveQuizAnswer(quiz, selected_answers)
       console.log(quiz)
-      if(note_text)
-        $scope.saveNote((quiz.in_group ? "In Class Group Note: " : "In Class Self Note: ") + note_text, Math.ceil(quiz.time))
+      if(note_text && $scope.last_note[quiz.in_group ? "group: " : "self"] !== note_text)
+        $scope.saveNote(note_text, Math.ceil(quiz.time), quiz.in_group)
       WizardHandler.wizard().next()
     }
 
@@ -123,14 +125,16 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.saveNote = function(note_text, time) {
+    $scope.saveNote = function(note_text, time, in_group) {
       Lecture.saveNote({
         course_id: $state.params.course_id,
         lecture_id: $scope.lecture.id,
         note_id: null
       }, {
-        data: note_text,
+        data: (in_group ? "In Class Group Note: " : "In Class Self Note: ") + note_text,
         time: time
+      },function (resp) {
+          $scope.last_note[in_group ? "group: " : "self"] = note_text
       });
     }
 

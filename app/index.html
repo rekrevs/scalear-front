@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexCtrl"> <!--<![endif]-->
-  <head> 
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title ng-bind="'ScalableLearning'+' - '+Page.title()">ScalableLearning</title>
@@ -17,23 +17,23 @@
     <!-- <link rel="stylesheet" href="styles/toggle-switch.css"> -->
     <!-- <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css"> -->
 
-    <!-- build:css(.tmp/styles) styles/main.css -->    
+    <!-- build:css(.tmp/styles) styles/main.css -->
     <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.min.css">
     <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css">
     <link rel="stylesheet" href="styles/foundation.css"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/main-foundation.css">
     <link rel="stylesheet" href="styles/landing.css"/>
-    <link rel="stylesheet" href="styles/jquery-ui.css" />    
+    <link rel="stylesheet" href="styles/jquery-ui.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
-    
+
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
-    
+
   </head>
 
 
@@ -57,8 +57,8 @@
      <span ng-if="!('landing'| includedByState) && !('home'| includedByState) ">
          <header>
             <main-navigation user="current_user" courses="current_courses"></main-navigation>
-        </header> 
-        <div id="main" role="main"> 
+        </header>
+        <div id="main" role="main">
             <div class="header">
                 <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
                     <teacher-navigation course="course" message="subheader_message" />
@@ -67,7 +67,7 @@
                     <student-navigation course="course" message="subheader_message" />
                 </div>
             </div>
-            <div class="container row"> 
+            <div class="container row">
                 <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" mode="editor" open="ContentNavigator.status">
                 </content-navigator>
                 <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
@@ -77,14 +77,14 @@
                 </div>
                 <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
                 </div>
-            </div> 
+            </div>
             <footer class="small-12 columns footer">
                <scalear_footer />
             </footer>
-        </div> 
+        </div>
     </span>
-    
-    
+
+
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -94,17 +94,17 @@
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-       
-       
+
+
     </script>
-    
+
     <!-- build:js({.tmp,app}) scripts/externals.js -->
 
      <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-    
-    <script src="bower_components/angular/angular.min.js"></script>   
+
+    <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
@@ -116,7 +116,7 @@
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
-    
+
     <script src="bower_components/popcornjs/popcorn.js"></script>
     <script src="bower_components/popcornjs/modules/player/popcorn.player.js"></script>
     <script src="bower_components/popcornjs/wrappers/common/popcorn._MediaElementProto.js"></script>
@@ -138,7 +138,7 @@
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
     <script src="bower_components/angular-macgyver/lib/macgyver.js"></script>
 
-    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script> 
+    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
 
@@ -170,14 +170,14 @@
     <script src="scripts/filters/filters.js"></script>
 
     <script src="scripts/directives/generic_directives.js"></script>
-    <script src="scripts/directives/error_directives.js"></script> 
+    <script src="scripts/directives/error_directives.js"></script>
     <script src="scripts/directives/youtube_directives.js"></script>
     <script src="scripts/directives/popover_directives.js"></script>
     <script src="scripts/directives/navigation_directives.js"></script>
-    <script src="scripts/directives/footer_directives.js"></script> 
+    <script src="scripts/directives/footer_directives.js"></script>
     <script src="scripts/directives/teacher/notification_directives.js"></script>
     <script src="scripts/directives/teacher/sharing_directives.js"></script>
-    <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
+    <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/lecture_middle_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>
     <script src="scripts/directives/teacher/progress/progress_directives.js"></script>
@@ -231,15 +231,15 @@
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>        
-    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_editor/customlink_details_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/customlink_middle_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/customlink_details_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/customlink_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/sharing_modal_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_overview_ctrl.js"></script>
@@ -253,6 +253,7 @@
     <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
     <script src="scripts/controllers/teacher/course/course_information_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course/send_emails.js"></script>
+    <script src="scripts/controllers/teacher/course/system_email_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/in_class/inclass_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/inclass_module_ctrl.js"></script>
@@ -293,5 +294,5 @@
             else
                 self.location = "ie.html"
         }
-    </script> 
+    </script>
 </html>

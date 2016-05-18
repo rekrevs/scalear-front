@@ -1,7 +1,7 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate', function ($scope, Kpi, Page, $rootScope, $translate) {
+  .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate','$modal', function ($scope, Kpi, Page, $rootScope, $translate, $modal) {
 
     Page.setTitle('statistics.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")

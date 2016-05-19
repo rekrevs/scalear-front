@@ -70,8 +70,17 @@ angular.module('scalearAngularApp')
     }
     $scope.lecture_player.events.onReady = function() {
       $scope.video_ready = true
-      $scope.lecture_player.controls.pause()
-      $scope.lecture_player.controls.seek(0)
+      $scope.lecture_player.controls.seek_and_pause(0)
+
+      $scope.lecture.timeline.items.forEach(function(item) {
+        if(item.data){
+          $scope.lecture_player.controls.cue($scope.lecture.start_time + (item.time-0.1), function() {
+            $scope.lecture_player.controls.seek_and_pause(item.time);
+            (item.type == 'quiz')? $scope.showOnlineQuiz(item.data) : $scope.showOnlineMarker(item.data)
+            $scope.$apply()
+          })
+        }
+      })
     }
 
     $scope.lecture_player.events.onPlay = function() {

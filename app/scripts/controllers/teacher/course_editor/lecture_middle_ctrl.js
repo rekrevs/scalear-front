@@ -68,18 +68,13 @@ angular.module('scalearAngularApp')
       $scope.slow = false
       $scope.video_ready = false
     }
+
     $scope.lecture_player.events.onReady = function() {
       $scope.video_ready = true
       $scope.lecture_player.controls.seek_and_pause(0)
 
       $scope.lecture.timeline.items.forEach(function(item) {
-        if(item.data){
-          $scope.lecture_player.controls.cue($scope.lecture.start_time + (item.time-0.1), function() {
-            $scope.lecture_player.controls.seek_and_pause(item.time);
-            (item.type == 'quiz')? $scope.showOnlineQuiz(item.data) : $scope.showOnlineMarker(item.data)
-            $scope.$apply()
-          })
-        }
+        item.data && addItemToVideoQueue(item.data, item.type);
       })
     }
 
@@ -100,6 +95,31 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $scope.is_youtube = is_youtube
       $scope.slow = true
+    }
+
+    var addItemToVideoQueue= function (item_data, type) {
+      item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time-0.1), function() {
+        if(!$scope.lecture_player.controls.paused()){
+          $timeout(function(){
+            console.log('from cue')
+            $scope.lecture_player.controls.seek_and_pause(item_data.time);
+            if(type == 'quiz'){
+              $scope.showOnlineQuiz(item_data)
+              item_data.hide_quiz_answers = false
+            }
+            else
+              $scope.showOnlineMarker(item_data)
+          })
+        }
+      })
+    }
+
+    var removeItemFromVideoQueue= function (item_data) {
+      if(item_data.cue){
+        $scope.lecture_player.controls.removeTrackEvent(item_data.cue.id)
+        // item_data.cue._running = false
+      }
+
     }
 
     $scope.closeAlerts = function() {
@@ -198,7 +218,8 @@ angular.module('scalearAngularApp')
             data.quiz.inclass = $scope.lecture.inclass
             $scope.editing_mode = false
             $scope.showOnlineQuiz(data.quiz)
-            $scope.lecture.timeline.add(data.quiz.time, 'quiz', data.quiz)
+            var item_index = $scope.lecture.timeline.add(data.quiz.time, 'quiz', data.quiz)
+            addItemToVideoQueue($scope.lecture.timeline.items[item_index].data, $scope.lecture.timeline.items[item_index].type)
             $scope.quiz_loading = false;
             $scope.quiz_deletable = true
             DetailsNavigator.open()
@@ -458,6 +479,8 @@ angular.module('scalearAngularApp')
 
 
         $scope.quiz_deletable = false
+        removeItemFromVideoQueue($scope.selected_quiz);
+        addItemToVideoQueue($scope.selected_quiz, "quiz");
         updateAnswers(data, $scope.selected_quiz, options);
         return true
       } else {
@@ -542,7 +565,8 @@ angular.module('scalearAngularApp')
           function(data) {
             if (!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
               $scope.showOnlineMarker(data.marker)
-            $scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
+            var item_index=$scope.lecture.timeline.add(data.marker.time, "marker", data.marker)
+            addItemToVideoQueue($scope.lecture.timeline.items[item_index].data, $scope.lecture.timeline.items[item_index].type)
             DetailsNavigator.open()
           })
       }
@@ -649,6 +673,8 @@ angular.module('scalearAngularApp')
             $scope.alert.msg = "There is another marker at the same time"
             $scope.hide_alerts = false;
           }else{
+            removeItemFromVideoQueue(marker)
+            addItemToVideoQueue(marker, "marker")
             updateOnlineMarker(marker)
             if (!(options && options.exit))
               $scope.closeMarkerMode()

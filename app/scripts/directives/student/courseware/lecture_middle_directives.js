@@ -580,4 +580,19 @@ angular.module('scalearAngularApp')
 
     }
   }
+}]).directive('annotation',['$filter', function($filter){
+  return{
+    restrict:"E",
+    scope:{
+      annotation:'=text',
+      close: '&'
+    },
+    templateUrl: '/views/student/lectures/annotation.html',
+    link:function(scope, element, attrs){
+      console.log('direc close', scope.close())
+      scope.close_btn = scope.close()
+      console.log('direc close2', scope.close_btn)
+
+    }
+  }
 }])

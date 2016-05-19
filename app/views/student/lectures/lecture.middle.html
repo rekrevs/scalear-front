@@ -1,6 +1,6 @@
 <span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down show-for-portrait" style="margin:0px">
 	 <span ng-show='key=="due"'>
-	 	<span translate>events.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "time."+alert_message[2] | translate}}</span>) 
+	 	<span translate>events.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "time."+alert_message[2] | translate}}</span>)
 	 	<span translate>time.ago</span>
 	 </span>
 	 <span ng-show='key=="today"'>
@@ -9,19 +9,19 @@
 </span>
 <span id="lecture_container" style="overflow:hidden">
 	<div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
-	'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
-	'large-uncentered land-uncentered': delayed_timeline_open, 		 
+	'large-12 land-medium-12 large-centered': !delayed_timeline_open,
+	'large-uncentered land-uncentered': delayed_timeline_open,
 	'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
 	'land-medium-8':!ContentNavigator.status && delayed_timeline_open
 	}">
 		<div ng-show="lecture" class="small-12 columns no-padding with-small-padding-top">
-			<div id="main-video-container" ng-style="container_style"> 
+			<div id="main-video-container" ng-style="container_style">
 				<form name="answer_form" novalidate>
 						<span class="no_solve" ng-if="!passed_requirments">
 							<center>
 								<div style='height:360px' >
 									<h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.messages.finish_before_proceeding</span></h2>
-								</div>						
+								</div>
 							</center>
 						</span>
 						<video_container ng-if="passed_requirments" ng-class="container_class"screenfull active="fullscreen" style="width:100%;height:100%">
@@ -45,10 +45,7 @@
 											<b><span translate>global.note</span>:</b>
 											<span translate>lectures.messages.did_not_get_credit</span>
 										</div>
-										<div ng-show="annotation" style="position: absolute;bottom: 0;min-width: 50%;border: 1px groove #e6e6e6;padding: 5px;z-index: 1;font-size: 14px;border-radius: 5px;" class=" transparent-darkblue-hover ">
-											<a ng-click="dismissAnnotation()"><i class="color-white size-14 fi-x" style="top: 0;position: absolute;margin: 5px;float: right;right: 0;line-height: 0;"></i></a>
-											<div class="color-white" style="width: 97%;font-size:2.4vh"><b>{{annotation}}</b></div>
-										</div>
+										<annotation text="annotation" close="dismissAnnotation" ng-if="annotation"/>
 									</quiz>
 								</youtube>
 								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="current_user.roles[0].id">
@@ -58,10 +55,10 @@
 									</div>
 									<div ng-show="quiz_mode" class="right" style="position:relative;right:30%">
 										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" >{{check_answer_title | translate}}</button>
-										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/> 
-									</div>									
+										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/>
+									</div>
 						    	</progress-bar>
-						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass> 
+						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass>
 								<div ng-show="fullscreen" class="row with-tiny-padding-top with-tiny-padding-bottom black">
 									<center>
 										<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}"  translate>lectures.button.new_note</button>
@@ -71,14 +68,14 @@
 									</center>
 								</div>
 					    </video_container>
-				</form>	
+				</form>
 				<div ng-show="!fullscreen && passed_requirments" class="row no-margin with-tiny-margin-top">
 					<center class="small-block-grid-3">
 					<div style="display:inline-block" class=" small with-tiny-margin-bottom">
 						<div><small>Watched:{{watched_percentage}}%</small></div>
 						<div><small>{{ quiz_percentage}}quizzes</small></div>
 					</div>
-						
+
 						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
 						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
 						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>

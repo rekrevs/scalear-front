@@ -297,8 +297,7 @@ angular.module('scalearAngularApp')
       $scope.removeShortcuts()
       resetVariables()
       $interval.cancel($scope.timer_interval);
-      if($scope.vote_session_timeout)
-        $interval.cancel($scope.vote_session_timeout)
+      cancelSessionVotesTimer()
       cancelStageTimer()
     }
 
@@ -489,7 +488,7 @@ angular.module('scalearAngularApp')
 
     var goToSubItem = function(item) {
       $scope.selected_timeline_sub_item = item
-
+      cancelSessionVotesTimer()
       if(item.type == "primary_marker" && $scope.selected_timeline_item.type != 'inclass')
         $scope.hideQuestionBox()
       else if(item.type != "markers")
@@ -501,12 +500,8 @@ angular.module('scalearAngularApp')
         if(item.data.status == 2 || item.data.status == 3) {
           adjustQuizLayer($scope.selected_timeline_item.data.quiz_type)
           getSessionVotes($scope.selected_timeline_item.data.id, $scope.selected_item.id, item.data.status == 3)
-          $scope.vote_session_timeout = $interval(function() {
-            getSessionVotes($scope.selected_timeline_item.data.id, $scope.selected_item.id, item.data.status == 3)
-          }, 5000)
+          startSessionVotesTimer()
         } else {
-          if($scope.vote_session_timeout)
-            $interval.cancel($scope.vote_session_timeout)
           if(item.data.status == 4) {
             $scope.loading_chart = true
             OnlineQuiz.getChartData({ online_quizzes_id: $scope.selected_timeline_item.data.id }, function(resp) {
@@ -1090,6 +1085,19 @@ angular.module('scalearAngularApp')
         $scope.session_votes = resp.votes
         $scope.session_max_votes = resp.max_votes
       })
+    }
+
+    var startSessionVotesTimer = function() {
+      $scope.session_votes_timer = $interval(function() {
+        getSessionVotes($scope.selected_timeline_item.data.id, $scope.selected_item.id, $scope.selected_timeline_sub_item.data.status == 3)
+      }, 5000)
+    }
+
+    var cancelSessionVotesTimer = function() {
+      if($scope.session_votes_timer)
+        $interval.cancel($scope.session_votes_timer)
+      $scope.session_votes = null
+      $scope.session_max_votes = null
     }
 
     $scope.chartReady = function() {

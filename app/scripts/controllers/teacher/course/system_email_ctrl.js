@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('systemEmailCtrl', ['$scope', '$state', 'Course', '$stateParams', '$log', '$window', 'Page', '$modalInstance','ngDialog', function($scope, $state, Course, $stateParams, $log, $window, Page, $modalInstance, ngDialog) {
+  .controller('systemEmailCtrl', ['$scope', '$state', 'Course', '$stateParams', '$log', '$window', 'Page', '$modalInstance', 'ngDialog', function($scope, $state, Course, $stateParams, $log, $window, Page, $modalInstance, ngDialog) {
 
     $window.scrollTo(0, 0);
     $scope.announcement = { emails: "" }
@@ -27,12 +27,12 @@ angular.module('scalearAngularApp')
               subject: $scope.announcement.subject,
               message: $scope.announcement.message,
               list_type: $scope.announcement.list_type,
+              reply_to: $scope.announcement.reply_to,
               emails: $scope.announcement.emails.split(",").map(function(email) {
                 return email.trim()
               })
             }, function() {
               $scope.closeThisDialog()
-              console.log('Im done!')
             })
           }
         }]

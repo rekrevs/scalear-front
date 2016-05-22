@@ -752,6 +752,7 @@ var translation_sv={
         copy_from_existing: "Kopiera data från befintlig kurs",
     },
     start_date: "Startdatum",
+    end_date: "Course End Date(t)",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",

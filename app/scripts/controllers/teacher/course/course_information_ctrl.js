@@ -31,8 +31,7 @@ angular.module('scalearAngularApp')
     delete modified_course.unique_identifier;
     delete modified_course.modules;
     delete modified_course.selected_module;
-
-    $log.debug(modified_course);
+    delete modified_course.duration;
     var timezone = angular.copy(modified_course.time_zone)
     modified_course.time_zone = timezone.name
     Course.update(

@@ -57,6 +57,16 @@ a.editable-click {
 	font-size:12px !important;
 }
 
+.drop-div{
+  border: 2px dashed black;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  margin: 0 0 0 2px;
+  background: #fff;
+  opacity: 0.9;
+  overflow: auto;
+}
 
 /*.editable-checkbox{
 	width:15px !important;
@@ -142,6 +152,15 @@ label{
 	display:inline-block;
 }  
 
+.dropped{
+    border: 2px dashed rgb(0, 0, 0);
+    border-radius: 6px;
+    background-color: white; 
+    padding:0px;
+    position:absolute;
+    min-height:40px;
+    min-width: 20px;
+    }
 /*.answer_div{
 	width: auto;
     height: 100%;

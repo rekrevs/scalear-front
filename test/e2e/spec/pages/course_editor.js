@@ -97,7 +97,8 @@ CourseEditor.prototype = Object.create({}, {
 			element(by.className('editable-input')).clear().sendKeys(url)
 			element(by.className('check')).click()
 			// video.wait_till_ready()
-			element(by.css('[ng-click="cancel()"]')).isDisplayed().then(function(result){
+			
+			element(by.css('[ng-click="cancel()"]')).isPresent().then(function(result){
 				if(result){
 					element(by.css('[ng-click="cancel()"]')).click()
 					sleep(1000)

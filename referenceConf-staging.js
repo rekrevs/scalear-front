@@ -19,6 +19,7 @@ var params= {
     password: 'password',
     admin_email:   'admin@scalable-learning.com',
     admin_password:"admin_account_password",
+    student_name_list: ['Student 1','Student 2','Student 3'],
 
     guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
@@ -37,6 +38,9 @@ var params= {
     course_description: 'too many words',
     prerequisites: '1- course 1 2- course 2 3- course 3',
 
+    teacher_fname: "teacher" ,
+    teacher_lname: "1" , 
+    teacher_univer: "test univerisity" ,
 
 }
 
@@ -119,20 +123,20 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js',
-        'test/e2e/spec/fill_course.spec.js',
-        'test/e2e/spec/course_information_validation.spec.js',
-        'test/e2e/spec/account_information_validation.spec.js',
-        'test/e2e/spec/enrollment_help.spec.js',
+        'test/e2e/spec/create_course.spec.js', // done
+        'test/e2e/spec/fill_course.spec.js', // done
+        'test/e2e/spec/course_information_validation.spec.js', // done
+        'test/e2e/spec/account_information_validation.spec.js', // done
+        'test/e2e/spec/enrollment_help.spec.js', // done
         'test/e2e/spec/course_editor_basic.spec.js',
         'test/e2e/spec/course_editor_copy.spec.js',
         'test/e2e/spec/course_editor_sharing.spec.js',
-        'test/e2e/spec/module_statistics.spec.js',
-        'test/e2e/spec/announcements.spec.js',
-        'test/e2e/spec/teacher-managment.spec.js',
-        'test/e2e/spec/students_solve_course.spec.js',
-        'test/e2e/spec/notes.spec.js',
-        'test/e2e/spec/discussions.spec.js',
+        'test/e2e/spec/module_statistics.spec.js', // done
+        'test/e2e/spec/announcements.spec.js', // done
+        'test/e2e/spec/teacher-managment.spec.js', // done
+        'test/e2e/spec/students_solve_course.spec.js', 
+        'test/e2e/spec/notes.spec.js', // done
+        'test/e2e/spec/discussions.spec.js', // done
         'test/e2e/spec/progress-module.spec.js',
         'test/e2e/spec/progress-completion-module.spec.js',
         'test/e2e/spec/validations.spec.js',

@@ -288,7 +288,7 @@ describe("Video validation", function(){
 
 	it('should try setting a .mp4 url', function(){
 		course_editor.change_item_url("http://it.uu.se/katalog/davbl791/wide-test.mp4")
-      	course_editor.open_video_settings()
+      	// course_editor.open_video_settings()
 	})
 
 	it('should now have the new mp4 video', function(){

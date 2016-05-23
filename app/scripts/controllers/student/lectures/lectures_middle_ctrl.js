@@ -341,11 +341,6 @@ angular.module('scalearAngularApp')
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
             if(time >=0 && $scope.show_progressbar){
                 if($scope.lecture_player.controls.getTime() - time > 1){
-                    console.log("time back")
-                    console.log($scope.lecture_player.controls.getTime())
-                    console.log(time)
-                    
-
                     Lecture.back(
                         {
                             course_id:$state.params.course_id,

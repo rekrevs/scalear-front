@@ -32,7 +32,7 @@ var video = new Video();
 describe("Revert Changes",function(){
 	describe("guerrillamail teacher 1",function(){
 		it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.guerrillamail_password)
+            login_page.sign_in(params.teacher1.email, params.guerrillamail_password)
        })
         it("should check that course has been removed",function(){
         	course_list.open()
@@ -45,7 +45,7 @@ describe("Revert Changes",function(){
 	})
 	describe("guerrillamail teacher 2",function(){
 		it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.guerrillamail_password)
+            login_page.sign_in(params.teacher2.email, params.guerrillamail_password)
        })
         it("should check that course has been removed",function(){
         	course_list.open()
@@ -55,10 +55,10 @@ describe("Revert Changes",function(){
             header.open_account_information()
             header.delete_user(params.guerrillamail_password)
         })
-	})	
+	})
 	describe("guerrillamail student 1",function(){
 		it("should login",function(){
-            login_page.sign_in(params.student_mail, params.guerrillamail_password)
+            login_page.sign_in(params.student1.email, params.guerrillamail_password)
        })
         it("should delete student account",function(){
             header.open_account_information()
@@ -67,7 +67,7 @@ describe("Revert Changes",function(){
 	})
 	describe("guerrillamail student 2",function(){
 		it("should login",function(){
-            login_page.sign_in(params.student2_mail, params.guerrillamail_password)
+            login_page.sign_in(params.student2.email, params.guerrillamail_password)
        })
         it("should delete student account",function(){
             header.open_account_information()
@@ -76,7 +76,7 @@ describe("Revert Changes",function(){
 	})
 	describe("guerrillamail student 3",function(){
 		it("should login",function(){
-            login_page.sign_in(params.student3_mail, params.guerrillamail_password)
+            login_page.sign_in(params.student3.email, params.guerrillamail_password)
        })
         it("should delete student account",function(){
             header.open_account_information()

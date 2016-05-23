@@ -16,7 +16,7 @@ var student_lec = new StudentLecture()
 describe("Notes",function(){
 	describe("Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -39,7 +39,7 @@ describe("Notes",function(){
 			student_lec.lecture(3).type_note("Some note text for testing.")
 			expect(student_lec.lecture(3).notes.count()).toEqual(1)
 			expect(student_lec.lecture(3).note(1).getText()).toEqual("Some note text for testing.")
-		})		
+		})
 		// it("should add a note Text ",function(){
 		// 	// student_lec.add_note()
 		// 	// student_lec.lecture(3).type_note("Some note text for testing.")
@@ -64,7 +64,7 @@ describe("Notes",function(){
 
 		})
 		it("should logout",function(){
-			student_lec.close_timeline()			
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})

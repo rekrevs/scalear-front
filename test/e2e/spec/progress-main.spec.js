@@ -8,8 +8,8 @@ var student = require('./lib/student_module');
 
 var ptor = protractor.getInstance();
 var params = ptor.params
-var student_names = ['studenttest2 sharklasers','student test'] 
-var student_emails = [params.student2_mail, params.student_mail]
+var student_names = ['studenttest2 sharklasers','student test']
+var student_emails = [params.student2.email, params.student1.email]
 var module_names = ['New Module', 'New Module 2']
 var checkmarks = {'student test': ['on_time', 'not_finished'], 'studenttest2 sharklasers': ['not_finished', 'not_finished']}
 // ptor.driver.manage().window().maximize();
@@ -19,7 +19,7 @@ ptor.driver.manage().window().setPosition(0, 0);
 describe("teacher", function(){
 	it('should login', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);	
+		o_c.sign_in(ptor, params.teacher1.email, params.password, o_c.feedback);
 	})
 	it('should open the first course', function(){
 		o_c.open_course_list(ptor);
@@ -62,9 +62,9 @@ describe('Teacher', function(){
 		progress.checkStatusImage(1, 1, 'not_finished')
 
 		progress.overrideStatus(2, 2, 1)
-		progress.checkStatusImage(2, 2, 'not_finished')		
+		progress.checkStatusImage(2, 2, 'not_finished')
 	})
-	
+
 })
 describe('Module Chart', function(){
 	it('should show that Student Two solved only 50% of quizzes', function(){
@@ -74,7 +74,7 @@ describe('Module Chart', function(){
 	})
 	it('should show that Student Two solved only 50% of lectures\' quizzes', function(){
 		progress.selectTabInMainProgress(2)
-		progress.wholeProgressBar(2, 1, student_names[0], 50)	
+		progress.wholeProgressBar(2, 1, student_names[0], 50)
 		ptor.navigate().refresh()
 	})
 

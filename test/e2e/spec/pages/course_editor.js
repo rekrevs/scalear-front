@@ -35,6 +35,9 @@ CourseEditor.prototype = Object.create({}, {
 	change_lecture_required:{value:function(){this.lecture_inorder_checkbox.click()}},
 	quiz_required_checkbox:{get:function(){return element(by.model('quiz.graded'))}},
 	quiz_retries:{get:function(){return element(by.tagName('details-number'))}},
+	trim_modal:{get:function (){ return element(by.id('trim-modal'))}},
+	trim:{value:function () {this.trim_modal.element(by.id('trim-btn')).click()}},
+	cancel_trim:{value:function () {this.trim_modal.element(by.id('cancel-btn')).click()}},
 	change_quiz_required:{value:function(){this.quiz_required_checkbox.click()}},
 	change_quiz_retries:{value:function(num){
 		this.quiz_retries.click()
@@ -61,25 +64,7 @@ CourseEditor.prototype = Object.create({}, {
 	get_module_name:{value: function(){
 		return element(by.tagName('details-text')).getText()
 	}},
-	// add_lecture: {value: function(){
-	// 	this.new_item_button.click()
-	// 	this.video_item.click()
-	// }},
-	// add_quiz: {value: function(){
-	// 	this.new_item_button.click()
-	// 	this.quiz_item.click()
-	// }},
-	// add_survey: {value: function(){
-	// 	this.new_item_button.click()
-	// 	this.survey_item.click()
-	// }},
-	// add_course_link: {value: function(){
-	// 	this.new_item_button.click()
-	// 	this.link_item.click()
-	// }},
-	// add_module_link:{value:function(){
-	// 	element(by.id('add_module_link')).click()
-	// }},
+
 	open_video_settings:{value: function(){
 		element(by.id('video_settings')).click()
 	}},
@@ -93,19 +78,16 @@ CourseEditor.prototype = Object.create({}, {
 		return element(by.id('item_name')).getText()
 	}},
 	change_item_url:{value: function(url){
-		element(by.id('url')).click().then(function(){
-			element(by.className('editable-input')).clear().sendKeys(url)
-			element(by.className('check')).click()
-			// video.wait_till_ready()
-			
-			element(by.css('[ng-click="cancel()"]')).isPresent().then(function(result){
-				if(result){
-					element(by.css('[ng-click="cancel()"]')).click()
-					sleep(1000)
-					browser.refresh();					
-				}
-			})
-		})
+		element(by.id('url')).click()
+		element(by.className('editable-input')).clear().sendKeys(url)
+		element(by.className('check')).click()
+		var self = this
+		browser.driver.wait(function() {
+      return self.trim_modal.isPresent().then(function(disp) {
+        return disp;
+      }, 100000);
+    });
+    this.cancel_trim()
 	}},
 	get_item_url:{value: function(){
 		return element(by.id('url')).getText()
@@ -119,9 +101,9 @@ CourseEditor.prototype = Object.create({}, {
 		})
 	}},
 	sort_links:{value:function(){
-		var handle_1 = this.module_link(1).field.element(by.className('handle')) 
-		var handle_2 = this.module_link(2).field.element(by.className('handle')) 
-		var handle_3 = this.module_link(3).field.element(by.className('handle')) 
+		var handle_1 = this.module_link(1).field.element(by.className('handle'))
+		var handle_2 = this.module_link(2).field.element(by.className('handle'))
+		var handle_3 = this.module_link(3).field.element(by.className('handle'))
   		browser.driver.actions().dragAndDrop(handle_1 ,handle_2).perform()
 		browser.driver.actions().dragAndDrop(handle_3 ,handle_1).perform()
 	}},
@@ -137,7 +119,7 @@ CourseEditor.prototype = Object.create({}, {
 		sub_header.show_content_menu()
 		this.share_button.click()
 	}}
-	
+
 });
 
 module.exports = CourseEditor;

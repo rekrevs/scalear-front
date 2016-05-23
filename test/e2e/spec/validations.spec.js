@@ -44,7 +44,7 @@ var q3_x = 169;
 var q3_y = 187;
 
 var d_q1_x = 169;
-var d_q1_y = 70; 
+var d_q1_y = 70;
 
 var d_q2_x = 169;
 var d_q2_y = 130;
@@ -55,7 +55,7 @@ var d_q3_y = 190;
 
 xdescribe("Lecture validation", function(){
 	it('should sign in as teacher', function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should create course', function(){
 		new_course.open()
@@ -67,7 +67,7 @@ xdescribe("Lecture validation", function(){
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
-	})	
+	})
 	it("should create modules",function(){
 		expect(navigator.modules.count()).toEqual(0)
 		course_editor.add_module();
@@ -92,12 +92,12 @@ xdescribe("Lecture validation", function(){
 		course_editor.open_lecture_settings();
 		element(by.model('module.due_date_enabled')).then(function(due_check){
 			due_check.click();
-			expect(due_check.getAttribute('checked')).toBe(null)	
+			expect(due_check.getAttribute('checked')).toBe(null)
 		})
-	})	
+	})
 	it('should change time of module', function(){
 		change_appearance_date(getAfterNextWeek("dd-mmmm-yyyy"));
-		expect(element(by.css('[src="images/error.png"]')).isDisplayed()).toEqual(true)	
+		expect(element(by.css('[src="images/error.png"]')).isDisplayed()).toEqual(true)
 		change_appearance_date(getYesterday("dd-mmmm-yyyy"));
 	})
 
@@ -105,10 +105,10 @@ xdescribe("Lecture validation", function(){
 		it('should change module duedate checkout box to tree',function(){
 			element(by.model('module.due_date_enabled')).then(function(due_check){
 				due_check.click();
-				expect(due_check.getAttribute('checked')).toBe("true")	
+				expect(due_check.getAttribute('checked')).toBe("true")
 			})
-		})	
-		it("should add items to the first module",function(){	
+		})
+		it("should add items to the first module",function(){
 			var module = navigator.module(1)
 			module.open()
 			module.open_content_items()
@@ -129,33 +129,33 @@ xdescribe("Lecture validation", function(){
 			element(by.id("lec_settings")).click()
 			element(by.model('module.due_date_enabled')).then(function(due_check){
 			due_check.click();
-			expect(due_check.getAttribute('checked')).toBe(null)	
+			expect(due_check.getAttribute('checked')).toBe(null)
 			})
-		})	
+		})
 		it('should change lecture due date to after next week  ',function(){
 			navigator.module(1).item(1).open()
 			element(by.id("lec_settings")).click()
-			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));	
-		})	
+			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
+		})
 		it('should change module due date to next week',function(){
 			navigator.module(1).open()
 			element(by.id("lec_settings")).click()
 			element(by.model('module.due_date_enabled')).then(function(due_check){
 				due_check.click();
-				expect(due_check.getAttribute('checked')).toBe("true")	
+				expect(due_check.getAttribute('checked')).toBe("true")
 				// change_due_date(getNextWeek("dd-mmmm-yyyy"));
 			})
-		})	
+		})
 		it('should check that lecture due date change to module next week ',function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
 			element(by.id("lec_settings")).click()
-			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));	
+			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
 			element.all(by.tagName('details-date')).then(function(dates){
 				dates[1].getText().then(function(dat){
 					expect(dat.split('/')[0]).toBe(getNextWeek("dd"))
-				}) 
-			})	
+				})
+			})
 		})
 	})
 
@@ -219,7 +219,7 @@ xdescribe("Lecture validation", function(){
 
 describe("Video validation", function(){
 	it('should sign in as teacher', function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should create course', function(){
 		new_course.open()
@@ -231,7 +231,7 @@ describe("Video validation", function(){
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
-	})	
+	})
 	it("should create modules",function(){
 		expect(navigator.modules.count()).toEqual(0)
 		course_editor.add_module();
@@ -241,7 +241,7 @@ describe("Video validation", function(){
 		course_editor.rename_module("module 2")
 		expect(navigator.modules.count()).toEqual(2)
 	})
-	it("should add items to the first module",function(){	
+	it("should add items to the first module",function(){
 		var module = navigator.module(1)
 		module.open()
 		module.open_content_items()
@@ -296,7 +296,7 @@ describe("Video validation", function(){
 	})
 
 	it('should be in order and required by default', function(){
-		
+
 		// navigator.module(1).open()
 		course_editor.open_lecture_settings()
 		element(by.model('lecture.required')).then(function(in_order){
@@ -386,8 +386,8 @@ describe("Quiz validation", function(){
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
-	})	
-	it("should add items to the first module",function(){	
+	})
+	it("should add items to the first module",function(){
 		var module = navigator.module(1)
 		module.open()
         module.open_content_items()
@@ -408,7 +408,7 @@ describe("Quiz validation", function(){
 
 
 	it('should be in order and required by default', function(){
-		
+
 		// navigator.module(1).open()
 		// course_editor.open_lecture_settings()
 		element(by.model('quiz.required')).then(function(in_order){
@@ -600,13 +600,13 @@ function change_name(ptor, text){
 				pen[0].click();
 			})
 		})
-	})	
+	})
 	ptor.sleep(5000);
 		element(by.className('editable-input')).sendKeys('test');
 		ptor.findElement(protractor.By.className('editable-buttons')).findElement(protractor.By.className('fi-check')).then(function(confirm){
 			confirm.click();
 		})
-		
+
 		element.all(by.name('quiz_name')).then(function(q_names){
 			expect(q_names[0].getText()).toEqual('test');
 		})

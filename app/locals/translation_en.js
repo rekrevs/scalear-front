@@ -550,7 +550,7 @@ var translation_en={
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hover for explanation",
-    tab_for_explanation: "Tab for explanation",
+    tap_for_explanation: "Tap for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",

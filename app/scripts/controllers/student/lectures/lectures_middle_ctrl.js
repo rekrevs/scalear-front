@@ -340,6 +340,16 @@ angular.module('scalearAngularApp')
         $scope.dismissAnnotation()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
             if(time >=0 && $scope.show_progressbar){
+                if($scope.lecture_player.controls.getTime() - time > 1){
+                    Lecture.back(
+                        {
+                            course_id:$state.params.course_id,
+                            lecture_id:$state.params.lecture_id
+                        },
+                        {time:time}
+                    );
+                }
+
                 $scope.lecture_player.controls.seek(time)
                 var percent_view = Math.round((($scope.lecture_player.controls.getTime()/$scope.total_duration)*100))
                 $log.debug("current watched: "+percent_view)
@@ -575,15 +585,6 @@ angular.module('scalearAngularApp')
         openTimeline()
     }
 
-    $scope.$on('video_back',function(ev, time){
-        Lecture.back(
-            {
-                course_id:$state.params.course_id,
-                lecture_id:$state.params.lecture_id
-            },
-            {time:time}
-        );
-    })
 
     $scope.checkAnswer = function(){
         $scope.selected_quiz.quiz_type=="html"? sendHtmlAnswers() : sendAnswers()

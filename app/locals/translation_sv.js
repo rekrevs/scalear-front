@@ -593,7 +593,8 @@ var translation_sv={
     },
     tooltip:{
         see_related: "Se relaterade svar för elev",
-        quizzes_solved: "quizzar lösta"
+        quizzes_solved: "quizzar lösta",
+        watched_video: "Sett"
     },
     popover:{
         change_status: "Ändra status",

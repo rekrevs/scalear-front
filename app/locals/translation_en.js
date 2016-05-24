@@ -593,7 +593,8 @@ var translation_en={
     },
     tooltip:{
         see_related: "See related answers to student",
-        quizzes_solved: "quizzes solved"
+        quizzes_solved: "quizzes solved",
+        watched_video: "Watched"
     },
     popover:{
         change_status: "Change Status",

@@ -525,7 +525,9 @@ var translation_sv={
         really_confused:"@:global.really_confused",
         note:"@:global.note",
         quiz:"@:global.quiz",
-        marker:"@:global.marker"
+        marker:"@:global.marker",
+        watched: "Watched(t)",
+        quizzes: "quizzes(t)"
     },
     button:{
         ask_question: "Ställ en fråga",

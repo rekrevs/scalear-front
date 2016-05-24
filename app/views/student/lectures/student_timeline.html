@@ -8,6 +8,13 @@
         <span bo-if="l.class_name =='lecture'">
             <h5  ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id, 'light-grey-hover':l.id != lecture.id }" style="cursor:pointer; margin: 0px;padding-left:15px" class="truncate">
                 <b bo-text="l.name"></b>
+                <span ng-if=" l.id == lecture.id">
+                    <small style="color: white;" translate> lectures.timeline.watched</small>
+                    <small style="color: white;" >{{lecture.watched_percentage}}%</small>
+                    <small style="color: white;" >{{lecture.quiz_percentage}}</small>
+                    <small style="color: white;" translate>lectures.timeline.quizzes</small>
+                </span>
+
                 <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>lectures.optional</span>
             </h5>
             <div style="margin-left: 20px;">

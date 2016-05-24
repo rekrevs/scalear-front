@@ -66,8 +66,8 @@ angular.module('scalearAngularApp')
         $scope.lecture = null
         $scope.video_ready=false
         $scope.show_progressbar = false
-        $scope.quiz_percentage =  "0 / 0 "
-        $scope.watched_percentage = 0
+        // $scope.quiz_percentage =  "0 / 0 "
+        // $scope.watched_percentage = 0
         // $scope.play_pause_flag = 0
         removeShortcuts()
     }
@@ -148,6 +148,8 @@ angular.module('scalearAngularApp')
         if($scope.timeline){
             $timeout(function(){
                 $scope.lecture = $scope.timeline['lecture'][id].meta
+                console.log("$scope.lecture")
+                console.log($scope.lecture)
                 Page.setTitle('navigation.lectures',': '+$scope.lecture.name);
             })
 
@@ -290,8 +292,12 @@ angular.module('scalearAngularApp')
             else if(milestone == 100)
             $scope.not_done_msg = true
             $log.debug("Watched:"+data.watched+"%"+" solved:"+data.quizzes_done[0]+" total:"+data.quizzes_done[1])
-            $scope.quiz_percentage = data.quizzes_done[0]+" / "+data.quizzes_done[1]
-            $scope.watched_percentage = data.watched
+            $scope.lecture.watched_percentage = data.watched
+            $scope.lecture.quiz_percentage = data.quizzes_done[0]+" / "+data.quizzes_done[1]
+            // console.log("quiz_percentage")
+            // console.log($scope.timeline['lecture'][lecture.id].meta.quiz_percentage)
+
+
                 
         })
     }

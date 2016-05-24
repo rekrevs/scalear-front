@@ -525,7 +525,9 @@ var translation_en={
         really_confused:"@:global.really_confused",
         note:"@:global.note",
         quiz:"@:global.quiz",
-        marker:"@:global.marker"
+        marker:"@:global.marker",
+        watched:"Watched",
+        quizzes:"quizzes"
     },
     button:{
         ask_question: "Ask a Question",

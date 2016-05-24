@@ -60,7 +60,10 @@ angular.module('scalearAngularApp')
                         var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
                         $log.debug(id)
                         // var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
-                        var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=status&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk"
+                        var url = "https://www.googleapis.com/youtube/v3/videos?id=" +
+                                  id + 
+                                  "&part=status&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk"
+                        /*
                         $http.jsonp(url).success(function(data) {
                             // if(parseInt(data.entry.media$group.yt$duration.seconds)<1){
                             if(data.items[0].status.uploadStatus != "processed"){
@@ -74,13 +77,32 @@ angular.module('scalearAngularApp')
                             d.reject($translate('editor.details.vidoe_not_exist'));
                             return d.promise
                         });
+                        */
+                        
+                        $.getJSON(url, 
+                            function (data, status) {
+                                $log.debug({status: status, data: data});
+                                if(data.items.length > 0) {
+                                    d.resolve();
+                                }
+                                else {
+                                    d.reject($translate('editor.details.vidoe_not_exist'));
+                                    return d.promise;
+                                }
+                            }).error(function(){
+                                $log.debug({status: status, data: data});
+                                d.reject($translate('editor.details.vidoe_not_exist'));
+                                return d.promise
+                                });
                     }
-                    else if(isMP4(lecture.url))
+                    else if(isMP4(lecture.url)) {
                         d.resolve()
-                    else
+                    }
+                    else {
                         d.reject($translate('editor.details.incompatible_link'))
+                    }
                 }
-                else{
+                else {
                     d.resolve()
                 }
             },

@@ -120,7 +120,7 @@ angular.module('scalearAngularApp')
         $scope.$apply()
       }, { "disable_in_input": true });
       shortcut.add("k", function() {
-        $scope.play_pause();
+        $scope.toggleVideoPlayback();
         $scope.$apply()
       }, { "disable_in_input": true });
       shortcut.add("l", function() {
@@ -477,10 +477,8 @@ angular.module('scalearAngularApp')
       var time = $scope.lecture_player.controls.getTime()
       $scope.seek(time - 10)
     }
-    $scope.play_pause = function() {
+    $scope.toggleVideoPlayback = function() {
       $scope.lecture_player.controls.paused() ? $scope.lecture_player.controls.play() : $scope.lecture_player.controls.pause()
-        // $scope.play_pause_flag? $scope.play_pause_flag = 0 : $scope.play_pause_flag = 1
-
     }
 
     $scope.fast_forward = function() {

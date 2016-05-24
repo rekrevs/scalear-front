@@ -239,10 +239,14 @@ angular.module('scalearAngularApp')
 
       player_controls.cue = function(time, callback) {
         player.cue(time, callback)
-        return player_controls.getCueEvent()
+        return player_controls.getLastCueEvent()
       }
-      player_controls.getCueEvent = function() {
+      player_controls.getLastCueEvent = function() {
         return player.getTrackEvent(player.getLastTrackEventId());
+      }
+
+      player_controls.removeTrackEvent = function(id){
+        player.removeTrackEvent(id)
       }
 
       player_controls.replay = function() {
@@ -990,10 +994,10 @@ angular.module('scalearAngularApp')
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
         if ($cookieStore.get('volume') != null){
-          scope.volume = $cookieStore.get('volume') 
+          scope.volume = $cookieStore.get('volume')
         }
         else{
-          scope.volume =  0.8 
+          scope.volume =  0.8
         }
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()

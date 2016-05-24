@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page','scalear_utils','$translate', function ($rootScope,$scope, Course,$state, $window, $log,Page, scalear_utils, $translate) {
+  .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page','scalear_utils','$translate','$filter', function ($rootScope,$scope, Course,$state, $window, $log,Page, scalear_utils, $translate,$filter) {
 		$window.scrollTo(0, 0);
 		Page.setTitle('navigation.new_course')
 		$rootScope.subheader_message = $translate("navigation.new_course")
@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
 		Course.newCourse(
 			function(data){
 				$scope.importing=data.importing;
+				console.log(data.importing)
 				$scope.timezones=scalear_utils.listTimezones()
 				$scope.course.time_zone = $scope.timezones[11] //GMT+0
 				$scope.course.start_date = new Date()
@@ -17,6 +18,18 @@ angular.module('scalearAngularApp')
 			}
 		);
 		
+		$scope.add_import_information = function(){
+			var course_info = $filter("filter")($scope.importing,{id:$scope.import_from},true)
+			if (course_info){
+				if (course_info[0].description){
+					$scope.course.description =  ($scope.course.description || "")+"\n"  + (("[Copied from "+course_info[0].name + " :]\n"+course_info[0].description) 	)
+				}
+				if (course_info[0].prerequisites){
+					$scope.course.prerequisites =  ($scope.course.prerequisites||"") +"\n" + (("[Copied from "+course_info[0].name + " :]\n"+course_info[0].prerequisites)) 
+				}
+			}		 
+		}
+
 		$scope.createCourse = function(){
 			if($scope.form.$valid){
  				var modified_course = angular.copy($scope.course)

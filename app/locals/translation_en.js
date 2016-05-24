@@ -753,6 +753,7 @@ var translation_en={
         copy_from_existing: "Copy Data from Existing Course",
     },
     start_date: "Course Start Date",
+    end_date: "Course End Date",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",

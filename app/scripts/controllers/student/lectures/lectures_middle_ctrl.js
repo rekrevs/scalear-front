@@ -148,7 +148,9 @@ angular.module('scalearAngularApp')
         if($scope.timeline){
             $timeout(function(){
                 $scope.lecture = $scope.timeline['lecture'][id].meta
-                Page.setTitle('navigation.lectures',': '+$scope.lecture.name);
+                Page.setTitle($scope.module_obj[$stateParams.module_id].name + ': ' +
+                              $scope.lecture.name + ' - ' + 
+                              $scope.course.name);
             })
 
             $scope.$parent.$parent.current_item= id

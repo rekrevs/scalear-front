@@ -152,7 +152,7 @@ label{
 	display:inline-block;
 }  
 
-.dropped{
+.dropped_drag{
     border: 2px dashed rgb(0, 0, 0);
     border-radius: 6px;
     background-color: white; 

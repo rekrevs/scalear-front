@@ -398,7 +398,7 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: 'E',
       template: "<div>" +
-        "<div class='component dropped'  ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<div class='component dropped_drag'  ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div >" +
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
         "<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'></h6>" +
@@ -409,8 +409,6 @@ angular.module('scalearAngularApp')
         "<span class='no-margin' >{{data.answer}}</span>" +
         "</div>" +
         "</div>",
-// <div ng-style="{left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%', position: 'absolute', width:(data.width*100)+'%', height:(data.height*100)+'%'}" data-drop="true" jqyoui-droppable='{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}' class="drop-div no-margin" ></div>
-// <span class="dragged handle" style="z-index:1;margin:0; border: 1px groove grey;" ng-style="{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%', position: 'absolute'}" data-drag="true" data-jqyoui-options='{containment:".ontop"}' jqyoui-draggable='{onStart:"formatDrag", onDrag:"adjustDrag",onStop:"convertPositionToPercent"}' pop-over="explanation_pop">{{data.answer}}</span>
 
       link: function(scope, element, attrs) {
 

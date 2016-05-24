@@ -47,7 +47,7 @@
 										</div>
 										<div ng-show="annotation" style="position: absolute;bottom: 0;min-width: 50%;border: 1px groove #e6e6e6;padding: 5px;z-index: 1;font-size: 14px;border-radius: 5px;" class=" transparent-darkblue-hover ">
 											<a ng-click="dismissAnnotation()"><i class="color-white size-14 fi-x" style="top: 0;position: absolute;margin: 5px;float: right;right: 0;line-height: 0;"></i></a>
-											<div class="color-white" style="width: 97%;font-size:2.4vh"><b>{{annotation}}</b></div>
+											<div class="color-white" style="width: 97%;font-size:2.4vh"><b ng-bind-html="annotation | parseUrlFilter:'_blank'" ng-click="play_pause()"></b></div>
 										</div>
 									</quiz>
 								</youtube>
@@ -73,21 +73,22 @@
 					    </video_container>
 				</form>	
 				<div ng-show="!fullscreen && passed_requirments" class="row no-margin with-tiny-margin-top">
-					<center class="small-block-grid-3">
-					<div style="display:inline-block" class=" small with-tiny-margin-bottom">
-						<div><small>Watched:{{watched_percentage}}%</small></div>
-						<div><small>{{ quiz_percentage}}quizzes</small></div>
-					</div>
-						
+					<center class="small-block-grid-3">						
 						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
 						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
 						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
 						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
 					</center>
+<!-- 					<center>
+						<div style="display:inline-block" class=" small with-tiny-margin-bottom">
+							<div><small>Watched:{{watched_percentage}}%</small></div>
+							<div><small>{{ quiz_percentage}} quizzes</small></div>
+						</div>
+					</center> -->
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" open="TimelineNavigator.status"/>
+	<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" open="TimelineNavigator.status" />
 </span>

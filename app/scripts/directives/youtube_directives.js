@@ -1023,7 +1023,6 @@ angular.module('scalearAngularApp')
         scope.player.controls.pause();
         scope.player.controls.seek(t - 10)
         scope.player.controls.play();
-        scope.$emit('video_back', t - 10)
       }, { "disable_in_input": true });
 
       scope.$on('$destroy', function() {

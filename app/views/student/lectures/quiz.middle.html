@@ -22,7 +22,7 @@
         {{quiz.name}}
     </h3>
     <h5 class="subheader">{{quiz.instructions}}</h5>
-    <div ng-if="quiz.quiz_type=='quiz'">
+    <div class="small-12 columns">
     	<p ng-if="status.attempts<quiz.retries+1">
     		<span translate="quizzes.attempt_number"></span>:
             {{status.attempts || 0}}/{{quiz.retries+1}}
@@ -50,8 +50,9 @@
             </span>
     	</form>
     </div>
+
     <div class="with-margin-top small-12 columns">
-        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.status=='Saved' && quiz.quiz_type == 'survey')" type="button" class="button tiny" ng-click="saveQuiz('save')">
+        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts==quiz.retries+1 && quiz.quiz_type == 'survey')" type="button" class="button tiny" ng-click="saveQuiz('save')">
            <span translate>button.save</span>
         </button>
         <button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">

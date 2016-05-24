@@ -80,7 +80,8 @@ angular.module('scalearAngularApp')
                     $scope.next_item= data.next_item;
         			if(data.correct)
         				$scope.correct=data.correct; 
-                    $scope.course.markDone(data.done[1],data.done[0], data.done[2])
+                    if(data.done[2])
+                        $scope.course.markDone(data.done[1],data.done[0])
         		}
             );
     	}

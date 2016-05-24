@@ -525,7 +525,9 @@ var translation_sv={
         really_confused:"@:global.really_confused",
         note:"@:global.note",
         quiz:"@:global.quiz",
-        marker:"@:global.marker"
+        marker:"@:global.marker",
+        watched: "Watched(t)",
+        quizzes: "quizzes(t)"
     },
     button:{
         ask_question: "Ställ en fråga",
@@ -549,8 +551,8 @@ var translation_sv={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_details: "Peka på alternativen för mer information",
-    click_for_details: "@:lectures.hover_for_details",
+    hover_for_explanation: "Hover for explanation(t)",  
+    tap_for_explanation: "Tap for explanation(t)",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
     must_place_items: "Du måste placera alla objekt",
@@ -593,7 +595,8 @@ var translation_sv={
     },
     tooltip:{
         see_related: "Se relaterade svar för elev",
-        quizzes_solved: "quizzar lösta"
+        quizzes_solved: "quizzar lösta",
+        watched_video: "Sett"
     },
     popover:{
         change_status: "Ändra status",
@@ -752,6 +755,7 @@ var translation_sv={
         copy_from_existing: "Kopiera data från befintlig kurs",
     },
     start_date: "Startdatum",
+    end_date: "Course End Date(t)",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",

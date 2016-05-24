@@ -525,7 +525,9 @@ var translation_en={
         really_confused:"@:global.really_confused",
         note:"@:global.note",
         quiz:"@:global.quiz",
-        marker:"@:global.marker"
+        marker:"@:global.marker",
+        watched:"Watched",
+        quizzes:"quizzes"
     },
     button:{
         ask_question: "Ask a Question",
@@ -549,8 +551,8 @@ var translation_en={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_details: "Hover for details",
-    click_for_details: "Click for details",
+    hover_for_explanation: "Hover for explanation",
+    tap_for_explanation: "Tap for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",
@@ -593,7 +595,8 @@ var translation_en={
     },
     tooltip:{
         see_related: "See related answers to student",
-        quizzes_solved: "quizzes solved"
+        quizzes_solved: "quizzes solved",
+        watched_video: "Watched"
     },
     popover:{
         change_status: "Change Status",
@@ -752,6 +755,7 @@ var translation_en={
         copy_from_existing: "Copy Data from Existing Course",
     },
     start_date: "Course Start Date",
+    end_date: "Course End Date",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",

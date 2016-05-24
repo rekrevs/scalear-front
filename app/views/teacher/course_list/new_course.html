@@ -32,10 +32,15 @@
                 </div>
             </div>
             <div class="large-10 column with-small-margin-bottom no-padding left">
-                <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
+<!--                 <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
                 <div>
                     <input name="duration" min="0" type="number" ng-model="course.duration" ng-init="course.duration=10" placeholder="*{{'time.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
                     <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
+                </div> -->
+                <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.end_date</small>
+                <div>
+                    <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}"/>
+                    <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
                 </div>
             </div>
         </div>
@@ -87,12 +92,19 @@
                     </div>
                 </div>
                 <div class="with-tiny-margin-bottom no-padding small-10">
-                    <span class="left">
+<!--                     <span class="left">
                         <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
                     </span>
                     <div>
                         <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'time.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
                         <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
+                    </div> -->
+                    <span class="left">
+                        <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.end_date</small>
+                    </span>
+                    <div>
+                         <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}"/>
+                        <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
                     </div>
                 </div>
             </center>

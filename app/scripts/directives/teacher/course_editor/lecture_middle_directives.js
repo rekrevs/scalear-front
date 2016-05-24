@@ -211,6 +211,9 @@ angular.module('scalearAngularApp')
               $("#delete_marker_button").find('a').focus()
             }
           }
+          else if($("#delete_marker_button").find('a').is(':focus')){
+              $("input.marker_name").focus()
+          }
         }
         var removeShortcuts=function(){
           shortcut.remove("Enter");
@@ -398,15 +401,15 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: 'E',
       template: "<div>" +
-        "<div class='component dropped answer_drag' style='border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 20px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<div class='component dropped_drag'  ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div >" +
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
-        "<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'>{{data.answer}}</h6>" +
+        "<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'></h6>" +
         "</div>" +
         "</div>" +
-        "<div class='dragged handle' data-drag='true' style='height: 31px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
-        "<span class='position-header error light-grey dark-text no-margin' style='top: -1px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>editor.drag.start</span></span>" +
-        "<h6 class='no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}</h6>" +
+        "<div class='dragged handle' data-drag='true' style='height: 46px; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<span class='position-header error light-grey dark-text no-margin' style='top: 6px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>editor.drag.start</span></span>" +
+        "<span class='no-margin' >{{data.answer}}</span>" +
         "</div>" +
         "</div>",
 

@@ -101,6 +101,13 @@
                 </div>
             </div>
             <div class="with-small-margin-bottom">
+                <i class="fi-calendar size-18"></i>
+                <small translate>courses.end_date</small>
+                <div>
+                    <details-date date="course.end_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="end_date"></details-date>
+                </div>
+            </div>
+            <div class="with-small-margin-bottom">
                 <i class="fi-web size-18"></i>
                 <small translate>courses.time_zone</small>
                 <div>
@@ -114,13 +121,13 @@
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link" class="break-text"></details-link>
                 </div>
             </div>
-            <div class="with-margin-bottom">
+<!--             <div class="with-margin-bottom">
                 <i class="fi-clock size-18"></i>
                 <small translate>courses.duration</small>
                 <div>
                     <details-text id="duration" value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text>
                 </div>
-            </div>
+            </div> -->
             <div class="with-small-margin-bottom" page-name="navigation.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
                 <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.information.button.export_as</span> CSV</button>
             </div>

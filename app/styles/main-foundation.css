@@ -2518,7 +2518,7 @@ a.active{
 
 .ngdialog.ngdialog-theme-custom .ngdialog-message {
   font-size: 16px;
-  font-family: 'Source Sans Pro';
+  font-family:  'Montserrat', 'Helvetica', Arial, sans-serif;
   line-height: 22px;
   margin-bottom: 1.5em;
 }
@@ -2541,13 +2541,15 @@ a.active{
 }
 
 .ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-secondary {
-  background: #e0e0e0;
+  background: #e7e7e7;
+  text-transform: initial;
   -webkit-border-radius: 0;
   border-radius: 0;
 }
 
 .ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-alert {
-  background: red;
+  background: #f74124;
+  text-transform: initial;
   -webkit-border-radius: 0;
   border-radius: 0;
 }

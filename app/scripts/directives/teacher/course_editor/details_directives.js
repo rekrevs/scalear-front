@@ -48,6 +48,7 @@ angular.module('scalearAngularApp')
             value: "=",
             save: "&",
             validate: "&",
+            column: "@",
             open:"="
         },
         link: function(scope, element, attr) {

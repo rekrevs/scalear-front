@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
                 User.sign_up({}, {
                     user: $scope.user
                 }, function() {
-                    $state.go('thanks_for_registering',{type:$scope.role_id-1}); //0 mean teacher, 1 means student
+                    $state.go('thanks_for_registering',{type:$scope.role_id-1, email : $scope.user.email}); //0 mean teacher, 1 means student
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                 })

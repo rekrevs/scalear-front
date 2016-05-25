@@ -127,6 +127,7 @@ var translation_en={
     dashboard: "Dashboard",
     account: "Account",
     show_all_courses: "Show all courses",
+    copied_from: "Copied From",
     description:{
       settings_description: "Modify your account information/settings",
     },

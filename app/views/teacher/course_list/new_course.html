@@ -111,10 +111,10 @@
         <h5 translate class="subheader">courses.new.copy_from_existing</h5>
         <div class="row with-margin-bottom">
             <div class="small-10 columns">
-                <select ng-model="import_from" ng-change="add_import_information()" ng-options="element.id as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
+                <select ng-model="import_from" ng-change="add_import_information()" ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
             </div>
             <div ng-show="import_from" class="small-2 columns" style="margin-top: 3px;">
-                <button type="button" class="button secondary tiny" ng-click="import_from=''" ><span translate>courses.new.button.unselect</span></button>
+                <button type="button" class="button secondary tiny" ng-click="unselect_course()" ><span translate>courses.new.button.unselect</span></button>
             </div>
         </div>
         <button ng-disabled="submitting || image_not_found" type="submit" class="button success right"><span translate>courses.new.button.create_course</span></button>

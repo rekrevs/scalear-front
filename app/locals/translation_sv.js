@@ -127,6 +127,7 @@ var translation_sv={
     dashboard: "Instrumentpanel",
     account: "Konto",
     show_all_courses: "Visa mina kurser",
+    copied_from: "Copied From(t)",
     description:{
       settings_description: "Ändra dina kontoinställningar",
     },

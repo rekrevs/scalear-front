@@ -73,6 +73,7 @@ var translation_en={
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",
     change_password_confirmation: "You have successfully changed your password.",
+    export_course: "Your anonymized course data will be emailed to you shortly." ,
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -706,7 +707,7 @@ var translation_en={
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
-            export_as: "Export course as",
+            export_as: "Export anonymized course data",
             invite: "Invite to Join",
         },
         tooltip:{

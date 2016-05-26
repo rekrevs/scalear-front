@@ -73,6 +73,7 @@ var translation_sv={
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",
     change_password_confirmation: "You have successfully changed your password.(t)",
+    export_course: "Your anonymized course data will be emailed to you shortly.(t)" ,
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -706,7 +707,7 @@ var translation_sv={
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",
-            export_as: "Exportera kursen som",
+            export_as: "Export anonymized course data(t)",
             invite: "Bjud in",
         },
         tooltip:{

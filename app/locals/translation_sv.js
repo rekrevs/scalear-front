@@ -73,6 +73,7 @@ var translation_sv={
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",
     change_password_confirmation: "You have successfully changed your password.(t)",
+    export_student:"Your student list will be emailed to you shortly(t).",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -668,6 +669,7 @@ var translation_sv={
     select_all: "Markera alla",
     deselect_all: "Avmarkera alla",
     done:"@:global.done",
+    export_as: "Export Student List",
   },
   groups:{
     module: "Modul",

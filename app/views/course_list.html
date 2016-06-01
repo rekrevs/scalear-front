@@ -62,9 +62,9 @@
       <course-item ng-repeat="course in courses | filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
     </div>
   </div>
-        <div class="columns button-group" style="text-align: center; line-height: 12px;" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="false" page-name="{{current}}">
-        <button type="button" class="button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" style="margin-right: 10px;" translate>courses.list.all</button>
-        <button type="button" class="button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" style="margin-right: 10px;" translate>courses.list.current</button>
-        <button type="button" class="button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" style="margin-right: 10px;" translate>courses.list.all_finished</button>
+        <div class="small-12 medium-4 left columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="false" page-name="{{current}}">
+        <button type="button" class="left button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" style="margin-right: 10px;" translate>courses.list.all</button>
+        <button type="button" class="left button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" style="margin-right: 10px;" translate>courses.list.current</button>
+        <button type="button" class="left button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" style="margin-right: 10px;" translate>courses.list.all_finished</button>
       </div>
 </div>

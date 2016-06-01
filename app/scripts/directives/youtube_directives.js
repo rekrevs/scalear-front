@@ -968,7 +968,7 @@ angular.module('scalearAngularApp')
         //for some reason youtube requires clicking the
         //play button twice to play after video end
         //simulating first click on play
-        scope.player.controls.seek(0)
+        // scope.player.controls.seek(0)
         $timeout(function() {
           scope.player.controls.play();
           scope.player.controls.pause();

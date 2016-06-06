@@ -78,6 +78,15 @@ var params= {
 
     url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
     url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+    video1:{
+        url:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+        duration:{ min:4, sec:47},
+    },
+    video2:{
+        url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+        duration:{ min:6, sec:5},
+    },
+
     q_x:169,
     q1_y:127,
     q2_y:157,
@@ -98,6 +107,16 @@ var params= {
     student_name: "Student",
     // guerrillamail_last_name: "4",
     guerrillamail_sch_uni_name: "test univerisity",
+
+    prepare: function(custom_browser) {
+        var this_browser = custom_browser || browser
+        this_browser.driver.manage().window().maximize();
+        this_browser.driver.get(params.frontend);
+        this_browser.driver.wait(function() {
+            return this_browser.element(by.id('login')).isPresent()
+        }, 30000)
+        this_browser.element(by.id('login')).click();
+    }
 
 }
 
@@ -179,7 +198,8 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/fill_course_pi.spec.js', // Done
+        // 'test/e2e/spec/fill_course_pi.spec.js', // Done
+        'test/e2e/spec/inclass_pi.spec.js', // Done
         // 'test/e2e/spec/create_course.spec.js', // Done
         // 'test/e2e/spec/fill_course.spec.js',// Done
         // 'test/e2e/spec/course_information_validation.spec.js',// Done
@@ -278,14 +298,15 @@ exports.config = {
     // before the specs are executed
     // You can specify a file containing code to run by setting onPrepare to
     // the filename string.
-    onPrepare: function() {
-        browser.driver.manage().window().maximize();
-        browser.driver.get(params.frontend);
-        browser.driver.wait(function() {
-            return element(by.id('login')).isPresent()
-        }, 30000)
-        element(by.id('login')).click();
-    },
+    onPrepare: params.prepare,
+    // function() {
+    //     browser.driver.manage().window().maximize();
+    //     browser.driver.get(params.frontend);
+    //     browser.driver.wait(function() {
+    //         return element(by.id('login')).isPresent()
+    //     }, 30000)
+    //     element(by.id('login')).click();
+    // },
 
     // The params object will be passed directly to the protractor instance,
     // and can be accessed from your test. It is an arbitrary object and can

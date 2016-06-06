@@ -248,13 +248,11 @@
     box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
 }
 
-.original_chart{
+.original_chart, .stage_timer{
 	max-width: 40%;
 	min-width: 40%;
 	float:right;
-	/*padding-top: 20px;*/
 	opacity:1;
-	/*overflow-y: auto;*/
 	left:0 !important;
 	top:0 !important;
 }

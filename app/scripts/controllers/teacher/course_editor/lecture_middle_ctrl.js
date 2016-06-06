@@ -196,9 +196,11 @@ angular.module('scalearAngularApp')
         if ($scope.lecture.inclass) {
           var offset = 5
           var caluclated_offset = (offset * duration) / 100
+          console.log("caluclated_offset", caluclated_offset);
 
           start_time = (start_time - caluclated_offset < 0) ? 0 : start_time - caluclated_offset
           end_time = (end_time + caluclated_offset > duration - 1) ? duration - 1 : end_time + caluclated_offset
+          console.log("start time", start_time);
         }
 
         $scope.quiz_loading = true;

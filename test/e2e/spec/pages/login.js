@@ -25,38 +25,32 @@ Login.prototype = Object.create({}, {
 	use_scalable_account_button:{get:function(){return element(by.css('[ng-click="showLoginForm()"]'))}},
 
 	sign_in:{value:function(email, password){
-		browser.ignoreSynchronization = false;
 		element(by.id('login')).isDisplayed().then(function(result) {
 		    if (result) {
 		    	element(by.id('login')).click()
 		    }
 		})
 		var login_obj = this
-		// element(by.css('[ng-click="showLoginForm()"]')).isDisplayed().then(function(result) {
-		//     if (result) {
-		//     	element(by.css('[ng-click="showLoginForm()"]')).click()
-		//     }
-		// })
 
 		element(by.className('previous_provider')).isDisplayed().then(function(result) {
 		    if (result) {
 		    	login_obj.prev_provider_email_field.click()
 		    	login_obj.prev_provider_type_email(email);
-				login_obj.prev_provider_type_password(password);
-				login_obj.prev_provider_login_button.click();
+					login_obj.prev_provider_type_password(password);
+					login_obj.prev_provider_login_button.click();
 		    }
 		    else{
 		    	login_obj.use_scalable_account_button.click()
 		    	login_obj.type_email(email);
+					login_obj.type_password(password);
+					login_obj.login_button.click();
+		    }
+		}, function(){
+	    	login_obj.use_scalable_account_button.click()
+	    	login_obj.type_email(email);
 				login_obj.type_password(password);
 				login_obj.login_button.click();
-		    }
-		} , function(){
-		    	login_obj.use_scalable_account_button.click()
-		    	login_obj.type_email(email);
-				login_obj.type_password(password);
-				login_obj.login_button.click();			
-		} )
+		})
 	}}
 });
 

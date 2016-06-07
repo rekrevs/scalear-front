@@ -33,6 +33,7 @@ angular.module('scalearAngularApp')
       'getCourseware':{method:'GET', params:{action:'courseware_angular'},headers:headers},
       'getEnrolledStudents':{method:'GET', params:{action:'enrolled_students'},headers:headers, isArray: true},
       'exportCsv':{method:'GET', params:{action:'export_csv'},headers:headers},
+      'exportStudentCsv':{method:'GET', params:{action:'export_student_csv'},headers:headers},
       'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},

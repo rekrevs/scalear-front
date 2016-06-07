@@ -1,5 +1,5 @@
 <accordion class="details_accordian" close-others="false">
-  <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
+  <accordion-group class="accordion-group" is-open= "lecture_details_groups.video">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="video_settings" class="show-inline" translate>content.types.video</div>
@@ -56,7 +56,7 @@
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group">
+  <accordion-group class="accordion-group" is-open="lecture_details_groups.settings">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="lec_settings" class="show-inline" translate>global.settings</div>
@@ -136,7 +136,7 @@
 
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items|filter:{type:'quiz'}).length">
+  <accordion-group class="accordion-group overflow-auto" is-open="lecture_details_groups.quizzes">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.quizzes</div>
@@ -144,7 +144,7 @@
     </accordion-heading>
     <quiz_list />
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items| filter:{type:'marker'}).length">
+  <accordion-group class="accordion-group overflow-auto" is-open="lecture_details_groups.markers">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.markers</div>

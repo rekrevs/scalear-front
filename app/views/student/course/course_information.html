@@ -21,7 +21,7 @@
                 <div class="small-10 columns with-small-padding-left">
                     <li class="break-text">{{teacher.name+' '+teacher.last_name}}</li>
                     <li class="email break-text"><a href="">{{teacher.email}}</a></li>
-                    <li >{{'courses.information'+teacher.role | translate}}</li>                    
+                    <li >{{'courses.information.'+teacher.role | translate}}</li>
                 </div>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
         </div>
         <!-- <h4 class="color-blue show-for-small-only">
-            <span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.information.taught_by</span> 
+            <span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.information.taught_by</span>
             <span ng-repeat="teacher in teachers">{{teacher.name}}
                 <span ng-if="$index < teachers.length-1">, </span>
             </span>
@@ -88,19 +88,27 @@
                     <small class="with-tiny-margin-left" translate>courses.start_date</small>
                     <div>{{course.start_date | amDateFormat:'dddd, DD MMMM YYYY'}}</div>
                 </div>
-                <div class="with-small-margin-bottom">
+                <div id='course_end_date' class="with-small-margin-bottom">
+                    <i class="fi-calendar size-18"></i>
+                    <small class="with-tiny-margin-left" translate>courses.end_date</small>
+                    <div>{{course.end_date | amDateFormat:'dddd, DD MMMM YYYY'}}</div>
+                </div>
+<!--                 <div class="with-small-margin-bottom">
                     <i class="fi-clock size-18"></i>
                     <small class="with-tiny-margin-left" translate>courses.duration</small>
                     <div>{{course.duration}}</div>
-                </div>
+                </div> -->
                 <div class="with-small-margin-bottom" ng-if="course.discussion_link">
-                    <i class="fi-link size-18"></i> 
+                    <i class="fi-link size-18"></i>
                     <small translate>courses.information.discussion_forum_link</small>
                     <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
                 </div>
+                <div>
+                    <label><input type="checkbox" ng-model="email_due_date" ng-change="updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></label>
+                </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 <!--<span ng-show="course" class="small-12 columns">
     <div class="small-3 columns no-padding">
@@ -175,7 +183,7 @@
             <p id='course_prerequisites' style="font-weight: 200;">
                 {{course.prerequisites}}
             </p>
-            
+
             <h5 translate class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false">navigation.announcements</h5>
             <p style="font-weight: 200;">
                 <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>

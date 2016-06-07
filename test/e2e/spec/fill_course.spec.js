@@ -9,6 +9,7 @@ var Login = require('./pages/login');
 var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
+var scroll_top = require('./lib/utils').scroll_top;
 
 var params = browser.params;
 var header = new Header()
@@ -32,7 +33,7 @@ var q3_x = 169;
 var q3_y = 187;
 
 var d_q1_x = 169;
-var d_q1_y = 70; 
+var d_q1_y = 70;
 
 var d_q2_x = 169;
 var d_q2_y = 130;
@@ -52,7 +53,7 @@ describe("Filling Course",function(){
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
 		})
-	
+
 		it("should create modules",function(){
 			expect(navigator.modules.count()).toEqual(0)
 			course_editor.add_module();
@@ -67,21 +68,22 @@ describe("Filling Course",function(){
 			module.open()
 			module.open_content_items()
 			content_items.add_video()
+			// sleep(5000)
 	        course_editor.rename_item("lecture1 video quizzes")
 	        course_editor.change_item_url(params.url1)
-	        video.wait_till_ready()
+	        // video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_video()
 	        course_editor.rename_item("lecture2 text quizzes")
 	        course_editor.change_item_url(params.url1)
-	        video.wait_till_ready()
+	        // video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_video()
 	        course_editor.rename_item("lecture3 video surveys")
 	        course_editor.change_item_url(params.url1)
-			video.wait_till_ready()
+			// video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_quiz()
@@ -93,7 +95,7 @@ describe("Filling Course",function(){
 
 	        module.open_content_items()
 			content_items.add_survey()
-	        course_editor.rename_item("survey1")     
+	        course_editor.rename_item("survey1")
 		})
 
 		it("should add items to the second module",function(){
@@ -103,19 +105,19 @@ describe("Filling Course",function(){
 			content_items.add_video()
 	        course_editor.rename_item("lecture4 video quizzes")
 	        course_editor.change_item_url(params.url1)
-	        video.wait_till_ready()
+	        // video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_video()
 	        course_editor.rename_item("lecture5 text quizzes")
 	        course_editor.change_item_url(params.url1)
-	        video.wait_till_ready()
+	        // video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_video()
 	        course_editor.rename_item("lecture6 video surveys")
 	        course_editor.change_item_url(params.url1)
-			video.wait_till_ready()
+			// video.wait_till_ready()
 
 	        module.open_content_items()
 			content_items.add_quiz()
@@ -127,7 +129,7 @@ describe("Filling Course",function(){
 
 			module.open_content_items()
 			content_items.add_survey()
-	        course_editor.rename_item("survey2")     
+	        course_editor.rename_item("survey2")
 		})
 
 		it("should open first lecture in first module",function(){
@@ -160,11 +162,14 @@ describe("Filling Course",function(){
 			invideo_quiz.rename("OCQ QUIZ")
 			invideo_quiz.add_answer(q1_x, q1_y)
 			invideo_quiz.type_explanation("explanation 1")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
 			invideo_quiz.mark_correct()
 			invideo_quiz.type_explanation("explanation 2")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
 			invideo_quiz.type_explanation("explanation 3")
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 			expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 
@@ -172,9 +177,13 @@ describe("Filling Course",function(){
 			invideo_quiz.create(invideo_quiz.drag)
 			expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
 			invideo_quiz.rename("DRAG QUIZ")
-			invideo_quiz.add_answer(d_q1_x, d_q1_y)
-			invideo_quiz.add_answer(d_q2_x, d_q2_y)
-			invideo_quiz.add_answer(d_q3_x, d_q3_y)
+			scroll_top()
+			invideo_quiz.add_answer_drag(d_q1_x, d_q1_y)
+			invideo_quiz.hide_popover()
+			invideo_quiz.add_answer_drag(d_q2_x, d_q2_y)
+			invideo_quiz.hide_popover()
+			invideo_quiz.add_answer_drag(d_q3_x, d_q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 			expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 		})
@@ -246,8 +255,11 @@ describe("Filling Course",function(){
 			expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
 			invideo_quiz.rename('MCQ SURVEY')
 			invideo_quiz.add_answer(q1_x, q1_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 			expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 
@@ -256,8 +268,11 @@ describe("Filling Course",function(){
 			expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
 			invideo_quiz.rename('OCQ SURVEY')
 			invideo_quiz.add_answer(q1_x, q1_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 			expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 		})
@@ -308,15 +323,15 @@ describe("Filling Course",function(){
 
 			quiz.add_question()
 			expect(quiz.questions.count()).toEqual(5)
-			var question = quiz.question(5)			
+			var question = quiz.question(5)
 			question.type_title('free question')
 			question.change_type_free_text()
 
 			quiz.add_question()
 			expect(quiz.questions.count()).toEqual(6)
-			var question = quiz.question(6)			
+			var question = quiz.question(6)
 			question.type_title('match question')
-			question.change_type_match_text()			
+			question.change_type_match_text()
 			question.type_answer('match answer')
 
 			quiz.add_question()
@@ -331,7 +346,7 @@ describe("Filling Course",function(){
 			question.add_answer()
 			question.type_answer("answer 3")
 			expect(question.answers.count()).toEqual(3)
-			
+
 			quiz.save()
 		})
 
@@ -397,7 +412,7 @@ describe("Filling Course",function(){
 			question.type_answer("answer 2")
 			question.add_answer()
 			question.type_answer("answer 3")
-			
+
 			quiz.save()
 		})
 
@@ -442,16 +457,18 @@ describe("Filling Course",function(){
 			var question = quiz.question(5)
 			question.type_title('free question')
 			question.change_type_free_text()
-			
+
 			quiz.save()
 		})
 
-		// /////////////////////////////////////
+		/////////////////////////////////////
 
 		it("should open first lecture in second module",function(){
+			// browser.refresh()
 			navigator.module(2).open()
 			navigator.module(2).item(1).open()
 			navigator.close()
+
 		})
 
 		it("should add video quizzes",function(){
@@ -477,20 +494,27 @@ describe("Filling Course",function(){
 			invideo_quiz.rename("OCQ QUIZ")
 			invideo_quiz.add_answer(q1_x, q1_y)
 			invideo_quiz.type_explanation("explanation 1")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
 			invideo_quiz.mark_correct()
 			invideo_quiz.type_explanation("explanation 2")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
 			invideo_quiz.type_explanation("explanation 3")
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 
 			video.seek(30)
 			invideo_quiz.create(invideo_quiz.drag)
 			expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
 			invideo_quiz.rename("DRAG QUIZ")
+			scroll_top()
 			invideo_quiz.add_answer(d_q1_x, d_q1_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(d_q2_x, d_q2_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(d_q3_x, d_q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 		})
 
@@ -554,16 +578,22 @@ describe("Filling Course",function(){
 			invideo_quiz.create(invideo_quiz.mcq_survey)
 			invideo_quiz.rename('MCQ SURVEY')
 			invideo_quiz.add_answer(q1_x, q1_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 
 			video.seek(20)
 			invideo_quiz.create(invideo_quiz.ocq_survey)
 			invideo_quiz.rename('OCQ SURVEY')
 			invideo_quiz.add_answer(q1_x, q1_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
+			invideo_quiz.hide_popover()
 			invideo_quiz.save_quiz()
 		})
 
@@ -630,7 +660,7 @@ describe("Filling Course",function(){
 			question.type_answer("answer 2")
 			question.add_answer()
 			question.type_answer("answer 3")
-			
+
 			quiz.save()
 
 		})
@@ -697,7 +727,7 @@ describe("Filling Course",function(){
 			question.type_answer("answer 2")
 			question.add_answer()
 			question.type_answer("answer 3")
-			
+
 			quiz.save()
 		})
 
@@ -742,7 +772,7 @@ describe("Filling Course",function(){
 			var question = quiz.question(5)
 			question.type_title('free question')
 			question.change_type_free_text()
-			
+
 			quiz.save()
 		})
 		it("should logout",function(){

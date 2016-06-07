@@ -1,9 +1,9 @@
 <accordion class="details_accordian" close-others="false">
-  <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
+  <accordion-group class="accordion-group" is-open= "lecture_details_groups.video">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="video_settings" class="show-inline" translate>content.types.video</div>
-      </div>              
+      </div>
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
       <tr>
@@ -18,9 +18,24 @@
           <i class='fi-info' tooltip='{{"editor.tooltip.video_info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <big-area id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
+            <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"><details-url>
         </td>
       </tr>
+
+      <!-- <tr>
+        <td class="right-border small-4">Start/Stop</td>
+        <td>
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>Start:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>
+          </div>
+          <br />
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>End:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; color: #555;">{{lecture.end_time | format}}</div>
+          </div>
+        </td>
+      </tr> -->
       <tr>
         <td class="right-border small-4"><span translate>editor.details.description</span>:</td>
         <td class="small-8">
@@ -41,11 +56,11 @@
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group">
+  <accordion-group class="accordion-group" is-open="lecture_details_groups.settings">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="lec_settings" class="show-inline" translate>global.settings</div>
-      </div>              
+      </div>
     </accordion-heading>
     <table class="table small-12 no-margin">
       <tr>
@@ -63,12 +78,12 @@
         </center>
         </td>
       </tr>
-      <tr id="bg_fix" style="height:130px">
+      <tr id="bg_fix" style="height:130px" ng-if="!lecture.inclass">
         <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
-        <td class="small-8"> 
+        <td class="small-8">
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.use_module</span>
-          
+
           <span ng-hide="!lecture.appearance_time_module">
             <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
             <div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
@@ -85,7 +100,7 @@
           </span>
         </td>
       </tr>
-      <tr style="height:130px">
+      <tr style="height:130px" ng-if="!lecture.inclass">
         <td class="right-border small-4"><span translate>editor.details.due_date</span></td>
         <td class="small-8">
           <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
@@ -106,18 +121,35 @@
               <details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
               <br>
               <details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
-            </span> 
+            </span>
           </div>
         </td>
       </tr>
+
+      <tr id="bg_fix" style="height:130px" ng-if="lecture.inclass">
+        <td class="right-border small-4"><span translate>Visibility</span></td>
+        <td class="small-8">
+          <input type="checkbox" ng-model="lecture.visible_to_student" ng-change="updateAppearanceDate();updateLecture()" class="no-margin">
+          <span class="size-12" translate>Visible to student</span>
+        </td>
+      </tr>
+
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
+  <accordion-group class="accordion-group overflow-auto" is-open="lecture_details_groups.quizzes">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline" translate>editor.details.quizzes</div>
-      </div>              
+      </div>
     </accordion-heading>
     <quiz_list />
+  </accordion-group>
+  <accordion-group class="accordion-group overflow-auto" is-open="lecture_details_groups.markers">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div class="show-inline" translate>editor.details.markers</div>
+      </div>
+    </accordion-heading>
+    <marker_list />
   </accordion-group>
 </accordion>

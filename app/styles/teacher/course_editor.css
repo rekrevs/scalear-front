@@ -57,6 +57,16 @@ a.editable-click {
 	font-size:12px !important;
 }
 
+.drop-div{
+  border: 2px dashed black;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  margin: 0 0 0 2px;
+  background: #fff;
+  opacity: 0.9;
+  overflow: auto;
+}
 
 /*.editable-checkbox{
 	width:15px !important;
@@ -142,7 +152,16 @@ label{
 	display:inline-block;
 }  
 
-.answer_div{
+.dropped_drag{
+    border: 2px dashed rgb(0, 0, 0);
+    border-radius: 6px;
+    background-color: white; 
+    padding:0px;
+    position:absolute;
+    min-height:40px;
+    min-width: 20px;
+    }
+/*.answer_div{
 	width: auto;
     height: 100%;
 	margin-left:10px;
@@ -153,7 +172,7 @@ label{
   -webkit-border-radius: 4px;
      -moz-border-radius: 4px;
           border-radius: 4px;
-}
+}*/
 
 .answer_img{
   width: 13px;
@@ -167,7 +186,7 @@ label{
   position: absolute;
 }
 
-.answer_div:before{
+/*.answer_div:before{
 	content: "Answers";
   position: absolute;
   top: -1px;
@@ -181,7 +200,7 @@ label{
   -webkit-border-radius: 4px 0 4px 0;
      -moz-border-radius: 4px 0 4px 0;
           border-radius: 4px 0 4px 0;
-}
+}*/
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
 .sortable li {  padding: 0.3em;  font-size: 1.4em; height: 50px; }
 

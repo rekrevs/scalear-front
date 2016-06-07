@@ -24,7 +24,7 @@ describe("Notes",function(){
 			course_list.open_course(1)
 		})
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).item(3).open()
 			navigator.close()
 		})
@@ -40,8 +40,15 @@ describe("Notes",function(){
 			expect(student_lec.lecture(3).notes.count()).toEqual(1)
 			expect(student_lec.lecture(3).note(1).getText()).toEqual("Some note text for testing.")
 		})		
+		// it("should add a note Text ",function(){
+		// 	// student_lec.add_note()
+		// 	// student_lec.lecture(3).type_note("Some note text for testing.")
+		// 	// expect(student_lec.lecture(3).notes.count()).toEqual(1)
+		// 	expect(student_lec.lecture(3).note(1).getText()).toEqual("Some note text for testing.")
+		// })
 		it("should edit note",function(){
-			student_lec.lecture(3).note(1).click()
+			student_lec.lecture(3).edit_note(1)
+
 			student_lec.lecture(3).type_note("Editied note for testing.")
 			expect(student_lec.lecture(3).notes.count()).toEqual(1)
 			expect(student_lec.lecture(3).note(1).getText()).toEqual("Editied note for testing.")
@@ -54,8 +61,10 @@ describe("Notes",function(){
 			student_lec.add_note()
 			student_lec.lecture(3).type_note("")
 			expect(student_lec.lecture(3).notes.count()).toEqual(0)
+
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()			
 			header.logout()
 		})
 	})

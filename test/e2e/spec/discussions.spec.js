@@ -33,6 +33,7 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
 			navigator.close()
+			browser.refresh()
 		})
 		it("should seek to 15%",function(){
 			video.seek(15)
@@ -61,6 +62,7 @@ describe("Discussions",function(){
             expect(student_lec.lecture(1).items.count()).toEqual(5)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -103,6 +105,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -145,6 +148,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comment(2).title).toEqual("second comment")
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -210,6 +214,7 @@ describe("Discussions",function(){
             expect(student_lec.lecture(2).items.count()).toEqual(4)
 		})
         it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -256,6 +261,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(0)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -286,6 +292,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).items.count()).toEqual(3)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
@@ -311,6 +318,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).items.count()).toEqual(3)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})

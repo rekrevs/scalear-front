@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator','$rootScope','ErrorHandler','$interval', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator,$rootScope,ErrorHandler,$interval) {
 
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
@@ -64,7 +64,16 @@ angular.module('scalearAngularApp')
 	};
 
   $scope.exportCourse = function(){
-    Course.exportCsv({course_id: $stateParams.course_id})
+    Course.exportCsv({course_id: $stateParams.course_id},
+      function(response){
+        if (response.notice){
+            $rootScope.show_alert = "success";
+            ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 2000);
+            $interval(function() {
+                  $rootScope.show_alert = "";
+            }, 4000, 1);                    
+      }
+    })
   }
 
   $scope.url_with_protocol = function(url){

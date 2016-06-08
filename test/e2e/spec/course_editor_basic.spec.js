@@ -23,7 +23,7 @@ var content_items= new ContentItems()
 
 describe("Teacher in the course editor", function(){
 	it("should login as teacher",function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	var navigator = new ContentNavigator(1)
 	it("should open course",function(){
@@ -34,19 +34,19 @@ describe("Teacher in the course editor", function(){
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
 	})
-	
+
 	it('should open first module', function(){
 		navigator.module(1).open()
 	})
 
 	it("should add and edit course links",function(){
 		var module = navigator.module(1)
-		
+
 		module.open_content_items()
 		content_items.add_link()
 		expect(module.items.count()).toEqual(7)
 
-		//exchange change_item_url with rename_item incase error is rasied 
+		//exchange change_item_url with rename_item incase error is rasied
 		course_editor.change_item_url_link("http://google.com")
 		course_editor.rename_item("link1")
 		expect(module.item(7).name).toEqual("link1")
@@ -89,7 +89,7 @@ describe("Teacher in the course editor", function(){
 
 describe("Student", function(){
 	it("should login", function(){
-		login_page.sign_in(params.student_mail, params.password)
+		login_page.sign_in(params.student1.email, params.password)
 	})
 	var navigator = new ContentNavigator(1)
 	it('should have correct number of modules and lectures with same order', function(){
@@ -127,15 +127,15 @@ describe("Student", function(){
 	it("should logout",function(){
 		header.logout()
 	})
-	 
+
 })
-	
+
 describe("Revert Changes - Teacher", function(){
 	it("should sign in and navigate to course",function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 		course_list.open()
 		course_list.open_course(1)
-	})	
+	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
 	})

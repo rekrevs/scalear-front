@@ -32,14 +32,14 @@ Discussion.prototype = Object.create({}, {
 	reply_text_area:{get:function(){return this.field.element(by.css('[ng-model="discussion.post.temp_response"]'))}},
 	reply_text_box:{get:function(){return this.field.element(by.css('[ng-click="sendComment(discussion.post);discussion.post.show_feedback = false"]'))}},
 	delete_button:{get:function(){return this.field.element(by.css('[ng-click="deletePost(item.data, $index)"]'))}},
-	delete_discussion:{value:function(){return this.delete_button.click()}},	
+	delete_discussion:{value:function(){return this.delete_button.click()}},
 	reply:{value:function(keys){
 		this.reply_button.click()
 		this.reply_text_area.clear().sendKeys(keys)
 		this.reply_text_box.click()
 	}},
 	comments_count:{value:function(){
-		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count() 
+		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count()
 	 }}
 })
 
@@ -59,7 +59,7 @@ Freetextquestion.prototype = Object.create({}, {
 	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
 	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
 	answers_count:{value:function(){
-		return this.field.all(by.repeater('answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict')).count() 
+		return this.field.all(by.repeater('answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict')).count()
 	}},
 	reply_button:{get:function(){return this.field.element(by.css('[ng-click="answer.show_feedback = true"]'))}},
 	reply_text_area:{get:function(){return this.field.element(by.css('[ng-model="answer.temp_response"]'))}},
@@ -72,7 +72,7 @@ Freetextquestion.prototype = Object.create({}, {
 		this.reply_text_box.click()
 	}},
 	comments_count:{value:function(){
-		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count() 
+		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count()
 	 }}
 })
 
@@ -83,21 +83,21 @@ var ModuleItem = function(elem){
 ModuleItem.prototype = Object.create({}, {
 	items:{get:function(){ return this.field.all(by.className('ul_item'))}},
 	title:{get:function(){return this.field.element(by.className("title")).getText()}},
-	// lecture 
+	// lecture
 	quizzes:{get:function(){return this.field.all(by.className('color-green'))}},
 	quiz:{value:function(val){return new Quiz(this.quizzes.get(val-1)) }},
 	discussions:{get:function(){return this.field.all(by.className('color-coral'))}},
 	discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
-	// quiz  and survey 
+	// quiz  and survey
 	question_quizzes:{get:function(){return this.field.all(by.className('color-blue'))}},
-	question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},	
+	question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},
 	freetextquestions:{get:function(){return this.field.all(by.className('color-coral'))}},
 	freetextquestion:{value:function(val){return new Freetextquestion(this.freetextquestions.get(val-1)) }},
 	makevisible:{value:function(){this.field.element(by.css('[ng-click="makeSurveyVisible(quiz, true)"]')).click()}},
 	hidevisible:{value:function(){this.field.element(by.css('[ng-click="makeSurveyVisible(quiz, false)"]')).click()}},
 	suveryresults:{get:function(){return element(by.css('[ng-if="current_survey.visible"]'))}},
 	clickonSeeall:{value:function(val){return this.field.element(by.css('[ng-show="quiz.filtered_user"]')).click()}},
-	// questiongrade:{value:function(val){return element.all(by.repeater("question in quiz.questions")).get(val-1).element(by.className('right')).getText()}}	
+	// questiongrade:{value:function(val){return element.all(by.repeater("question in quiz.questions")).get(val-1).element(by.className('right')).getText()}}
 
 })
 
@@ -111,10 +111,10 @@ Student.prototype = Object.create({}, {
 	columns_count:{value:function(){return this.field.all(by.className("state")).count() }},
 	column_item:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('src') }},
 	column_item_tooltip:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('tooltip') }},
-	column_item_click:{value:function(val,num){ 
+	column_item_click:{value:function(val,num){
 		this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).click()
 		element(by.className('popover')).all(by.className('ng-pristine')).get(num-1).click()
-		this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).click() 
+		this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).click()
 	}},
 })
 
@@ -168,7 +168,7 @@ ModuleProgress.prototype = Object.create({}, {
 	module_graph_table:{get:function(){return element(by.tagName('tbody'))}},
 	// module_graph_table:{get:function(){return element(by.css('[on-ready="loading_total_charts=false"]')).element(by.tagName("table"))}},
 	module_graph:{value:function(){return new ModuleGraphTable(this.module_graph_table)}},
-		
+
 	check_module_finished:{value:function(val){return element.all(by.css('[ng-show="module_done"]')).get(val-1).getAttribute('class')}},
 	getModuleChartValueAt:{value:function(column){
 		this.module_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()

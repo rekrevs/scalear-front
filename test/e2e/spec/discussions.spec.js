@@ -21,7 +21,7 @@ describe("Discussions",function(){
 	// })
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -69,7 +69,7 @@ describe("Discussions",function(){
 
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -112,7 +112,7 @@ describe("Discussions",function(){
 
 	describe("Third Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student3_mail, params.password)
+			login_page.sign_in(params.student3.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -141,7 +141,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
 			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
 		})
-		it("should add comment",function(){			
+		it("should add comment",function(){
 			student_lec.lecture(1).discussion(1).add_comment()
 			student_lec.lecture(1).discussion(1).type_comment("second comment")
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(2)
@@ -155,7 +155,7 @@ describe("Discussions",function(){
 
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -220,7 +220,7 @@ describe("Discussions",function(){
 	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -239,7 +239,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(2).comments.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(2).comment(2).text).toContain("Flagged comment")
-		})	
+		})
 		it("should vote second comment",function(){
 			expect(student_lec.lecture(1).discussion(2).comment(2).vote_count).toEqual("1")
 			student_lec.lecture(1).discussion(2).comment(2).vote()
@@ -267,7 +267,7 @@ describe("Discussions",function(){
 	})
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -298,7 +298,7 @@ describe("Discussions",function(){
 	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()

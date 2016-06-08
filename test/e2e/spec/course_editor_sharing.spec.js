@@ -24,10 +24,10 @@ var navigator = new ContentNavigator(1)
 var content_items= new ContentItems()
 
 describe("Sharing a module",function(){
-    describe("Teacher1",function(){  
+    describe("Teacher1",function(){
         it("should login as teacher",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
-        })      
+            login_page.sign_in(params.teacher1.email, params.password)
+        })
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
@@ -45,7 +45,7 @@ describe("Sharing a module",function(){
             share_window.checkboxes.each(function(checkbox){
                 expect(checkbox.getAttribute('checked')).toBe('true')
             })
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it("should logout",function(){
@@ -54,7 +54,7 @@ describe("Sharing a module",function(){
     })
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it('should create course', function(){
             new_course.open()
@@ -76,7 +76,7 @@ describe("Sharing a module",function(){
     })
     describe("Teacher1",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it("should open course",function(){
             course_list.open()
@@ -95,7 +95,7 @@ describe("Sharing a module",function(){
             share_window.checkboxes.each(function(checkbox){
                 expect(checkbox.getAttribute('checked')).toBe('true')
             })
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it("should logout",function(){
@@ -104,7 +104,7 @@ describe("Sharing a module",function(){
     })
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it('should accept shared data', function(){
             header.show_notification()
@@ -148,7 +148,7 @@ describe("Sharing a module",function(){
 describe("Sharing a non existing module",function(){
     describe("Teacher1",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it("should open course",function(){
             course_list.open()
@@ -184,7 +184,7 @@ describe("Sharing a non existing module",function(){
             share_window.checkboxes.each(function(checkbox){
                 expect(checkbox.getAttribute('checked')).toBe('true')
             })
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it('should open forth module', function(){
@@ -197,7 +197,7 @@ describe("Sharing a non existing module",function(){
             share_window.checkboxes.each(function(checkbox){
                 expect(checkbox.getAttribute('checked')).toBe('true')
             })
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it("should delete forth module",function(){
@@ -213,7 +213,7 @@ describe("Sharing a non existing module",function(){
     })
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it('should accept shared data', function(){
             header.show_notification()
@@ -227,7 +227,7 @@ describe("Sharing a non existing module",function(){
     })
     describe("Teacher1",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it("should open course",function(){
             course_list.open()
@@ -249,7 +249,7 @@ describe("Sharing a non existing module",function(){
     })
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it("should check that shared item doesn't exist",function(){
             header.show_courses_menu()
@@ -263,7 +263,7 @@ describe("Sharing a non existing module",function(){
 describe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it("should open course",function(){
             course_list.open()
@@ -301,7 +301,7 @@ describe("Sharing single items",function(){
             expect(share_window.checked(2)).toEqual('true')
             expect(share_window.checked(1)).toBe(null)
             expect(share_window.checked(3)).toBe(null)
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it('should open forth module', function(){
@@ -315,7 +315,7 @@ describe("Sharing single items",function(){
             expect(share_window.checked(3)).toEqual('true')
             expect(share_window.checked(1)).toBe(null)
             expect(share_window.checked(2)).toBe(null)
-            share_window.type_teacher_email(params.teacher2_mail)
+            share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
         it("should logout",function(){
@@ -324,7 +324,7 @@ describe("Sharing single items",function(){
     })
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it('should accept shared data', function(){
             header.show_notification()
@@ -332,7 +332,7 @@ describe("Sharing single items",function(){
             header.accept_share_notification(1)
             header.show_notification()
             expect(header.share_notifications.count()).toEqual(1)
-            header.accept_share_notification(1)            
+            header.accept_share_notification(1)
             expect(header.notification_menu.isPresent()).toBe(false)
         })
         it('should check that it redirected to share page', function(){
@@ -405,7 +405,7 @@ describe("Sharing single items",function(){
 describe("Rollback changes",function(){
     describe("Teacher2",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it("should open course",function(){
             course_list.open()
@@ -442,7 +442,7 @@ describe("Rollback changes",function(){
     })
     describe("Teacher1",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it("should open course",function(){
             course_list.open()

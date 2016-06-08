@@ -16,7 +16,7 @@ ptor.driver.manage().window().maximize();
 
 describe('basic functionality', function(){
 	it('should login', function(){
-		functions.sign_in(ptor, params.student_mail, params.password, functions.feedback)
+		functions.sign_in(ptor, params.student1.email, params.password, functions.feedback)
 	})
 	it('menu app should be closed',function(){
 		menu_should_be_closed(ptor);

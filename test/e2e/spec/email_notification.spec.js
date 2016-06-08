@@ -34,8 +34,8 @@ describe("Email Notification Sign up Teacher ",function(){
 	describe("guerrillamail website",function(){
 		it("should sign up as teacher",function(){
 			signup_page.sign_up('teacher')
-			signup_page.create(params.teacher3_mail, params.guerrillamail_password , params.guerrillamail_sch_uni_name , "3" , params.teacher_first_name , params.teacher3_mail)
-					// signup_page.create(params.teacher2_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name,"test_teacher2" )
+			signup_page.create(params.teacher3.email, params.teacher3.password , params.teacher3.university , params.teacher3.l_name , params.teacher3.f_name , params.teacher3.online_name)
+					// signup_page.create(params.teacher2.email, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name,"test_teacher2" )
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -57,7 +57,7 @@ describe("Email Notification Sign up Teacher ",function(){
 
 		// })
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
+			guerrilla_mail_page.change_mail_name(params.teacher3.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -108,7 +108,7 @@ describe("Email Notification Sign up Teacher ",function(){
 describe("Teacher Management",function(){
 	describe("Teacher1",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 	        course_list.open()
@@ -125,7 +125,7 @@ describe("Teacher Management",function(){
 			course_info.add_teacher()
 			expect(course_info.email_field.isDisplayed()).toEqual(true);
 			expect(course_info.role_field.isDisplayed()).toEqual(true);
-			course_info.type_email(params.teacher3_mail)
+			course_info.type_email(params.teacher3.email)
 			course_info.select_role(2)
 			course_info.invite()
 			expect(course_info.teachers.count()).toEqual(2)
@@ -137,7 +137,7 @@ describe("Teacher Management",function(){
     })
     describe("guerrillamail Teacher",function(){
         it("should login",function(){
-            login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
+            login_page.sign_in(params.teacher3.email, params.guerrillamail_password)
         })
         it('should accept invitation to course', function(){
             header.show_notification()
@@ -158,7 +158,7 @@ describe("Teacher Management",function(){
     })
     describe("Student1",function(){
     	it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
@@ -179,7 +179,7 @@ describe("Teacher Management",function(){
 describe("Discussion Part 1" , function(){
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -234,7 +234,7 @@ describe("Discussion Part 1" , function(){
 			// guerrilla_mail_page.open_url(params.guerrillamail_url)
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.teacher3_mail)
+			guerrilla_mail_page.change_mail_name(params.teacher3.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -253,7 +253,7 @@ describe("Discussion Part 1" , function(){
 
 				browser.switchTo().window(firstWindowHandle)
 					.then(function () {
-						login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
+						login_page.sign_in(params.teacher3.email, params.guerrillamail_password)
 					})
 				});
         })
@@ -276,7 +276,7 @@ describe("Discussion Part 1" , function(){
 describe("Discussion Part 2" , function(){
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -325,7 +325,7 @@ describe("Revert Changes",function(){
         })
  		var navigator = new ContentNavigator(1)
 		it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it('should open course information', function(){
 			course_list.open()
@@ -345,7 +345,7 @@ describe("Revert Changes",function(){
 	})
 	describe("guerrillamail teacher",function(){
 		it("should login",function(){
-            login_page.sign_in(params.teacher3_mail, params.guerrillamail_password)
+            login_page.sign_in(params.teacher3.email, params.guerrillamail_password)
        })
         it("should check that course has been removed",function(){
         	course_list.open()
@@ -361,7 +361,7 @@ describe("Revert Changes",function(){
 	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -405,13 +405,13 @@ describe("guerrillamail Teacher",function(){
 		// guerrilla_mail_page.open_url(params.guerrillamail_url)
 	})
 	it("should change guerrillamail email ",function(){
-		guerrilla_mail_page.change_mail_name(params.teacher3_mail)
+		guerrilla_mail_page.change_mail_name(params.teacher3.email)
 		sleep(11000)
 	})
 	it("should check mails count ",function(){
 		 guerrilla_mail_page.count_row().then(function(coun){expect(coun).toEqual(4)})
 
-	
+
 		browser.getAllWindowHandles().then(function (handles) {
 		var secondWindowHandle = handles[1];
 		var firstWindowHandle = handles[0];

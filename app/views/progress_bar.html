@@ -41,7 +41,7 @@
                 </div>
             </span>
 
-            <span ng-show="editing=='video'">
+            <span ng-if="editing=='video'">
                 <div>
                     <div class="progress-events repeating_green_pattern" ng-style="{'left':((video.start_time/duration)*100)+'%', 'width': (((video.end_time - video.start_time)/duration)*100)+'%'}" ></div>
 

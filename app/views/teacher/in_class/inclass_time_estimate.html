@@ -36,8 +36,8 @@
 		</h6>
 		<h6 class="size-12">
 			(<span>{{quiz_count || 0}}</span>
-			<span >{{ (quiz_count>1? 'inclass.quizzes' : 'inclass.quiz')| translate | lowercase}}</span>
-			<span>, {{question_count || 0}}</span>
+			<span>{{ (quiz_count>1? 'inclass.quizzes' : 'inclass.quiz')| translate | lowercase}},</span>
+			<span>{{question_count || 0}}</span>
 			<span >{{'inclass.discussions' | translate | lowercase}}</span>
 			<span translate>global.and</span>
 			<span>{{survey_count || 0}}</span>
@@ -45,6 +45,6 @@
 		</h6>
 	</div>
 	<div class="size-12 color-green">
-		(<a pop-over="popover_options" class="size-12 color-green"  translate>inclass.change_defaults</a>)
+		(<a pop-over="popover_options" class="size-12 color-green" translate>inclass.change_defaults</a>)
 	</div>
 </div>

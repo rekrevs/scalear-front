@@ -27,7 +27,7 @@ var new_course = new NewCourse()
 describe("Teacher Management",function(){
 	describe("Teacher1",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 	        course_list.open()
@@ -44,7 +44,7 @@ describe("Teacher Management",function(){
 			course_info.add_teacher()
 			expect(course_info.email_field.isDisplayed()).toEqual(true);
 			expect(course_info.role_field.isDisplayed()).toEqual(true);
-			course_info.type_email(params.teacher2_mail)
+			course_info.type_email(params.teacher2.email)
 			course_info.select_role(2)
 			course_info.invite()
 			expect(course_info.teachers.count()).toEqual(2)
@@ -54,8 +54,8 @@ describe("Teacher Management",function(){
         })
     })
     describe("Teacher2",function(){
-        it("should login",function(){        	
-            login_page.sign_in(params.teacher2_mail, params.password)
+        it("should login",function(){
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it('should accept invitation to course', function(){
             header.show_notification()
@@ -71,14 +71,14 @@ describe("Teacher Management",function(){
         })
     })
     describe("Student1",function(){
-    	it("should login", function(){    		
-			login_page.sign_in(params.student_mail, params.password)
+    	it("should login", function(){
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			course_info.student.open()			
+			course_info.student.open()
 		})
 		it("should check number of teacher ",function(){
 			expect(course_info.teachers.count()).toEqual(2)
@@ -92,7 +92,7 @@ describe("Revert Changes",function(){
 	describe("Teacher1",function(){
 		var navigator = new ContentNavigator(1)
 		it("should login",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it('should open course information', function(){
 			course_list.open()
@@ -112,7 +112,7 @@ describe("Revert Changes",function(){
 	})
 	describe("Teacher2",function(){
 		it("should login",function(){
-            login_page.sign_in(params.teacher2_mail, params.password)
+            login_page.sign_in(params.teacher2.email, params.password)
         })
         it("should check that course has been removed",function(){
         	course_list.open()

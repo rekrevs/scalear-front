@@ -12,13 +12,13 @@ ptor.driver.manage().window().maximize();
 describe("go to preview as student mode", function(){
     it('should sign in as teacher', function(){
         o_c.press_login(ptor);
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
-    
+
     it('preview as student should not be visible', function(){
     	expect(element(by.id('preview_as_student')).isDisplayed()).toEqual(false);
     })
@@ -26,7 +26,7 @@ describe("go to preview as student mode", function(){
     it('should add a module and lecture to create quizzes', function(){
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.add_lecture(ptor);           
+        teacher.add_lecture(ptor);
         // o_c.press_content_navigator(ptor);
         // ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -35,7 +35,7 @@ describe("go to preview as student mode", function(){
     it('preview as student should be visible', function(){
     	expect(element(by.id('preview_as_student')).isDisplayed()).toEqual(true);
     })
-    
+
     it('click preview as student', function(){
     	element(by.id('preview_as_student')).click();
     })
@@ -69,13 +69,13 @@ describe("go to preview as student mode", function(){
 xdescribe("in order and required doesnot apply", function(){
     it('should sign in as teacher', function(){
         // o_c.press_login(ptor);
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
-    
+
     it('preview as student should not be visible', function(){
     	expect(element(by.id('preview_as_student')).isDisplayed()).toEqual(false);
     })
@@ -83,12 +83,12 @@ xdescribe("in order and required doesnot apply", function(){
     it('should add a module and lecture to create quizzes', function(){
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.add_lecture(ptor);           
+        teacher.add_lecture(ptor);
         // o_c.press_content_navigator(ptor);
         // ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 
-        teacher.add_lecture(ptor);           
+        teacher.add_lecture(ptor);
         // o_c.press_content_navigator(ptor);
         // ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 2","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -97,7 +97,7 @@ xdescribe("in order and required doesnot apply", function(){
     it('preview as student should be visible', function(){
     	expect(element(by.id('preview_as_student')).isDisplayed()).toEqual(true);
     })
-    
+
     it('click preview as student', function(){
     	element(by.id('preview_as_student')).click();
     })

@@ -39,19 +39,19 @@
                     </span>
                 </ul>
             </div>
-            <div ng-show="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')" ng-class="question_block">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
+            <div ng-if="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')" class="question_block">
+                <div class="quiz" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                     <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
                     <div google-chart chart="chart" on-ready="chartReady()"></div>
                 </div>
-                <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="original_chart">
+                <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="stage_timer">
                     <center>{{stage_counter | format}}</center>
                 </div>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'" class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'" class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
@@ -77,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'primary_marker'" ng-class="question_block">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'primary_marker'" class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div style="padding-left:5px;">
@@ -114,7 +114,7 @@
             </span>
         </div>
         <div class="bottom-middle">
-            <button ng-class="button_class" ng-click="prevSubItem()" class="button reall-tiny secondary"><i class="fi-previous" /></button>
+            <button ng-class="button_class" ng-click="prevSubItem()" class="prev_btn button reall-tiny secondary"><i class="fi-previous" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <span>{{button_names[5]}} </span><i class="fi-rewind" />
             </button>
@@ -160,7 +160,7 @@
             <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <i class="fi-fast-forward" /><span> {{button_names[5]}}</span>
             </button>
-            <button ng-class="button_class" ng-click="nextSubItem()" class="button reall-tiny secondary"><i class="fi-next" /></button>
+            <button ng-class="button_class" ng-click="nextSubItem()" class="next_btn button reall-tiny secondary"><i class="fi-next" /></button>
         </div>
         <div class="bottom-right no-padding-top right">
             <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button>

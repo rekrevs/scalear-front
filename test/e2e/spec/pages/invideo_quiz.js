@@ -30,10 +30,22 @@ InvideoQuiz.prototype = Object.create({}, {
 	text_answers:{get:function(){return element.all(by.name("answer"))}},
 	text_explanation:{get:function(){return element.all(by.model("answer.explanation"))}},
 	text_correct_checkbox:{get:function(){return element.all(by.model('answer.correct'))}},
-	// quizzes:{get:function(){return element.all(by.repeater("quiz in quiz_list"))}},
 	quizzes:{get:function(){return element.all(by.repeater("quiz in lecture.timeline.items"))}},
 	quiz:{value:function(num){return this.quizzes.get(num-1)}},
 	count:{get:function(){return this.quizzes.count()}},
+	start_handle:{get:function (){ return element(by.className("squarebrackets_left"))}},
+	end_handle:{get:function (){ return element(by.className("squarebrackets_right"))}},
+	quiz_handle:{get:function (){ return element(by.className("quiz_circle"))}},
+	start_checkbox:{get:function(){ return element(by.model("selected_quiz.has_start")) }},
+	end_checkbox:{get:function(){ return element(by.model("selected_quiz.has_end")) }},
+	intro_time_field:{get:function(){return element(by.model("selected_quiz.inclass_session.intro_formatedTime"))}},
+	self_time_field:{get:function(){return element(by.model("selected_quiz.inclass_session.self_formatedTime"))}},
+	group_time_field:{get:function(){return element(by.model("selected_quiz.inclass_session.group_formatedTime"))}},
+	discussion_time_field:{get:function(){return element(by.model("selected_quiz.inclass_session.discussion_formatedTime"))}},
+	intro_time:{get:function(){return this.intro_time_field.getAttribute('value')}},
+	self_time:{get:function(){return this.self_time_field.getAttribute('value')}},
+	group_time:{get:function(){return this.group_time_field.getAttribute('value')}},
+	discussion_time:{get:function(){return this.discussion_time_field.getAttribute('value')}},
 	create:{value:function(quiz_type_button){
 		course_editor.new_question_button.click();
 		quiz_type_button.click()

@@ -669,7 +669,7 @@ var translation_sv={
     select_all: "Markera alla",
     deselect_all: "Avmarkera alla",
     done:"@:global.done",
-    export_as: "Export Student List",
+    export_as: "Export Student List (t)",
   },
   groups:{
     module: "Modul",

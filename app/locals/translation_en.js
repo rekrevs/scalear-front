@@ -74,6 +74,7 @@ var translation_en={
     select_module_first:"Please Select A Module First",
     change_password_confirmation: "You have successfully changed your password.",
     export_course: "Your anonymized course data will be emailed to you shortly." ,
+    export_student:"Your student list will be emailed to you shortly.",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -672,6 +673,7 @@ var translation_en={
     select_all: "Select All",
     deselect_all: "Deselect All",
     done:"@:global.done",
+    export_as: "Export Student List",
   },
   groups:{
     module: "Module",

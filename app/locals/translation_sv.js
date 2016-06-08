@@ -74,6 +74,7 @@ var translation_sv={
     select_module_first:"Välj först en modul i menyn.",
     change_password_confirmation: "You have successfully changed your password.(t)",
     export_course: "Your anonymized course data will be emailed to you shortly.(t)" ,
+    export_student:"Your student list will be emailed to you shortly(t).",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -555,7 +556,7 @@ var translation_sv={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_explanation: "Hover for explanation(t)",  
+    hover_for_explanation: "Hover for explanation(t)",
     tap_for_explanation: "Tap for explanation(t)",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
@@ -672,6 +673,7 @@ var translation_sv={
     select_all: "Markera alla",
     deselect_all: "Avmarkera alla",
     done:"@:global.done",
+    export_as: "Export Student List (t)",
   },
   groups:{
     module: "Modul",

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal','$cookieStore','ContentNavigator', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal,$cookieStore, ContentNavigator) {
+  .controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal','$cookieStore','ContentNavigator','$rootScope' , 'ErrorHandler' , '$interval', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal,$cookieStore, ContentNavigator,$rootScope , ErrorHandler , $interval) {
  
         ContentNavigator.close()
         $log.debug("in enrolled students");
@@ -36,7 +36,19 @@ angular.module('scalearAngularApp')
               }
             )
         }
-
+        $scope.exportStudentsList = function(){ 
+          $log.debug("List ")
+          Course.exportStudentCsv({course_id: $stateParams.course_id}, 
+            function(response){  
+              if (response.notice){ 
+                  $rootScope.show_alert = "success"; 
+                  ErrorHandler.showMessage($translate("error_message.export_student"), 'errorMessage', 2000); 
+                  $interval(function() { 
+                        $rootScope.show_alert = ""; 
+                  }, 4000, 1);                     
+            } 
+          }) 
+        }         
         $scope.emailSingle=function(student){
           $scope.deSelectAll()
           $scope.toggleSelect(student)

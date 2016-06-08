@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$q', '$stateParams', '$log', function($scope, $state, Module, CustomLink, $q, $stateParams, $log) {
+    .controller('moduleDetailsCtrl', ['$scope', '$rootScope', '$state', 'Module', 'CustomLink', '$q', '$stateParams', '$log', function($scope, $rootScope, $state, Module, CustomLink, $q, $stateParams, $log) {
         
     var unwatch =$scope.$watch('course.selected_module', function(){
         if($scope.course && $scope.course.selected_module){
@@ -14,6 +14,18 @@ angular.module('scalearAngularApp')
         
     })
 
+    // ---
+    
+    var init_module_group_settings= {module:   true,  // initially to open 'module' group, 
+                                     settings: false  // 'settings' to be closed
+                                    };
+        
+    if(!$rootScope.module_details_groups){
+       $rootScope.module_details_groups= init_module_group_settings;
+      }
+   
+    // ---
+    
     $scope.validateModule = function(column, data) {
         $log.debug(data)
         var d = $q.defer();

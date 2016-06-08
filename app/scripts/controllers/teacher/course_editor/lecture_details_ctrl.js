@@ -34,7 +34,21 @@ angular.module('scalearAngularApp')
             getMarkerList()
         }
     })
-
+    
+    // ---
+    
+    var init_lecture_group_settings= {video:    true,  // initially to open 'video' group, 
+                                      settings: false, // rest to be closed
+                                      quizzes:  false, 
+                                      markers:  false
+                                     };
+        
+    if(!$rootScope.lecture_details_groups){
+       $rootScope.lecture_details_groups= init_lecture_group_settings;
+      }
+   
+    // ---
+        
     $scope.is_youtube = false
 
     $scope.validateLecture = function(column, data) {

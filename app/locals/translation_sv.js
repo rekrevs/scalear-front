@@ -283,7 +283,7 @@ var translation_sv={
     login: "@:navigation.login",
     join: "Registrera",
     remember_me: "Förbli inloggad",
-    confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
+    confirm_destroy: "Are you sure you want to delete your account?(t)",
     confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
     required_marked: "Obligatoriska fält är markerade med *",
     use_school: "Använd kontot på din skola/universitet",

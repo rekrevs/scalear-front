@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
+  .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log','Lecture' ,'Quiz', function ($scope, $stateParams, $timeout, Module, $log, Lecture , Quiz) {
   	
    $scope.module= $scope.course.selected_module
   	$scope.getAllItemsProgress = function(offset, limit){
@@ -49,6 +49,38 @@ angular.module('scalearAngularApp')
             }
         );
     }    
+
+
+    $scope.updateStatus = function(student_id, module_id, status , lecture_quiz) {
+        console.log(arguments)
+        // console.log(module_id)
+        // console.log(status)
+        // console.log(lecture_quiz)
+      if(status)
+        status = (status == "Finished on Time") ? 1 : 2
+      else
+        status = 0
+      if(lecture_quiz){//1 for lecture 0 for quiz
+        Lecture.changeLectureStatus({
+          course_id: $stateParams.course_id,
+          lecture_id: module_id
+        }, {
+          user_id: student_id,
+          status: status
+        })
+      }
+      else{
+        Quiz.changeQuizStatus({
+          course_id: $stateParams.course_id,
+          quiz_id: module_id
+        }, {
+          user_id: student_id,
+          status: status
+        })
+    }
+      
+    }
+
 
     $scope.getRemainingLectureProgress = function(){
         if($scope.lecture_offset+$scope.lecture_limit<=parseInt($scope.total))

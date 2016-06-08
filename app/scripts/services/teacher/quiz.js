@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
         "showStudent":{method:'POST',params:{action:'show_question_student'},headers:headers},
         "saveStudentQuiz":{method:'POST',params:{action:'save_student_quiz_angular'},headers:headers},
         "quizCopy":{method:'POST',params:{action:'quiz_copy'},headers:headers},
+        "changeQuizStatus": {method:'POST', params:{action:'change_status_angular'},headers:headers},
         "updateGrade":{method:'POST',params:{action:'update_grade'},headers:headers}
       });
 

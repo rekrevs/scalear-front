@@ -400,7 +400,7 @@ angular.module('scalearAngularApp')
         current_item.data.color = "black"
         if(current_item.type == 'inclass') {
           timers = current_item.data.timers
-          current_item.data.inclass_title = 'Self'
+          current_item.data.inclass_title = $translate('inclass.self_stage')
           current_item.data.status = 2
           current_item.data.background = "#008CBA"
           current_item.data.color = "white"
@@ -411,14 +411,14 @@ angular.module('scalearAngularApp')
           item_index++
 
           var group_quiz = angular.copy(current_item)
-          group_quiz.data.inclass_title = 'Group'
+          group_quiz.data.inclass_title = $translate('inclass.group_stage')
           group_quiz.data.status = 3
           group_quiz.data.background = "#43AC6A"
           group_quiz.data.timer = timers.in_group
           sub_items.splice(++item_index, 0, group_quiz);
 
           var discussion = angular.copy(current_item)
-          discussion.data.inclass_title = 'Discussion'
+          discussion.data.inclass_title = $translate('inclass.discussion_stage')
           discussion.data.status = 4
           discussion.data.background = "darkorange"
           discussion.data.color = "white"
@@ -432,7 +432,7 @@ angular.module('scalearAngularApp')
           continue;
         }
       }
-      sub_items[0].data.inclass_title = "Intro"
+      sub_items[0].data.inclass_title = $translate('inclass.intro_stage')
       sub_items[0].data.background = "lightgrey"
       sub_items[0].data.color = "black"
       sub_items[0].data.timer = timers.intro
@@ -770,7 +770,7 @@ angular.module('scalearAngularApp')
         "label": $translate('global.students'),
         "type": "string"
       }, {
-        "label": 'Self',
+        "label": $translate('inclass.self_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -784,7 +784,7 @@ angular.module('scalearAngularApp')
           "role": "style",
         }
       }, {
-        "label": 'Group',
+        "label": $translate('inclass.group_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -805,7 +805,7 @@ angular.module('scalearAngularApp')
           group_count = data[ind][3] || 0,
           self = Math.floor((self_count / 10) * 100),
           group = Math.floor((group_count / 10) * 100),
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>Self: " + self_count + ", Group: " + group_count + "</div>",
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate('inclass.self_stage')+": " + self_count + ", "+$translate('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [

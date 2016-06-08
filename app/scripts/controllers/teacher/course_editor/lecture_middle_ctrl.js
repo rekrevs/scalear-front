@@ -714,7 +714,7 @@ angular.module('scalearAngularApp')
         current_item.data.background = "lightgrey"
         current_item.data.color = "black"
         if (current_item.type == 'quiz') {
-          current_item.data.inclass_title = 'Self'
+          current_item.data.inclass_title = $translate('inclass.self_stage')
           current_item.data.background = "#008CBA"
           current_item.data.color = "white"
 
@@ -723,13 +723,13 @@ angular.module('scalearAngularApp')
           item_index++
 
           var group_quiz = angular.copy(current_item)
-          group_quiz.data.inclass_title = 'Group'
+          group_quiz.data.inclass_title = $translate('inclass.group_stage')
           group_quiz.data.background = "#43AC6A"
           $scope.filtered_timeline_items.splice(++item_index, 0, group_quiz);
 
           var discussion = angular.copy(current_item)
 
-          discussion.data.inclass_title = 'Discussion'
+          discussion.data.inclass_title = $translate('inclass.discussion_stage')
           discussion.data.background = "darkorange"
           discussion.data.color = "white"
           $scope.filtered_timeline_items.splice(++item_index, 0, discussion);
@@ -740,7 +740,7 @@ angular.module('scalearAngularApp')
           continue;
         }
       }
-      $scope.filtered_timeline_items[0].data.inclass_title = "Intro"
+      $scope.filtered_timeline_items[0].data.inclass_title = $translate('inclass.intro_stage')
       $scope.filtered_timeline_items[0].data.background = "lightgrey"
       $scope.filtered_timeline_items[0].data.color = "black"
       console.log("done", $scope.filtered_timeline_items)

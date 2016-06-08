@@ -4,7 +4,7 @@
 <div id="main_course_list">
   </br>
   <div ng-show="courses && courses.length">
-    <div class="small-12 columns">
+    <div class="small-12 columns course_list">
       <!-- Course selection/filter buttons -->
       <div class="small-12 medium-4 left columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="false" page-name="{{current}}">
         <button type="button" class="left button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>courses.list.all</button>

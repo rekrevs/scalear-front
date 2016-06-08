@@ -20,7 +20,7 @@
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="navigation.lectures" >
           <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
             <div><timeline-filters class="settings hide-for-small" /></div>
-            <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> <span translate>lectures.timeline</span></a>            
+            <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> <span translate>lectures.timeline</span></a>
           </h1>
         </li>
       </ul>
@@ -28,15 +28,7 @@
         <div ng-show="course.warning_message" class="left">
           <h5 class="warning alert-box radius hide-for-portrait hide-for-small-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5>
         </div>
-      </top-bar-section>         
-    </top-bar>
-  </div>
-
-  <div ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
-    <top-bar class="sub-header whitesmoke">
-      <div class="left name">
-        <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>
-      </div>
+      </top-bar-section>
     </top-bar>
   </div>
 </div>

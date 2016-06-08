@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
     <link rel="stylesheet" href="bower_components/angular-wizard/dist/angular-wizard.min.css">
-    
+
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -57,27 +57,28 @@
      <div ui-view="landing"></div>
      <span ng-if="!('landing'| includedByState) && !('home'| includedByState) ">
          <header>
-            <main-navigation user="current_user" courses="current_courses"></main-navigation>
+            <main-navigation user="current_user" teacher-courses="current_teacher_courses" student-courses="current_student_courses"></main-navigation>
         </header>
         <div id="main" role="main">
             <div class="header">
-                <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
-                    <teacher-navigation course="course" message="subheader_message" />
+                <div ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
+                    <user-navigation message="subheader_message" />
                 </div>
-                <div ng-if="current_user.roles[0].id == 2">
-                    <student-navigation course="course" message="subheader_message" />
+                <div ng-if="course_role==1">
+                    <teacher-navigation course="course"  />
+                </div>
+                <div ng-if="course_role==2">
+                    <student-navigation course="course" />
                 </div>
             </div>
             <div class="container row">
-                <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" mode="editor" open="ContentNavigator.status">
+                <content-navigator ng-if="course_role==1" modules="course.modules" mode="editor" open="ContentNavigator.status">
                 </content-navigator>
-                <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
+                <content-navigator ng-if="course_role==2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
                 <br ng-hide="('**.course.**' | includedByState)"/>
-                <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin">
-                </div>
-                <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
-                </div>
+                <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin"></div>
+                <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view></div>
             </div>
             <footer class="small-12 columns footer">
                <scalear_footer />

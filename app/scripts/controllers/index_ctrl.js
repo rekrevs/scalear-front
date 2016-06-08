@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.ContentNavigator = ContentNavigator
             $scope.scalear_api = scalear_api
-            
+
             $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
             $scope.$on('content_navigator_change',function(ev, status){
@@ -23,7 +23,6 @@ angular.module('scalearAngularApp')
                     $scope.ContentNavigator.delayed_navigator_open = true
                 }
             })
-            
 
             var getCurrentCourses=function(){
                 $scope.current_courses=null
@@ -31,18 +30,19 @@ angular.module('scalearAngularApp')
                     if($rootScope.current_user && $rootScope.current_user.roles){
                         Course.currentCourses({},
                             function(data){
-                                $scope.current_courses = data
+                                $scope.current_teacher_courses = data.teacher_courses
+                                $scope.current_student_courses = data.student_courses
                                 unwatch()
                             }
                         );
                     }
-                });                
+                });
             }
 
             $scope.$on("get_current_courses",function(){
                 getCurrentCourses()
             })
-            
+
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);
                 $log.debug('changhing language')
@@ -51,26 +51,15 @@ angular.module('scalearAngularApp')
                 $window.moment.locale(key);
             };
 
-            
-
             $scope.notificationsNumber = function(){
-                if($scope.current_user && $scope.current_user.roles[0].id!=2){
+                if($scope.current_user){
                     return $scope.current_user.shared + $scope.current_user.invitations
                 }
             }
+
             $scope.closeClipboard=function(){
                 $rootScope.clipboard.show_msg = false
             }
-            
-
-            // var isMobile=function(){
-            //     var iOS = false,
-            //         iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-            //     for ( var i = 0; i < iDevice.length ; i++ ) {
-            //         if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-            //     }
-            //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-            // }
 
             $rootScope.is_mobile= MobileDetector.isMobile()
             $scope.changeLanguage($translate.uses());
@@ -79,7 +68,6 @@ angular.module('scalearAngularApp')
             //Google Analytics
             ga('create', scalear_api.ga_token); //UA-66097980-1
             ga('send', 'pageview');
-
 
         }
     ]);

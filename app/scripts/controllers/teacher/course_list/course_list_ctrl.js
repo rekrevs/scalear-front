@@ -6,22 +6,23 @@ angular.module('scalearAngularApp')
     Page.setTitle('navigation.courses')
     Page.startTour();
     $rootScope.subheader_message = $translate("navigation.courses")
-      
+
     $scope.column='name'
     $scope.course_filter = '!!'
-    
+
     var getAllCourses=function(){
-    
+
       $scope.courses=null
       Course.index({},
       function(data){
-        $scope.courses = data
-        $log.debug($scope.courses)
+        $scope.teacher_courses = JSON.parse(data.teacher_courses)
+        $scope.student_courses = JSON.parse(data.student_courses)
+        console.log($scope.student_courses)
     // Code for removing finshed courses when chosing "All Courses" from main menu
     //     $scope.courses.forEach(function(course){
     //        if(!course.ended){
     //        $scope.course_filter = false;
-    //        return 
+    //        return
     //    }
     //  })
      })
@@ -70,7 +71,7 @@ angular.module('scalearAngularApp')
               }
           }]
       });
-			
+
 		}
 
     $scope.unenrollCourse=function(course){
@@ -100,5 +101,5 @@ angular.module('scalearAngularApp')
 		}
 
     getAllCourses()
-  		
+
 }]);

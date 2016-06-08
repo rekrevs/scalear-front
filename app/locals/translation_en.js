@@ -334,6 +334,8 @@ var translation_en={
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
     last_update: "Last update: 17-August-2015",
+    understand: "I understand",
+    cancel: "Cancel",
   },
   faq:{
     faq:"Frequently Asked Questions",

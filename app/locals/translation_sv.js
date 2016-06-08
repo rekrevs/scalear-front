@@ -334,6 +334,8 @@ var translation_sv={
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
     last_update: "Senast uppdaterad: 2015-08-17",
+    understand: "I understand",
+    cancel: "Cancel",
   },
   faq:{
     faq:"Vanliga frågor",

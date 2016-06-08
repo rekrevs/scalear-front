@@ -64,11 +64,8 @@ angular.module('scalearAngularApp')
 	};
 
   $scope.exportCourse = function(){
-    Course.exportCsv({course_id: $stateParams.course_id}
-      ,
+    Course.exportCsv({course_id: $stateParams.course_id},
       function(response){
-        console.log("EXPPPPPPPPPPPP")
-        console.log(response)  
         if (response.notice){
             $rootScope.show_alert = "success";
             ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 2000);

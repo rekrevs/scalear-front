@@ -26,6 +26,13 @@
             </div>
         </div>
         <hr />
+
+        <div>
+        <h4  class="subheader" page-name="{{current}}"step-text="Here you will find the latest settings posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false" translate>navigation.settings</h4>
+            <div style="margin-left: 40px;"><input type="checkbox" ng-model="email_due_date" ng-change="updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></div>
+         </div>
+
+        <hr />
         <h4  class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false" translate>navigation.announcements</h4>
         <div>
             <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
@@ -102,9 +109,6 @@
                     <i class="fi-link size-18"></i>
                     <small translate>courses.information.discussion_forum_link</small>
                     <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
-                </div>
-                <div>
-                    <label><input type="checkbox" ng-model="email_due_date" ng-change="updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></label>
                 </div>
             </div>
         </div>

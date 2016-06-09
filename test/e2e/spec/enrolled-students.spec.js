@@ -21,7 +21,7 @@ var password = 'password';
 xdescribe("1", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -29,7 +29,7 @@ xdescribe("1", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	//test
@@ -37,13 +37,13 @@ xdescribe("1", function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail,params.password);
+		teacher.get_key_and_enroll(ptor, params.student2.email,params.password);
 	})
 	it('should enroll student3', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student3_mail,params.password);
+		teacher.get_key_and_enroll(ptor, params.student3.email,params.password);
 	})
 	it('should enroll student4', function(){
 		o_c.to_teacher(ptor);
@@ -77,7 +77,7 @@ xdescribe("1", function(){
 describe("2", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create course', function(){
@@ -85,7 +85,7 @@ describe("2", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	//test
@@ -93,7 +93,7 @@ describe("2", function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 	})
 
 	it('check for enrolled students', function(){
@@ -111,13 +111,13 @@ describe("2", function(){
 	})
 
 	it('should check if student is not enrolled', function(){
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.sign_in(ptor, params.student1.email, params.password);
 		o_c.open_course_list(ptor)
 		check_if_courses_exist(ptor, 0);
 		o_c.logout(ptor);
 	})
 	it('should check if other student is still enrolled', function(){
-		o_c.sign_in(ptor, params.student2_mail, params.password);
+		o_c.sign_in(ptor, params.student2.email, params.password);
 		o_c.open_course_list(ptor)
 		check_if_courses_exist(ptor, 1);
 	})
@@ -195,7 +195,7 @@ xdescribe("", function(){
 		o_c.cancel_account(ptor, params.password);
 	})
 
-	xit('should delete account 5', function(){		
+	xit('should delete account 5', function(){
 		o_c.sign_in(ptor, studentmail5, params.password);
 		o_c.open_tray(ptor);
 		o_c.cancel_account(ptor, params.password);
@@ -209,7 +209,7 @@ xdescribe("", function(){
 //            enroll student by mail
 //====================================================
 // function get_key_and_enroll(ptor, mail){
-	
+
 // 	o_c.open_tray(ptor);
 // 	o_c.open_info_teacher(ptor);
 // 	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[1]').then(function(element){
@@ -222,7 +222,7 @@ xdescribe("", function(){
 // 			o_c.home(ptor);
 // 			o_c.open_tray(ptor);
 // 			o_c.logout(ptor, o_c.feedback);
-// 			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+// 			o_c.sign_in(ptor, params.teacher1.email, params.password, o_c.feedback);
 // 		})
 // 	})
 // }
@@ -242,7 +242,7 @@ function check_enrolled_no(ptor, no){
 function delete_enrolled_student(ptor, no){
 	element(by.id("delete_mode")).click()
 	element.all(by.repeater('student in students')).count().then(function(count){
-		var student_no = count	
+		var student_no = count
 		var student = element(by.repeater("student in students").row(no-1))
 		student.element(by.className('text_delete')).click()
 		student.element(by.className('fi-check')).click()

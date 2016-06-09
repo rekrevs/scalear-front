@@ -6,22 +6,25 @@ angular.module('scalearAngularApp')
     Page.setTitle('navigation.courses')
     Page.startTour();
     $rootScope.subheader_message = $translate("navigation.courses")
-
-		$scope.column='name'
+      
+    $scope.column='name'
     $scope.course_filter = '!!'
+    
     var getAllCourses=function(){
+    
       $scope.courses=null
       Course.index({},
       function(data){
         $scope.courses = data
         $log.debug($scope.courses)
-        $scope.courses.forEach(function(course){
-          if(!course.ended){
-            $scope.course_filter = false
-            return 
-          }
-        })
-      })           
+    // Code for removing finshed courses when chosing "All Courses" from main menu
+    //     $scope.courses.forEach(function(course){
+    //        if(!course.ended){
+    //        $scope.course_filter = false;
+    //        return 
+    //    }
+    //  })
+     })
     }
 
     var removeFromCourseList=function(course){

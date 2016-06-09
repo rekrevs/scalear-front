@@ -12,7 +12,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-var teacher_name = "teacher1" 
+var teacher_name = "teacher1"
 var comment1 = {title: "teacher can reply to discussions", likes:0, flags:0, screen_name:teacher_name}
 var comment2 = {title: "still can add many comments", likes:0, flags:0, screen_name:teacher_name}
 
@@ -21,7 +21,7 @@ describe("1", function () {
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor);
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
@@ -33,19 +33,19 @@ describe("1", function () {
         teacher.add_module(ptor);
         o_c.press_content_navigator(ptor);
         teacher.open_module(ptor, 1);
-        teacher.create_lecture(ptor);           
+        teacher.create_lecture(ptor);
         o_c.press_content_navigator(ptor);
         teacher.init_lecture(ptor, "mcq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-        
+
         ptor.navigate().refresh();
-        
+
         youtube.seek(ptor, 30);
         quiz_ov.create_mcq_quiz(ptor, o_c.feedback);
         lecture_middle.rename_quiz(ptor, 1, 'MCQ QUIZ');
         o_c.scroll_to_top(ptor);
         quiz_ov.make_mcq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback);
         lecture_middle.exit_quiz(ptor, o_c.feedback);
-        
+
         youtube.seek(ptor, 50);
         quiz_ov.create_ocq_quiz(ptor, o_c.feedback);
         lecture_middle.rename_quiz(ptor, 3, 'OCQ QUIZ');
@@ -66,15 +66,15 @@ describe("1", function () {
         o_c.open_course(ptor, 1);
     })
 
-    it('should open first module', function(){        
+    it('should open first module', function(){
         o_c.open_module(ptor, 1);
         o_c.press_content_navigator(ptor)
     })
 
-    it('should go to the progress page', function(){ 
+    it('should go to the progress page', function(){
         o_c.open_progress(ptor)
         o_c.open_module_progress(ptor)
-        o_c.hide_dropmenu(ptor)     
+        o_c.hide_dropmenu(ptor)
     })
 
     it('should mark quizzes and discussions to be in class', function () {
@@ -85,13 +85,13 @@ describe("1", function () {
        progress.showDiscussionInclass(1,0)
        progress.showVideoQuizInclass(2,0)
     })
-    
+
     it('should go to inclass', function () {
         o_c.open_inclass()
         progress.checkTimeEstimate(16)
         press_display(ptor);
     })
-    
+
     it('should check for titles', function () {
         check_lecture_title("New Lecture")
         check_current_quiz(ptor, "MCQ QUIZ");
@@ -153,7 +153,7 @@ describe("1", function () {
         check_lecture_title("New Lecture Surveys")
         check_current_quiz(ptor, "MCQ SURVEY");
     })
-    
+
     it('should hide and unhide question block', function () {
         press_hide(ptor);
         press_back(ptor);
@@ -165,19 +165,19 @@ describe("1", function () {
     it('should exit in-class', function () {
         press_exit(ptor);
     })
-    
+
     // it('should clear the course for deletion', function(){
     //     o_c.open_tray(ptor);
     //     o_c.open_course_editor(ptor);
-        
+
     //     teacher.open_module(ptor, 1);
     //     teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
 
     //     teacher.delete_empty_module(ptor, 1, o_c.feedback);
     // })
-    
+
     // it('should delete course', function () {
-    //     //should choose one of home() or home_teacher() 
+    //     //should choose one of home() or home_teacher()
     //     //depending on the current state(student or teacher)
     //     o_c.home_teacher(ptor);
     //     teacher.delete_course(ptor, o_c.feedback);
@@ -187,20 +187,20 @@ describe("1", function () {
 xdescribe("2", function () {
 
     it('should sign in as teacher', function () {
-        o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+        o_c.sign_in(ptor, params.teacher1.email, params.password, o_c.feedback);
     })
 
     it('should create_course', function () {
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
     })
-    
+
     it('should get the enrollment key and enroll student', function(){
         teacher.get_key_and_enroll(ptor);
     })
     //test
     it('should open course and make some data', function () {
         o_c.open_course_whole(ptor);
-        
+
         teacher.add_module(ptor, o_c.feedback);
         teacher.open_module(ptor, 1);
         teacher.create_lecture(ptor, "lec", "https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89", o_c.feedback);
@@ -211,10 +211,10 @@ xdescribe("2", function () {
         o_c.open_course_whole(ptor);
         o_c.open_tray(ptor);
         o_c.open_lectures(ptor);
-        
+
         youtube.seek(ptor, 30);
         disc.ask_public_question(ptor, 'q1');
-        
+
         youtube.seek(ptor, 50);
         disc.ask_public_question(ptor, 'q2');
         disc.ask_public_question(ptor, 'q3');
@@ -223,12 +223,12 @@ xdescribe("2", function () {
     it('should mark questions to be in class', function () {
         o_c.to_teacher(ptor);
         o_c.open_course_whole(ptor);
-        
+
         o_c.open_tray(ptor);
         o_c.open_progress_page(ptor);
         student.open_module_number(ptor, 1);
         teacher.check_inclass(ptor, 1);
-        teacher.check_inclass_in_item(ptor, 2, 1); 
+        teacher.check_inclass_in_item(ptor, 2, 1);
         teacher.check_inclass_in_item(ptor, 2, 2);
         teacher.check_inclass_in_item(ptor, 2, 3);
     })
@@ -256,7 +256,7 @@ xdescribe("2", function () {
         press_unhide_multi(ptor);
         check_current_question(ptor, "q2");
     })
-    
+
     it('should exit in-class', function () {
         press_exit(ptor);
     })
@@ -272,7 +272,7 @@ xdescribe("2", function () {
     })
 
     it('should delete course', function () {
-        //should choose one of home() or home_teacher() 
+        //should choose one of home() or home_teacher()
         //depending on the current state(student or teacher)
         // o_c.home_teacher(ptor);
         teacher.delete_course(ptor, o_c.feedback);
@@ -355,7 +355,7 @@ function press_unhide(ptor){
 //             expect(qb[0].isDisplayed()).toEqual(true);
 //         })
 //     })
-// }   
+// }
 
 function check_current_question(ptor, text){
     locator.s_by_classname(ptor, 'original_question').then(function(qu){

@@ -203,7 +203,7 @@ exports.open_view_shared=function(){
 exports.hide_dropmenu = function(ptor){
     element(by.id('content_navigator')).then(function(btn){
         ptor.actions().mouseMove(btn).perform();
-    })    
+    })
 }
 
 //====================================================
@@ -316,7 +316,7 @@ exports.open_announcements = function(ptor){
 //=======================================================
 exports.to_student = function(ptor){
     this.logout(ptor);
-    this.sign_in(ptor, params.student_mail, params.password);
+    this.sign_in(ptor, params.student1.email, params.password);
 }
 
 //=======================================================
@@ -324,7 +324,7 @@ exports.to_student = function(ptor){
 //=======================================================
 exports.to_teacher = function(ptor){
     this.logout(ptor);
-    this.sign_in(ptor, params.teacher_mail, params.password);
+    this.sign_in(ptor, params.teacher1.email, params.password);
 }
 
 ///////////////////////////////////////////////////////
@@ -350,8 +350,8 @@ exports.reject_shared = function(ptor,shared_no){
 // //====================================================
 // //               press lectures button
 // //====================================================
-exports.open_lectures = function(ptor){ 
-    element(by.id('course_content')).click()   
+exports.open_lectures = function(ptor){
+    element(by.id('course_content')).click()
     // info_icon = ptor.findElement(protractor.By.id("lectures")).then(function(btn){
     //     btn.click();
     //     ptor.getCurrentUrl().then(function(url) {
@@ -629,7 +629,7 @@ exports.open_item = function(ptor,item_no){
 //            open item by no from content navigator
 //====================================================
 
-exports.open_item_from_navigator=function(mo_no, item_no){    
+exports.open_item_from_navigator=function(mo_no, item_no){
     //element(by.repeater('module in modules').row(mo_no-1)).
     // element(by.repeater('item in module.items').row(item_no-1)).click()
     element(by.repeater('module in modules').row(mo_no-1)).element(by.repeater('item in module.items').row(item_no-1)).click()
@@ -727,7 +727,7 @@ exports.open_item_from_navigator=function(mo_no, item_no){
 //     this.home(ptor);
 //     this.open_tray(ptor);
 //     this.logout(ptor, this.feedback);
-//     this.sign_in(ptor, params.teacher_mail, params.password, this.feedback);
+//     this.sign_in(ptor, params.teacher1.email, params.password, this.feedback);
 // }
 
 // //=======================================================
@@ -737,7 +737,7 @@ exports.open_item_from_navigator=function(mo_no, item_no){
 //     this.home_teacher(ptor);
 //     this.open_tray(ptor);
 //     this.logout(ptor, this.feedback);
-//     this.sign_in(ptor, params.student_mail, params.password, this.feedback);   
+//     this.sign_in(ptor, params.student1.email, params.password, this.feedback);
 // }
 
 //=======================================================
@@ -770,7 +770,7 @@ exports.scroll_to_bottom = function(ptor) {
 //     element.getLocation().then(function(loc){
 //         ptor.executeScript('window.scrollTo('+loc.x+','+loc.y+')', '');
 //     })
-    
+
 // }
 
 // //

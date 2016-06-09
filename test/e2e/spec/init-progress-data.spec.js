@@ -13,7 +13,7 @@ xdescribe("teacher", function(){
 		// ptor.sleep(2000)
 		teacher.rename_module(ptor, 'New Module 2')
 	})
-	
+
 	it('should add a lecture', function(){
 		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
@@ -28,7 +28,7 @@ xdescribe("teacher", function(){
 	// 	teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
 	// })
 	// it('should seek the video', function(){
-		
+
 	// 	o_c.scroll(ptor, 200)
 	// })
 	it('should seek and add an over video quiz MCQ', function(){
@@ -78,7 +78,7 @@ xdescribe("teacher", function(){
 			o_c.scroll_to_top(ptor)
 			teacher.make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
 			// teacher.exit_invideo_quiz()
-			o_c.scroll_to_top(ptor)		
+			o_c.scroll_to_top(ptor)
 
 		// quiz_ov.create_drag_quiz(ptor)
 		// lecture_middle.rename_quiz(ptor, 5, 'DRAG QUIZ')
@@ -109,7 +109,7 @@ xdescribe("teacher", function(){
 	// it('should set the url for the lecture', function(){
 	// 	teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
 	// })
-	
+
 	// it('should seek the video', function(){
 	// 	youtube.seek(ptor, 10)
 	// })
@@ -151,7 +151,7 @@ xdescribe("teacher", function(){
 
 		// quiz_ov_text.create_ocq_quiz(ptor)
 		// lecture_middle.rename_quiz(ptor, 3, 'OCQ TEXT QUIZ')
-		
+
 		// quiz_ov_text.make_ocq_questions(ptor)
 		// lecture_middle.exit_quiz(ptor)
 	})
@@ -175,7 +175,7 @@ xdescribe("teacher", function(){
 		// lecture_middle.exit_quiz(ptor)
 	})
 
-	
+
 	// it('should scroll to the top', function(){
 	// 	o_c.scroll_to_top(ptor)
 	// })
@@ -195,7 +195,7 @@ xdescribe("teacher", function(){
 	// it('should set the url for the lecture', function(){
 	// 	teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
 	// })
-	
+
 	// it('should seek the video', function(){
 	// 	youtube.seek(ptor, 10)
 	// })
@@ -271,7 +271,7 @@ xdescribe("teacher", function(){
 	it('should add a FREE question', function(){
 		teacher.add_quiz_question_free(ptor, 'free question')
 	})
-	
+
 	it('should add a MATCH question', function(){
 		teacher.add_quiz_question_free(ptor, 'match question', 'match answer')
 	})
@@ -318,7 +318,7 @@ xdescribe("teacher", function(){
 	it('should add a FREE question', function(){
 		teacher.add_quiz_question_free(ptor, 'free question')
 	})
-	
+
 	it('should add a MATCH question', function(){
 		teacher.add_quiz_question_free(ptor, 'match question', 'match answer')
 	})
@@ -367,11 +367,11 @@ xdescribe("teacher", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
         o_c.open_course(ptor, 1);
-        teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+        teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 
 	})
 
@@ -385,7 +385,7 @@ xdescribe('First Student', function(){
 
 	it('should sign in', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.sign_in(ptor, params.student1.email, params.password);
 	})
 	it('should open the first course', function(){
 		o_c.open_course_list(ptor);
@@ -570,7 +570,7 @@ xdescribe('First Student', function(){
 	it('should select the third choice', function(){
 		student.answer_invideo_ocq(ptor, 2)
 		student.answer_quiz(ptor)
-	})	
+	})
 
 	it('should watch video and pass by all milestones', function(){
 		youtube.press_play(ptor)
@@ -602,7 +602,7 @@ xdescribe('First Student', function(){
 
 	it('should answer match question', function(){
 		student.free_match_answer(ptor, 6, 'match answer')
-	})	
+	})
 
 	it('should answer drag correct', function(){
 		ptor.sleep(3000);
@@ -641,7 +641,7 @@ xdescribe('First Student', function(){
 
 	it('should answer match question', function(){
 		student.free_match_answer(ptor, 6, "shouldn't match answer")
-	})	
+	})
 
 	it('should answer drag correct', function(){
 		ptor.sleep(3000);
@@ -804,7 +804,7 @@ xdescribe('First Student', function(){
 	//end test
 
 	// // it('should delete course', function(){
-	// // 	//should choose one of home() or home_teacher() 
+	// // 	//should choose one of home() or home_teacher()
 	// // 	//depending on the current state(student or teacher)
 	// // 	o_c.home(ptor);
 	// // 	teacher.delete_course(ptor);
@@ -814,13 +814,13 @@ xdescribe('First Student', function(){
 // xdescribe('Teacher', function(){
 // 	it('should sign in', function(){
 // 		// o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);		
-		
+// 		o_c.sign_in(ptor, params.teacher1.email, params.password);
+
 // 	})
 // 	it('should enroll second student', function(){
 // 		o_c.open_course_list(ptor);
 //         o_c.open_course(ptor, 1);
-//         teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+//         teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 // 	})
 // })
 
@@ -828,7 +828,7 @@ xdescribe('Second Student', function(){
 
 	it('should sign in', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student2_mail, params.password);
+		o_c.sign_in(ptor, params.student2.email, params.password);
 	})
 
 	it('should open the first course', function(){
@@ -1036,7 +1036,7 @@ xdescribe('Second Student', function(){
 
 	it('should answer match question', function(){
 		student.free_match_answer(ptor, 6, 'match answer')
-	})	
+	})
 
 	it('should answer drag correct', function(){
 		ptor.sleep(3000);
@@ -1097,7 +1097,7 @@ xdescribe('Second Student', function(){
 xdescribe('First Student', function(){
 	it('should sign in', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.sign_in(ptor, params.student1.email, params.password);
 	})
 
 	it('should open the first course', function(){
@@ -1114,7 +1114,7 @@ xdescribe('First Student', function(){
 		o_c.open_module(ptor, 1);
 		o_c.open_item_from_navigator(1, 2);
 		// o_c.press_content_navigator(ptor);
-		
+
 	})
 	// it('should open the second lecture', function(){
 	// 	o_c.open_item(ptor, 2)
@@ -1224,7 +1224,7 @@ xdescribe('First Student', function(){
 // 					else if(text == 'answer 2'){
 // 					 	ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
 // 					}
-// 				})		
+// 				})
 // 			})
 // 		})
 // 	}
@@ -1269,7 +1269,7 @@ xdescribe('First Student', function(){
 // 		 	ptor.actions().mouseDown().perform();
 // 		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
 // 		 	ptor.actions().mouseUp().perform();
-			
+
 // 			ptor.actions().mouseMove(answer[1]).perform();
 // 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 // 		 	ptor.actions().mouseDown().perform();
@@ -1290,7 +1290,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 
 // 			answer[1].getText().then(function (text){
@@ -1299,7 +1299,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 
 // 			answer[2].getText().then(function (text){
@@ -1308,7 +1308,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 // 		})
 // 	})
@@ -1325,7 +1325,7 @@ xdescribe('First Student', function(){
 // 		 	ptor.actions().mouseDown().perform();
 // 		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
 // 		 	ptor.actions().mouseUp().perform();
-			
+
 // 			ptor.actions().mouseMove(answer[1]).perform();
 // 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 // 		 	ptor.actions().mouseDown().perform();
@@ -1346,7 +1346,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 
 // 			answer[1].getText().then(function (text){
@@ -1355,7 +1355,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 
 // 			answer[2].getText().then(function (text){
@@ -1364,7 +1364,7 @@ xdescribe('First Student', function(){
 // 			 	ptor.actions().mouseDown().perform();
 // 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
 // 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
+// 			 	ptor.actions().mouseUp().perform();
 // 			})
 // 		})
 // 	})
@@ -1382,7 +1382,7 @@ function request_review_inclass(ptor, which){
 			popover.findElement(protractor.By.className('button')).then(function(yes){
 				yes.click();
 			})
-		}	
+		}
 	})
 }
 

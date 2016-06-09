@@ -10,10 +10,10 @@ var params = ptor.params
 ptor.driver.manage().window().maximize();
 
 describe("deleting confused", function(){
-	
+
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('create_course', function(){
@@ -21,24 +21,24 @@ describe("deleting confused", function(){
 	})
 
 	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+		// teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 	})
 
 	it('should login a student', function(){
@@ -54,16 +54,16 @@ describe("deleting confused", function(){
 
 	it('should get the enrollment key and enroll student', function(){
 		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		// teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 	})
 
 	it('should go the other student and check for ability to delete a confused', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
+		// o_c.sign_in(ptor, params.student2.email, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_confused_no(0);
@@ -94,10 +94,10 @@ describe("deleting confused", function(){
 })
 
 describe("deleting notes", function(){
-	
+
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('create_course', function(){
@@ -105,24 +105,24 @@ describe("deleting notes", function(){
 	})
 
 	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+		// teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 	})
 
 	it('should login a student', function(){
@@ -136,16 +136,16 @@ describe("deleting notes", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		// teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 		o_c.to_teacher(ptor);
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2.email, params.password);
 	})
 
 	it('should go the other student and check for notes not visible', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
+		// o_c.sign_in(ptor, params.student2.email, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_notes_no(0);
@@ -176,10 +176,10 @@ describe("deleting notes", function(){
 })
 
 describe("deleting discussion from another lecture", function(){
-	
+
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('create_course', function(){
@@ -187,23 +187,23 @@ describe("deleting discussion from another lecture", function(){
 	})
 
 	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should ask a public question as student', function(){
@@ -248,10 +248,10 @@ describe("deleting discussion from another lecture", function(){
 })
 
 describe("deleting confused from another lecture", function(){
-	
+
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('create_course', function(){
@@ -259,24 +259,24 @@ describe("deleting confused from another lecture", function(){
 	})
 
 	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);;
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);;
 	})
 
 	it('should login a student', function(){
@@ -318,10 +318,10 @@ describe("deleting confused from another lecture", function(){
 })
 
 describe("deleting notes from another lecture", function(){
-	
+
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('create_course', function(){
@@ -329,23 +329,23 @@ describe("deleting notes from another lecture", function(){
 	})
 
 	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student', function(){

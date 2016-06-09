@@ -9,12 +9,12 @@ var params = ptor.params
 ptor.driver.manage().window().maximize();
 
 
-//equation 
+//equation
 // 570 >> 169
 //(width*169)/570
 // questions coordinates
 var d_q1_x = 169; //175-6;
-var d_q1_y = 70; 
+var d_q1_y = 70;
 
 var d_q2_x = 169; //175-6;
 var d_q2_y = 130;
@@ -26,23 +26,23 @@ var d_q3_y = 190;
 
 // 	it('should sign in as teacher', function(){
 // 		o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 	})
 
 // 	it('should create_course', function(){
 // 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 // 	})
 
-	
+
 // 	//test
 // 	it('should add a module and lecture to create quizzes', function(){
-// 		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 		// o_c.open_course_list(ptor)
 // 		// o_c.open_course(ptor, 1);
 // 		teacher.add_module(ptor);
 // 		// o_c.press_content_navigator(ptor);
 // 		teacher.open_module(ptor, 1);
-// 		teacher.add_lecture(ptor);			
+// 		teacher.add_lecture(ptor);
 // 		o_c.press_content_navigator(ptor);
 // 		ptor.sleep(2000)
 // 		teacher.init_lecture(ptor, "drag_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -56,9 +56,9 @@ var d_q3_y = 190;
 // 	//end test
 
 // 	it('should get the enrollment key and enroll student', function(){
-// 		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+// 		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 // 	})
-    
+
 // 	it('should clear the course for deletion', function(){
 // 		o_c.to_teacher(ptor);
 // 		o_c.open_course_list(ptor);
@@ -79,7 +79,7 @@ describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -88,13 +88,13 @@ describe("1", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "drag_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -109,7 +109,7 @@ describe("1", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for no of drags ', function(){
@@ -162,7 +162,7 @@ describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -171,13 +171,13 @@ describe("2", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "drag_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -192,7 +192,7 @@ describe("2", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for no of drags ', function(){
@@ -332,7 +332,7 @@ function check_drag_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 						expect(loc.y-location.y).toBeGreaterThan(Math.floor((w*q1_y)/570)-8);
 						expect(loc.y-location.y).toBeLessThan(Math.floor((w*q1_y)/570)-4);
 					})
-					
+
 					check_boxes[1].getLocation().then(function(loc){
 						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/570)+20);
 						expect(loc.y-location.y).toBeGreaterThan(Math.floor((w*q2_y)/570)-8);

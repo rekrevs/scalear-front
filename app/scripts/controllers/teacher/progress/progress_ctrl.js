@@ -61,7 +61,6 @@ angular.module('scalearAngularApp')
     // }
 
     $scope.updateStatus = function(student_id, module_id, status) {
-        console.log(arguments)
       if(status)
         status = (status == "Finished on Time") ? 1 : 2
       else

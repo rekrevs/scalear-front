@@ -3,7 +3,12 @@
 angular.module('scalearAngularApp')
   .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location, $interval) {
 
+  // console.log($location.path())
+  // console.log()
   $scope.issue_types=[{value:"system", text:$translate('feedback.system')}, {value:"content", text:$translate('feedback.course_content')}]//"ScalableLearning Website", "Course Content"]
+  if(!($location.path().indexOf('courses') > -1)){
+    $scope.issue_types=[{value:"system", text:$translate('feedback.system')}]//"ScalableLearning Website", "Course Content"]  
+  }
   $scope.selected_type = $scope.issue_types[0];
 
   $scope.issue_scalable_website_types=[{value:"none", text:$translate('feedback.none')},{value:"no_access", text:$translate('feedback.no_access')},{value:"question_before_sign", text:$translate('feedback.question_before_sign')},{value:"request_feature", text:$translate('feedback.request_feature')},{value:"no_email", text:$translate('feedback.no_email')},{value:"confused", text:$translate('feedback.confused')},{value:"bug", text:$translate('feedback.bug')},{value:"other", text:$translate('feedback.other')}]

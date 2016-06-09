@@ -49,23 +49,23 @@
 			</button>
 		</span>
 		<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
-			<button class="button small" ng-click="togglePreviewInclass()">
-				<span translate>Preview in-class</span>
+			<button class="button small preview_inclass" ng-click="togglePreviewInclass()">
+				<span translate>editor.preview_inclass</span>
 			</button>
 		</span>
 		<button class="button small" ng-click="openQuizList($event)" translate>editor.button.show_all_quizzes</button>
 	</center>
-	<center ng-if="filtered_timeline_items">
-		<div  style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
-			<ul  class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
+	<center id="preview_inclass_panel" ng-if="filtered_timeline_items">
+		<div style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
+			<ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
 				<li style="display:none"></li>
-		  		<span ng-repeat="item in filtered_timeline_items" >
-		    		<li ng-if="!item.data.inclass_title" class="small_circles" ng-class="{'active': item == selected_inclass_item}" ng-style="{'background': item.data.background, 'color':item.data.color}"></li>
-		    		<li ng-if="item.data.inclass_title" ng-class="{'active': item == selected_inclass_item }" ng-style="{'background': item.data.background, 'color':item.data.color}">{{item.data.inclass_title}}</li>
-		      	</span>
+	  		<span ng-repeat="item in filtered_timeline_items" >
+	    		<li ng-if="!item.data.inclass_title" class="small_circles" ng-class="{'active': item == selected_inclass_item}" ng-style="{'background': item.data.background, 'color':item.data.color}"></li>
+	    		<li ng-if="item.data.inclass_title" ng-class="{'active': item == selected_inclass_item }" ng-style="{'background': item.data.background, 'color':item.data.color}">{{item.data.inclass_title}}</li>
+	      	</span>
 		    </ul>
-		    <button ng-click="inclassPrevItem()" class="button really-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-previous" /></button>
-	        <button ng-click="inclassNextItem()" class="button really-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-next" /></button>
+		    <button ng-click="inclassPrevItem()" class="inclass_prev button really-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-previous" /></button>
+	       <button ng-click="inclassNextItem()" class="inclass_next button really-tiny secondary" style="font-size: 13px;padding: 3px 20px;margin-bottom:10px"><i class="fi-next" /></button>
 	    </div>
 	</center>
 	<div class="small-12 small-centered columns">

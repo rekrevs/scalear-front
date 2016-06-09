@@ -17,7 +17,7 @@ var new_course = new NewCourse();
 describe("Course Editor Copy", function(){
     describe("Teacher", function(){
         it("should login as teacher",function(){
-            login_page.sign_in(params.teacher_mail, params.password)
+            login_page.sign_in(params.teacher1.email, params.password)
         })
         it('should create another course', function(){
             new_course.open()
@@ -144,7 +144,7 @@ describe("Course Editor Copy", function(){
             sub_header.open_edit_mode()
         })
         var navigator = new ContentNavigator(1)
-        it('should clear the course for deletion', function(){        
+        it('should clear the course for deletion', function(){
             var module = navigator.module(2)
             module.open()
             module.item(2).delete()
@@ -171,7 +171,7 @@ describe("Course Editor Copy", function(){
             module.item(1).delete()
             expect(module.items.count()).toEqual(0)
             module.delete()
-            expect(navigator.modules.count()).toEqual(0)    
+            expect(navigator.modules.count()).toEqual(0)
         })
 
         it('should delete course', function(){
@@ -190,7 +190,7 @@ describe("Course Editor Copy", function(){
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
         })
-        it('should removed copied itesm', function(){        
+        it('should removed copied itesm', function(){
             var module = navigator.module(3)
             module.open()
             module.item(1).delete()

@@ -10,7 +10,7 @@ ptor.driver.manage().window().maximize();
 // describe('add required quiz and answer it',function(){
 //     it('should sign in as teacher', function(){
 //         o_c.press_login(ptor)
-//         o_c.sign_in(ptor, params.teacher_mail, params.password);
+//         o_c.sign_in(ptor, params.teacher1.email, params.password);
 //     })
 
 //     it('should create_course', function(){
@@ -18,7 +18,7 @@ ptor.driver.manage().window().maximize();
 //     })
 
 //     it('should add a normal quiz', function(){
-//         // o_c.sign_in(ptor, params.teacher_mail, params.password);
+//         // o_c.sign_in(ptor, params.teacher1.email, params.password);
 //         // o_c.open_course_list(ptor);
 //         // o_c.open_course(ptor, 1);
 //         // o_c.open_content_editor(ptor);
@@ -63,7 +63,7 @@ ptor.driver.manage().window().maximize();
 //     })
 
 //     it('should get the enrollment key and enroll student', function(){
-//         teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+//         teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 //     })
 
 //     it('should go to student', function(){
@@ -100,7 +100,7 @@ ptor.driver.manage().window().maximize();
 
 //     it('should answer match question', function(){
 //         student.free_match_answer(ptor, 6, 'match answer')
-//     })  
+//     })
 
 //     it('should answer drag correct', function(){
 //         ptor.sleep(3000);
@@ -121,7 +121,7 @@ ptor.driver.manage().window().maximize();
 //         check_alertbox_msg(ptor)
 //         check_submit_disabled(ptor)
 //     })
-    
+
 //     it('should delete course', function(){
 //         o_c.to_teacher(ptor);
 //         o_c.open_course_list(ptor);
@@ -140,7 +140,7 @@ ptor.driver.manage().window().maximize();
 
 //     it('should sign in as teacher', function(){
 //         // o_c.press_login(ptor)
-//         o_c.sign_in(ptor, params.teacher_mail, params.password);
+//         o_c.sign_in(ptor, params.teacher1.email, params.password);
 //     })
 
 //     it('should create_course', function(){
@@ -148,7 +148,7 @@ ptor.driver.manage().window().maximize();
 //     })
 
 //     it('should add a normal quiz', function(){
-//         // o_c.sign_in(ptor, params.teacher_mail, params.password);
+//         // o_c.sign_in(ptor, params.teacher1.email, params.password);
 //         // o_c.open_course_list(ptor);
 //         // o_c.open_course(ptor, 1);
 //         // o_c.open_content_editor(ptor);
@@ -192,7 +192,7 @@ ptor.driver.manage().window().maximize();
 //     })
 
 //     it('should get the enrollment key and enroll student', function(){
-//         teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+//         teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 //     })
 
 //     it('should go to student', function(){
@@ -229,7 +229,7 @@ ptor.driver.manage().window().maximize();
 
 //     it('should answer match question', function(){
 //         student.free_match_answer(ptor, 6, 'mat answer')
-//     })  
+//     })
 
 //     // it('should answer drag correct', function(){
 //     //     ptor.sleep(2000);
@@ -264,7 +264,7 @@ ptor.driver.manage().window().maximize();
 
 //     it('should answer match question', function(){
 //         student.free_match_answer(ptor, 6, 'match answer')
-//     })  
+//     })
 
 //     it('should answer drag correct', function(){
 //         ptor.sleep(3000);
@@ -279,8 +279,8 @@ ptor.driver.manage().window().maximize();
 //         under_review_no(1)
 //         no_attempt(ptor, 2)
 //         check_submit_disabled(ptor)
-//     })    
-    
+//     })
+
 //     // it('should delete course', function(){
 //     //     o_c.to_teacher(ptor);
 //     //     o_c.open_course_list(ptor);
@@ -297,7 +297,7 @@ ptor.driver.manage().window().maximize();
 
 describe('add quiz and student saves it',function(){
     it('should sign in as teacher', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
@@ -305,7 +305,7 @@ describe('add quiz and student saves it',function(){
     })
 
     it('should add a normal quiz', function(){
-        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.sign_in(ptor, params.teacher1.email, params.password);
         // o_c.open_course_list(ptor);
         // o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
@@ -340,7 +340,7 @@ describe('add quiz and student saves it',function(){
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+        teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
     })
 
     it('should go to student', function(){
@@ -373,7 +373,7 @@ describe('add quiz and student saves it',function(){
 
     it('should answer match question', function(){
         student.free_match_answer(ptor, 6, 'match answer')
-    })  
+    })
 
     it('should answer drag correct', function(){
         ptor.sleep(3000);
@@ -398,7 +398,7 @@ describe('add quiz and student saves it',function(){
 
     it('should refresh',function(){
         ptor.navigate().refresh();
-    })  
+    })
 
     it('should check student answers',function(){
         student.check_mcq_answer(ptor, 2, 2);
@@ -408,8 +408,8 @@ describe('add quiz and student saves it',function(){
         student.check_free_match_answer(ptor, 6, 'match answer')
         o_c.scroll_to_bottom(ptor)
         student.check_drag_answer(ptor, 7);
-    })  
-    
+    })
+
     it('should delete course', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
@@ -443,7 +443,7 @@ function incorrect_no(no){
 function check_quiz_name(ptor, name){
     o_c.press_content_navigator(ptor)
     element(by.repeater('module in modules ').row(0)).click()
-    var quiz = element(by.repeater('item in module.items').row(0)) 
+    var quiz = element(by.repeater('item in module.items').row(0))
     expect(quiz.getText()).toContain(name)
     // expect(quiz.element(by.className('alert')).getText()).toEqual('Required')
     o_c.press_content_navigator(ptor)

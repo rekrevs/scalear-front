@@ -1,24 +1,92 @@
 var params= {
     //local
-    frontend: 'http://0.0.0.0:9000/#',
+    frontend: 'http://localhost:9000/#',
 
-    admin_mail:    'admin@scalear.com',
-    teacher_mail:  'teacher1@sharklasers.com',
-    teacher2_mail: 'teacher2@sharklasers.com',
+    // admin_mail:    'admin@scalear.com',
+    // teacher_mail:  'teacher1@sharklasers.com',
+    // teacher2_mail: 'teacher2@sharklasers.com',
     // teacher3_mail: "teacher3@sharklasers.com",
-    teacher3_mail: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    student_mail:  'studenttest@sharklasers.com',
-    student2_mail: 'studenttest2@sharklasers.com',
-    student3_mail: 'studenttest3@sharklasers.com',
-    student4_mail: 'studenttest4@sharklasers.com',
-    student5_mail: 'studenttest5@sharklasers.com',
+    // teacher3_mail: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+
+    // student_mail:  'studenttest@sharklasers.com',
+    // student2_mail: 'studenttest2@sharklasers.com',
+    // student3_mail: 'studenttest3@sharklasers.com',
+    // student4_mail: 'studenttest4@sharklasers.com',
+    // student5_mail: 'studenttest5@sharklasers.com',
     admin_password:"password",
     password: 'password',
     // student_name_list: ['Student 1','Student 2','Student 3'],
-    student_name_list: ['Test_1 student','Test_2 student','Test_3 student'],
+    // student_name_list: ['Test_1 student','Test_2 student','Test_3 student'],
+
+
+    student1:{
+        f_name: "Test_1",
+        l_name: "student",
+        online_name: "studenttest1",
+        university: "uni",
+        email: "studenttest@sharklasers.com",
+    },
+    student2:{
+        f_name: "Test_2",
+        l_name: "student",
+        online_name: "studenttest2",
+        university: "uni",
+        email: "studenttest2@sharklasers.com",
+    },
+    student3:{
+        f_name: "Test_3",
+        l_name: "student",
+        online_name: "studenttest3",
+        university: "uni",
+        email: "studenttest3@sharklasers.com",
+    },
+    student4:{
+        f_name: "Student",
+        l_name: "4",
+        online_name: "studenttest3",
+        university: "test univerisity",
+        email: "studenttest3@sharklasers.com",
+    },
+    teacher1:{
+        f_name: "teacher",
+        l_name: "1",
+        online_name: "teacher1@sharklasers.com",
+        university: "test univerisity",
+        email: "teacher1@sharklasers.com",
+    },
+    teacher2:{
+        f_name: "teacher",
+        l_name: "test",
+        online_name: "teacher test",
+        university: "world university",
+        email: "teacher2@sharklasers.com",
+    },
+    teacher3:{
+        f_name: "teacher",
+        l_name: "3",
+        online_name: "teacher test3",
+        university: "test univerisity",
+        email: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    },
+    admin:{
+        f_name: "Administrator",
+        l_name: "Control",
+        online_name: "Admin",
+        university: "uniAdmin",
+        email: "admin@scalear.com",
+    },
 
     url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
     url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+    video1:{
+        url:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+        duration:{ min:4, sec:47},
+    },
+    video2:{
+        url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+        duration:{ min:6, sec:5},
+    },
+
     q_x:169,
     q1_y:127,
     q2_y:157,
@@ -34,18 +102,21 @@ var params= {
 
     guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
-    guerrillamail_first_name: "student",
+    // guerrillamail_first_name: "student",
     teacher_first_name: "teacher",
     student_name: "Student",
-
-    guerrillamail_last_name: "4",
+    // guerrillamail_last_name: "4",
     guerrillamail_sch_uni_name: "test univerisity",
 
-
-    // teacher_screen_name: "teacher1" ,
-    teacher_fname: "teacher1" ,
-    teacher_lname: "sharklasers.com" , 
-    teacher_univer: "shark" ,
+    prepare: function(custom_browser) {
+        var this_browser = custom_browser || browser
+        this_browser.driver.manage().window().maximize();
+        this_browser.driver.get(params.frontend);
+        this_browser.driver.wait(function() {
+            return this_browser.element(by.id('login')).isPresent()
+        }, 30000)
+        this_browser.element(by.id('login')).click();
+    }
 
 }
 
@@ -127,36 +198,38 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js', // Done
-        'test/e2e/spec/fill_course.spec.js',// Done
-        'test/e2e/spec/course_information_validation.spec.js',// Done
-        'test/e2e/spec/account_information_validation.spec.js',// Done
-        'test/e2e/spec/enrollment_help.spec.js',// Done
-        'test/e2e/spec/course_editor_basic.spec.js',
-        'test/e2e/spec/course_editor_copy.spec.js',
-        'test/e2e/spec/course_editor_sharing.spec.js',
-        'test/e2e/spec/module_statistics.spec.js', // Done 
-        'test/e2e/spec/announcements.spec.js',  // Done
-        'test/e2e/spec/teacher-managment.spec.js', // Done
-        'test/e2e/spec/students_solve_course.spec.js',  // Done
-        'test/e2e/spec/notes.spec.js',   // Done
+        // 'test/e2e/spec/fill_course_pi.spec.js', // Done
+        'test/e2e/spec/inclass_pi.spec.js', // Done
+        // 'test/e2e/spec/create_course.spec.js', // Done
+        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/course_information_validation.spec.js',// Done
+        // 'test/e2e/spec/account_information_validation.spec.js',// Done
+        // 'test/e2e/spec/enrollment_help.spec.js',// Done
+        // 'test/e2e/spec/course_editor_basic.spec.js',
+        // 'test/e2e/spec/course_editor_copy.spec.js',
+        // 'test/e2e/spec/course_editor_sharing.spec.js',
+        // 'test/e2e/spec/module_statistics.spec.js', // Done
+        // 'test/e2e/spec/announcements.spec.js',  // Done
+        // 'test/e2e/spec/teacher-managment.spec.js', // Done
+        // 'test/e2e/spec/students_solve_course.spec.js',  // Done
+        // 'test/e2e/spec/notes.spec.js',   // Done
 
-        'test/e2e/spec/discussions.spec.js',  // Done
-        'test/e2e/spec/progress-module.spec.js', // Done
+        // 'test/e2e/spec/discussions.spec.js',  // Done
+        // 'test/e2e/spec/progress-module.spec.js', // Done
 
-        'test/e2e/spec/progress-completion-module.spec.js',// Done
-        'test/e2e/spec/validations.spec.js', // Done
+        // 'test/e2e/spec/progress-completion-module.spec.js',// Done
+        // 'test/e2e/spec/validations.spec.js', // Done
 
-        'test/e2e/spec/delete_course.spec.js',
+        // 'test/e2e/spec/delete_course.spec.js',
 
 
         // to test email features locall
 
-        // 'test/e2e/spec/add_user.spec.js',  
-        // 'test/e2e/spec/create_course.spec.js', 
+        // 'test/e2e/spec/add_user.spec.js',
+        // 'test/e2e/spec/create_course.spec.js',
         // 'test/e2e/spec/fill_course.spec.js',
-        // 'test/e2e/spec/email_notification.spec.js',  
-        // 'test/e2e/spec/delete_user.spec.js',  
+        // 'test/e2e/spec/email_notification.spec.js',
+        // 'test/e2e/spec/delete_user.spec.js',
 
    //{{reviewed}}
         // 'test/e2e/spec/init-progress-data.spec.js', //
@@ -225,14 +298,15 @@ exports.config = {
     // before the specs are executed
     // You can specify a file containing code to run by setting onPrepare to
     // the filename string.
-    onPrepare: function() {
-        browser.driver.manage().window().maximize();
-        browser.driver.get(params.frontend);
-        browser.driver.wait(function() {
-            return element(by.id('login')).isPresent()
-        }, 30000)
-        element(by.id('login')).click();
-    },
+    onPrepare: params.prepare,
+    // function() {
+    //     browser.driver.manage().window().maximize();
+    //     browser.driver.get(params.frontend);
+    //     browser.driver.wait(function() {
+    //         return element(by.id('login')).isPresent()
+    //     }, 30000)
+    //     element(by.id('login')).click();
+    // },
 
     // The params object will be passed directly to the protractor instance,
     // and can be accessed from your test. It is an arbitrary object and can

@@ -13,6 +13,9 @@ Video.prototype= Object.create({}, {
 	play: {value:function(){return this.play_button.click()}},
 	current_time:{get:function(){return this.time.element(by.binding("current_time")).getText()}},
 	duration:{get:function(){return this.time.element(by.binding("total_duration")).getText()}},
+	timeline_events:{get:function(){ return element.all(by.repeater('element in timeline.items')) }},
+	quizzes_events:{get:function(){ return element.all(by.className("repeating_blue_pattern")) }},
+	open_quiz:{value:function(num){return this.quizzes_events.get(num-1).click()}},
 	seek:{value:function(percent){
 		this.wait_till_ready()
 		var progress_bar = this.progress_bar

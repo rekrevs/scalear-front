@@ -30,35 +30,35 @@ var student_quiz = new StudentQuiz()
 var student_lec = new StudentLecture()
 
 var student_names = ['studenttest2 sharklasers', 'student test']
-var teacher_name = "teacher1" 
-var student_emails = [params.student2_mail, params.student_mail]
+var teacher_name = "teacher1"
+var student_emails = [params.student2.email, params.student1.email]
 var module_names = ['New Module', 'New Module 2']
 var checkmarks = {'studenttest2 sharklasers': ['on_time', 'not_finished'], 'student test': ['on_time', 'not_finished']}
 var duration={ min:4, sec:46}
 var total_duration = duration.min*60+duration.sec
 var modules_items = {
 	'New Module': [{
-					'name':'lecture1 video quizzes', 
+					'name':'lecture1 video quizzes',
 					'duration': '00:04:47',
 					'questions': [
 						{title:'MCQ QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration), vote_count:1, vote_percent:34},
-						{title:'OCQ QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34}, 
+						{title:'OCQ QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34},
 						{title:'DRAG QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration), vote_count:0, vote_percent:0}
 					],
 					'free_text':[],
 					'discussion':[
-						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:params.student_mail},
-						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:params.student_mail},
-						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:params.student2_mail}
+						{title: 'Private Question', type:'private', time:roundTimeToPercentage(15, total_duration), likes:'0', flags:'0', screen_name:params.student1.online_name},
+						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:params.student1.online_name},
+						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:params.student2.online_name}
 					],
 					'confused':[],
 					},
 					{
-					'name':'lecture2 text quizzes', 
+					'name':'lecture2 text quizzes',
 					'duration': '00:04:47',
 					'questions': [
 						{title:'MCQ TEXT QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration), vote_count:2, vote_percent:67},
-						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34}, 
+						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34},
 						{title:'DRAG TEXT QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration), vote_count:1, vote_percent:34}
 					],
 					'free_text':[],
@@ -66,7 +66,7 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'lecture3 video surveys', 
+					'name':'lecture3 video surveys',
 					'duration': '00:04:47',
 					'questions':  [
 						{title:'MCQ SURVEY', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
@@ -77,10 +77,10 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'quiz1', 
+					'name':'quiz1',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
@@ -91,10 +91,10 @@ var modules_items = {
 					'confused':[]
 					},
 					{
-					'name':'quiz2', 
+					'name':'quiz2',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
@@ -105,10 +105,10 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'survey1', 
+					'name':'survey1',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 					],
 					'free_text':[
 						{title:'free question', answers:[{title:'first student free answer'}]},
@@ -117,11 +117,11 @@ var modules_items = {
 					'confused':[],
 					}],
 	'New Module 2': [{
-					'name':'lecture4 video quizzes', 
+					'name':'lecture4 video quizzes',
 					'duration': '00:04:47',
 					'questions': [
 						{title:'MCQ QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
-						{title:'OCQ QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration)}, 
+						{title:'OCQ QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration)},
 						{title:'DRAG QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration)}
 					],
 					'free_text':[],
@@ -129,11 +129,11 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'lecture5 text quizzes', 
+					'name':'lecture5 text quizzes',
 					'duration': '00:04:47',
 					'questions': [
 						{title:'MCQ TEXT QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
-						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration)}, 
+						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration)},
 						{title:'DRAG TEXT QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration)}
 					],
 					'free_text':[],
@@ -141,7 +141,7 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'lecture6 video surveys', 
+					'name':'lecture6 video surveys',
 					'duration': '00:04:47',
 					'questions': [
 						{title:'MCQ SURVEY', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
@@ -152,10 +152,10 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'quiz3', 
+					'name':'quiz3',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
@@ -166,10 +166,10 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'quiz4', 
+					'name':'quiz4',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
@@ -180,10 +180,10 @@ var modules_items = {
 					'confused':[],
 					},
 					{
-					'name':'survey2', 
+					'name':'survey2',
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
-						{title:'ocq question', type:'OCQ'},						
+						{title:'ocq question', type:'OCQ'},
 					],
 					'free_text':[
 						{title:'free question', answers:[]},
@@ -192,10 +192,10 @@ var modules_items = {
 					'confused':[],
 					}]
 }
-var comment0 = {title: "first comment", likes:0, flags:0, screen_name:'studenttest2'}
+var comment0 = {title: "first comment", likes:0, flags:0, screen_name:params.student2.online_name}
 var comment1 = {title: "second comment", likes:2, flags:1, screen_name:'Student-00A0'}
-var comment2 = {title: "teacher can reply to discussions", likes:0, flags:0, screen_name:teacher_name}
-var comment3 = {title: "still can add many comments", likes:0, flags:0, screen_name:teacher_name}
+var comment2 = {title: "teacher can reply to discussions", likes:0, flags:0, screen_name:params.teacher1.online_name}
+var comment3 = {title: "still can add many comments", likes:0, flags:0, screen_name:params.teacher1.online_name}
 
 // module_progress = Module 1, 2 , 3 level(1)
 // module item =  lecture , normal quizes level ( 2 )
@@ -204,7 +204,7 @@ var comment3 = {title: "still can add many comments", likes:0, flags:0, screen_n
 describe("check course review", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
@@ -240,24 +240,24 @@ describe("check course review", function(){
 				})
 			})
 			describe('First lecture',function(){
-				it('should display correct quiz titles',function(){					
+				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][0].questions[0]
-					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(1).show_inclass_click()
-					expect(module_progress.module_item(1).quiz(1).show_inclass_box.isSelected()).toEqual(true)  
+					expect(module_progress.module_item(1).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][0].questions[1]
-					expect(module_progress.module_item(1).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(1).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(2).show_inclass_click()
-					expect(module_progress.module_item(1).quiz(2).show_inclass_box.isSelected()).toEqual(true)  	
-					
+					expect(module_progress.module_item(1).quiz(2).show_inclass_box.isSelected()).toEqual(true)
+
 					var question = modules_items['New Module'][0].questions[2]
-					expect(module_progress.module_item(1).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(1).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(3).show_inclass_click()
-					expect(module_progress.module_item(1).quiz(3).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(1).quiz(3).show_inclass_box.isSelected()).toEqual(true)
 				})
 				it('should display correct total In-Class time',function(){
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
@@ -281,35 +281,35 @@ describe("check course review", function(){
 				it('should have correct discussion titles and content',function(){
 					// Discussion 1
 					var discussion = modules_items['New Module'][0].discussion[0]
-					expect(module_progress.module_item(1).discussion(1).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(1).discussion_title).toEqual('['+discussion.time+'] Discussion:')
 					expect(module_progress.module_item(1).discussion(1).discussion_student_name).toEqual(discussion.screen_name+':')
-					expect(module_progress.module_item(1).discussion(1).discussion_student_content).toEqual(discussion.title)		
-					expect(module_progress.module_item(1).discussion(1).discussion_student_private.isDisplayed()).toEqual(true)				
+					expect(module_progress.module_item(1).discussion(1).discussion_student_content).toEqual(discussion.title)
+					expect(module_progress.module_item(1).discussion(1).discussion_student_private.isDisplayed()).toEqual(true)
 					module_progress.module_item(1).discussion(1).show_inclass_click()
-					expect(module_progress.module_item(1).discussion(1).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(1).discussion(1).show_inclass_box.isSelected()).toEqual(true)
 					// Discussion 2
 					var discussion = modules_items['New Module'][0].discussion[1]
-					expect(module_progress.module_item(1).discussion(2).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(2).discussion_title).toEqual('['+discussion.time+'] Discussion:')
 					expect(module_progress.module_item(1).discussion(2).discussion_student_name).toEqual(discussion.screen_name+':')
-					expect(module_progress.module_item(1).discussion(2).discussion_student_content).toEqual(discussion.title)		
+					expect(module_progress.module_item(1).discussion(2).discussion_student_content).toEqual(discussion.title)
 					expect(module_progress.module_item(1).discussion(2).discussion_student_flags).toEqual(discussion.flags)
-					expect(module_progress.module_item(1).discussion(2).discussion_student_likes).toEqual(discussion.likes)		
-					expect(module_progress.module_item(1).discussion(2).discussion_student_public.isDisplayed()).toEqual(true)				
+					expect(module_progress.module_item(1).discussion(2).discussion_student_likes).toEqual(discussion.likes)
+					expect(module_progress.module_item(1).discussion(2).discussion_student_public.isDisplayed()).toEqual(true)
 					module_progress.module_item(1).discussion(2).show_inclass_click()
-					expect(module_progress.module_item(1).discussion(2).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(1).discussion(2).show_inclass_box.isSelected()).toEqual(true)
 					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(2)})
-				
+
 					// Discussion 3
 					var discussion = modules_items['New Module'][0].discussion[2]
-					expect(module_progress.module_item(1).discussion(3).discussion_title).toEqual('['+discussion.time+'] Discussion:')				
+					expect(module_progress.module_item(1).discussion(3).discussion_title).toEqual('['+discussion.time+'] Discussion:')
 					expect(module_progress.module_item(1).discussion(3).discussion_student_name).toEqual(discussion.screen_name+':')
-					expect(module_progress.module_item(1).discussion(3).discussion_student_content).toEqual(discussion.title)		
-					expect(module_progress.module_item(1).discussion(3).discussion_student_private.isDisplayed()).toEqual(true)				
+					expect(module_progress.module_item(1).discussion(3).discussion_student_content).toEqual(discussion.title)
+					expect(module_progress.module_item(1).discussion(3).discussion_student_private.isDisplayed()).toEqual(true)
 					module_progress.module_item(1).discussion(3).show_inclass_click()
-					expect(module_progress.module_item(1).discussion(3).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(1).discussion(3).show_inclass_box.isSelected()).toEqual(true)
 				})
 				it('should display correct total In-Class time',function(){
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n15 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n15 minutes')
 					module_progress.module_item(1).quiz(1).show_inclass_click()
 					module_progress.module_item(1).quiz(2).show_inclass_click()
 					module_progress.module_item(1).quiz(3).show_inclass_click()
@@ -319,7 +319,7 @@ describe("check course review", function(){
 				})
 				it('should be able to add a replay to discussion',function(){
 					module_progress.module_item(1).discussion(2).reply("reply")
-					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(3)})					
+					module_progress.module_item(1).discussion(2).comments_count().then(function(coun){expect(coun).toEqual(3)})
 				})
 				it('should be able to delete discussion', function(){
 					module_progress.module_item(1).discussion(2).delete_discussion()
@@ -327,24 +327,24 @@ describe("check course review", function(){
 
 			})
 			describe('Second Lecture',function(){
-				it('should display correct quiz titles',function(){					
+				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][1].questions[0]
-					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(1).show_inclass_click()
-					expect(module_progress.module_item(2).quiz(1).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(2).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][1].questions[1]
-					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(2).show_inclass_click()
-					expect(module_progress.module_item(2).quiz(2).show_inclass_box.isSelected()).toEqual(true)  	
-					
+					expect(module_progress.module_item(2).quiz(2).show_inclass_box.isSelected()).toEqual(true)
+
 					var question = modules_items['New Module'][1].questions[2]
-					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')	
+					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(3).show_inclass_click()
-					expect(module_progress.module_item(2).quiz(3).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(2).quiz(3).show_inclass_box.isSelected()).toEqual(true)
 				})
 				it('should display correct total In-Class time',function(){
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n9 minutes')
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
@@ -367,23 +367,23 @@ describe("check course review", function(){
 					module_progress.module_item(2).quiz(1).show_inclass_click()
 					module_progress.module_item(2).quiz(2).show_inclass_click()
 					module_progress.module_item(2).quiz(3).show_inclass_click()
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')
 				})
 			})
 			describe('Third Lecture',function(){
-				it('should display correct quiz titles',function(){					
+				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][2].questions[0]
-					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
 					module_progress.module_item(3).quiz(1).show_inclass_click()
-					expect(module_progress.module_item(3).quiz(1).show_inclass_box.isSelected()).toEqual(true)  	
+					expect(module_progress.module_item(3).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][2].questions[1]
-					expect(module_progress.module_item(3).quiz(2).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(3).quiz(2).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
 					module_progress.module_item(3).quiz(2).show_inclass_click()
-					expect(module_progress.module_item(3).quiz(2).show_inclass_box.isSelected()).toEqual(true)  						
+					expect(module_progress.module_item(3).quiz(2).show_inclass_box.isSelected()).toEqual(true)
 				})
 				it('should display correct total In-Class time',function(){
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
@@ -398,19 +398,19 @@ describe("check course review", function(){
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(3).quiz(1).show_inclass_click()
 					module_progress.module_item(3).quiz(2).show_inclass_click()
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')
 				})
 			})
 			describe('Quiz 1',function(){
-				it('should display correct quiz titles',function(){					
+				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][3].questions[0]
-					expect(module_progress.module_item(4).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(4).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 					var question = modules_items['New Module'][3].questions[1]
-					expect(module_progress.module_item(4).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(4).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 					var question = modules_items['New Module'][3].questions[2]
-					expect(module_progress.module_item(4).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(4).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 				})
 				it('should display quiz statistics correct',function(){
@@ -428,12 +428,12 @@ describe("check course review", function(){
 					refresh()
 					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2)).toBe('1')
 					refresh()
-					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')				
+					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')
 				})
 				it('should have correct freetext answer',function(){
 					var discussion = modules_items['New Module'][3].free_text[0]
-					module_progress.module_item(4).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
-					expect(module_progress.module_item(4).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					module_progress.module_item(4).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})
+					expect(module_progress.module_item(4).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(4).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
 					expect(module_progress.module_item(4).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
 					module_progress.module_item(4).freetextquestion(1).grade_change(1, 2)
@@ -442,8 +442,8 @@ describe("check course review", function(){
 					expect(module_progress.module_item(4).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
 
 					var discussion = modules_items['New Module'][3].free_text[1]
-					module_progress.module_item(4).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})										
-					expect(module_progress.module_item(4).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					module_progress.module_item(4).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})
+					expect(module_progress.module_item(4).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(4).freetextquestion(2).answer(1)).toEqual(discussion.answers[0].title)
 					expect(module_progress.module_item(4).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
 					module_progress.module_item(4).freetextquestion(2).grade_change(1, 2)
@@ -453,15 +453,15 @@ describe("check course review", function(){
 				})
 			})
 			describe('Quiz 2',function(){
-				it('should display correct quiz titles',function(){					
+				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][4].questions[0]
-					expect(module_progress.module_item(5).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(5).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 					var question = modules_items['New Module'][4].questions[1]
-					expect(module_progress.module_item(5).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(5).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 					var question = modules_items['New Module'][4].questions[2]
-					expect(module_progress.module_item(5).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(5).question_quiz(3).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
@@ -482,12 +482,12 @@ describe("check course review", function(){
 					refresh()
 					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2)).toBe('2')
 					refresh()
-					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')				
+					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')
 				})
 				it('should have correct freetext answer',function(){
 					var discussion = modules_items['New Module'][4].free_text[0]
-					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})										
-					expect(module_progress.module_item(5).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})
+					expect(module_progress.module_item(5).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(5).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
 					expect(module_progress.module_item(5).freetextquestion(1).grade(1)).toEqual(discussion.answers[0].grade)
 					module_progress.module_item(5).freetextquestion(1).grade_change(1, 2)
@@ -503,8 +503,8 @@ describe("check course review", function(){
 					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual(discussion.answers[1].grade)
 
 					var discussion = modules_items['New Module'][4].free_text[1]
-					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})										
-					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})
+					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(5).freetextquestion(2).answer(1)).toEqual(discussion.answers[0].title)
 					expect(module_progress.module_item(5).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
 					module_progress.module_item(5).freetextquestion(2).grade_change(1, 4)
@@ -512,7 +512,7 @@ describe("check course review", function(){
 					module_progress.module_item(5).freetextquestion(2).grade_change(1, 2)
 					expect(module_progress.module_item(5).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
 
-					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)				
+					expect(module_progress.module_item(5).freetextquestion(2).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(5).freetextquestion(2).answer(2)).toEqual(discussion.answers[1].title)
 					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
 					module_progress.module_item(5).freetextquestion(2).grade_change(2, 2)
@@ -523,18 +523,18 @@ describe("check course review", function(){
 				it('should click on related button ',function(){
 					module_progress.module_item(5).freetextquestion(1).clickonRelated(1)
 					var discussion = modules_items['New Module'][4].free_text[0]
-					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
-					
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})
+
 					var discussion = modules_items['New Module'][4].free_text[1]
-					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})										
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(1)})
 				})
 				it('should check related answers to student',function(){
 					module_progress.module_item(5).clickonSeeall()
 					var discussion = modules_items['New Module'][4].free_text[0]
-					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})										
-					
+					module_progress.module_item(5).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(2)})
+
 					var discussion = modules_items['New Module'][4].free_text[1]
-					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})															
+					module_progress.module_item(5).freetextquestion(2).answers.count().then(function(coun){expect(coun).toEqual(2)})
 				})
 				it('should have change grade of answer for student 2',function(){
 					var discussion = modules_items['New Module'][4].free_text[0]
@@ -552,7 +552,7 @@ describe("check course review", function(){
 				})
 				describe('Student 2',function(){
 					it("login in",function(){
-						login_page.sign_in(params.student2_mail, params.password)
+						login_page.sign_in(params.student2.email, params.password)
 					})
 					it("should open quiz 2 in first module ",function(){
 						course_list.open()
@@ -560,7 +560,7 @@ describe("check course review", function(){
 						navigator.module(1).open()
 						navigator.module(1).item(5).open()
 					})
-					it("should check that grade of quiz",function(){					
+					it("should check that grade of quiz",function(){
 						expect(student_quiz.incorrect.count()).toEqual(3)
 						expect(student_quiz.correct.count()).toEqual(2)
 					})
@@ -569,7 +569,7 @@ describe("check course review", function(){
 					})
 				})
 				it("teacher should login",function(){
-					login_page.sign_in(params.teacher_mail, params.password)
+					login_page.sign_in(params.teacher1.email, params.password)
 				})
 				it("should open course",function(){
 					course_list.open()
@@ -581,7 +581,7 @@ describe("check course review", function(){
 				it("should open first moduel",function(){
 					navigator.module(1).open()
 					element(by.className('module-review')).click()
-				})	
+				})
 				it('should revert the grade of answer for student 2',function(){
 					var discussion = modules_items['New Module'][4].free_text[0]
 					expect(module_progress.module_item(5).freetextquestion(1).grade(2)).toEqual("Incorrect")
@@ -594,13 +594,13 @@ describe("check course review", function(){
 					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
 				})
 			})
-			describe('Survey',function(){  
-				it('should display correct Survey titles',function(){					
+			describe('Survey',function(){
+				it('should display correct Survey titles',function(){
 					var question = modules_items['New Module'][5].questions[0]
-					expect(module_progress.module_item(6).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(6).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
 					var question = modules_items['New Module'][5].questions[1]
-					expect(module_progress.module_item(6).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')	
+					expect(module_progress.module_item(6).question_quiz(2).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
@@ -614,19 +614,19 @@ describe("check course review", function(){
 				})
 				it('should display freetext question statistics correct',function(){
 					var discussion = modules_items['New Module'][5].free_text[0]
-					module_progress.module_item(6).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})										
-					expect(module_progress.module_item(6).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)				
+					module_progress.module_item(6).freetextquestion(1).answers.count().then(function(coun){expect(coun).toEqual(1)})
+					expect(module_progress.module_item(6).freetextquestion(1).title).toEqual('Free Text Question: '+discussion.title)
 					expect(module_progress.module_item(6).freetextquestion(1).answer(1)).toEqual(discussion.answers[0].title)
 					module_progress.module_item(6).question_quiz(1).show_inclass_click()
 					module_progress.module_item(6).question_quiz(2).show_inclass_click()
-					module_progress.module_item(6).freetextquestion(1).show_inclass_click()					
+					module_progress.module_item(6).freetextquestion(1).show_inclass_click()
 				})
 				it('should display correct total In-Class time',function(){
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')	
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n6 minutes')
 					module_progress.module_item(6).question_quiz(1).show_inclass_click()
 					module_progress.module_item(6).question_quiz(2).show_inclass_click()
-					module_progress.module_item(6).freetextquestion(1).show_inclass_click()					
-					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')	
+					module_progress.module_item(6).freetextquestion(1).show_inclass_click()
+					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')
 				})
 				it('should be able to add a replay to discussion',function(){
 					module_progress.module_item(6).freetextquestion(1).reply("reply")
@@ -643,7 +643,7 @@ describe("check course review", function(){
 				})
 				describe('Student 2',function(){
 					it(" login in",function(){
-						login_page.sign_in(params.student2_mail, params.password)
+						login_page.sign_in(params.student2.email, params.password)
 					})
 					it("should open first moduel",function(){
 						course_list.open()
@@ -651,7 +651,7 @@ describe("check course review", function(){
 						navigator.module(1).open()
 						navigator.module(1).item(6).open()
 					})
-					it(" check that survey is visible",function(){					
+					it(" check that survey is visible",function(){
 						expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(true)
 					})
 					it("should logout",function(){
@@ -659,7 +659,7 @@ describe("check course review", function(){
 					})
 				})
 				it("teacher should login",function(){
-					login_page.sign_in(params.teacher_mail, params.password)
+					login_page.sign_in(params.teacher1.email, params.password)
 				})
 				it("should open course",function(){
 					course_list.open()
@@ -681,7 +681,7 @@ describe("check course review", function(){
 				describe('Revert disussion',function(){
 					describe('Student 2',function(){
 						it(" login in",function(){
-							login_page.sign_in(params.student2_mail, params.password)
+							login_page.sign_in(params.student2.email, params.password)
 						})
 						it("should open first moduel",function(){
 							course_list.open()
@@ -689,7 +689,7 @@ describe("check course review", function(){
 							navigator.module(1).open()
 							navigator.module(1).item(6).open()
 						})
-						it(" check that survey is not visible",function(){					
+						it(" check that survey is not visible",function(){
 							expect(module_progress.module_item(6).suveryresults.isPresent()).toBe(false)
 						})
 						it('should open first lecture in first module', function(){
@@ -716,7 +716,7 @@ describe("check course review", function(){
 					})
 					describe('Student 1',function(){
 						it(" login in",function(){
-							login_page.sign_in(params.student_mail, params.password)
+							login_page.sign_in(params.student1.email, params.password)
 						})
 						it('should open first lecture in first module', function(){
 							course_list.open()
@@ -738,7 +738,7 @@ describe("check course review", function(){
 						})
 					})
 					it("teacher should login",function(){
-						login_page.sign_in(params.teacher_mail, params.password)
+						login_page.sign_in(params.teacher1.email, params.password)
 					})
 				})
 			})
@@ -821,7 +821,7 @@ describe("check course review", function(){
 // 			progress.checkTimeEstimate(0)
 // 		})
 
-// 		it('should be able to add a replay to discussion',function(){	
+// 		it('should be able to add a replay to discussion',function(){
 // 			progress.checkDiscussionComment(1,0,0,comment0)
 // 			progress.addReplyToDiscussion(1,0,comment1.title)
 // 			progress.checkDiscussionComment(1,0,1,comment1)
@@ -941,14 +941,14 @@ describe("check course review", function(){
 // 			progress.checkQuizFreeTextAnswers(5,0, modules_items['New Module'])
 // 		})
 // 		it('should replay to free text question',function(){
-// 			var reply_msg = "Reply to Free text question" 
+// 			var reply_msg = "Reply to Free text question"
 // 			progress.addReplyToFreeText(5,0, reply_msg)
 // 			progress.checkReplyToFreeText(5,0, reply_msg)
 // 			// o_c.scroll_to_bottom(ptor)
 // 			// progress.deleteReplyToFreeText(5,0,0)
 // 		})
 // 	})
-	
+
 // })
 
 // describe('Teacher', function(){
@@ -958,7 +958,7 @@ describe("check course review", function(){
 //     	o_c.press_content_navigator(ptor)
 // 		o_c.open_progress(ptor)
 // 		o_c.open_module_progress(ptor)
-// 		o_c.hide_dropmenu(ptor)		
+// 		o_c.hide_dropmenu(ptor)
 // 	})
 // })
 // describe('Content Navigator Button', function(){
@@ -1083,7 +1083,7 @@ describe("check course review", function(){
 // 			progress.checkQuizFreeTextTitle(5,0, modules_items['New Module 2'])
 // 		})
 // 	})
-	
+
 // })
 
 // function checkNameOnSelectorButton(name){

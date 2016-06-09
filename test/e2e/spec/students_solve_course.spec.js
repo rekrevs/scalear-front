@@ -27,16 +27,16 @@ var student_quiz = new StudentQuiz()
 describe("Solve Course",function(){
 	describe("Teacher",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
-	    })	
+	    })
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
-		})    
+		})
 		it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).item(4).open()
@@ -83,7 +83,7 @@ describe("Solve Course",function(){
 
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -123,7 +123,7 @@ describe("Solve Course",function(){
 				sleep(2000)
 				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 2")
-				
+
 				student_lec.show_explanation(3)
 				sleep(2000)
 				expect(student_lec.explanation_title).toContain("Correct")
@@ -556,7 +556,7 @@ describe("Solve Course",function(){
 			it('wait for the voting question', function(){
 				video.play()
 				sleep(1000)
-				video.pause()				
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -766,7 +766,7 @@ describe("Solve Course",function(){
 	})
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -1029,12 +1029,12 @@ describe("Solve Course",function(){
 			// })
 			it("should logout",function(){
 				header.logout()
-			})			
+			})
 		})
 	})
 	// describe("First Student",function(){
 	// 	it("should login", function(){
-	// 		login_page.sign_in(params.student_mail, params.password)
+	// 		login_page.sign_in(params.student1.email, params.password)
 	// 	})
 	// 	var navigator = new ContentNavigator(0)
 	// 	it('should open first course', function(){

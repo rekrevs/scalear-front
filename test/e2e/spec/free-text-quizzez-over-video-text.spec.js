@@ -13,36 +13,36 @@ describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
-	
+
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-		
+
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
 		teacher.create_invideo_free_text_quiz(ptor);
-		teacher.make_free_text_questions(ptor);	
+		teacher.make_free_text_questions(ptor);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -90,23 +90,23 @@ describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	
+
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -119,7 +119,7 @@ describe("2", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -164,10 +164,10 @@ describe("2", function(){
 })
 
 describe("3", function(){
-	
+
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -176,12 +176,12 @@ describe("3", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -194,7 +194,7 @@ describe("3", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -241,7 +241,7 @@ describe("3", function(){
 describe("4", function(){
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -250,12 +250,12 @@ describe("4", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -268,7 +268,7 @@ describe("4", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -315,22 +315,22 @@ describe("4", function(){
 describe("5", function(){
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	
+
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		// o_c.press_content_navigator(ptor);
 		// ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -343,7 +343,7 @@ describe("5", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and expect quiz', function(){

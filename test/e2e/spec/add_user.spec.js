@@ -33,10 +33,10 @@ var video = new Video();
 describe("Sign up Teacher 1",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
-			console.log(params.teacher_mail)
+			console.log(params.teacher1.email)
 			// browser.refresh()
 			signup_page.sign_up('teacher')
-			signup_page.create(params.teacher_mail, params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher_mail)
+			signup_page.create(params.teacher1.email, params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -55,7 +55,7 @@ describe("Sign up Teacher 1",function(){
 			});
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.teacher_mail)
+			guerrilla_mail_page.change_mail_name(params.teacher1.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -107,10 +107,10 @@ describe("Sign up teacher 2",function(){
 	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
 			sleep(4000)
-			// consloe.log(params.teacher2_mail)
+			// consloe.log(params.teacher2.email)
 			// browser.refresh()
 			signup_page.sign_up('teacher')
-			signup_page.create(params.teacher2_mail, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name, params.teacher2_mail)
+			signup_page.create(params.teacher2.email, params.password , params.guerrillamail_sch_uni_name , "2" , params.teacher_first_name, params.teacher2.email)
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -128,7 +128,7 @@ describe("Sign up teacher 2",function(){
 			});
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.teacher2_mail)
+			guerrilla_mail_page.change_mail_name(params.teacher2.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -182,10 +182,10 @@ describe("Sign up Student 1",function(){
 		it("should sign up as student",function(){
 
 			sleep(4000)
-			// consloe.log(params.student_mail)
+			// consloe.log(params.student1.email)
 			// browser.refresh()
 			signup_page.sign_up('student')
-			signup_page.create(params.student_mail, params.password , 'uni' , params.student_name , "Test" , params.student_mail )
+			signup_page.create(params.student1.email, params.password , 'uni' , params.student_name , "Test" , params.student1.email )
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -203,7 +203,7 @@ describe("Sign up Student 1",function(){
 			});
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.student_mail)
+			guerrilla_mail_page.change_mail_name(params.student1.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -257,10 +257,10 @@ describe("Sign up Student 2",function(){
 		it("should sign up as student",function(){
 
 			// sleep(4000)
-			// consloe.log(params.student2_mail)
+			// consloe.log(params.student2.email)
 			// browser.refresh()
 			signup_page.sign_up('student')
-			signup_page.create(params.student2_mail, params.password , "uni" , "2" , params.student_name ,params.student2_mail )
+			signup_page.create(params.student2.email, params.password , "uni" , "2" , params.student_name ,params.student2.email )
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -278,7 +278,7 @@ describe("Sign up Student 2",function(){
 			});
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.student2_mail)
+			guerrilla_mail_page.change_mail_name(params.student2.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){
@@ -332,10 +332,10 @@ describe("Sign up Student 3",function(){
 		it("should sign up as student",function(){
 
 			// sleep(4000)
-			// consloe.log(params.student3_mail)
+			// consloe.log(params.student3.email)
 			// browser.refresh()
 			signup_page.sign_up('student')
-			signup_page.create(params.student3_mail, params.password , "uni" , "3" , params.student_name , params.student3_mail )
+			signup_page.create(params.student3.email, params.password , "uni" , "3" , params.student_name , params.student3.email )
 		})
 		it("should check url thanks pages",function(){
 			sleep(6000)
@@ -353,7 +353,7 @@ describe("Sign up Student 3",function(){
 			});
 		})
 		it("should change guerrillamail email ",function(){
-			guerrilla_mail_page.change_mail_name(params.student3_mail)
+			guerrilla_mail_page.change_mail_name(params.student3.email)
 			sleep(120000)
 		})
 		it("should check mails count ",function(){

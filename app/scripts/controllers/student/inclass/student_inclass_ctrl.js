@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$timeout', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $timeout, Lecture, Page, WizardHandler, $cookieStore) {
+  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore) {
 
     //Page.setTitle('In-class')
       // if(!MobileDetector.isPhone())
@@ -71,9 +71,9 @@ angular.module('scalearAngularApp')
           }
         } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
           $scope.showWaitNotification("Please wait for the teacher to continue.")
-          $timeout(function() {
+          $interval(function() {
             $scope.removeWaitNotification()
-          }, 5000)
+          }, 5000,1)
         }
       })
     }
@@ -202,7 +202,7 @@ angular.module('scalearAngularApp')
       getLatestStatus(function(data) {
         if((type =='self' &&  data.status == 3) || (type =='group' &&  data.status == 4)){
           $scope.showWaitNotification("Please click on 'Next' to continue.")
-          $timeout(function() {
+          $interval(function() {
             $scope.removeWaitNotification()
           }, 5000)
         }

@@ -18,7 +18,7 @@ var dashboard = new Dashboard()
 
 describe("Teacher",function(){
 	it("should login as teacher",function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it("should open course",function(){
         course_list.open()
@@ -46,7 +46,7 @@ describe("Teacher",function(){
 		course_info.open()
 		var enrollment_key = course_info.enrollmentkey
 		header.logout()
-		login_page.sign_in(params.student_mail, params.password)
+		login_page.sign_in(params.student1.email, params.password)
 		header.join_course(enrollment_key)
 	})
 })
@@ -87,8 +87,8 @@ describe("Student",function(){
 })
 
 describe("Teacher",function(){
-	it('should sign in',function(){		
-		login_page.sign_in(params.teacher_mail, params.password)		
+	it('should sign in',function(){
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should check announcements in dashboard', function(){
 		expect(dashboard.events.count()).toEqual(6)
@@ -103,7 +103,7 @@ describe("Teacher",function(){
 		course_list.open()
 		course_list.open_course(1)
 	})
-	it('should delete announcement', function(){		
+	it('should delete announcement', function(){
 		announcement.open()
 		announcement.delete(3)
 		expect(announcement.posts.count()).toEqual(2)
@@ -115,9 +115,9 @@ describe("Teacher",function(){
 
 describe("Student",function(){
 	it("should sign in ",function(){
-		login_page.sign_in(params.student_mail, params.password)
+		login_page.sign_in(params.student1.email, params.password)
 	})
-	it('should check announcements in dashboard', function(){		
+	it('should check announcements in dashboard', function(){
 		expect(dashboard.events.count()).toEqual(5)
 		expect(dashboard.events.get(0).getText()).toContain("announcement 6")
 		expect(dashboard.events.get(1).getText()).toContain("announcement 5")
@@ -149,9 +149,9 @@ describe("Student",function(){
 
 describe("Revert Changes - Teacher",function(){
 	it('should sign in',function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
-	it('should check announcements in dashboard', function(){		
+	it('should check announcements in dashboard', function(){
 		expect(dashboard.events.count()).toEqual(5)
 		expect(dashboard.events.get(0).getText()).toContain("announcement 6")
 		expect(dashboard.events.get(1).getText()).toContain("announcement 5")
@@ -163,7 +163,7 @@ describe("Revert Changes - Teacher",function(){
 		course_list.open()
 		course_list.open_course(1)
 	})
-	it('should delete announcement', function(){		
+	it('should delete announcement', function(){
 		announcement.open()
 		announcement.delete(2)
 		expect(announcement.posts.count()).toEqual(1)

@@ -20,7 +20,7 @@ var navigator = new ContentNavigator(1)
 describe("Deleting Course",function(){
 	describe("Teacher",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
@@ -68,7 +68,7 @@ describe("Deleting Course",function(){
 			// expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
 			invideo_quiz.delete(1)
 			// expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
-			
+
 			// expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 		})
 		it("should open first quiz in first module",function(){

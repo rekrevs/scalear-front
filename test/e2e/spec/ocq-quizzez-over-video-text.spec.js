@@ -12,7 +12,7 @@ describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -21,12 +21,12 @@ describe("1", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "ocq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -41,7 +41,7 @@ describe("1", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for ocq_no', function(){
@@ -66,7 +66,7 @@ describe("1", function(){
 		student.answer_invideo_ocq(ptor, 2)
 		is_checked(ptor, 2);
 		is_not_checked(ptor, 3)
-		
+
 	})
 
 	it('should press answer button',function(){
@@ -101,7 +101,7 @@ describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -110,12 +110,12 @@ describe("2", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "ocq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -130,7 +130,7 @@ describe("2", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for ocq_no', function(){
@@ -183,7 +183,7 @@ describe("explanation validation", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -192,12 +192,12 @@ describe("explanation validation", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "ocq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -212,7 +212,7 @@ describe("explanation validation", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for ocq_no', function(){

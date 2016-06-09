@@ -17,24 +17,15 @@ Module.prototype = Object.create({}, {
 	context_menu_items:{get:function(){return this.field.element(by.className("module-menu")).all(by.tagName("li"))}},
 	open:{value:function(num){return this.field.element(by.className("module_name")).click()}},
 	open_content_items: {value: function(){this.new_item_button.click()}},
-	// open_item:{value:function(num){return this.items.get(num-1).click()}},
+	open_student_inclass:{value:function(){this.field.element(by.className("inclass_button")).click()}},
 	sort_items:{value:function(item1, item2){
 	  	browser.driver.actions().dragAndDrop(this.handles.get(item1), this.handles.get(item2)).perform()
 	  	sleep(1000);
 	}},
-	// delete_item:{value:function(num){
-	// 	var item = this.items.get(num-1)
-	// 	item.element(by.className('delete')).click()
-	// 	item.element(by.className('alert')).click()
-	// }},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
 		this.field.element(by.className('alert')).click()
 		sleep(1000);
-
-		// element(by.className('delete_confirm')).click()		
-element(by.css('[ng-click="action({event:$event});showDeletePopup(false, $event)"]'))
-		// element(by.buttonText("Delete")).click()		
 	}},
 	copy:{value:function(){
 		right_click(this.name_field)

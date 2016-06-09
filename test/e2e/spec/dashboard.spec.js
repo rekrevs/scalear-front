@@ -11,7 +11,7 @@
 
 // 	it('should sign in as teacher', function(){
 // 		o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 	})
 
 // 	it('should create_course', function(){
@@ -19,11 +19,11 @@
 // 	})
 
 // 	it('should get the enrollment key and enroll student', function(){
-// 		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+// 		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 // 	})
 
 // 	it('should check student side for elements in news feed', function(){
-// 		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 		// o_c.to_student(ptor);
 // 		check_dashboard_elements(0);
 // 	})

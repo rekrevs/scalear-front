@@ -47,37 +47,37 @@
             <div class="row" style="text-align:left;margin-left:0;">
                 <div class="small-11 left columns" >
                     <lable>
-                        <span>Start time</span>
+                        <span translate>editor.start_time</span>
                         <input class="inclass_choice" type="checkbox" ng-change="updateQuizStartTime()" ng-model="selected_quiz.has_start">
                     </lable>
-                    <lable style="padding-left:10px"><span>End time</span>
+                    <lable style="padding-left:10px"><span translate>editor.end_time</span>
                          <input class="inclass_choice" type="checkbox" ng-model="selected_quiz.has_end" ng-change="updateQuizEndTime()">
                     </lable>
                 </div>
             </div>
             <div class="row" style="text-align:left;margin-left:0;">
-                <div class="small-4 columns"><span translate>Intro Timer</span>:</div>
+                <div class="small-4 columns"><span translate>editor.intro_timer</span>:</div>
                 <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
                     <input type="text" ng-model="selected_quiz.inclass_session.intro_formatedTime" style="height: 30px;margin-bottom:0;">
                     <small class="error position-absolute z-one" ng-show="intro_timer_error" ng-bind="intro_timer_error"></small>
                 </div>
             </div>
             <div class="row" style="text-align:left;margin-left:0;">
-                <div class="small-4 columns"><span translate>Self Timer</span>:</div>
+                <div class="small-4 columns"><span translate>editor.self_timer</span>:</div>
                 <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
                     <input type="text" ng-model="selected_quiz.inclass_session.self_formatedTime" style="height: 30px;margin-bottom:0;">
                     <small class="error position-absolute z-one" ng-show="self_timer_error" ng-bind="self_timer_error"></small>
                 </div>
             </div>
             <div class="row" style="text-align:left;margin-left:0;">
-                <div class="small-4 columns"><span translate>Group Timer</span>:</div>
+                <div class="small-4 columns"><span translate>editor.group_timer</span>:</div>
                 <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
                     <input type="text" ng-model="selected_quiz.inclass_session.group_formatedTime" style="height: 30px;margin-bottom:0;">
                     <small class="error position-absolute z-one" ng-show="group_timer_error" ng-bind="group_timer_error"></small>
                 </div>
             </div>
             <div class="row" style="text-align:left;margin-left:0;">
-                <div class="small-4 columns"><span translate>Discussion Timer</span>:</div>
+                <div class="small-4 columns"><span translate>editor.discussion_timer</span>:</div>
                 <div class="small-3 left columns no-padding">
                     <input type="text" ng-model="selected_quiz.inclass_session.discussion_formatedTime" style="height: 30px;margin-bottom:0;">
                     <small class="error position-absolute z-one" ng-show="discussion_timer_error" ng-bind="discussion_timer_error"></small>

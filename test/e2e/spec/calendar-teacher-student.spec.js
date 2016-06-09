@@ -27,10 +27,10 @@ month[10] = "November";
 month[11] = "December";
 
 describe("should check calendar functionality", function(){
-  
+
   it('should sign in as teacher', function(){
     o_c.press_login(ptor)
-    o_c.sign_in(ptor, params.teacher_mail, params.password);
+    o_c.sign_in(ptor, params.teacher1.email, params.password);
   })
 
   it('should create_course', function(){
@@ -39,7 +39,7 @@ describe("should check calendar functionality", function(){
 
   //test
   it('should add a couple of module and lectures', function(){
-    // o_c.sign_in(ptor, params.teacher_mail, params.password);
+    // o_c.sign_in(ptor, params.teacher1.email, params.password);
     // o_c.open_course_list(ptor)
     // o_c.open_course(ptor, 1);
     // o_c.open_content_editor(ptor);
@@ -49,16 +49,16 @@ describe("should check calendar functionality", function(){
     teacher.open_module(ptor, 1);
     teacher.add_lecture(ptor);
     teacher.add_lecture(ptor);
-    
+
     teacher.open_module(ptor, 2);
     teacher.add_lecture(ptor);
     teacher.add_lecture(ptor);
     teacher.add_lecture(ptor);
-    
+
   })
 
   it('should get the enrollment key and enroll student', function(){
-    teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
   })
 
   it('should check if the calendar is visible', function(){
@@ -105,7 +105,7 @@ describe("should check calendar functionality", function(){
 //====================================================
 function is_calendar(ptor){
   locator.by_id(ptor, "studentCalendar").then(function(cal){
-    expect(cal.isDisplayed()).toEqual(true);    
+    expect(cal.isDisplayed()).toEqual(true);
   })
 }
 

@@ -32,7 +32,7 @@ var module_progress = new ModuleProgress()
 describe("Module Completion", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
@@ -55,8 +55,8 @@ describe("Module Completion", function(){
 				module_progress.module_completion().student(1).columns_count().then(function(coun){expect(coun).toEqual(6)})
 			})
 			it ("should check student 1 data ", function(){
-				expect(module_progress.module_completion().student(1).name).toEqual(params.student_name_list[0])
-				expect(module_progress.module_completion().student(1).email).toEqual(params.student_mail)
+				expect(module_progress.module_completion().student(1).name).toEqual(params.student1.f_name +' '+ params.student1.l_name)
+				expect(module_progress.module_completion().student(1).email).toEqual(params.student1.email)
 				expect(module_progress.module_completion().student(1).column_item(1)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(1).column_item_tooltip(1)).toContain('3/3 quizzes solved')
 				expect(module_progress.module_completion().student(1).column_item(2)).toContain('Finished_on_Time.png')
@@ -68,8 +68,8 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(1).column_item(6)).toContain('Finished_on_Time.png')
 			})
 			it ("should check student 2 data ", function(){
-				expect(module_progress.module_completion().student(2).name).toEqual(params.student_name_list[1])
-				expect(module_progress.module_completion().student(2).email).toEqual(params.student2_mail)
+				expect(module_progress.module_completion().student(2).name).toEqual(params.student2.f_name + " "+ params.student2.l_name)
+				expect(module_progress.module_completion().student(2).email).toEqual(params.student2.email)
 				expect(module_progress.module_completion().student(2).column_item(1)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(2).column_item_tooltip(1)).toContain('3/3 quizzes solved')
 				expect(module_progress.module_completion().student(2).column_item(2)).toContain('Finished_on_Time.png')
@@ -79,10 +79,10 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(2).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(5)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(2).column_item(6)).toContain('Not_Finished.png')
-			})	
+			})
 			it ("should check student 3 data ", function(){
-				expect(module_progress.module_completion().student(3).name).toEqual(params.student_name_list[2])
-				expect(module_progress.module_completion().student(3).email).toEqual(params.student3_mail)
+				expect(module_progress.module_completion().student(3).name).toEqual(params.student3.f_name +' '+params.student3.l_name)
+				expect(module_progress.module_completion().student(3).email).toEqual(params.student3.email)
 				expect(module_progress.module_completion().student(3).column_item(1)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes solved')
 				expect(module_progress.module_completion().student(3).column_item(2)).toContain('Not_Finished.png')
@@ -130,7 +130,7 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(2).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(5)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(6)).toContain('Not_Finished.png')
-			})	
+			})
 			it ("should check student 3 data ", function(){
 				expect(module_progress.module_completion().student(3).column_item(1)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes solved')
@@ -152,7 +152,7 @@ describe("Module Completion", function(){
 describe("Course Completion", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
@@ -178,7 +178,7 @@ describe("Course Completion", function(){
 				// expect(module_progress.module_completion().student(1).email).toEqual('student2@email.com')
 				expect(module_progress.module_completion().student(1).column_item(1)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(1).column_item(2)).toContain('Not_Finished.png')
-			})	
+			})
 			it ("should check student 2 data ", function(){
 				// expect(module_progress.module_completion().student(2).name).toEqual('Student 3')
 				// expect(module_progress.module_completion().student(2).email).toEqual('student3@email.com')
@@ -204,7 +204,7 @@ describe("Course Completion", function(){
 				header.logout()
 			})
 			it("Student 2 login in",function(){
-				login_page.sign_in(params.student2_mail, params.password)
+				login_page.sign_in(params.student2.email, params.password)
 			})
 			it("Student 2 should open course",function(){
 				course_list.open()
@@ -218,7 +218,7 @@ describe("Course Completion", function(){
 				header.logout()
 			})
 			it("Student 1 login in",function(){
-				login_page.sign_in(params.student_mail, params.password)
+				login_page.sign_in(params.student1.email, params.password)
 			})
 			it("Student 1 should open course",function(){
 				course_list.open()
@@ -228,13 +228,13 @@ describe("Course Completion", function(){
 				navigator.module(1).open()
 				// expect(module_progress.check_module_finished(1)).toMatch('ng-hide')
 				expect(module_progress.check_module_finished(2)).not.toMatch('ng-hide')
-					
+
 			})
 			it("Student 1 should logout",function(){
 				header.logout()
 			})
 			it("teacher should login",function(){
-				login_page.sign_in(params.teacher_mail, params.password)
+				login_page.sign_in(params.teacher1.email, params.password)
 			})
 			it("should open course",function(){
 				course_list.open()
@@ -256,8 +256,8 @@ describe("Course Completion", function(){
 				module_progress.module_completion().student(1).column_item_click(2,1)
 				expect(module_progress.module_completion().student(1).column_item(2)).toContain('Not_Finished.png')
 			})
-			
-		})	
+
+		})
 		it("should logout",function(){
 			header.logout()
 		})
@@ -268,7 +268,7 @@ describe("Course Completion", function(){
 describe("Course Graph", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
@@ -288,22 +288,22 @@ describe("Course Graph", function(){
 				module_progress.module_graph().students_count().then(function(coun){expect(coun).toEqual(3)})
 			})
 			it ("should check student 1 data ", function(){
-				expect(module_progress.module_graph().student(1).name).toContain(params.student_name_list[0])
+				expect(module_progress.module_graph().student(1).name).toContain(params.student1.f_name +' '+ params.student1.l_name)
 				expect(module_progress.module_graph().student(1).quiz).toContain('50%')
 				expect(module_progress.module_graph().student(1).video).toContain('100%')
-			})			
+			})
 			it ("should check student 2 data ", function(){
-				expect(module_progress.module_graph().student(2).name).toContain(params.student_name_list[1])
+				expect(module_progress.module_graph().student(2).name).toContain(params.student2.f_name + " "+ params.student2.l_name)
 				expect(module_progress.module_graph().student(2).quiz).toContain('50%')
 				expect(module_progress.module_graph().student(2).video).toContain('50%')
-			})	
+			})
 			it ("should check student 3 data ", function(){
-				expect(module_progress.module_graph().student(3).name).toContain(params.student_name_list[2])
+				expect(module_progress.module_graph().student(3).name).toContain(params.student3.f_name +' '+params.student3.l_name)
 				expect(module_progress.module_graph().student(3).quiz).toContain('0%')
 				expect(module_progress.module_graph().student(3).video).toContain('0%')
 			})
 
-		})	
+		})
 		it("should logout",function(){
 			header.logout()
 		})

@@ -232,7 +232,7 @@ var translation_en={
     provide_desciption: "Please provide more description",
     provide_email_name: "Please make sure that you provided your name and email address",
     thanks: "Thanks for your feedback! We’ll get back to you soon.",
-    leave_feedback:"Share all the details. The more we known, the better we can help you.",
+    leave_feedback:"Share all the details. The more we know, the better we can help you.",
     course_content: "My Course Contents",
     system: "The ScalableLearning Website",
     none: "Please select one...",

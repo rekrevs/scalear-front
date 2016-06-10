@@ -501,7 +501,7 @@ var translation_en={
         use_module: "Use Module’s Visibility",
         use_module_due: "Use Module’s Due Date",
         vidoe_not_exist: "Video may not exist or may still be uploading",
-        incompatible_link: "Incompatible link",
+        incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
         student_link_lecture:"Student link to lecture",
         appearance_date: "Appearance Date",
         due_date: "Due Date",

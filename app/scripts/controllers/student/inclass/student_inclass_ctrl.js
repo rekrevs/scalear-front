@@ -59,7 +59,8 @@ angular.module('scalearAngularApp')
             // if (data.status == 3)
             //   force_state_to = "group_answered"
           }
-          $scope.note = $scope.last_note = {self:'', group:''}
+          $scope.note = {self:'', group:''}
+          $scope.last_note = {self:'', group:''}
         }
 
         if ($scope.inclass_status != data.status) {
@@ -67,7 +68,8 @@ angular.module('scalearAngularApp')
           WizardHandler.wizard().goTo(states[$scope.inclass_status]) //force_state_to ||
           if($scope.inclass_status < 2){
             emptyPreservedAnswers()
-            $scope.note = $scope.last_note = {self:'', group:''}
+            $scope.note = {self:'', group:''}
+            $scope.last_note = {self:'', group:''}
           }
         } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
           $scope.showWaitNotification("Please wait for the teacher to continue.")

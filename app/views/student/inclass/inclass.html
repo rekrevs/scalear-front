@@ -207,7 +207,7 @@ ul.connected_blocks {
               <div class="rotate-90" style="top: 40%;position: relative;" translate>inclass.self_stage</div>
             </div>
             <div class="small-11 column" style="padding:0 5px">
-              <div class='panel small-12 column' ng-repeat="choice in quiz.answers|filter:{'selected':true}">
+              <div class='panel small-12 column' ng-repeat="choice in quiz.answers" ng-show="choice.selected">
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
                 <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
               </div>
@@ -267,7 +267,7 @@ ul.connected_blocks {
               <div class="rotate-90" style="top: 40%;position: relative;" translate>inclass.self_stage</div>
             </div>
             <div class="small-11 column" style="padding:0 5px">
-              <div class='panel small-12 column' ng-repeat="choice in quiz.answers|filter:{'selected':true}">
+              <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
                 <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
               </div>
@@ -280,7 +280,7 @@ ul.connected_blocks {
               <div class="rotate-90" style="top: 45%;position: relative;" translate>inclass.group_stage</div>
             </div>
             <div class="small-11 column" style="padding:0 5px">
-              <div class='panel small-12 column' ng-repeat="choice in group_quiz.answers|filter:{'selected':true}">
+              <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in group_quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
                 <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
               </div>

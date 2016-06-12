@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
         lecture[column] = data;
         if (column == 'url' && invalid_url(data)) {
             $log.debug(data)
-            d.resolve($translate('error_message.invalid_input'));
+            d.resolve($translate('editor.details.incompatible_video_link'));
         }
 
         Lecture.validateLecture({
@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
                         d.resolve()
                     }
                     else {
-                        d.reject($translate('editor.details.incompatible_link'))
+                        d.reject($translate('editor.details.incompatible_video_link'))
                     }
                 }
                 else {

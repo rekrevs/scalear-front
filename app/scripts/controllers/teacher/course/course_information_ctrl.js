@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
 
   $scope.updateCourse = function(data,type){
     if(data && data instanceof Date){ 
+          console.log(type)
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
           $scope.course[type] = data
     }

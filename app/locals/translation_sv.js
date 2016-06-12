@@ -780,6 +780,7 @@ var translation_sv={
     },
     start_date: "Startdatum",
     end_date: "Slutdatum för kurs",
+    disable_registration: "Disable Registration After(t)",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",

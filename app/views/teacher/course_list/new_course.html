@@ -43,6 +43,13 @@
                     <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
                 </div>
             </div>
+            <div class="large-10 column with-small-margin-bottom no-padding left">
+                <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input  type="checkbox" ng-change="enable_disable_registration()" style="margin-left: 10px;" ng-model="disable_registration_checked" >
+                <div>
+                    <input name="date" type="text" ng-disabled="!disable_registration_checked" datepicker-popup="dd-MMMM-yyyy" ng-model="course.disable_registration"  ng-class="{error: server_errors['disable_registration']}"/>
+                    <small class="error with-tiny-padding" ng-show="server_errors['disable_registration']">{{server_errors['disable_registration'].join()}}</small>
+                </div>
+            </div>
         </div>
 
     </div>

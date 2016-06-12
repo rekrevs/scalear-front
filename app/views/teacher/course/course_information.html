@@ -114,6 +114,14 @@
                     <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
                 </div>
             </div>
+            <div class="with-small-margin-bottom">
+                <i class="fi-calendar size-18"></i>
+                <small translate>courses.disable_registration</small>
+                <div>
+                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration"></details-date>
+                </div>
+            </div>
+            
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i>
                 <small translate>courses.information.discussion_forum_link</small>

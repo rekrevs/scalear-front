@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
                 
             }
             $scope.calendar.className = ["truncate"]
-
+            $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
             $scope.eventSources.push($scope.calendar);
             $timeout(function() {
                 // changeLang()

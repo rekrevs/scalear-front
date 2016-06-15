@@ -13,7 +13,8 @@
         </tr>
         <tr>
             <td style="width:70%;padding:5px">
-                <input type="text" disabled ng-model="item.time" format='hh:mm:ss' style="width: 96%;"/>
+                <input type="text" ng-model="item.time"  style="width: 96%;"/>
+                <small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>
                 <select ng-model='privacy' ng-disabled="item.data.isEdit" ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
             <td ng-if="!item.data.isEdit" stlye="padding:0">

@@ -1,23 +1,50 @@
 'use strict';
 angular.module('scalearAngularApp')
-.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User',function($log,$translate,Forum,$state, $rootScope, User){
+.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User','$filter',function($log,$translate,Forum,$state, $rootScope, User,$filter){
     return{
         restrict:"E",
         templateUrl:"/views/forum/question_block.html",
         scope:{
             item:'=',
-            pref: '='
+            pref: '=',
+            totalduration: '='
+
         },
         link:function(scope,element,attrs){
             scope.preview_as_student = $rootScope.preview_as_student
             scope.ask_button_clicked = false
             scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
+            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];  
+            scope.item.time = $filter('format','hh:mm:ss')(scope.item.time) 
             $('.text_block').focus();
 
             if(scope.item.data && scope.item.data.isEdit){
                 scope.privacy = (scope.item.data.privacy == 0)? scope.choices[0] : scope.choices[1]
                 scope.current_question = scope.item.data.content
+            }
+
+            var validateTime = function(time, check_duration) {
+              var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+              if (int_regex.test(time)) {
+                var hhmm = time.split(':'); // split hours and minutes
+                var hours = parseInt(hhmm[0]); // get hours and parse it to an int
+                var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
+                var seconds = parseInt(hhmm[2]);
+                // check if hours or minutes are incorrect
+                var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
+                if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
+                  return $translate('editor.incorrect_format_time')
+                } 
+                else if (check_duration && (scope.totalduration) <= calculated_duration || calculated_duration <= 0) {
+                  return $translate('editor.time_outside_range')
+                }
+              } else {
+                return $translate('editor.incorrect_format_time')
+              }
+            }
+    
+            var arrayToSeconds = function(a) {
+              return (+a[0]||0) * 60 * 60 + (+a[1]||0) * 60 + (+a[2]||0) // minutes are worth 60 seconds. Hours are worth 60 minutes.
             }
 
             scope.postQuestion=function(item){
@@ -26,27 +53,32 @@ angular.module('scalearAngularApp')
                         $rootScope.current_user.discussion_pref = scope.privacy.value;                                
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
-                    scope.ask_button_clicked = true
-                    Forum.createPost(
-                        {post: 
-                            {
-                                content: scope.current_question, 
-                                time:item.time, 
-                                lecture_id:$state.params.lecture_id, 
-                                privacy:scope.privacy.value
+                    scope.time_error = validateTime(item.time,true)
+                    if (!( scope.time_error)){
+                        scope.ask_button_clicked = true    
+                         item.time = arrayToSeconds(item.time.split(':'))
+                         Forum.createPost(
+                            {post: 
+                                {
+                                    content: scope.current_question, 
+                                    time:item.time, 
+                                    lecture_id:$state.params.lecture_id, 
+                                    privacy:scope.privacy.value
+                                }
+                            }, 
+                            function(response){
+                                $log.debug("success");
+                                item.data= response.post
+                                scope.error_message=null
+                                scope.current_question = ''
+                                scope.$emit("discussion_updated")
+                            }, 
+                            function(){
+                                $log.debug("failure")
                             }
-                        }, 
-                        function(response){
-                            $log.debug("success");
-                            item.data= response.post
-                            scope.error_message=null
-                            scope.current_question = ''
-                            scope.$emit("discussion_updated")
-                        }, 
-                        function(){
-                            $log.debug("failure")
-                        }
-                    )
+                        )
+                    }
+                       
                 }
                 else
                     scope.$emit('remove_from_timeline', item)
@@ -100,7 +132,8 @@ angular.module('scalearAngularApp')
         restrict:"A",
         scope:{
             seek:'&',
-            data:'&'
+            data:'&',
+            totalduration: '='
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {

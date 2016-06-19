@@ -44,7 +44,7 @@ var translation_en={
     confused: "Confused",
     really_confused: "Really Confused",
     search: "Search",
-    new_course: "New Course",
+    new_course: "New course",
     required: "Required",
     optional: "Optional",
     students: "Students",
@@ -733,6 +733,7 @@ var translation_en={
         messages:{
             no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
             enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
+            create_enroll_instruction: "To create or enroll in a course choose 'New course' or 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         },
         tooltip:{
             unenroll: "Unenroll",

@@ -552,7 +552,7 @@ var translation_sv={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_explanation: "Hover for explanation(t)",  
+    hover_for_explanation: "Hover for explanation(t)",
     tap_for_explanation: "Tap for explanation(t)",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
@@ -733,6 +733,7 @@ var translation_sv={
         messages:{
             no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
             enroll_instruction: "För att anmäla dig till en kurs 'Gå med i en ny kurs' på kurser-menyn och ange kursnyckeln du fått från din lärare",
+            create_enroll_instruction: "To create or enroll in a course choose 'New course' or 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor. (t)",
         },
         tooltip:{
             unenroll: "Avregistrera",

@@ -119,7 +119,6 @@ angular.module('scalearAngularApp', [
                 s = 2;
             }
             else{
-                console.log("toParams",toParams)
                 if(toParams.course_id){
                     Course.getRole({course_id: toParams.course_id}, function(resp) {
                         $rootScope.course_role = resp.role

@@ -30,7 +30,7 @@
 							<annotation text="selected_marker.annotation" ng-if='selected_marker.annotation && selected_marker.annotation !=""'/>
 						</quiz>
 					</youtube>
-					<progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="current_user.roles[0].id" timeline="lecture.timeline" editing="editing_type">
+					<progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="1" timeline="lecture.timeline" editing="editing_type">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>

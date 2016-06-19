@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/:lang/courses/:course_id/:action', {course_id:$stateParams.course_id, lang:$translate.uses()},
     { 'create': { method: 'POST', headers:headers, params:{course_id:null}},
-      'index': { method: 'GET', isArray: true , headers:headers, params:{course_id:null}},
+      'index': { method: 'GET', headers:headers, params:{course_id:null}},
       'update': { method: 'PUT' , headers:headers},
       'validateCourse':{method: 'PUT', params: {action: 'validate_course_angular'}, headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
@@ -37,9 +37,10 @@ angular.module('scalearAngularApp')
       'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
-      'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}},
+      'currentCourses':{method: 'GET', headers:headers, params: {action: 'current_courses'}},
       'exportModuleProgress':{method: 'GET', headers:headers, params: {action: 'export_modules_progress'}},
       'systemWideEmail':{method: 'POST', params: {action: 'send_system_announcement'}, headers:headers},
+      'getRole':{method: 'GET', headers:headers, params: {action: 'get_role'}},
     });
 
 }])

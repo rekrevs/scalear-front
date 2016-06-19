@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
         $scope.sending = false;
         $rootScope.$broadcast("get_current_courses")
         $scope.is_mobile= MobileDetector.isMobile()
-        if( $scope.is_mobile && ((data.roles[0].id != 2 && MobileDetector.isTablet()) ||  MobileDetector.isPhone)){
+        if( $scope.is_mobile && (MobileDetector.isTablet() ||  MobileDetector.isPhone())){
           ngDialog.open({
             template: 'mobileSupport',
             className: 'ngdialog-theme-default ngdialog-theme-custom',

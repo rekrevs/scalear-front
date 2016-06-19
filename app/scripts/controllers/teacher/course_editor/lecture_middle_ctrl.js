@@ -119,7 +119,6 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.removeTrackEvent(item_data.cue.id)
         // item_data.cue._running = false
       }
-
     }
 
     $scope.closeAlerts = function() {
@@ -140,15 +139,15 @@ angular.module('scalearAngularApp')
       $scope.lecture_player.controls.seek(time)
     }
 
-    $scope.lecture_player.events.seeked = function() {
-      $log.debug("seeking")
+    // $scope.lecture_player.events.seeked = function() {
+    //   $log.debug("seeking")
         //    if($scope.editing_mode ){
         //      if($scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time))
         //        $scope.saveQuizBtn({exit:true})
         //      else if($scope.selected_marker && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_marker.time))
         //        $scope.closeMarkerMode()
         // }
-    }
+    // }
 
     var checkQuizTimeConflict = function(time) {
       var new_time = time

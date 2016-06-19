@@ -32,7 +32,7 @@ angular.module('scalearAngularApp', [
 ]).constant('headers', {
     withCredentials: true,
     'X-Requested-With': 'XMLHttpRequest'
-}).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour){
+}).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour','Course',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course){
 
     $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
     $rootScope.show_alert = "";
@@ -60,7 +60,7 @@ angular.module('scalearAngularApp', [
     $log.debug("lang is " + $rootScope.current_lang);
     var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing', 'signup']
     var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
-    var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
+    var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics', 'course.module.course_editor']
     var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
     //check if route requires no auth
@@ -114,12 +114,24 @@ angular.module('scalearAngularApp', [
             if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
                 $state.go("ie");
             }
-
             if($rootScope.current_user && $rootScope.current_user.info_complete === false){
                 $state.go('edit_account')
                 s = 2;
             }
             else{
+                if(toParams.course_id){
+                    Course.getRole({course_id: toParams.course_id}, function(resp) {
+                        $rootScope.course_role = resp.role
+                        if((stateTeacher(to.name) && $rootScope.course_role === 2) || (stateStudent(to.name) && $rootScope.course_role === 1)) { // student trying to access teacher page  // teacher trying to access student page
+                            $state.go("course_list");
+                            $rootScope.show_alert = "error";
+                            ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);
+                            $timeout(function() {
+                                $rootScope.show_alert = "";
+                            }, 4000);
+                        }
+                    })
+                }
                 if($rootScope.current_user && to.name === 'home'){
                     $state.go("dashboard")
                 }
@@ -142,20 +154,30 @@ angular.module('scalearAngularApp', [
                 if (!routeClean(to.name) && result === 0 ){ // user not logged in trying to access a page that needs authentication.
                     $state.go("login");
                     s = 0;
-                } else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
-                    $state.go("course_list");
-                    s = 0;
                 }
-                else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
-                    $state.go("course_list");
-                    s = 0;
-                }
+                // else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
+                //     $state.go("course_list");
+                //     s = 0;
+                // }
+                // else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+                //     $state.go("course_list");
+                //     s = 0;
+                // }
+
+                // else if ((stateTeacher(to.name) && $rootScope.course_role === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
+                //     $state.go("course_list");
+                //     s = 0;
+                // }
+                // else if ((stateStudent(to.name) && $rootScope.course_role === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+                //     $state.go("course_list");
+                //     s = 0;
+                // }
                 else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 1)// teacher going to home, redirected to courses page
                     $state.go("course_list");
-                else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
-                    $state.go("course_list");
+                // else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
+                //     $state.go("course_list");
                 else if (stateNoAuth(to.name)) {
-                    if (result === 1 || result === 2) {
+                    if (result === 1) {
                         $state.go("home");
                         s = 0;
                     }

@@ -95,7 +95,7 @@ angular.module('scalearAngularApp')
             });
         }
     }
-}]).directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope','$filter','$log', function(Forum, Timeline, $translate, $rootScope,$filter, $log) {
+}]).directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope','$filter','$log',"$window","MobileDetector", function(Forum, Timeline, $translate, $rootScope,$filter, $log,$window,MobileDetector) {
     return {
         restrict:"A",
         scope:{
@@ -104,6 +104,10 @@ angular.module('scalearAngularApp')
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
+            scope.turncatingcount = 30
+            if(MobileDetector.isiPad()){
+                scope.turncatingcount = 15
+            }
             scope.item = scope.data()
             scope.current_user = $rootScope.current_user
             scope.preview_as_student = $rootScope.preview_as_student

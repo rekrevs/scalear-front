@@ -69,11 +69,22 @@
 	background-color: rgba(0,162,86,0.5);
 	padding: 3px;
 }*/
-.course_list{
-    background-color: white;
-    top: 77px;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    padding-top: 23px;
+.course_list {
+  background-color: #fff;
+  top: 77px;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 1px 1px 1px lightgrey;
+}
+
+.course_list .button,.course_list input{
+	margin-bottom:0;
+}
+
+#main_course_list{
+  top: 40px;
+  position: relative;
 }

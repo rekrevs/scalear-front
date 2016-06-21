@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','scalear_utils','Timeline', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, scalear_utils, Timeline) {
 
- 	Page.setTitle('navigation.content')
+ 	Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
     DetailsNavigator.open()

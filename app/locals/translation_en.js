@@ -69,6 +69,7 @@ var translation_en={
     got_some_errors: "Please correct the errors above",
     required:"@:global.required",
     invalid_input: "Invalid Input",
+    due_date_changed:"Due Date has been changed.",
     you_are_not_authorized: "You are not authorized to see requested page",
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",

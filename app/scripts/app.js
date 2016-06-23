@@ -28,7 +28,8 @@ angular.module('scalearAngularApp', [
     'ngClipboard',
     'ngTextTruncate',
     'ngDialog',
-    'mgo-angular-wizard'
+    'mgo-angular-wizard',
+    'angular-medium-editor'
 ]).constant('headers', {
     withCredentials: true,
     'X-Requested-With': 'XMLHttpRequest'

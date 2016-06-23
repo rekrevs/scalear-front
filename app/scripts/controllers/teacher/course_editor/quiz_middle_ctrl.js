@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state','$q' ,function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state, $q) {
- 	
+
  	var unwatch = $scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
         $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
 
 
  	$scope.alert={type:"alert", msg:"error_message.got_some_errors"}
- 
+
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
  	}
@@ -43,8 +43,8 @@ angular.module('scalearAngularApp')
 					else{
 						question.answers = data.answers[index]
 						if(!data.answers[index].length && question.question_type != 'Free Text Question')
-							$scope.addHtmlAnswer("",question)				
-					}	
+							$scope.addHtmlAnswer("",question)
+					}
 			  	});
 
 			  	$scope.quizSortableOptions={
@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
 					opacity: 0.4,
 					scroll: true
 			 	}
-				 
+
 		    });
 
 	    shortcut.add("Enter",
@@ -68,16 +68,16 @@ angular.module('scalearAngularApp')
 			},
 			{"disable_in_input" : false, 'propagate':true});
  	}
- 	
+
  	init();
- 	
+
  	var updateQuestions=function(questions){
 		Quiz.updateQuestions(
 			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
 			{questions: questions}
 		);
 	}
- 	
+
  	$scope.saveAll=function(){
  		if($scope.tform.$valid)
  		{
@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
 				$scope.questions[elem].answers.forEach(function(ans){
 					if(ans.id && obj.id==null){
 						obj.id = ans.id
-						return 
+						return
 					}
 				})
 				var y=angular.copy($scope.questions[elem])
@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
  		$scope.hide_alerts=false;
  	}
  	}
- 	
+
  	$scope.addQuestion=function(){
  			var new_question={quiz_id:$scope.quiz.id, content:"", question_type:"MCQ"}
  			new_question.answers = [];
@@ -125,7 +125,7 @@ angular.module('scalearAngularApp')
 		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
 		question.answers.push($scope.new_answer)
 	}
- 	
+
  	$scope.removeHtmlAnswer = function(index, question){
 		if(question.answers.length>1){
 			question.answers.splice(index, 1);
@@ -133,15 +133,15 @@ angular.module('scalearAngularApp')
 			$rootScope.show_alert="error";
 	      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
 	      	$timeout(function(){
-	      		$rootScope.show_alert="";	
+	      		$rootScope.show_alert="";
 	      	},4000);
 		}
 	}
-	
+
 	$scope.removeQuestion = function(index){
 	  	$scope.questions.splice(index, 1);
 	}
- 
+
 	$scope.addHeader=function(){
 		var new_header = {quiz_id:$scope.quiz.id, content:"", question_type:"header"}
 		$scope.questions.push(new_header)
@@ -158,6 +158,7 @@ angular.module('scalearAngularApp')
 	    delete modified_quiz.updated_at;
 	    delete modified_quiz.id;
 	    delete modified_quiz.due_date_enabled;
+	    delete modified_quiz.disable_module_due_controls
 
 	    Quiz.update({
 	            course_id: $stateParams.course_id,
@@ -190,5 +191,5 @@ angular.module('scalearAngularApp')
 	    })
 	    return d.promise;
 	};
- 
+
  }])

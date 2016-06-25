@@ -153,7 +153,9 @@ angular.module('scalearAngularApp')
     template: "<ng-form name='aform'>"+
               "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
-              "</ng-form>"
+              "</ng-form>"+
+              "{{explanation[quiz.id]}}"
+
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
   return {
@@ -358,7 +360,8 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>'+
+    '<div ng-style="{left: (data.xcoor*100)+\'%\', top: ((data.ycoor+data.height)*100)+\'%\'}"  style="resize:none;position:absolute;background-color: white;font-size: 14px;">explanation{{explanation[[quiz.id]]}}</div>',
     link:function(scope,elem){
 
     }

@@ -652,6 +652,12 @@ angular.module('scalearAngularApp')
         if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.is_quiz_solved = true;
           showNotification('lectures.messages.thank_you_answer')
+          if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
+            // $scope.explanation[] = data.explanation[] 
+            for(var el in data.explanation)
+              $scope.explanation[el] = data.explanation[el];
+
+          }
         } else {
           for(var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];

@@ -86,20 +86,28 @@ angular.module('scalearAngularApp')
 
             scope.updateQuestion= function(question){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
-                    Forum.updatePost({post_id: question.id},
-                        {content: scope.current_question},                    
-                        function(){
-                            question.content = scope.current_question
-                            question.updated_at = new Date()
-                            question.edited = true
-                            question.isEdit = false
-                            scope.error_message=null
-                            scope.current_question = ''
-                        }
-                    )
+                    
+                    scope.time_error = validateTime(question.time,true)
+                    if (!( scope.time_error)){
+                        scope.ask_button_clicked = true    
+                        question.time = arrayToSeconds(question.time.split(':'))
+                        Forum.updatePost({post_id: question.data.id},
+                            {content: scope.current_question,
+                            time:question.time 
+                            },                    
+                            function(){
+                                question.data.content = scope.current_question
+                                question.data.updated_at = new Date()
+                                question.data.edited = true
+                                question.data.isEdit = false
+                                scope.error_message=null
+                                scope.current_question = ''
+                            }
+                        )
+                    }
                 }
                 else
-                    question.isEdit = false
+                    question.data.isEdit = false
             }
 
             scope.cancelQuestion=function(question){

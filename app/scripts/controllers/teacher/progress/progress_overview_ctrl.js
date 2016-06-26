@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('progressOverviewCtrl', ['$interval','$rootScope', '$scope','$state', '$stateParams','ContentNavigator', '$translate','$log', 'Page','ErrorHandler', function ($interval,$rootScope, $scope, $state, $stateParams, ContentNavigator, $translate, $log, Page,ErrorHandler) {
     
-    Page.setTitle('navigation.progress')
+    Page.setTitle($translate('navigation.progress') + ': ' + $scope.course.name);
     ContentNavigator.open()
 
     $scope.goTo=function(state){

@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
   $scope.in_delete = false;
   $scope.toggle_message = 'courses.information.button.remove_teacher'
   $scope.roles = [{value:3, text:'courses.information.professor'}, {value:4, text:'courses.information.ta'}];
-  Page.setTitle('navigation.information')
+  Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
   Page.startTour()
   ContentNavigator.close()
   $scope.timezones=scalear_utils.listTimezones()

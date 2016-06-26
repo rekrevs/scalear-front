@@ -35,6 +35,14 @@ angular.module('scalearAngularApp', [
     'X-Requested-With': 'XMLHttpRequest'
 }).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour','Course',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course){
 
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        showProcessingMessages: false,
+        showMathMenu: false
+    });
+
     $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
     $rootScope.show_alert = "";
     editableOptions.theme = 'default';

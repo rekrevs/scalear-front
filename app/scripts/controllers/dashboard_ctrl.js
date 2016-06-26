@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function(event, element){ 
+        $(".tooltip.tip-top").remove()
         element.attr({'tooltip-html-unsafe': event.tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
@@ -39,7 +40,6 @@ angular.module('scalearAngularApp')
         Dashboard.getDashboard({},function(data) {
             $scope.uiConfig = {
                 calendar: {
-                    editable: true,
                     header: {
                         right: 'today prev,next',
                         left: 'title'
@@ -47,6 +47,9 @@ angular.module('scalearAngularApp')
                     eventRender: $scope.eventRender
                 }
             };
+            if($rootScope.current_user.roles[0].id != 2){
+                $scope.uiConfig.calendar.editable = true
+            }
             angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
             $scope.calendar = data;
             for (var element in $scope.calendar.events) {
@@ -109,12 +112,7 @@ angular.module('scalearAngularApp')
 
 
             }   
-            // $scope.uiConfig.calendar.eventDropStart = function(event) {
-            //     $scope.calendar.events[element].tooltip_string = null
-            // }   
-            // $scope.uiConfig.calendar.eventDropStop = function(event) {
-            //     $scope.calendar.events[element].tooltip_string = $scope.calendar.events[element].title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')($scope.calendar.events[element].start, 'HH:mm')
-            // }   
+ 
             $scope.eventSources.push($scope.calendar);
             $timeout(function() {
                 // changeLang()

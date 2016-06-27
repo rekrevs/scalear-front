@@ -166,12 +166,13 @@ angular.module('scalearAngularApp')
     };
 }]).directive('detailsDate', ['$timeout',function($timeout) {
     return {
-        template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || ("global.empty"|translate) }}<i ng-class="overclass"></i></a>',
+        template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data,disableregistrationchecked)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || ("global.empty"|translate) }}<i ng-class="overclass"></i></a>',
         restrict: 'E',
         scope: {
             date: "=",
             save: "&",
             validate: "&",
+            disableregistrationchecked: "=",
             column: "@"
         },
         link: function(scope, element) {

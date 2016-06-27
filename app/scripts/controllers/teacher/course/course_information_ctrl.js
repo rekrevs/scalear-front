@@ -6,6 +6,10 @@ angular.module('scalearAngularApp')
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
   $scope.toggle_message = 'courses.information.button.remove_teacher'
+  if($scope.course.disable_registration)
+  {
+    $scope.disable_registration_checked = true
+  }
   $scope.roles = [{value:3, text:'courses.information.professor'}, {value:4, text:'courses.information.ta'}];
   Page.setTitle('navigation.information')
   Page.startTour()
@@ -21,7 +25,6 @@ angular.module('scalearAngularApp')
 
   $scope.updateCourse = function(data,type){
     if(data && data instanceof Date){ 
-          console.log(type)
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
           $scope.course[type] = data
     }
@@ -44,13 +47,23 @@ angular.module('scalearAngularApp')
     );
   }
 
-	$scope.validateCourse = function(column,data) {
+  $scope.enable_disable_registration = function(disable_registration_checked){
+    if (!disable_registration_checked) {
+      $scope.course.disable_registration = null
+      $scope.updateCourse("","disable_registration")
+
+    };
+  }
+
+	$scope.validateCourse = function(column,data,disableregistrationchecked) {
     var d = $q.defer();
     var course={}
     course[column]=data;
+    course["disable_registration_checked"]=disableregistrationchecked;
     Course.validateCourse(
       {course_id:$stateParams.course_id},
-      course,
+      course 
+,
       function(){
         d.resolve()
       },

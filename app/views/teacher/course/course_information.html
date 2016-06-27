@@ -116,12 +116,18 @@
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
-                <small translate>courses.disable_registration</small>
-                <div>
-                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration"></details-date>
+                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input  type="checkbox" ng-change="enable_disable_registration(disable_registration_checked)" style="margin-left: 10px;" ng-model="disable_registration_checked" >
+                 <div>
+                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" ng-hide="!disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" disableregistrationchecked = "disable_registration_checked"></details-date>
+                    <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
                 </div>
+
+                <!-- <div>
+                    <input name="date" type="text" ng-hide="!disable_registration_checked" datepicker-popup="dd-MMMM-yyyy" ng-model="course.disable_registration"  ng-class="{error: server_errors['disable_registration']}"/>
+
+                </div>
+ -->
             </div>
-            
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i>
                 <small translate>courses.information.discussion_forum_link</small>

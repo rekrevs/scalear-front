@@ -284,6 +284,12 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/users/password/new.html',
             controller: 'UsersPasswordNewCtrl'
         })
+        .state('forgot_password_confirmation', {
+            url: '/users/forgot_password_confirmation',
+            templateUrl: '/views/users/password/forgot_password_confirmation.html',
+            controller: 'ForgotPasswordConfirmationCtrl',
+            params : {email: null}
+        })
         .state('change_password', {
             url: '/users/password/edit?reset_password_token',
             templateUrl: '/views/users/password/edit.html',

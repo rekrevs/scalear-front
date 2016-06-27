@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
       delete $scope.user.errors;
       User.reset_password({}, { user: $scope.user }, function() {
         $scope.sending = false;
-        $state.go("login");
+        $state.go('forgot_password_confirmation',{email : $scope.user.email});
       }, function(response) {
         $scope.sending = false;
         if (response.data.saml) {

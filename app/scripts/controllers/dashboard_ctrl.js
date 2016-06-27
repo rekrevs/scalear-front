@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter','$location', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location) {
+.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter','$location','Module','ErrorHandler','$interval', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location , Module ,ErrorHandler ,$interval) {
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function(event, element){ 
+        $(".tooltip.tip-top").remove()
         element.attr({'tooltip-html-unsafe': event.tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
@@ -39,7 +40,6 @@ angular.module('scalearAngularApp')
         Dashboard.getDashboard({},function(data) {
             $scope.uiConfig = {
                 calendar: {
-                    editable: false,
                     header: {
                         right: 'today prev,next',
                         left: 'title'
@@ -47,6 +47,9 @@ angular.module('scalearAngularApp')
                     eventRender: $scope.eventRender
                 }
             };
+            if($rootScope.current_user.roles[0].id != 2){
+                $scope.uiConfig.calendar.editable = true
+            }
             angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
             $scope.calendar = data;
             for (var element in $scope.calendar.events) {
@@ -55,6 +58,9 @@ angular.module('scalearAngularApp')
                 $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
                 // $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+
                 $scope.calendar.events[element].title =  $scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
+                // console.log($scope.calendar.events[element].title)
+                // console.log($scope.calendar.events[element].start)
+
                 $scope.calendar.events[element].tooltip_string = $scope.calendar.events[element].title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')($scope.calendar.events[element].start, 'HH:mm')
                 if($scope.calendar.events[element].status==1)
                     $scope.calendar.events[element].tooltip_string+="<br />"+$translate("events.completed_on_time")
@@ -74,6 +80,39 @@ angular.module('scalearAngularApp')
             }
             $scope.calendar.className = ["truncate"]
 
+            $scope.uiConfig.calendar.eventDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view ) {
+                var group = {"due_date" :  event.start}
+                Module.update({
+                        course_id: event.course_id,
+                        module_id: event.group_id
+                    }, {
+                        group: group
+                    },
+                    function(response) {
+                        if (response.notice){ 
+                          $rootScope.show_alert = "success"; 
+                          ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000); 
+                          $interval(function() { 
+                                $rootScope.show_alert = ""; 
+                          }, 4000, 1);                     
+                        } 
+                    },
+                    function(response) {
+                        revertFunc()
+                        console.log(response)
+                        // if (response.notice){ 
+                          $rootScope.show_alert = "error"; 
+                          ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 2000); 
+                          $interval(function() { 
+                                $rootScope.show_alert = ""; 
+                          }, 4000, 1);                     
+                        // } 
+                    }
+                );
+
+
+            }   
+ 
             $scope.eventSources.push($scope.calendar);
             $timeout(function() {
                 // changeLang()

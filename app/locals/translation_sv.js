@@ -69,6 +69,7 @@ var translation_sv={
     got_some_errors: "Rätta till felen ovan",
     required:"@:global.required",
     invalid_input: "Ogiltiga indata",
+    due_date_changed: "Due Date has been changed(t).",
     you_are_not_authorized: "Du har inte behörighet att visa den begärda sidan",
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",

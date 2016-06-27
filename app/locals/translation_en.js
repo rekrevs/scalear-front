@@ -130,6 +130,7 @@ var translation_en={
     notifications: "Notifications",
     notification: "Notification",
     dashboard: "Dashboard",
+    settings: "Settings",
     account: "Account",
     show_all_courses: "Show all courses",
     copied_from: "Copied From",
@@ -726,7 +727,7 @@ var translation_en={
         enrollment_key: "Enrollment Key",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
-        receive_due_date_email: "Receive email for due dates of lectures or quizzes",
+        receive_due_date_email: "Receive email reminders of upcoming due dates.",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",

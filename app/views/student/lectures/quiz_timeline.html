@@ -5,8 +5,8 @@
     </div>
   </td>
   <td style="padding:0 12px;" >
-    <p class="solved size-14 color-black text-italic" ng-click="seek()(item.time, item.data.lecture_id)" bo-text="item.data.question" style="margin-bottom:5px"></p>
-    <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!item.graded" style="margin-top: 3px;" translate>lectures.optional</span>
+    <p class="solved size-14 color-black text-italic" ng-click="seek()(item.time, item.data.lecture_id)" bo-html="item.data.question" style="margin-bottom:5px"></p>
+    <span bo-show="!item.graded" class="color-grey text-italic" style="margin-left: 5px; margin-bottom:5px; font-size: 10px;" translate>lectures.optional</span>
   </td>
   <td style="padding: 0px; padding-right: 8px;min-width: 80px;" class="valign-top" colspan="2">
     <img style="float: right;" src="images/check7.png" />
@@ -22,7 +22,7 @@
   </td>
   <td style="padding:0 12px;" >
     <!-- <p class="size-14 color-grey text-italic" bo-text="item.data.question" style="margin-bottom:5px"> -->
-        <span  class="size-14 color-grey text-italic"  bo-text="item.data.question"  style="margin-bottom:5px"></span>
+        <span  class="size-14 color-grey text-italic"  bo-html="item.data.question"  style="margin-bottom:5px"></span>
         <span  bo-show="!item.graded" class="color-grey text-italic" style="margin-left: 5px; margin-bottom:5px; font-size: 10px;" translate>lectures.optional</span>
     <!-- </p> -->
   </td>

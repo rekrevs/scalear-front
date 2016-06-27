@@ -20,7 +20,7 @@
             <div style="margin-left: 20px;">
                 <span bo-if="l.description">
                     <h6 class="subheader uppercase" translate>lectures.timeline.description</h6>
-                    <p class="dark-text" bo-text="l.description"></p>
+                    <p class="dark-text" bo-html="l.description"></p>
                 </span>
                 <span bo-if="l.slides && l.slides != 'none'">
                     <h6 class="subheader uppercase" translate>lectures.timeline.slides</h6>

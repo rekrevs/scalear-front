@@ -223,7 +223,8 @@ angular.module('scalearAngularApp')
       link: function(scope, element, attrs) {
         var current = element;
         scope.$watch(function() {
-          return attrs.embedSrc; }, function() {
+          return attrs.embedSrc;
+        }, function() {
           var clone = element
             .clone()
             .attr('src', attrs.embedSrc);
@@ -277,26 +278,4 @@ angular.module('scalearAngularApp')
         }
       });
     };
-  }).directive('richTextarea', function() {
-    return {
-      replace: true,
-      restrict: 'EA',
-      template: "<textarea medium-editor bind-options='medium_editor_options' class='medium-editor-textarea' ></textarea>",
-      controller: ['$scope','$attrs','$interpolate', function($scope, $attrs, $interpolate) {
-        $scope.medium_editor_options = {
-          'toolbar':
-            {'buttons':
-              ["bold","italic","underline","strikethrough","subscript","superscript","anchor","image","quote","pre","orderedlist","unorderedlist","h1","h2","h3","removeFormat"]
-            },
-          'placeholder': (!$attrs.placeholder)? false : {text:$interpolate($attrs.placeholder)()}
-        }
-
-      }]
-    };
   })
-// scope.temp_opt = {'toolbar': {'buttons': ["bold","italic","underline","strikethrough","subscript","superscript","anchor","image","quote","pre","orderedlist","unorderedlist","h1","h2","h3","removeFormat"]}}
-//         if(!attr.placeholder)
-//           scope.temp_opt.placeholder = false
-//         scope.medium_editor_options = scope.temp_opt
-//         console.log("attr", attr);
-//         console.log("scope.medium_editor_options",scope.medium_editor_options);

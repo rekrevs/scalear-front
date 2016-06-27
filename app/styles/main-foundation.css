@@ -2626,3 +2626,10 @@ body.ngdialog-open { overflow: initial !important; }
 .ui-state-default p{
   margin:0 !important;
 }
+
+.medium-editor-toolbar-form .medium-editor-toolbar-input{
+  width:40px !important ;
+}
+.editable-wrap.editable-textarea{
+  width:100%;
+}

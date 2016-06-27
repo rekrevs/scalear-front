@@ -112,12 +112,12 @@
         </div>
         <h5 translate class="subheader">courses.information.description</h5>
         <p style="font-weight: 200;">
-            <textarea rows="3" style="height: 150px;" ng-model="course.description" ng-class="{error: server_errors['description']}">importing </textarea>
+            <rich-textarea rows="3" style="height: 150px;" ng-model="course.description" ng-class="{error: server_errors['description']}">importing </rich-textarea>
             <small class="error with-tiny-padding" ng-show="server_errors['description']">{{server_errors['description'].join()}}</small>
         </p>
         <h5 translate class="subheader">courses.prerequisites</h5>
         <p style="font-weight: 200;">
-            <textarea rows="3" style="height: 100px;" ng-model="course.prerequisites" ng-class="{error: server_errors['prerequisites']}"></textarea>
+            <rich-textarea rows="3" style="height: 100px;" ng-model="course.prerequisites" ng-class="{error: server_errors['prerequisites']}"></rich-textarea>
             <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
         </p>
         <h5 translate class="subheader">courses.new.copy_from_existing</h5>

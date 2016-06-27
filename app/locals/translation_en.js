@@ -278,6 +278,7 @@ var translation_en={
     last_name: "Last Name",
     screen_name: "Online Name",
     university: "School or University",
+    first_day: "First day of the week for the calendar",
     link: "Website",
     security: "Security",
     online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',

@@ -278,6 +278,7 @@ var translation_sv={
     last_name: "Efternamn",
     screen_name: "Ditt online-namn",
     university: "Skola eller universitet",
+    first_day: "First day of the week for the calendar(t)",
     link: "Hemsida",
     security: "Säkerhet",
     avatar_comment: 'Du kan byta din avatar på ',

@@ -4,6 +4,28 @@ angular.module('scalearAngularApp')
     .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal','Page','$translate',function($rootScope, $scope, User, $state, $modal,Page, $translate) {
     
     Page.setTitle('navigation.account_information')
+    $scope.dayNamesOption =  [{
+        id: 0,
+        name: full_calendar_en["dayNamesShort"][0]
+    },{
+        id: 1,
+        name: full_calendar_en["dayNamesShort"][1]
+    },{
+        id: 2,
+        name: full_calendar_en["dayNamesShort"][2]
+    },{
+        id: 3,
+        name: full_calendar_en["dayNamesShort"][3]
+    },{
+        id: 4,
+        name: full_calendar_en["dayNamesShort"][4]
+    },{
+        id: 5,
+        name: full_calendar_en["dayNamesShort"][5]
+    },{
+        id: 6,
+        name: full_calendar_en["dayNamesShort"][6]
+    }]
     $rootScope.subheader_message = $translate('navigation.account_information')
     // $scope.user = angular.copy($rootScope.current_user)
     $rootScope.$watch('current_user', function(val) {
@@ -18,10 +40,13 @@ angular.module('scalearAngularApp')
                 email: $rootScope.current_user.email,
                 link: $rootScope.current_user.link,
                 bio: $rootScope.current_user.bio,
-                saml: $rootScope.current_user.saml
+                saml: $rootScope.current_user.saml,
+                first_day: $scope.dayNamesOption[$rootScope.current_user.first_day],
+                   
             }
     })
     // })
+    
 
     $rootScope.$watch('current_lang', function(newval, oldval) {
         if (newval != oldval)
@@ -54,6 +79,7 @@ angular.module('scalearAngularApp')
             })
         }
         else{
+            $scope.user.first_day = $scope.user.first_day.id
             User.update_account({}, {
                 user: $scope.user
             }, 

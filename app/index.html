@@ -30,11 +30,13 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
     <link rel="stylesheet" href="bower_components/angular-wizard/dist/angular-wizard.min.css">
+    <link rel="stylesheet" href="bower_components/medium-editor/dist/css/medium-editor.css">
+    <link rel="stylesheet" href="bower_components/medium-editor/dist/css/themes/default.css">
+    <link rel="stylesheet" href="bower_components/spectrum/spectrum.css">
 
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
-
   </head>
 
 
@@ -95,10 +97,9 @@
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-
-
     </script>
+
+
 
     <!-- build:js({.tmp,app}) scripts/externals.js -->
 
@@ -109,7 +110,7 @@
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
@@ -159,6 +160,10 @@
     <script src="bower_components/ngDialog/js/ngDialog.min.js"></script>
     <script src="bower_components/ics.js/ics.deps.min.js"></script>
     <script src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
+    <script src="bower_components/medium-editor/dist/js/medium-editor.js"></script>
+    <script src="bower_components/angular-medium-editor/dist/angular-medium-editor.js"></script>
+    <script src="bower_components/MathJax/MathJax.js?config=TeX-AMS_CHTML-full"></script>
+    <script src="bower_components/spectrum/spectrum.js"></script>
 
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -173,6 +178,7 @@
     <script src="scripts/filters/filters.js"></script>
 
     <script src="scripts/directives/generic_directives.js"></script>
+    <script src="scripts/directives/richTextarea_directive.js"></script>
     <script src="scripts/directives/error_directives.js"></script>
     <script src="scripts/directives/youtube_directives.js"></script>
     <script src="scripts/directives/popover_directives.js"></script>

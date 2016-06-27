@@ -4,7 +4,7 @@
         <div class="row" style="margin-top:10px;text-align:left;margin-left:0;">
             <div class="small-12 columns" style="margin-bottom: 5px;"><span translate>editor.quiz_question</span>:</div>
             <div class="small-12 left columns" style="margin-bottom: 15px;">
-                <input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 30px;margin-bottom:0;">
+                <div><rich-textarea class="quiz_name" type="text" ng-model="selected_quiz.question"></div>
                 <small class="error" ng-show="name_error" ng-bind="name_error"></small>
             </div>
         </div>

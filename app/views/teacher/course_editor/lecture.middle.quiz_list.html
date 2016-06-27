@@ -12,7 +12,7 @@
 							<span class="looks-like-a-link">{{quiz.data.time|format}}</span>
 						</div>
 						<div class="small-12 columns">
-							<span class="quiz_title color-blue2 looks-like-a-link">{{quiz.data.question}}</span>
+							<span class="quiz_title color-blue2 looks-like-a-link" ng-bind-html="quiz.data.question"></span>
 						</div>
 					</span>
 				</div>

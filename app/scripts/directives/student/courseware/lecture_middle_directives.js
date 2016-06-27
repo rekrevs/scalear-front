@@ -511,9 +511,9 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;" style="padding:0 9px">'+
+    template: '<div e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
                 '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
-                  '{{ value }}'+
+                  '<span ng-bind-html="value"></span>'+
                 '</div>'+
                 '<div style="font-size: 10px; float: right; display: inline-block;">'+
                   '<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>'+
@@ -532,12 +532,12 @@ angular.module('scalearAngularApp')
       });
 
       scope.moveCursorToEnd=function(){
-        $timeout(function() {
-            var textarea = $('.editable-input');
-            var strLength= textarea.val().length;
-            textarea.focus();
-            textarea[0].setSelectionRange(strLength, strLength);
-        });
+        // $timeout(function() {
+        //     var textarea = $('.editable-input');
+        //     var strLength= textarea.val().length;
+        //     textarea.focus();
+        //     textarea[0].setSelectionRange(strLength, strLength);
+        // });
 
         shortcut.add("enter", function(){
           $('form.editable-textarea').submit();
@@ -545,8 +545,8 @@ angular.module('scalearAngularApp')
         shortcut.add("esc", function(){
           $('form.editable-textarea').submit();
         }, {"disable_in_input" : false});
-
       }
+
       scope.show=function(){
         scope.myform.$show()
         $('.editable-input').focus()

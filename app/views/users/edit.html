@@ -127,6 +127,27 @@
           </div>
         </div>
     </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="row">
+                <div class="small-4 columns">
+                   <label class="with-small-margin-top right">
+                      <span translate>account.first_day</span>
+                      <!-- <small style="font-style:italic;" ng-class="{'color-red text-bold': !user.first_day}" >*</small> -->
+                    </label>
+                </div>
+                <div class="small-8 columns">
+                  <div class="row">
+                    <div class="small-9 columns">
+                      <select class="no-margin-bottom"  ng-options="day.name for day in dayNamesOption" ng-model="user.first_day" ng-class="{error: user.errors.first_day}"></select>
+                      <small ng-show="user.errors.first_day" class="error with-tiny-padding">{{user.errors.first_day.join()}}</small>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="row with-medium-margin-top" ng-hide="user.saml">
       <div class="small-12 columns">

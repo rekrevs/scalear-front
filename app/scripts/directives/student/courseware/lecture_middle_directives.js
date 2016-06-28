@@ -145,8 +145,22 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		templateUrl: '/views/student/lectures/html_drag.html'
+		templateUrl: '/views/student/lectures/html_drag.html',
+    link: function(scope){
+
+      scope.$watch('explanation[quiz.id]', function(newval){
+        if(scope.explanation && scope.explanation[scope.quiz.id])
+        {
+          scope.mypop={
+            content:'<div>{{explanation[quiz.id][answer]}}</div>',
+            html:true,
+            trigger:'hover',
+            container: 'body'
+          }
+        }
+      })
 	}
+}
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
   return{
     restrict:'E',

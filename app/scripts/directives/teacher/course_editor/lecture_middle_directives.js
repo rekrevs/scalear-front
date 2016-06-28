@@ -516,15 +516,8 @@ angular.module('scalearAngularApp')
       template: "<div>" +
         "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div>" +
-				"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
+				"<h6 class='no-margin' pop-over='popover_options' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
         "</div>"+
-          "<form name='aform' >" +
-          "<label style='margin-top:10px'>" +
-          "<span translate>editor.explanation</span>" +
-          "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
-          "<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
-          "</label>" +
-          "</form>" +
         "</div>"
 ,
 
@@ -543,9 +536,15 @@ angular.module('scalearAngularApp')
           scope.data.height = main.height() / (ontop.height());
         }
 
+        // scope.close = function() {
+        //   scope.save()
+        //   console.log("close")
+        //   angular.element(element.children()[0]).popover('hide')
+        // }
         scope.close = function() {
           scope.save()
-          angular.element(element.children()[0]).popover('hide')
+          console.log(element)
+          angular.element(element.find('h6')).popover('hide')
         }
 
         scope.delete = function() {
@@ -553,8 +552,28 @@ angular.module('scalearAngularApp')
           // angular.element(element.children()[0]).popover('hide')
         }
 
+        var template = "<form name='aform' >" +
+          "<label style='margin-top:10px'>" +
+          "<span translate>editor.explanation</span>" +
+          "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
+          "<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
+          "</label>" +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
+          "</form>"
 
-        console.log(scope.data)
+
+
+        scope.popover_options = {
+          content: template,
+          html: true,
+          placement: function() {
+            var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
+            return scope.data.ycoor < 0.3 ? "bottom" : placement
+          },
+          instant_show: !scope.data.id,
+          container: 'body'
+        }
+        // console.log(scope.data)
 
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",

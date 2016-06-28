@@ -195,6 +195,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.$watch('explanation[data.id]', function(newval){
+        console.log('explanation watch')
         if(scope.explanation && scope.explanation[scope.data.id]){
           if(scope.explanation[scope.data.id][0]){
             scope.title_class = "green_notification"
@@ -360,9 +361,25 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>'+
-    '<div ng-style="{left: (data.xcoor*100)+\'%\', top: ((data.ycoor+data.height)*100)+\'%\'}"  style="resize:none;position:absolute;background-color: white;font-size: 14px;">explanation{{explanation[[quiz.id]]}}</div>',
+    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" pop-over="explanation_pop" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;" ></textarea>',
     link:function(scope,elem){
+      var setup=function(){
+        scope.explanation_pop={}
+        scope.explanation[scope.data.id] = null
+      }
+
+      scope.$watch('explanation[quiz.id]', function(newval){
+        if(scope.explanation  && scope.explanation[scope.quiz.id]){
+          scope.explanation_pop={
+            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
+            content:"<div>{{explanation[quiz.id]}}</div>",
+            html:true,
+            trigger:$rootScope.is_mobile? 'click' : 'hover',
+            placement:(scope.data.xcoor > 0.5)? "left":"right"
+          }
+        }
+      })
+      setup()
 
     }
   }

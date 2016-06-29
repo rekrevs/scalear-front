@@ -6,6 +6,9 @@ angular.module('scalearAngularApp')
     Page.setTitle('navigation.dashboard');
     Page.startTour();
     $rootScope.subheader_message = $translate("dashboard.whats_new")
+    $scope.eventSources = [];
+    $scope.filtered_events = [];
+    $scope.calendar_year = []
 
     $scope.toggleLargeCalendar = function() {
       $scope.large_calendar = !$scope.large_calendar
@@ -33,11 +36,8 @@ angular.module('scalearAngularApp')
     };
 
 
-    var getCalendar = function() {
-      $scope.eventSources = [];
-      $scope.filtered_events = []
-
-      Dashboard.getDashboard({}, function(data) {
+    var getCalendar = function(year) {
+      Dashboard.getDashboard({year:year}, function(data) {
         $scope.uiConfig = {
           calendar: {
             header: {
@@ -76,7 +76,6 @@ angular.module('scalearAngularApp')
 
         }
         $scope.calendar.className = ["truncate"]
-
         $scope.uiConfig.calendar.eventDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
           var group = { "due_date": event.start }
           Module.update({
@@ -107,6 +106,13 @@ angular.module('scalearAngularApp')
             }
           );
         }
+
+        $scope.uiConfig.calendar.viewRender = function(view,element){
+          if (!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0) ){
+            $scope.calendar_year.push(view.title.split(" ")[1].toString())
+            getCalendar(view.title.split(" ")[1])
+          }
+        } 
 
         $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
         $scope.eventSources.push($scope.calendar);
@@ -142,7 +148,9 @@ angular.module('scalearAngularApp')
     }
 
     getAnnouncements();
-    getCalendar();
+    var year = new Date().getFullYear()
+    getCalendar(year);
+    $scope.calendar_year.push(year.toString())
 
 
   }]);

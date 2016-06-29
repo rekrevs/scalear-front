@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location, $interval) {
+  .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval','$state', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location, $interval,$state) {
 
-  // console.log($location.path())
-  // console.log()
   $scope.issue_types=[{value:"system", text:$translate('feedback.system')}, {value:"content", text:$translate('feedback.course_content')}]//"ScalableLearning Website", "Course Content"]
-  if(!($location.path().indexOf('courses') > -1)){
+  if(!($state.includes("course"))){
     $scope.issue_types=[{value:"system", text:$translate('feedback.system')}]//"ScalableLearning Website", "Course Content"]  
   }
   $scope.selected_type = $scope.issue_types[0];

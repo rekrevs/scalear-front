@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('richTextarea', function() {
+  .directive('richTextarea', ['$timeout', function($timeout) {
     return {
       replace: true,
       restrict: 'EA',
@@ -9,9 +9,7 @@ angular.module('scalearAngularApp')
       controller: ['$scope', '$attrs', '$interpolate', function($scope, $attrs, $interpolate) {
 
         // Medium Editor - Spectrum text color extension
-        console.log("controller", $scope)
         var currentTextSelection;
-
         var ColorPickerExtension = MediumEditor.extensions.button.extend({
           name: "colorPicker",
           action: "applyForeColor",
@@ -80,70 +78,163 @@ angular.module('scalearAngularApp')
 
         // Medium Editor - Font increase extension
         var FontSizeIncreseExtension = MediumEditor.extensions.button.extend({
-          name: 'increaseFontSize',
-          action: 'fontSize',
-          aria: 'increase font size',
-          contentDefault: '+', // ±
-          init: function() {
-            this.button = this.document.createElement('button');
-            this.button.classList.add('medium-editor-action');
-            this.button.innerHTML = '<b title="increase text size">+</b>';
-            this.on(this.button, 'click', this.handleClick.bind(this));
-          },
-          handleClick: function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            var fontSize = this.document.queryCommandValue('fontSize') + '';
-            if(fontSize < 8)
-              this.execAction('fontSize', { value: parseInt(fontSize)+1 } || 3);
-          }
-        })
-        //////////////////////////////////////////////////////////////////////////////
+            name: 'increaseFontSize',
+            action: 'fontSize',
+            aria: 'increase font size',
+            contentDefault: '+',
+            init: function() {
+              this.button = this.document.createElement('button');
+              this.button.classList.add('medium-editor-action');
+              this.button.innerHTML = '<b title="increase text size">+</b>';
+              this.on(this.button, 'click', this.handleClick.bind(this));
+            },
+            handleClick: function(event) {
+              event.preventDefault();
+              event.stopPropagation();
+              var fontSize = this.document.queryCommandValue('fontSize') + '';
+              if(fontSize < 8)
+                this.execAction('fontSize', { value: parseInt(fontSize) + 1 } || 3);
+            }
+          })
+          //////////////////////////////////////////////////////////////////////////////
 
         // Medium Editor - Font decrease extension
         var FontSizeDecreaseExtension = MediumEditor.extensions.button.extend({
-          name: 'decreaseFontSize',
-          action: 'fontSize',
-          aria: 'decrease font size',
-          contentDefault: '-', // ±
+            name: 'decreaseFontSize',
+            action: 'fontSize',
+            aria: 'decrease font size',
+            contentDefault: '-',
+            init: function() {
+              this.button = this.document.createElement('button');
+              this.button.classList.add('medium-editor-action');
+              this.button.innerHTML = '<b title="decrease text size">-</b>';
+              this.on(this.button, 'click', this.handleClick.bind(this));
+            },
+            handleClick: function(event) {
+              event.preventDefault();
+              event.stopPropagation();
+              var fontSize = this.document.queryCommandValue('fontSize') + '';
+              if(fontSize > 1)
+                this.execAction('fontSize', { value: parseInt(fontSize) - 1 } || 3);
+            }
+          })
+          //////////////////////////////////////////////////////////////////////////////
+
+        // Medium Editor - Font decrease extension
+        var MathJaxExtension = MediumEditor.extensions.button.extend({
+          name: 'mathjax',
+          aria: 'Math Latex support',
+          contentDefault: 'Math',
           init: function() {
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
-            this.button.innerHTML = '<b title="decrease text size">-</b>';
+            this.button.innerHTML = '<b title="Math Latex">&#8721;</b>';
             this.on(this.button, 'click', this.handleClick.bind(this));
+            var self = this
+            var editor_element = this.base.elements[0]
+            $timeout(function() {
+              MathJaxCleanUp(editor_element)
+              MathJax.Hub.Queue(["Rerender", MathJax.Hub, editor_element,function(){
+                disableMathEdit(editor_element)
+                self.setActive()
+              }])
+            })
           },
           handleClick: function(event) {
+            var self = this
+            var editor_element = this.base.elements[0]
+            if(this.isActive()) {
+              removeTypeset(editor_element)
+              self.setInactive()
+            } else {
+              MathJax.Hub.Queue(["Typeset", MathJax.Hub, editor_element,function(){
+                disableMathEdit(editor_element)
+                self.setActive()
+              }])
+            }
             event.preventDefault();
             event.stopPropagation();
-            var fontSize = this.document.queryCommandValue('fontSize') + '';
-            if(fontSize > 1)
-              this.execAction('fontSize', { value: parseInt(fontSize)-1 } || 3);
-          }
+            this.base.trigger("editableInput",{},editor_element)
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+            if(MathJax.Hub.getAllJax(this.base.elements[0]).length == 0) {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+            }
+          },
+          setActive: function() {
+            if(MathJax.Hub.getAllJax(this.base.elements[0]).length > 0) {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+            }
+          },
         })
+
+        function removeTypeset(elem) {
+          var HTML = MathJax.HTML,
+            jax = MathJax.Hub.getAllJax();
+          for(var i = 0, m = jax.length; i < m; i++) {
+            var script = jax[i].SourceElement()
+            console.log();
+            var splitter = (script.type.indexOf("mode=display") == -1)? "$" : "$$"
+             var tex = splitter + jax[i].originalText + splitter
+            jax[i].Remove();
+            var preview = script.previousSibling;
+            var parent = script.parentNode
+            var span = HTML.Element("span", { className: "mathjax_original" }, [tex]);
+            parent.insertBefore(span, preview);
+            if(preview && preview.className === "MathJax_Preview")
+              parent.removeChild(preview);
+            parent.removeChild(script);
+            $(span).replaceWith(function() {
+              return $(this).text()
+            });
+          }
+        }
+
+        function disableMathEdit(elem) {
+          var jax = MathJax.Hub.getAllJax(elem);
+          console.log(jax);
+          for(var i = 0; i < jax.length; i++) {
+            var el = $("<span contenteditable='false'></span>").css({ width: "100%", height: "100%", background: "rgba(0, 0, 0, 0)", position: "absolute" })
+            $("#" + jax[i].inputID + "-Frame").css("outline", "none").prepend(el)
+          }
+        }
+
+        function MathJaxCleanUp(elem) {
+          $(elem).find("span[class*=MathJax]").remove()
+        }
+
         //////////////////////////////////////////////////////////////////////////////
 
         $scope.medium_editor_options = {
           'toolbar': {
             'buttons': ["bold", "italic", "underline", "strikethrough", "subscript", "superscript",
-            {name: 'anchor',contentDefault:"<i class='fi-link size-18'></i>"},
-            "anchor",
-            {name: 'image',contentDefault:"<i class='fi-photo size-18'></i>"},
-            "quote","increaseFontSize","decreaseFontSize", "colorPicker", "pre",
-            {name: 'orderedlist',contentDefault:"<i class='fi-list-number size-24' style='line-height:0'></i>"},
-             {name: 'unorderedlist',contentDefault:"<i class='fi-list-bullet size-24' style='line-height:0'></i>"},
-             "justifyLeft", "justifyCenter", "justifyRight",
-             {name: 'removeFormat',contentDefault:"<b>clear</b>"},
-             ]
+              { name: 'anchor', contentDefault: "<i class='fi-link size-18'></i>" },
+              "anchor",
+              { name: 'image', contentDefault: "<i class='fi-photo size-18'></i>" },
+              "quote", "increaseFontSize", "decreaseFontSize", "colorPicker", "pre",
+              { name: 'orderedlist', contentDefault: "<i class='fi-list-number size-24' style='line-height:0'></i>" },
+              { name: 'unorderedlist', contentDefault: "<i class='fi-list-bullet size-24' style='line-height:0'></i>" },
+              "justifyLeft", "justifyCenter", "justifyRight",
+              "mathjax",
+              { name: 'removeFormat', contentDefault: "<b>clear</b>" },
+            ]
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
-          extensions: {
+          'extensions': {
             'colorPicker': pickerExtension,
-            'increaseFontSize':new FontSizeIncreseExtension(),
-            'decreaseFontSize':new FontSizeDecreaseExtension()
+            'increaseFontSize': new FontSizeIncreseExtension(),
+            'decreaseFontSize': new FontSizeDecreaseExtension(),
+            'mathjax': new MathJaxExtension()
           },
-          disableReturn:false
+          'disableReturn': false
         }
 
       }]
     };
-  })
+  }])

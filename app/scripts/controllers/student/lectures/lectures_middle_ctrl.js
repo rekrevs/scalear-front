@@ -661,6 +661,11 @@ angular.module('scalearAngularApp')
           if(!($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')))
             if($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
               middle_msg = 'lectures.multiple_correct'
+          if($scope.selected_quiz.quiz_type == 'html' && $scope.selected_quiz.question_type.toUpperCase() == 'DRAG')
+          {
+            for(var el in data.explanation)
+              $scope.explanation[el] = data.explanation[el];
+          }
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           showNotification(verdict, sub_message, middle_msg)
 

@@ -13,13 +13,13 @@ angular.module('scalearAngularApp')
   		capitalize: function(s){
     		return s[0].toUpperCase() + s.slice(1);
 		},
-   		expandDragAnswers:function(id, answers, type, question_id){
+   		expandDragAnswers:function(id, answers, type, question_id,explanations){
 			var all_answers=[];
 			if(!(answers instanceof Array)){
 				answers=[answers];
 			}			
 			for(var answer in answers){
-				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id);
+				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id,explanations[answer]);
 				if(answer==0)
 					new_ans.id=id;
 				all_answers.push(new_ans);
@@ -28,13 +28,18 @@ angular.module('scalearAngularApp')
 		},
  		mergeDragAnswers:function(answers, type, question_id){
 			var all_answers=[]
+			var all_explanation=[]
 			answers.forEach(function(elem){
-				if(type=="quiz")
+				if(type=="quiz"){
 					all_answers.push(elem.content)
-				else
+					all_explanation = ""
+				}
+				else{
 					all_answers.push(elem.answer)
+					all_explanation.push(elem.explanation)
+				}
 			});
-			return x.newAnswer(all_answers,"","","","",type, question_id);
+			return x.newAnswer(all_answers,"","","","",type, question_id,all_explanation);
 		},
 		mergeDragPos:function(answers){
 			var all_pos=[]
@@ -43,12 +48,12 @@ angular.module('scalearAngularApp')
 			});
 			return all_pos
 		},	
-		newAnswer: function(ans, h, w,l, t, type, question_id){
+		newAnswer: function(ans, h, w,l, t, type, question_id,explanation){
 			if(type!="quiz"){
 				var y={
 					answer: ans || "",
 					correct:false,
-					explanation:"",
+					explanation: explanation|| "",
 					online_quiz_id:question_id,
 					height:h || 0,
 					width:w  || 0,

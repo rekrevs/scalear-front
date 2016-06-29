@@ -315,7 +315,7 @@ angular.module('scalearAngularApp')
             if (!data.answers.length)
               $scope.addHtmlAnswer()
             else
-              $scope.selected_quiz.answers = CourseEditor.expandDragAnswers(data.answers[0].id, data.answers[0].answer, "lecture", $scope.selected_quiz.id)
+              $scope.selected_quiz.answers = CourseEditor.expandDragAnswers(data.answers[0].id, data.answers[0].answer, "lecture", $scope.selected_quiz.id,data.answers[0].explanation)
           } else {
             $scope.selected_quiz.answers = data.answers
             if (!$scope.selected_quiz.answers.length)

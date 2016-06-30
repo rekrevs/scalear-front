@@ -179,7 +179,7 @@ angular.module('scalearAngularApp')
             jax = MathJax.Hub.getAllJax();
           for(var i = 0, m = jax.length; i < m; i++) {
             var script = jax[i].SourceElement()
-            console.log();
+
             var splitter = (script.type.indexOf("mode=display") == -1)? "$" : "$$"
              var tex = splitter + jax[i].originalText + splitter
             jax[i].Remove();
@@ -198,7 +198,7 @@ angular.module('scalearAngularApp')
 
         function disableMathEdit(elem) {
           var jax = MathJax.Hub.getAllJax(elem);
-          console.log(jax);
+
           for(var i = 0; i < jax.length; i++) {
             var el = $("<span contenteditable='false'></span>").css({ width: "100%", height: "100%", background: "rgba(0, 0, 0, 0)", position: "absolute" })
             $("#" + jax[i].inputID + "-Frame").css("outline", "none").prepend(el)

@@ -28,7 +28,14 @@
             <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
                 <input class="quiz_required" type="checkbox" ng-model="selected_quiz.graded" style="height: 30px;margin-bottom:20px;" >
             </div>
+        </div>    
+        <div ng-show="inclass" class="row" style="text-align:left;margin-left:0;">
+            <div class="small-3 columns"><span translate>editor.details.display_text</span>:</div>
+            <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
+                <input class="quiz_display_text" type="checkbox" ng-model="selected_quiz.display_text" style="height: 30px;margin-bottom:20px;" >
+            </div>
         </div>
+        
         <!-- <div class="row" style="text-align:left;margin-left:0;">
         <div class="small-3 columns"><span translate>editor.end_time</span>:</div>
         <div class="small-3 left columns no-padding" style="margin-bottom: 10px;">

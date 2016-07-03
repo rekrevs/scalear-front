@@ -142,10 +142,10 @@ angular.module('scalearAngularApp')
 	}
 
 }]).directive('studentHtmlDrag',function(){
-	return {
-		restrict:'E',
-		replace:true,
-		templateUrl: '/views/student/lectures/html_drag.html',
+  return {
+    restrict:'E',
+    replace:true,
+    templateUrl: '/views/student/lectures/html_drag.html',
     link: function(scope){
 
       scope.$watch('explanation[quiz.id]', function(newval){
@@ -159,7 +159,7 @@ angular.module('scalearAngularApp')
           }
         }
       })
-	}
+  }
 }
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
   return{
@@ -374,7 +374,7 @@ angular.module('scalearAngularApp')
     restrict:'E',
     template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
     link:function(scope,elem){
-
+    
     }
   }
 }]).directive('studentTimeline', ['$timeout', 'ContentNavigator','TimelineFilter',function($timeout, ContentNavigator,TimelineFilter) {

@@ -40,6 +40,7 @@
 										</div>
 										<div ng-if="selected_quiz.quiz_type != 'html'">
 										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
+											<annotation text="selected_quiz.question" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="selected_quiz.display_text"/>
 										</div>
 										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;">
 											<b><span translate>global.note</span>:</b>

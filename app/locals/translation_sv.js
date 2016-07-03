@@ -515,6 +515,7 @@ var translation_sv={
         required:"@:global.required",
         in_order: "I ordning",
         retries: "försök",
+        display_text:"Display question over video(t)",
         student_link_quiz:"Student-länk till quiz"
     },
     popover:{

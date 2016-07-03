@@ -6,10 +6,12 @@ angular.module('scalearAngularApp')
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
   $scope.toggle_message = 'courses.information.button.remove_teacher'
+  $scope.formData = {};
   if($scope.course.disable_registration)
   {
-    $scope.disable_registration_checked = true
+    $scope.formData.disable_registration_checked = true
   }
+
   $scope.roles = [{value:3, text:'courses.information.professor'}, {value:4, text:'courses.information.ta'}];
   Page.setTitle('navigation.information')
   Page.startTour()
@@ -47,19 +49,28 @@ angular.module('scalearAngularApp')
     );
   }
 
-  $scope.enable_disable_registration = function(disable_registration_checked){
-    if (!disable_registration_checked) {
+  $scope.enable_disable_registration = function(){
+    if (!$scope.formData.disable_registration_checked) {
       $scope.course.disable_registration = null
       $scope.updateCourse("","disable_registration")
-
-    };
+    }
+    else{
+      if (!$scope.course.disable_registration) {
+        $scope.course.disable_registration = $scope.course.end_date   
+        $scope.updateCourse($scope.course.disable_registration,"disable_registration")        
+      };
+    }
   }
 
-	$scope.validateCourse = function(column,data,disableregistrationchecked) {
+	$scope.validateCourse = function(column,data) {
     var d = $q.defer();
     var course={}
     course[column]=data;
-    course["disable_registration_checked"]=disableregistrationchecked;
+    if($scope.formData.disable_registration_checked && !data){
+      $scope.formData.disable_registration_checked = false
+      $scope.course.disable_registration = null
+      $scope.updateCourse("","disable_registration")        
+    }
     Course.validateCourse(
       {course_id:$stateParams.course_id},
       course 

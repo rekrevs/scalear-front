@@ -172,7 +172,6 @@ angular.module('scalearAngularApp')
             date: "=",
             save: "&",
             validate: "&",
-            disableregistrationchecked: "=",
             column: "@"
         },
         link: function(scope, element) {

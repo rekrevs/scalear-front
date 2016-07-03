@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
         var d = new Date()
         modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
         modified_course.time_zone = modified_course.time_zone.name;
-        Course.create({ course: modified_course, "import": $scope.import_from? $scope.import_from.id : null ,"disable_registration_checked":($scope.disable_registration_checked)},
+        Course.create({ course: modified_course, "import": $scope.import_from? $scope.import_from.id : null },
           function(data) {
             $scope.submitting = false;
             $scope.submitted = false;

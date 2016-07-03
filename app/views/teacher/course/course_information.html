@@ -116,10 +116,10 @@
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
-                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input  type="checkbox" ng-change="enable_disable_registration(disable_registration_checked)" style="margin-left: 10px;" ng-model="disable_registration_checked" >
+                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input ng-model="formData.disable_registration_checked" type="checkbox" ng-change="enable_disable_registration()" style="margin-left: 10px;"  >
                  <div>
-                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" ng-hide="!disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" disableregistrationchecked = "disable_registration_checked"></details-date>
-                    <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
+                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" ng-hide="!formData.disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" ></details-date>
+                    <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && formData.disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
                 </div>
 
                 <!-- <div>

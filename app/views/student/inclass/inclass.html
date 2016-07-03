@@ -82,7 +82,7 @@ ul.connected_blocks {
 		</div>
 		<span ng-hide="quiz.done">
 			<div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="self_note" /></div>
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand no-margin" ng-click="checkAnswer(quiz, self_note)">Vote!</button></div>
 		</span>
 		<span ng-show="quiz.done && inclass_status==2 ">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -108,7 +108,7 @@ ul.connected_blocks {
 		</div>
 		<span ng-hide="group_quiz.done">
 			<div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="group_note" /></div>
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)">Vote!</button></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand success no-margin" ng-click="checkAnswer(group_quiz, group_note)">Vote!</button></div>
 		</span>
 		<span ng-show="group_quiz.done && inclass_status==3">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -194,7 +194,7 @@ ul.connected_blocks {
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-            <button class="vote_btn button expand no-margin" ng-click="sendAnswers(quiz, note.self)"><span translate>button.vote</span>!</button>
+            <button class="vote_btn button expand no-margin" ng-click="checkAnswer(quiz, note.self)"><span translate>button.vote</span>!</button>
           </div>
         </div>
       </span>
@@ -254,7 +254,7 @@ ul.connected_blocks {
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-            <button class="vote_btn button expand success no-margin" ng-click="sendAnswers(group_quiz, note.group)" >Vote!</button>
+            <button class="vote_btn button expand success no-margin" ng-click="checkAnswer(group_quiz, note.group)" >Vote!</button>
           </div>
         </div>
       </span>

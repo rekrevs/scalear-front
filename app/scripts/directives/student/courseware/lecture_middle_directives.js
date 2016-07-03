@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
-							"<label style='font-size: 15px;padding-bottom: 10px;font-weight: bold;'>{{quiz.question}}:</label>"+
+							"<label style='font-size: 15px;padding-bottom: 10px;font-weight: bold;' ng-bind-html='quiz.question'>:</label>"+
 							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'lectures.answer' : 'lectures.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
+					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
 
@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
 				if(scope.explanation && scope.explanation[scope.answer.id]){
 					scope.mypop={
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
-						content:'<div>{{explanation[answer.id][1]}}</div>',
+						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
 						trigger:'hover'
 					}
@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
+					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 
 				"</ng-form>",
 		link: function(scope){
@@ -124,7 +124,7 @@ angular.module('scalearAngularApp')
 					$log.debug("exp changed!!!")
 					scope.mypop={
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
-						content:'<div>{{explanation[answer.id][1]}}</div>',
+						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
 						trigger:'hover'
 					}
@@ -205,7 +205,7 @@ angular.module('scalearAngularApp')
           }
           scope.explanation_pop={
             title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
-            content:"<div>{{explanation[data.id][1]}}</div>",
+            content:"<div ng-bind-html='explanation[data.id][1]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:(scope.data.xcoor > 0.5)? "left":"right"
@@ -342,7 +342,7 @@ angular.module('scalearAngularApp')
           var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
-            content:"<div>{{explanation[selected_id][1]}}</div>",
+            content:"<div ng-bind-html='explanation[selected_id][1]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:angular.element(elem.children()[1]).position().left > (ontop.width()/2)? "left":"right"
@@ -358,10 +358,7 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
-    link:function(scope,elem){
-
-    }
+    template: '<textarea placeholder="Write your answer here..." ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>'
   }
 }]).directive('studentTimeline', ['$timeout', 'ContentNavigator','TimelineFilter',function($timeout, ContentNavigator,TimelineFilter) {
   return {

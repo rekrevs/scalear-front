@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator','$rootScope','ErrorHandler','$interval', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator,$rootScope,ErrorHandler,$interval) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator','$rootScope','ErrorHandler','$interval','$location', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator,$rootScope,ErrorHandler,$interval,$location) {
 
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
   Page.startTour()
   ContentNavigator.close()
   $scope.timezones=scalear_utils.listTimezones()
+  $scope.add_course_url = $location.absUrl().split('courses')[0]+"courses/enroll_course?unique_identifier="+$scope.course.unique_identifier
 
   $scope.timezones.forEach(function(zone){
     if(zone.name == $scope.course.time_zone){

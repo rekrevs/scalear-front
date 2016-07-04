@@ -329,6 +329,11 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/course_list.html',
             controller: 'courseListCtrl'
         })
+        .state('student_enroll_course', {
+            url: '/courses/enroll_course?unique_identifier',
+            templateUrl: '/views/student/course_list/enroll_course.html',
+            controller: 'CoursesEnrollCtrl'
+        })
         .state('new_course', {
             url: '/courses/new',
             templateUrl: '/views/teacher/course_list/new_course.html',

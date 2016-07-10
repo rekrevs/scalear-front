@@ -508,8 +508,8 @@ angular.module('scalearAngularApp')
               $scope.selected_timeline_item.data.answers = resp.chart
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatInclassQuizChartData')
             })
-          } else
-            adjustQuizLayer()
+          }
+          adjustQuizLayer()
         }
 
         if(item.data.timer) {

@@ -131,18 +131,18 @@
                             <div ng-if="item.type=='discussion'">
                                 <b translate>inclass.discussion</b>:
                                 <div ng-if="item.data.length == 1">
-                                    <div style="padding: 0 5px;">{{item.data[0].post.content}}</div>
+                                    <div style="padding: 0 5px;" ng-bind-html="item.data[0].post.content"></div>
                                 </div>
                                 <ol ng-if="item.data.length > 1">
                                     <li ng-repeat="discussion in item.data|filter:{'post.hide':true}">
-                                        <div style="padding: 0 5px;">{{discussion.post.content}}</div>
+                                        <div style="padding: 0 5px;" ng-bind-html="discussion.post.content"></div>
                                     </li>
                                 </ol>
                             </div>
                             <div ng-if="item.type!='discussion'">
                                 <div style="padding: 0 5px;">
                                     <b ng-if="item.data.type !='marker'">{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
-                                    {{item.data.title}}
+                                    <span ng-bind-html="item.data.title"></span>
                                 </div>
                             </div>
                         </li>
@@ -151,7 +151,7 @@
                         <li ng-repeat="item in timeline['survey'][module_item.id]['filtered'].items|filter:{'data':'!!'}" ng-click="skipToItem(module_item, item, 'survey')">
                             <div style="padding: 0 5px;">
                                 <b><span translate>inclass.survey</span>:</b>
-                                {{item.data.title}}
+                                <span ng-bind-html="item.data.title"></span>
                             </div>
                         </li>
                     </div>

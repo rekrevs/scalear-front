@@ -751,7 +751,7 @@ angular.module('scalearAngularApp')
         tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
           "c": [
-            { "v": text },
+            { "v": scalear_utils.isHtml(text)?$(text).text() : text },
             { "v": correct },
             { "v": tooltip_text },
             { "v": incorrect },
@@ -809,7 +809,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": text },
+            { "v": scalear_utils.isHtml(text)?$(text).text() : text},
             { "v": self },
             { "v": tooltip_text },
             { "v": style },
@@ -831,9 +831,10 @@ angular.module('scalearAngularApp')
       ]
       formated_data.rows = []
       for(var ind in data) {
+
         var row = {
           "c": [
-            { "v": data[ind][1] },
+            { "v": scalear_utils.isHtml(data[ind][1])? $(data[ind][1]).text(): data[ind][1] },
             { "v": data[ind][0] }
           ]
         }

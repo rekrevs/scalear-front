@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
       screenfull.request();
       $scope.fullscreen = true;
       $scope.blurButtons();
-      $scope.timer = Math.ceil($scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question + $scope.inclass_quizzes_time);
+      $scope.timer = Math.ceil($scope.review_question_count * $scope.time_parameters.question + $scope.review_video_quiz_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question + $scope.inclass_quizzes_time + $scope.review_quiz_count * $scope.time_parameters.quiz);
       $scope.counter = $scope.timer > 0 ? 1 : 0;
       $scope.counting = true;
       $scope.timerCountdown()
@@ -78,11 +78,11 @@ angular.module('scalearAngularApp')
     }
 
     var init = function() {
-      $scope.timeline = { lecture: {}, survey: {} }
+      $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
       $scope.module = angular.copy($scope.course.selected_module)
       $scope.module.items = []
       getLectureCharts()
-      getSurveyCharts()
+      getQuizCharts()
     }
 
     var getLectureCharts = function() {
@@ -112,28 +112,29 @@ angular.module('scalearAngularApp')
           }
           adjustModuleItems($scope.lectures, $scope.course.selected_module.items, $scope.module.items)
           checkDisplayInclass()
-          console.log("timeline for inclass", $scope.timeline)
         },
         function() {}
       )
     }
 
-    var getSurveyCharts = function() {
-      Module.getSurveyChartsInclass({
+    var getQuizCharts = function() {
+      Module.getQuizChartsInclass({
           course_id: $stateParams.course_id,
           module_id: $stateParams.module_id
         },
         function(data) {
           $log.debug(data)
-          $scope.quizzes = angular.extend({}, data.surveys, $scope.quizzes)
+          $scope.quizzes = angular.extend({}, data.quizzes, $scope.quizzes)
+          $scope.review_quiz_count = data.review_quiz_count
           $scope.review_survey_count = data.review_survey_count
-          for(var survey_id in $scope.quizzes) {
-            $scope.timeline["survey"][survey_id] = { 'filtered': new Timeline() }
-            for(var q_idx in $scope.quizzes[survey_id].questions) {
-              var q_id = $scope.quizzes[survey_id].questions[q_idx].id
-              $scope.quizzes[survey_id].answers[q_id].id = q_id
-              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question" ? $scope.quizzes[survey_id].questions[q_idx].type : 'charts'
-              $scope.timeline['survey'][survey_id]['filtered'].add(0, type, $scope.quizzes[survey_id].answers[q_id])
+          for(var quiz_id in $scope.quizzes) {
+            var quiz_type = $scope.quizzes[quiz_id].type
+            $scope.timeline[quiz_type][quiz_id] = { 'filtered': new Timeline() }
+            for(var q_idx in $scope.quizzes[quiz_id].questions) {
+              var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
+              $scope.quizzes[quiz_id].answers[q_id].id = q_id
+              var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question" ? $scope.quizzes[quiz_id].questions[q_idx].type : 'charts'
+              $scope.timeline[quiz_type][quiz_id]['filtered'].add(0, type, $scope.quizzes[quiz_id].answers[q_id])
             }
           }
           adjustModuleItems($scope.quizzes, $scope.course.selected_module.items, $scope.module.items)
@@ -143,9 +144,8 @@ angular.module('scalearAngularApp')
       )
     }
 
-
     var checkDisplayInclass = function() {
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_quizzes_count || $scope.review_survey_count || $scope.inclass_quizzes_count)
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count)
     }
 
     var adjustModuleItems = function(obj, from, to) {
@@ -170,7 +170,7 @@ angular.module('scalearAngularApp')
             $scope.inclass_quizzes_time += num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion) / 60
             $scope.inclass_quizzes_count += num
           } else
-            $scope.review_quizzes_count += num
+            $scope.review_video_quiz_count += num
 
           checkDisplayInclass()
         })
@@ -231,19 +231,19 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion = function(survey, item) {
-      console.log(survey, item)
+    $scope.updateHideQuizQuestion = function(quiz, item) {
+      console.log(quiz, item)
 
       Quiz.showInclass({
           course_id: $stateParams.course_id,
-          quiz_id: survey.id
+          quiz_id: quiz.id
         }, {
           question: item.data.id,
           show: !item.data.show
         },
         function() {
           var num = (item.data.show ? 1 : -1)
-          $scope.review_survey_count += num * ((item.type == "charts") ? 1 : item.data.answers.length + 1)
+          $scope["review_"+quiz.quiz_type+"_count"] += num * ((item.type == "charts") ? 1 : item.data.answers.length + 1)
         }
       )
     }
@@ -600,8 +600,10 @@ angular.module('scalearAngularApp')
           }
           goToSubItem($scope.selected_timeline_item.sub_items[current_timeline_index])
         }
-        if($scope.selected_timeline_item.type == "charts")
-          $scope.chart = (type == 'lecture') ? $scope.createChart($scope.selected_timeline_item.data.answers, {}, 'formatLectureChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, { 'backgroundColor': 'white' }, 'formatSurveyChartData')
+        if($scope.selected_timeline_item.type == "charts"){
+          var options =  (type != "lecture")? { 'backgroundColor': 'white' } : {}
+          $scope.chart = (type == 'survey') ? $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatSurveyChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatLectureChartData')
+        }
       }
     }
 

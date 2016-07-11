@@ -148,9 +148,9 @@
                         </li>
                     </div>
                     <div ng-if="module_item.class_name=='quiz'">
-                        <li ng-repeat="item in timeline['survey'][module_item.id]['filtered'].items|filter:{'data':'!!'}" ng-click="skipToItem(module_item, item, 'survey')">
+                        <li ng-repeat="item in timeline[module_item.quiz_type][module_item.id]['filtered'].items|filter:{'data':'!!'}" ng-click="skipToItem(module_item, item, module_item.quiz_type)">
                             <div style="padding: 0 5px;">
-                                <b><span translate>inclass.survey</span>:</b>
+                                <b><span translate>{{'inclass.'+module_item.quiz_type}}</span>:</b>
                                 {{item.data.title}}
                             </div>
                         </li>

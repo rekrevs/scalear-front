@@ -63,7 +63,7 @@
       </div>
     </accordion-heading>
     <table class="table small-12 no-margin">
-      <tr>
+<!--       <tr>
         <td colspan="2">
           <center>
             <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
@@ -77,7 +77,31 @@
             </span>
           </center>
         </td>
-      </tr>
+      </tr> -->
+  <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
+    <td class="right-border small-4"><span translate>editor.details.in_order</span></td>
+    <td class="small-8">
+      <input type="checkbox" ng-model="lecture.required_module" ng-change="updateLecture()" class="no-margin">
+      <span class="size-12" translate>editor.details.use_module</span>
+      <br>
+        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input ng-disabled="lecture.required_module" type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
+          <span class="size-12" translate>editor.details.in_order</span>
+        </span>      
+    </td>
+  </tr>
+  <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
+    <td class="right-border small-4"><span translate>editor.details.required</span></td>
+    <td class="small-8">
+      <input type="checkbox" ng-model="lecture.graded_module" ng-change="updateLecture()" class="no-margin">
+      <span class="size-12" translate>editor.details.use_module</span>
+      <br>
+        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input ng-disabled="lecture.graded_module" type="checkbox" ng-model="lecture.graded"  ng-change='updateLecture()'>
+          <span class="size-12" translate>editor.details.required</span>
+        </span>      
+    </td>
+  </tr>
       <tr id="bg_fix" style="height:130px" ng-if="!lecture.inclass">
         <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
         <td class="small-8">

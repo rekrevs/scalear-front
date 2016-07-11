@@ -68,6 +68,7 @@ angular.module('scalearAngularApp')
       delete modified_module.total_links
       delete modified_module.due_date_enabled;
 
+
       Module.update({
           course_id: $stateParams.course_id,
           module_id: $scope.module.id
@@ -82,6 +83,12 @@ angular.module('scalearAngularApp')
             }
             if(item.due_date_module) {
               item.due_date = $scope.module.due_date;
+            }
+            if(item.required_module) {
+              item.required = $scope.module.required;
+            }
+            if(item.graded_module) {
+              item.graded = $scope.module.graded;
             }
           });
         },

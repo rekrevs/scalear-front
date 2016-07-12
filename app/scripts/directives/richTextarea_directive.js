@@ -128,6 +128,8 @@ angular.module('scalearAngularApp')
           init: function() {
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
+            this.button.classList.add('mathjax-btn');
+            this.button.title = "Use this button to turn on/off equation formatting. Write equations using LaTeX formatting surrounded by $$ (new line) or $ (in-line). For example: $$E=mc^2$$"
             this.button.innerHTML = '<b title="Math Latex">&#8721;</b>';
             this.on(this.button, 'click', this.handleClick.bind(this));
             var self = this
@@ -150,6 +152,7 @@ angular.module('scalearAngularApp')
               MathJax.Hub.Queue(["Typeset", MathJax.Hub, editor_element,function(){
                 disableMathEdit(editor_element)
                 self.setActive()
+                $(".mathjax-btn").tooltip((!self.isActive())? "show" : "destroy");
               }])
             }
             event.preventDefault();

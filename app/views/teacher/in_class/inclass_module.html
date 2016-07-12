@@ -37,6 +37,10 @@
                             </li>
                         </ul>
                     </li>
+                    <li ng-if="item.type.indexOf('confused') !=-1" class="li_inner color-blue" ng-class="{'color-red': item.type.indexOf('really') != -1}">
+                        <inner_title type="'inclass.'+item.type| translate" itemtitle="item.data.count" class="small-10 columns" style="margin-right:5px; float:none"/>
+                        <show_box value="item.data.show" action="updateHideConfused(lec.id, item.time, item.data.show)" text="global.visible" class="right"/>
+                    </li>
                     <li ng-if="item.type=='charts' || item.type=='inclass'" class="li_inner" ng-class="{'color-green': item.type=='charts', 'color-orange': item.type=='inclass'}">
                         <inner_title type="'inclass.'+item.data.type.toLowerCase() | translate" itemtitle="item.data.title" class="small-10 columns" style="margin-right:5px; float:none" />
                         <show_box value="item.data.show" action="updateHideQuiz(item)" text="global.visible" class="right" />

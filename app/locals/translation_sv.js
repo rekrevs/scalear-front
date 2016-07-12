@@ -391,6 +391,8 @@ var translation_sv={
     marker: "@:global.marker",
     primary_marker: "@:global.marker",
     free_text_question:"@:global.free_text_question",
+    confused:"@:global.confused",
+    really_confused:"@:global.really_confused",
     hide:"@:button.hide",
     show:"@:button.show",
     exit: "Avsluta",

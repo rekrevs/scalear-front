@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -108,6 +108,9 @@ angular.module('scalearAngularApp')
                       $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion)/60
                     }
                   }
+                  // else if(type=='confused' || type=='really_confused'){
+                  //   $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
+                  // }
                   $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])
                 }
            }
@@ -484,6 +487,19 @@ angular.module('scalearAngularApp')
         {
           question:question_id,
           show:value
+        }
+      )
+    }
+
+    $scope.updateHideConfused=function(lec_id, time, value){
+      Lecture.confusedShowInclass(
+        {
+          course_id:$stateParams.course_id,
+          lecture_id:lec_id
+        },
+        {
+          time: time,
+          hide: value
         }
       )
     }

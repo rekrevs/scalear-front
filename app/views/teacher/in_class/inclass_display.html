@@ -63,6 +63,17 @@
                     </div>
                 </div>
             </div>
+            <div ng-if="!hide_questions && selected_timeline_item.type.indexOf('confused') !=-1" class="question_block">
+                <div>
+                    <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
+                        <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
+                        <div style="padding-left:5px;">
+                            <span translate>{{'inclass.'+selected_timeline_item.type}}</span>:
+                            <span>{{selected_timeline_item.data.count}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'" class="question_block">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
@@ -139,7 +150,10 @@
                                     </li>
                                 </ol>
                             </div>
-                            <div ng-if="item.type!='discussion'">
+                            <div ng-if="item.type.indexOf('confused') !=-1" style="padding: 0 5px;">
+                                <b translate>{{'inclass.'+item.type}}</b>
+                            </div>
+                            <div ng-if="item.type!='discussion' && item.type.indexOf('confused') ==-1">
                                 <div style="padding: 0 5px;">
                                     <b ng-if="item.data.type !='marker'">{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
                                     {{item.data.title}}

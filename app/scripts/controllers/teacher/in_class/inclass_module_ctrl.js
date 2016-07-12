@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture) {
     $window.scrollTo(0, 0);
     Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
     $scope.inclass_player = {}
@@ -248,6 +248,19 @@ angular.module('scalearAngularApp')
       )
     }
 
+    $scope.updateHideConfused=function(lec_id, time, value){
+      Lecture.confusedShowInclass(
+        {
+          course_id:$stateParams.course_id,
+          lecture_id:lec_id
+        },
+        {
+          time: time,
+          hide: value
+        }
+      )
+    }
+
     var openModal = function() {
       angular.element("body").css("overflow", "hidden");
       angular.element("#main").css("overflow", "hidden");
@@ -478,6 +491,9 @@ angular.module('scalearAngularApp')
             // else
           if(current_item.type == "discussion")
             sub_items[item_index].data.inclass_title = "Question"
+          else if(current_item.type.indexOf('confused') !=-1){
+            sub_items[item_index].data.inclass_title = $translate("inclass."+current_item.type)
+          }
           else if(current_item.type != "primary_marker")
             sub_items[item_index].data.inclass_title = "Quiz"
         }

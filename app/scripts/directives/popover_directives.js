@@ -61,18 +61,10 @@ angular.module('scalearAngularApp')
 			          	}
 
 			          	if(options.instant_show){
-			          		if ("mouseover"==options.instant_show ){
-				          		$timeout(function(){
-				          			element.trigger("mouseover")	 
-				          		})
-				          	}
-			          		else{
-				          		$timeout(function(){
-				          			element.trigger("click")	 
-				          		})			     
-				          	}
-			          		
-			          		options.instant_show =false
+			          		$timeout(function(){
+			          			element.trigger(options.instant_show)	
+			          			options.instant_show =false 
+			          		})
 			          	}
 
 			          	$(document).on("click", function (e) {

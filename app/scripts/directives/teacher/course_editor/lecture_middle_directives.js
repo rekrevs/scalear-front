@@ -570,11 +570,9 @@ angular.module('scalearAngularApp')
       link: function(scope, element, iAttrs) {
 
         scope.isSurvey = function() {
-          if (scope.subtype)
-            return scope.subtype.toUpperCase() == "SURVEY"
-          else
-            return false
+          return scope.subtype && (scope.subtype.toLowerCase() == "survey" || scope.subtype.toLowerCase() == "html_survey")
         }
+
         scope.isFreeText = function() {
           return (scope.quiz.question_type == "Free Text Question")
         }

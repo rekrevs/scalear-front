@@ -210,7 +210,7 @@ angular.module('scalearAngularApp')
           $scope.quiz_mode = true
           $scope.check_answer_title = "lectures.button.check_answer"
 
-          if(quiz.quiz_type == 'html') {
+          if(quiz.quiz_type == 'html' || quiz.quiz_type == 'html_survey') {
             $log.debug("HTML quiz")
             $scope.quiz_layer.backgroundColor = "white"
             $scope.quiz_layer.overflowX = 'hidden'
@@ -226,7 +226,7 @@ angular.module('scalearAngularApp')
           if(quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
             $scope.studentAnswers[quiz.id] = "";
 
-          if(quiz.quiz_type == 'survey' || quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
+          if(quiz.quiz_type == 'survey' || quiz.question_type.toUpperCase() == "FREE TEXT QUESTION" || quiz.quiz_type == 'html_survey')
             $scope.check_answer_title = "lectures.button.submit"
 
           $scope.last_quiz = quiz
@@ -578,7 +578,7 @@ angular.module('scalearAngularApp')
 
 
     $scope.checkAnswer = function() {
-      $scope.selected_quiz.quiz_type == "html" ? sendHtmlAnswers() : sendAnswers()
+      ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") ? sendHtmlAnswers() : sendAnswers()
     }
 
     var sendHtmlAnswers = function() {
@@ -649,7 +649,7 @@ angular.module('scalearAngularApp')
 
     var displayResult = function(data) {
       if(data.msg != "Empty") { // he chose sthg
-        if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
+        if($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.is_quiz_solved = true;
           showNotification('lectures.messages.thank_you_answer')
         } else {

@@ -97,6 +97,31 @@
     </div>
 </div>
 
+<div class="small-12 medium-10 large-10 medium-centered large-centered columns">
+    <div class="row">
+        <div class="large-4 medium-12 small-12 with-small-margin-top columns">
+            <h4 class="color-grey text-bold" translate>content.questions.categories.text_survey.title</h4>
+            <div class="subheader size-14" translate>content.questions.categories.text_survey.desc</div>
+        </div>
+        <div class="large-2 medium-4 small-6 with-small-margin-top columns">
+            <a id='ocq_html_survey' type="button" class="th grey" ng-class="{thumbactive: question_type == 'ocq'}" ng-model="question_type" ng-click="addQuiz('html_survey','OCQ')" >
+                <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
+            </a>
+            <center><h6 translate>content.questions.types.ocq</h6></center>
+        </div>
+        <div class="large-2 medium-4 small-6 with-small-margin-top columns">
+            <a id='mcq_html_survey' type="button" class="th grey" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('html_survey','MCQ')" >
+                <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_symbol.png">
+            </a>
+            <center><h6 translate>content.questions.types.mcq</h6></center>
+        </div>
+        <div class="large-2 medium-0 small-0 with-small-margin-top columns">
+        </div>
+        <div class="large-2 medium-0 small-0 with-small-margin-top columns">
+        </div>
+    </div>
+</div>
+
 <div class="modal-footer clear-both">
     <button class="button small alert right" ng-click="cancel()" translate="button.cancel"></button>
 </div>

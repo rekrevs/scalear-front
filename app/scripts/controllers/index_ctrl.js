@@ -25,7 +25,8 @@ angular.module('scalearAngularApp')
             })
 
             var getCurrentCourses=function(){
-                $scope.current_courses=null
+                $scope.current_teacher_courses = null
+                $scope.current_student_courses = null
                 var unwatch = $rootScope.$watch('current_user', function(){
                     if($rootScope.current_user && $rootScope.current_user.roles){
                         Course.currentCourses({},

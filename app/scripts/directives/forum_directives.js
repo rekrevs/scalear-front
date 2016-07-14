@@ -1,14 +1,12 @@
 'use strict';
 angular.module('scalearAngularApp')
-.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User','$filter',function($log,$translate,Forum,$state, $rootScope, User,$filter){
+.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User','$filter','ValidateTime','VideoInformation',function($log,$translate,Forum,$state, $rootScope, User,$filter,ValidateTime,VideoInformation){
     return{
         restrict:"E",
         templateUrl:"/views/forum/question_block.html",
         scope:{
             item:'=',
-            pref: '=',
-            totalduration: '='
-
+            pref: '='
         },
         link:function(scope,element,attrs){
             scope.preview_as_student = $rootScope.preview_as_student
@@ -23,26 +21,6 @@ angular.module('scalearAngularApp')
                 scope.current_question = scope.item.data.content
             }
 
-            var validateTime = function(time, check_duration) {
-              var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-              if (int_regex.test(time)) {
-                var hhmm = time.split(':'); // split hours and minutes
-                var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-                var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-                var seconds = parseInt(hhmm[2]);
-                // check if hours or minutes are incorrect
-                var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
-                if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-                  return $translate('editor.incorrect_format_time')
-                } 
-                else if (check_duration && (scope.totalduration) <= calculated_duration || calculated_duration <= 0) {
-                  return $translate('editor.time_outside_range')
-                }
-              } else {
-                return $translate('editor.incorrect_format_time')
-              }
-            }
-    
             var arrayToSeconds = function(a) {
               return (+a[0]||0) * 60 * 60 + (+a[1]||0) * 60 + (+a[2]||0) // minutes are worth 60 seconds. Hours are worth 60 minutes.
             }
@@ -53,7 +31,7 @@ angular.module('scalearAngularApp')
                         $rootScope.current_user.discussion_pref = scope.privacy.value;                                
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
-                    scope.time_error = validateTime(item.time,true)
+                    scope.time_error = ValidateTime(item.time,true,VideoInformation.totalDuration)
                     if (!( scope.time_error)){
                         scope.ask_button_clicked = true    
                          item.time = arrayToSeconds(item.time.split(':'))
@@ -87,8 +65,14 @@ angular.module('scalearAngularApp')
             scope.updateQuestion= function(question){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                     
-                    scope.time_error = validateTime(question.time,true)
+                    scope.time_error = ValidateTime(question.time,true,VideoInformation.totalDuration)
+                    console.log("scope.time_error")
+                    console.log(scope.time_error)
+
                     if (!( scope.time_error)){
+                        console.log("scope.time_error")
+                        console.log(scope.time_error)
+
                         scope.ask_button_clicked = true    
                         question.time = arrayToSeconds(question.time.split(':'))
                         Forum.updatePost({post_id: question.data.id},
@@ -140,8 +124,7 @@ angular.module('scalearAngularApp')
         restrict:"A",
         scope:{
             seek:'&',
-            data:'&',
-            totalduration: '='
+            data:'&'
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {

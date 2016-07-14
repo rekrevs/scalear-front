@@ -5,7 +5,7 @@
         </p>
     </td>
     <td ng-if="item.data==null || item.data.isEdit" colspan="3" style="padding:0">
-        <question_block item="item" totalduration = "totalduration"/>
+        <question_block item="item"/>
     </td>
     <td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
         <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">

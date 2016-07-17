@@ -33,7 +33,7 @@ angular.module('scalearAngularApp', [
 ]).constant('headers', {
     withCredentials: true,
     'X-Requested-With': 'XMLHttpRequest'
-}).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour','Course',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course){
+}).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour','Course', 'URLInformation',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course, URLInformation){
 
     MathJax.Hub.Config({
         tex2jax: {
@@ -113,11 +113,11 @@ angular.module('scalearAngularApp', [
         $rootScope.unload = true;
     }
 
-    $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from){
+    $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams){
         if($tour.isActive()){
             $tour.end();
         }
-
+        URLInformation.history = $state.href(from, fromParams)
         UserSession.getRole().then(function(result){
             var s = 1;
             if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
@@ -128,7 +128,7 @@ angular.module('scalearAngularApp', [
                 s = 2;
             }
             else{
-                if(toParams.course_id){
+                if(toParams.course_id && $rootScope.current_user){
                     Course.getRole({course_id: toParams.course_id}, function(resp) {
                         $rootScope.course_role = resp.role
                         if((stateTeacher(to.name) && $rootScope.course_role === 2) || (stateStudent(to.name) && $rootScope.course_role === 1)) { // student trying to access teacher page  // teacher trying to access student page
@@ -199,6 +199,7 @@ angular.module('scalearAngularApp', [
                 $timeout(function() {
                     $rootScope.show_alert = "";
                 }, 4000);
+                URLInformation.redirect = $state.href(to, toParams)
             }
             if(s === 2){
                 $rootScope.show_alert = "error";
@@ -330,8 +331,8 @@ angular.module('scalearAngularApp', [
             controller: 'courseListCtrl'
         })
         .state('student_enroll_course', {
-            url: '/courses/enroll_course?unique_identifier',
-            templateUrl: '/views/student/course_list/enroll_course.html',
+            url: '/courses/enroll?id',
+            templateUrl: '/views/empty_view.html',
             controller: 'CoursesEnrollCtrl'
         })
         .state('new_course', {

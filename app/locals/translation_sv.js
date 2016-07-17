@@ -727,7 +727,7 @@ var translation_sv={
         ta: "Lärarassistent",
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
-        add_course_url: "Add Course URL(t)",
+        enrollment_url: "Enrollment URL(t)",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
         receive_due_date_email: "Receive email reminders of upcoming due dates.(t)",

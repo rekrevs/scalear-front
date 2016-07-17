@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate','$cookieStore',function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate,$cookieStore) { //server and also front end requests (requesting partials and so on..)
+.factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate','$cookieStore','$location','URLInformation',function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate,$cookieStore,$location,URLInformation) { //server and also front end requests (requesting partials and so on..)
     return {
         // optional method
         'request': function(config) {
@@ -107,7 +107,7 @@ angular.module('scalearAngularApp')
                     $rootScope.stop = undefined;
                 }
                 $rootScope.show_alert = "error";
-                ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+                ErrorHandler.showFMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
                 $rootScope.stop = $interval(function() {
                     $rootScope.show_alert = "";
                 }, 4000, 1);
@@ -135,9 +135,8 @@ angular.module('scalearAngularApp')
             }
 
             if (rejection.status == 401 && rejection.config.url.search(re) != -1) {
-
-                var $state = $injector.get('$state');
-                $state.go("login")
+                URLInformation.redirect = URLInformation.history
+                var $state = $injector.get('$state');                
                 if($cookieStore.get('preview_as_student')){
                     $log.debug("preview_as_student")
                   $cookieStore.remove('preview_as_student')
@@ -157,7 +156,7 @@ angular.module('scalearAngularApp')
                 $rootScope.stop = $interval(function() {
                     $rootScope.show_alert = "";
                 }, 4000, 1);
-
+                $state.go("login")
 
             }
             var re = new RegExp("^" + scalear_api.host)

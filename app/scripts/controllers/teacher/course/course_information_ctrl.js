@@ -11,15 +11,15 @@ angular.module('scalearAngularApp')
   Page.startTour()
   ContentNavigator.close()
   $scope.timezones=scalear_utils.listTimezones()
-  $scope.add_course_url = $location.absUrl().split('courses')[0]+"courses/enroll_course?unique_identifier="+$scope.course.unique_identifier
+  $scope.enrollment_url = $location.absUrl().split('courses')[0]+"courses/enroll?id="+$scope.course.unique_identifier
 
   $scope.timezones.forEach(function(zone){
     if(zone.name == $scope.course.time_zone){
       $scope.course.time_zone = zone
       return
     }
-  })  
-
+  }) 
+ 
   $scope.updateCourse = function(data,type){
     if(data && data instanceof Date){ 
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());

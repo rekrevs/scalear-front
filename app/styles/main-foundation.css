@@ -2638,3 +2638,16 @@ body.ngdialog-open { overflow: initial !important; }
 .editable-wrap.editable-textarea{
   width:100%;
 }
+
+.medium-editor-button-active{
+  color: yellow !important;
+}
+
+.medium-editor-p{
+    margin-bottom: 0;
+    font-family: inherit;
+    font-weight: normal;
+    font-size: inherit;
+    line-height: inherit;
+    text-rendering: optimizeLegibility;
+}

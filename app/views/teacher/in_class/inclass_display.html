@@ -41,7 +41,7 @@
             </div>
             <div ng-if="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')" class="question_block">
                 <div class="quiz" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                    <div style="padding-left:5px;">{{selected_timeline_item.data.title}}</div>
+                    <div style="padding-left:5px;" ng-bind-html="selected_timeline_item.data.title"></div>
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
@@ -55,9 +55,9 @@
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
-                            <span>{{question.post.content}}</span>
+                            <span ng-bind-html="question.post.content"></span>
                             <span class="color-dark-grey" ng-repeat="comment in question.post.comments" ng-show="comment.comment.hide"><br />
-                                <i style="padding-left:15px">{{comment.comment.content}}</i>
+                                <i style="padding-left:15px" ng-bind-html="comment.comment.content"></i>
                             </span>
                         </div>
                     </div>
@@ -79,10 +79,10 @@
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
                         <div style="padding-left:5px;">
-                            <span>{{selected_timeline_item.data.title}}</span>
+                            <span ng-bind-html="selected_timeline_item.data.title"></span>
                             <span class="color-dark-grey" ng-repeat="answer in selected_timeline_item.data.answers" ng-show="answer.hide">
                                 <br />
-                                <i style="padding-left:5px">{{answer.online_answer}}</i>
+                                <i style="padding-left:5px" ng-bind-html="answer.online_answer"></i>
                             </span>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div style="padding-left:5px;">
-                            <span>{{selected_timeline_item.data.title}}</span>
+                            <span ng-bind-html="selected_timeline_item.data.title"></span>
                         </div>
                     </div>
                 </div>
@@ -100,16 +100,16 @@
         </div>
         <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow: auto;">
             <div style="background:white;">
-                <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;">{{selected_timeline_item.data.title}}</div>
+                <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;" ng-bind-html="selected_timeline_item.data.title"></div>
                 <div ng-if="selected_timeline_item.type == 'charts'">
                     <div google-chart chart="chart"></div>
                 </div>
                 <div ng-if="selected_timeline_item.type == 'Free Text Question'" style="padding-left:30px">
                     <ul style="padding:5px;color:black;font-weight:normal">
                         <li ng-repeat="question in selected_timeline_item.data.answers" style="list-style: disc;">
-                            <p style="font-size:20px; margin:0">{{question.answer}}</p>
+                            <p style="font-size:20px; margin:0" ng-bind-html="question.answer"></p>
                             <i ng-show="question.response" style="padding-left: 30px;
-                            color:steelblue;font-size:20px">{{question.response}}</i>
+                            color:steelblue;font-size:20px" ng-bind-html="question.response"></i>
                         </li>
                     </ul>
                 </div>
@@ -142,11 +142,11 @@
                             <div ng-if="item.type=='discussion'">
                                 <b translate>inclass.discussion</b>:
                                 <div ng-if="item.data.length == 1">
-                                    <div style="padding: 0 5px;">{{item.data[0].post.content}}</div>
+                                    <div style="padding: 0 5px;" ng-bind-html="item.data[0].post.content"></div>
                                 </div>
                                 <ol ng-if="item.data.length > 1">
                                     <li ng-repeat="discussion in item.data|filter:{'post.hide':true}">
-                                        <div style="padding: 0 5px;">{{discussion.post.content}}</div>
+                                        <div style="padding: 0 5px;" ng-bind-html="discussion.post.content"></div>
                                     </li>
                                 </ol>
                             </div>
@@ -156,7 +156,7 @@
                             <div ng-if="item.type!='discussion' && item.type.indexOf('confused') ==-1">
                                 <div style="padding: 0 5px;">
                                     <b ng-if="item.data.type !='marker'">{{'inclass.'+item.data.type.toLowerCase() | translate}}:</b>
-                                    {{item.data.title}}
+                                    <span ng-bind-html="item.data.title"></span>
                                 </div>
                             </div>
                         </li>
@@ -165,7 +165,9 @@
                         <li ng-repeat="item in timeline[module_item.quiz_type][module_item.id]['filtered'].items|filter:{'data':'!!'}" ng-click="skipToItem(module_item, item, module_item.quiz_type)">
                             <div style="padding: 0 5px;">
                                 <b><span translate>{{'inclass.'+module_item.quiz_type}}</span>:</b>
-                                {{item.data.title}}
+                                <span ng-bind-html="item.data.title"></span>
+                                <b><span translate>inclass.survey</span>:</b>
+                                <span ng-bind-html="item.data.title"></span>
                             </div>
                         </li>
                     </div>

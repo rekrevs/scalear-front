@@ -35,9 +35,9 @@ angular.module('scalearAngularApp', [
     'X-Requested-With': 'XMLHttpRequest'
 }).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour','Course',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course){
 
-    MathJax.Hub.Config({
+    MathJax && MathJax.Hub.Config({
         tex2jax: {
-            inlineMath: [['$','$'], ['\\(','\\)']]
+            inlineMath: [['$','$']]
         },
         showProcessingMessages: false,
         showMathMenu: false
@@ -210,10 +210,12 @@ angular.module('scalearAngularApp', [
         })
     });
 
-}]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider', 'scalear_api',function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider, scalear_api) {
+}]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider', 'scalear_api','$sceProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider, scalear_api, $sceProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
 
     $logProvider.debugEnabled(scalear_api.debug)
+
+    $sceProvider.enabled(false);
 
     $translateProvider
         .translations('en', translation_en)

@@ -54,7 +54,10 @@ ul.connected_blocks {
 }
 </style>
 <div class="student_inclass small-12 column disable_selection">
-	<h3 ng-if="inclass_status>=2"><b>Q.</b> {{quiz.question_title}}</h3>
+	<h3 ng-if="inclass_status>=2">
+    <b>Q.</b>
+    <span ng-bind-html="quiz.question_title"></span>
+  </h3>
   <h3 ng-if="inclass_status<2"><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3>
 </div>
 <div class="small-12 columns no-padding" style="margin-bottom: 10px;">
@@ -182,7 +185,7 @@ ul.connected_blocks {
           <div class="small-11 column" style="padding:0 5px">
             <div class='panel small-12 column choice' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
               <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-              <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+              <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
             </div>
           </div>
           </div>
@@ -209,7 +212,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-repeat="choice in quiz.answers" ng-show="choice.selected">
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -242,7 +245,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column choice' ng-repeat='choice in group_quiz.answers' ng-click="selectAnswer(choice,group_quiz)" ng-class="{'selected': choice.selected}">
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -269,7 +272,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -282,7 +285,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in group_quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -316,7 +319,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -329,7 +332,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in group_quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>

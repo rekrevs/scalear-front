@@ -56,8 +56,8 @@ angular.module('scalearAngularApp')
         color: "="
       },
       template: '<span class="inner_title" bindonce>' +
-        '<span style="cursor:pointer"><span ng-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: ' +
-        '<span ng-style=\'{"color":color, "fontWeight":"normal"}\' bo-text="itemtitle"></span>' +
+        '<span style="cursor:pointer"><span bo-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: ' +
+        '<span bo-style=\'{"color":color, "fontWeight":"normal"}\' bo-html="itemtitle"></span>' +
         '</span>' +
         '</span>'
     };

@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
     },
     parseDuration: function(DurationString) {
       var matches = DurationString.match(/^P([0-9]+Y|)?([0-9]+M|)?([0-9]+D|)?T?([0-9]+H|)?([0-9]+M|)?([0-9]+S|)?$/),
-      result = {}; 
+      result = {};
       if (matches) {
         result.year = parseInt(matches[1]) || 0;
         result.month = parseInt(matches[2]) || 0;
@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
         result.hour = parseInt(matches[4]) || 0;
         result.minute = parseInt(matches[5]) || 0;
         result.second = parseInt(matches[6]) || 0;
- 
+
         result.toString = function() {
           var string = '';
           if (this.year) string += this.year + ' Year' + (this.year == 1 ? '': 's') + ' ';
@@ -45,17 +45,17 @@ angular.module('scalearAngularApp')
           if (this.minute) string += this.minute + ' Minute' + (this.minute == 1 ? '': 's') + ' ';
           if (this.second) string += this.second + ' Second' + (this.second == 1 ? '': 's') + ' ';
           return string;
-        } 
+        }
         return result;
       } else {
         return false;
       }
     },
     hour12: function(hour){
-      var hours = hour%24; 
+      var hours = hour%24;
       var mid='AM';
       if(hours==0)
-        hours=12;    
+        hours=12;
       else if(hours>12){
         hours=hours%12;
         mid='PM';
@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
     },
     toObjectById:function(arr){ //convert array to objec with IDs as keys
       var obj={}
-      if(arr instanceof Array){      
+      if(arr instanceof Array){
         arr.forEach(function(item){
             obj[item.id] = item;
         });
@@ -83,6 +83,9 @@ angular.module('scalearAngularApp')
           return elem
       }
       return -1
+    },
+    isHtml:function(s){
+        return typeof s == "string" && /<[a-z][\s\S]*>/i.test(s)
     },
     capitalize: function(s){
       return s[0].toUpperCase() + s.slice(1);

@@ -103,7 +103,8 @@ angular.module('scalearAngularApp')
       scope: {
         time_quiz: '=timeQuiz',
         time_question: '=timeQuestion',
-        quiz_count: '=quizCount',
+        video_quiz_count: '=videoQuizCount',
+        quiz_count:'=quizCount',
         question_count: '=questionCount',
         survey_count: '=surveyCount',
         inclass_quiz_time: '=inclassQuizTime',
@@ -133,7 +134,7 @@ angular.module('scalearAngularApp')
         }
 
         var reviewEstimateCalculator = function() {
-          return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question + scope.survey_count * scope.time_question
+          return (scope.video_quiz_count * scope.time_quiz) + (scope.question_count * scope.time_question) + (scope.survey_count * scope.time_question) + (scope.quiz_count * scope.time_quiz)
         }
 
         var inclassEstimateCalculator = function() {
@@ -150,7 +151,7 @@ angular.module('scalearAngularApp')
             return 'black'
         }
 
-        scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count, survey_count, inclass_quiz_time]', function(newValues) {
+        scope.$watchCollection('[time_quiz, time_question, video_quiz_count, quiz_count, question_count, survey_count, inclass_quiz_time]', function(newValues) {
           scope.review_estimate = reviewEstimateCalculator()
           scope.inclass_estimate = inclassEstimateCalculator()
           scope.total_inclass_estimate = scope.review_estimate + scope.inclass_estimate

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -108,6 +108,9 @@ angular.module('scalearAngularApp')
                       $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion)/60
                     }
                   }
+                  // else if(type=='confused' || type=='really_confused'){
+                  //   $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
+                  // }
                   $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])
                 }
            }
@@ -143,18 +146,32 @@ angular.module('scalearAngularApp')
       function(resp){
         $log.debug(resp)
         var quizzes=resp.quizzes
+        $scope.review_quiz_count = resp.review_quiz_count
+        $scope.review_quiz_reply_count = {}
       	$scope.timeline['quiz'] ={}
 
         for(var quiz_id in quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
+          $scope.review_quiz_reply_count[quiz_id]={}
   	 			for(var q_index in quizzes[quiz_id].questions){
             var q_id = quizzes[quiz_id].questions[q_index].id
+            $scope.review_quiz_reply_count[quiz_id][q_id]=0
             var data = quizzes[quiz_id].charts[q_id] || quizzes[quiz_id].free_question[q_id]
             data.type = quizzes[quiz_id].questions[q_index].type
             data.id = q_id
             data.quiz_type='quiz'
+            data.show = quizzes[quiz_id].questions[q_index].show
             data.title=quizzes[quiz_id].questions[q_index].question
             var type = quizzes[quiz_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
+            if(type=="free_question"){
+              data.answers.forEach(function(answer){
+                if(!answer.hide)
+                  $scope.review_quiz_reply_count[quiz_id][q_id]++
+                answer.hide = !answer.hide
+              })
+            }
+            if(data.show)
+              $scope.review_quiz_count+=$scope.review_quiz_reply_count[quiz_id][q_id]
   	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
   	 		}
@@ -325,7 +342,7 @@ angular.module('scalearAngularApp')
         $scope.inclass_quizzes_count+= num
       }
       else
-        $scope.review_quizzes_count+= num
+        $scope.review_video_quiz_count+= num
 
         Module.hideQuiz({
           course_id: $stateParams.course_id,
@@ -389,24 +406,38 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideResponse = function(survey_id, item, answer){
-      $log.debug(survey_id)
+    $scope.updateHideResponse = function(quiz_id, item, answer, item_type){
+      $log.debug(quiz_id)
       $log.debug(item)
       $log.debug(answer)
-      if(!answer.hide){
-        $scope.review_survey_reply_count[survey_id][item.data.id]++
-        if(item.data.show)
-          $scope.review_survey_count++
+      if(item_type == "survey"){
+        if(!answer.hide){
+          $scope.review_survey_reply_count[quiz_id][item.data.id]++
+          if(item.data.show)
+            $scope.review_survey_count++
+        }
+        else{
+          $scope.review_survey_reply_count[quiz_id][item.data.id]--
+          if(item.data.show)
+            $scope.review_survey_count--
+        }
       }
       else{
-        $scope.review_survey_reply_count[survey_id][item.data.id]--
-        if(item.data.show)
-          $scope.review_survey_count--
+        if(!answer.hide){
+          $scope.review_quiz_reply_count[quiz_id][item.data.id]++
+          if(item.data.show)
+            $scope.review_quiz_count++
+        }
+        else{
+          $scope.review_quiz_reply_count[quiz_id][item.data.id]--
+          if(item.data.show)
+            $scope.review_quiz_count--
+        }
       }
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
-          quiz_id: survey_id
+          quiz_id: quiz_id
         },
         {
           hide:{
@@ -418,7 +449,7 @@ angular.module('scalearAngularApp')
           $log.debug(answer.hide)
           if(answer.hide && !item.data.show){
             item.data.show = true
-            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show, item.type)
+            $scope.updateHideQuizQuestion(quiz_id, item.data.id, item.data.show, item.type, item_type)
           }
         }
       )
@@ -439,21 +470,36 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion=function(survey_id,id, value, type, item){
-      $log.debug(item)
-      $log.debug(type)
-      if(value)
-        $scope.review_survey_count+= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]+1
+    $scope.updateHideQuizQuestion=function(quiz_id, question_id, value, question_type, item_type){
+      $log.debug(item_type, "this is it")
+      $log.debug(question_type)
+      var num_reply = (question_type == "charts")? 1 : $scope["review_"+item_type+"_reply_count"][quiz_id][question_id]+1
+      if(value) //item_type can be either 'survey' or 'quiz'
+        $scope["review_"+item_type+"_count"]+= num_reply
       else
-        $scope.review_survey_count-= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]+1
+        $scope["review_"+item_type+"_count"]-= num_reply
+
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
-          quiz_id:survey_id
+          quiz_id:quiz_id
         },
         {
-          question:id,
+          question:question_id,
           show:value
+        }
+      )
+    }
+
+    $scope.updateHideConfused=function(lec_id, time, value){
+      Lecture.confusedShowInclass(
+        {
+          course_id:$stateParams.course_id,
+          lecture_id:lec_id
+        },
+        {
+          time: time,
+          hide: value
         }
       )
     }
@@ -844,7 +890,7 @@ angular.module('scalearAngularApp')
           }
           else if($scope.selected_item.data.show != null){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
-            $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show, $scope.selected_item.type)
+            $scope.updateHideQuizQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show, $scope.selected_item.type, $scope.selected_item.data.quiz_type)
           }
   			}
         else if($scope.selected_item.type == "free_question"){
@@ -852,7 +898,7 @@ angular.module('scalearAngularApp')
             $log.debug($scope.inner_highlight_index)
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
-              $scope.updateHideSurveyQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show, $scope.selected_item.type)
+              $scope.updateHideQuizQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show, $scope.selected_item.type, $scope.selected_item.data.quiz_type)
             }
             else{
               var q_ind = $scope.inner_highlight_index

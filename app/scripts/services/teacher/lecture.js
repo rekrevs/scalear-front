@@ -32,7 +32,8 @@ angular.module('scalearAngularApp')
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
       "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers },
       "changeLectureStatus": {method:'POST', params:{action:'change_status_angular'},headers:headers},
-      "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers }
+      "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
+      "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
     });
 
   }])

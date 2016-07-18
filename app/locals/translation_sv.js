@@ -884,6 +884,10 @@ var translation_sv={
         on_video_survey:{
           title: "Video-enkät",
           desc: "Enkäter har inget rätt svar. Använd detta om undersöknings val syns i videon."
+        },
+        text_survey:{
+          title: "Text Survey (t)",
+          desc: "Text Surveys have no correct answer on a white background. Use this if the survey choices are not visible in the video. (t)"
         }
       },
       types:{

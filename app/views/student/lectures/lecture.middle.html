@@ -35,10 +35,10 @@
 											<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>error_message.slow.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
 											<loading size='big' show='true' style="position:relative;top:70px;" />
 										</div>
-										<div ng-if="selected_quiz.quiz_type == 'html'" >
+										<div ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'" >
 										 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
 										</div>
-										<div ng-if="selected_quiz.quiz_type != 'html'">
+										<div ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'">
 										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
 										</div>
 										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;">

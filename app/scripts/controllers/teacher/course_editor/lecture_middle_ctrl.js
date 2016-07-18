@@ -158,8 +158,6 @@ angular.module('scalearAngularApp')
             new_time += 2
           else if (quiz.time == parseInt(new_time))
             new_time += 1
-            // else if (quiz.time == parseInt(new_time - 1))
-            //   new_time += 1
         }
       })
       return new_time
@@ -195,11 +193,9 @@ angular.module('scalearAngularApp')
         if ($scope.lecture.inclass) {
           var offset = 5
           var caluclated_offset = (offset * duration) / 100
-          console.log("caluclated_offset", caluclated_offset);
 
           start_time = (start_time - caluclated_offset < 0) ? 0 : start_time - caluclated_offset
           end_time = (end_time + caluclated_offset > duration - 1) ? duration - 1 : end_time + caluclated_offset
-          console.log("start time", start_time);
         }
 
         $scope.quiz_loading = true;
@@ -215,7 +211,6 @@ angular.module('scalearAngularApp')
           },
           function(data) { //success
             $log.debug(data);
-            // $log.debug(data)
             data.quiz.inclass = $scope.lecture.inclass
             $scope.editing_mode = false
             $scope.showOnlineQuiz(data.quiz)
@@ -263,7 +258,7 @@ angular.module('scalearAngularApp')
         $scope.$parent.$parent.selected_quiz_id = quiz.id
         $scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-        if (quiz.quiz_type == "html") {
+        if (quiz.quiz_type == "html" || quiz.quiz_type == "html_survey") {
           getHTMLData()
           $log.debug("HTML quiz")
           $scope.double_click_msg = ""
@@ -321,8 +316,7 @@ angular.module('scalearAngularApp')
             if (!$scope.selected_quiz.answers.length)
               $scope.addHtmlAnswer()
           }
-        },
-        function() {}
+        }
       );
     }
 
@@ -453,7 +447,7 @@ angular.module('scalearAngularApp')
           else
             correct = $scope.selected_quiz.answers[element].correct || correct;
         }
-        if (!correct && $scope.selected_quiz.quiz_type != 'survey') {
+        if (!correct && ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey')) {
           $scope.alert.msg = "editor.messages.quiz_no_answer"
           return false
         }
@@ -462,7 +456,12 @@ angular.module('scalearAngularApp')
     };
 
     $scope.saveQuizBtn = function(options) {
-      if ((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && isFormValid())) && $scope.selected_quiz.answers.length) {
+      if ((
+            ($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') ||
+            (($scope.selected_quiz.quiz_type != 'html' || $scope.selected_quiz.quiz_type == 'html_survey') && isFormValid())
+          ) &&
+          $scope.selected_quiz.answers.length
+        ) {
         $scope.submitted = false;
         $scope.hide_alerts = true;
         var data

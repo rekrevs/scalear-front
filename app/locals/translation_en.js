@@ -884,6 +884,10 @@ var translation_en={
         on_video_survey:{
           title: "On-video Survey",
           desc: "Surveys have no correct answer. Use this if the survey choices are visible in the video."
+        },
+        text_survey:{
+          title: "Text Survey",
+          desc: "Text Surveys have no correct answer on a white background. Use this if the survey choices are not visible in the video."
         }
       },
       types:{

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     restrict: "E",
     template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid"
   };
-}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval', function($rootScope, $log, $timeout, $window, $cookieStore, $interval) {
+}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation) {
   return {
     transclude: true,
     restrict: 'E',
@@ -296,6 +296,7 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
+            VideoInformation.totalDuration =  scope.player.controls.getDuration()
           });
 
         player.on('playing',

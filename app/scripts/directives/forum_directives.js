@@ -1,6 +1,6 @@
 'use strict';
 angular.module('scalearAngularApp')
-.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User',function($log,$translate,Forum,$state, $rootScope, User){
+.directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User','$filter','ValidateTime','VideoInformation',function($log,$translate,Forum,$state, $rootScope, User,$filter,ValidateTime,VideoInformation){
     return{
         restrict:"E",
         templateUrl:"/views/forum/question_block.html",
@@ -12,12 +12,17 @@ angular.module('scalearAngularApp')
             scope.preview_as_student = $rootScope.preview_as_student
             scope.ask_button_clicked = false
             scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
+            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];  
+            scope.item.time = $filter('format','hh:mm:ss')(scope.item.time) 
             $('.text_block').focus();
 
             if(scope.item.data && scope.item.data.isEdit){
                 scope.privacy = (scope.item.data.privacy == 0)? scope.choices[0] : scope.choices[1]
                 scope.current_question = scope.item.data.content
+            }
+
+            var arrayToSeconds = function(a) {
+              return (+a[0]||0) * 60 * 60 + (+a[1]||0) * 60 + (+a[2]||0) // minutes are worth 60 seconds. Hours are worth 60 minutes.
             }
 
             scope.postQuestion=function(item){
@@ -26,27 +31,32 @@ angular.module('scalearAngularApp')
                         $rootScope.current_user.discussion_pref = scope.privacy.value;                                
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
-                    scope.ask_button_clicked = true
-                    Forum.createPost(
-                        {post: 
-                            {
-                                content: scope.current_question, 
-                                time:item.time, 
-                                lecture_id:$state.params.lecture_id, 
-                                privacy:scope.privacy.value
+                    scope.time_error = ValidateTime(item.time,true,VideoInformation.totalDuration)
+                    if (!( scope.time_error)){
+                        scope.ask_button_clicked = true    
+                         item.time = arrayToSeconds(item.time.split(':'))
+                         Forum.createPost(
+                            {post: 
+                                {
+                                    content: scope.current_question, 
+                                    time:item.time, 
+                                    lecture_id:$state.params.lecture_id, 
+                                    privacy:scope.privacy.value
+                                }
+                            }, 
+                            function(response){
+                                $log.debug("success");
+                                item.data= response.post
+                                scope.error_message=null
+                                scope.current_question = ''
+                                scope.$emit("discussion_updated")
+                            }, 
+                            function(){
+                                $log.debug("failure")
                             }
-                        }, 
-                        function(response){
-                            $log.debug("success");
-                            item.data= response.post
-                            scope.error_message=null
-                            scope.current_question = ''
-                            scope.$emit("discussion_updated")
-                        }, 
-                        function(){
-                            $log.debug("failure")
-                        }
-                    )
+                        )
+                    }
+                       
                 }
                 else
                     scope.$emit('remove_from_timeline', item)
@@ -54,20 +64,34 @@ angular.module('scalearAngularApp')
 
             scope.updateQuestion= function(question){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
-                    Forum.updatePost({post_id: question.id},
-                        {content: scope.current_question},                    
-                        function(){
-                            question.content = scope.current_question
-                            question.updated_at = new Date()
-                            question.edited = true
-                            question.isEdit = false
-                            scope.error_message=null
-                            scope.current_question = ''
-                        }
-                    )
+                    
+                    scope.time_error = ValidateTime(question.time,true,VideoInformation.totalDuration)
+                    console.log("scope.time_error")
+                    console.log(scope.time_error)
+
+                    if (!( scope.time_error)){
+                        console.log("scope.time_error")
+                        console.log(scope.time_error)
+
+                        scope.ask_button_clicked = true    
+                        question.time = arrayToSeconds(question.time.split(':'))
+                        Forum.updatePost({post_id: question.data.id},
+                            {content: scope.current_question,
+                            time:question.time 
+                            },                    
+                            function(){
+                                question.data.content = scope.current_question
+                                question.data.updated_at = new Date()
+                                question.data.edited = true
+                                question.data.isEdit = false
+                                scope.error_message=null
+                                scope.current_question = ''
+                            }
+                        )
+                    }
                 }
                 else
-                    question.isEdit = false
+                    question.data.isEdit = false
             }
 
             scope.cancelQuestion=function(question){

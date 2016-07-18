@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
       template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
     };
   })
-  .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate', function($timeout, $q, OnlineQuiz, $translate) {
+  .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate','ValidateTime', function($timeout, $q, OnlineQuiz, $translate,ValidateTime) {
     return {
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/quiz_edit_panel.html',
@@ -74,24 +74,24 @@ angular.module('scalearAngularApp')
           });
         }
 
-        var validateTime = function(time, check_duration) {
-          var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-          if (int_regex.test(time)) {
-            var hhmm = time.split(':'); // split hours and minutes
-            var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-            var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-            var seconds = parseInt(hhmm[2]);
-            // check if hours or minutes are incorrect
-            var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
-            if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-              return $translate('editor.incorrect_format_time')
-            } else if (check_duration && (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0) {
-              return $translate('editor.time_outside_range')
-            }
-          } else {
-            return $translate('editor.incorrect_format_time')
-          }
-        }
+        // var validateTime = function(time, check_duration) {
+        //   var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+        //   if (int_regex.test(time)) {
+        //     var hhmm = time.split(':'); // split hours and minutes
+        //     var hours = parseInt(hhmm[0]); // get hours and parse it to an int
+        //     var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
+        //     var seconds = parseInt(hhmm[2]);
+        //     // check if hours or minutes are incorrect
+        //     var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
+        //     if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
+        //       return $translate('editor.incorrect_format_time')
+        //     } else if (check_duration && (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0) {
+        //       return $translate('editor.time_outside_range')
+        //     }
+        //   } else {
+        //     return $translate('editor.incorrect_format_time')
+        //   }
+        // }
 
         var validateName = function(quiz) {
           var d = $q.defer();
@@ -122,10 +122,10 @@ angular.module('scalearAngularApp')
             scope.name_error = name_error
             if (!name_error) {
               if (quiz.inclass) {
-                scope.intro_timer_error = validateTime(quiz.inclass_session.intro_formatedTime)
-                scope.self_timer_error = validateTime(quiz.inclass_session.self_formatedTime)
-                scope.group_timer_error = validateTime(quiz.inclass_session.group_formatedTime)
-                scope.discussion_timer_error = validateTime(quiz.inclass_session.discussion_formatedTime)
+                scope.intro_timer_error = ValidateTime(quiz.inclass_session.intro_formatedTime,false,scope.lecture_player.controls.getDuration())
+                scope.self_timer_error = ValidateTime(quiz.inclass_session.self_formatedTime,false,scope.lecture_player.controls.getDuration())
+                scope.group_timer_error = ValidateTime(quiz.inclass_session.group_formatedTime,false,scope.lecture_player.controls.getDuration())
+                scope.discussion_timer_error = ValidateTime(quiz.inclass_session.discussion_formatedTime,false,scope.lecture_player.controls.getDuration())
                 if (!(scope.intro_timer_error || scope.self_timer_error || scope.group_timer_error || scope.discussion_timer_error)) {
                   quiz.inclass_session.intro = arrayToSeconds(quiz.inclass_session.intro_formatedTime.split(':'))
                   quiz.inclass_session.self = arrayToSeconds(quiz.inclass_session.self_formatedTime.split(':'))
@@ -134,7 +134,7 @@ angular.module('scalearAngularApp')
                   error = false
                 }
               } else {
-                scope.time_error = validateTime(quiz.formatedTime, true)
+                scope.time_error = ValidateTime(quiz.formatedTime, true,scope.lecture_player.controls.getDuration())
                 if (!scope.time_error) {
                   var fraction = quiz.time % 1
                   var new_time = arrayToSeconds(quiz.formatedTime.split(':'))

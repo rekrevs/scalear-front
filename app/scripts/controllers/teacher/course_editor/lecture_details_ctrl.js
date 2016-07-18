@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
             }
             if($scope.lecture.due_date)
                 $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
-            $scope.lecture.visible_to_student = $scope.visible($scope.lecture.appearance_time)
+            // $scope.lecture.visible_to_student = $scope.visible($scope.lecture.appearance_time)
 
             item_unwatch()
             var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){
@@ -34,21 +34,21 @@ angular.module('scalearAngularApp')
             getMarkerList()
         }
     })
-    
+
     // ---
-    
-    var init_lecture_group_settings= {video:    true,  // initially to open 'video' group, 
+
+    var init_lecture_group_settings= {video:    true,  // initially to open 'video' group,
                                       settings: false, // rest to be closed
-                                      quizzes:  false, 
+                                      quizzes:  false,
                                       markers:  false
                                      };
-        
+
     if(!$rootScope.lecture_details_groups){
        $rootScope.lecture_details_groups= init_lecture_group_settings;
       }
-   
+
     // ---
-        
+
     $scope.is_youtube = false
 
     $scope.validateLecture = function(column, data) {
@@ -75,7 +75,7 @@ angular.module('scalearAngularApp')
                         $log.debug(id)
                         // var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                         var url = "https://www.googleapis.com/youtube/v3/videos?id=" +
-                                  id + 
+                                  id +
                                   "&part=status&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk"
                         /*
                         $http.jsonp(url).success(function(data) {
@@ -92,8 +92,8 @@ angular.module('scalearAngularApp')
                             return d.promise
                         });
                         */
-                        
-                        $.getJSON(url, 
+
+                        $.getJSON(url,
                             function (data, status) {
                                 $log.debug({status: status, data: data});
                                 if(data.items.length > 0) {
@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
         delete modified_lecture.due_date_enabled
         delete modified_lecture.disable_module_due_controls
         delete modified_lecture.timeline
-        delete modified_lecture.visible_to_student
+        // delete modified_lecture.visible_to_student
 
         Lecture.update({
                 course_id: $scope.lecture.course_id,
@@ -172,7 +172,7 @@ angular.module('scalearAngularApp')
         var enabled = $scope.lecture.due_date_enabled
         var due_date = new Date($scope.lecture.due_date)
         var week = 7
-        var year = 0
+        var years = 0
         if(isDueDateDisabled($scope.lecture.due_date) && enabled)
             years =  -offset
         else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)
@@ -190,18 +190,17 @@ angular.module('scalearAngularApp')
         $scope.lecture.due_date_module = !$scope.lecture.disable_module_due_controls && $scope.lecture.due_date_enabled
     }
 
-    $scope.updateAppearanceDate=function(){
-        var offset = 200
-        var apperance = new Date($scope.lecture.appearance_time)
-        var week = 7
-        var year = 0
-        var visible = $scope.visible($scope.lecture.appearance_time)
-        year = visible? offset : -offset
-        apperance.setFullYear(apperance.getFullYear()+ year)
-        console.debug(apperance, visible)
-        $scope.lecture.appearance_time = apperance
-        $scope.lecture.visible_to_student = !visible
-    }
+    // $scope.updateAppearanceDate=function(){
+    //     var offset = 200
+    //     var apperance = new Date($scope.lecture.appearance_time)
+    //     var week = 7
+    //     var year = 0
+    //     var visible = $scope.visible($scope.lecture.appearance_time)
+    //     year = visible? offset : -offset
+    //     apperance.setFullYear(apperance.getFullYear()+ year)
+    //     $scope.lecture.appearance_time = apperance
+    //     $scope.lecture.visible_to_student = !visible
+    // }
 
     $scope.visible = function(appearance_time) {
         return new Date(appearance_time) <= new Date()

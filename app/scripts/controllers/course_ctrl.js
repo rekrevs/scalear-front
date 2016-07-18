@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
     $scope.$on('$destroy', function() {
       ContentNavigator.close()
       $scope.$parent.course = null
+      $rootScope.course_role = null
     });
 
 

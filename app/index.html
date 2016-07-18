@@ -63,7 +63,7 @@
         </header>
         <div id="main" role="main">
             <div class="header">
-                <div ng-show="!('**.course.**' | includedByState) && !('home' | includedByState) && current_user">
+                <div ng-if="(!('**.course.**' | includedByState) && !('home' | includedByState) && !!current_user)">
                     <user-navigation message="subheader_message" />
                 </div>
                 <div ng-if="course_role==1">

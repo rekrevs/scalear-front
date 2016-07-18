@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'scalear_utils', '$translate', '$filter', function($rootScope, $scope, Course, $state, $window, $log, Page, scalear_utils, $translate, $filter) {
+.controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'scalear_utils', '$translate', '$filter', function($rootScope, $scope, Course, $state, $window, $log, Page, scalear_utils, $translate, $filter) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.new_course')
     $rootScope.subheader_message = $translate("navigation.new_course")
@@ -17,7 +17,6 @@ angular.module('scalearAngularApp')
         $scope.import_from = null
       }
     );
-
     $scope.add_import_information = function() {
       var splitter_text = "[" + $translate("navigation.copied_from")
       var desc_temp = "",
@@ -49,7 +48,16 @@ angular.module('scalearAngularApp')
       $scope.add_import_information()
     }
 
+	$scope.enable_disable_registration = function(){
+		if (!$scope.disable_registration_checked) {
+			$scope.course.disable_registration = null
+		};
+	}
+
     $scope.createCourse = function() {
+
+    console.log($scope.form.$valid)
+    	
       if($scope.form.$valid) {
         var modified_course = angular.copy($scope.course)
         $scope.submitting = true;

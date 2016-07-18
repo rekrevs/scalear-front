@@ -788,6 +788,7 @@ var translation_en={
     },
     start_date: "Course Start Date",
     end_date: "Course End Date",
+    disable_registration: "Disable Registration After",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",

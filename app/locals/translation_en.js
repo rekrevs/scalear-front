@@ -517,6 +517,7 @@ var translation_en={
         required:"@:global.required",
         in_order: "In Order",
         retries: "Retries",
+        display_text:"Display question over video",
         student_link_quiz:"Student link to quiz"
     },
     popover:{

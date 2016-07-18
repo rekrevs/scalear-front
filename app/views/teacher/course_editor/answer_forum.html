@@ -11,7 +11,7 @@
 			    <div class="small-2 columns">
 			      <span class="prefix"><span translate>global.question</span>:</span>
 			    </div>
-			    <div class="small-8 left columns" ng-class="{'small-10':!isNormalQuiz()}" style="    margin-bottom: 1rem;">
+			    <div class="small-8 left columns" ng-class="{'small-10':!isNormalQuiz()}" style="    margin-bottom: 0.3rem;">
 			      <div><rich-textarea required name='qlabel' ng-model='quiz[column]'/></div>
 			      <small class='error' ng-show='submitted && qform.qlabel.$error.required'><span translate>error_message.required</span>!</small>
 			    </div>
@@ -23,7 +23,7 @@
 					      <span class="prefix"><span translate>editor.type</span>:</span>
 					    </div>
 					    <div class="small-10 columns">
-					    	<select ng-model='quiz.question_type' required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices size-14'></select>
+					    	<select ng-model='quiz.question_type' required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices size-14' style="margin-bottom:0.3rem"></select>
 					    </div>
 					</div>
 				    <div class="small-10 columns" ng-if='isFreeText() && !isSurvey()'>
@@ -40,7 +40,7 @@
 		  	</div>
 		  	<div class="row">
 		  		<div class="small-11 small-push-1 columns text-left">
-					<a id="add_answer" ng-if='!isFreeText()' class='button tiny add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>editor.button.add_answer</a>
+					<a id="add_answer" ng-if='!isFreeText()' class='no-margin-bottom with-tiny-margin-top button tiny add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>editor.button.add_answer</a>
 				</div>
 		  	</div>
   		</center>

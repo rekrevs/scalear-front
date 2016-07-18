@@ -797,7 +797,7 @@ angular.module('scalearAngularApp')
         "</div>" +
         "</ng-form>" +
         "</div>" +
-        "<hr style='margin: 10px 0;'/>"
+        "<hr style='margin: 0;'/>"
     }
 
   }).directive('htmlOcq', function() {

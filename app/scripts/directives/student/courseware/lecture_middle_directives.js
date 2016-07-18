@@ -167,7 +167,9 @@ angular.module('scalearAngularApp')
     template: "<ng-form name='aform'>"+
               "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
-              "</ng-form>"
+              "</ng-form>"+
+              "{{explanation[quiz.id]}}"
+
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
   return {
@@ -372,8 +374,25 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" pop-over="explanation_pop" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;" ></textarea>',
     link:function(scope,elem){
+      var setup=function(){
+        scope.explanation_pop={}
+        scope.explanation[scope.data.id] = null
+      }
+
+      scope.$watch('explanation[quiz.id]', function(newval){
+        if(scope.explanation  && scope.explanation[scope.quiz.id]){
+          scope.explanation_pop={
+            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
+            content:"<div>{{explanation[quiz.id]}}</div>",
+            html:true,
+            trigger:$rootScope.is_mobile? 'click' : 'hover',
+            placement:(scope.data.xcoor > 0.5)? "left":"right"
+          }
+        }
+      })
+      setup()
 
     }
   }

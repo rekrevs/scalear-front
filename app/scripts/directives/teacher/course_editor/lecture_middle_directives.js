@@ -268,8 +268,9 @@ angular.module('scalearAngularApp')
         quiz: "=",
         data: "=",
         list: '=',
+        
         save: "&",
-        remove: "&"
+      remove: "&",
       },
       replace: true,
       restrict: 'E',
@@ -474,7 +475,6 @@ angular.module('scalearAngularApp')
 
         scope.close = function() {
           scope.save()
-          console.log(element)
           angular.element(element.find('h6')).popover('hide')
         }
 
@@ -518,14 +518,16 @@ angular.module('scalearAngularApp')
     return {
       replace: true,
       restrict: 'E',
+      save: "&",
+      remove: "&",
+
       template: "<div>" +
         "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div>" +
-				"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' ng-bind-html='quiz.question'></h6>"+
-        "</div>" +
-        "</div>" +
+				"<h6 class='no-margin' pop-over='popover_options' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
+        "</div>"+
+        "</div>"+
         "</div>",
-
       link: function(scope, element, attrs) {
         scope.calculatePosition = function() {
           var ontop = angular.element('.ontop');
@@ -541,7 +543,42 @@ angular.module('scalearAngularApp')
           scope.data.height = main.height() / (ontop.height());
         }
 
-        console.log(scope.data)
+        // scope.close = function() {
+        //   scope.save()
+        //   console.log("close")
+        //   angular.element(element.children()[0]).popover('hide')
+        // }
+        scope.close = function() {
+          scope.save()
+          angular.element(element.find('h6')).popover('hide')
+        }
+
+        scope.delete = function() {
+          scope.remove()
+          // angular.element(element.children()[0]).popover('hide')
+        }
+
+        var template = "<form name='aform' >" +
+          "<label style='margin-top:10px'>" +
+          "<span translate>editor.explanation</span>" +
+          "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
+          "<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
+          "</label>" +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
+          "</form>"
+
+
+
+        scope.popover_options = {
+          content: template,
+          html: true,
+          placement: function() {
+            var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
+            return scope.data.ycoor < 0.3 ? "bottom" : placement
+          },
+          instant_show: !scope.data.id,
+          container: 'body'
+        }
 
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",
@@ -629,7 +666,12 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       template: "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
-        "<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>" +
+        "<div ng-switch-when='FREE TEXT QUESTION' >"+
+          "<div ng-switch on='quiz.match_type.toUpperCase()'>" +
+            "<div ng-switch-when='MATCH TEXT' ><html_freetextmatch ng-repeat='answer in quiz.answers' /></div>"+
+            "<div ng-switch-when='FREE TEXT' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
+          "</div>"+  
+        "</div>" +
         "<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>" +
         "<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>" +
         "<ul  ng-switch-when='DRAG' class='no-padding-top'>" +
@@ -679,23 +721,50 @@ angular.module('scalearAngularApp')
     };
   }]).directive('htmlFreetext', function() {
     return {
-      restrict: 'E',
+      restrict: 'E', 
       template: "<ng-form name='aform'>" +
-        "<div class='row'>" +
-        "<div class='small-10 columns'>" +
-        "<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />" +
-        "<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
+        "<div class ='row collapse' >" +
+          "<div class='small-2 columns' style='padding: 10px 0;'>" +
+            "<label class='text-left' translate>editor.explanation</label>" +
+          "</div>" +
+          "<div class='small-7 left columns no-padding'>" +
+            "<input class='no-margin' type='text' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>" +
+          "</div>" +
         "</div>" +
+
+        "</ng-form>"
+    }
+
+  }).directive('htmlFreetextmatch', function() {
+    return {
+      restrict: 'E', 
+      template: "<ng-form name='aform'>" +
+        "<div ng-if=quiz.match_type == 'Match Text'>"+
+        "<div class='row'>" +
+          "<div class='small-10 columns'>" +
+            "<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />" +
+            "<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
+          "</div>" +
         "</div>" +
         "<div class='text-left size-12'>" +
-        "<div><br/><span translate>editor.regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>" +
-        "<ul class='size-12'>" +
-        "<li>Waterloo -> <span translate>editor.regex.correct_if</span> 'Waterloo'</li>" +
-        "<li>/(Waterloo|waterloo)/ -> <span translate>editor.regex.correct_for</span> 'Waterloo' , 'waterloo'</li>" +
-        "<li>/[0-9]/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.any_integer</span></li>" +
-        "<li>/(10|14|29)/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.numbers</span></li>" +
-        "</ul>" +
+          "<div><br/><span translate>editor.regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>" +
+            "<ul class='size-12'>" +
+              "<li>Waterloo -> <span translate>editor.regex.correct_if</span> 'Waterloo'</li>" +
+              "<li>/(Waterloo|waterloo)/ -> <span translate>editor.regex.correct_for</span> 'Waterloo' , 'waterloo'</li>" +
+              "<li>/[0-9]/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.any_integer</span></li>" +
+              "<li>/(10|14|29)/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.numbers</span></li>" +
+            "</ul>" +
+          "</div>" +
         "</div>" +
+        "</div>"+
+        "<div class ='row collapse' >" +
+        "<div class='small-2 columns' style='padding: 10px 0;'>" +
+        "<label class='text-left' translate>editor.explanation</label>" +
+        "</div>" +
+        "<div class='small-7 left columns no-padding'>" +
+        "<input class='no-margin' type='text' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>" +
+        "</div>" +
+
         "</ng-form>"
     }
 

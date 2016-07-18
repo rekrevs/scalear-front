@@ -27,14 +27,16 @@
 					    </div>
 					</div>
 				    <div class="small-10 columns" ng-if='isFreeText() && !isSurvey()'>
-				    	<select ng-model='quiz.match_type' required  ng-options='obj.value as obj.text for obj in match_types' class='choices size-14'></select>
+					    	<select ng-model='quiz.match_type' required  ng-options='obj.value as obj.text for obj in match_types' class='choices size-14'></select>
+
 				    </div>
 				</div>
 		  	</div>
 		  	<div class="row">
-	  			<div class="small-10 small-push-1 columns" ng-if="(isFreeText() && quiz.match_type == 'Match Text')||!isFreeText()">
-					<htmlanswer />
-				</div>
+	  			<!-- <div class="small-10 small-push-1 columns" ng-if="(isFreeText() && quiz.match_type == 'Match Text')||!isFreeText()"> -->
+				<div class="small-10 small-push-1 columns" >
+					<htmlanswer />					
+				</div>			
 		  	</div>
 		  	<div class="row">
 		  		<div class="small-11 small-push-1 columns text-left">

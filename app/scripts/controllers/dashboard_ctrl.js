@@ -38,6 +38,7 @@ angular.module('scalearAngularApp')
 
     var getCalendar = function(year) {
       Dashboard.getDashboard({year:year}, function(data) {
+        $scope.key = "Calendar URL:  "+$location.absUrl()+"/dynamic_url?key="+data.key 
         $scope.uiConfig = {
           calendar: {
             header: {

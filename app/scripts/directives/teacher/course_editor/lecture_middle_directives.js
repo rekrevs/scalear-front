@@ -397,10 +397,13 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id,
+          // instant_show: !scope.data.id,
           container: 'body',
         }
-
+        if(!scope.data.id){
+            scope.popover_options.instant_show = 'click'
+          }
+        
         scope.$watch('quiz.answers', function() {
           scope.updateValues();
         }, true)

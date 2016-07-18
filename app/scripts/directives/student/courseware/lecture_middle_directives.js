@@ -226,6 +226,9 @@ angular.module('scalearAngularApp')
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:(scope.data.xcoor > 0.5)? "left":"right"
           }
+          if(scope.quiz.question_type =="OCQ"){
+            scope.explanation_pop.instant_show = "mouseover"
+          }
         }
       })
       setup()

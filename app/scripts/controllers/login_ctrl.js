@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout','URLInformation', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout,URLInformation ) {
 
   $scope.user={}
   Page.setTitle('navigation.login')
@@ -94,8 +94,12 @@ angular.module('scalearAngularApp')
       $rootScope.show_alert = "error";
       ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
     }
-    else
+    else if(URLInformation.redirect){
+       $window.location.href= URLInformation.redirect
+    }
+    else{
       $state.go("dashboard");
+    }
   }
 
   $scope.samlLogin=function(idp){

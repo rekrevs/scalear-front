@@ -51,6 +51,9 @@ angular.module('scalearAngularApp')
                         $log.debug(data)
                         $scope.quiz.appearance_time = data.quiz.appearance_time
                         $scope.quiz.due_date = data.quiz.due_date
+                        $scope.quiz.graded= data.quiz.graded
+                        $scope.quiz.required = data.quiz.required
+
                     }
                 );
             };

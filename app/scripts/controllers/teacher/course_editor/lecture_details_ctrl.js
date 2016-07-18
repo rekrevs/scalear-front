@@ -155,6 +155,9 @@ angular.module('scalearAngularApp')
                 $scope.lecture.appearance_time = data.lecture.appearance_time
                 // $scope.course.selected_module.total_time += data.lecture.duration
                 $scope.lecture.due_date = data.lecture.due_date
+                $scope.lecture.graded= data.lecture.graded
+                $scope.lecture.required = data.lecture.required
+
             },
             function() {
 

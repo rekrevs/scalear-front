@@ -87,6 +87,14 @@ angular.module('scalearAngularApp')
     isHtml:function(s){
         return typeof s == "string" && /<[a-z][\s\S]*>/i.test(s)
     },
+    getHtmlText:function(text){
+        if(this.isHtml(text)){
+            var val =  $(text)
+            val.find(".MathJax_Preview").remove()
+            return val.text()
+        }
+        return text
+    },
     capitalize: function(s){
       return s[0].toUpperCase() + s.slice(1);
     },

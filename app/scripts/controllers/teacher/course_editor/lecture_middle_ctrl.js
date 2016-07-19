@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time-0.1), function() {
         if(!$scope.lecture_player.controls.paused()){
           $timeout(function(){
-            console.log('from cue')
+
             $scope.lecture_player.controls.seek_and_pause(item_data.time);
             if(type == 'quiz'){
               $scope.showOnlineQuiz(item_data)
@@ -381,7 +381,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.deleteQuiz = function(quiz) {
-      console.log(quiz)
+
       var deferred = $q.defer();
       $scope.quiz_overlay = false
       OnlineQuiz.destroy({ online_quizzes_id: quiz.id }, {},
@@ -741,7 +741,7 @@ angular.module('scalearAngularApp')
       $scope.filtered_timeline_items[0].data.inclass_title = $translate('inclass.intro_stage')
       $scope.filtered_timeline_items[0].data.background = "lightgrey"
       $scope.filtered_timeline_items[0].data.color = "black"
-      console.log("done", $scope.filtered_timeline_items)
+
       $scope.goToInclassItem($scope.filtered_timeline_items[0])
     }
 

@@ -97,7 +97,7 @@
 								<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue"><pre>{{answer.response}}</pre></i>
 								<span ng-show="answer.response && !answer.show_feedback" ><a ng-click="deleteFeedback(answer)" class="button really-tiny alert" style="margin:0 5px" translate>button.delete</a></span>
 								<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'" style="margin-left: 1.25rem;margin-top: 5px">
-									<textarea ng-model="answer.temp_response"  style="width: 60%;height:80px" />
+									<div><rich-textarea ng-model="answer.temp_response"  style="width: 60%;height:80px" /></div>
 									<button ng-click="sendFeedback(answer);answer.show_feedback = false" style="margin:5px" class="send_feedback button tiny success" translate>progress.button.send_reply</button>
 								</div>
 							</li>
@@ -119,7 +119,7 @@
 					<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner color-blue" ng-class="{'color-red': item.type.indexOf('really') != -1}">
 						<div class="row">
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.'+item.type| translate" itemtitle="item.data.count" class="small-10 columns left"/>
-							<show_box value="item.data.show" action="updateHideConfused(lec.meta.id, item.time, item.data.show)" class="left"/>
+							<show_box value="item.data.show" action="updateHideConfused(lec.meta.id, item.time, item.data.show, item.type.indexOf('really') != -1)" class="left"/>
 						</div>
 					</li>
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral" >
@@ -144,7 +144,7 @@
 
 								 		<span  bo-text="discussion.post.screen_name"></span>:
 							 		</b>
-						 		 	<span class="disc_content" bo-text="discussion.post.content"></span>
+						 		 	<span class="disc_content" bo-html="discussion.post.content"></span>
 						 		 	<span bo-show="discussion.post.flags_count>0" style="float: right;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 										<img bo-src='discussion.post.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
 										<span class="disc_flags_count" bo-text="discussion.post.flags_count"></span>
@@ -165,7 +165,7 @@
 										</span>
 										<div>
 											<b><span class="comment_screen_name" bo-text="comment.comment.screen_name"></span>:</b>
-											<span class="comment_content" style="white-space: pre;" bo-text="comment.comment.content"></span>
+											<span class="comment_content" style="white-space: pre;" bo-html="comment.comment.content"></span>
 										 	<span bo-show="comment.comment.flags_count>0" style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 												<img bo-src='comment.comment.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
 												<span class="comment_flags_count" bo-text="comment.comment.flags_count"></span>
@@ -178,7 +178,7 @@
 									</li>
 								</ul>
 								<div class="feedback" ng-show="discussion.post.show_feedback" style="margin-left: 1.25rem;margin-top: 5px">
-									<textarea ng-model="discussion.post.temp_response" bo-attr bo-attr-placeholder="'discussion.write_comment' | translate"  style="width: 60%;height:80px;"></textarea>
+									<div><rich-textarea ng-model="discussion.post.temp_response" placeholder="{{'discussion.write_comment' | translate}}" style="width: 60%;height:80px;" /></div>
 									<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="send_comment button tiny success" style="margin: 5px;" translate>progress.button.send_reply</button>
 								</div>
 							</li>
@@ -195,7 +195,7 @@
 										<a ng-click="lec.filtered_user = answer.user_id;lec.filter_strict=true" tooltip="{{'progress.tooltip.see_related'|translate}}" class="button really-tiny secondary" style="margin:0 5px" translate>progress.related</a>
 									</span>
 								</span>
-								<div style="width:70%" bo-text="answer.online_answer"></div>
+								<div style="width:70%" bo-html="answer.online_answer"></div>
 							</li>
 						</ul>
 					</li>

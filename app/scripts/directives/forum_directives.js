@@ -12,8 +12,8 @@ angular.module('scalearAngularApp')
             scope.preview_as_student = $rootScope.preview_as_student
             scope.ask_button_clicked = false
             scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];  
-            scope.item.time = $filter('format','hh:mm:ss')(scope.item.time) 
+            scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];
+            scope.item.time = $filter('format','hh:mm:ss')(scope.item.time)
             $('.text_block').focus();
 
             if(scope.item.data && scope.item.data.isEdit){
@@ -28,35 +28,35 @@ angular.module('scalearAngularApp')
             scope.postQuestion=function(item){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                     if($rootScope.current_user.discussion_pref != scope.privacy.value){
-                        $rootScope.current_user.discussion_pref = scope.privacy.value;                                
+                        $rootScope.current_user.discussion_pref = scope.privacy.value;
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
                     scope.time_error = ValidateTime(item.time,true,VideoInformation.totalDuration)
                     if (!( scope.time_error)){
-                        scope.ask_button_clicked = true    
+                        scope.ask_button_clicked = true
                          item.time = arrayToSeconds(item.time.split(':'))
                          Forum.createPost(
-                            {post: 
+                            {post:
                                 {
-                                    content: scope.current_question, 
-                                    time:item.time, 
-                                    lecture_id:$state.params.lecture_id, 
+                                    content: scope.current_question,
+                                    time:item.time,
+                                    lecture_id:$state.params.lecture_id,
                                     privacy:scope.privacy.value
                                 }
-                            }, 
+                            },
                             function(response){
                                 $log.debug("success");
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
                                 scope.$emit("discussion_updated")
-                            }, 
+                            },
                             function(){
                                 $log.debug("failure")
                             }
                         )
                     }
-                       
+
                 }
                 else
                     scope.$emit('remove_from_timeline', item)
@@ -64,21 +64,21 @@ angular.module('scalearAngularApp')
 
             scope.updateQuestion= function(question){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
-                    
+
                     scope.time_error = ValidateTime(question.time,true,VideoInformation.totalDuration)
-                    console.log("scope.time_error")
-                    console.log(scope.time_error)
+
+
 
                     if (!( scope.time_error)){
-                        console.log("scope.time_error")
-                        console.log(scope.time_error)
 
-                        scope.ask_button_clicked = true    
+
+
+                        scope.ask_button_clicked = true
                         question.time = arrayToSeconds(question.time.split(':'))
                         Forum.updatePost({post_id: question.data.id},
                             {content: scope.current_question,
-                            time:question.time 
-                            },                    
+                            time:question.time
+                            },
                             function(){
                                 question.data.content = scope.current_question
                                 question.data.updated_at = new Date()
@@ -140,18 +140,18 @@ angular.module('scalearAngularApp')
             scope.public_text = $translate("discussion.public_post")
             scope.deleteDiscussion = function(discussion){
                 Forum.deletePost(
-                    {post_id: discussion.data.id}, 
+                    {post_id: discussion.data.id},
                     function(response){
                         scope.error_message = null
                         scope.$emit('remove_from_timeline', discussion)
-                    }, 
+                    },
                     function(){}
                 )
-            }            
+            }
 
             scope.flagPost = function(){
                 Forum.flagPost(
-                    {post_id: scope.item.data.id}, 
+                    {post_id: scope.item.data.id},
                     function(response){
                         scope.item.data.user_flag=1;
                         scope.item.data.flags_count++;
@@ -163,11 +163,11 @@ angular.module('scalearAngularApp')
             }
             scope.unflagPost = function(){
                 Forum.flagPost(
-                    {post_id: scope.item.data.id}, 
+                    {post_id: scope.item.data.id},
                     function(response){
                         scope.item.data.user_flag = 0;
                         scope.item.data.flags_count--;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -177,13 +177,13 @@ angular.module('scalearAngularApp')
             scope.upvotePost= function(){
                 Forum.votePost(
                     {
-                        vote: parseInt(scope.item.data.user_vote)+1, 
+                        vote: parseInt(scope.item.data.user_vote)+1,
                         post_id:scope.item.data.id
-                    }, 
+                    },
                     function(response){
                         scope.item.data.user_vote=1;
                         scope.item.data.votes_count++;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -193,13 +193,13 @@ angular.module('scalearAngularApp')
             scope.downvotePost = function(){
                 Forum.votePost(
                     {
-                        vote: parseInt(scope.item.data.user_vote)-1, 
+                        vote: parseInt(scope.item.data.user_vote)-1,
                         post_id:scope.item.data.id
-                    }, 
+                    },
                     function(response){
-                        scope.item.data.user_vote=0;    
+                        scope.item.data.user_vote=0;
                         scope.item.data.votes_count--;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -249,11 +249,11 @@ angular.module('scalearAngularApp')
             scope.preview_as_student = $rootScope.preview_as_student
             scope.flagComment = function(){
                 Forum.flagComment(
-                    {comment_flag:{comment_id: scope.item.comment.id}}, 
+                    {comment_flag:{comment_id: scope.item.comment.id}},
                     function(response){
                         scope.item.comment.user_flag=1;
                         scope.item.comment.flags_count++;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -261,11 +261,11 @@ angular.module('scalearAngularApp')
             }
             scope.unflagComment = function(){
                 Forum.flagComment(
-                    {comment_flag:{comment_id: scope.item.comment.id}}, 
+                    {comment_flag:{comment_id: scope.item.comment.id}},
                     function(response){
                         scope.item.comment.user_flag = 0;
                         scope.item.comment.flags_count--;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -274,11 +274,11 @@ angular.module('scalearAngularApp')
 
             scope.upvoteComment= function(){
                 Forum.voteComment(
-                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)+1, comment_id:scope.item.comment.id}}, 
+                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)+1, comment_id:scope.item.comment.id}},
                     function(response){
                         scope.item.comment.user_vote=1;
                         scope.item.comment.votes_count++;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -287,11 +287,11 @@ angular.module('scalearAngularApp')
 
             scope.downvoteComment= function(){
                 Forum.voteComment(
-                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)-1, comment_id:scope.item.comment.id}}, 
+                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)-1, comment_id:scope.item.comment.id}},
                     function(response){
                         scope.item.comment.user_vote=0;
                         scope.item.comment.votes_count--;
-                    }, 
+                    },
                     function(){
                         $log.debug("failure");
                     }
@@ -303,7 +303,7 @@ angular.module('scalearAngularApp')
 }]).directive('votingButton', ['$translate', '$log',function($translate, $log){
     return{
         restrict: 'E',
-        scope:{            
+        scope:{
             votes_count: '=votesCount',
             voted: '=',
             up: '&',
@@ -335,7 +335,7 @@ angular.module('scalearAngularApp')
 }]).directive('commentBox', ['$log',function($log){
     return{
         restrict: 'E',
-        scope:{            
+        scope:{
             discussion: '&',
             submit:"&"
         },

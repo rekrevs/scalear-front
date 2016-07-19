@@ -440,6 +440,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.canPlay = function() {
+      console.log("can play event", $scope.go_to_time);
       if($scope.go_to_time && !$rootScope.is_mobile) {
         $log.debug("can play")
         if($scope.go_to_time >= 0)
@@ -470,13 +471,16 @@ angular.module('scalearAngularApp')
         window.onmousemove = null
       }
     }
+
     $scope.toggleFullscreen = function() {
       $scope.fullscreen ? goSmallScreen() : goFullscreen()
     }
+
     $scope.rewind = function() {
       var time = $scope.lecture_player.controls.getTime()
       $scope.seek(time - 10)
     }
+
     $scope.toggleVideoPlayback = function() {
       $scope.lecture_player.controls.paused() ? $scope.lecture_player.controls.play() : $scope.lecture_player.controls.pause()
     }
@@ -576,9 +580,8 @@ angular.module('scalearAngularApp')
       openTimeline()
     }
 
-
     $scope.checkAnswer = function() {
-      ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") ? sendHtmlAnswers() : sendAnswers()
+      ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") ? sendHtmlAnswers(): sendAnswers()
     }
 
     var sendHtmlAnswers = function() {
@@ -651,13 +654,13 @@ angular.module('scalearAngularApp')
       if(data.msg != "Empty") { // he chose sthg
         if($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.is_quiz_solved = true;
-          var sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
-          showNotification('lectures.messages.thank_you_answer',sub_message)
-          if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
-            // $scope.explanation[] = data.explanation[] 
+          if($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey')
+            var sub_message = $rootScope.is_mobile? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          showNotification('lectures.messages.thank_you_answer', sub_message || "")
+          if($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
+            // $scope.explanation[] = data.explanation[]
             for(var el in data.explanation)
               $scope.explanation[el] = data.explanation[el];
-
           }
         } else {
           for(var el in data.detailed_exp)
@@ -665,13 +668,13 @@ angular.module('scalearAngularApp')
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
           var sub_message = ''
           var middle_msg = ''
-          if(!($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')))
-            if($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
-              middle_msg = 'lectures.multiple_correct'
-          if($scope.selected_quiz.quiz_type == 'html' && $scope.selected_quiz.question_type.toUpperCase() == 'DRAG')
-          {
+          if($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')){
             for(var el in data.explanation)
               $scope.explanation[el] = data.explanation[el];
+          }
+          else{
+            if($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
+              middle_msg = 'lectures.multiple_correct'
           }
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           showNotification(verdict, sub_message, middle_msg)

@@ -149,7 +149,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getDuration = function() {
-        // console.log(scope.start, scope.end)
         // var duration
         // if(scope.start && scope.end)
         //  duration = scope.end - scope.start
@@ -296,7 +295,7 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
-            VideoInformation.totalDuration =  scope.player.controls.getDuration()
+            VideoInformation.totalDuration =  player_controls.getDuration()
           });
 
         player.on('playing',
@@ -342,13 +341,13 @@ angular.module('scalearAngularApp')
           }
         })
 
-        player.on('canplaythrough', function() {
-          parent.focus()
-          if (player_events.canPlay) {
-            player_events.canPlay();
-            scope.$apply();
-          }
-        })
+        // player.on('canplaythrough', function() {
+        //   parent.focus()
+        //   if (player_events.canPlay) {
+        //     player_events.canPlay();
+        //     scope.$apply();
+        //   }
+        // })
 
         player.on('seeked', function() {
           parent.focus()

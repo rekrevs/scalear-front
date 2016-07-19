@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture','scalear_utils', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture, scalear_utils) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -491,7 +491,7 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideConfused=function(lec_id, time, value){
+    $scope.updateHideConfused=function(lec_id, time, value, very){
       Lecture.confusedShowInclass(
         {
           course_id:$stateParams.course_id,
@@ -499,7 +499,8 @@ angular.module('scalearAngularApp')
         },
         {
           time: time,
-          hide: value
+          hide: value,
+          very: very
         }
       )
     }
@@ -686,7 +687,7 @@ angular.module('scalearAngularApp')
 		    }
 		    var row = {
 		        "c": [{
-		            "v": text
+		            "v": scalear_utils.getHtmlText(text)
 		        }, {
 		            "v": correct
 		        }, {
@@ -725,7 +726,7 @@ angular.module('scalearAngularApp')
           }
           var row = {
               "c": [{
-                  "v": text
+                  "v": scalear_utils.getHtmlText(text)
               }, {
                   "v": correct
               }, {
@@ -751,7 +752,7 @@ angular.module('scalearAngularApp')
         var row=
         {"c":
             [
-                {"v": data[ind][1]},
+                {"v": scalear_utils.getHtmlText(data[ind][1])},
                 {"v": data[ind][0]}
             ]
         }

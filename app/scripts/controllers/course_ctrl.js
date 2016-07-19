@@ -21,7 +21,9 @@ angular.module('scalearAngularApp')
     $scope.$on('$destroy', function() {
       ContentNavigator.close()
       $scope.$parent.course = null
-      $rootScope.course_role = null
+      if(!$state.includes('**.course.**' ))
+      // if(!$rootScope.preview_as_student)
+        $rootScope.course_role = null
     });
 
 

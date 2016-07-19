@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
           init: function() {
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
-            this.button.innerHTML = '<b>color</b>';
+            this.button.innerHTML = "<i class='fi-paint-bucket size-18'></i>";
             initPicker(this.button);
             this.on(this.button, 'click', this.handleClick.bind(this));
           },
@@ -216,16 +216,29 @@ angular.module('scalearAngularApp')
 
         $scope.medium_editor_options = {
           'toolbar': {
-            'buttons': ["bold", "italic", "underline", "strikethrough", "subscript", "superscript",
+            'buttons': [
+              "bold",
+              "italic",
+              "underline",
+              "strikethrough",
+              "subscript",
+              "superscript",
+              "increaseFontSize",
+              "decreaseFontSize",
+              "colorPicker",
               { name: 'anchor', contentDefault: "<i class='fi-link size-18'></i>" },
               "anchor",
               { name: 'image', contentDefault: "<i class='fi-photo size-18'></i>" },
-              "quote", "increaseFontSize", "decreaseFontSize", "colorPicker", "pre",
-              { name: 'orderedlist', contentDefault: "<i class='fi-list-number size-24' style='line-height:0'></i>" },
-              { name: 'unorderedlist', contentDefault: "<i class='fi-list-bullet size-24' style='line-height:0'></i>" },
-              "justifyLeft", "justifyCenter", "justifyRight",
+              "quote",
+              "pre",
+              { name: 'orderedlist', contentDefault: "<i class='fi-list-number size-22' style='line-height:0'></i>" },
+              { name: 'unorderedlist', contentDefault: "<i class='fi-list-bullet size-22' style='line-height:0'></i>" },
+              "justifyLeft",
+              "justifyCenter",
+              "justifyRight",
               "mathjax",
-              { name: 'removeFormat', contentDefault: "<b>clear</b>" },
+              "removeFormat"
+              // { name: 'removeFormat', contentDefault: "<b>clear</b>" },
             ]
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },

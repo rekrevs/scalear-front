@@ -2627,8 +2627,11 @@ body.ngdialog-open { overflow: initial !important; }
   margin:0 !important;
 }
 
-.medium-editor-toolbar-form .medium-editor-toolbar-input{
+/*.medium-editor-toolbar-form .medium-editor-toolbar-input{
   width:40px !important ;
+}*/
+.medium-editor-toolbar{
+  width: 32.23%;
 }
 
 .medium-editor-placeholder:after{
@@ -2651,3 +2654,7 @@ body.ngdialog-open { overflow: initial !important; }
     line-height: inherit;
     text-rendering: optimizeLegibility;
 }
+
+/*.medium-toolbar-arrow-under:after{
+  top: 100px;
+}*/

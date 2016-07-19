@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     Course.newCourse(
       function(data) {
         $scope.importing = data.importing;
-        console.log(data.importing)
+
         $scope.timezones = scalear_utils.listTimezones()
         $scope.course.time_zone = $scope.timezones[11] //GMT+0
         $scope.course.start_date = new Date()
@@ -48,16 +48,16 @@ angular.module('scalearAngularApp')
       $scope.add_import_information()
     }
 
-	$scope.enable_disable_registration = function(){
-		if (!$scope.disable_registration_checked) {
-			$scope.course.disable_registration = null
-		};
-	}
+  $scope.enable_disable_registration = function(){
+    if (!$scope.disable_registration_checked) {
+      $scope.course.disable_registration = null
+    };
+  }
 
     $scope.createCourse = function() {
 
-    console.log($scope.form.$valid)
-    	
+
+
       if($scope.form.$valid) {
         var modified_course = angular.copy($scope.course)
         $scope.submitting = true;

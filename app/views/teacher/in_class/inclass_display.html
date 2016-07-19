@@ -68,7 +68,7 @@
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
                         <div style="padding-left:5px;">
-                            <span translate>{{'inclass.'+selected_timeline_item.type}}</span>:
+                            <span>{{'inclass.'+selected_timeline_item.type | translate}}</span>:
                             <span>{{selected_timeline_item.data.count}}</span>
                         </div>
                     </div>

@@ -137,6 +137,7 @@ angular.module('scalearAngularApp')
               $scope.timeline[quiz_type][quiz_id]['filtered'].add(0, type, $scope.quizzes[quiz_id].answers[q_id])
             }
           }
+
           adjustModuleItems($scope.quizzes, $scope.course.selected_module.items, $scope.module.items)
           checkDisplayInclass()
         },
@@ -164,7 +165,7 @@ angular.module('scalearAngularApp')
           hide: quiz.data.show
         },
         function() {
-          console.log(quiz)
+
           var num = (quiz.data.show ? -1 : 1)
           if(quiz.type == "inclass") {
             $scope.inclass_quizzes_time += num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion) / 60
@@ -214,7 +215,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideComment = function(comment, discussion) {
-      console.log(comment)
+
       Forum.hideComment({}, {
           post_id: discussion.id,
           comment_id: comment.id,
@@ -232,7 +233,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideQuizQuestion = function(quiz, item) {
-      console.log(quiz, item)
+
 
       Quiz.showInclass({
           course_id: $stateParams.course_id,
@@ -248,7 +249,7 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideConfused=function(lec_id, time, value){
+    $scope.updateHideConfused=function(lec_id, time, value, very){
       Lecture.confusedShowInclass(
         {
           course_id:$stateParams.course_id,
@@ -256,7 +257,8 @@ angular.module('scalearAngularApp')
         },
         {
           time: time,
-          hide: value
+          hide: value,
+          very:very
         }
       )
     }
@@ -449,7 +451,7 @@ angular.module('scalearAngularApp')
       sub_items[0].data.background = "lightgrey"
       sub_items[0].data.color = "black"
       sub_items[0].data.timer = timers.intro
-      console.log("done", sub_items)
+
       return sub_items
     }
 
@@ -462,7 +464,7 @@ angular.module('scalearAngularApp')
         start_time = (item.time - 15 < $scope.selected_item.start_time) ? $scope.selected_item.start_time : item.time - 15
         end_time = (item.time + 15 > $scope.selected_item.end_time) ? $scope.selected_item.end_time : item.time + 15
       }
-      console.log("getSubItems item start end", item, start_time, end_time)
+
       if(item.type == "primary_marker") {
         var sub_items = [item]
         var current_item_index = timeline.items.indexOf(item)
@@ -484,21 +486,18 @@ angular.module('scalearAngularApp')
         var current_item = sub_items[item_index]
         current_item.data.background = "lightgrey"
         current_item.data.color = "black"
-        if(current_item.type != "markers") {
-          console.log("current_item.type", current_item.type)
-            // if (current_item.type == "primary_marker")
-            //   sub_items[item_index].data.inclass_title = "Marker"
-            // else
+         if(current_item.type != "markers") {
           if(current_item.type == "discussion")
-            sub_items[item_index].data.inclass_title = "Question"
-          else if(current_item.type.indexOf('confused') !=-1){
-            sub_items[item_index].data.inclass_title = $translate("inclass."+current_item.type)
+            sub_items[item_index].data.inclass_title = $translate("inclass.discussion")
+          else if(current_item.type.indexOf('confused') !=-1)
+            sub_items[item_index].data.inclass_title = $translate("inclass.confused")
+          else if(current_item.type != "primary_marker"){
+
+            sub_items[item_index].data.inclass_title = current_item.data.type
           }
-          else if(current_item.type != "primary_marker")
-            sub_items[item_index].data.inclass_title = "Quiz"
         }
       }
-      console.log("after setup SubItems", sub_items)
+
       return sub_items
     }
 
@@ -602,10 +601,10 @@ angular.module('scalearAngularApp')
           updateInclassSession($scope.selected_timeline_item.data.id, 1)
         }
         $scope.selected_timeline_item = angular.copy(current_timeline_item)
-        console.log("selected_timeline_item", $scope.selected_timeline_item)
+
         if(type == 'lecture') {
           $scope.selected_timeline_item.sub_items = getSubItems($scope.timeline[type][$scope.selected_item.id]['all'], current_timeline_item)
-          console.log("returned subitems", $scope.selected_timeline_item.sub_items)
+
           var current_timeline_index
           if($scope.selected_timeline_item.type == 'inclass') {
             current_timeline_index = 0
@@ -628,14 +627,14 @@ angular.module('scalearAngularApp')
         $scope.item_itr = 0
         $scope.timeline_itr += 1
       }
-      console.log("next items", $scope.timeline_itr)
+
       if($scope.item_itr >= 0 && $scope.item_itr < $scope.module.items.length) {
         $scope.selected_item = $scope.module.items[$scope.item_itr]
         var type = $scope.selected_item.class_name == 'quiz' ? $scope.selected_item.quiz_type : $scope.selected_item.class_name
         if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]) {
           $scope.timeline_itr += 1
           if($scope.timeline_itr > 0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id]['filtered'].items.length) {
-            console.log("currentItem", $scope.timeline[type][$scope.selected_item.id]['filtered'].items[$scope.timeline_itr])
+
             goToItem($scope.nextItem)
           } else {
             $scope.item_itr += 1
@@ -661,7 +660,7 @@ angular.module('scalearAngularApp')
     $scope.prevItem = function() {
       if($scope.item_itr >= $scope.module.items.length)
         $scope.item_itr = $scope.module.items.length - 1
-      console.log("prevItem", $scope.timeline_itr)
+
       if($scope.item_itr >= 0) {
         $scope.selected_item = $scope.module.items[$scope.item_itr]
         var type = $scope.selected_item.class_name == 'quiz' ? $scope.selected_item.quiz_type : $scope.selected_item.class_name
@@ -769,7 +768,7 @@ angular.module('scalearAngularApp')
         tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
           "c": [
-            { "v": scalear_utils.isHtml(text)?$(text).text() : text },
+            { "v": scalear_utils.getHtmlText(text) },
             { "v": correct },
             { "v": tooltip_text },
             { "v": incorrect },
@@ -827,7 +826,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": scalear_utils.isHtml(text)?$(text).text() : text},
+            { "v": scalear_utils.getHtmlText(text)},
             { "v": self },
             { "v": tooltip_text },
             { "v": style },
@@ -852,7 +851,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": scalear_utils.isHtml(data[ind][1])? $(data[ind][1]).text(): data[ind][1] },
+            { "v": scalear_utils.getHtmlText(data[ind][1]) },
             { "v": data[ind][0] }
           ]
         }
@@ -1027,7 +1026,7 @@ angular.module('scalearAngularApp')
     }
 
     var isSurvey = function() {
-      return $scope.selected_timeline_item.data.type == 'Survey'
+      return (($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "survey") || ($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "html_survey"))
     }
 
 
@@ -1081,7 +1080,7 @@ angular.module('scalearAngularApp')
     }
 
     var updateInclassSession = function(quiz_id, status) {
-      console.log("status update!", status)
+
       $scope.inclass_session = status
       if(status >= 0 && status <= 5) {
         OnlineQuiz.updateInclassSession({ online_quizzes_id: quiz_id }, { status: status })

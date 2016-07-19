@@ -11,9 +11,7 @@ angular.module('scalearAngularApp')
   // $cookieStore.remove("saml_provider")
   $scope.previous_provider = $cookieStore.get("login_provider")
 
-  // console.log($location)
   // $scope.saml = $location.$$search
-  // console.log($scope.saml)
   // if(Object.keys($scope.saml).length){
   //   // $scope.saml=JSON.parse($state.params.attributes)
   //   ngDialog.open({

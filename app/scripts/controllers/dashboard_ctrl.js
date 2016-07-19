@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
 
     var getCalendar = function(year) {
       Dashboard.getDashboard({year:year}, function(data) {
-        $scope.key = "Calendar URL:  "+$location.absUrl()+"/dynamic_url?key="+data.key 
+        $scope.key = "Calendar URL:  "+$location.absUrl()+"/dynamic_url?key="+data.key
         $scope.uiConfig = {
           calendar: {
             header: {
@@ -96,7 +96,6 @@ angular.module('scalearAngularApp')
             },
             function(response) {
               revertFunc()
-              console.log(response)
                 // if (response.notice){
               $rootScope.show_alert = "error";
               ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 2000);
@@ -113,7 +112,7 @@ angular.module('scalearAngularApp')
             $scope.calendar_year.push(view.title.split(" ")[1].toString())
             getCalendar(view.title.split(" ")[1])
           }
-        } 
+        }
 
         $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
         $scope.eventSources.push($scope.calendar);

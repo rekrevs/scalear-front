@@ -317,7 +317,6 @@ angular.module('scalearAngularApp')
         }
 
         scope.scrollIntoView = function(module) {
-          console.log("scrolling")
           if($('#module_' + module.id).length) {
             $('.modules_container').scrollToThis('#module_' + module.id, { offsetTop: $('.modules_container').offset().top, duration: 400 });
           }

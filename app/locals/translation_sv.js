@@ -377,6 +377,8 @@ var translation_sv={
     small_calendar:"Liten kalender",
     export_calendar: "Exportera kalender",
     whats_new: "Nyheter",
+    as_ical_file: "ICAl file(t)",
+    as_url: "URL(t)",
   },
   inclass:{
     more: "mer",

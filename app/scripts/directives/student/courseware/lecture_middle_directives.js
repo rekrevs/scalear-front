@@ -168,9 +168,7 @@ angular.module('scalearAngularApp')
               "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
               "</ng-form>"+
-              "{{explanation}}"+
               "<div ng-bind-html='explanation[quiz.id]'></div>"
-
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
   return {
@@ -586,7 +584,7 @@ angular.module('scalearAngularApp')
 
       scope.show=function(){
         scope.myform.$show()
-        $('.editable-input').focus()
+        $('.medium-editor-textarea').focus()
       }
 
       if(!scope.value)

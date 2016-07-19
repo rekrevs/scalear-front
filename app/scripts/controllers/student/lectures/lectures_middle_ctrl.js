@@ -248,7 +248,7 @@ angular.module('scalearAngularApp')
 
       duration_milestones.forEach(function(milestone) {
         $scope.lecture_player.controls.cue(($scope.total_duration * milestone) / 100, function() {
-          updateViewPercentage(milestone)
+          updateViewPercentage(milestone, "mile_cue")
         })
       })
 
@@ -267,7 +267,7 @@ angular.module('scalearAngularApp')
       }
     }
 
-    var updateViewPercentage = function(milestone) {
+    var updateViewPercentage = function(milestone, source) {
       var lecture = $scope.lecture // in case request callback got delayed and lecture has changed
       $scope.not_done_msg = false
       Lecture.updatePercentView({
@@ -281,7 +281,7 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lecture.id].meta.is_done = data.lecture_done
           } else if(milestone == 100)
             $scope.not_done_msg = true
-          $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1])
+          $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
           $scope.lecture.watched_percentage = data.watched
           $scope.lecture.quiz_percentage = data.quizzes_done[0] + " / " + data.quizzes_done[1]
         })
@@ -348,7 +348,7 @@ angular.module('scalearAngularApp')
           $scope.lecture_player.controls.seek(time)
           var percent_view = Math.round((($scope.lecture_player.controls.getTime() / $scope.total_duration) * 100))
           $log.debug("current watched: " + percent_view)
-          updateViewPercentage(percent_view)
+          updateViewPercentage(percent_view, "seek")
         }
       } else {
         $state.go("course.module.courseware.lecture", { lecture_id: lecture_id }, { reload: false, notify: false });
@@ -423,13 +423,13 @@ angular.module('scalearAngularApp')
         var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
         $log.debug("current watched: " + percent_view)
         $scope.submitPause(current_time, $scope.quiz_mode);
-        updateViewPercentage(percent_view)
+        updateViewPercentage(percent_view, "pause")
       }
     }
 
     $scope.lecture_player.events.onEnd = function() {
       $scope.video_end = true
-      updateViewPercentage(100)
+      updateViewPercentage(100, "end")
     }
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
@@ -440,11 +440,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.canPlay = function() {
-      console.log("can play event", $scope.go_to_time);
       if($scope.go_to_time && !$rootScope.is_mobile) {
-        $log.debug("can play")
         if($scope.go_to_time >= 0)
-          $scope.seek_and_pause($scope.go_to_time)
+          var time = $scope.go_to_time
+          $timeout(function(){
+            $scope.seek_and_pause(time)
+          })
         $scope.go_to_time = null
       }
     }
@@ -538,7 +539,7 @@ angular.module('scalearAngularApp')
       $scope.last_discussion = $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion", null);
       $scope.last_fullscreen_state = $scope.fullscreen;
       $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
-      $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
+      $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
       TimelineFilter.set('discussion', true)
       $scope.lecture_player.controls.pause()
       goSmallScreen()
@@ -573,7 +574,7 @@ angular.module('scalearAngularApp')
       $scope.last_fullscreen_state = $scope.fullscreen
 
       $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
-      $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
+      $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
       TimelineFilter.set('note', true)
       $scope.lecture_player.controls.pause()
       goSmallScreen()
@@ -684,7 +685,7 @@ angular.module('scalearAngularApp')
         $scope.display_review_message = true
         var percent_view = Math.round((($scope.lecture_player.controls.getTime() / $scope.total_duration) * 100))
         $log.debug("current watched: " + percent_view)
-        updateViewPercentage(percent_view)
+        updateViewPercentage(percent_view, "solved_quiz")
       }
 
       $interval(function() {
@@ -827,14 +828,14 @@ angular.module('scalearAngularApp')
       if($scope.last_video_state && $scope.lecture_player.controls.paused() && !$scope.quiz_mode) {
         $scope.lecture_player.controls.play()
       }
-      if(!$scope.last_timeline_state && $scope.TimelineNavigator.getStatus()) {
+      if($scope.last_timeline_state && $scope.TimelineNavigator.getStatus()) {
         $timeout(function() {
           $scope.TimelineNavigator.close()
         }, 400)
       }
-      // $scope.last_fullscreen_state = null
-      // $scope.last_video_state = null
-      // $scope.last_timeline_state = null
+      $scope.last_fullscreen_state = null
+      $scope.last_video_state = null
+      $scope.last_timeline_state = null
     }
 
     $scope.dismissAnnotation = function() {

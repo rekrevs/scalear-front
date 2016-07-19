@@ -2,7 +2,7 @@
     <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;" ng-class="{'disabled': editing=='video'}" ng-mouseenter="showPlayhead()" ng-mouseleave="hidePlayhead()">
         <span ng-if="user_role==2">
             <div class="elapsed" ng-style="{width: elapsed_width + '%'}" ></div>
-            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ></div>
+            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
             <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'lectures.timeline.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'lectures.timeline.confused' | translate}}" tooltip-append-to-body="true"></span>

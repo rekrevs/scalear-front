@@ -36,13 +36,17 @@
     <tr style="height:60px" id="bg_fix">
       <td class="right-border small-4"><span translate>editor.details.in_order</span></td>
       <td class="small-8">
-        <input type="checkbox" ng-model="module.required" ng-change="updateModule()" class="no-margin">
+        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input type="checkbox" ng-model="module.required" ng-change="updateModule()" class="no-margin">
+        </span>
       </td>
     </tr>
     <tr style="height:60px" id="bg_fix">
       <td class="right-border small-4"><span translate>editor.details.required</span></td>
       <td class="small-8">
-        <input type="checkbox" ng-model="module.graded" ng-change="updateModule()" class="no-margin">
+        <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input type="checkbox" ng-model="module.graded" ng-change="updateModule()" class="no-margin">
+        </span>
       </td>
     </tr>
       <tr style="height:130px">

@@ -25,6 +25,13 @@ angular.module('scalearAngularApp')
       }
     }
 
+    $scope.addUrl=function(event){
+
+      event.preventDefault()
+      event.stopPropagation()
+
+    }
+
     var resizeCalendar = function() {
       angular.element('#studentCalendar').fullCalendar('render');
     }
@@ -38,7 +45,12 @@ angular.module('scalearAngularApp')
 
     var getCalendar = function(year) {
       Dashboard.getDashboard({year:year}, function(data) {
-        $scope.key = "Calendar URL:  "+$location.absUrl()+"/dynamic_url?key="+data.key 
+        
+      $scope.calendar_url = {
+          content: "Calendar URL:\n"+$location.absUrl().replace("/#","")+"/dynamic_url?key="+data.key ,
+          html: true,
+          placement: 'right'
+      }
         $scope.uiConfig = {
           calendar: {
             header: {

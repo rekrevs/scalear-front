@@ -20,8 +20,16 @@ table {
 					<span translate>dashboard.small_calendar</span>
 				</span>
 			</button>
-			<button class="really-tiny button secondary no-margin hide-for-small left" ng-click="exportCalendar()" translate>dashboard.export_calendar</button>
-			<span class="calendar_color  alert-box label radius" style="margin-left: 25px;padding: 7px;" >{{key}}</span>
+      <div class=" left">
+        <a class="tiny button secondary no-margin hide-for-small left dropdown" dropdown-toggle="#sort_list"><span translate>dashboard.export_calendar</span></a>
+        <ul id="sort_list" class="dropdown-menu">
+          <li><a href="" ng-click="exportCalendar()" translate>dashboard.as_ical_file</a></li>
+          <li><a pop-over="calendar_url" ng-click="addUrl($event)" translate>dashboard.as_url</a></li>
+        </ul>
+        <br />
+      </div>
+      	<!-- <button class="really-tiny button secondary no-margin hide-for-small left" ng-click="exportCalendar()" translate>dashboard.export_calendar</button> -->
+			<!-- <spadn class="calendar_color  alert-box label radius" style="margin-left: 25px;padding: 7px;" >{{key}}</span> -->
 				
 			<span class="right">
 			    <span class="calendar_color done alert-box label radius" translate="events.done"></span>

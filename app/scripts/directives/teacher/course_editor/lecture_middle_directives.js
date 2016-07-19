@@ -480,7 +480,7 @@ angular.module('scalearAngularApp')
 
         scope.close = function() {
           scope.save()
-          angular.element(element.find('h6')).popover('hide')
+          angular.element(element.find('.dropped_drag')).popover('hide')
         }
 
         var template = '<ul class="no-margin">' +
@@ -507,10 +507,12 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id,
+          // instant_show: !scope.data.id,
           container: 'body'
         }
-
+        if(!scope.data.id){
+          scope.popover_options.instant_show = 'click'
+        }
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",
           minHeight: 40,
@@ -622,6 +624,21 @@ angular.module('scalearAngularApp')
         scope.isNormalQuiz = function() {
           return "content" in scope.quiz
         }
+        scope.removeAnswerFreeText = function(){
+          if(scope.isFreeText() ){
+            scope.quiz.answers.forEach(function (value, i) {
+                if(i==0 ){
+                    if((scope.quiz.match_type == "Free Text")){
+                      value.content = ""
+                      console.log(value.content)                     
+                    }
+                }
+                else
+                {scope.quiz.answers.splice(i, 1);}
+            });
+          }
+        }
+
         scope.quiz_types = [
           { value: "MCQ", text: $translate('content.questions.quiz_types.mcq') },
           { value: "OCQ", text: $translate('content.questions.quiz_types.ocq') },

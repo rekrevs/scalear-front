@@ -23,11 +23,11 @@
 					      <span class="prefix"><span translate>editor.type</span>:</span>
 					    </div>
 					    <div class="small-10 columns">
-					    	<select ng-model='quiz.question_type' required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices size-14' style="margin-bottom:0.3rem"></select>
+					    	<select ng-model='quiz.question_type' ng-click="removeAnswerFreeText()" required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices size-14' style="margin-bottom:0.3rem"></select>
 					    </div>
 					</div>
 				    <div class="small-10 columns" ng-if='isFreeText() && !isSurvey()'>
-					    	<select ng-model='quiz.match_type' required  ng-options='obj.value as obj.text for obj in match_types' class='choices size-14'></select>
+					    	<select ng-model='quiz.match_type' ng-click="removeAnswerFreeText()" required  ng-options='obj.value as obj.text for obj in match_types' class='choices size-14'></select>
 
 				    </div>
 				</div>

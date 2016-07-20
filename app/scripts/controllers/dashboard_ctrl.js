@@ -25,6 +25,11 @@ angular.module('scalearAngularApp')
       }
     }
 
+    $scope.preventDropDownHide = function(event) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
     var resizeCalendar = function() {
       angular.element('#studentCalendar').fullCalendar('render');
     }
@@ -37,8 +42,14 @@ angular.module('scalearAngularApp')
 
 
     var getCalendar = function(year) {
-      Dashboard.getDashboard({year:year}, function(data) {
-        $scope.key = "Calendar URL:  "+$location.absUrl()+"/dynamic_url?key="+data.key
+      Dashboard.getDashboard({ year: year }, function(data) {
+        $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + data.key
+        $scope.calendar_pop = {
+          content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
+          html: true,
+          placement: 'right'
+        }
+
         $scope.uiConfig = {
           calendar: {
             header: {
@@ -107,8 +118,8 @@ angular.module('scalearAngularApp')
           );
         }
 
-        $scope.uiConfig.calendar.viewRender = function(view,element){
-          if (!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0) ){
+        $scope.uiConfig.calendar.viewRender = function(view, element) {
+          if(!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0)) {
             $scope.calendar_year.push(view.title.split(" ")[1].toString())
             getCalendar(view.title.split(" ")[1])
           }

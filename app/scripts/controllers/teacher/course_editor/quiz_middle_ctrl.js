@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 						if(!data.answers[index].length)
 							$scope.addHtmlAnswer("", question)
 						else
-							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
+							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz")
 					}
 					else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
 						question.answers=[];

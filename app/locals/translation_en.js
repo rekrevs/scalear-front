@@ -379,6 +379,8 @@ var translation_en={
     small_calendar:"Small Calendar",
     export_calendar: "Export Calendar",
     whats_new: "What's New",
+    as_ical_file: "As File",
+    as_url: "As Link",
   },
   inclass:{
     more: "more",

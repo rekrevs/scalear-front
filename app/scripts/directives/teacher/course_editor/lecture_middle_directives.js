@@ -232,7 +232,6 @@ angular.module('scalearAngularApp')
           maker_enter_tab_click("tab")
         }, {"disable_in_input" : false});
         scope.$on('$destroy', function() {
-
           removeShortcuts()
         });
       }
@@ -480,7 +479,7 @@ angular.module('scalearAngularApp')
 
         scope.close = function() {
           scope.save()
-          angular.element(element.find('h6')).popover('hide')
+          angular.element(element.find('.dropped_drag')).popover('hide')
         }
 
         var template = '<ul class="no-margin">' +
@@ -507,10 +506,12 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id,
+          // instant_show: !scope.data.id,
           container: 'body'
         }
-
+        if(!scope.data.id){
+          scope.popover_options.instant_show = 'click'
+        }
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",
           minHeight: 40,
@@ -525,7 +526,6 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       save: "&",
       remove: "&",
-
       template: "<div>" +
         "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\"  pop-over='popover_options'>" +
         "<h6 class='no-margin' style='text-align:left;resize:none;padding:10px;font-size: 0.1rem' ng-bind-html='quiz.question'></h6>"+
@@ -619,6 +619,20 @@ angular.module('scalearAngularApp')
         scope.isNormalQuiz = function() {
           return "content" in scope.quiz
         }
+        scope.removeAnswerFreeText = function(){
+          if(scope.isFreeText() ){
+            scope.quiz.answers.forEach(function (value, i) {
+                if(i==0 ){
+                    if((scope.quiz.match_type == "Free Text")){
+                      value.content = ""
+                    }
+                }
+                else
+                {scope.quiz.answers.splice(i, 1);}
+            });
+          }
+        }
+
         scope.quiz_types = [
           { value: "MCQ", text: $translate('content.questions.quiz_types.mcq') },
           { value: "OCQ", text: $translate('content.questions.quiz_types.ocq') },

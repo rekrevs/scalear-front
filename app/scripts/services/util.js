@@ -98,6 +98,15 @@ angular.module('scalearAngularApp')
     capitalize: function(s){
       return s[0].toUpperCase() + s.slice(1);
     },
+    gcd:function(a, b) {
+        return (b == 0) ? a : this.gcd (b, a%b);
+    },
+    calculateScreenRatio:function(){
+        var w = screen.width;
+        var h = screen.height;
+        var r = this.gcd(w, h);
+        return (w/r) + ":" + (h/r)
+    },
     listTimezones:function(){
       return [
         {name:"American Samoa" ,offset:-11, value:"(GMT-11:00) American Samoa"},

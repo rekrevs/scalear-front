@@ -492,10 +492,11 @@ angular.module('scalearAngularApp')
     }
 
     var goFullscreen = function() {
-      $scope.video_class = ''
+      // $scope.video_class = ''
       $scope.fullscreen = true
-      $scope.resize.big()
+      // $scope.resize.big()
       if($rootScope.is_mobile) {
+        $scope.resize.big()
         $scope.container_class = 'mobile_video_full'
         $scope.video_layer = { 'width': '100%', 'height': angular.element($window).height() - 70, 'position': 'relative' }
         $(window).bind('orientationchange', function(event) {
@@ -504,15 +505,19 @@ angular.module('scalearAngularApp')
           $scope.$apply()
         });
       }
+      else if(scalear_utils.calculateScreenRatio() == "4:3"){
+        $scope.video_layer ={'marginTop':"5.5%", 'marginBottom': "5.5%"}
+      }
     }
 
     var goSmallScreen = function() {
-      $scope.video_class = 'flex-video'
+      // $scope.video_class = 'flex-video'
       $scope.fullscreen = false
-      $scope.resize.small()
+      // $scope.resize.small()
+      $scope.video_layer = {}
       if($rootScope.is_mobile) {
+        $scope.resize.small()
         $scope.container_class = ""
-        $scope.video_layer = {}
         $(window).off('orientationchange');
       }
       // $scope.video_layer ={height: "",left: "",position: "",top: "",width: "",zIndex: 0}

@@ -24,8 +24,8 @@
 								</div>
 							</center>
 						</span>
-						<video_container ng-if="passed_requirments" ng-class="container_class"screenfull active="fullscreen" style="width:100%;height:100%">
-								<youtube class="widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer" style="margin: 0 auto;">
+						<video_container ng-if="passed_requirments" ng-class="container_class"screenfull active="fullscreen" style="width:100%;height:100%;background:black">
+								<youtube class="widescreen" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer" style="margin: 0 auto;">
 									<quiz ng-show="show_progressbar" ng-style="quiz_layer"  resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;">
 										<!-- ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready) || video_end" -->
 										<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">

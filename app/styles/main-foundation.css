@@ -2627,11 +2627,8 @@ body.ngdialog-open { overflow: initial !important; }
   margin:0 !important;
 }
 
-/*.medium-editor-toolbar-form .medium-editor-toolbar-input{
-  width:40px !important ;
-}*/
 .medium-editor-toolbar{
-  width: 32.23%;
+  width: 503px;
 }
 
 .medium-editor-placeholder:after{
@@ -2655,6 +2652,14 @@ body.ngdialog-open { overflow: initial !important; }
     text-rendering: optimizeLegibility;
 }
 
-/*.medium-toolbar-arrow-under:after{
+.medium-toolbar-arrow-under:after{
   top: 100px;
-}*/
+}
+
+.medium-editor-toolbar-form{
+  height: 100px
+}
+
+.medium-editor-toolbar-form .medium-editor-toolbar-input{
+  width:100%;
+}

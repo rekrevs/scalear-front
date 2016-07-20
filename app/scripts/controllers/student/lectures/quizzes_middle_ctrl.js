@@ -34,7 +34,8 @@ angular.module('scalearAngularApp')
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;
 	 		$scope.status=data.status;
-	 		$scope.correct=data.correct;
+            $scope.correct=data.correct;
+            $scope.explanation=data.explanation;
             $scope.next_item= data.next_item;
 	 		$scope.alert_messages= data.alert_messages
             $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
@@ -78,8 +79,10 @@ angular.module('scalearAngularApp')
         			$scope.alert_messages= data.alert_messages;
                     $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
                     $scope.next_item= data.next_item;
-        			if(data.correct)
-        				$scope.correct=data.correct; 
+                    if(data.correct)
+                        $scope.correct=data.correct; 
+                    if(data.explanation)
+                        $scope.explanation=data.explanation; 
                     if(data.done[2])
                         $scope.course.markDone(data.done[1],data.done[0])
         		}

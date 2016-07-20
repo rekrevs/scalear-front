@@ -40,13 +40,13 @@
 										</div>
 										<div ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'">
 										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
-											<annotation text="selected_quiz.question" action="toggleVideoPlayback" ng-if="selected_quiz.display_text"/>
 										</div>
 										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;">
 											<b><span translate>global.note</span>:</b>
 											<span translate>lectures.messages.did_not_get_credit</span>
 										</div>
-										<annotation text="annotation" markerquiz="marker" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation"/>
+										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation"/>
+										<annotation text="selected_quiz.question" ng-if="selected_quiz.display_text"/>
 									</quiz>
 								</youtube>
 								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">

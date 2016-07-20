@@ -25,11 +25,9 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.addUrl=function(event){
-
+    $scope.preventDropDownHide = function(event) {
       event.preventDefault()
       event.stopPropagation()
-
     }
 
     var resizeCalendar = function() {
@@ -44,13 +42,13 @@ angular.module('scalearAngularApp')
 
 
     var getCalendar = function(year) {
-      Dashboard.getDashboard({year:year}, function(data) {
-        
-      $scope.calendar_url = {
-          content: "Calendar URL:\n"+$location.absUrl().replace("/#","")+"/dynamic_url?key="+data.key ,
+      Dashboard.getDashboard({ year: year }, function(data) {
+        $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + data.key
+        $scope.calendar_pop = {
+          content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
           html: true,
           placement: 'right'
-      }
+        }
         $scope.uiConfig = {
           calendar: {
             header: {
@@ -120,12 +118,12 @@ angular.module('scalearAngularApp')
           );
         }
 
-        $scope.uiConfig.calendar.viewRender = function(view,element){
-          if (!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0) ){
+        $scope.uiConfig.calendar.viewRender = function(view, element) {
+          if(!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0)) {
             $scope.calendar_year.push(view.title.split(" ")[1].toString())
             getCalendar(view.title.split(" ")[1])
           }
-        } 
+        }
 
         $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
         $scope.eventSources.push($scope.calendar);

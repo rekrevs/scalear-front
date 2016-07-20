@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
           }
         }
 
-				scope.updateQuizEndTime = function() {
+        scope.updateQuizEndTime = function() {
           scope.selected_quiz.end_time = scope.selected_quiz.time
           if (scope.selected_quiz.has_end) {
             var duration = scope.lecture_player.controls.getDuration()
@@ -232,7 +232,6 @@ angular.module('scalearAngularApp')
           maker_enter_tab_click("tab")
         }, {"disable_in_input" : false});
         scope.$on('$destroy', function() {
-          console.log("destroy");
           removeShortcuts()
         });
       }
@@ -270,7 +269,7 @@ angular.module('scalearAngularApp')
         quiz: "=",
         data: "=",
         list: '=',
-        
+
         save: "&",
       remove: "&",
       },
@@ -405,7 +404,7 @@ angular.module('scalearAngularApp')
         if(!scope.data.id){
             scope.popover_options.instant_show = 'click'
           }
-        
+
         scope.$watch('quiz.answers', function() {
           scope.updateValues();
         }, true)
@@ -531,7 +530,7 @@ angular.module('scalearAngularApp')
       template: "<div>" +
         "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div>" +
-				"<h6 class='no-margin' pop-over='popover_options' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
+        "<h6 class='no-margin' pop-over='popover_options' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
         "</div>"+
         "</div>"+
         "</div>",
@@ -630,7 +629,6 @@ angular.module('scalearAngularApp')
                 if(i==0 ){
                     if((scope.quiz.match_type == "Free Text")){
                       value.content = ""
-                      console.log(value.content)                     
                     }
                 }
                 else
@@ -690,7 +688,7 @@ angular.module('scalearAngularApp')
           "<div ng-switch on='quiz.match_type.toUpperCase()'>" +
             "<div ng-switch-when='MATCH TEXT' ><html_freetextmatch ng-repeat='answer in quiz.answers' /></div>"+
             "<div ng-switch-when='FREE TEXT' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
-          "</div>"+  
+          "</div>"+
         "</div>" +
         "<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>" +
         "<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>" +
@@ -741,7 +739,7 @@ angular.module('scalearAngularApp')
     };
   }]).directive('htmlFreetext', function() {
     return {
-      restrict: 'E', 
+      restrict: 'E',
       template: "<ng-form name='aform'>" +
         "<div class ='row collapse' >" +
           "<div class='small-2 columns' style='padding: 10px 0;'>" +
@@ -757,7 +755,7 @@ angular.module('scalearAngularApp')
 
   }).directive('htmlFreetextmatch', function() {
     return {
-      restrict: 'E', 
+      restrict: 'E',
       template: "<ng-form name='aform'>" +
         "<div ng-if=quiz.match_type == 'Match Text'>"+
         "<div class='row'>" +

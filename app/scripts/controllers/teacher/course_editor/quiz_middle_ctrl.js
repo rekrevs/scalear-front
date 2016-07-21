@@ -31,15 +31,15 @@ angular.module('scalearAngularApp')
 			  	$scope.questions.forEach(function(question,index){
 			  		if(question.question_type.toUpperCase() == 'DRAG'){
 						question.answers = []
-						if(!data.answers[index].length)
+						if(!data.answers[index].length)	
 							$scope.addHtmlAnswer("", question)
 						else
-							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz",data.answers[index][0].explanation)
+							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id,data.answers[index][0].explanation)
 					}
-					else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
-						question.answers=[];
-						$scope.addHtmlAnswer("",question)
-					}
+					// else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
+					// 	question.answers=[];
+					// 	$scope.addHtmlAnswer("",question)
+					// }
 					else{
 						question.answers = data.answers[index]
 						if(!data.answers[index].length && question.question_type != 'Free Text Question')
@@ -86,11 +86,8 @@ angular.module('scalearAngularApp')
 		var data=[]
 		for(var elem in $scope.questions)
 		{
-			console.log("asdasd")
 			if($scope.questions[elem].question_type.toUpperCase() == 'DRAG'){
-				console.log($scope.questions[elem].answers)
 				var obj = CourseEditor.mergeDragAnswers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
-				console.log(obj)
 				$scope.questions[elem].answers.forEach(function(ans){
 					if(ans.id && obj.id==null){
 						obj.id = ans.id

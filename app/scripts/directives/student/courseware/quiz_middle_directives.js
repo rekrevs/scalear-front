@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
 		templateUrl:'/views/student/lectures/student_quiz.html',
 		link:function(scope){
 			scope.index=0
+			scope.drag_explanation={}
 			scope.getIndex=function(){
 				return ++scope.index
 			}
@@ -35,26 +36,22 @@ angular.module('scalearAngularApp')
 				return scope.updateValues(ques)!=0
 			}
 
-			scope.getExplanationPop=function(id){
-				console.log("id", id)
-				scope.id = id
+			scope.getExplanationPop=function(id,drag_id){
+				var x = 0
+				if ( typeof(drag_id) == 'undefined'){
+					x = '<div ng-bind-html="explanation['+id+']"></div>'
+				}
+				else{
+					x ='<div ng-bind-html="explanation['+id+']['+drag_id+']"></div>'
+				}
 				return {
-					content:'<div>{{explanation[id]}}{{explanation}}</div>',
+					content:x,
 		            html:true,
 		            trigger:$rootScope.is_mobile? 'click' : 'hover',
-		            placement:"right"
+		            placement:"left"
 				}
 			}
-      // scope.$watch('correct', function(newval){
-      //   if(scope.correct[scope.quiz.questions[0].id]==0){
-	     //    scope.explanation_pop={
-	     //        content:'<div>{{quiz.questions[0].answers[0].explanation}}</div>',
-	     //        html:true,
-	     //        trigger:$rootScope.is_mobile? 'click' : 'hover',
-	     //        placement:"right"
-	     //      }	
-      //   }
-      // })
+
 
 
 		}

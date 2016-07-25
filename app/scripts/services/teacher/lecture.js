@@ -34,6 +34,7 @@ angular.module('scalearAngularApp')
       "changeLectureStatus": {method:'POST', params:{action:'change_status_angular'},headers:headers},
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
+      "logVideoEvent": { method: 'POST', ignoreLoadingBar: true, params: { action: 'log_video_event' }, headers: headers },
     });
 
   }])

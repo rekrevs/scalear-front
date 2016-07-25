@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'scalear_utils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, scalear_utils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'scalear_utils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, scalear_utils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation) {
 
     $log.debug("lect mid ctlr")
     $scope.video_layer = {}
@@ -189,6 +189,26 @@ angular.module('scalearAngularApp')
       }
     }
 
+    var logVideoEvent =function(event, from_time, to_time){
+      if(from_time != null && from_time >= 0) {
+        console.log('log event', event)
+        Lecture.logVideoEvent({
+          course_id: $state.params.course_id,
+          lecture_id: $state.params.lecture_id
+        },{
+          event: event,
+          from_time: from_time,
+          to_time: to_time,
+          in_quiz: $scope.quiz_mode,
+          speed: VideoInformation.speed,
+          volume: VideoInformation.volume,
+          fullscreen: $scope.fullscreen
+        },function(){
+          console.log("event logged")
+        })
+      }
+    }
+
     $scope.lecture_player.events.onReady = function() {
       $scope.slow = false
       $scope.total_duration = $scope.lecture_player.controls.getDuration()
@@ -326,29 +346,34 @@ angular.module('scalearAngularApp')
       })
     }
 
-    var logBackEvent = function(time) {
-      if(time && time > 0) {
-        Lecture.back({
-          course_id: $state.params.course_id,
-          lecture_id: $state.params.lecture_id
-        }, { time: time });
-      }
-    }
-
+    // var logBackEvent = function(time) {
+    //   if(time && time > 0) {
+    //     Lecture.back({
+    //       course_id: $state.params.course_id,
+    //       lecture_id: $state.params.lecture_id
+    //     }, { time: time });
+    //   }
+    // }
 
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
       $scope.closeReviewNotify()
       $scope.dismissAnnotation()
+      var current_time = $scope.lecture_player.controls.getTime()
+      $scope.seek_to_time = time
       if(!lecture_id || lecture_id == $scope.lecture.id) { //if current lecture
-        if(time >= 0 && $scope.show_progressbar) {
-          if($scope.lecture_player.controls.getTime() - time > 1) {
-            logBackEvent(time)
-          }
-
+        if(time >= 0 && $scope.show_progressbar){
           $scope.lecture_player.controls.seek(time)
-          var percent_view = Math.round((($scope.lecture_player.controls.getTime() / $scope.total_duration) * 100))
-          $log.debug("current watched: " + percent_view)
-          updateViewPercentage(percent_view, "seek")
+          // if(Math.abs(current_time - time) >= 15){
+            if(!$scope.log_event_timeout){
+              $scope.log_event_timeout = $timeout(function(){
+                console.log("timeout", current_time, $scope.seek_to_time  )
+                logVideoEvent("seek", current_time, $scope.seek_to_time)
+                var percent_view = Math.round((($scope.seek_to_time / $scope.total_duration) * 100))
+                updateViewPercentage(percent_view, "seek")
+                $scope.log_event_timeout = null
+              },1000)
+            }
+          // }
         }
       } else {
         $state.go("course.module.courseware.lecture", { lecture_id: lecture_id }, { reload: false, notify: false });
@@ -361,6 +386,7 @@ angular.module('scalearAngularApp')
     $scope.seek_and_pause = function(time, lecture_id) {
       if($scope.lecture_player.controls.getTime() != time)
         clearQuiz()
+      $scope.skip_pause_update = true
       $scope.seek(time, lecture_id)
       $scope.lecture_player.controls.pause()
     }
@@ -370,17 +396,19 @@ angular.module('scalearAngularApp')
       checkIfQuizSolved()
     }
 
-    $scope.submitPause = function(time, quiz_mode) {
-      if(time && time > 0) {
-        Lecture.pause({
-          course_id: $state.params.course_id,
-          lecture_id: $state.params.lecture_id
-        }, {
-          time: time,
-          quiz_mode: quiz_mode
-        });
-      }
-    }
+    // $scope.submitPause = function(time, quiz_mode) {
+    //   if(time && time > 0) {
+    //     Lecture.pause({
+    //       course_id: $state.params.course_id,
+    //       lecture_id: $state.params.lecture_id
+    //     }, {
+    //       time: time,
+    //       quiz_mode: quiz_mode
+    //     });
+    //   }
+    // }
+
+
 
     var checkIfQuizSolved = function() {
       if($scope.quiz_mode) {
@@ -414,6 +442,7 @@ angular.module('scalearAngularApp')
       $log.debug("playing ")
       checkIfQuizSolved()
       $scope.video_end = false
+      logVideoEvent("play", $scope.lecture_player.controls.getTime())
     }
 
     $scope.lecture_player.events.onPause = function() {
@@ -421,10 +450,11 @@ angular.module('scalearAngularApp')
         $log.debug("pausing")
         var current_time = $scope.lecture_player.controls.getTime()
         var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
-        $log.debug("current watched: " + percent_view)
-        $scope.submitPause(current_time, $scope.quiz_mode);
+        // $scope.submitPause(current_time, $scope.quiz_mode);
+        logVideoEvent("pause", current_time)
         updateViewPercentage(percent_view, "pause")
       }
+      $scope.skip_pause_update= false
     }
 
     $scope.lecture_player.events.onEnd = function() {
@@ -475,6 +505,7 @@ angular.module('scalearAngularApp')
 
     $scope.toggleFullscreen = function() {
       $scope.fullscreen ? goSmallScreen() : goFullscreen()
+      logVideoEvent("fullscreen", $scope.lecture_player.controls.getTime())
     }
 
     $scope.rewind = function() {
@@ -507,6 +538,9 @@ angular.module('scalearAngularApp')
       }
       else if(scalear_utils.calculateScreenRatio() == "4:3"){
         $scope.video_layer ={'marginTop':"5.5%", 'marginBottom': "5.5%"}
+      }
+      else if(scalear_utils.calculateScreenRatio() == "16:9"){
+        $scope.video_layer ={'paddingBottom': '51.7%'}
       }
     }
 

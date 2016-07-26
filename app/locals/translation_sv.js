@@ -56,6 +56,8 @@ var translation_sv={
     warning:"Varning",
     are_you_sure: "Är du säker på att du vill fortsätta?",
     visible: "Synlig",
+    leave: "Leave(t)",
+    stay: "Stay(t)",
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -550,6 +552,8 @@ var translation_sv={
         please_choose_an_answer: "Var god välj ditt (dina) svar",
         finish_before_proceeding:"Se klart tidigare videos innan du fortsätter",
         really_confused_use_question: "Du kan ställa en fråga så att läraren kan hjälpa dig.",
+        navigate_away:"Are you sure you want to navigate away from this page?(t)",
+        change_lost:"Your changes will be lost!(t)",
     },
     timeline:{
         timeline: "Tidslinje",

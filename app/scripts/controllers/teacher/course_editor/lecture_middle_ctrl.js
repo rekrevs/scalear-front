@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', 'OnlineQuiz', '$q', 'DetailsNavigator', 'OnlineMarker', '$filter', 'Timeline', function($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, OnlineQuiz, $q, DetailsNavigator, OnlineMarker, $filter, Timeline) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', 'OnlineQuiz', '$q', 'DetailsNavigator', 'OnlineMarker', '$filter', 'Timeline', '$urlRouter','ngDialog', function($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, OnlineQuiz, $q, DetailsNavigator, OnlineMarker, $filter, Timeline,$urlRouter,ngDialog) {
 
     var unwatch = $scope.$watch('items_obj["lecture"][' + $stateParams.lecture_id + ']', function() {
       if ($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]) {
@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
+    $scope.state_exit_error = false
 
     $scope.alert = {
       type: "alert",
@@ -440,6 +441,7 @@ angular.module('scalearAngularApp')
         for (var element in $scope.selected_quiz.answers) {
           if (!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim() == "") {
             $scope.alert.msg = "editor.messages.provide_answer"
+            $scope.state_exit_error = true
             return false
           }
           if ($scope.selected_quiz.question_type.toUpperCase() == "DRAG")
@@ -449,6 +451,7 @@ angular.module('scalearAngularApp')
         }
         if (!correct && ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey')) {
           $scope.alert.msg = "editor.messages.quiz_no_answer"
+          $scope.state_exit_error = true
           return false
         }
       }
@@ -484,8 +487,10 @@ angular.module('scalearAngularApp')
         updateAnswers(data, $scope.selected_quiz, options);
         return true
       } else {
-        if ($scope.selected_quiz.quiz_type == 'html')
+        if ($scope.selected_quiz.quiz_type == 'html'){
           $scope.alert.msg = $scope.answer_form.$error.atleastone ? "editor.messages.quiz_no_answer" : "editor.messages.provide_answer"
+          $scope.state_exit_error = true
+        }
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)
@@ -770,5 +775,44 @@ angular.module('scalearAngularApp')
       $scope.editing_type = null
       $scope.refreshVideo()
     }
+
+    $rootScope.$on('$stateChangeStart', 
+      function(event, toState, toParams, fromState, fromParams, options){ 
+           //
+        if(!$scope.leave_state){
+          if ($scope.selected_marker && $scope.editing_mode) {
+            $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
+          }
+
+          if ($scope.selected_quiz && $scope.editing_mode) {
+            $scope.saveQuizBtn({ exit: true })
+          }
+          if($scope.state_exit_error){
+            event.preventDefault();
+            $scope.state_exit_error = false
+            ngDialog.openConfirm({
+              template: '<div class="ngdialog-message">\
+                          <h2><b><span translate>lectures.messages.change_lost</span></b></h2>\
+                          <span translate>lectures.messages.navigate_away</span>\
+                          </div>\
+                          <div class="ngdialog-buttons">\
+                              <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>global.leave</button>\
+                              <button type="button" class="ngdialog-button ngdialog-button-primary"  ng-click="confirm(1)"translate>global.stay</button>\
+                          </div>',
+              plain: true,
+              className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+              showClose: false,
+            }).then(
+            function (value) {
+              $("#module_"+$state.params.module_id).click()
+            }, 
+            function (value) {
+                  $scope.leave_state = true
+                  $scope.exitQuizBtn()
+                   $state.go(toState, toParams)
+              });
+          }
+        }
+      })
 
   }]);

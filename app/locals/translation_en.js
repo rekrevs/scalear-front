@@ -103,6 +103,8 @@ var translation_en={
     next: "Next",
     submit: "Submit",
     save: "Save",
+    publish: "Publish",
+    unpublish: "Unpublish",
     save_close: "Save and Close",
     close: "Close",
     delete: "Delete",

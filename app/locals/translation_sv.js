@@ -103,6 +103,8 @@ var translation_sv={
     next: "Nästa",
     submit: "Skicka in",
     save: "Spara",
+    publish: "Publish(t)",
+    unpublish: "Unpublish(t)",
     save_close: "Spara och stäng",
     close: "Stäng",
     delete: "Radera",

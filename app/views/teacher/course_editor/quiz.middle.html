@@ -32,6 +32,8 @@
 				<button class="button small" name="add_question" ng-click="addQuestion()" translate>editor.button.add_question</button>
 				<button class="button small" name="add_header" ng-click="addHeader()" translate>editor.button.add_header</button>
 				<button class="button small green" name="save_quiz" ng-click="saveAll()" translate>button.save</button>
+				<button class="button small green" name="save_publish" ng-click="savePublish(true)" ng-if="publish_state" translate>button.publish</button>
+				<button class="button small green" name="save_publish" ng-click="savePublish(false)" ng-if="!publish_state" translate>button.unpublish</button>
 				</div>	
 			</center>
 		</div>

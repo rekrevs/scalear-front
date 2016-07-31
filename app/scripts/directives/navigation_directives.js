@@ -277,7 +277,7 @@ angular.module('scalearAngularApp')
               $state.go('course.module.' + mode + '.' + item_type, params)
             }
             if(!(mode == 'courseware' && item_type == 'customlink')) {
-              scope.currentitem = { id: item.id }
+              scope.currentitem = { id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id }
             }
 
           }
@@ -294,9 +294,9 @@ angular.module('scalearAngularApp')
             $state.go('course.module.inclass', { module_id: module.id })
           } else
             $state.go('course.module.course_editor.overview', { module_id: module.id })
-          scope.currentmodule = module
+            scope.currentmodule = { id: $state.params.module_id }
           $timeout(function() {
-            scope.scrollIntoView(module)
+            scope.scrollIntoView(scope.currentmodule)
           })
 
         }

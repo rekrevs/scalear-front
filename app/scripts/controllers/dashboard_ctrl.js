@@ -9,6 +9,8 @@ angular.module('scalearAngularApp')
     $scope.eventSources = [];
     $scope.filtered_events = [];
     $scope.calendar_year = []
+    $scope.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"], // Names of months for drop-down and formatting
+
 
     $scope.toggleLargeCalendar = function() {
       $scope.large_calendar = !$scope.large_calendar
@@ -42,7 +44,7 @@ angular.module('scalearAngularApp')
 
 
     var getCalendar = function(year) {
-      Dashboard.getDashboard({ year: year }, function(data) {
+      Dashboard.getDashboard({ year: JSON.stringify(year) }, function(data) {
         $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + data.key
         $scope.calendar_pop = {
           content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
@@ -119,10 +121,41 @@ angular.module('scalearAngularApp')
         }
 
         $scope.uiConfig.calendar.viewRender = function(view, element) {
-          if(!($scope.calendar_year.indexOf(view.title.split(" ")[1]) >= 0)) {
-            $scope.calendar_year.push(view.title.split(" ")[1].toString())
-            getCalendar(view.title.split(" ")[1])
-          }
+        var months_to_get = []
+        var month_year = []
+        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0]) 
+        var current_year = parseInt(view.title.split(" ")[1]) 
+        console.log(current_year)
+        months_to_get.push((current_month-1)%12 + 1)
+        months_to_get.push((current_month)%12 + 1)
+        months_to_get.push((current_month+1)%12 + 1)
+        if(!($scope.calendar_year.indexOf(view.title) >= 0)) {
+          month_year.push(view.title)
+          $scope.calendar_year.push(view.title)
+        }
+        if(months_to_get[0] == 0){
+          var prev_month = $scope.monthNames[11]+" "+(current_year-1).toString()
+        }
+        else{
+          var prev_month = $scope.monthNames[(months_to_get[0]-1)]+" "+current_year.toString()
+        }
+        if(!($scope.calendar_year.indexOf(prev_month) >= 0)) {
+          month_year.push(prev_month)
+          $scope.calendar_year.push(prev_month)
+        }
+
+        if(months_to_get[2] == 1){
+          var next_month = $scope.monthNames[0]+" "+((current_year+1)).toString()
+        }
+        else{
+          var next_month = $scope.monthNames[(months_to_get[2]-1)]+" "+current_year.toString()
+        }
+        if(!($scope.calendar_year.indexOf(next_month) >= 0)) {
+          month_year.push(next_month)
+          $scope.calendar_year.push(next_month)
+        }
+        if (month_year.length !=0) {getCalendar(month_year)}
+
         }
 
         $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
@@ -159,9 +192,11 @@ angular.module('scalearAngularApp')
     }
 
     getAnnouncements();
-    var year = new Date().getFullYear()
-    getCalendar(year);
-    $scope.calendar_year.push(year.toString())
+    var monthyear = new Date()
+    monthyear =  $scope.monthNames[(monthyear.getMonth+1)]+" "+monthyear.getFullYear().toString()
+    getCalendar(monthyear);
+    $scope.calendar_year.push(monthyear )
+
 
 
   }]);

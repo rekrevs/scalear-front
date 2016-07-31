@@ -1,18 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('studentQuiz', ['Lecture','$stateParams','$log',function(Lecture, $stateParams, $log){
+.directive('studentQuiz', ['Lecture','$stateParams','$log','$rootScope',function(Lecture, $stateParams, $log, $rootScope){
 	return {
 		scope: {
 			quiz:"=",
 			studentAnswers:"=",
 			submitted:"=",
-			correct:"="			
+			correct:"=",
+			explanation:"="			
 		},
 		restrict: 'E',
 		templateUrl:'/views/student/lectures/student_quiz.html',
 		link:function(scope){
 			scope.index=0
+			scope.drag_explanation={}
 			scope.getIndex=function(){
 				return ++scope.index
 			}
@@ -33,6 +35,25 @@ angular.module('scalearAngularApp')
 			scope.valid= function(ques){
 				return scope.updateValues(ques)!=0
 			}
+
+			scope.getExplanationPop=function(id,drag_id){
+				var x = 0
+				if ( typeof(drag_id) == 'undefined'){
+					x = '<div ng-bind-html="explanation['+id+']"></div>'
+				}
+				else{
+					x ='<div ng-bind-html="explanation['+id+']['+drag_id+']"></div>'
+				}
+				return {
+					content:x,
+		            html:true,
+		            trigger:$rootScope.is_mobile? 'click' : 'hover',
+		            placement:"left"
+				}
+			}
+
+
+
 		}
 	};
 }]);

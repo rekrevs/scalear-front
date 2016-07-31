@@ -276,7 +276,7 @@ angular.module('scalearAngularApp', [
             params : { input1: null, input2: null }
         })
         .state('thanks_for_registering', {
-            url: '/users/thanks?type',
+            url: '/users/thanks',
             templateUrl: '/views/users/thanks.html',
             controller: 'ThanksForRegisteringCtrl',
             params : {email: null}

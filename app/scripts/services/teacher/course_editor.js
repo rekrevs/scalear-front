@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
 				answers=[answers];
 			}			
 			for(var answer in answers){
+				// var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id);
 				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id,explanations[answer]);
 				if(answer==0)
 					new_ans.id=id;
@@ -32,11 +33,11 @@ angular.module('scalearAngularApp')
 			answers.forEach(function(elem){
 				if(type=="quiz"){
 					all_answers.push(elem.content)
-					all_explanation = ""
+					all_explanation.push(elem.explanation||"")
 				}
 				else{
 					all_answers.push(elem.answer)
-					all_explanation.push(elem.explanation)
+					all_explanation.push(elem.explanation||"")
 				}
 			});
 			return x.newAnswer(all_answers,"","","","",type, question_id,all_explanation);
@@ -67,7 +68,8 @@ angular.module('scalearAngularApp')
 				var y={
 					content: ans || "",
 					correct:false,
-					question_id:question_id
+					question_id:question_id,
+					explanation: explanation|| ""
 				}
 			}
 			return y;

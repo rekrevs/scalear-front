@@ -643,8 +643,12 @@ angular.module('scalearAngularApp')
           { value: 'Match Text', text: $translate('content.questions.quiz_types.match_text') }
         ]
         $log.debug(scope.quiz)
-        if (!scope.quiz.match_type)
-          scope.quiz.match_type = scope.match_types[0].value
+        if (!scope.quiz.match_type) {
+          if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers[0].content !="")
+            scope.quiz.match_type =scope.match_types[1].value
+          else
+            scope.quiz.match_type =scope.match_types[0].value
+        }
 
         if (!scope.isSurvey()) {
           scope.quiz_types.push({ value: "drag", text: $translate('content.questions.quiz_types.drag') })
@@ -801,7 +805,7 @@ angular.module('scalearAngularApp')
         "<input class='valign-middle' ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />" + //atleastone
         "</div>" +
         "</div>" +
-        "<div class ='row collapse' ng-if='show() && !isSurvey()'>" +
+        "<div class ='row collapse' ng-if='!isSurvey()'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
@@ -833,7 +837,7 @@ angular.module('scalearAngularApp')
         "<input class='valign-middle' id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>" + //atleastone
         "</div>" +
         "</div>" +
-        "<div class ='row collapse' ng-if='show() && !isSurvey()'>" +
+        "<div class ='row collapse' ng-if='!isSurvey()'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +

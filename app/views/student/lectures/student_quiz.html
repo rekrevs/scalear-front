@@ -16,16 +16,17 @@
                     <p ng-if='correct[question.id]==3' class='color-green correct right' translate='quizzes.grade.correct'></p>
                 </div>
             </div>
-
             <div class="small-12 columns">
                 <div class="small-12 column" ng-if='question.question_type == "Free Text Question"'>
                     <textarea ng-model='studentAnswers[question.id]'></textarea>
+                    <div ng-bind-html="explanation[question.answers[0].id]"></div>
                 </div>
                 <div ng-if='question.question_type.toUpperCase()=="OCQ" || question.question_type.toUpperCase()=="MCQ"' ng-repeat='answer in question.answers'>
                     <div class="small-12 columns" ng-if='question.question_type=="MCQ"' width='10px;'>
                         <label class="with-margin-top">
                             <input class="left with-small-margin-right with-tiny-margin-top" atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})' ng-class="{error: submitted && !valid(question.id)}"/>
-                            <div ng-bind-html="answer.content"></div>
+                            <div ng-bind-html="answer.content" ng-init="answer.options = getExplanationPop(answer.id)" pop-over="answer.options"></div>
+
                             <small class='error' ng-show='submitted && !valid(question.id)' translate>quizzes.must_choose_answer</small>
                         </label>
                     </div>
@@ -33,7 +34,7 @@
                     <div class="small-12 columns" ng-if='question.question_type=="OCQ"' width='10px;'>
                         <label class="with-margin-top">
                             <input class="left with-margin-right" atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})' ng-class="{error: submitted && !valid(question.id)}"/>
-                            <div ng-bind-html="answer.content"></div>
+                            <div ng-bind-html="answer.content" ng-init="options = getExplanationPop(answer.id)" pop-over="options"></div>
                             <small class='error' ng-show='submitted && !valid(question.id)' translate>quizzes.must_choose_answer</small>
                         </label>
                     </div>
@@ -43,7 +44,7 @@
                        <ul class='sortable custome' ui-sortable ng-model='studentAnswers[question.id]'>
                           <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default with-small-padding with-tiny-margin'>
                              <div class='ui-icon ui-icon-arrowthick-2-n-s handle must-show-inline valign-middle'></div>
-                             <div class="must-show-inline" ng-bind-html="answer"></div>
+                             <div class="must-show-inline" ng-bind-html="answer" ng-init="drag_explanation[studentAnswers[question.id].indexOf(answer)] = getExplanationPop(question.answers[0].id,studentAnswers[question.id].indexOf(answer))" pop-over="drag_explanation[studentAnswers[question.id].indexOf(answer)]" ></div>
                           </li>
                        </ul>
                     </div>

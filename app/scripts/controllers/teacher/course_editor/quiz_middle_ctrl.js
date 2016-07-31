@@ -32,15 +32,15 @@ angular.module('scalearAngularApp')
 			  	$scope.questions.forEach(function(question,index){
 			  		if(question.question_type.toUpperCase() == 'DRAG'){
 						question.answers = []
-						if(!data.answers[index].length)
+						if(!data.answers[index].length)	
 							$scope.addHtmlAnswer("", question)
 						else
-							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz")
+							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id,data.answers[index][0].explanation)
 					}
-					else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
-						question.answers=[];
-						$scope.addHtmlAnswer("",question)
-					}
+					// else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
+					// 	question.answers=[];
+					// 	$scope.addHtmlAnswer("",question)
+					// }
 					else{
 						question.answers = data.answers[index]
 						if(!data.answers[index].length && question.question_type != 'Free Text Question')
@@ -99,11 +99,11 @@ angular.module('scalearAngularApp')
 				y.answers=[obj]
 				data[elem]= y
 			}
-			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text'){
-				var y=angular.copy($scope.questions[elem])
-				y.answers=[]
-				data[elem]= y
-			}
+			// else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text'){
+			// 	var y=angular.copy($scope.questions[elem])
+			// 	y.answers=[]
+			// 	data[elem]= y
+			// }
 			else
 				data[elem] = $scope.questions[elem]
 		}

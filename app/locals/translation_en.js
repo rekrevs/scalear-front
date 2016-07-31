@@ -56,6 +56,8 @@ var translation_en={
     warning:"Warning",
     are_you_sure: "Are you sure you want to proceed?",
     visible: "Visible",
+    leave: "Leave",
+    stay: "Stay",
   },
   mailer:{
     send_email: "Send An Email",
@@ -552,6 +554,8 @@ var translation_en={
         please_choose_an_answer: "Please choose your answer(s).",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         really_confused_use_question: "You could ask a question so the teacher can help you.",
+        navigate_away:"Are you sure you want to navigate away from this page?",
+        change_lost:"Your changes will be lost!",
     },
     timeline:{
         timeline: "Timeline",

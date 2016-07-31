@@ -261,7 +261,8 @@ angular.module('scalearAngularApp')
         $timeout(function() {
           $scope.scrollIntoView()
         }, 500)
-      } else {
+      } 
+      else if(!($rootScope.is_mobile)) {
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.pause()
       }
@@ -440,7 +441,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.canPlay = function() {
-      if($scope.go_to_time && !$rootScope.is_mobile) {
+      if($scope.go_to_time ) {
         if($scope.go_to_time >= 0)
           var time = $scope.go_to_time
           $timeout(function(){

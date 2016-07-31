@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils', 'course_data', '$state', 'ContentNavigator', '$window', 'MobileDetector', function($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils, course_data, $state, ContentNavigator, $window, MobileDetector) {
     angular.extend($scope.$parent, course_data)
     if($state.includes("**.course")) {
-      if($rootScope.course_role == 2) {
+      if($rootScope.course_role == 2 || $rootScope.course_role == 7) {
         if(MobileDetector.isPhone() && angular.element($window).width() < 700 /*ipad 768x1024 */ ) {
           $state.go('course.content_selector', { course_id: $scope.course.id })
         } else {
@@ -41,7 +41,7 @@ angular.module('scalearAngularApp')
                 x.getTeacherData(id).then(function(data) {
                   deferred.resolve(data);
                 })
-              } else if($rootScope.course_role == 2) {
+              } else if($rootScope.course_role == 2 || $rootScope.course_role == 7) {
                 x.getStudentData(id).then(function(data) {
                   deferred.resolve(data);
                 })

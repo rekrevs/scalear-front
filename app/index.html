@@ -70,14 +70,14 @@
                 <div ng-if="course_role==1">
                     <teacher-navigation course="course"  />
                 </div>
-                <div ng-if="course_role==2">
+                <div ng-if="course_role==2 || course_role == 7">
                     <student-navigation course="course" />
                 </div>
             </div>
             <div class="container row">
                 <content-navigator ng-if="course_role==1" modules="course.modules" mode="editor" open="ContentNavigator.status">
                 </content-navigator>
-                <content-navigator ng-if="course_role==2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
+                <content-navigator ng-if="course_role==2 || course_role == 7" modules="course.groups" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
                 <br ng-hide="('**.course.**' | includedByState)"/>
                 <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin"></div>

@@ -24,10 +24,10 @@ angular.module('scalearAngularApp')
       $scope.course.time_zone = zone
       return
     }
-  }) 
- 
+  })
+
   $scope.updateCourse = function(data,type){
-    if(data && data instanceof Date){ 
+    if(data && data instanceof Date){
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
           $scope.course[type] = data
     }
@@ -57,8 +57,8 @@ angular.module('scalearAngularApp')
     }
     else{
       if (!$scope.course.disable_registration) {
-        $scope.course.disable_registration = $scope.course.end_date   
-        $scope.updateCourse($scope.course.disable_registration,"disable_registration")        
+        $scope.course.disable_registration = $scope.course.end_date
+        $scope.updateCourse($scope.course.disable_registration,"disable_registration")
       };
     }
   }
@@ -70,11 +70,11 @@ angular.module('scalearAngularApp')
     if($scope.formData.disable_registration_checked && !data){
       $scope.formData.disable_registration_checked = false
       $scope.course.disable_registration = null
-      $scope.updateCourse("","disable_registration")        
+      $scope.updateCourse("","disable_registration")
     }
     Course.validateCourse(
       {course_id:$stateParams.course_id},
-      course 
+      course
 ,
       function(){
         d.resolve()
@@ -97,7 +97,7 @@ angular.module('scalearAngularApp')
             ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 2000);
             $interval(function() {
                   $rootScope.show_alert = "";
-            }, 4000, 1);                    
+            }, 4000, 1);
       }
     })
   }
@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
   $scope.removeTeacher = function(index){
     Course.deleteTeacher(
       {
-        course_id:$stateParams.course_id, 
+        course_id:$stateParams.course_id,
         email:$scope.teachers[index].email
       }, {},
       function(){
@@ -169,12 +169,6 @@ angular.module('scalearAngularApp')
   $scope.animateCopy=function(){
      $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
   }
-
-  $scope.updateTeacherEmailDiscussion=function(){
-
-  }
-
-
 
   $scope.getTeachers();
 

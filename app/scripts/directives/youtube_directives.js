@@ -126,14 +126,17 @@ angular.module('scalearAngularApp')
 
       player_controls.mute = function() {
         player.mute();
+        VideoInformation.volume = 0
       }
 
       player_controls.volume = function(val) {
         player.volume(val);
+        VideoInformation.volume = val
       }
 
       player_controls.unmute = function() {
         player.unmute();
+        VideoInformation.volume = 0.8
       }
       player_controls.paused = function() {
         return player.paused();
@@ -266,6 +269,8 @@ angular.module('scalearAngularApp')
         } else {
           player.video.playbackRate = speed
         }
+
+        VideoInformation.speed = speed
       }
 
       player_controls.getAvailableQuality = function() {
@@ -283,6 +288,7 @@ angular.module('scalearAngularApp')
           if (paused)
             player_controls.pause()
         }
+        VideoInformation.quality = quality
       }
 
       var setupEvents = function() {

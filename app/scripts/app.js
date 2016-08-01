@@ -131,7 +131,7 @@ angular.module('scalearAngularApp', [
                 if(toParams.course_id && $rootScope.current_user){
                     Course.getRole({course_id: toParams.course_id}, function(resp) {
                         $rootScope.course_role = resp.role
-                        if((stateTeacher(to.name) && $rootScope.course_role === 2) || (stateStudent(to.name) && $rootScope.course_role === 1)) { // student trying to access teacher page  // teacher trying to access student page
+                        if((stateTeacher(to.name) && ($rootScope.course_role === 2 || $rootScope.course_role === 7 )) || (stateStudent(to.name) && $rootScope.course_role === 1)) { // student trying to access teacher page  // teacher trying to access student page
                             $state.go("course_list");
                             $rootScope.show_alert = "error";
                             ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);

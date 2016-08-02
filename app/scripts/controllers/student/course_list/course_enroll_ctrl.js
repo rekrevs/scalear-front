@@ -10,13 +10,9 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('get_current_courses')
           }, function(response){
               $scope.user.errors=response;
-              $rootScope.show_alert = "error";
-              ErrorHandler.showMessage(response.data.errors, 'errorMessage', 2000);
-              $interval(function() {
-                $rootScope.show_alert = "";
-              }, 4000, 1);
+              ErrorHandler.showMessage(response.data.errors, 'errorMessage', 4000, "error");
               if($rootScope.current_user)
                 $state.go("course_list")
-          }) 
+          })
 
   }]);

@@ -89,8 +89,7 @@ angular.module('scalearAngularApp')
   var next=function(user){
     if(!user.info_complete){
       $state.go("edit_account");
-      $rootScope.show_alert = "error";
-      ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
+      ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', null, "error");
     }
     else if(URLInformation.redirect){
        $window.location.href= URLInformation.redirect
@@ -110,11 +109,7 @@ angular.module('scalearAngularApp')
       },
       function(){
         $rootScope.busy_loading = false;
-        $rootScope.show_alert = "error";
-        ErrorHandler.showMessage('Could not reach provider', 'errorMessage', 8000);
-        $timeout(function() {
-            $rootScope.show_alert = "";
-        }, 4000);
+        ErrorHandler.showMessage('Could not reach provider', 'errorMessage', 4000, "error");
       }
     )
   }

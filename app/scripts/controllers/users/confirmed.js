@@ -53,7 +53,6 @@ angular.module('scalearAngularApp')
         }, function(reason) {
           $rootScope.busy_loading = true;
           UserSession.logout().then(function() {
-            $rootScope.show_alert = "";
             $state.go("login");
             $rootScope.busy_loading = false;
           });

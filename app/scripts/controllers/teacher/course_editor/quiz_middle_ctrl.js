@@ -32,7 +32,7 @@ angular.module('scalearAngularApp')
 			  	$scope.questions.forEach(function(question,index){
 			  		if(question.question_type.toUpperCase() == 'DRAG'){
 						question.answers = []
-						if(!data.answers[index].length)	
+						if(!data.answers[index].length)
 							$scope.addHtmlAnswer("", question)
 						else
 							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id,data.answers[index][0].explanation)
@@ -124,7 +124,7 @@ angular.module('scalearAngularApp')
         delete modified_quiz.id;
         delete modified_quiz.due_date_enabled;
         delete modified_quiz.disable_module_due_controls
- 		if (publishstate){// make appearance data today 
+ 		if (publishstate){// make appearance data today
 			modified_quiz.appearance_time = new Date()
  		}
  		else{
@@ -163,11 +163,7 @@ angular.module('scalearAngularApp')
 		if(question.answers.length>1){
 			question.answers.splice(index, 1);
 		}else{
-			$rootScope.show_alert="error";
-	      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
-	      	$timeout(function(){
-	      		$rootScope.show_alert="";
-	      	},4000);
+    	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
 		}
 	}
 

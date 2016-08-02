@@ -31,12 +31,7 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                $rootScope.show_alert = "success";
-                ErrorHandler.showMessage($translate("error_message.connected"), 'errorMessage', 2000);
-                $rootScope.stop = $interval(function() {
-                    $rootScope.server_error = false;
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage($translate("error_message.connected"), 'errorMessage', 4000, "success");
             }
 
             // if (response.data.notice && response.config.url.search(re) != -1) {
@@ -75,11 +70,7 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage(rejection.headers()["x-flash-error"] || rejection.headers()["x-flash-warning"], 'errorMessage');
-                $rootScope.stop = $interval(function() {
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage(rejection.headers()["x-flash-error"] || rejection.headers()["x-flash-warning"], 'errorMessage', 4000, "error");
             }
 
             if (rejection.status == 400 && rejection.config.url.search(re) != -1) {
@@ -87,16 +78,12 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
-                $rootScope.stop = $interval(function() {
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
             }
 
             if (rejection.status == 404 && rejection.config.url.search(re) != -1) {
                 var $state = $injector.get('$state');
-                if ($rootScope.current_user) 
+                if ($rootScope.current_user)
                     $state.go("course_list") //check
                 else
                     $state.go("login") //check
@@ -106,11 +93,7 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                $rootScope.show_alert = "error";
-                ErrorHandler.showFMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
-                $rootScope.stop = $interval(function() {
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showFMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
             }
 
             if (rejection.status == 403 && rejection.config.url.search(re) != -1) {
@@ -124,19 +107,13 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-                $rootScope.stop = $interval(function() {
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
 
-
-
+                ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 4000,  "error");
             }
 
             if (rejection.status == 401 && rejection.config.url.search(re) != -1) {
                 URLInformation.redirect = URLInformation.history
-                var $state = $injector.get('$state');                
+                var $state = $injector.get('$state');
                 if($cookieStore.get('preview_as_student')){
                     $log.debug("preview_as_student")
                   $cookieStore.remove('preview_as_student')
@@ -151,11 +128,7 @@ angular.module('scalearAngularApp')
                     $rootScope.stop = undefined;
                 }
 
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["error"] === 'undefined') ? rejection.data : rejection.data["error"]), 'errorMessage', 8000);
-                $rootScope.stop = $interval(function() {
-                    $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["error"] === 'undefined') ? rejection.data : rejection.data["error"]), 'errorMessage', 4000, "error");
                 $state.go("login")
 
             }
@@ -163,12 +136,11 @@ angular.module('scalearAngularApp')
             if (rejection.status == 0 && rejection.config.url.search(re) != -1 && $rootScope.unload != true){ //host not reachable
                 if ($rootScope.server_error != true) {
                     $rootScope.server_error = true;
-                    $rootScope.show_alert = "error";
 
                     if (rejection.data == "")
-                        ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('error_message.cant_connect_to_server'), 'errorMessage', 8000);
+                        ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('error_message.cant_connect_to_server'), 'errorMessage', 8000, "error");
                     else
-                        ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+                        ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 10000, "error");
                 }
 
                 var $http = $injector.get('$http'); //test connection every 10 seconds.

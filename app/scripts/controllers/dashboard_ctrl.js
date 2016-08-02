@@ -100,21 +100,13 @@ angular.module('scalearAngularApp')
             },
             function(response) {
               if(response.notice) {
-                $rootScope.show_alert = "success";
-                ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000);
-                $interval(function() {
-                  $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000, "success");
               }
             },
             function(response) {
               revertFunc()
                 // if (response.notice){
-              $rootScope.show_alert = "error";
-              ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 2000);
-              $interval(function() {
-                $rootScope.show_alert = "";
-              }, 4000, 1);
+              ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 2000, "error");
               // }
             }
           );
@@ -123,8 +115,8 @@ angular.module('scalearAngularApp')
         $scope.uiConfig.calendar.viewRender = function(view, element) {
         var months_to_get = []
         var month_year = []
-        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0]) 
-        var current_year = parseInt(view.title.split(" ")[1]) 
+        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0])
+        var current_year = parseInt(view.title.split(" ")[1])
         console.log(current_year)
         months_to_get.push((current_month-1)%12 + 1)
         months_to_get.push((current_month)%12 + 1)

@@ -338,11 +338,7 @@ angular.module('scalearAngularApp')
 
     $scope.removeHtmlAnswer = function(index) {
       if ($scope.selected_quiz.answers.length <= 1) {
-        $rootScope.show_alert = "error";
-        ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
-        $timeout(function() {
-          $rootScope.show_alert = "";
-        }, 4000);
+        ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
       } else
         $scope.selected_quiz.answers.splice(index, 1);
     }
@@ -776,8 +772,8 @@ angular.module('scalearAngularApp')
       $scope.refreshVideo()
     }
 
-    $rootScope.$on('$stateChangeStart', 
-      function(event, toState, toParams, fromState, fromParams, options){ 
+    $rootScope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams, options){
            //
         if(!$scope.leave_state){
           if ($scope.selected_marker && $scope.editing_mode) {
@@ -805,7 +801,7 @@ angular.module('scalearAngularApp')
             }).then(
             function (value) {
               $("#module_"+$state.params.module_id).click()
-            }, 
+            },
             function (value) {
                   $scope.leave_state = true
                   $scope.exitQuizBtn()

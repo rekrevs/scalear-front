@@ -75,11 +75,11 @@ angular.module('scalearAngularApp')
       course_role = null
     }
 
-    function isStudent(){
+    function isStudent() {
       return course_role == 2 || course_role == 7
     }
 
-    function isTeacher(){
+    function isTeacher() {
       return course_role == 1
     }
 
@@ -111,16 +111,16 @@ angular.module('scalearAngularApp')
       Course.getCourseEditor({ course_id: id },
         function(data) {
           course = data.course
-          course.modules = data.groups
           ModuleModel.setModules(data.groups)
-          // course.module_obj = {}
-          // course.items_obj = { lecture: {}, quiz: {}, customlink: {} }
-          // course.modules.forEach(function(module) {
-          //   course.module_obj[module.id] = module
-          //   module.items.forEach(function(item) {
-          //     course.items_obj[item.class_name][item.id] = item
-          //   })
-          // })
+          // course.modules = data.groups
+            // course.module_obj = {}
+            // course.items_obj = { lecture: {}, quiz: {}, customlink: {} }
+            // course.modules.forEach(function(module) {
+            //   course.module_obj[module.id] = module
+            //   module.items.forEach(function(item) {
+            //     course.items_obj[item.class_name][item.id] = item
+            //   })
+            // })
           deferred.resolve(course);
         },
         function() {
@@ -154,12 +154,62 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("item_done", course.groups[group_index].items[item_index])
     }
 
-    function getCourse(){
+    function getCourse() {
       return course
     }
 
-    function removeCourse(){
+    function removeCourse() {
       course = null
+    }
+
+    function update(c) {
+      var modified_course = angular.copy(c);
+      console.log(modified_course.time_zone);
+      modified_course.time_zone = c.time_zone.name
+      delete modified_course.id;
+      delete modified_course.created_at;
+      delete modified_course.updated_at;
+      delete modified_course.unique_identifier;
+      delete modified_course.duration;
+      delete modified_course.guest_unique_identifier
+      return Course.update(
+        { course_id: course.id },
+        { course: modified_course },
+        function() {
+          angular.extend(course, modified_course)
+            // $scope.$emit('get_current_courses')
+        }
+      ).$promise
+    }
+
+    function validate(c) {
+      return Course.validateCourse({ course_id: course.id }, c).$promise
+    }
+
+    function exportCourse() {
+      return Course.exportCsv({ course_id: course.id }).$promise
+    }
+
+    function getTeachers() {
+      return Course.getTeachers({ course_id: course.id }).$promise
+    }
+
+    function updateTeacher(teacher) {
+      return Course.updateTeacher({ course_id: course.id }, teacher).$promise
+    }
+
+    function saveNewTeacher(teacher){
+      return Course.saveTeacher(
+        { course_id: course.id },
+        { new_teacher: teacher }
+      ).$promise
+    }
+
+    function deleteTeacher(teacher) {
+      return Course.deleteTeacher({
+        course_id: course.id,
+        email: teacher.email
+      }).$promise
     }
 
     return {
@@ -170,7 +220,14 @@ angular.module('scalearAngularApp')
       getData: init,
       getCourse: getCourse,
       isStudent: isStudent,
-      isTeacher: isTeacher
+      isTeacher: isTeacher,
+      update: update,
+      validate: validate,
+      getTeachers: getTeachers,
+      updateTeacher: updateTeacher,
+      deleteTeacher: deleteTeacher,
+      saveNewTeacher:saveNewTeacher,
+      exportCourse:exportCourse
     }
 
   }])

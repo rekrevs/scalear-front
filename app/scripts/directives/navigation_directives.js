@@ -23,7 +23,6 @@ angular.module('scalearAngularApp')
           $rootScope.busy_loading = true;
           $timeout(function() {
             UserSession.logout().then(function(){
-              $rootScope.show_alert = "";
               $state.go("login");
               $rootScope.busy_loading = false;
             })

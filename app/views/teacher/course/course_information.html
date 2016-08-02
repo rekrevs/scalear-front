@@ -36,7 +36,7 @@
                         <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_email</span></label>
                     </li>
                     <li>
-                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher(teacher)" style="cursor: pointer;"></delete-button>
                     </li>
                 </div>
             </div>
@@ -104,14 +104,14 @@
                 <i class="fi-calendar size-18"></i>
                 <small translate>courses.start_date</small>
                 <div>
-                    <details-date date="course.start_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
+                    <details-date date="course.start_date" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
                 <small translate>courses.end_date</small>
                 <div>
-                    <details-date date="course.end_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="end_date"></details-date>
+                    <details-date date="course.end_date" save="updateCourse(data,type)" validate="validateCourse" column="end_date"></details-date>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
@@ -123,17 +123,11 @@
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
-                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input ng-model="formData.disable_registration_checked" type="checkbox" ng-change="enable_disable_registration()" style="margin-left: 10px;"  >
+                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input ng-model="formData.disable_registration_checked" type="checkbox" ng-change="toggleRegistrationCheck()" style="margin-left: 10px;"  >
                  <div>
-                    <details-date date="course.disable_registration | amDateFormat:'dddd, DD MMMM YYYY'" ng-hide="!formData.disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" ></details-date>
+                    <details-date date="course.disable_registration" ng-show="formData.disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" ></details-date>
                     <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && formData.disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
                 </div>
-
-                <!-- <div>
-                    <input name="date" type="text" ng-hide="!disable_registration_checked" datepicker-popup="dd-MMMM-yyyy" ng-model="course.disable_registration"  ng-class="{error: server_errors['disable_registration']}"/>
-
-                </div>
- -->
             </div>
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i>

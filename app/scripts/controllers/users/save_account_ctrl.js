@@ -14,18 +14,13 @@ angular.module('scalearAngularApp')
             user: $scope.user
         }, function(response) {
             $scope.sending = false;
-            $rootScope.show_alert = "";
             if($rootScope.current_user.intro_watched == false){
                 $state.go('confirmed')
             }
             $scope.user.current_password = null;
             $modalInstance.close();
             if (response.password_confrimation){
-                $rootScope.show_alert = "success";
-                ErrorHandler.showMessage($translate("error_message.change_password_confirmation"), 'errorMessage', 2000);
-                $interval(function() {
-                      $rootScope.show_alert = "";
-                }, 4000, 1);                    
+                ErrorHandler.showMessage($translate("error_message.change_password_confirmation"), 'errorMessage', 4000, "success");
             }
 
         }, function(response) {

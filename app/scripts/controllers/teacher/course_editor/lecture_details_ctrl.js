@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils','OnlineQuiz','OnlineMarker','Timeline','$modal', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils, OnlineQuiz, OnlineMarker, Timeline, $modal) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','ScalearUtils','OnlineQuiz','OnlineMarker','Timeline','$modal', function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, ScalearUtils, OnlineQuiz, OnlineMarker, Timeline, $modal) {
 
     var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
         if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -278,7 +278,7 @@ angular.module('scalearAngularApp')
                 $scope.video={}
                 $scope.video.title = data.items[0].snippet.title//data.entry.title.$t;
                 $scope.video.author =data.items[0].snippet.channelTitle//data.entry.author[0].name.$t;
-		        var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
+		        var duration = ScalearUtils.parseDuration(data.items[0].contentDetails.duration)
                 $scope.lecture.duration = $scope.lecture.duration || (duration.hour*(60*60)+duration.minute*(60)+duration.second)//data.entry.media$group.yt$duration.seconds
                 // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
                 d.resolve()

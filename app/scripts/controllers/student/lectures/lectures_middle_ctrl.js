@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'scalear_utils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, scalear_utils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation) {
 
     $log.debug("lect mid ctlr")
     $scope.video_layer = {}
@@ -171,8 +171,8 @@ angular.module('scalearAngularApp')
             if(!$scope.preview_as_student) {
               for(var item in lec.requirements) {
                 for(var id in lec.requirements[item]) {
-                  var group_index = scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
-                  var item_index = scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id]) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                  var group_index = ScalearUtils.getIndexById($scope.course.groups, $stateParams.module_id) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
+                  var item_index = ScalearUtils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id]) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                   if(item_index != -1 && group_index != -1)
                     if(!$scope.course.groups[group_index].items[item_index].is_done)
                       $scope.passed_requirments = false
@@ -281,7 +281,7 @@ angular.module('scalearAngularApp')
         $timeout(function() {
           $scope.scrollIntoView()
         }, 500)
-      } 
+      }
       else if(!($rootScope.is_mobile)) {
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.pause()
@@ -537,10 +537,10 @@ angular.module('scalearAngularApp')
           $scope.$apply()
         });
       }
-      else if(scalear_utils.calculateScreenRatio() == "4:3"){
+      else if(ScalearUtils.calculateScreenRatio() == "4:3"){
         $scope.video_layer ={'marginTop':"5.5%", 'marginBottom': "5.5%"}
       }
-      else if(scalear_utils.calculateScreenRatio() == "16:9"){
+      else if(ScalearUtils.calculateScreenRatio() == "16:9"){
         $scope.video_layer ={'paddingBottom': '51.7%'}
       }
     }

@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','scalear_utils','Timeline', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, scalear_utils, Timeline) {
+    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','ScalearUtils','Timeline', 'CourseModel', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, Timeline, CourseModel) {
 
+    $scope.course = CourseModel.getCourse()
  	Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
@@ -27,9 +28,9 @@ angular.module('scalearAngularApp')
             },350)
         }
     })
-    
+
     $scope.$on('share_copy', function(event, data){
-        openSharingModal(data)      
+        openSharingModal(data)
     })
 
      $scope.$on('add_module', function(){
@@ -65,13 +66,13 @@ angular.module('scalearAngularApp')
     $scope.$on('copy_item', function(event, item){
         $scope.copy(item)
     })
-    
+
     $scope.$on('paste_item', function(event, module_id){
         $scope.paste(module_id)
     })
 
  	$scope.capitalize = function(s){
- 		return scalear_utils.capitalize(s)
+ 		return ScalearUtils.capitalize(s)
  	}
 
  	$scope.addModule=function(callback){
@@ -85,7 +86,7 @@ angular.module('scalearAngularApp')
                 ContentNavigator.open()
                 if(callback)
                     callback(data.group.id)
-	    	}, 
+	    	},
 	    	function(){}
 		);
     }
@@ -114,7 +115,7 @@ angular.module('scalearAngularApp')
         else if(type == 'inclass_video')
             $scope.addLecture(module_id || $state.params.module_id, true)
         else if(type == 'link')
-            $scope.addCustomLink(module_id || $state.params.module_id)            
+            $scope.addCustomLink(module_id || $state.params.module_id)
         else
             $scope.addQuiz(module_id || $state.params.module_id, type)
     }
@@ -123,7 +124,7 @@ angular.module('scalearAngularApp')
     	$scope.item_loading=true
     	Lecture.newLecture(
             {
-                course_id: $stateParams.course_id, 
+                course_id: $stateParams.course_id,
                 group: module_id,
                 inclass: inclass
             },
@@ -133,7 +134,7 @@ angular.module('scalearAngularApp')
 	    	    $scope.items_obj["lecture"][data.lecture.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
     			$scope.item_loading=false
                 $state.go('course.module.course_editor.lecture', {lecture_id: data.lecture.id})
-	    	}, 
+	    	},
 	    	function(){}
 		);
     }
@@ -141,7 +142,7 @@ angular.module('scalearAngularApp')
     $scope.removeLecture=function(item){
     	Lecture.destroy(
     		{
-    			course_id: $stateParams.course_id, 
+    			course_id: $stateParams.course_id,
     			lecture_id: item.id
     		},
     		{},
@@ -157,7 +158,7 @@ angular.module('scalearAngularApp')
     		function(){}
 		);
     }
-    
+
     $scope.addQuiz=function(module_id, type){
     	$scope.item_loading=true
     	Quiz.newQuiz(
@@ -170,11 +171,11 @@ angular.module('scalearAngularApp')
         	    $scope.items_obj["quiz"][data.quiz.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
     			$scope.item_loading=false
                 $state.go('course.module.course_editor.quiz', {quiz_id: data.quiz.id})
-        	}, 
+        	},
         	function(){}
 		);
     }
-    
+
     $scope.removeQuiz=function(item){
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
@@ -206,7 +207,7 @@ angular.module('scalearAngularApp')
 
     $scope.paste=function(module_id){
     	var clipboard = $rootScope.clipboard
-        
+
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)
         else{
@@ -216,11 +217,11 @@ angular.module('scalearAngularApp')
                 pasteQuiz(clipboard, module_id)
             else if(clipboard.type == 'customlink')
                 pastLink(clipboard, module_id)
-        } 
+        }
     }
 
     var pasteModule=function(module){
-   		$scope.module_overlay = true 
+   		$scope.module_overlay = true
     	Module.moduleCopy(
 		{course_id: $stateParams.course_id	},
 		{module_id: module.id},
@@ -238,7 +239,7 @@ angular.module('scalearAngularApp')
     }
 
     var pasteLecture=function(item, module_id){
-    	$scope.item_overlay = true  
+    	$scope.item_overlay = true
     	Lecture.lectureCopy(
     		{course_id: $stateParams.course_id},
     		{
@@ -246,18 +247,18 @@ angular.module('scalearAngularApp')
     			module_id :module_id
     		},
     		function(data){
-    			$scope.item_overlay = false 
+    			$scope.item_overlay = false
     			data.lecture.class_name='lecture'
     			$scope.module_obj[module_id].items.push(data.lecture)
                 $scope.module_obj[module_id].total_time += data.lecture.duration
                 $scope.items_obj["lecture"][data.lecture.id] = data.lecture
-    		}, 
+    		},
     		function(){}
 		)
     }
 
     var pasteQuiz=function(item, module_id){
-    	$scope.item_overlay = true  
+    	$scope.item_overlay = true
     	Quiz.quizCopy(
     		{course_id: $stateParams.course_id},
     		{
@@ -266,11 +267,11 @@ angular.module('scalearAngularApp')
     		},
     		function(data){
     			$log.debug(data)
-    			$scope.item_overlay = false 
+    			$scope.item_overlay = false
     			data.quiz.class_name='quiz'
     			$scope.module_obj[module_id].items.push(data.quiz)
                 $scope.items_obj["quiz"][data.quiz.id] = data.quiz
-    		}, 
+    		},
     		function(){}
 		)
     }
@@ -279,7 +280,7 @@ angular.module('scalearAngularApp')
     var pastLink=function(item,module_id){
         $log.debug("link copy")
         $log.debug(item)
-        $scope.item_overlay = true  
+        $scope.item_overlay = true
         CustomLink.linkCopy(
             {
                 link_id: item.id,
@@ -289,11 +290,11 @@ angular.module('scalearAngularApp')
             {},
             function(data){
                 $log.debug(data)
-                $scope.item_overlay = false 
+                $scope.item_overlay = false
                 data.link.class_name='customlink'
                 $scope.module_obj[module_id].items.push(data.link)
                 $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
-            }, 
+            },
             function(){}
         )
     }
@@ -318,7 +319,7 @@ angular.module('scalearAngularApp')
     $scope.addCustomLink=function(module_id){
         Module.newCustomLink(
             {
-                course_id:$stateParams.course_id, 
+                course_id:$stateParams.course_id,
                 module_id:module_id
             },
             {},
@@ -328,7 +329,7 @@ angular.module('scalearAngularApp')
                 $scope.module_obj[module_id].items.push(data.link)
                 $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
                 $state.go('course.module.course_editor.customlink', {customlink_id: data.link.id})
-            }, 
+            },
             function(){}
         );
     }
@@ -344,7 +345,7 @@ angular.module('scalearAngularApp')
                 if($state.params.customlink_id == elem.id)
                     $state.go('course.module.course_editor.overview')
                 $scope.$broadcast('update_module_statistics')
-            }, 
+            },
             function(){}
         );
     }

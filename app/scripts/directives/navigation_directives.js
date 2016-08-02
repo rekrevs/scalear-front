@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive('mainNavigation', ['$state', '$tour', 'scalear_api', '$timeout', '$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator', 'User', 'Preview', '$log', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User, Preview, $log) {
+  .directive('mainNavigation', ['$state', '$tour', 'scalear_api', '$timeout', '$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator', 'User', 'Preview', '$log','UserSession', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User, Preview, $log, UserSession) {
     return {
       replace: true,
       restrict: "E",
@@ -22,12 +22,11 @@ angular.module('scalearAngularApp')
         scope.logout = function() {
           $rootScope.busy_loading = true;
           $timeout(function() {
-            User.sign_out({}, function() {
+            UserSession.logout().then(function(){
               $rootScope.show_alert = "";
-              $rootScope.current_user = null
               $state.go("login");
               $rootScope.busy_loading = false;
-            });
+            })
           }, 200);
         }
 

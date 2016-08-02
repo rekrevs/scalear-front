@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'scalear_utils', '$translate', '$filter', function($rootScope, $scope, Course, $state, $window, $log, Page, scalear_utils, $translate, $filter) {
+.controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.new_course')
     $rootScope.subheader_message = $translate("navigation.new_course")
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
       function(data) {
         $scope.importing = data.importing;
 
-        $scope.timezones = scalear_utils.listTimezones()
+        $scope.timezones = ScalearUtils.listTimezones()
         $scope.course.time_zone = $scope.timezones[11] //GMT+0
         $scope.course.start_date = new Date()
         $scope.import_from = null

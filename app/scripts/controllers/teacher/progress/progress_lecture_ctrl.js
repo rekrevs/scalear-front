@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture','scalear_utils', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture, scalear_utils) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture','ScalearUtils', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture, ScalearUtils) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -687,7 +687,7 @@ angular.module('scalearAngularApp')
 		    }
 		    var row = {
 		        "c": [{
-		            "v": scalear_utils.getHtmlText(text)
+		            "v": ScalearUtils.getHtmlText(text)
 		        }, {
 		            "v": correct
 		        }, {
@@ -726,7 +726,7 @@ angular.module('scalearAngularApp')
           }
           var row = {
               "c": [{
-                  "v": scalear_utils.getHtmlText(text)
+                  "v": ScalearUtils.getHtmlText(text)
               }, {
                   "v": correct
               }, {
@@ -752,7 +752,7 @@ angular.module('scalearAngularApp')
         var row=
         {"c":
             [
-                {"v": scalear_utils.getHtmlText(data[ind][1])},
+                {"v": ScalearUtils.getHtmlText(data[ind][1])},
                 {"v": data[ind][0]}
             ]
         }

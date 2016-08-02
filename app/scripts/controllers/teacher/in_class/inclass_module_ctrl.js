@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'ScalearUtils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, ScalearUtils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture) {
     $window.scrollTo(0, 0);
     Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
     $scope.inclass_player = {}
@@ -150,7 +150,7 @@ angular.module('scalearAngularApp')
     }
 
     var adjustModuleItems = function(obj, from, to) {
-      var ids = scalear_utils.getKeys(obj)
+      var ids = ScalearUtils.getKeys(obj)
       for(var i in from)
         if(ids.indexOf(from[i].id.toString()) != -1)
           to.push(from[i])
@@ -768,7 +768,7 @@ angular.module('scalearAngularApp')
         tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(text) },
+            { "v": ScalearUtils.getHtmlText(text) },
             { "v": correct },
             { "v": tooltip_text },
             { "v": incorrect },
@@ -826,7 +826,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(text)},
+            { "v": ScalearUtils.getHtmlText(text)},
             { "v": self },
             { "v": tooltip_text },
             { "v": style },
@@ -851,7 +851,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(data[ind][1]) },
+            { "v": ScalearUtils.getHtmlText(data[ind][1]) },
             { "v": data[ind][0] }
           ]
         }

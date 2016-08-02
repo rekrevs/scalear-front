@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','scalear_utils','$translate','ContentNavigator', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, scalear_utils,$translate,ContentNavigator) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','ScalearUtils','$translate','ContentNavigator', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, ScalearUtils,$translate,ContentNavigator) {
     $controller('surveysCtrl', {$scope: $scope});
-    
+
  	var init = function(){
         $scope.course.warning_message=null
         $scope.studentAnswers={};
@@ -21,8 +21,8 @@ angular.module('scalearAngularApp')
            if(!$scope.preview_as_student){
                 for(var item in $scope.quiz.requirements){
                     for(var id in $scope.quiz.requirements[item]){
-                        var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
-                        var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, $scope.quiz.requirements[item][id])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                        var group_index= ScalearUtils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
+                        var item_index= ScalearUtils.getIndexById($scope.course.groups[group_index].items, $scope.quiz.requirements[item][id])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                         if(item_index!=-1 && group_index!=-1)
                             if(!$scope.course.groups[group_index].items[item_index].is_done)
                                 $scope.passed_requirments = false
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
                 $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
 	    });
 	}
- 	
+
  	init();
 
     $scope.nextItem = function(){
@@ -67,22 +67,22 @@ angular.module('scalearAngularApp')
     		$scope.submitted=false;
     		Quiz.saveStudentQuiz(
                 {
-                    quiz_id: $stateParams.quiz_id, 
+                    quiz_id: $stateParams.quiz_id,
                     course_id: $stateParams.course_id
                 },
                 {
-                    student_quiz: $scope.studentAnswers, 
+                    student_quiz: $scope.studentAnswers,
                     commit: action
-                }, 
+                },
                 function(data){
         			$scope.status=data.status;
         			$scope.alert_messages= data.alert_messages;
                     $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
                     $scope.next_item= data.next_item;
                     if(data.correct)
-                        $scope.correct=data.correct; 
+                        $scope.correct=data.correct;
                     if(data.explanation)
-                        $scope.explanation=data.explanation; 
+                        $scope.explanation=data.explanation;
                     if(data.done[2])
                         $scope.course.markDone(data.done[1],data.done[0])
         		}

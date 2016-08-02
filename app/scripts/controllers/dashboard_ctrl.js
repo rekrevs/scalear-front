@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope', '$compile', '$translate', '$filter', '$location', 'Module', 'ErrorHandler', '$interval', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location, Module, ErrorHandler, $interval) {
+  .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope', '$compile', '$translate', '$filter', '$location', 'Module', 'ErrorHandler', '$interval','Lecture','Quiz', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location, Module, ErrorHandler, $interval, Lecture, Quiz) {
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
@@ -92,13 +92,61 @@ angular.module('scalearAngularApp')
         $scope.calendar.className = ["truncate"]
         $scope.uiConfig.calendar.eventDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
           var group = { "due_date": event.start }
-          Module.update({
-              course_id: event.course_id,
-              module_id: event.group_id
-            }, {
-              group: group
-            },
-            function(response) {
+          if(event.lecture_id){
+              Lecture.update({
+                course_id: event.course_id,
+                lecture_id: event.lecture_id
+              }, {
+                lecture: group
+              },
+              function(response) {
+                response_succes(response)
+              },
+              function(response) {
+                response_fail(response,revertFunc,event)
+              }
+            );
+          }
+          else if(event.quiz_id){
+              Quiz.update({
+                course_id: event.course_id,
+                quiz_id: event.quiz_id
+              }, {
+                quiz: group
+              },
+              function(response) {
+                response_succes(response)
+              },
+              function(response) {
+                response_fail(response,revertFunc,event)
+              }
+            );
+
+          }
+          else{
+            Module.update({
+                course_id: event.course_id,
+                module_id: event.group_id
+              }, {
+                group: group
+              },
+              function(response) {
+                response_succes(response)
+              },
+              function(response) {
+                response_fail(response,revertFunc,event)
+              }
+            );
+          }
+
+
+        }
+
+        String.prototype.capitalizeFirstLetter = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
+
+        var response_succes =  function(response) {
               if(response.notice) {
                 $rootScope.show_alert = "success";
                 ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000);
@@ -106,26 +154,29 @@ angular.module('scalearAngularApp')
                   $rootScope.show_alert = "";
                 }, 4000, 1);
               }
-            },
-            function(response) {
+            }
+
+        var response_fail = function(response,revertFunc,item) {
               revertFunc()
-                // if (response.notice){
               $rootScope.show_alert = "error";
-              ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 2000);
+              if (response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time"){
+                var message =  Object.keys(response.data.errors)[0].replace("_"," ").capitalizeFirstLetter()+"("+response.data.appearance_time+") "+response.data.errors[Object.keys(response.data.errors)[0]][0] 
+              }
+              else{
+                var message = Object.keys(response.data.errors)[0].replace("_"," ")+" "+response.data.errors[Object.keys(response.data.errors)[0]][0]
+              }
+              ErrorHandler.showMessage( message, 'errorMessage', 2000);
               $interval(function() {
                 $rootScope.show_alert = "";
               }, 4000, 1);
-              // }
             }
-          );
-        }
+
 
         $scope.uiConfig.calendar.viewRender = function(view, element) {
         var months_to_get = []
         var month_year = []
         var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0]) 
         var current_year = parseInt(view.title.split(" ")[1]) 
-        console.log(current_year)
         months_to_get.push((current_month-1)%12 + 1)
         months_to_get.push((current_month)%12 + 1)
         months_to_get.push((current_month+1)%12 + 1)

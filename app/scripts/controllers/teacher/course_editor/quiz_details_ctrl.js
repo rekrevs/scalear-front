@@ -76,10 +76,12 @@ angular.module('scalearAngularApp')
                     var years = 0
                 due_date.setFullYear(due_date.getFullYear()+ years)
 
-                var appearance_date = new Date($scope.quiz.appearance_time)
-                if(due_date <= appearance_date){
-                    due_date=appearance_date
-                    due_date.setDate(appearance_date.getDate()+ week)
+                var module_due_date = new Date($scope.module_obj[$scope.quiz.group_id].appearance_time)
+                
+
+                if(enabled && due_date > module_due_date){
+                    due_date=module_due_date
+                    due_date.setDate(module_due_date.getDate())
                 }
 
                 $scope.quiz.due_date = due_date

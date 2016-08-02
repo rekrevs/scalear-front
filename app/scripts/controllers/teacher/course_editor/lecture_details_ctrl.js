@@ -144,7 +144,6 @@ angular.module('scalearAngularApp')
         delete modified_lecture.disable_module_due_controls
         delete modified_lecture.timeline
         // delete modified_lecture.visible_to_student
-
         Lecture.update({
                 course_id: $scope.lecture.course_id,
                 lecture_id: $scope.lecture.id

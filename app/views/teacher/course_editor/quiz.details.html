@@ -10,7 +10,7 @@
 	    <td class="right-border small-4"><span translate>editor.details.in_order</span></td>
 	    <td class="small-8">
 	      <input type="checkbox" ng-model="quiz.required_module" ng-change="updateQuiz()" class="no-margin">
-	      <span class="size-12" translate>editor.details.use_module</span>
+	      <span class="size-12" translate>editor.details.use_module_in_order</span>
 	      <br>
 	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.required_module" type="checkbox" ng-model="quiz.required"  ng-change='updateQuiz()'>
@@ -22,7 +22,7 @@
 	    <td class="right-border small-4"><span translate>editor.details.required</span></td>
 	    <td class="small-8">
 	      <input type="checkbox" ng-model="quiz.graded_module" ng-change="updateQuiz()" class="no-margin">
-	      <span class="size-12" translate>editor.details.use_module</span>
+	      <span class="size-12" translate>editor.details.use_module_required</span>
 	      <br>
 	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.graded_module" type="checkbox" ng-model="quiz.graded"  ng-change='updateQuiz()'>

@@ -36,23 +36,36 @@ angular.module('scalearAngularApp')
 				return scope.updateValues(ques)!=0
 			}
 
-			scope.getExplanationPop=function(id,drag_id){
-				var x = 0
-				if ( typeof(drag_id) == 'undefined'){
-					x = '<div ng-bind-html="explanation['+id+']"></div>'
-				}
-				else{
-					x ='<div ng-bind-html="explanation['+id+']['+drag_id+']"></div>'
-				}
-				return {
-					content:x,
-		            html:true,
-		            trigger:$rootScope.is_mobile? 'click' : 'hover',
-		            placement:"left"
-				}
+			scope.getExplanationPop=function(answer_id,drag_id){
+					return {
+						content:'<div ng-bind-html="explanation['+answer_id+']'+((drag_id != null)? '['+drag_id+']': '')+'"></div>',
+			            html:true,
+			            trigger:$rootScope.is_mobile? 'click' : 'hover',
+			            placement:"left"
+					}					
 			}
+      
+      		scope.$watch('explanation', function(newval){
+      			console.log('explanation', scope.explanation)
+      			if(Object.keys(scope.explanation).length){
+      				updateExplanation()
+      			}
+      		})
 
-
+      		function updateExplanation(){
+	  			scope.quiz.questions.forEach(function(question){
+	  				if(question.question_type.toUpperCase()!=="DRAG"){
+	      				question.answers.forEach(function(answer){
+	      					answer.options = scope.getExplanationPop(answer.id)
+	      				})
+	      			}
+		      		else{
+		      			scope.studentAnswers[question.id].forEach(function(answer, idx){
+		      				scope.drag_explanation[idx] = scope.getExplanationPop(question.answers[0].id,idx)
+		      			})
+		      		}
+      			})
+	      	}
 
 		}
 	};

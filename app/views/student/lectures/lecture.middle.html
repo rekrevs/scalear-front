@@ -45,7 +45,7 @@
 											<b><span translate>global.note</span>:</b>
 											<span translate>lectures.messages.did_not_get_credit</span>
 										</div>
-										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation"/>
+										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && !selected_quiz "/>
 										<annotation text="selected_quiz.question" ng-if="selected_quiz.display_text"/>
 									</quiz>
 								</youtube>

@@ -337,18 +337,26 @@ angular.module('scalearAngularApp')
           }
         }
 
+        var hidePopover = function(){
+          $('.popover').remove();
+        }
+        
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
         scope.close = function() {
           scope.save()
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         scope.delete = function() {
           scope.remove()
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         scope.answerDragStart = function() {
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         $rootScope.$on("radioChange", function() {
@@ -477,11 +485,19 @@ angular.module('scalearAngularApp')
             ans.explanation[scope.data.pos] = ""
         })
 
+        var hidePopover = function(){
+          $('.popover').remove();
+        }
+        
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
         scope.close = function() {
           scope.save()
-          angular.element(element.find('.dropped_drag')).popover('hide')
+          hidePopover()
         }
-
+        
         var template = '<ul class="no-margin">' +
           '<label>' +
           '<span translate>editor.drag.instruction</span>' +
@@ -550,14 +566,22 @@ angular.module('scalearAngularApp')
         //   scope.save()
         //   angular.element(element.children()[0]).popover('hide')
         // }
+
+       var hidePopover = function(){
+          $('.popover').remove();
+        }
+        
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
         scope.close = function() {
           scope.save()
-          angular.element(element.find('h6')).popover('hide')
+          hidePopover()
         }
 
         scope.delete = function() {
           scope.remove()
-          // angular.element(element.children()[0]).popover('hide')
         }
 
         var template = "<form name='aform' >" +
@@ -644,7 +668,7 @@ angular.module('scalearAngularApp')
         ]
         $log.debug(scope.quiz)
         if (!scope.quiz.match_type) {
-          if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers[0].content !="")
+          if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers && scope.quiz.answers[0].content !="")
             scope.quiz.match_type =scope.match_types[1].value
           else
             scope.quiz.match_type =scope.match_types[0].value

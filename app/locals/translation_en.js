@@ -262,6 +262,7 @@ var translation_en={
     this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive. To get started:",
     create_account_with_university: "and create an account with your university email address.",
     add_course_by_choosing: "Add your course by choosing “Join Course” from the “Courses” menu and entering the Enrollment Key for",
+    add_course_by_url: " Follow this link ",
     sincerely:"Sincerely",
   },
   account:{

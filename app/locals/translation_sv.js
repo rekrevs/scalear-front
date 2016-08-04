@@ -262,6 +262,7 @@ var translation_sv={
     this_term_new_system:"I kursen {{course_name}} kommer vi att använda verktyget Scalable Learning. För att komma igång:",
     create_account_with_university: "och skapa ett konto med din e-postadress från universitetet/skolan.",
     add_course_by_choosing: "Lägg till din kurs genom att välja 'Lägg till kurs' i menyn 'Mina kurser' och ange kursnyckeln för",
+    add_course_by_url: " Follow this link(t)",
     sincerely:"Vänliga hälsningar",
   },
   account:{

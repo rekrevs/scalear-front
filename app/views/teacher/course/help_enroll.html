@@ -8,7 +8,15 @@
       <div class="panel">
         <div id="enrollment_message" clip-copy="getTextToCopy()" clip-click="animateCopy()">
           <p><span translate>enroll_email.dear_student</span>,</p>
-          <p><span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system</span>
+          <p class='no-margin'>
+          	<span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system</span>
+			<br>
+			<br>
+			<span translate>enroll_email.add_course_by_url</span> <a href="{{enrollment_url}}">{{enrollment_url}}</a></span>.
+			<br>
+			<br>
+			<span translate>global.or</span>
+		</p>
             <ul style="list-style: none;">
               <li><span>1. </span><span translate>enroll_email.go_to</span> <a href="{{'home'| href}}">{{'home'| href}}</a> <span translate>enroll_email.create_account_with_university</span></li>
               <li><span>2. </span><span translate>enroll_email.add_course_by_choosing</span> <span>{{course.short_name}} :</span> <b>{{course.unique_identifier}}</b></li>
@@ -25,12 +33,19 @@
       <div class="panel">
         <div id="enrollment_message" clip-copy="getTextToCopy()" clip-click="animateCopy()">
           <p><span translate>enroll_email.dear_student</span>,</p>
-          <p><span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system</span>
-            <ul style="list-style: none;">
-              <li><span>1. </span><span translate>enroll_email.go_to</span> <a href="{{'home'| href}}">{{'home'| href}}</a> <span translate>enroll_email.create_account_with_university</span></li>
-              <li><span>2. </span><span translate>enroll_email.add_course_by_choosing</span> <span>{{course.short_name}} :</span> <b>{{course.guest_unique_identifier}}</b></li>
-            </ul>
-          </p>
+          <p class='no-margin'>
+          	<span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system</span>
+			<br>
+			<br>
+			<span translate>enroll_email.add_course_by_url</span> <a href="{{enrollment_url_guest}}">{{enrollment_url_guest}}</a></span>.
+			<br>
+			<br>
+			<span translate>global.or</span>
+		  </p>
+	      <ul style="list-style: none;">
+	        <li><span>1. </span><span translate>enroll_email.go_to</span> <a href="{{'home'| href}}">{{'home'| href}}</a> <span translate>enroll_email.create_account_with_university</span></li>
+	        <li><span>2. </span><span translate>enroll_email.add_course_by_choosing</span> <span>{{course.short_name}} :</span> <b>{{course.guest_unique_identifier}}</b></li>
+	      </ul>
           <p><span translate>enroll_email.sincerely</span>,
             <br />
             <span>{{current_user.name+' '+current_user.last_name}}</span></p>
@@ -39,6 +54,7 @@
       </div>
     </tab>
   </tabset>
+
 
 </div>
 <!--[/htmlclean-protect]-->

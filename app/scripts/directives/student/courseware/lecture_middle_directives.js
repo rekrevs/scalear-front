@@ -126,7 +126,8 @@ angular.module('scalearAngularApp')
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
-						trigger:'hover'
+						trigger:'hover',
+            instant_show : "mouseover"
 					}
 				}
 			})

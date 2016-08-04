@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', 'OnlineQuiz', '$q', 'DetailsNavigator', 'OnlineMarker', '$filter', 'Timeline', '$urlRouter','ngDialog', function($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, OnlineQuiz, $q, DetailsNavigator, OnlineMarker, $filter, Timeline,$urlRouter,ngDialog) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', 'OnlineQuiz', '$q', 'DetailsNavigator', 'OnlineMarker', '$filter', 'Timeline', '$urlRouter','ngDialog','$window', function($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, OnlineQuiz, $q, DetailsNavigator, OnlineMarker, $filter, Timeline,$urlRouter,ngDialog,$window) {
 
     var unwatch = $scope.$watch('items_obj["lecture"][' + $stateParams.lecture_id + ']', function() {
       if ($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]) {
@@ -444,6 +444,9 @@ angular.module('scalearAngularApp')
             $scope.state_exit_error = true
             return false
           }
+          else{
+            $scope.state_exit_error = false        
+          }
           if ($scope.selected_quiz.question_type.toUpperCase() == "DRAG")
             correct = 1
           else
@@ -454,7 +457,11 @@ angular.module('scalearAngularApp')
           $scope.state_exit_error = true
           return false
         }
+        else{
+          $scope.state_exit_error = false        
+        }
       }
+
       return true;
     };
 
@@ -485,12 +492,14 @@ angular.module('scalearAngularApp')
         removeItemFromVideoQueue($scope.selected_quiz);
         addItemToVideoQueue($scope.selected_quiz, "quiz");
         updateAnswers(data, $scope.selected_quiz, options);
+        $scope.state_exit_error = false
         return true
       } else {
         if ($scope.selected_quiz.quiz_type == 'html'){
           $scope.alert.msg = $scope.answer_form.$error.atleastone ? "editor.messages.quiz_no_answer" : "editor.messages.provide_answer"
           $scope.state_exit_error = true
         }
+
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)

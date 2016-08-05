@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
       'validateName': { method: 'PUT', params: { action: 'validate_name' }, headers: headers },
       'updateHide': { method: 'POST', params: { action: 'update_hide' }, headers: headers },
     });
-  }]).factory('MarkerModel', ['OnlineMarker', '$rootScope', 'ItemsModel', '$q','$filter','VideoInformation','Lecture', function(OnlineMarker, $rootScope, ItemsModel, $q, $filter, VideoInformation, Lecture) {
+  }]).factory('MarkerModel', ['OnlineMarker', '$rootScope', 'ItemsModel', '$q', '$filter', 'VideoInformation', 'Lecture','ScalearUtils', function(OnlineMarker, $rootScope, ItemsModel, $q, $filter, VideoInformation, Lecture, ScalearUtils) {
 
     // var marker_list = []
     var selected_marker = null
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
     }
 
     function clearSelectedMarker() {
-       selected_marker = null
+      selected_marker = null
     }
 
     function isInstance(instance) {
@@ -94,6 +94,11 @@ angular.module('scalearAngularApp')
       }
 
       function update() {
+        var fraction = marker.time % 1
+        var new_time = ScalearUtils.arrayToSeconds(marker.formatedTime.split(':'))
+        if(marker.time != new_time + fraction) {
+          marker.time = new_time
+        }
         return OnlineMarker.update({ online_markers_id: marker.id }, {
           online_marker: {
             time: marker.time,
@@ -110,7 +115,7 @@ angular.module('scalearAngularApp')
           }).$promise
       }
 
-      function validate() {
+      function validateName() {
         var deferred = $q.defer();
         var online_marker = {}
         online_marker.title = marker.title;
@@ -119,12 +124,36 @@ angular.module('scalearAngularApp')
             deferred.resolve()
           },
           function(data) {
+            var errors = {}
             if(data.status == 422)
-              deferred.resolve(data.data.errors.join());
+              errors.name_error = data.data.errors.join()
             else
-              deferred.reject('Server Error');
+              errors.name_error = 'Server Error'
+            deferred.reject(errors);
           })
         return deferred.promise;
+      }
+
+      function validateTime() {
+        var errors = {}
+        errors.time_error = ScalearUtils.validateTime(marker.formatedTime, VideoInformation.duration)
+        if(errors.time_error) {
+          return errors
+        }
+      }
+
+      function validate() {
+        var deferred = $q.defer()
+        validateName()
+          .then(function() {
+            var errors = validateTime()
+            errors ? deferred.reject(errors) : deferred.resolve()
+          })
+          .catch(function(errors) {
+            deferred.reject(errors)
+          })
+
+        return deferred.promise
       }
 
 
@@ -133,7 +162,7 @@ angular.module('scalearAngularApp')
         instanceType: instanceType,
         update: update,
         deleteMarker: deleteMarker,
-        validate:validate
+        validate: validate
       })
     }
 
@@ -141,9 +170,9 @@ angular.module('scalearAngularApp')
       getMarkers: getMarkers,
       addMarker: addMarker,
       createInstance: createInstance,
-      setSelectedMarker:setSelectedMarker,
-      getSelectedMarker:getSelectedMarker,
-      clearSelectedMarker:clearSelectedMarker
+      setSelectedMarker: setSelectedMarker,
+      getSelectedMarker: getSelectedMarker,
+      clearSelectedMarker: clearSelectedMarker
     }
 
   }])

@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
     });
 
   }])
-  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter) {
+  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils) {
 
     // var quiz_list = []
 
@@ -259,6 +259,84 @@ angular.module('scalearAngularApp')
           }).$promise
       }
 
+      function update(){
+        if (video_quiz.inclass) {
+          video_quiz.inclass_session.intro = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.intro_formatedTime.split(':'))
+          video_quiz.inclass_session.self = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.self_formatedTime.split(':'))
+          video_quiz.inclass_session.in_group = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.group_formatedTime.split(':'))
+          video_quiz.inclass_session.discussion = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.discussion_formatedTime.split(':'))
+        }
+        var fraction = video_quiz.time % 1
+        var new_time = ScalearUtils.arrayToSeconds(video_quiz.formatedTime.split(':'))
+        if(video_quiz.time != new_time + fraction)
+          video_quiz.time = video_quiz.start_time = video_quiz.end_time = new_time
+
+        return OnlineQuiz.update({ online_quizzes_id: video_quiz.id }, {
+            online_quiz: {
+              time: video_quiz.time,
+              start_time: video_quiz.start_time,
+              end_time: video_quiz.end_time,
+              question: video_quiz.question,
+              inclass: video_quiz.inclass,
+              graded: video_quiz.graded,
+              display_text: video_quiz.display_text
+            },
+            intro_timer: video_quiz.inclass_session.intro,
+            self_timer: video_quiz.inclass_session.self,
+            group_timer: video_quiz.inclass_session.in_group,
+            discussion_timer: video_quiz.inclass_session.discussion,
+          }).$promise
+      }
+
+      function validateName() {
+          var deferred = $q.defer();
+          var quiz = {}
+          quiz.question = video_quiz.question;
+          OnlineQuiz.validateName({ online_quizzes_id: video_quiz.id },
+            quiz,
+            function() {
+              deferred.resolve()
+            },
+            function(data) {
+              var errors ={}
+              if (data.status == 422)
+                errors.name_error = data.data.errors.join()
+              else
+                errors.name_error = 'Server Error'
+              deferred.reject(errors);
+            })
+          return deferred.promise;
+        }
+
+        function validateTime(){
+          var errors = {}
+          errors.time_error = ScalearUtils.validateTime(video_quiz.formatedTime, VideoInformation.duration)
+          if (video_quiz.inclass) {
+            errors.intro_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
+            errors.self_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
+            errors.group_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
+            errors.discussion_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
+          }
+          if (errors.time_error || errors.intro_timer_error || errors.self_timer_error || errors.group_timer_error || errors.discussion_timer_error) {
+            return errors
+          }
+        }
+
+        function validate(){
+          var deferred = $q.defer()
+          validateName()
+          .then(function() {
+            var errors = validateTime()
+            errors? deferred.reject(errors) :deferred.resolve()
+          })
+          .catch(function(errors){
+            deferred.reject(errors)
+          })
+
+          return deferred.promise
+        }
+
+
       function instanceType() {
         return 'VideoQuiz'
       }
@@ -318,7 +396,9 @@ angular.module('scalearAngularApp')
         isSurvey: isSurvey,
         isTextSurvey: isTextSurvey,
         deleteQuiz: deleteQuiz,
-        isDragTextQuiz:isDragTextQuiz
+        isDragTextQuiz:isDragTextQuiz,
+        validate:validate,
+        update:update
       })
     }
 

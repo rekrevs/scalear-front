@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', 'OnlineQuiz', '$q', 'DetailsNavigator', 'OnlineMarker', '$filter', 'Timeline', '$urlRouter', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils','MarkerModel', function($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, OnlineQuiz, $q, DetailsNavigator, OnlineMarker, $filter, Timeline, $urlRouter, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -9,7 +9,8 @@ angular.module('scalearAngularApp')
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
-    $scope.state_exit_error = false
+    $scope.marker_errors = {}
+    $scope.quiz_errors = {}
 
     $scope.alert = {
       type: "alert",
@@ -111,38 +112,38 @@ angular.module('scalearAngularApp')
 
     $scope.showOnlineQuiz = function(quiz) {
       $scope.selected_quiz = VideoQuizModel.getSelectedVideoQuiz()
-      if($scope.selected_marker && $scope.editing_mode) {
-        $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
-      }
+      console.log("$scope.selected_quiz", $scope.selected_quiz);
       $scope.last_details_state = DetailsNavigator.getStatus()
       if($scope.selected_quiz != quiz) {
-        if($scope.editing_mode)
-          if(!$scope.saveQuizBtn({ exit: true }))
-            return
-        $scope.hide_alerts = true;
-        $scope.submitted = false
-        $scope.editing_mode = false;
-        $timeout(function() {
-          $scope.editing_mode = true;
-        })
-        $scope.selected_quiz = VideoQuizModel.createInstance(quiz).setAsSelected()
+        saveOpenEditor()
+          .then(function(error) {
+            if(!error) {
+              $scope.hide_alerts = true;
+              $scope.submitted = false
+              $scope.editing_mode = false;
+              $timeout(function() {
+                $scope.editing_mode = true;
+              })
+              $scope.selected_quiz = VideoQuizModel.createInstance(quiz).setAsSelected()
 
-        $scope.editing_type = 'quiz'
-        $scope.lecture_player.controls.seek_and_pause(quiz.time)
+              $scope.editing_type = 'quiz'
+              $scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-        if($scope.selected_quiz.isTextQuiz()) {
-          $scope.selected_quiz.getTextQuizAnswers()
-          $scope.double_click_msg = ""
-          $scope.quiz_layer.backgroundColor = "white"
-          $scope.quiz_layer.overflowX = 'hidden'
-          $scope.quiz_layer.overflowY = 'auto'
-        } else {
-          $scope.selected_quiz.getInVideoQuizAnswers();
-          $scope.double_click_msg = "editor.messages.double_click_new_answer";
-          $scope.quiz_layer.backgroundColor = "transparent"
-          $scope.quiz_layer.overflowX = ''
-          $scope.quiz_layer.overflowY = ''
-        }
+              if($scope.selected_quiz.isTextQuiz()) {
+                $scope.selected_quiz.getTextQuizAnswers()
+                $scope.double_click_msg = ""
+                $scope.quiz_layer.backgroundColor = "white"
+                $scope.quiz_layer.overflowX = 'hidden'
+                $scope.quiz_layer.overflowY = 'auto'
+              } else {
+                $scope.selected_quiz.getInVideoQuizAnswers();
+                $scope.double_click_msg = "editor.messages.double_click_new_answer";
+                $scope.quiz_layer.backgroundColor = "transparent"
+                $scope.quiz_layer.overflowX = ''
+                $scope.quiz_layer.overflowY = ''
+              }
+            }
+          })
       }
     }
 
@@ -182,7 +183,6 @@ angular.module('scalearAngularApp')
         for(var idx in $scope.selected_quiz.answers) {
           if(!$scope.selected_quiz.answers[idx].answer || $scope.selected_quiz.answers[idx].answer.trim() == "") {
             $scope.alert.msg = "editor.messages.provide_answer"
-            $scope.state_exit_error = true
             return false
           }
           if($scope.selected_quiz.isDragQuiz())
@@ -192,7 +192,6 @@ angular.module('scalearAngularApp')
         }
         if(!correct && (!$scope.selected_quiz.isSurvey() && !$scope.selected_quiz.isTextSurvey())) {
           $scope.alert.msg = "editor.messages.quiz_no_answer"
-          $scope.state_exit_error = true
           return false
         }
       }
@@ -200,6 +199,20 @@ angular.module('scalearAngularApp')
     };
 
     $scope.saveQuizBtn = function(options) {
+      return $scope.selected_quiz.validate()
+        .then(function() {
+          removeItemFromVideoQueue($scope.selected_quiz);
+          addItemToVideoQueue($scope.selected_quiz, "quiz");
+          $scope.selected_quiz.update()
+          return saveQuizAnswers(options)
+        })
+        .catch(function(errors) {
+          angular.extend($scope.quiz_errors, errors)
+          return true
+        })
+    }
+
+    function saveQuizAnswers(options) {
       if((
           ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz()) ||
           ((!$scope.selected_quiz.isTextVideoQuiz() || $scope.selected_quiz.isTextSurvey()) && isFormValid())
@@ -208,9 +221,6 @@ angular.module('scalearAngularApp')
         $scope.submitted = false;
         $scope.hide_alerts = true;
         $scope.quiz_deletable = false
-
-        removeItemFromVideoQueue($scope.selected_quiz);
-        addItemToVideoQueue($scope.selected_quiz, "quiz");
 
         $scope.selected_quiz.updateAnswers()
           .then(function() {
@@ -222,19 +232,16 @@ angular.module('scalearAngularApp')
         if(options && options.exit) {
           $scope.exitQuizBtn()
         }
-
-        return true
-
+        return false
       } else {
         if($scope.selected_quiz.isTextVideoQuiz()) {
           $scope.alert.msg = $scope.answer_form.$error.atleastone ? "editor.messages.quiz_no_answer" : "editor.messages.provide_answer"
-          $scope.state_exit_error = true
         }
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)
         $scope.selected_quiz.hide_quiz_answers = false
-        return false
+        return true
       }
     }
 
@@ -265,6 +272,7 @@ angular.module('scalearAngularApp')
       // if($scope.selected_quiz)
       //   $scope.selected_quiz.selected = false
       $scope.selected_quiz = null
+      $scope.quiz_errors = {}
       $scope.quiz_deletable = false
       VideoQuizModel.clearSelectedVideoQuiz()
     }
@@ -297,22 +305,38 @@ angular.module('scalearAngularApp')
         })
     }
 
-    $scope.showOnlineMarker = function(marker) {
-      $scope.selected_marker = MarkerModel.getSelectedMarker()
-      if($scope.selected_quiz && $scope.editing_mode) {
-        if(!$scope.saveQuizBtn({ exit: true }))
-          return
+    function saveOpenEditor() {
+      console.log("saving open editor")
+      var promise = $q.when(false)
+      if($scope.editing_mode) {
+        if($scope.selected_marker) {
+          console.log("promise is marker");
+          promise = $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
+        } else if($scope.selected_quiz) {
+          console.log("promise is quiz");
+          promise = $scope.saveQuizBtn({ exit: true })
+        }
       }
+      return promise
+    }
+
+    $scope.showOnlineMarker = function(marker) {
+      var promise = $q.when(false)
+      $scope.selected_marker = MarkerModel.getSelectedMarker()
       if($scope.selected_marker != marker) {
-        if($scope.editing_mode)
-          $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
-        $scope.editing_mode = false;
-        $timeout(function() {
-          $scope.editing_mode = true;
-        })
-        $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
-        $scope.editing_type = 'marker'
-        $scope.lecture_player.controls.seek_and_pause(marker.time)
+        saveOpenEditor()
+          .then(function(error) {
+            console.log("error is", error);
+            if(!error) {
+              $scope.editing_mode = false;
+              $timeout(function() {
+                $scope.editing_mode = true;
+              })
+              $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
+              $scope.editing_type = 'marker'
+              $scope.lecture_player.controls.seek_and_pause(marker.time)
+            }
+          })
       }
     }
 
@@ -324,29 +348,25 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveMarkerBtn = function(marker, options) {
-      marker.validate()
-        .then(function(error) {
-          $scope.title_error = error
-          $scope.time_error = ScalearUtils.validateTime(marker.formatedTime, $scope.lecture_player.controls.getDuration())
-          if(!($scope.title_error || $scope.time_error)) {
-            var fraction = marker.time % 1
-            var new_time = ScalearUtils.arrayToSeconds(marker.formatedTime.split(':'))
-            if(marker.time != new_time + fraction) {
-              marker.time = new_time
-            }
-            var same_markers = $scope.lecture.timeline.getItemsBetweenTimeByType(marker.time, marker.time, "marker")
-            if(same_markers.length > 0 && same_markers[0].data.id != marker.id) {
-              $scope.alert.msg = "There is another marker at the same time"
-              $scope.hide_alerts = false;
-            } else {
-              removeItemFromVideoQueue(marker)
-              addItemToVideoQueue(marker, "marker")
-              marker.update()
-
-            }
+      return marker.validate()
+        .then(function() {
+          var same_markers = $scope.lecture.timeline.getItemsBetweenTimeByType(marker.time, marker.time, "marker")
+          if(same_markers.length > 0 && same_markers[0].data.id != marker.id) {
+            $scope.alert.msg = "There is another marker at the same time"
+            $scope.hide_alerts = false;
+            return true
+          } else {
+            removeItemFromVideoQueue(marker)
+            addItemToVideoQueue(marker, "marker")
+            marker.update()
+            closeMarkerMode()
+            return false
           }
         })
-        closeMarkerMode()
+        .catch(function(errors) {
+          angular.extend($scope.marker_errors, errors)
+          return true
+        })
     }
 
     function closeMarkerMode() {
@@ -356,6 +376,7 @@ angular.module('scalearAngularApp')
 
     function clearMarkerVariables() {
       $scope.selected_marker = null
+      $scope.marker_errors = {}
       MarkerModel.clearSelectedMarker()
     }
 
@@ -486,41 +507,39 @@ angular.module('scalearAngularApp')
       })
     }
 
+    function showUnsavedQuizDialog() {
+      ngDialog.openConfirm({
+        template: '<div class="ngdialog-message">\
+                  <h2><b><span translate>lectures.messages.change_lost</span></b></h2>\
+                  <span translate>lectures.messages.navigate_away</span>\
+                  </div>\
+                  <div class="ngdialog-buttons">\
+                      <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>global.leave</button>\
+                      <button type="button" class="ngdialog-button ngdialog-button-primary"  ng-click="confirm(1)"translate>global.stay</button>\
+                  </div>',
+        plain: true,
+        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+        showClose: false,
+      }).then(
+        function(value) {
+          $("#module_" + $state.params.module_id).click()
+        },
+        function(value) {
+          $scope.leave_state = true
+          $state.go(toState, toParams)
+        }
+      );
+    }
+
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
         if(!$scope.leave_state) {
-          if($scope.editing_mode) {
-            if($scope.selected_marker) {
-              $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
-            } else if($scope.selected_quiz) {
-              $scope.saveQuizBtn({ exit: true })
+          saveOpenEditor.then(function(error) {
+            if(error) {
+              event.preventDefault();
+              showUnsavedQuizDialog()
             }
-          }
-          if($scope.state_exit_error) {
-            event.preventDefault();
-            $scope.state_exit_error = false
-            ngDialog.openConfirm({
-                template: '<div class="ngdialog-message">\
-                          <h2><b><span translate>lectures.messages.change_lost</span></b></h2>\
-                          <span translate>lectures.messages.navigate_away</span>\
-                          </div>\
-                          <div class="ngdialog-buttons">\
-                              <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>global.leave</button>\
-                              <button type="button" class="ngdialog-button ngdialog-button-primary"  ng-click="confirm(1)"translate>global.stay</button>\
-                          </div>',
-                plain: true,
-                className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
-                showClose: false,
-              })
-              .then(
-                function(value) {
-                  $("#module_" + $state.params.module_id).click()
-                },
-                function(value) {
-                  $scope.leave_state = true
-                  $state.go(toState, toParams)
-                });
-          }
+          })
         }
       })
 

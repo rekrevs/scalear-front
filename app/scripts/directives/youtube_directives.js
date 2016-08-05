@@ -630,11 +630,13 @@ angular.module('scalearAngularApp')
           //   return item.data && item.data.selected
           // })[0]
           var current_quiz = VideoQuizModel.getSelectedVideoQuiz()
-          $(".squarebrackets_left").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
-          $(".squarebrackets_right").css("left", ((current_quiz.end_time / scope.duration) * 100) + '%')
-          $(".quiz_circle").css("left", ((current_quiz.time / scope.duration) * 100) - 0.51 + '%')
-          $(".repeating_grey_pattern").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
-          $(".repeating_orange_pattern").css("left", ((current_quiz.time / scope.duration) * 100) + '%')
+          if(current_quiz){
+            $(".squarebrackets_left").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".squarebrackets_right").css("left", ((current_quiz.end_time / scope.duration) * 100) + '%')
+            $(".quiz_circle").css("left", ((current_quiz.time / scope.duration) * 100) - 0.51 + '%')
+            $(".repeating_grey_pattern").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".repeating_orange_pattern").css("left", ((current_quiz.time / scope.duration) * 100) + '%')
+          }
         }
       }
 

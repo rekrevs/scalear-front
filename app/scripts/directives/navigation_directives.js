@@ -62,9 +62,7 @@ angular.module('scalearAngularApp')
     return {
       replace: true,
       restrict: "E",
-      scope: {
-        course: "=",
-      },
+      scope: {},
       templateUrl: '/views/teacher/teacher_sub_navigation.html',
       link: function(scope) {
         scope.ContentNavigator = ContentNavigator
@@ -73,6 +71,9 @@ angular.module('scalearAngularApp')
           // scope.$watch("$state.includes('*.module.**')",function(value){
           // 	scope.in_module_state = value
           // })
+        scope.$on("Course:ready",function(ev, course_data){
+          scope.course = course_data
+        })
 
         scope.initFilters = function() {
           scope.progress_item_filter = { lecture_quizzes: true, confused: true, charts: true, discussion: true, free_question: true };
@@ -133,13 +134,15 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: "E",
       transclude: true,
-      scope: {
-        course: "=",
-      },
+      scope: {},
       templateUrl: '/views/student/student_sub_navigation.html',
       link: function(scope) {
         scope.ContentNavigator = ContentNavigator
         scope.TimelineNavigator = TimelineNavigator
+
+        scope.$on("Course:ready",function(ev, course_data){
+          scope.course = course_data
+        })
 
         scope.toggleNavigator = function() {
           if(!$state.includes('course.content_selector'))
@@ -157,13 +160,15 @@ angular.module('scalearAngularApp')
       replace: true,
       transclude: true,
       scope: {
-        modules: '=',
         mode: '@',
         open_navigator: '=open'
       },
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
+        scope.$on('Module:ready',function(ev, modules){
+          scope.modules = modules
+        })
         scope.$watch('$state.params', function() {
           if($state.params.module_id) {
             scope.currentmodule = { id: $state.params.module_id }

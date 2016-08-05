@@ -1,30 +1,69 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Quiz', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope','$translate',function($resource, $http, $stateParams, scalear_api, headers, $rootScope ,$translate) {
+  .factory('Quiz', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/:lang/courses/:course_id/quizzes/:quiz_id/:action', {course_id:$stateParams.course_id, lang:$translate.uses()},
-      { 'create': { method: 'POST', headers: headers },
-      	'newQuiz':{method:'POST', params:{action:'new_or_edit'}, headers:headers},
-        'index': { method: 'GET', isArray: true, headers: headers},
-        'update': { method: 'PUT', headers: headers},
-        'destroy': { method: 'DELETE', headers: headers },
-        'show':{method: 'GET', headers: headers},
-        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
-        "updateQuestions": {method: 'PUT', params: {action: 'update_questions_angular'},headers: headers},
-        "validateQuiz": {method: 'PUT', params: {action: 'validate_quiz_angular'},headers: headers},
-        "makeVisible":{method:'POST', params:{action:'make_visible'}, headers:headers},
-        "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
-        "hideResponseStudent":{method:'POST',params:{action:'hide_response_student'},headers:headers},
-        "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
-        "deleteFeedback":{method:'POST',params:{action:'delete_response'},headers:headers},
-        "showInclass":{method:'POST',params:{action:'show_question_inclass'},headers:headers},
-        "showStudent":{method:'POST',params:{action:'show_question_student'},headers:headers},
-        "saveStudentQuiz":{method:'POST',params:{action:'save_student_quiz_angular'},headers:headers},
-        "quizCopy":{method:'POST',params:{action:'quiz_copy'},headers:headers},
-        "changeQuizStatus": {method:'POST', params:{action:'change_status_angular'},headers:headers},
-        "updateGrade":{method:'POST',params:{action:'update_grade'},headers:headers}
-      });
+    return $resource(scalear_api.host + '/:lang/courses/:course_id/quizzes/:quiz_id/:action', { course_id: $stateParams.course_id, lang: $translate.uses() }, {
+      'create': { method: 'POST', headers: headers },
+      'newQuiz': { method: 'POST', params: { action: 'new_or_edit' }, headers: headers },
+      'index': { method: 'GET', isArray: true, headers: headers },
+      'update': { method: 'PUT', headers: headers },
+      'destroy': { method: 'DELETE', headers: headers },
+      'show': { method: 'GET', headers: headers },
+      "getQuestions": { method: 'GET', params: { action: 'get_questions_angular' }, headers: headers },
+      "updateQuestions": { method: 'PUT', params: { action: 'update_questions_angular' }, headers: headers },
+      "validateQuiz": { method: 'PUT', params: { action: 'validate_quiz_angular' }, headers: headers },
+      "makeVisible": { method: 'POST', params: { action: 'make_visible' }, headers: headers },
+      "hideResponses": { method: 'POST', params: { action: 'hide_responses' }, headers: headers },
+      "hideResponseStudent": { method: 'POST', params: { action: 'hide_response_student' }, headers: headers },
+      "sendFeedback": { method: 'POST', params: { action: 'create_or_update_survey_responses' }, headers: headers },
+      "deleteFeedback": { method: 'POST', params: { action: 'delete_response' }, headers: headers },
+      "showInclass": { method: 'POST', params: { action: 'show_question_inclass' }, headers: headers },
+      "showStudent": { method: 'POST', params: { action: 'show_question_student' }, headers: headers },
+      "saveStudentQuiz": { method: 'POST', params: { action: 'save_student_quiz_angular' }, headers: headers },
+      "quizCopy": { method: 'POST', params: { action: 'quiz_copy' }, headers: headers },
+      "changeQuizStatus": { method: 'POST', params: { action: 'change_status_angular' }, headers: headers },
+      "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers }
+    });
 
-}])
+  }]).factory("QuizModel", ['Quiz', function(Quiz) {
+
+    var selected_quiz = null
+
+    function setSelectedQuiz(quiz) {
+      selected_quiz = quiz
+      return getSelectedQuiz()
+    }
+
+    function getSelectedQuiz() {
+      return selected_quiz
+    }
+
+    function clearSelectedQuiz() {
+      selected_quiz = null
+    }
+
+    function isInstance(instance) {
+      return(instance.instanceType && instance.instanceType() == "Lecture");
+    }
+
+    function createInstance(quiz){
+
+      if(isInstance(quiz)) {
+        return quiz;
+      }
+
+      return angular.extend(quiz,{
+
+      })
+    }
+
+    return {
+      setSelectedQuiz:setSelectedQuiz,
+      getSelectedQuiz:getSelectedQuiz,
+      clearSelectedQuiz:clearSelectedQuiz,
+      isInstance:isInstance,
+      createInstance:createInstance
+    }
+  }])

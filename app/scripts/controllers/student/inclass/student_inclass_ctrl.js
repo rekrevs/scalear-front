@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore) {
+  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore','ModuleModel', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore, ModuleModel) {
 
     //Page.setTitle('In-class')
     // if(!MobileDetector.isPhone())
@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     var group_answers = $cookieStore.get('group_answers') || []
       // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
-    $scope.module = $scope.course.selected_module
+    $scope.module = ModuleModel.getSelectedModule()//$scope.course.selected_module
 
     Page.setTitle($scope.module.name + ': ' + 'In-class' + ' - ' + $scope.course.name);
 

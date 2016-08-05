@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/app_messages.html",
       link: function(scope, element) {
         ErrorHandler.addToElementList($(element).find('.alert-message'));
-        scope.$on("ErrorMessage:show", function(status){
+        scope.$on("ErrorMessage:show", function(ev, status){
           scope.status = status
         })
         scope.$on("ErrorMessage:hide", function(){

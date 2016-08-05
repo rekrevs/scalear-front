@@ -18,3 +18,317 @@ angular.module('scalearAngularApp')
     });
 
   }])
+  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter) {
+
+    // var quiz_list = []
+
+    var selected_video_quiz = null
+
+    function getQuizzes() {
+      var deferred = $q.defer();
+      var lecture = ItemsModel.getSelectedItem();
+      OnlineQuiz.getQuizList({ lecture_id: lecture.id },
+        function(data) {
+          var quiz_list = []
+          data.quizList.forEach(function(q) {
+            var quiz = createInstance(q)
+            quiz_list.push(quiz)
+            $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
+          })
+          deferred.resolve(quiz_list);
+        });
+      return deferred.promise;
+    }
+
+    function getFinalQuizTime(time, lecture) {
+      var new_time = parseInt(time)
+      lecture.timeline.items.forEach(function(item) {
+        if(item.type == 'quiz') {
+          var quiz_time = parseInt(item.data.time)
+          if(quiz_time == new_time + 1)
+            new_time += 2
+          else if(quiz_time == new_time)
+            new_time += 1
+        }
+      })
+      return new_time
+    }
+
+    function addVideoQuiz(insert_time, quiz_type, question_type) {
+      var deferred = $q.defer()
+      var lecture = ItemsModel.getSelectedItem();
+      var video_duration = VideoInformation.duration
+
+      if(insert_time < 1) {
+        insert_time = 1
+      }
+      insert_time = getFinalQuizTime(insert_time, lecture)
+
+      if(insert_time >= video_duration) {
+        insert_time = video_duration - 2
+      }
+
+      var start_time = insert_time
+      var end_time = insert_time
+
+      if(lecture.inclass) {
+        var offset = 5
+        var caluclated_offset = (offset * video_duration) / 100
+
+        start_time = (start_time - caluclated_offset < 0) ? 0 : start_time - caluclated_offset
+        end_time = (end_time + caluclated_offset > video_duration - 1) ? video_duration - 1 : end_time + caluclated_offset
+      }
+
+      Lecture.newQuiz({
+            course_id: lecture.course_id,
+            lecture_id: lecture.id,
+            time: insert_time,
+            start_time: start_time,
+            end_time: end_time,
+            quiz_type: quiz_type,
+            ques_type: question_type,
+            inclass: lecture.inclass
+          },
+          function(data) {
+            var quiz = createInstance(data.quiz)
+            quiz.inclass = lecture.inclass
+            $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
+            deferred.resolve(quiz)
+          })
+        // })
+      return deferred.promise;
+    }
+
+    function isInstance(instance) {
+      return (instance.instanceType && instance.instanceType() == "VideoQuiz");
+    }
+
+    function setSelectedVideoQuiz(quiz) {
+      // quiz.selected = true
+      quiz.formatedTime = $filter('format')(quiz.time)
+      quiz.start_formatedTime = $filter('format')(quiz.start_time)
+      quiz.end_formatedTime = $filter('format')(quiz.end_time)
+      if(!(quiz.inclass && quiz.inclass_session))
+        quiz.inclass_session = { intro: 120, self: 120, in_group: 120, discussion: 120 }
+      quiz.inclass_session.intro_formatedTime = $filter('format')(quiz.inclass_session.intro)
+      quiz.inclass_session.self_formatedTime = $filter('format')(quiz.inclass_session.self)
+      quiz.inclass_session.group_formatedTime = $filter('format')(quiz.inclass_session.in_group)
+      quiz.inclass_session.discussion_formatedTime = $filter('format')(quiz.inclass_session.discussion)
+      selected_video_quiz = quiz
+      return getSelectedVideoQuiz()
+    }
+
+    function getSelectedVideoQuiz() {
+      return selected_video_quiz
+    }
+
+    function clearSelectedVideoQuiz(){
+      selected_video_quiz = null
+    }
+
+
+    function createInstance(video_quiz) {
+
+      if(isInstance(video_quiz)) {
+        return video_quiz;
+      }
+
+      function addAnswer(ans, height, width, left, top) {
+        var new_answer = CourseEditor.newAnswer(ans, height, width, left, top, "lecture", video_quiz.id)
+        video_quiz.answers.push(new_answer)
+        if(video_quiz.question_type.toLowerCase() == "drag") {
+          var max = Math.max.apply(Math, video_quiz.allPos)
+          new_answer.pos = max == -Infinity ? 0 : max + 1
+          video_quiz.allPos = mergeDragPos(video_quiz.answers)
+        }
+      }
+
+      function removeAnswer(index) {
+        video_quiz.answers.splice(index, 1);
+        if(video_quiz.question_type.toLowerCase() == "drag") {
+          video_quiz.allPos = mergeDragPos(video_quiz.answers)
+        }
+      }
+
+      function addFreeTextAnswer() {
+        var answer_width = 250,
+            answer_height = 100,
+            element = angular.element("#ontop"),
+            top = element.height() / 3,
+            left = element.width() / 4,
+            the_top = top / element.height(),
+            the_left = left / element.width(),
+            the_width = answer_width / element.width(),
+            the_height = answer_height / (element.height());
+        addAnswer("", the_height, the_width, the_left, the_top)
+      }
+
+      function addHtmlAnswer(ans) {
+        var new_answer = CourseEditor.newAnswer(ans, "", "", "", "", "lecture", video_quiz.id)
+        video_quiz.answers.push(new_answer)
+      }
+
+      function removeHtmlAnswer(index) {
+        if(video_quiz.answers.length <= 1) {
+          ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
+        } else
+          video_quiz.answers.splice(index, 1);
+      }
+
+      function mergeDragPos(answers) {
+        var all_pos = []
+        answers.forEach(function(elem, i) {
+          elem.pos = i
+          all_pos.push(parseInt(elem.pos))
+        });
+        return all_pos
+      }
+
+      function updateAnswers() {
+        var answers = video_quiz.answers
+        if(isDragTextQuiz()) {
+          var obj = CourseEditor.mergeDragAnswers(video_quiz.answers, "lecture", video_quiz.id)
+          video_quiz.answers.forEach(function(ans) {
+            if(ans.id && obj.id == null) {
+              obj.id = ans.id
+              return
+            }
+          })
+          answers = [obj]
+        }
+        return Lecture.updateAnswers({
+          course_id: video_quiz.course_id,
+          lecture_id: video_quiz.lecture_id,
+          online_quiz_id: video_quiz.id
+        }, {
+          answer: answers,
+          quiz_title: video_quiz.question,
+          match_type: video_quiz.match_type
+        }).$promise
+      }
+
+
+
+      function getQuizAnswers(argument) {
+          return isInVideoQuiz()? getInVideoQuizAnswers() : getTextQuizAnswers()
+      }
+
+      function getInVideoQuizAnswers() {
+        return Lecture.getQuizData({
+              "course_id": video_quiz.course_id,
+              "lecture_id": video_quiz.lecture_id,
+              "quiz": video_quiz.id
+            },
+            function(data) {
+              video_quiz.answers = data.answers
+              if(video_quiz.question_type.toLowerCase() == "drag")
+                video_quiz.allPos = mergeDragPos(data.answers)
+              if(video_quiz.question_type.toLowerCase() == "free text question" && video_quiz.answers.length == 0) {
+                addFreeTextAnswer(video_quiz)
+              }
+            })
+          .$promise
+      }
+
+      function getTextQuizAnswers() {
+        return Lecture.getHtmlData({
+              "course_id": video_quiz.course_id,
+              "lecture_id": video_quiz.lecture_id,
+              "quiz": video_quiz.id
+            },
+            function(data) {
+              if(video_quiz.question_type.toLowerCase() == 'drag') {
+                video_quiz.answers = []
+                if(!data.answers.length)
+                  addHtmlAnswer()
+                else
+                  video_quiz.answers = CourseEditor.expandDragAnswers(data.answers[0].id, data.answers[0].answer, "lecture", video_quiz.id, data.answers[0].explanation)
+              } else {
+                video_quiz.answers = data.answers
+                if(!video_quiz.answers.length)
+                  addHtmlAnswer()
+              }
+            })
+          .$promise
+      }
+
+      function deleteQuiz() {
+        return OnlineQuiz.destroy({ online_quizzes_id: video_quiz.id }, {},
+          function(data) {
+            $rootScope.$broadcast("Lecture:" + video_quiz.lecture_id + ":remove_from_timeline", video_quiz, 'quiz')
+          }).$promise
+      }
+
+      function instanceType() {
+        return 'VideoQuiz'
+      }
+
+      function setAsSelected() {
+        return setSelectedVideoQuiz(video_quiz)
+      }
+
+      function isTextVideoQuiz() {
+        return (video_quiz.quiz_type == "html");
+      }
+
+      function isInVideoQuiz() {
+         return (video_quiz.quiz_type == "invideo");
+      }
+
+      function isTextQuiz() {
+        return (isTextVideoQuiz() || isTextSurvey());
+      }
+
+      function isFreeTextVideoQuiz() {
+        return (video_quiz.question_type.toLowerCase() == 'free text question');
+      }
+
+      function isDragQuiz() {
+        return (video_quiz.question_type.toLowerCase() == 'drag');
+      }
+
+      function isSurvey() {
+        return (video_quiz.quiz_type == 'survey');
+      }
+
+      function isTextSurvey() {
+        return (video_quiz.quiz_type == 'html_survey');
+      }
+
+      function isDragTextQuiz() {
+        return (isDragQuiz() && isTextVideoQuiz());
+      }
+
+      return angular.extend(video_quiz, {
+        getInVideoQuizAnswers: getInVideoQuizAnswers,
+        getTextQuizAnswers: getTextQuizAnswers,
+        getQuizAnswers:getQuizAnswers,
+        addFreeTextAnswer: addFreeTextAnswer,
+        addAnswer: addAnswer,
+        removeAnswer: removeAnswer,
+        addHtmlAnswer: addHtmlAnswer,
+        removeHtmlAnswer: removeHtmlAnswer,
+        updateAnswers:updateAnswers,
+        instanceType: instanceType,
+        setAsSelected: setAsSelected,
+        isTextVideoQuiz: isTextVideoQuiz,
+        isFreeTextVideoQuiz: isFreeTextVideoQuiz,
+        isDragQuiz: isDragQuiz,
+        isTextQuiz: isTextQuiz,
+        isSurvey: isSurvey,
+        isTextSurvey: isTextSurvey,
+        deleteQuiz: deleteQuiz,
+        isDragTextQuiz:isDragTextQuiz
+      })
+    }
+
+    return {
+      getQuizzes: getQuizzes,
+      addVideoQuiz: addVideoQuiz,
+      createInstance: createInstance,
+      setSelectedVideoQuiz:setSelectedVideoQuiz,
+      getSelectedVideoQuiz:getSelectedVideoQuiz,
+      clearSelectedVideoQuiz:clearSelectedVideoQuiz
+    }
+
+  }])

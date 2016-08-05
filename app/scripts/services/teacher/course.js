@@ -85,20 +85,26 @@ angular.module('scalearAngularApp')
 
     function init(course_id) {
       var deferred = $q.defer();
-      UserSession.getUser().then(function(user) {
-        if(user && user.roles) {
-          getRole(course_id)
-            .then(function(course_role) {
-              if(course_role == 1) {
-                getTeacherData(course_id)
-                  .then(deferred.resolve)
-              } else if(course_role == 2 || course_role == 7) {
-                getStudentData(course_id)
-                  .then(deferred.resolve)
-              }
-            })
-        }
-      })
+      UserSession.getUser()
+        .then(function(user) {
+          if(user && user.roles) {
+            getRole(course_id)
+              .then(function(course_role) {
+
+                function done(course_data) {
+                  setCourse(course_data)
+                  $rootScope.$broadcast("Course:ready", course_data)
+                  deferred.resolve(course_data)
+                }
+
+                if(isTeacher()) {
+                  getTeacherData(course_id).then(done)
+                } else if(isStudent()) {
+                  getStudentData(course_id).then(done)
+                }
+              })
+          }
+        })
       return deferred.promise
     }
 
@@ -110,18 +116,14 @@ angular.module('scalearAngularApp')
       $cookieStore.remove('course_id')
       Course.getCourseEditor({ course_id: id },
         function(data) {
-          course = data.course
-          ModuleModel.setModules(data.groups)
-          // course.modules = data.groups
-            // course.module_obj = {}
-            // course.items_obj = { lecture: {}, quiz: {}, customlink: {} }
-            // course.modules.forEach(function(module) {
-            //   course.module_obj[module.id] = module
-            //   module.items.forEach(function(item) {
-            //     course.items_obj[item.class_name][item.id] = item
-            //   })
-            // })
-          deferred.resolve(course);
+          $rootScope.$broadcast("Course:set_modules", data.groups)
+          // course.items_obj = { lecture: {}, quiz: {}, customlink: {} }
+          // course.modules.forEach(function(module) {
+          //   module.items.forEach(function(item) {
+          //     course.items_obj[item.class_name][item.id] = item
+          //   })
+          // })
+          deferred.resolve(data.course);
         },
         function() {
           deferred.reject();
@@ -134,11 +136,11 @@ angular.module('scalearAngularApp')
       var deferred = $q.defer();
       Course.getCourseware({ course_id: id },
         function(data) {
-          course = JSON.parse(data.course);
-          course.next_item = data.next_item
-          course.module_obj = ScalearUtils.toObjectById(course.groups)
-
-          deferred.resolve($scope);
+          data.course = JSON.parse(data.course);
+          data.course.next_item = data.next_item
+          ModuleModel.setModules(data.course.groups)
+            // data.course.module_obj = ScalearUtils.toObjectById(data.course.groups)
+          deferred.resolve(data.course);
         },
         function() {
           deferred.reject();
@@ -154,6 +156,10 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("item_done", course.groups[group_index].items[item_index])
     }
 
+    function setCourse(course_data) {
+      course = course_data
+    }
+
     function getCourse() {
       return course
     }
@@ -164,7 +170,6 @@ angular.module('scalearAngularApp')
 
     function update(c) {
       var modified_course = angular.copy(c);
-      console.log(modified_course.time_zone);
       modified_course.time_zone = c.time_zone.name
       delete modified_course.id;
       delete modified_course.created_at;
@@ -172,14 +177,8 @@ angular.module('scalearAngularApp')
       delete modified_course.unique_identifier;
       delete modified_course.duration;
       delete modified_course.guest_unique_identifier
-      return Course.update(
-        { course_id: course.id },
-        { course: modified_course },
-        function() {
-          angular.extend(course, modified_course)
-            // $scope.$emit('get_current_courses')
-        }
-      ).$promise
+
+      return Course.update({ course_id: course.id }, { course: modified_course }).$promise
     }
 
     function validate(c) {
@@ -188,28 +187,6 @@ angular.module('scalearAngularApp')
 
     function exportCourse() {
       return Course.exportCsv({ course_id: course.id }).$promise
-    }
-
-    function getTeachers() {
-      return Course.getTeachers({ course_id: course.id }).$promise
-    }
-
-    function updateTeacher(teacher) {
-      return Course.updateTeacher({ course_id: course.id }, teacher).$promise
-    }
-
-    function saveNewTeacher(teacher){
-      return Course.saveTeacher(
-        { course_id: course.id },
-        { new_teacher: teacher }
-      ).$promise
-    }
-
-    function deleteTeacher(teacher) {
-      return Course.deleteTeacher({
-        course_id: course.id,
-        email: teacher.email
-      }).$promise
     }
 
     return {
@@ -223,11 +200,7 @@ angular.module('scalearAngularApp')
       isTeacher: isTeacher,
       update: update,
       validate: validate,
-      getTeachers: getTeachers,
-      updateTeacher: updateTeacher,
-      deleteTeacher: deleteTeacher,
-      saveNewTeacher:saveNewTeacher,
-      exportCourse:exportCourse
+      exportCourse: exportCourse
     }
 
   }])

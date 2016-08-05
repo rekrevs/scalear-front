@@ -25,8 +25,8 @@
 									<loading size='small' show='true' style="position:relative;top:70px;" />
 								</span>
 							</div>
-							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveQuizBtn()"/>
-							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer" subtype="selected_quiz.quiz_type"/>
+							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'" ng-repeat="answer in selected_quiz.answers" data="answer" list="selected_quiz.allPos" quiz="selected_quiz" remove="selected_quiz.removeAnswer($index)" save="saveQuizBtn()"/>
+							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="selected_quiz.addHtmlAnswer" remove="selected_quiz.removeHtmlAnswer" subtype="selected_quiz.quiz_type"/>
 							<annotation text="selected_marker.annotation" ng-if='selected_marker.annotation && selected_marker.annotation !=""'/>
 						</quiz>
 					</youtube>

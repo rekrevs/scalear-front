@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
                         $rootScope.current_user.discussion_pref = scope.privacy.value;
                         User.alterPref({},{privacy: scope.privacy.value})
                     }
-                    scope.time_error = ValidateTime(item.time,true,VideoInformation.totalDuration)
+                    scope.time_error = ValidateTime(item.time,true,VideoInformation.duration)
                     if (!( scope.time_error)){
                         scope.ask_button_clicked = true
                          item.time = arrayToSeconds(item.time.split(':'))
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
             scope.updateQuestion= function(question){
                 if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
 
-                    scope.time_error = ValidateTime(question.time,true,VideoInformation.totalDuration)
+                    scope.time_error = ValidateTime(question.time,true,VideoInformation.duration)
 
 
 

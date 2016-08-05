@@ -46,32 +46,100 @@ angular.module('scalearAngularApp')
       'updateAllInclassSessions': { method: 'POST', ignoreLoadingBar: true, headers: headers, params: { action: 'update_all_inclass_sessions' } }
     });
   }])
-  .factory('ModuleModel', ['Module','ScalearUtils', function(Module, ScalearUtils) {
+  .factory('ModuleModel', ['Module', 'ScalearUtils', '$rootScope','ItemsModel', function(Module, ScalearUtils, $rootScope, ItemsModel) {
     var selected_module = null
     var modules = []
     var module_obj = {}
+    var course = null
+
+    $rootScope.$on("Course:ready", function(course_data) {
+      course = course_data
+    })
+
+    $rootScope.$on("Course:set_modules", function(ev, modules) {
+      setModules(modules)
+    })
 
     function setSelectedModule(module) {
       selected_module = module
     }
 
-    function getSelectedModule(){
+    function getSelectedModule() {
       return selected_module
     }
 
-    function removeSelectedModule(){
+    function removeSelectedModule() {
       selected_module = null
     }
 
-    function setModules(all_modules){
+    function setModules(all_modules) {
       modules = all_modules
       module_obj = ScalearUtils.toObjectById(all_modules)
-      // modules.forEach(function(module) {
-      //   module_obj[module.id] = module
+      modules.forEach(function(module) {
+        ItemsModel.addToList(module.items)
+      })
+      $rootScope.$broadcast("Module:ready", modules)
+        // modules.forEach(function(module) {
+        //   module_obj[module.id] = module
     }
 
-    function getById(id){
+    function add() {
+      var deferred = $q.defer();
+      Module.newModule({ course_id: course.id }, {},
+        function(data) {
+          var module = data.group
+          module.items = []
+          modules.push(module)
+          $scope.module_obj[module.id] = module //$scope.course.modules[$scope.course.modules.length - 1]
+          deferred.resolve(module);
+          $rootScope.$broadcast("Module:added", module)
+        })
+      return deferred.promise;
+    }
+
+    function remove(module) {
+      return Module.destroy({
+          course_id: module.course_id,
+          module_id: module.id
+        }, {},
+        function() {
+          modules.splice(modules.indexOf(module), 1)
+          delete module_obj[module.id]
+        }).$promise
+    }
+
+    function getById(id) {
       return module_obj[id]
+    }
+
+    function getStatistics() {
+      return Module.getModuleStatistics({
+        course_id: selected_module.course_id,
+        module_id: selected_module.id
+      }).$promise
+    }
+
+    function validate(m) {
+      return Module.validateModule({course_id: selected_module.course_id, module_id: selected_module.id},m).$promise
+    }
+
+    function update(module){
+      var modified_module = angular.copy(module);
+      delete modified_module.id;
+      delete modified_module.items;
+      delete modified_module.created_at;
+      delete modified_module.updated_at;
+      delete modified_module.total_time;
+
+      Module.update({
+          course_id: module.course_id,
+          module_id: module.id
+        }, {
+          group: modified_module
+        },
+        function(response) {
+          $rootScope.$broadcast("Module:"+module.id+":updated", module)
+        });
     }
 
     return {
@@ -79,8 +147,12 @@ angular.module('scalearAngularApp')
       getSelectedModule: getSelectedModule,
       removeSelectedModule: removeSelectedModule,
       setModules: setModules,
-      getById:getById
-
+      getById: getById,
+      add: add,
+      remove: remove,
+      getStatistics: getStatistics,
+      validate:validate,
+      update:update
     }
 
   }])

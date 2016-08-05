@@ -93,7 +93,7 @@ angular.module('scalearAngularApp')
                     $interval.cancel($rootScope.stop);
                     $rootScope.stop = undefined;
                 }
-                ErrorHandler.showFMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
+                ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
             }
 
             if (rejection.status == 403 && rejection.config.url.search(re) != -1) {

@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
         $log.debug('showing confirmation ')
         $log.debug($stateParams)
 
-        UserSession.getUser().then(function(result) {
+        UserSession.getCurrentUser().then(function(result) {
             if(result==0){
                 User.show_confirmation({confirmation_token: $stateParams.confirmation_token },
                     function(){

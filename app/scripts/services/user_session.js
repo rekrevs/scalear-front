@@ -5,35 +5,38 @@ angular.module('scalearAngularApp')
 
     var current_user = null
 
-    function getUser(argument) {
+    function getCurrentUser(argument) {
       var deferred = $q.defer();
-      var user = getCurrentUser()
-      if(!user) {
-        User.getCurrentUser(function(data) {
-          $log.debug(data);
-          if(data.signed_in) {
-            user = JSON.parse(data.user);
-            if(!user.last_name) {
-              user.last_name = ''
-            }
-            user.roles = user.roles.map(function(r) {
-              return r.id
-            })
-            user.profile_image = data.profile_image
-            user.invitations = data.invitations
-            user.shared = data.shared
-            user.accepted_shared = data.accepted_shared
-            getNotifications().then(function(response) {
-              user.invitation_items = response.invitations
-              user.shared_items = response.shared_items
+      if(!current_user) {
+        User.getCurrentUser()
+          .$promise
+          .then(function(data) {
+            if(data.signed_in) {
+              var user = JSON.parse(data.user);
+              if(!user.last_name) {
+                user.last_name = ''
+              }
+              user.roles = user.roles.map(function(r) {
+                return r.id
+              })
+              user.profile_image = data.profile_image
+              user.invitations = data.invitations
+              user.shared = data.shared
+              user.accepted_shared = data.accepted_shared
               setCurrentUser(user)
-            })
+              deferred.resolve(user)
+              return getNotifications()
 
-          }
-          deferred.resolve(user)
-        })
+            } else {
+              deferred.reject()
+            }
+          })
+          .then(function(response) {
+            current_user.invitation_items = response.invitations
+            current_user.shared_items = response.shared_items
+          })
       } else {
-        deferred.resolve(user)
+        deferred.resolve(current_user)
       }
       return deferred.promise;
     }
@@ -47,11 +50,7 @@ angular.module('scalearAngularApp')
       $rootScope.current_user = user
     }
 
-    function getCurrentUser() {
-      return current_user
-    }
-
-    function removeCurrentUser(){
+    function removeCurrentUser() {
       current_user = null
       $rootScope.current_user = null
     }
@@ -63,7 +62,7 @@ angular.module('scalearAngularApp')
     }
 
     return {
-      getUser: getUser,
+      getCurrentUser: getCurrentUser,
       logout: logout
     };
 

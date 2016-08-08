@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture', 'Quiz', '$translate', '$log', 'Page', '$modal', '$timeout', '$filter', 'CustomLink', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'Timeline', 'CourseModel', function($rootScope, $stateParams, $scope, $state, Course, Module, Lecture, Quiz, $translate, $log, Page, $modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, Timeline, CourseModel) {
+  .controller('courseEditorCtrl', ['$rootScope', '$scope', '$state', '$translate', '$log', 'Page', '$modal', '$timeout', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'CourseModel', 'ModuleModel', 'ItemsModel', 'LectureModel', 'QuizModel', 'LinkModel', function($rootScope, $scope, $state, $translate, $log, Page, $modal, $timeout, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, CourseModel, ModuleModel, ItemsModel ,LectureModel, QuizModel, LinkModel) {
 
     $scope.course = CourseModel.getSelectedCourse()
     Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
     DetailsNavigator.open()
-      // $scope.timeline = new Timeline()
+
     $scope.DetailsNavigator = DetailsNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.delayed_details_status = DetailsNavigator.getStatus()
@@ -86,28 +86,28 @@ angular.module('scalearAngularApp')
       module.remove()
         .then(function() {
           emptyClipboard()
-          if(ModuleModel.getSelectedModule().id == module.id) {
+          var selected_module = ModuleModel.getSelectedModule()
+          if(selected_module && selected_module.id == module.id) {
             $state.go('course.course_editor')
           }
         })
     }
 
-    var addItemBytype = function(type, module_id) {
+    function addItemBytype(type, module_id) {
       if(type == 'video')
-        $scope.addLecture(module_id || $state.params.module_id, false)
+        $scope.addLecture(false)
       else if(type == 'inclass_video')
-        $scope.addLecture(module_id || $state.params.module_id, true)
+        $scope.addLecture(true)
       else if(type == 'link')
         $scope.addCustomLink(module_id || $state.params.module_id)
       else
-        $scope.addQuiz(module_id || $state.params.module_id, type)
+        $scope.addQuiz(type)
     }
 
     $scope.addLecture = function(inclass) {
-      $scope.item_loading = true
       LectureModel.create(inclass)
         .then(function(lecture) {
-          $scope.item_loading = false
+          emptyClipboard()
           $state.go('course.module.course_editor.lecture', { lecture_id: lecture.id })
         })
     }
@@ -124,10 +124,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addQuiz = function(type) {
-      $scope.item_loading = true
       QuizModel.create(type)
         .then(function(quiz) {
-          $scope.item_loading = false
+          emptyClipboard()
           $state.go('course.module.course_editor.quiz', { quiz_id: quiz.id })
         })
     }
@@ -142,12 +141,34 @@ angular.module('scalearAngularApp')
         })
     }
 
+    $scope.addCustomLink = function(module_id) {
+      LinkModel.create()
+        .then(function(link) {
+          $state.go('course.module.course_editor.customlink', { customlink_id: link.id })
+        })
+    }
+
+    $scope.removeCustomLink = function(link) {
+      link.remove()
+        .then(function() {
+          emptyClipboard()
+          $scope.$broadcast('update_module_statistics')
+          if($state.params.customlink_id == link.id)
+            $state.go('course.module.course_editor.overview')
+        })
+    }
+
     $scope.previewStudent = function() {
       Preview.start()
     }
 
     $scope.copy = function(item) {
-      $rootScope.clipboard = { id: item.id, name: item.name, type: item.class_name || 'module', show_msg: true }
+      $rootScope.clipboard = {
+        id: item.id,
+        name: item.name,
+        type: item.class_name || 'module',
+        show_msg: true
+      }
     }
 
     var emptyClipboard = function() {
@@ -155,77 +176,18 @@ angular.module('scalearAngularApp')
     }
 
     $scope.paste = function(module_id) {
-      var clipboard = $rootScope.clipboard
+      var item = $rootScope.clipboard
 
-      if(clipboard.type == 'module')
-        pasteModule(clipboard)
-      else {
-        if(clipboard.type == 'lecture')
-          pasteLecture(clipboard, module_id)
-        else if(clipboard.type == 'quiz')
-          pasteQuiz(clipboard, module_id)
-        else if(clipboard.type == 'customlink')
-          pastLink(clipboard, module_id)
+      if(item.type == 'module') {
+        ModuleModel.paste(item)
+      } else if(item.type == 'lecture') {
+        LectureModel.paste(item, module_id)
+      } else if(item.type == 'quiz') {
+        QuizModel.paste(item, module_id)
+      } else if(item.type == 'customlink') {
+        LinkModel.paste(item, module_id)
       }
-    }
 
-    var pasteModule = function(module) {
-      ModuleModel.paste(module)
-    }
-
-    var pasteLecture = function(item, module_id) {
-      // $scope.item_overlay = true
-      // Lecture.lectureCopy({ course_id: $stateParams.course_id }, {
-      //     lecture_id: item.id,
-      //     module_id: module_id
-      //   },
-      //   function(data) {
-      //     $scope.item_overlay = false
-      //     data.lecture.class_name = 'lecture'
-      //     $scope.module_obj[module_id].items.push(data.lecture)
-      //     $scope.module_obj[module_id].total_time += data.lecture.duration
-      //     $scope.items_obj["lecture"][data.lecture.id] = data.lecture
-      //   },
-      //   function() {}
-      // )
-    }
-
-    var pasteQuiz = function(item, module_id) {
-      $scope.item_overlay = true
-      Quiz.quizCopy({ course_id: $stateParams.course_id }, {
-          quiz_id: item.id,
-          module_id: module_id
-        },
-        function(data) {
-          $log.debug(data)
-          $scope.item_overlay = false
-          data.quiz.class_name = 'quiz'
-          $scope.module_obj[module_id].items.push(data.quiz)
-          $scope.items_obj["quiz"][data.quiz.id] = data.quiz
-        },
-        function() {}
-      )
-    }
-
-
-    var pastLink = function(item, module_id) {
-      $log.debug("link copy")
-      $log.debug(item)
-      $scope.item_overlay = true
-      CustomLink.linkCopy({
-          link_id: item.id,
-          course_id: $stateParams.course_id,
-          module_id: module_id
-        }, {},
-        function(data) {
-          $log.debug(data)
-          $scope.item_overlay = false
-          data.link.class_name = 'customlink'
-          $scope.module_obj[module_id].items.push(data.link)
-          $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length - 1]
-        },
-        function() {}
-      )
     }
 
     var openSharingModal = function(data) {
@@ -234,46 +196,15 @@ angular.module('scalearAngularApp')
         controller: "sharingModalCtrl",
         resolve: {
           selected_module: function() {
-            return $scope.module_obj[data.module_id]
+            return ModuleModel.getById(data.module_id)
           },
           selected_item: function() {
             if(data.item) {
-              return $scope.items_obj[data.item.class_name][data.item.id]
+              return ItemModel.getById(data.item.id, data.item.class_name)
             }
           }
         }
       });
-    }
-
-    $scope.addCustomLink = function(module_id) {
-      Module.newCustomLink({
-          course_id: $stateParams.course_id,
-          module_id: module_id
-        }, {},
-        function(data) {
-          data.link.url = "http://"
-          data.link.class_name = "customlink"
-          $scope.module_obj[module_id].items.push(data.link)
-          $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length - 1]
-          $state.go('course.module.course_editor.customlink', { customlink_id: data.link.id })
-        },
-        function() {}
-      );
-    }
-
-    $scope.removeCustomLink = function(elem) {
-      $log.debug(elem)
-      CustomLink.destroy({ link_id: elem.id }, {},
-        function() {
-          $scope.module_obj[elem.group_id].items.splice($scope.module_obj[elem.group_id].items.indexOf(elem), 1)
-          delete $scope.items_obj["customlink"][elem.id];
-          emptyClipboard()
-          if($state.params.customlink_id == elem.id)
-            $state.go('course.module.course_editor.overview')
-          $scope.$broadcast('update_module_statistics')
-        },
-        function() {}
-      );
     }
 
   }]);

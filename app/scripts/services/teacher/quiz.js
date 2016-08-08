@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
       "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers }
     });
 
-  }]).factory("QuizModel", ['Quiz', 'ModuleModel', function(Quiz, ModuleModel) {
+  }]).factory("QuizModel", ['Quiz', 'ModuleModel','$rootScope', function(Quiz, ModuleModel, $rootScope) {
 
     var selected_quiz = null
 
@@ -54,10 +54,25 @@ angular.module('scalearAngularApp')
         .$promise
         .then(function(data) {
           data.quiz.class_name = 'quiz'
-          var quiz = createInstance(quiz)
+          var quiz = createInstance(data.quiz)
           $rootScope.$broadcast("Item:added", quiz)
           return quiz
         });
+    }
+
+    function paste(q, module_id) {
+      var module = ModuleModel.getById(module_id)
+      return Quiz.quizCopy({ course_id: module.course_id }, {
+          quiz_id: q.id,
+          module_id: module.id
+        })
+        .$promise
+        .then(function(data) {
+          data.quiz.class_name = 'quiz'
+          var quiz = createInstance(data.quiz)
+          $rootScope.$broadcast("Item:added", quiz)
+          return quiz
+        })
     }
 
     function isInstance(instance) {
@@ -119,7 +134,7 @@ angular.module('scalearAngularApp')
           }, {})
           .$promise
           .then(function() {
-            $rootScope.$broadcast("Item:removed", lecture)
+            $rootScope.$broadcast("Item:removed", quiz)
           });
       }
 
@@ -127,7 +142,8 @@ angular.module('scalearAngularApp')
         instanceType: instanceType,
         module: module,
         validate: validate,
-        update: update
+        update: update,
+        remove:remove
       })
     }
 
@@ -136,6 +152,8 @@ angular.module('scalearAngularApp')
       getSelectedQuiz: getSelectedQuiz,
       clearSelectedQuiz: clearSelectedQuiz,
       isInstance: isInstance,
-      createInstance: createInstance
+      createInstance: createInstance,
+      paste:paste,
+      create:create
     }
   }])

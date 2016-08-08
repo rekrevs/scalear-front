@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('ItemsModel', ['LectureModel', 'QuizModel','$rootScope', function(LectureModel, QuizModel, $rootScope) {
+  .factory('ItemsModel', ['LectureModel', 'QuizModel', 'LinkModel','$rootScope', function(LectureModel, QuizModel, LinkModel, $rootScope) {
 
     var items_obj = { lecture: {}, quiz: {}, customlink: {} };
+
     $rootScope.$on("Module:set_items", function(ev, items) {
       setItems(items)
     })
@@ -30,8 +31,7 @@ angular.module('scalearAngularApp')
       } else if(item.class_name == 'quiz') {
         it = QuizModel.createInstance(item)
       } else {
-        //TODO
-        console.log("customlink");
+        it =LinkModel.createInstance(item)
       }
       items_obj[item.class_name][item.id] = it
     }
@@ -51,6 +51,10 @@ angular.module('scalearAngularApp')
 
     function getLink(id) {
       return items_obj['customlink'][id]
+    }
+
+    function getById(id, type) {
+       return items_obj[type][id]
     }
 
     function getSelectedItem() {

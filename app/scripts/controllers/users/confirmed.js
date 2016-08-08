@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     $scope.player.events = {}
     Page.setTitle('Welcome to ScalableLearning');
     $rootScope.subheader_message = $translate("intro.title")
-    // UserSession.getUser().then(function(result) {
+    // UserSession.getCurrentUser().then(function(result) {
       // $scope.role = result
       // if($scope.role == 2) {
         // $scope.intro_url = scalear_api.student_welcom_video

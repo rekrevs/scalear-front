@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
     }
 
     function init(course_id) {
-      return UserSession.getUser()
+      return UserSession.getCurrentUser()
         .then(function(user) {
           if(user && user.roles) {
             return getCourseRole(course_id)

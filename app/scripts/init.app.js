@@ -96,7 +96,7 @@ angular.module('scalearAngularApp')
         $tour.end();
       }
       URLInformation.history = $state.href(from, fromParams)
-      UserSession.getUser().then(function(user) {
+      UserSession.getCurrentUser().then(function(user) {
         var s = 1;
         if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
           $state.go("ie");

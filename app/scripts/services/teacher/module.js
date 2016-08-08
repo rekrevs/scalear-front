@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
     var module_obj = {}
     var course = null
 
-    $rootScope.$on("Course:ready", function(course_data) {
+    $rootScope.$on("Course:ready", function(ev, course_data) {
       course = course_data
     })
 
@@ -88,6 +88,7 @@ angular.module('scalearAngularApp')
     }
 
     function create() {
+      console.log("course = ", course);
       return Module.newModule({ course_id: course.id }, {})
         .$promise
         .then(function(data) {

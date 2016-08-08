@@ -68,26 +68,25 @@ angular.module('scalearAngularApp')
         .$promise
         .then(function(data) {
           data.lecture.class_name = 'lecture'
-          var lecture = createInstance(lecture)
-          // module.push(lecture)
+          var lecture = createInstance(data.lecture)
           $rootScope.$broadcast("Item:added", lecture)
           return lecture
         })
     }
 
-    function paste(lecture){
-      Lecture.lectureCopy({ course_id: $stateParams.course_id }, {
-          lecture_id: lecture.id,
-          module_id: module_id
-        },
-        function(data) {
+    function paste(lec, module_id) {
+      var module = ModuleModel.getById(module_id)
+      Lecture.lectureCopy({ course_id: module.course_id }, {
+          lecture_id: lec.id,
+          module_id: module.id
+        })
+        .$promise
+        .then(function(data) {
           data.lecture.class_name = 'lecture'
-          $scope.module_obj[module_id].items.push(data.lecture)
-          $scope.module_obj[module_id].total_time += data.lecture.duration
-          $scope.items_obj["lecture"][data.lecture.id] = data.lecture
-        },
-        function() {}
-      )
+          var lecture = createInstance(data.lecture)
+          $rootScope.$broadcast("Item:added", lecture)
+          return lecture
+        })
     }
 
     function createInstance(lecture) {
@@ -267,8 +266,8 @@ angular.module('scalearAngularApp')
         addToTimeline: addToTimeline,
         removeFromTimeline: removeFromTimeline,
         instanceType: instanceType,
-        remove:remove,
-        module:module
+        remove: remove,
+        module: module
       })
     }
 
@@ -278,7 +277,8 @@ angular.module('scalearAngularApp')
       clearSelectedLecture: clearSelectedLecture,
       getSelectedLecture: getSelectedLecture,
       setSelectedLecture: setSelectedLecture,
-      create:create
+      create: create,
+      paste:paste
     }
 
   }])

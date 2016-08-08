@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
             } else {
               $state.go("course.course_editor", { "course_id": data.course.id })
             }
-            $rootScope.$broadcast('get_current_courses')
+            $rootScope.$broadcast('Course:get_current_courses')
           },
           function(response) {
             $scope.submitting = false;

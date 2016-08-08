@@ -45,8 +45,12 @@ angular.module('scalearAngularApp')
 
   }]).factory('CourseModel', ['Course', '$rootScope', '$q', 'UserSession', '$cookieStore', 'ScalearUtils', function(Course, $rootScope, $q, UserSession, $cookieStore, ScalearUtils) {
 
-    var course_role = null
-    var selected_course
+    var course_role;
+    var selected_course;
+
+    $rootScope.$on("Course:get_current_courses", function() {
+      currentCourses();
+    })
 
     function getCourseRole(id) {
       var deferred = $q.defer();
@@ -61,6 +65,10 @@ angular.module('scalearAngularApp')
         deferred.resolve(course_role)
       }
       return deferred.promise;
+    }
+
+    function currentCourses() {
+      return Course.currentCourses({}).$promise;
     }
 
     function setCourseRole(role) {
@@ -93,9 +101,10 @@ angular.module('scalearAngularApp')
           }
         })
         .then(function(course_data) {
-          setCourse(course_data)
-          $rootScope.$broadcast("Course:ready", course_data)
-          return course_data
+          var course = createInstance(course_data)
+          setCourse(course)
+          $rootScope.$broadcast("Course:ready", course)
+          return course
         })
     }
 
@@ -204,7 +213,8 @@ angular.module('scalearAngularApp')
       isStudent: isStudent,
       isTeacher: isTeacher,
       createInstance: createInstance,
-      isInstance: isInstance
+      isInstance: isInstance,
+      currentCourses: currentCourses
     }
 
   }])

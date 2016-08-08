@@ -10,13 +10,12 @@ angular.module('scalearAngularApp')
     $scope.player.events = {}
     Page.setTitle('Welcome to ScalableLearning');
     $rootScope.subheader_message = $translate("intro.title")
-    // UserSession.getCurrentUser().then(function(result) {
-      // $scope.role = result
-      // if($scope.role == 2) {
-        // $scope.intro_url = scalear_api.student_welcom_video
-      // } else {
+    UserSession.getCurrentUser()
+      .then(function(user) {
+        $scope.current_user = current_user
+      })
     $scope.intro_url = scalear_api.teacher_welcome_video
-    // }
+
     $scope.player.events.onEnd = function() {
       if($scope.privacy_approved) {
         $interval(function() {
@@ -27,16 +26,14 @@ angular.module('scalearAngularApp')
         }, 1000, 5)
       }
     }
-    // })
 
     $scope.watchedIntro = function() {
       var completion = {}
       completion['intro_watched'] = true;
-      User.updateCompletionWizard({ id: $rootScope.current_user.id }, { completion_wizard: completion },
+      User.updateCompletionWizard({ id: $scope.current_user.id }, { completion_wizard: completion },
         function() {
-          $log.debug('SUCCEEDED')
-          $rootScope.current_user.completion_wizard = {}
-          $rootScope.current_user.completion_wizard.intro_watched = true;
+          $scope.current_user.completion_wizard = {}
+          $scope.current_user.completion_wizard.intro_watched = true;
           $state.go('course_list');
         }
       );

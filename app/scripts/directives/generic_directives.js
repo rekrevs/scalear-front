@@ -193,14 +193,16 @@ angular.module('scalearAngularApp')
 
       }
     }
-  }]).directive('enrollHelpModal', ['$modal', '$rootScope', function($modal, $rootScope) {
+  }]).directive('enrollHelpModal', ['$modal', 'UserSession', function($modal, UserSession) {
     return {
       restrict: 'A',
       replace: true,
       link: function(scope, element) {
         scope.openHelpModal = function(course) {
+          UserSession.getCurrentUser().then(function(user) {
+            scope.current_user = user
+          })
           scope.course = course
-          scope.current_user = $rootScope.current_user
           scope.getTextToCopy = function() {
             return $("#enrollment_message").text();
           }

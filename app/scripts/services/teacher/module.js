@@ -81,10 +81,16 @@ angular.module('scalearAngularApp')
     }
 
     function setModules(all_modules) {
+      clearModules()
       all_modules.forEach(function(module) {
         addToCollection(createInstance(module))
       })
       $rootScope.$broadcast("Module:ready", modules)
+    }
+
+    function clearModules() {
+      modules = []
+      module_obj = {}
     }
 
     function create() {
@@ -215,7 +221,6 @@ angular.module('scalearAngularApp')
       setSelectedModule: setSelectedModule,
       getSelectedModule: getSelectedModule,
       clearSelectedModule: clearSelectedModule,
-      setModules: setModules,
       getById: getById,
       create: create,
       createInstance: createInstance,

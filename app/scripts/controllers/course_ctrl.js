@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'ScalearUtils', 'CourseData', '$state', 'ContentNavigator', '$window', 'MobileDetector','CourseModel', function($rootScope, $stateParams, $scope, Course, $log, $cookieStore, ScalearUtils, CourseData, $state, ContentNavigator, $window, MobileDetector, CourseModel) {
+  .controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'ScalearUtils', 'CourseData', '$state', 'ContentNavigator', '$window', 'MobileDetector', 'CourseModel', function($rootScope, $stateParams, $scope, Course, $log, $cookieStore, ScalearUtils, CourseData, $state, ContentNavigator, $window, MobileDetector, CourseModel) {
 
     if($state.includes("**.course")) {
       if(CourseModel.isStudent()) {
@@ -21,9 +21,10 @@ angular.module('scalearAngularApp')
 
     $scope.$on('$destroy', function() {
       ContentNavigator.close()
-      CourseModel.removeSelectedCourse()
-      if(!$state.includes('**.course.**' ))
+      if(!$state.includes('**.course.**')) {
+        CourseModel.removeSelectedCourse()
         CourseModel.removeCourseRole()
+      }
     });
 
   }])

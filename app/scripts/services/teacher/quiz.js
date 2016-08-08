@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
       "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers }
     });
 
-  }]).factory("QuizModel", ['Quiz', function(Quiz) {
+  }]).factory("QuizModel", ['Quiz', 'ModuleModel', function(Quiz, ModuleModel) {
 
     var selected_quiz = null
 
@@ -44,26 +44,98 @@ angular.module('scalearAngularApp')
       selected_quiz = null
     }
 
-    function isInstance(instance) {
-      return(instance.instanceType && instance.instanceType() == "Lecture");
+    function create(type) {
+      var module = ModuleModel.getSelectedModule()
+      return Quiz.newQuiz({
+          course_id: module.course_id,
+          group: module.id,
+          type: type
+        }, {})
+        .$promise
+        .then(function(data) {
+          data.quiz.class_name = 'quiz'
+          var quiz = createInstance(quiz)
+          $rootScope.$broadcast("Item:added", quiz)
+          return quiz
+        });
     }
 
-    function createInstance(quiz){
+    function isInstance(instance) {
+      return(instance.instanceType && instance.instanceType() == "Quiz");
+    }
+
+    function createInstance(quiz) {
 
       if(isInstance(quiz)) {
         return quiz;
       }
 
-      return angular.extend(quiz,{
+      function instanceType() {
+        return "Quiz"
+      }
 
+      function module() {
+        return ModuleModel.getById(quiz.group_id)
+      }
+
+      function validate() {
+        return Quiz.validateQuiz({
+            course_id: quiz.course_id,
+            quiz_id: quiz.id
+          }, quiz)
+          .$promise
+          .catch(function(data) {
+            if(data.status == 422 && data.data.errors)
+              return data.data.errors.join();
+            else
+              return 'Server Error';
+          })
+      }
+
+      function update() {
+        var modified_quiz = angular.copy(quiz);
+        delete modified_quiz.created_at;
+        delete modified_quiz.updated_at;
+        delete modified_quiz.class_name;
+        delete modified_quiz.id;
+
+        return Quiz.update({
+            course_id: quiz.course_id,
+            quiz_id: quiz.id
+          }, {
+            quiz: modified_quiz
+          })
+          .$promise
+          .then(function(data) {
+            angular.extend(quiz, data.quiz)
+            return quiz
+          });
+      }
+
+      function remove() {
+        return Quiz.destroy({
+            course_id: quiz.course_id,
+            quiz_id: quiz.id
+          }, {})
+          .$promise
+          .then(function() {
+            $rootScope.$broadcast("Item:removed", lecture)
+          });
+      }
+
+      return angular.extend(quiz, {
+        instanceType: instanceType,
+        module: module,
+        validate: validate,
+        update: update
       })
     }
 
     return {
-      setSelectedQuiz:setSelectedQuiz,
-      getSelectedQuiz:getSelectedQuiz,
-      clearSelectedQuiz:clearSelectedQuiz,
-      isInstance:isInstance,
-      createInstance:createInstance
+      setSelectedQuiz: setSelectedQuiz,
+      getSelectedQuiz: getSelectedQuiz,
+      clearSelectedQuiz: clearSelectedQuiz,
+      isInstance: isInstance,
+      createInstance: createInstance
     }
   }])

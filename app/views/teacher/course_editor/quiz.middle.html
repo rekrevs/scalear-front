@@ -5,8 +5,8 @@
 </div>
 <div class="row">
 	<div class="small-12 columns">
-		<span translate>editor.details.instructions</span>: 
-		<big-area value="quiz.instructions" save="updateQuiz()" validate="validateQuiz" column="instructions"></big-area>
+		<span translate>editor.details.instructions</span>:
+		<big-area value="quiz.instructions" save="quiz.update()" validate="validateQuiz" column="instructions"></big-area>
 	</div>
 </div>
 <br>
@@ -14,7 +14,7 @@
 	<div ng-show="!preview">
 		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions'>
 			<div ng-repeat="question in questions" class="row soft-border quiz_sort">
-				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index" sortable="true"/>
+				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addAnswer" remove="removeAnswer" removeq="removeQuestion" index="$index" sortable="true"/>
 				<div ng-if="question.question_type=='header'" class="small-12 columns" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'editor.messages.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>editor.header</span>:</label>
@@ -28,13 +28,13 @@
 				<div ng-show="submitted && !hide_alerts">
 					<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 				</div>
-				<div class="large-block-grid-4">		
+				<div class="large-block-grid-4">
 				<button class="button small" name="add_question" ng-click="addQuestion()" translate>editor.button.add_question</button>
 				<button class="button small" name="add_header" ng-click="addHeader()" translate>editor.button.add_header</button>
-				<button class="button small green" name="save_quiz" ng-click="saveAll()" translate>button.save</button>
-				<button class="button small green" name="save_publish" ng-click="savePublish(true)" ng-if="publish_state" translate>button.publish</button>
-				<button class="button small green" name="save_publish" ng-click="savePublish(false)" ng-if="!publish_state" translate>button.unpublish</button>
-				</div>	
+				<button class="button small green" name="save_quiz" ng-click="saveQuestions()" translate>button.save</button>
+				<button class="button small green" name="save_publish" ng-click="publish()" ng-if="publish_state" translate>button.publish</button>
+				<button class="button small green" name="save_publish" ng-click="unpublish()" ng-if="!publish_state" translate>button.unpublish</button>
+				</div>
 			</center>
 		</div>
 	</div>

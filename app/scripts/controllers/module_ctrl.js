@@ -7,6 +7,6 @@ angular.module('scalearAngularApp')
     ModuleModel.setSelectedModule(selected_module)
 
     $scope.$on('$destroy', function() {
-      ModuleModel.removeSelectedModule()
+      ModuleModel.clearSelectedModule()
     });
 }])

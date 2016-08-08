@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
       'updateAllInclassSessions': { method: 'POST', ignoreLoadingBar: true, headers: headers, params: { action: 'update_all_inclass_sessions' } }
     });
   }])
-  .factory('ModuleModel', ['Module', 'ScalearUtils', '$rootScope','ItemsModel', function(Module, ScalearUtils, $rootScope, ItemsModel) {
+  .factory('ModuleModel', ['Module', '$rootScope', function(Module, $rootScope) {
     var selected_module = null
     var modules = []
     var module_obj = {}
@@ -60,6 +60,14 @@ angular.module('scalearAngularApp')
       setModules(modules)
     })
 
+    $rootScope.$on("Item:added", function(ev, item) {
+      addItemToModule(item)
+    })
+
+    $rootScope.$on("Item:removed", function(ev, item) {
+      removeItemFromModule(item)
+    })
+
     function setSelectedModule(module) {
       selected_module = module
     }
@@ -68,91 +76,149 @@ angular.module('scalearAngularApp')
       return selected_module
     }
 
-    function removeSelectedModule() {
+    function clearSelectedModule() {
       selected_module = null
     }
 
     function setModules(all_modules) {
-      modules = all_modules
-      module_obj = ScalearUtils.toObjectById(all_modules)
-      modules.forEach(function(module) {
-        ItemsModel.addToList(module.items)
+      all_modules.forEach(function(module) {
+        addToCollection(createInstance(module))
       })
       $rootScope.$broadcast("Module:ready", modules)
-        // modules.forEach(function(module) {
-        //   module_obj[module.id] = module
     }
 
-    function add() {
-      var deferred = $q.defer();
-      Module.newModule({ course_id: course.id }, {},
-        function(data) {
-          var module = data.group
+    function create() {
+      return Module.newModule({ course_id: course.id }, {})
+        .$promise
+        .then(function(data) {
+          var module = createInstance(data.group)
           module.items = []
-          modules.push(module)
-          $scope.module_obj[module.id] = module //$scope.course.modules[$scope.course.modules.length - 1]
-          deferred.resolve(module);
+          addToCollection(module)
           $rootScope.$broadcast("Module:added", module)
+          return module
         })
-      return deferred.promise;
     }
 
-    function remove(module) {
-      return Module.destroy({
-          course_id: module.course_id,
-          module_id: module.id
-        }, {},
-        function() {
-          modules.splice(modules.indexOf(module), 1)
-          delete module_obj[module.id]
-        }).$promise
+    function addToCollection(module) {
+      modules.push(module)
+      module_obj[module.id] = module
+      $rootScope.$broadcast("Module:set_items", module.items)
+    }
+
+    function removeFromCollection(module) {
+      modules.splice(modules.indexOf(module), 1)
+      delete module_obj[module.id]
+    }
+
+    function addItemToModule(item) {
+      module_obj[item.group_id].items.push(item)
+    }
+
+    function removeItemFromModule(item) {
+      var items = module_obj[item.group_id].items
+      items.splice(items.indexOf(item), 1)
     }
 
     function getById(id) {
       return module_obj[id]
     }
 
-    function getStatistics() {
-      return Module.getModuleStatistics({
-        course_id: selected_module.course_id,
-        module_id: selected_module.id
-      }).$promise
+    function isInstance(instance) {
+      return(instance.instanceType && instance.instanceType() == "Module");
     }
 
-    function validate(m) {
-      return Module.validateModule({course_id: selected_module.course_id, module_id: selected_module.id},m).$promise
+    function paste(module) {
+      return Module.moduleCopy({ course_id: course.id }, { module_id: module.id })
+        .$promise
+        .then(function(data) {
+          var module = createInstance(data.group)
+          addToCollection(module)
+        })
     }
 
-    function update(module){
-      var modified_module = angular.copy(module);
-      delete modified_module.id;
-      delete modified_module.items;
-      delete modified_module.created_at;
-      delete modified_module.updated_at;
-      delete modified_module.total_time;
+    function createInstance(module) {
 
-      Module.update({
+      if(isInstance(module)) {
+        return module;
+      }
+
+      function instanceType() {
+        return 'Module'
+      }
+
+      function remove() {
+        return Module.destroy({
+            course_id: module.course_id,
+            module_id: module.id
+          }, {})
+          .$promise
+          .then(function() {
+            removeFromCollection(module)
+          })
+
+      }
+
+      function validate() {
+        return Module.validateModule({
+            course_id: module.course_id,
+            module_id: module.id
+          }, module)
+          .$promise
+          .catch(function(data) {
+            if(data.status == 422)
+              return data.data.errors[0];
+            else
+              return 'Server Error';
+          })
+
+      }
+
+      function update() {
+        var modified_module = angular.copy(module);
+        delete modified_module.id;
+        delete modified_module.items;
+        delete modified_module.created_at;
+        delete modified_module.updated_at;
+        delete modified_module.total_time;
+
+        return Module.update({
+            course_id: module.course_id,
+            module_id: module.id
+          }, {
+            group: modified_module
+          })
+          .$promise
+          .then(function() {
+            $rootScope.$broadcast("Module:" + module.id + ":updated", module)
+          })
+      }
+
+      function getStatistics() {
+        return Module.getModuleStatistics({
           course_id: module.course_id,
           module_id: module.id
-        }, {
-          group: modified_module
-        },
-        function(response) {
-          $rootScope.$broadcast("Module:"+module.id+":updated", module)
-        });
+        }).$promise
+      }
+
+
+      return angular.extend(module, {
+        instanceType: instanceType,
+        remove: remove,
+        validate: validate,
+        update: update,
+        getStatistics: getStatistics,
+      })
     }
 
     return {
       setSelectedModule: setSelectedModule,
       getSelectedModule: getSelectedModule,
-      removeSelectedModule: removeSelectedModule,
+      clearSelectedModule: clearSelectedModule,
       setModules: setModules,
       getById: getById,
-      add: add,
-      remove: remove,
-      getStatistics: getStatistics,
-      validate:validate,
-      update:update
+      create: create,
+      createInstance: createInstance,
+      paste: paste
     }
 
   }])

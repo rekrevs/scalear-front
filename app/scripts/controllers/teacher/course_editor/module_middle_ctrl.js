@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     })()
 
     function getStatistics() {
-      ModuleModel.getStatistics()
+      $scope.module.getStatistics()
         .then(function(data) {
           $scope.module_statistics = data
         })

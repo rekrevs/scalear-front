@@ -534,7 +534,7 @@ angular.module('scalearAngularApp')
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
         if(!$scope.leave_state) {
-          saveOpenEditor.then(function(error) {
+          saveOpenEditor().then(function(error) {
             if(error) {
               event.preventDefault();
               showUnsavedQuizDialog()

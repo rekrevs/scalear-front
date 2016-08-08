@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture','ScalearUtils', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture, ScalearUtils) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum','Page','ContentNavigator','Lecture','ScalearUtils', 'ModuleModel', function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum, Page, ContentNavigator, Lecture, ScalearUtils, ModuleModel) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -76,7 +76,7 @@ angular.module('scalearAngularApp')
         },
         function(data){
           angular.extend($scope, data)
-          $scope.module= $scope.course.selected_module
+          $scope.module= ModuleModel.getSelectedModule()
           if($scope.progress_player.controls.isYoutube($scope.first_lecture.url)){
             $scope.video_start = $scope.first_lecture.start_time
             $scope.video_end = $scope.first_lecture.end_time
@@ -973,7 +973,7 @@ angular.module('scalearAngularApp')
     var toPrint = document.getElementById('printarea');
     var win = window.open('', '_blank');
     win.document.open();
-    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/externals/print/progress_print.css" /></head><body onload="window.print()"><center><b>'+$scope.course.selected_module.name+'</b></center>')
+    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/externals/print/progress_print.css" /></head><body onload="window.print()"><center><b>'+$scope.module.name+'</b></center>')
     win.document.write(toPrint.innerHTML);
     win.document.write('</html>');
     win.document.close();

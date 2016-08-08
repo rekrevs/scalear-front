@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
       "logVideoEvent": { method: 'POST', ignoreLoadingBar: true, params: { action: 'log_video_event' }, headers: headers },
     });
 
-  }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q) {
+  }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
 
     var selected_lecture = null
 
@@ -56,6 +56,38 @@ angular.module('scalearAngularApp')
 
     function isInstance(instance) {
       return(instance.instanceType && instance.instanceType() == "Lecture");
+    }
+
+    function create(inclass) {
+      var module = ModuleModel.getSelectedModule()
+      return Lecture.newLecture({
+          course_id: module.course_id,
+          group: module.id,
+          inclass: inclass
+        })
+        .$promise
+        .then(function(data) {
+          data.lecture.class_name = 'lecture'
+          var lecture = createInstance(lecture)
+          // module.push(lecture)
+          $rootScope.$broadcast("Item:added", lecture)
+          return lecture
+        })
+    }
+
+    function paste(lecture){
+      Lecture.lectureCopy({ course_id: $stateParams.course_id }, {
+          lecture_id: lecture.id,
+          module_id: module_id
+        },
+        function(data) {
+          data.lecture.class_name = 'lecture'
+          $scope.module_obj[module_id].items.push(data.lecture)
+          $scope.module_obj[module_id].total_time += data.lecture.duration
+          $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+        },
+        function() {}
+      )
     }
 
     function createInstance(lecture) {
@@ -103,10 +135,11 @@ angular.module('scalearAngularApp')
             lecture_id: lecture.id
           }, {
             lecture: modified_lecture
-          },
-          function(data) {
+          })
+          .$promise
+          .then(function(data) {
             angular.extend(lecture, data.lecture)
-          }).$promise
+          })
       }
 
       function validateUrl() {
@@ -146,21 +179,17 @@ angular.module('scalearAngularApp')
       }
 
       function validate() {
-        var deferred = $q.defer();
-        Lecture.validateLecture({
+        return Lecture.validateLecture({
             course_id: lecture.course_id,
             lecture_id: lecture.id
-          }, lecture,
-          function() {
-            deferred.resolve()
-          },
-          function(resp) {
+          }, lecture)
+          .$promise
+          .catch(function() {
             if(resp.status == 422)
-              deferred.reject(resp.data.errors.join());
+              return resp.data.errors.join();
             else
-              deferred.reject('Server Error');
+              return 'Server Error';
           })
-        return deferred.promise;
       }
 
       function updateUrl() {
@@ -198,8 +227,20 @@ angular.module('scalearAngularApp')
           }
         } else {
           lecture.url = "none"
+          deferred.reject()
         }
         return deferred.promise;
+      }
+
+      function remove() {
+        return Lecture.destroy({
+            course_id: lecture.course_id,
+            lecture_id: lecture.id
+          }, {})
+          .$promise
+          .then(function() {
+            $rootScope.$broadcast("Item:removed", lecture)
+          });
       }
 
       function addToTimeline(time, type, data) {
@@ -208,6 +249,10 @@ angular.module('scalearAngularApp')
 
       function removeFromTimeline(item, item_type) {
         lecture.timeline.items.splice(lecture.timeline.getIndexById(item.id, item_type), 1)
+      }
+
+      function module() {
+        return ModuleModel.getById(lecture.group_id)
       }
 
       function instanceType() {
@@ -221,41 +266,19 @@ angular.module('scalearAngularApp')
         updateUrl: updateUrl,
         addToTimeline: addToTimeline,
         removeFromTimeline: removeFromTimeline,
-        instanceType:instanceType
+        instanceType: instanceType,
+        remove:remove,
+        module:module
       })
     }
 
     return {
       createInstance: createInstance,
-      isInstance:isInstance,
-      clearSelectedLecture:clearSelectedLecture,
-      getSelectedLecture:getSelectedLecture,
-      setSelectedLecture:setSelectedLecture
+      isInstance: isInstance,
+      clearSelectedLecture: clearSelectedLecture,
+      getSelectedLecture: getSelectedLecture,
+      setSelectedLecture: setSelectedLecture,
+      create:create
     }
 
   }])
-
-
-// if(data.items[0].status.uploadStatus != "processed"){
-//     deferred.reject($translate('editor.details.vidoe_not_exist'));
-//     return deferred.promise
-// }
-// else{
-//     deferred.resolve()
-// }
-
-
-
-// $.getJSON(url,
-//     function(data, status) {
-//       if(data.items.length > 0) {
-//         deferred.resolve();
-//       } else {
-//         deferred.reject($translate('editor.details.vidoe_not_exist'));
-//         return deferred.promise;
-//       }
-//     })
-//   .error(function() {
-//     deferred.reject($translate('editor.details.vidoe_not_exist'));
-//     return deferred.promise
-//   });

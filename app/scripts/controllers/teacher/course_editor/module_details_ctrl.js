@@ -13,32 +13,15 @@ angular.module('scalearAngularApp')
     })()
 
     $scope.validateModule = function(column, data) {
-      var deferred = $q.defer();
-      var module = {}
+      var module = {id: $scope.module.id, course_id: $scope.module.course_id}
       module[column] = data;
-      ModuleModel.validate(module)
-      .then(function(){
-        deferred.resolve()
-      })
-      .catch(function(data){
-        if(data.status == 422)
-          deferred.resolve(data.data.errors[0]);
-        else
-          deferred.reject('Server Error');
-      })
-      return deferred.promise;
+      var temp_module = ModuleModel.createInstance(module)
+      return temp_module.validate()
     };
 
     $scope.updateModule = function() {
-      ModuleModel.update($scope.module)
+      $scope.module.update()
     }
-
-
-    // function isDueDateDisabled() {
-    //   var due = new Date($scope.module.due_date)
-    //   var today = new Date()
-    //   return due.getFullYear() > today.getFullYear() + 100
-    // }
 
     $scope.updateDueDate = function() {
       var enabled = $scope.due_date_enabled

@@ -43,28 +43,24 @@ angular.module('scalearAngularApp')
       'getRole': { method: 'GET', headers: headers, params: { action: 'get_role' } },
     });
 
-  }]).factory('CourseModel', ['Course', '$rootScope', '$q', 'UserSession', '$cookieStore', 'ScalearUtils', 'ModuleModel', function(Course, $rootScope, $q, UserSession, $cookieStore, ScalearUtils, ModuleModel) {
+  }]).factory('CourseModel', ['Course', '$rootScope', '$q', 'UserSession', '$cookieStore', 'ScalearUtils', function(Course, $rootScope, $q, UserSession, $cookieStore, ScalearUtils) {
 
     var course_role = null
-    var course
+    var selected_course
 
-    function getRole(id) {
+    function getCourseRole(id) {
       var deferred = $q.defer();
-      var role = getCourseRole()
-      if(!role) {
-        Course.getRole({ course_id: id },
-          function(resp) {
+      if(!course_role) {
+        Course.getRole({ course_id: id })
+          .$promise
+          .then(function(resp) {
             setCourseRole(resp.role)
             deferred.resolve(resp.role)
           })
       } else {
-        deferred.resolve(role)
+        deferred.resolve(course_role)
       }
       return deferred.promise;
-    }
-
-    function getCourseRole() {
-      return course_role
     }
 
     function setCourseRole(role) {
@@ -84,68 +80,47 @@ angular.module('scalearAngularApp')
     }
 
     function init(course_id) {
-      var deferred = $q.defer();
-      UserSession.getUser()
+      return UserSession.getUser()
         .then(function(user) {
           if(user && user.roles) {
-            getRole(course_id)
-              .then(function(course_role) {
-
-                function done(course_data) {
-                  setCourse(course_data)
-                  $rootScope.$broadcast("Course:ready", course_data)
-                  deferred.resolve(course_data)
-                }
-
-                if(isTeacher()) {
-                  getTeacherData(course_id).then(done)
-                } else if(isStudent()) {
-                  getStudentData(course_id).then(done)
-                }
-              })
+            return getCourseRole(course_id)
+          }
+        }).then(function(course_role) {
+          if(isTeacher()) {
+            return getTeacherData(course_id)
+          } else if(isStudent()) {
+            return getStudentData(course_id)
           }
         })
-      return deferred.promise
+        .then(function(course_data) {
+          setCourse(course_data)
+          $rootScope.$broadcast("Course:ready", course_data)
+          return course_data
+        })
     }
 
     function getTeacherData(id) {
-      var deferred = $q.defer();
       $cookieStore.remove('preview_as_student')
       $cookieStore.remove('old_user_id')
       $cookieStore.remove('new_user_id')
       $cookieStore.remove('course_id')
-      Course.getCourseEditor({ course_id: id },
-        function(data) {
+      return Course.getCourseEditor({ course_id: id })
+        .$promise
+        .then(function(data) {
           $rootScope.$broadcast("Course:set_modules", data.groups)
-          // course.items_obj = { lecture: {}, quiz: {}, customlink: {} }
-          // course.modules.forEach(function(module) {
-          //   module.items.forEach(function(item) {
-          //     course.items_obj[item.class_name][item.id] = item
-          //   })
-          // })
-          deferred.resolve(data.course);
-        },
-        function() {
-          deferred.reject();
-        }
-      )
-      return deferred.promise;
+          return data.course;
+        })
     }
 
     function getStudentData(id) {
-      var deferred = $q.defer();
-      Course.getCourseware({ course_id: id },
-        function(data) {
+      return Course.getCourseware({ course_id: id })
+        .$promise
+        .then(function(data) {
           data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          ModuleModel.setModules(data.course.groups)
-            // data.course.module_obj = ScalearUtils.toObjectById(data.course.groups)
-          deferred.resolve(data.course);
-        },
-        function() {
-          deferred.reject();
-        }
-      )
+          $rootScope.$broadcast("Course:set_modules", data.groups)
+          return data.course;
+        })
       return deferred.promise;
     }
 
@@ -157,50 +132,79 @@ angular.module('scalearAngularApp')
     }
 
     function setCourse(course_data) {
-      course = course_data
+      selected_course = course_data
     }
 
-    function getCourse() {
-      return course
+    function getSelectedCourse() {
+      return selected_course
     }
 
-    function removeCourse() {
-      course = null
+    function removeSelectedCourse() {
+      selected_course = null
     }
 
-    function update(c) {
-      var modified_course = angular.copy(c);
-      modified_course.time_zone = c.time_zone.name
-      delete modified_course.id;
-      delete modified_course.created_at;
-      delete modified_course.updated_at;
-      delete modified_course.unique_identifier;
-      delete modified_course.duration;
-      delete modified_course.guest_unique_identifier
-
-      return Course.update({ course_id: course.id }, { course: modified_course }).$promise
+    function isInstance(instance) {
+      return(instance.instanceType && instance.instanceType() == "Course");
     }
 
-    function validate(c) {
-      return Course.validateCourse({ course_id: course.id }, c).$promise
-    }
+    function createInstance(course) {
 
-    function exportCourse() {
-      return Course.exportCsv({ course_id: course.id }).$promise
+      if(isInstance(course)) {
+        return course
+      }
+
+      function instanceType() {
+        return 'Course'
+      }
+
+      function update() {
+        var modified_course = angular.copy(course);
+        modified_course.time_zone = course.time_zone.name
+        delete modified_course.id;
+        delete modified_course.created_at;
+        delete modified_course.updated_at;
+        delete modified_course.unique_identifier;
+        delete modified_course.duration;
+        delete modified_course.guest_unique_identifier
+
+        return Course.update({ course_id: course.id }, { course: modified_course })
+          .$promise
+      }
+
+      function validate() {
+        return Course.validateCourse({ course_id: course.id }, course)
+          .$promise
+          .catch(function(resp) {
+            if(resp.status == 422)
+              return resp.data.errors.join();
+            else
+              return 'Server Error';
+          })
+      }
+
+      function exportCourse() {
+        return Course.exportCsv({ course_id: course.id })
+          .$promise
+      }
+
+      return angular.extend(course, {
+        instanceType: instanceType,
+        update: update,
+        validate: validate,
+        exportCourse: exportCourse
+      })
     }
 
     return {
-      getUserRole: getRole,
       getCourseRole: getCourseRole,
       removeCourseRole: removeCourseRole,
-      removeCourse: removeCourse,
+      removeSelectedCourse: removeSelectedCourse,
       getData: init,
-      getCourse: getCourse,
+      getSelectedCourse: getSelectedCourse,
       isStudent: isStudent,
       isTeacher: isTeacher,
-      update: update,
-      validate: validate,
-      exportCourse: exportCourse
+      createInstance: createInstance,
+      isInstance: isInstance
     }
 
   }])

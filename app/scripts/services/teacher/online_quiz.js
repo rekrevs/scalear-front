@@ -20,24 +20,22 @@ angular.module('scalearAngularApp')
   }])
   .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils) {
 
-    // var quiz_list = []
-
     var selected_video_quiz = null
 
     function getQuizzes() {
-      var deferred = $q.defer();
       var lecture = ItemsModel.getSelectedItem();
-      OnlineQuiz.getQuizList({ lecture_id: lecture.id },
-        function(data) {
+      return OnlineQuiz.getQuizList({ lecture_id: lecture.id })
+        .$promise
+        .then(function(data) {
           var quiz_list = []
           data.quizList.forEach(function(q) {
             var quiz = createInstance(q)
             quiz_list.push(quiz)
             $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
           })
-          deferred.resolve(quiz_list);
-        });
-      return deferred.promise;
+          return quiz_list
+        })
+
     }
 
     function getFinalQuizTime(time, lecture) {
@@ -55,7 +53,6 @@ angular.module('scalearAngularApp')
     }
 
     function addVideoQuiz(insert_time, quiz_type, question_type) {
-      var deferred = $q.defer()
       var lecture = ItemsModel.getSelectedItem();
       var video_duration = VideoInformation.duration
 
@@ -79,28 +76,27 @@ angular.module('scalearAngularApp')
         end_time = (end_time + caluclated_offset > video_duration - 1) ? video_duration - 1 : end_time + caluclated_offset
       }
 
-      Lecture.newQuiz({
-            course_id: lecture.course_id,
-            lecture_id: lecture.id,
-            time: insert_time,
-            start_time: start_time,
-            end_time: end_time,
-            quiz_type: quiz_type,
-            ques_type: question_type,
-            inclass: lecture.inclass
-          },
-          function(data) {
-            var quiz = createInstance(data.quiz)
-            quiz.inclass = lecture.inclass
-            $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
-            deferred.resolve(quiz)
-          })
-        // })
-      return deferred.promise;
+      return Lecture.newQuiz({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id,
+          time: insert_time,
+          start_time: start_time,
+          end_time: end_time,
+          quiz_type: quiz_type,
+          ques_type: question_type,
+          inclass: lecture.inclass
+        })
+        .$promise
+        .then(function(data) {
+          var quiz = createInstance(data.quiz)
+          quiz.inclass = lecture.inclass
+          $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
+        })
+
     }
 
     function isInstance(instance) {
-      return (instance.instanceType && instance.instanceType() == "VideoQuiz");
+      return(instance.instanceType && instance.instanceType() == "VideoQuiz");
     }
 
     function setSelectedVideoQuiz(quiz) {
@@ -122,7 +118,7 @@ angular.module('scalearAngularApp')
       return selected_video_quiz
     }
 
-    function clearSelectedVideoQuiz(){
+    function clearSelectedVideoQuiz() {
       selected_video_quiz = null
     }
 
@@ -152,14 +148,14 @@ angular.module('scalearAngularApp')
 
       function addFreeTextAnswer() {
         var answer_width = 250,
-            answer_height = 100,
-            element = angular.element("#ontop"),
-            top = element.height() / 3,
-            left = element.width() / 4,
-            the_top = top / element.height(),
-            the_left = left / element.width(),
-            the_width = answer_width / element.width(),
-            the_height = answer_height / (element.height());
+          answer_height = 100,
+          element = angular.element("#ontop"),
+          top = element.height() / 3,
+          left = element.width() / 4,
+          the_top = top / element.height(),
+          the_left = left / element.width(),
+          the_width = answer_width / element.width(),
+          the_height = answer_height / (element.height());
         addAnswer("", the_height, the_width, the_left, the_top)
       }
 
@@ -207,60 +203,59 @@ angular.module('scalearAngularApp')
         }).$promise
       }
 
-
-
       function getQuizAnswers(argument) {
-          return isInVideoQuiz()? getInVideoQuizAnswers() : getTextQuizAnswers()
+        return isInVideoQuiz() ? getInVideoQuizAnswers() : getTextQuizAnswers()
       }
 
       function getInVideoQuizAnswers() {
         return Lecture.getQuizData({
-              "course_id": video_quiz.course_id,
-              "lecture_id": video_quiz.lecture_id,
-              "quiz": video_quiz.id
-            },
-            function(data) {
-              video_quiz.answers = data.answers
-              if(video_quiz.question_type.toLowerCase() == "drag")
-                video_quiz.allPos = mergeDragPos(data.answers)
-              if(video_quiz.question_type.toLowerCase() == "free text question" && video_quiz.answers.length == 0) {
-                addFreeTextAnswer(video_quiz)
-              }
-            })
+            "course_id": video_quiz.course_id,
+            "lecture_id": video_quiz.lecture_id,
+            "quiz": video_quiz.id
+          })
           .$promise
+          .then(function(data) {
+            video_quiz.answers = data.answers
+            if(video_quiz.question_type.toLowerCase() == "drag")
+              video_quiz.allPos = mergeDragPos(data.answers)
+            if(video_quiz.question_type.toLowerCase() == "free text question" && video_quiz.answers.length == 0) {
+              addFreeTextAnswer(video_quiz)
+            }
+          })
       }
 
       function getTextQuizAnswers() {
         return Lecture.getHtmlData({
-              "course_id": video_quiz.course_id,
-              "lecture_id": video_quiz.lecture_id,
-              "quiz": video_quiz.id
-            },
-            function(data) {
-              if(video_quiz.question_type.toLowerCase() == 'drag') {
-                video_quiz.answers = []
-                if(!data.answers.length)
-                  addHtmlAnswer()
-                else
-                  video_quiz.answers = CourseEditor.expandDragAnswers(data.answers[0].id, data.answers[0].answer, "lecture", video_quiz.id, data.answers[0].explanation)
-              } else {
-                video_quiz.answers = data.answers
-                if(!video_quiz.answers.length)
-                  addHtmlAnswer()
-              }
-            })
+            "course_id": video_quiz.course_id,
+            "lecture_id": video_quiz.lecture_id,
+            "quiz": video_quiz.id
+          })
           .$promise
+          .then(function(data) {
+            if(video_quiz.question_type.toLowerCase() == 'drag') {
+              video_quiz.answers = []
+              if(!data.answers.length)
+                addHtmlAnswer()
+              else
+                video_quiz.answers = CourseEditor.expandDragAnswers(data.answers[0].id, data.answers[0].answer, "lecture", video_quiz.id, data.answers[0].explanation)
+            } else {
+              video_quiz.answers = data.answers
+              if(!video_quiz.answers.length)
+                addHtmlAnswer()
+            }
+          })
       }
 
       function deleteQuiz() {
-        return OnlineQuiz.destroy({ online_quizzes_id: video_quiz.id }, {},
-          function(data) {
+        return OnlineQuiz.destroy({ online_quizzes_id: video_quiz.id }, {})
+          .$promise
+          .then(function(data) {
             $rootScope.$broadcast("Lecture:" + video_quiz.lecture_id + ":remove_from_timeline", video_quiz, 'quiz')
-          }).$promise
+          })
       }
 
-      function update(){
-        if (video_quiz.inclass) {
+      function update() {
+        if(video_quiz.inclass) {
           video_quiz.inclass_session.intro = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.intro_formatedTime.split(':'))
           video_quiz.inclass_session.self = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.self_formatedTime.split(':'))
           video_quiz.inclass_session.in_group = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.group_formatedTime.split(':'))
@@ -272,70 +267,61 @@ angular.module('scalearAngularApp')
           video_quiz.time = video_quiz.start_time = video_quiz.end_time = new_time
 
         return OnlineQuiz.update({ online_quizzes_id: video_quiz.id }, {
-            online_quiz: {
-              time: video_quiz.time,
-              start_time: video_quiz.start_time,
-              end_time: video_quiz.end_time,
-              question: video_quiz.question,
-              inclass: video_quiz.inclass,
-              graded: video_quiz.graded,
-              display_text: video_quiz.display_text
-            },
-            intro_timer: video_quiz.inclass_session.intro,
-            self_timer: video_quiz.inclass_session.self,
-            group_timer: video_quiz.inclass_session.in_group,
-            discussion_timer: video_quiz.inclass_session.discussion,
-          }).$promise
+          online_quiz: {
+            time: video_quiz.time,
+            start_time: video_quiz.start_time,
+            end_time: video_quiz.end_time,
+            question: video_quiz.question,
+            inclass: video_quiz.inclass,
+            graded: video_quiz.graded,
+            display_text: video_quiz.display_text
+          },
+          intro_timer: video_quiz.inclass_session.intro,
+          self_timer: video_quiz.inclass_session.self,
+          group_timer: video_quiz.inclass_session.in_group,
+          discussion_timer: video_quiz.inclass_session.discussion,
+        }).$promise
       }
 
       function validateName() {
-          var deferred = $q.defer();
-          var quiz = {}
-          quiz.question = video_quiz.question;
-          OnlineQuiz.validateName({ online_quizzes_id: video_quiz.id },
-            quiz,
-            function() {
-              deferred.resolve()
-            },
-            function(data) {
-              var errors ={}
-              if (data.status == 422)
-                errors.name_error = data.data.errors.join()
-              else
-                errors.name_error = 'Server Error'
-              deferred.reject(errors);
-            })
-          return deferred.promise;
-        }
-
-        function validateTime(){
-          var errors = {}
-          errors.time_error = ScalearUtils.validateTime(video_quiz.formatedTime, VideoInformation.duration)
-          if (video_quiz.inclass) {
-            errors.intro_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
-            errors.self_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
-            errors.group_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
-            errors.discussion_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
-          }
-          if (errors.time_error || errors.intro_timer_error || errors.self_timer_error || errors.group_timer_error || errors.discussion_timer_error) {
+        var quiz = {}
+        quiz.question = video_quiz.question;
+        return OnlineQuiz.validateName({ online_quizzes_id: video_quiz.id }, quiz)
+          .$promise
+          .catch(function(data) {
+            var errors = {}
+            if(data.status == 422)
+              errors.name_error = data.data.errors.join()
+            else
+              errors.name_error = 'Server Error'
             return errors
-          }
-        }
+          })
+      }
 
-        function validate(){
-          var deferred = $q.defer()
-          validateName()
+      function validateTime() {
+        var deferred = $q.defer()
+        var errors = {}
+        errors.time_error = ScalearUtils.validateTime(video_quiz.formatedTime, VideoInformation.duration)
+        if(video_quiz.inclass) {
+          errors.intro_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
+          errors.self_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
+          errors.group_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
+          errors.discussion_timer_error = ScalearUtils.validateTime(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
+        }
+        if(errors.time_error || errors.intro_timer_error || errors.self_timer_error || errors.group_timer_error || errors.discussion_timer_error) {
+          deferred.reject(errors)
+        } else {
+          deferred.resolve()
+        }
+        return deferred.promise
+      }
+
+      function validate() {
+        return validateName()
           .then(function() {
-            var errors = validateTime()
-            errors? deferred.reject(errors) :deferred.resolve()
+            return validateTime()
           })
-          .catch(function(errors){
-            deferred.reject(errors)
-          })
-
-          return deferred.promise
-        }
-
+      }
 
       function instanceType() {
         return 'VideoQuiz'
@@ -346,47 +332,47 @@ angular.module('scalearAngularApp')
       }
 
       function isTextVideoQuiz() {
-        return (video_quiz.quiz_type == "html");
+        return(video_quiz.quiz_type == "html");
       }
 
       function isInVideoQuiz() {
-         return (video_quiz.quiz_type == "invideo");
+        return(video_quiz.quiz_type == "invideo");
       }
 
       function isTextQuiz() {
-        return (isTextVideoQuiz() || isTextSurvey());
+        return(isTextVideoQuiz() || isTextSurvey());
       }
 
       function isFreeTextVideoQuiz() {
-        return (video_quiz.question_type.toLowerCase() == 'free text question');
+        return(video_quiz.question_type.toLowerCase() == 'free text question');
       }
 
       function isDragQuiz() {
-        return (video_quiz.question_type.toLowerCase() == 'drag');
+        return(video_quiz.question_type.toLowerCase() == 'drag');
       }
 
       function isSurvey() {
-        return (video_quiz.quiz_type == 'survey');
+        return(video_quiz.quiz_type == 'survey');
       }
 
       function isTextSurvey() {
-        return (video_quiz.quiz_type == 'html_survey');
+        return(video_quiz.quiz_type == 'html_survey');
       }
 
       function isDragTextQuiz() {
-        return (isDragQuiz() && isTextVideoQuiz());
+        return(isDragQuiz() && isTextVideoQuiz());
       }
 
       return angular.extend(video_quiz, {
         getInVideoQuizAnswers: getInVideoQuizAnswers,
         getTextQuizAnswers: getTextQuizAnswers,
-        getQuizAnswers:getQuizAnswers,
+        getQuizAnswers: getQuizAnswers,
         addFreeTextAnswer: addFreeTextAnswer,
         addAnswer: addAnswer,
         removeAnswer: removeAnswer,
         addHtmlAnswer: addHtmlAnswer,
         removeHtmlAnswer: removeHtmlAnswer,
-        updateAnswers:updateAnswers,
+        updateAnswers: updateAnswers,
         instanceType: instanceType,
         setAsSelected: setAsSelected,
         isTextVideoQuiz: isTextVideoQuiz,
@@ -396,9 +382,9 @@ angular.module('scalearAngularApp')
         isSurvey: isSurvey,
         isTextSurvey: isTextSurvey,
         deleteQuiz: deleteQuiz,
-        isDragTextQuiz:isDragTextQuiz,
-        validate:validate,
-        update:update
+        isDragTextQuiz: isDragTextQuiz,
+        validate: validate,
+        update: update
       })
     }
 
@@ -406,9 +392,9 @@ angular.module('scalearAngularApp')
       getQuizzes: getQuizzes,
       addVideoQuiz: addVideoQuiz,
       createInstance: createInstance,
-      setSelectedVideoQuiz:setSelectedVideoQuiz,
-      getSelectedVideoQuiz:getSelectedVideoQuiz,
-      clearSelectedVideoQuiz:clearSelectedVideoQuiz
+      setSelectedVideoQuiz: setSelectedVideoQuiz,
+      getSelectedVideoQuiz: getSelectedVideoQuiz,
+      clearSelectedVideoQuiz: clearSelectedVideoQuiz
     }
 
   }])

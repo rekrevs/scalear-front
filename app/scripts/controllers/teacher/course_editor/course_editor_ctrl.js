@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture', 'Quiz', '$translate', '$log', 'Page', '$modal', '$timeout', '$filter', 'CustomLink', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'Timeline', 'CourseModel', function($rootScope, $stateParams, $scope, $state, Course, Module, Lecture, Quiz, $translate, $log, Page, $modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, Timeline, CourseModel) {
 
-    $scope.course = CourseModel.getCourse()
+    $scope.course = CourseModel.getSelectedCourse()
     Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addModule = function(callback) {
-      ModuleModel.add()
+      ModuleModel.create()
         .then(function(module) {
           $state.go('course.module.course_editor.overview', { module_id: module.id })
           ContentNavigator.open()
@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeModule = function(module) {
-      ModuleModel.remove(module)
+      module.remove()
         .then(function() {
           emptyClipboard()
           if(ModuleModel.getSelectedModule().id == module.id) {
@@ -103,72 +103,43 @@ angular.module('scalearAngularApp')
         $scope.addQuiz(module_id || $state.params.module_id, type)
     }
 
-    $scope.addLecture = function(module_id, inclass) {
+    $scope.addLecture = function(inclass) {
       $scope.item_loading = true
-      Lecture.newLecture({
-          course_id: $stateParams.course_id,
-          group: module_id,
-          inclass: inclass
-        },
-        function(data) {
-          data.lecture.class_name = 'lecture'
-          $scope.module_obj[module_id].items.push(data.lecture)
-          $scope.items_obj["lecture"][data.lecture.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length - 1]
+      LectureModel.create(inclass)
+        .then(function(lecture) {
           $scope.item_loading = false
-          $state.go('course.module.course_editor.lecture', { lecture_id: data.lecture.id })
-        },
-        function() {}
-      );
+          $state.go('course.module.course_editor.lecture', { lecture_id: lecture.id })
+        })
     }
 
-    $scope.removeLecture = function(item) {
-      Lecture.destroy({
-          course_id: $stateParams.course_id,
-          lecture_id: item.id
-        }, {},
-        function() {
-          $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item), 1)
-          delete $scope.items_obj["lecture"][item.id];
+    $scope.removeLecture = function(lecture) {
+      lecture.remove()
+        .then(function() {
           emptyClipboard()
-          if($state.params.lecture_id == item.id)
-            $state.go('course.module.course_editor.overview')
-          $rootScope.$broadcast("update_module_time", item.group_id)
+          $rootScope.$broadcast("update_module_time", lecture.group_id)
           $scope.$broadcast('update_module_statistics')
-        },
-        function() {}
-      );
+          if($state.params.lecture_id == lecture.id)
+            $state.go('course.module.course_editor.overview')
+        })
     }
 
-    $scope.addQuiz = function(module_id, type) {
+    $scope.addQuiz = function(type) {
       $scope.item_loading = true
-      Quiz.newQuiz({ course_id: $stateParams.course_id, group: module_id, type: type }, {},
-        function(data) {
-          $log.debug(data)
-          data.quiz.class_name = 'quiz'
-          $scope.module_obj[module_id].items.push(data.quiz)
-          $scope.items_obj["quiz"][data.quiz.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length - 1]
+      QuizModel.create(type)
+        .then(function(quiz) {
           $scope.item_loading = false
-          $state.go('course.module.course_editor.quiz', { quiz_id: data.quiz.id })
-        },
-        function() {}
-      );
+          $state.go('course.module.course_editor.quiz', { quiz_id: quiz.id })
+        })
     }
 
-    $scope.removeQuiz = function(item) {
-      Quiz.destroy({
-          course_id: $stateParams.course_id,
-          quiz_id: item.id
-        }, {},
-        function() {
-          $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item), 1)
-          delete $scope.items_obj["quiz"][item.id];
+    $scope.removeQuiz = function(quiz) {
+      quiz.remove()
+        .then(function() {
           emptyClipboard()
-          if($state.params.quiz_id == item.id)
-            $state.go('course.module.course_editor.overview')
           $scope.$broadcast('update_module_statistics')
-        },
-        function() {}
-      );
+          if($state.params.quiz_id == quiz.id)
+            $state.go('course.module.course_editor.overview')
+        })
     }
 
     $scope.previewStudent = function() {
@@ -199,36 +170,24 @@ angular.module('scalearAngularApp')
     }
 
     var pasteModule = function(module) {
-      $scope.module_overlay = true
-      Module.moduleCopy({ course_id: $stateParams.course_id }, { module_id: module.id },
-        function(data) {
-          $log.debug(data)
-          $scope.course.modules.push(data.group)
-          $scope.module_obj[data.group.id] = data.group
-          $scope.module_obj[data.group.id].items.forEach(function(item) {
-            $scope.items_obj[item.class_name][item.id] = item
-          })
-          $scope.module_overlay = false
-        },
-        function() {}
-      )
+      ModuleModel.paste(module)
     }
 
     var pasteLecture = function(item, module_id) {
-      $scope.item_overlay = true
-      Lecture.lectureCopy({ course_id: $stateParams.course_id }, {
-          lecture_id: item.id,
-          module_id: module_id
-        },
-        function(data) {
-          $scope.item_overlay = false
-          data.lecture.class_name = 'lecture'
-          $scope.module_obj[module_id].items.push(data.lecture)
-          $scope.module_obj[module_id].total_time += data.lecture.duration
-          $scope.items_obj["lecture"][data.lecture.id] = data.lecture
-        },
-        function() {}
-      )
+      // $scope.item_overlay = true
+      // Lecture.lectureCopy({ course_id: $stateParams.course_id }, {
+      //     lecture_id: item.id,
+      //     module_id: module_id
+      //   },
+      //   function(data) {
+      //     $scope.item_overlay = false
+      //     data.lecture.class_name = 'lecture'
+      //     $scope.module_obj[module_id].items.push(data.lecture)
+      //     $scope.module_obj[module_id].total_time += data.lecture.duration
+      //     $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+      //   },
+      //   function() {}
+      // )
     }
 
     var pasteQuiz = function(item, module_id) {

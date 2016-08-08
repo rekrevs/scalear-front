@@ -11,25 +11,24 @@ angular.module('scalearAngularApp')
       'validateName': { method: 'PUT', params: { action: 'validate_name' }, headers: headers },
       'updateHide': { method: 'POST', params: { action: 'update_hide' }, headers: headers },
     });
-  }]).factory('MarkerModel', ['OnlineMarker', '$rootScope', 'ItemsModel', '$q', '$filter', 'VideoInformation', 'Lecture','ScalearUtils', function(OnlineMarker, $rootScope, ItemsModel, $q, $filter, VideoInformation, Lecture, ScalearUtils) {
+  }]).factory('MarkerModel', ['OnlineMarker', '$rootScope', 'ItemsModel', '$q', '$filter', 'VideoInformation', 'Lecture', 'ScalearUtils', function(OnlineMarker, $rootScope, ItemsModel, $q, $filter, VideoInformation, Lecture, ScalearUtils) {
 
-    // var marker_list = []
     var selected_marker = null
 
     function getMarkers() {
-      var deferred = $q.defer();
       var lecture = ItemsModel.getSelectedItem();
-      OnlineMarker.getMarkerList({ lecture_id: lecture.id },
-        function(data) {
+      return OnlineMarker.getMarkerList({ lecture_id: lecture.id })
+        .$promise
+        .then(function(data) {
           var marker_list = []
           data.markerList.forEach(function(m) {
             var marker = createInstance(m)
             marker_list.push(marker)
             $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", marker.time, "marker", marker)
           })
-          deferred.resolve(marker_list);
-        });
-      return deferred.promise;
+          return marker_list;
+        })
+
     }
 
     function addMarker(insert_time) {
@@ -51,8 +50,8 @@ angular.module('scalearAngularApp')
             course_id: lecture.course_id,
             lecture_id: lecture.id,
             time: insert_time,
-          },
-          function(data) {
+          })
+          .then(function(data) {
             var marker = createInstance(data.marker)
             $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", marker.time, 'marker', marker)
             deferred.resolve(marker)
@@ -109,53 +108,48 @@ angular.module('scalearAngularApp')
       }
 
       function deleteMarker() {
-        return OnlineMarker.destroy({ online_markers_id: marker.id }, {},
-          function() {
+        return OnlineMarker.destroy({ online_markers_id: marker.id }, {})
+          .$promise
+          .then(function() {
             $rootScope.$broadcast("Lecture:" + marker.lecture_id + ":remove_from_timeline", marker, 'marker')
-          }).$promise
+          })
       }
 
       function validateName() {
-        var deferred = $q.defer();
         var online_marker = {}
         online_marker.title = marker.title;
-        OnlineMarker.validateName({ online_markers_id: marker.id }, { online_marker: online_marker },
-          function() {
-            deferred.resolve()
-          },
-          function(data) {
+        return OnlineMarker.validateName({ online_markers_id: marker.id }, { online_marker: online_marker })
+          .$promise
+          .catch(function(data) {
             var errors = {}
             if(data.status == 422)
               errors.name_error = data.data.errors.join()
             else
               errors.name_error = 'Server Error'
-            deferred.reject(errors);
+            return errors;
           })
-        return deferred.promise;
+
       }
 
       function validateTime() {
+        var deferred = $q.defer()
         var errors = {}
         errors.time_error = ScalearUtils.validateTime(marker.formatedTime, VideoInformation.duration)
         if(errors.time_error) {
-          return errors
+          deferred.reject(errors)
+        } else {
+          deferred.resolve()
         }
-      }
-
-      function validate() {
-        var deferred = $q.defer()
-        validateName()
-          .then(function() {
-            var errors = validateTime()
-            errors ? deferred.reject(errors) : deferred.resolve()
-          })
-          .catch(function(errors) {
-            deferred.reject(errors)
-          })
-
         return deferred.promise
       }
 
+      function validate() {
+        return validateName()
+          .then(function() {
+            return validateTime()
+          })
+
+      }
 
       return angular.extend(marker, {
         setAsSelected: setAsSelected,

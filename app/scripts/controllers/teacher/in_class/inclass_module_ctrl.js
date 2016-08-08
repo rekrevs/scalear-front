@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'ScalearUtils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, ScalearUtils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'ScalearUtils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', 'ModuleModel', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, ScalearUtils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture, ModuleModel) {
     $window.scrollTo(0, 0);
     Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
     $scope.inclass_player = {}
@@ -79,7 +79,7 @@ angular.module('scalearAngularApp')
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
-      $scope.module = angular.copy($scope.course.selected_module)
+      $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
       getLectureCharts()
       getQuizCharts()
@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
             }
             $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
           }
-          adjustModuleItems($scope.lectures, $scope.course.selected_module.items, $scope.module.items)
+          adjustModuleItems($scope.lectures, ModuleModel.getSelectedModule().items, $scope.module.items)
           checkDisplayInclass()
         },
         function() {}
@@ -138,7 +138,7 @@ angular.module('scalearAngularApp')
             }
           }
 
-          adjustModuleItems($scope.quizzes, $scope.course.selected_module.items, $scope.module.items)
+          adjustModuleItems($scope.quizzes, ModuleModel.getSelectedModule().items, $scope.module.items)
           checkDisplayInclass()
         },
         function() {}

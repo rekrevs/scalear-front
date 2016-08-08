@@ -136,8 +136,8 @@ angular.module('scalearAngularApp')
             url: '/courses/:course_id',
             template: '<ui-view/>',
             controller: 'courseCtrl',
-            resolve:{
-                CourseData:['CourseModel','$stateParams',function(CourseModel, $stateParams){
+            resolve:{   //Injected 'ModuleModel' because it needs to load with the CourseModel
+                CourseData:['CourseModel','ModuleModel', 'ItemsModel','$stateParams',function(CourseModel, ModuleModel, ItemsModel, $stateParams){
                     return CourseModel.getData($stateParams.course_id)
                 }]
             }

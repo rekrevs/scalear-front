@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$q', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', '$rootScope', 'ErrorHandler', '$interval', '$location', 'CourseModel', function($scope, $stateParams, Course, $q, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, $rootScope, ErrorHandler, $interval, $location, CourseModel) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler',  '$location', 'CourseModel', 'TeacherModel', function($scope, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
 
     $window.scrollTo(0, 0);
     $scope.in_delete = false;
     $scope.toggle_message = 'courses.information.button.remove_teacher'
     $scope.formData = {};
-    $scope.course = CourseModel.getCourse()
+    $scope.course = CourseModel.getSelectedCourse()
     $scope.formData.disable_registration_checked = !!$scope.course.disable_registration
     $scope.roles = [{ value: 3, text: 'courses.information.professor' }, { value: 4, text: 'courses.information.ta' }];
     Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
     Page.startTour()
     ContentNavigator.close()
     setupTimezone()
+    getTeachers();
 
     function setupTimezone() {
       $scope.timezones.forEach(function(zone) {
@@ -27,21 +28,21 @@ angular.module('scalearAngularApp')
       })
     }
 
+    function checkRegistrationField() {
+      if(!$scope.formData.disable_registration_checked) {
+        $scope.course.disable_registration = null
+      } else if(!$scope.course.disable_registration) {
+        $scope.course.disable_registration = $scope.course.end_date
+      }
+    }
+
     $scope.updateCourse = function(data, type) {
       if(data && data instanceof Date) {
         data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
         $scope.course[type] = data
       }
       checkRegistrationField()
-      CourseModel.update($scope.course)
-    }
-
-    function checkRegistrationField(){
-      if(!$scope.formData.disable_registration_checked) {
-        $scope.course.disable_registration = null
-      } else if(!$scope.course.disable_registration) {
-        $scope.course.disable_registration = $scope.course.end_date
-      }
+      $scope.course.update()
     }
 
     $scope.toggleRegistrationCheck = function() {
@@ -50,34 +51,24 @@ angular.module('scalearAngularApp')
     }
 
     $scope.validateCourse = function(column, data) {
-      var deferred = $q.defer();
-      var course = {}
+      var course = { id: $scope.course.id }
       course[column] = data;
-      CourseModel.validate(course)
-        .then(function() {
-          deferred.resolve()
-        })
-        .catch(function(resp) {
-          if(resp.status == 422)
-            deferred.resolve(resp.data.errors.join());
-          else
-            deferred.reject('Server Error');
-        })
-      return deferred.promise;
+      var temp_course = CourseModel.createInstance(course)
+      return temp_course.validate()
     };
 
     $scope.exportCourse = function() {
-      CourseModel.exportCourse()
-      .then(function(response) {
-        if(response.notice) {
-          ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
-        }
-      })
+      $scope.course.exportCourse()
+        .then(function(response) {
+          if(response.notice) {
+            ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+          }
+        })
     }
 
     //teachers part
     function getTeachers() {
-      CourseModel.getTeachers().then(function(value) {
+      TeacherModel.getTeachers().then(function(value) {
         $scope.teachers = value.data;
         $scope.new_teacher = {};
       })
@@ -93,7 +84,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateTeacher = function(teacher) {
-      CourseModel.updateTeacher(teacher)
+      TeacherModel.updateTeacher(teacher)
     }
 
     $scope.removeNewTeacher = function() {
@@ -102,28 +93,28 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeTeacher = function(teacher) {
-      CourseModel.deleteTeacher(teacher).then(function() {
+      TeacherModel.deleteTeacher(teacher).then(function() {
         var index = $scope.teachers.indexOf(teacher)
-        if(index !=-1)
+        if(index != -1)
           $scope.teachers.splice(index, 1);
       })
     }
 
     $scope.saveTeacher = function() {
-      CourseModel.saveNewTeacher($scope.new_teacher )
-      .then(function(){
-         getTeachers();
+      TeacherModel.saveNewTeacher($scope.new_teacher)
+        .then(function() {
+          getTeachers();
           $scope.teacher_forum = false
-      })
-      .catch(function(value){
-        $scope.new_teacher.errors = value.data.errors
-      })
+        })
+        .catch(function(value) {
+          $scope.new_teacher.errors = value.data.errors
+        })
     }
 
     $scope.animateCopy = function() {
       $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
     }
 
-    getTeachers();
+
 
   }]);

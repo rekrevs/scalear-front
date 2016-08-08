@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', 'ItemsModel', 'ModuleModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, ItemsModel, ModuleModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
 
-    var module = ModuleModel.getSelectedModule()
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
+    var module = $scope.lecture.module()
     ItemsModel.setSelectedItem($scope.lecture)
     $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
     $scope.disable_module_due_controls = CourseEditor.isDueDateDisabled(module.due_date)
@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
     $scope.validateLecture = function(column, data) {
       var lecture = { id: $scope.lecture.id, course_id: $scope.lecture.course_id, group_id: $scope.lecture.group_id };
       lecture[column] = data;
-      var temp_lecture = LectureModel(lecture);
+      var temp_lecture = LectureModel.createInstance(lecture);
       if(column == 'url') {
         return temp_lecture.validateUrl(); // returns a promise
       } else {

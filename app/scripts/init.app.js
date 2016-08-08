@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
   .run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour', 'Course', 'URLInformation','CourseModel', function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course, URLInformation, CourseModel) {
 
+    try{
     MathJax && MathJax.Hub.Config({
       tex2jax: {
         inlineMath: [
@@ -12,6 +13,8 @@ angular.module('scalearAngularApp')
       showProcessingMessages: false,
       showMathMenu: false
     });
+  }
+  catch(e){}
 
     $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
     editableOptions.theme = 'default';
@@ -103,7 +106,7 @@ angular.module('scalearAngularApp')
           s = 2;
         } else {
           if(toParams.course_id && $rootScope.current_user) {
-            CourseModel.getUserRole(toParams.course_id).then(function(role) {
+            CourseModel.getCourseRole(toParams.course_id).then(function(role) {
               if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher() )) { // student trying to access teacher page  // teacher trying to access student page
                 $state.go("course_list");
                 showErrorMsg()

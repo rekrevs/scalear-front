@@ -16,7 +16,7 @@ GuerrillaMail.prototype = Object.create({}, {
 	table_field:{ get: function(){return element(by.id('email_list'))}},
 	rows_field:{ get: function(){return element.all(by.className('mail_row'))}},
 	row_field:{ get: function(){return element(by.className('mail_row'))}},
-	confirm_email_field:{ get: function(){return element(by.css('[href^="http://mail."]'))}},
+	confirm_email_field:{ get: function(){return element(by.partialLinkText("users/confirmation")) }},
 
 	type_email: { value: function (keys) { 
 		this.email_field.click();

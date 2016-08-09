@@ -1,3 +1,9 @@
+Date.prototype.addDays = function(days)
+{
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
 var params= {
     //local
     frontend: 'http://localhost:9000/#',
@@ -94,7 +100,9 @@ var params= {
 
     short_name: "csc-test",
     course_name: "aesting course 100",
-    course_duration: '19',
+    // course_duration: '19',
+    course_end_date: new Date().addDays(30),
+
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -199,7 +207,7 @@ exports.config = {
       },
     specs: [
         // 'test/e2e/spec/fill_course_pi.spec.js', // Done
-        'test/e2e/spec/inclass_pi.spec.js', // Done
+        // 'test/e2e/spec/inclass_pi.spec.js', // Done
         // 'test/e2e/spec/create_course.spec.js', // Done
         // 'test/e2e/spec/fill_course.spec.js',// Done
         // 'test/e2e/spec/course_information_validation.spec.js',// Done
@@ -222,6 +230,7 @@ exports.config = {
 
         // 'test/e2e/spec/delete_course.spec.js',
 
+        'test/e2e/spec/features_sprint7_test.spec.js'
 
         // to test email features locall
 
@@ -280,6 +289,7 @@ exports.config = {
     // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
     capabilities: {
         'browserName': 'chrome'
+        // 'browserName': 'firefox'
     },
 
     // ----- More information for your tests ----
@@ -330,3 +340,4 @@ exports.config = {
         defaultTimeoutInterval: 300000
     }
 };
+

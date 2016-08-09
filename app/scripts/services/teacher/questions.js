@@ -12,6 +12,10 @@ angular.module('scalearAngularApp')
           quiz_id: quiz.id
         })
         .$promise
+    }
+
+    function getEditableQuestions() {
+      getQuestions()
         .then(function(data) {
           questions = data.questions
           questions.forEach(function(question, index) {
@@ -30,6 +34,14 @@ angular.module('scalearAngularApp')
           })
 
           return questions
+        })
+    }
+
+    function getSolvableQuestions() {
+      getQuestions()
+        .then(function(data) {
+          questions = data.questions
+          return data
         })
     }
 
@@ -96,6 +108,8 @@ angular.module('scalearAngularApp')
 
     return {
       getQuestions: getQuestions,
+      getEditableQuestions: getEditableQuestions,
+      getSolvableQuestions:getSolvableQuestions
       addQuestion: addQuestion,
       removeQuestion: removeQuestion,
       updateQuestions: updateQuestions,

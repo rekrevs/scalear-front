@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .service('ScalearUtils', ['$rootScope','$translate', function($rootScope,  $translate) {
+  .service('ScalearUtils', ['$rootScope', '$translate', function($rootScope, $translate) {
     return {
       getKeys: function(obj) {
         return Object.keys ? Object.keys(obj) : (function(obj) {
@@ -72,10 +72,38 @@ angular.module('scalearAngularApp')
         return obj
       },
       urlWithProtocol: function(url) {
+        console.log("URL is", url);
         if(url)
           return url.match(/^http/) ? url : 'http://' + url;
         else
           return url;
+      },
+      shorten: function(url, l) {
+        var length = typeof(l) != "undefined" ? l : 50;
+        var link = url.replace("http://", "").replace("https://", "");
+        if(link.length <= length)
+          return link
+        var chunk_length = length / 2
+        var start_chunk = this.shortString(link, chunk_length, false);
+        var end_chunk = this.shortString(link, chunk_length, true);
+        return start_chunk + ".." + end_chunk;
+      },
+      shortString:function(s, l, reverse) {
+        var stop_chars = [' ', '/', '&'];
+        var acceptable_shortness = l * 0.80; // When to start looking for stop characters
+        var text = reverse ? s.split("").reverse().join("") : s;
+        var short_s = "";
+
+        for(var i = 0; i < l - 1; i++) {
+          short_s += text[i];
+          if(i >= acceptable_shortness && stop_chars.indexOf(s[i]) >= 0) {
+            break;
+          }
+        }
+        if(reverse) {
+          return short_s.split("").reverse().join("");
+        }
+        return short_s;
       },
       getIndexById: function(arr, id) { // returns index of an object in an array by searching for its id
         for(var elem in arr) {
@@ -125,7 +153,7 @@ angular.module('scalearAngularApp')
           return $translate('editor.incorrect_format_time')
         }
       },
-      arrayToSeconds: function(a){
+      arrayToSeconds: function(a) {
         return(+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) // minutes are worth 60 seconds. Hours are worth 60 minutes.
       },
       listTimezones: function() {

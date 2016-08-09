@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation','CourseModel','ModuleModel', 'ItemsModel', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel) {
 
-    $log.debug("lect mid ctlr")
+    $scope.course = CourseModel.getSelectedCourse()
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
@@ -14,9 +14,11 @@ angular.module('scalearAngularApp')
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.ContentNavigator.open()
+
     if($scope.preview_as_student) {
       $scope.TimelineNavigator.open()
     }
+
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
 
     $scope.$on("export_notes", function() {
@@ -38,18 +40,6 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.pause()
       }
     })
-
-    // angular.element($window)
-    // .bind('focus', function() {
-    //     if($scope.lecture_player.element && $scope.last_video_state)
-    //         $scope.lecture_player.controls.play()
-    // })
-    // .bind('blur', function() {
-    //     if($scope.lecture_player.element){
-    //         $scope.last_video_state = !$scope.lecture_player.controls.paused()
-    //         $scope.lecture_player.controls.pause()
-    //     }
-    // });
 
     var initVariables = function() {
       $scope.studentAnswers = {}
@@ -143,12 +133,12 @@ angular.module('scalearAngularApp')
       if($scope.timeline) {
         $timeout(function() {
           $scope.lecture = $scope.timeline['lecture'][id].meta
-          Page.setTitle($scope.module_obj[$stateParams.module_id].name + ': ' +
+          var module = ModuleModel.getSelectedModule()
+          Page.setTitle(module.name + ': ' +
             $scope.lecture.name + ' - ' +
             $scope.course.name);
         })
 
-        $scope.$parent.$parent.current_item = id
         initVariables()
         clearQuiz()
         $scope.closeReviewNotify()
@@ -169,13 +159,12 @@ angular.module('scalearAngularApp')
             }
 
             if(!$scope.preview_as_student) {
-              for(var item in lec.requirements) {
-                for(var id in lec.requirements[item]) {
-                  var group_index = ScalearUtils.getIndexById($scope.course.groups, $stateParams.module_id) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
-                  var item_index = ScalearUtils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id]) //CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-                  if(item_index != -1 && group_index != -1)
-                    if(!$scope.course.groups[group_index].items[item_index].is_done)
-                      $scope.passed_requirments = false
+              for(var item_type in lec.requirements) {
+                for(var index in lec.requirements[item_type]) {
+                  var item = ItemsModel.getById(lec.requirements[item_type][index], item_type)
+                  if(!item.is_done){
+                    $scope.passed_requirments = false
+                  }
                 }
               }
             }
@@ -298,7 +287,7 @@ angular.module('scalearAngularApp')
         function(data) {
           $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
           if(data.lecture_done && !lecture.is_done) {
-            $scope.course.markDone(lecture.group_id, lecture.id)
+            lecture.markDone()
             $scope.timeline['lecture'][lecture.id].meta.is_done = data.lecture_done
           } else if(milestone == 100)
             $scope.not_done_msg = true

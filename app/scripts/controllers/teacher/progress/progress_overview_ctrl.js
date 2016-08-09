@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressOverviewCtrl', ['$interval','$rootScope', '$scope','$state', '$stateParams','ContentNavigator', '$translate','$log', 'Page','ErrorHandler', function ($interval,$rootScope, $scope, $state, $stateParams, ContentNavigator, $translate, $log, Page,ErrorHandler) {
+  .controller('progressOverviewCtrl', ['$scope','$state', 'ContentNavigator', '$translate','$log', 'Page','ErrorHandler','CourseModel', function ($scope, $state, ContentNavigator, $translate, $log, Page,ErrorHandler, CourseModel) {
 
+    $scope.course = CourseModel.getSelectedCourse()
     Page.setTitle($translate('navigation.progress') + ': ' + $scope.course.name);
     ContentNavigator.open()
 
@@ -10,12 +11,8 @@ angular.module('scalearAngularApp')
         if($state.params.module_id)
             $state.go(state)
         else{
-           showError()
+           ErrorHandler.showMessage($translate('error_message.select_module_first'), 'errorMessage', 0, "error");
         }
-    }
-
-    var showError=function(){
-        ErrorHandler.showMessage($translate('error_message.select_module_first'), 'errorMessage', 0, "error");
     }
 
 }]);

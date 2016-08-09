@@ -32,8 +32,10 @@ angular.module('scalearAngularApp')
             }
           })
           .then(function(response) {
-            current_user.invitation_items = response.invitations
-            current_user.shared_items = response.shared_items
+            if(response) {
+              current_user.invitation_items = response.invitations
+              current_user.shared_items = response.shared_items
+            }
           })
       } else {
         deferred.resolve(current_user)
@@ -56,7 +58,7 @@ angular.module('scalearAngularApp')
     }
 
     function logout() {
-      User.signOut({}, function() {
+      return User.signOut({}, function() {
         removeCurrentUser()
       }).$promise;
     }

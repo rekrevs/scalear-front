@@ -49,6 +49,7 @@ angular.module('scalearAngularApp')
     var selected_course;
 
     $rootScope.$on("Course:get_current_courses", function() {
+      console.log("DID I COME FROM EVENT?");
       currentCourses();
     })
 
@@ -127,17 +128,10 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          $rootScope.$broadcast("Course:set_modules", data.groups)
+          $rootScope.$broadcast("Course:set_modules", data.course.groups)
           return data.course;
         })
       return deferred.promise;
-    }
-
-    function markDone(module_id, item_id) {
-      var group_index = ScalearUtils.getIndexById(course.groups, module_id)
-      var item_index = ScalearUtils.getIndexById(course.groups[group_index].items, item_id)
-      if(item_index != -1 && group_index != -1)
-        $rootScope.$broadcast("item_done", course.groups[group_index].items[item_index])
     }
 
     function setCourse(course_data) {
@@ -150,6 +144,23 @@ angular.module('scalearAngularApp')
 
     function removeSelectedCourse() {
       selected_course = null
+    }
+
+    function getUserOtherCourses() {
+      return Course.newCourse().$promise
+    }
+
+    function create(course, import_from_id) {
+      var modified_course = angular.copy(course)
+      $scope.submitting = true;
+      var d = new Date()
+      modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
+      modified_course.time_zone = course.time_zone.name;
+      return Course.create({ course: modified_course, "import": import_from_id })
+        .$promise
+        .then(function() {
+          $rootScope.$broadcast('Course:get_current_courses')
+        })
     }
 
     function isInstance(instance) {
@@ -196,11 +207,28 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
+      function getAnnouncements() {
+        return Course.getAnnouncements({ course_id: course.id })
+          .$promise
+      }
+
+      function getStudentDueDateEmail() {
+        return Course.getStudentDueDateEmail({ course_id: course.id })
+          .$promise
+      }
+
+      function updateStudentDueDateEmail(val) {
+        Course.updateStudentDueDateEmail({ course_id: course.id }, { email_due_date: val });
+      }
+
       return angular.extend(course, {
         instanceType: instanceType,
         update: update,
         validate: validate,
-        exportCourse: exportCourse
+        exportCourse: exportCourse,
+        getAnnouncements: getAnnouncements,
+        getStudentDueDateEmail: getStudentDueDateEmail,
+        updateStudentDueDateEmail: updateStudentDueDateEmail
       })
     }
 

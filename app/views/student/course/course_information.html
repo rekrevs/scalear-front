@@ -31,57 +31,13 @@
     <div ng-if="course_role != 7">
       <h4 class="subheader" page-name="{{current}}" step-text="Here you will find the latest settings posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false" translate>navigation.settings</h4>
       <div style="margin-left: 40px;">
-        <input type="checkbox" ng-model="email_due_date" ng-change="updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></div>
+        <input type="checkbox" ng-model="email_due_date" ng-change="course.updateStudentDueDateEmail(email_due_date)"> <span translate>courses.information.receive_due_date_email</span></div>
       <hr />
     </div>
     <h4 class="subheader" page-name="{{current}}" step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false" translate>navigation.announcements</h4>
     <div>
       <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
     </div>
-    <!-- <h4 class="color-blue show-for-small-only">
-            <span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.information.taught_by</span>
-            <span ng-repeat="teacher in teachers">{{teacher.name}}
-                <span ng-if="$index < teachers.length-1">, </span>
-            </span>
-        </h4> -->
-    <!-- <div class="hide-for-large-up with-padding-bottom">
-            <div>
-                <button id="calendar_btn" calendar-modal type="button" class="button tiny right" ng-click="openCalendar()"page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="bottom" step-append-to-body="false"><span translate>navigation.calendar</span></button>
-                <button id="course_content" type="button" class="button success tiny " ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="bottom" step-append-to-body="false" translate>go_to_course</button>
-            </div>
-            <span page-name="{{current}}"step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
-                <div id='course_date' class="with-margin-bottom">
-                    <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
-                    <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
-                </div>
-                <div class="with-margin-bottom">
-                    <i class="fi-clock size-24"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
-                    <div>
-                        <small id='course_duration' class="truncate">{{course.duration}}</small>
-                    </div>
-                </div>
-                <div class="with-margin-bottom">
-                    <i class="fi-link size-24"></i> <small class="with-tiny-margin-left" translate>courses.information.discussion_forum_link</small>
-                    <div>
-                        <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
-                    </div>
-                </div>
-            </span>
-            <hr />
-        </div> -->
-    <!-- <div class="small-12 columns no-padding">
-            <h4 class="subheader with-margin-bottom" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.information.taught_by</h4>
-            <p style="font-weight: 200;">
-                <div class="small-12 medium-6 large-6 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
-                    <profile-image class="small-2 medium-2 large-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
-                    <div class="small-10 medium-10 large-10 columns with-small-padding-left">
-                        <li class="fn truncate" title="{{teacher.name+' '+teacher.last_name}}">{{teacher.name+' '+teacher.last_name}}</li>
-                        <li class="locality">{{'courses.'+teacher.role | translate}}</li>
-                        <li class="email break-text"><a href="">{{teacher.email}}</a></li>
-                    </div>
-                </div>
-            </p>
-        </div> -->
   </div>
   <div class="small-3 columns no-padding-right">
     <img class="small-9 columns with-small-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
@@ -101,99 +57,12 @@
           <small class="with-tiny-margin-left" translate>courses.end_date</small>
           <div>{{course.end_date | amDateFormat:'dddd, DD MMMM YYYY'}}</div>
         </div>
-        <!--                 <div class="with-small-margin-bottom">
-                    <i class="fi-clock size-18"></i>
-                    <small class="with-tiny-margin-left" translate>courses.duration</small>
-                    <div>{{course.duration}}</div>
-                </div> -->
         <div class="with-small-margin-bottom" ng-if="course.discussion_link">
           <i class="fi-link size-18"></i>
           <small translate>courses.information.discussion_forum_link</small>
-          <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
+          <a id="discussion_link" class="truncate" href="{{urlWithProtocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!--<span ng-show="course" class="small-12 columns">
-    <div class="small-3 columns no-padding">
-        <img class="small-10 medium-6 large-10 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
-        <div class="small-12 columns no-padding show-for-large-up">
-            <button type="button" calendar-modal class="button tiny " ng-click="openCalendar()" page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="right" step-append-to-body="false"><span translate>navigation.calendar</span></button>
-            <button id="course_content" type="button" class="button success tiny under-the-other " ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="right" step-append-to-body="false" translate>go_to_course</button>
-            <span page-name="{{current}}"step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
-                <div id='course_date' class="large-12 column with-margin-bottom no-padding">
-                    <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
-                    <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
-                </div>
-                <div class="large-12 column with-margin-bottom no-padding">
-                    <i class="fi-clock size-24"></i><small class="with-tiny-margin-left" translate>courses.duration</small>
-                    <div>
-                        <small id='course_duration' class="truncate">{{course.duration}}</small>
-                    </div>
-                </div>
-                <div class="large-12 column with-margin-bottom no-padding" ng-if="course.discussion_link">
-                    <i class="fi-link size-24"></i> <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
-                </div>
-            </span>
-        </div>
-    </div>
-    <div class="small-12 medium-12 large-9 columns">
-        <h2 id='course_code_name' class="title color-green"><span>{{course.short_name}}</span> | <span>{{course.name}}</span></h2>
-        <h6 class="color-blue show-for-small-only"><span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.information.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
-        <div class="hide-for-large-up with-padding-bottom">
-            <div>
-                <button id="calendar_btn" calendar-modal type="button" class="button tiny right" ng-click="openCalendar()"page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="bottom" step-append-to-body="false"><span translate>navigation.calendar</span></button>
-                <button id="course_content" type="button" class="button success tiny " ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="bottom" step-append-to-body="false" translate>go_to_course</button>
-            </div>
-            <span page-name="{{current}}"step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
-                <div id='course_date' class="with-margin-bottom">
-                    <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
-                    <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
-                </div>
-                <div class="with-margin-bottom">
-                    <i class="fi-clock size-24"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
-                    <div>
-                        <small id='course_duration' class="truncate">{{course.duration}}</small>
-                    </div>
-                </div>
-                <div class="with-margin-bottom">
-                    <i class="fi-link size-24"></i> <small class="with-tiny-margin-left" translate>courses.information.discussion_forum_link</small>
-                    <div>
-                        <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
-                    </div>
-                </div>
-            </span>
-            <hr />
-        </div>
-        <div class="small-12 columns no-padding">
-            <h5 translate class="subheader" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false">courses.information.taught_by</h5>
-            <p style="font-weight: 200;">
-                <div class="small-12 medium-6 large-6 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
-                    <profile-image class="small-2 medium-2 large-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
-                    <div class="small-10 medium-10 large-10 columns with-small-padding-left">
-                        <li class="fn truncate" title="{{teacher.name+' '+teacher.last_name}}">{{teacher.name+' '+teacher.last_name}}</li>
-                        <li class="locality">{{'courses.'+teacher.role | translate}}</li>
-                        <li class="email break-text"><a href="">{{teacher.email}}</a></li>
-                    </div>
-                </div>
-            </p>
-        </div>
-        <div>
-            <h5 translate class="subheader">groups.description</h5>
-            <p id='course_description' style="font-weight: 200;">
-                {{course.description}}
-            </p>
-            <h5 translate class="subheader" page-name="{{current}}"step-text="This is what you need to know to take this course." step-index="5" step-placement="top" step-append-to-body="false">courses.prerequisites</h5>
-            <p id='course_prerequisites' style="font-weight: 200;">
-                {{course.prerequisites}}
-            </p>
-
-            <h5 translate class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false">navigation.announcements</h5>
-            <p style="font-weight: 200;">
-                <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
-            </p>
-        </div>
-    </div>
-</span>
- -->

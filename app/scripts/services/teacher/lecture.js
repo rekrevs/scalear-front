@@ -254,6 +254,14 @@ angular.module('scalearAngularApp')
         return ModuleModel.getById(lecture.group_id)
       }
 
+      function setAsSelected() {
+        return setSelectedLecture(lecture)
+      }
+
+      function markDone() {
+        $rootScope.$broadcast("item_done", lecture)
+      }
+
       function instanceType() {
         return 'Lecture'
       }
@@ -267,7 +275,9 @@ angular.module('scalearAngularApp')
         removeFromTimeline: removeFromTimeline,
         instanceType: instanceType,
         remove: remove,
-        module: module
+        module: module,
+        setAsSelected:setAsSelected,
+        markDone:markDone
       })
     }
 

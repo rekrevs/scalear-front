@@ -113,6 +113,10 @@ angular.module('scalearAngularApp')
         .$promise
       }
 
+      function setAsSelected() {
+        return setSelectedLink(link)
+      }
+
       return angular.extend(link, {
         instanceType: instanceType,
         module: module,

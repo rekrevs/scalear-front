@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassCtrl', ['$scope', '$translate', 'ContentNavigator','Page', function ($scope, $translate, ContentNavigator, Page) {
-		Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
+  .controller('inclassCtrl', ['$scope', '$translate', 'ContentNavigator','Page','CourseModel', function ($scope, $translate, ContentNavigator, Page, CourseModel) {
+
+    $scope.course = CourseModel.getSelectedCourse()
+
+    Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
   		ContentNavigator.open()
   }]);

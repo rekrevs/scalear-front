@@ -101,45 +101,36 @@ angular.module('scalearAngularApp')
           if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
             $state.go("ie");
           }
-          if(current_user && current_user.info_complete === false) {
+          if(!current_user.info_complete) {
             $state.go('edit_account')
             s = 2;
           } else {
-            if(toParams.course_id && current_user) {
-              CourseModel.getCourseRole(toParams.course_id).then(function(role) {
-                if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
-                  $state.go("course_list");
-                  showErrorMsg()
-                }
-              })
+            if(toParams.course_id) {
+              CourseModel.getCourseRole(toParams.course_id)
+                .then(function(role) {
+                  if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
+                    $state.go("course_list");
+                    showErrorMsg()
+                  }
+                })
             }
-            if(current_user && to.name === 'home') {
+            if(to.name === 'home') {
               $state.go("dashboard")
-            } else if(!current_user && to.name === 'home') {
-              $state.go("landing")
-            }
-            if(to.name === 'confirmed') {
+            } else if(to.name === 'confirmed') {
               if(from.name === 'show_confirmation') {
                 $state.go("confirmed")
               } else {
                 $state.go("home");
                 s = 0;
               }
-            }
-            if(current_user && !current_user.intro_watched && to.name !== "edit_account") {
+            } else if(!current_user.intro_watched && to.name !== "edit_account") {
               $state.go('confirmed')
               s = 1;
-            }
-            if(!routeClean(to.name) && !current_user) { // user not logged in trying to access a page that needs authentication.
-              $state.go("login");
-              s = 0;
-            } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && user) { // teacher going to home, redirected to courses page
+            } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page
               $state.go("course_list");
             } else if(stateNoAuth(to.name)) {
-              if(current_user) {
-                $state.go("home");
-                s = 0;
-              }
+              $state.go("home");
+              s = 0;
             }
           }
 
@@ -149,6 +140,15 @@ angular.module('scalearAngularApp')
           }
           if(s === 2) {
             ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 4000, "error");
+          }
+        })
+        .catch(function() {
+          if(to.name === 'home') {
+            $state.go("landing")
+          }
+          if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
+            $state.go("login");
+            s = 0;
           }
         })
     });

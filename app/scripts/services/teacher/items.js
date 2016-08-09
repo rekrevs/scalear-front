@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('ItemsModel', ['LectureModel', 'QuizModel', 'LinkModel','$rootScope', function(LectureModel, QuizModel, LinkModel, $rootScope) {
+  .factory('ItemsModel', ['LectureModel', 'QuizModel', 'LinkModel', '$rootScope', function(LectureModel, QuizModel, LinkModel, $rootScope) {
 
     var items_obj = { lecture: {}, quiz: {}, customlink: {} };
 
@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
       } else if(item.class_name == 'quiz') {
         it = QuizModel.createInstance(item)
       } else {
-        it =LinkModel.createInstance(item)
+        it = LinkModel.createInstance(item)
       }
       items_obj[item.class_name][item.id] = it
     }
@@ -54,11 +54,11 @@ angular.module('scalearAngularApp')
     }
 
     function getById(id, type) {
-       return items_obj[type][id]
+      return items_obj[type][id]
     }
 
     function getSelectedItem() {
-      return LectureModel.getSelectedLecture() || QuizModel.getSelectedQuiz()
+      return LectureModel.getSelectedLecture() || QuizModel.getSelectedQuiz() || LinkModel.getSelectedLink()
     }
 
     function setSelectedItem(item) {
@@ -67,12 +67,15 @@ angular.module('scalearAngularApp')
         LectureModel.setSelectedLecture(item)
       } else if(item.class_name == 'quiz') {
         QuizModel.setSelectedQuiz(item)
+      } else {
+        LinkModel.setSelectedLink(item)
       }
     }
 
     function clearAllSelected() {
       LectureModel.clearSelectedLecture()
       QuizModel.clearSelectedQuiz()
+      LinkModel.getSelectedLink()
     }
 
     return {
@@ -83,7 +86,8 @@ angular.module('scalearAngularApp')
       getLink: getLink,
       getSelectedItem: getSelectedItem,
       setSelectedItem: setSelectedItem,
-      clearAllSelected: clearAllSelected
+      clearAllSelected: clearAllSelected,
+      getById: getById
     }
 
   }])

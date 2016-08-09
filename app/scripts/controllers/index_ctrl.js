@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexCtrl', ['$scope', '$timeout', '$rootScope', '$translate', '$window', '$log', 'Page', '$cookieStore', 'ContentNavigator', 'scalear_api', 'MobileDetector', 'CourseModel', function($scope, $timeout, $rootScope, $translate, $window, $log, Page, $cookieStore, ContentNavigator, scalear_api, MobileDetector, CourseModel) {
+  .controller('indexCtrl', ['$scope', '$timeout', '$rootScope', '$translate', '$window', '$log', 'Page', '$cookieStore', 'ContentNavigator', 'scalear_api', 'MobileDetector', 'CourseModel', 'UserSession', function($scope, $timeout, $rootScope, $translate, $window, $log, Page, $cookieStore, ContentNavigator, scalear_api, MobileDetector, CourseModel, UserSession) {
 
     FastClick.attach(document.body);
     $scope.Page = Page;
@@ -27,7 +27,10 @@ angular.module('scalearAngularApp')
       }
     })
 
-    getCurrentCourses()
+    UserSession.getCurrentUser()
+    .then(function () {
+       getCurrentCourses()
+    })
 
     function getCurrentCourses() {
       CourseModel.currentCourses()

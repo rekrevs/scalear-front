@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
       "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers }
     });
 
-  }]).factory("QuizModel", ['Quiz', 'ModuleModel','$rootScope', function(Quiz, ModuleModel, $rootScope) {
+  }]).factory("QuizModel", ['Quiz', 'ModuleModel', '$rootScope', function(Quiz, ModuleModel, $rootScope) {
 
     var selected_quiz = null
 
@@ -138,12 +138,34 @@ angular.module('scalearAngularApp')
           });
       }
 
+      function setAsSelected() {
+        return setSelectedQuiz(quiz)
+      }
+
+      function markDone() {
+        $rootScope.$broadcast("item_done", quiz)
+      }
+
+      function studentSolve(studentAnswers, action) {
+        return Quiz.saveStudentQuiz({
+            quiz_id: quiz.id,
+            course_id: quiz.course_id
+          }, {
+            student_quiz: studentAnswers,
+            commit: action
+          })
+          .$promise
+      }
+
       return angular.extend(quiz, {
         instanceType: instanceType,
         module: module,
         validate: validate,
         update: update,
-        remove:remove
+        remove: remove,
+        setAsSelected: setAsSelected,
+        markDone: markDone,
+        studentSolve:studentSolve
       })
     }
 
@@ -153,7 +175,7 @@ angular.module('scalearAngularApp')
       clearSelectedQuiz: clearSelectedQuiz,
       isInstance: isInstance,
       createInstance: createInstance,
-      paste:paste,
-      create:create
+      paste: paste,
+      create: create
     }
   }])

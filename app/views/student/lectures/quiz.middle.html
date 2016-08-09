@@ -39,12 +39,12 @@
     <hr>
     <div class="small-12 columns no-padding">
     	<form name="form">
-            <center class="no_solve" ng-if="!passed_requirments && !should_solve">
+            <center class="no_solve" ng-if="!passed_requirments">
                 <div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
                     <h2 style="top:60px;font-weight:300;font-size:18px" ><span translate>lectures.messages.finish_before_proceeding</span></h2>
                 </div>
             </center>
-            <span ng-if="passed_requirments && should_solve">
+            <span ng-if="passed_requirments">
         		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct" explanation="explanation"></student-quiz>
 
             </span>

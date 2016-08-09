@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel) {
+  .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel) {
 
-    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
-    ItemsModel.setSelectedItem($scope.quiz)
+    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id).setAsSelected()
+    $scope.course = CourseModel.getSelectedCourse()
     $scope.publish_state = getPublishStatus($scope.quiz)
     $scope.alert = {
       type: "alert",
@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
     angular.extend($scope, QuestionModel);
     addShortucts();
 
-    $scope.getQuestions()
+    $scope.getEditableQuestions()
       .then(function(questions) {
         $scope.questions = questions
       });

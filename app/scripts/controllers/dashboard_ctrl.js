@@ -148,11 +148,7 @@ angular.module('scalearAngularApp')
 
         var response_succes =  function(response) {
               if(response.notice) {
-                $rootScope.show_alert = "success";
-                ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000);
-                $interval(function() {
-                  $rootScope.show_alert = "";
-                }, 4000, 1);
+                ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000, "success");
               }
             }
 
@@ -160,23 +156,20 @@ angular.module('scalearAngularApp')
               revertFunc()
               $rootScope.show_alert = "error";
               if (response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time"){
-                var message =  Object.keys(response.data.errors)[0].replace("_"," ").capitalizeFirstLetter()+"("+response.data.appearance_time+") "+response.data.errors[Object.keys(response.data.errors)[0]][0] 
+                var message =  Object.keys(response.data.errors)[0].replace("_"," ").capitalizeFirstLetter()+"("+response.data.appearance_time+") "+response.data.errors[Object.keys(response.data.errors)[0]][0]
               }
               else{
                 var message = Object.keys(response.data.errors)[0].replace("_"," ")+" "+response.data.errors[Object.keys(response.data.errors)[0]][0]
               }
-              ErrorHandler.showMessage( message, 'errorMessage', 2000);
-              $interval(function() {
-                $rootScope.show_alert = "";
-              }, 4000, 1);
+              ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 4000, "error");
             }
 
 
         $scope.uiConfig.calendar.viewRender = function(view, element) {
         var months_to_get = []
         var month_year = []
-        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0]) 
-        var current_year = parseInt(view.title.split(" ")[1]) 
+        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0])
+        var current_year = parseInt(view.title.split(" ")[1])
         months_to_get.push((current_month-1)%12 + 1)
         months_to_get.push((current_month)%12 + 1)
         months_to_get.push((current_month+1)%12 + 1)

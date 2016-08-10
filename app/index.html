@@ -43,11 +43,7 @@
 
   <body>
     <loading class="errorpageserver" size="big" show="busy_loading" ></loading>
-    <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
-        <div style="text-align: center; display:block; height: 0px;">
-            <div id='server_error' app-messages status="show_alert" style="z-index: 20000;"></div>
-        </div>
-    </div>
+    <div app-messages server-error='server_error'></div>
 
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -67,17 +63,17 @@
                 <div ng-if="(!('**.course.**' | includedByState) && !('home' | includedByState) && !!current_user)">
                     <user-navigation message="subheader_message" />
                 </div>
-                <div ng-if="course_role==1">
-                    <teacher-navigation course="course"  />
+                <div ng-if="isTeacher()">
+                    <teacher-navigation />
                 </div>
-                <div ng-if="course_role==2 || course_role == 7">
-                    <student-navigation course="course" />
+                <div ng-if="isStudent()">
+                    <student-navigation />
                 </div>
             </div>
             <div class="container row">
-                <content-navigator ng-if="course_role==1" modules="course.modules" mode="editor" open="ContentNavigator.status">
+                <content-navigator ng-if="isTeacher()"  mode="editor" open="ContentNavigator.status">
                 </content-navigator>
-                <content-navigator ng-if="course_role==2 || course_role == 7" modules="course.groups" mode="courseware" open="ContentNavigator.status">
+                <content-navigator ng-if="isStudent()" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
                 <br ng-hide="('**.course.**' | includedByState)"/>
                 <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin"></div>
@@ -172,6 +168,9 @@
     <script src="locals/translation_en.js"></script>
     <script src="locals/translation_sv.js"></script>
 
+    <script src="scripts/core.app.js"></script>
+    <script src="scripts/constants.app.js"></script>
+    <script src="scripts/init.app.js"></script>
     <script src="scripts/app.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/filters/filters.js"></script>
@@ -196,12 +195,15 @@
     <script src="scripts/directives/forum_directives.js"></script>
 
     <script src="scripts/services/teacher/course.js"></script>
-    <script src="scripts/services/teacher/custom_link.js"></script>
-    <script src="scripts/services/teacher/lecture.js"></script>
+    <script src="scripts/services/teacher/teachers.js"></script>
     <script src="scripts/services/teacher/module.js"></script>
+    <script src="scripts/services/teacher/items.js"></script>
+    <script src="scripts/services/teacher/lecture.js"></script>
     <script src="scripts/services/teacher/online_quiz.js"></script>
     <script src="scripts/services/teacher/online_marker.js"></script>
     <script src="scripts/services/teacher/quiz.js"></script>
+    <script src="scripts/services/teacher/questions.js"></script>
+    <script src="scripts/services/teacher/custom_link.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
     <script src="scripts/services/teacher/kpi.js"></script>
@@ -250,8 +252,6 @@
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_editor/lecture_marker_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/customlink_details_ctrl.js"></script>

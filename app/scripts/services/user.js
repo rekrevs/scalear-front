@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
       {
         'getCurrentUser': { method: 'GET', headers: headers , ignoreLoadingBar: true, params: {action: 'get_current_user'}},
         'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
-        'sign_out': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
+        'signOut': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
         'signUp': { method: 'POST', headers: headers},
         'reset_password':{method:'POST', headers:headers, params:{action: 'password'}},
         'change_password':{method:'PUT', headers:headers, params:{action: 'password'}},

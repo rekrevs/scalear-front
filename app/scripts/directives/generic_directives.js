@@ -193,18 +193,19 @@ angular.module('scalearAngularApp')
 
       }
     }
-  }]).directive('enrollHelpModal', ['$modal', '$rootScope','$location', function($modal, $rootScope,$location) {
+
+  }]).directive('enrollHelpModal', ['$modal', 'UserSession','$location', function($modal, UserSession,$location) {
     return {
       restrict: 'A',
       replace: true,
       link: function(scope, element) {
         scope.openHelpModal = function(course) {
+          UserSession.getCurrentUser().then(function(user) {
+            scope.current_user = user
+          })
           scope.course = course
           scope.enrollment_url = $location.absUrl().split('courses')[0]+"courses/enroll?id="+scope.course.unique_identifier
           scope.enrollment_url_guest = $location.absUrl().split('courses')[0]+"courses/enroll?id="+scope.course.guest_unique_identifier
-          
-
-          scope.current_user = $rootScope.current_user
           scope.getTextToCopy = function() {
             return $("#enrollment_message").text();
           }

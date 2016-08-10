@@ -2,40 +2,71 @@
 
 angular.module('scalearAngularApp')
   .factory('UserSession', ['$rootScope', 'User', 'Home', '$q', '$log', '$translate', function($rootScope, User, Home, $q, $log, $translate) {
-    return {
-      getRole: function() {
-        var deferred = $q.defer();
-        User.getCurrentUser(function(data) {
-          data.user = JSON.parse(data.user);
-          $log.debug(data);
-          if(data.signed_in) {
-            $rootScope.current_user = data.user
-            if($rootScope.current_user.last_name == null) {
-              $rootScope.current_user.last_name = ''
-            }
-            $rootScope.current_user.roles = $rootScope.current_user.roles.map(
-              function(r) {
+
+    var current_user = null
+
+    function getCurrentUser(argument) {
+      var deferred = $q.defer();
+      if(!current_user) {
+        User.getCurrentUser()
+          .$promise
+          .then(function(data) {
+            if(data.signed_in) {
+              var user = JSON.parse(data.user);
+              if(!user.last_name) {
+                user.last_name = ''
+              }
+              user.roles = user.roles.map(function(r) {
                 return r.id
-            })
-            $rootScope.current_user.profile_image = data.profile_image
-              // if($rootScope.current_user.roles.includes(1)!=2){ //1(teacher) or 5(admin)
-            $rootScope.current_user.invitations = data.invitations
-            $rootScope.current_user.shared = data.shared
-            $rootScope.current_user.accepted_shared = data.accepted_shared
-            Home.getNotifications({}, function(response) {
-              $rootScope.current_user.invitation_items = response.invitations
-              $rootScope.current_user.shared_items = response.shared_items
-            })
-            return deferred.resolve(1)
-              // // }
-              // else //student
-              //   return deferred.resolve(2)
-          } else { //not signed in
-            $rootScope.current_user = null;
-            return deferred.resolve(0)
-          }
-        })
-        return deferred.promise;
+              })
+              user.profile_image = data.profile_image
+              user.invitations = data.invitations
+              user.shared = data.shared
+              user.accepted_shared = data.accepted_shared
+              setCurrentUser(user)
+              deferred.resolve(user)
+              return getNotifications()
+
+            } else {
+              deferred.reject()
+            }
+          })
+          .then(function(response) {
+            if(response) {
+              current_user.invitation_items = response.invitations
+              current_user.shared_items = response.shared_items
+            }
+          })
+      } else {
+        deferred.resolve(current_user)
       }
+      return deferred.promise;
+    }
+
+    function getNotifications() {
+      return Home.getNotifications().$promise
+    }
+
+    function setCurrentUser(user) {
+      current_user = user
+      $rootScope.current_user = user
+    }
+
+    function removeCurrentUser() {
+      current_user = null
+      $rootScope.current_user = null
+    }
+
+    function logout() {
+      return User.signOut({}, function() {
+        removeCurrentUser()
+      }).$promise;
+    }
+
+    return {
+      getCurrentUser: getCurrentUser,
+      logout: logout
     };
+
+
   }]);

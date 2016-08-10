@@ -8,16 +8,16 @@ angular.module('scalearAngularApp')
         $log.debug('showing confirmation ')
         $log.debug($stateParams)
 
-        UserSession.getRole().then(function(result) {
+        UserSession.getCurrentUser().then(function(result) {
             if(result==0){
-                User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, 
+                User.show_confirmation({confirmation_token: $stateParams.confirmation_token },
                     function(){
                         $timeout(function(){
                            $scope.sending=false;
                            $rootScope.$emit('$stateChangeStart', {name:'confirmed'},{},{name:'show_confirmation'})
 
                         },2500)
-                    }, 
+                    },
                     function(data){
                         $scope.sending=false;
                         $scope.user.errors=data.data;

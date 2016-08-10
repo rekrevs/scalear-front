@@ -1,16 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore) {
+  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore','CourseModel', 'ModuleModel', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore, CourseModel, ModuleModel) {
 
-    //Page.setTitle('In-class')
-    // if(!MobileDetector.isPhone())
-    ContentNavigator.close()
     var self_answers = $cookieStore.get('self_answers') || []
     var group_answers = $cookieStore.get('group_answers') || []
-      // $scope.messages = ["The in-class session has not started", "The in-class question has not started.", "Individual", "Group", "Discussion", "End"]
     var states = ['noclass', 'intro', 'self', 'group', 'discussion']
-    $scope.module = $scope.course.selected_module
+
+    $scope.course = CourseModel.getSelectedCourse()
+    $scope.module = ModuleModel.getSelectedModule()
 
     Page.setTitle($scope.module.name + ': ' + 'In-class' + ' - ' + $scope.course.name);
 
@@ -36,7 +34,6 @@ angular.module('scalearAngularApp')
           $scope.group_quiz.in_group = true
           $scope.lecture = data.lecture
           $('.answer_choices input').attr('type', $scope.quiz.question_type == "MCQ" ? "checkbox" : "radio")
-            // var force_state_to
           if(self_answers.length > 0) {
             self_answers.forEach(function(answer) {
                 var filtered_answers = $scope.quiz.answers.filter(function(a) {
@@ -45,8 +42,6 @@ angular.module('scalearAngularApp')
                 if(filtered_answers.length)
                   filtered_answers[0].selected = true
               })
-              // if (data.status == 2)
-              //   force_state_to = "self_answered"
           }
           if(group_answers.length > 0) {
             group_answers.forEach(function(answer) {
@@ -56,8 +51,6 @@ angular.module('scalearAngularApp')
                 if(filtered_answers.length)
                   filtered_answers[0].selected = true
               })
-              // if (data.status == 3)
-              //   force_state_to = "group_answered"
           }
           $scope.note = { self: '', group: '' }
           $scope.last_note = { self: '', group: '' }

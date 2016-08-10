@@ -1,74 +1,55 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator','scalear_api','MobileDetector',function($scope, $timeout, $state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate, $cookieStore, Course, ScalTour, ContentNavigator, scalear_api, MobileDetector) {
+  .controller('indexCtrl', ['$scope', '$timeout', '$rootScope', '$translate', '$window', '$log', 'Page', '$cookieStore', 'ContentNavigator', 'scalear_api', 'MobileDetector', 'CourseModel', 'UserSession', function($scope, $timeout, $rootScope, $translate, $window, $log, Page, $cookieStore, ContentNavigator, scalear_api, MobileDetector, CourseModel, UserSession) {
 
-            FastClick.attach(document.body);
-            $scope.Page = Page;
-            $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
-            $scope.ContentNavigator = ContentNavigator
-            $scope.scalear_api = scalear_api
+    FastClick.attach(document.body);
+    $scope.Page = Page;
+    $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
+    $scope.ContentNavigator = ContentNavigator
 
-            $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
+    $scope.isTeacher = CourseModel.isTeacher
+    $scope.isStudent = CourseModel.isStudent
 
-            $scope.$on('content_navigator_change',function(ev, status){
-                if(!status){
-                    $scope.cancelDelay = $timeout(function(){
-                        $scope.ContentNavigator.delayed_navigator_open = false
-                    },300)
-                }
-                else{
-                    if($scope.cancelDelay)
-                        $timeout.cancel($scope.cancelDelay)
-                    $scope.ContentNavigator.delayed_navigator_open = true
-                }
-            })
+    $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
-            var getCurrentCourses=function(){
-                $scope.current_teacher_courses = null
-                $scope.current_student_courses = null
-                var unwatch = $rootScope.$watch('current_user', function(){
-                    if($rootScope.current_user && $rootScope.current_user.roles){
-                        Course.currentCourses({},
-                            function(data){
-                                $scope.current_teacher_courses = data.teacher_courses
-                                $scope.current_student_courses = data.student_courses
-                                unwatch()
-                            }
-                        );
-                    }
-                });
-            }
+    $rootScope.is_mobile = MobileDetector.isMobile()
 
-            $scope.$on("get_current_courses",function(){
-                getCurrentCourses()
-            })
+    $scope.$on('content_navigator_change', function(ev, status) {
+      if(!status) {
+        $scope.cancelDelay = $timeout(function() {
+          $scope.ContentNavigator.delayed_navigator_open = false
+        }, 300)
+      } else {
+        if($scope.cancelDelay)
+          $timeout.cancel($scope.cancelDelay)
+        $scope.ContentNavigator.delayed_navigator_open = true
+      }
+    })
 
-            $scope.changeLanguage = function(key) {
-                $log.debug("in change language " + key);
-                $log.debug('changhing language')
-                $translate.uses(key);
-                $rootScope.current_lang = key;
-                $window.moment.locale(key);
-            };
+    UserSession.getCurrentUser()
+    .then(function () {
+       getCurrentCourses()
+    })
 
-            $scope.notificationsNumber = function(){
-                if($scope.current_user){
-                    return $scope.current_user.shared + $scope.current_user.invitations
-                }
-            }
+    function getCurrentCourses() {
+      CourseModel.currentCourses()
+        .then(function(data) {
+          $scope.current_teacher_courses = data.teacher_courses
+          $scope.current_student_courses = data.student_courses
+        })
+    }
 
-            $scope.closeClipboard=function(){
-                $rootScope.clipboard.show_msg = false
-            }
+    $scope.changeLanguage = function(key) {
+      $translate.uses(key);
+      $rootScope.current_lang = key;
+      $window.moment.locale(key);
+    };
 
-            $rootScope.is_mobile= MobileDetector.isMobile()
-            $scope.changeLanguage($translate.uses());
-            getCurrentCourses()
+    $scope.changeLanguage($translate.uses());
 
-            //Google Analytics
-            ga('create', scalear_api.ga_token); //UA-66097980-1
-            ga('send', 'pageview');
+    //Google Analytics
+    ga('create', scalear_api.ga_token);
+    ga('send', 'pageview');
 
-        }
-    ]);
+  }]);

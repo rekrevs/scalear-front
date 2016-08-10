@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'scalear_utils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, scalear_utils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture) {
+  .controller('inclassModuleCtrl', ['$scope', '$modal', '$timeout', '$window', '$log', 'Module', '$stateParams', 'ScalearUtils', '$translate', 'Timeline', 'Page', '$interval', 'OnlineQuiz', 'Forum', 'Quiz', 'OnlineMarker','Lecture', 'ModuleModel', 'CourseModel', function($scope, $modal, $timeout, $window, $log, Module, $stateParams, ScalearUtils, $translate, Timeline, Page, $interval, OnlineQuiz, Forum, Quiz, OnlineMarker, Lecture, ModuleModel, CourseModel) {
     $window.scrollTo(0, 0);
+    $scope.course = CourseModel.getSelectedCourse()
+
     Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
     $scope.inclass_player = {}
     $scope.inclass_player.events = {}
@@ -79,7 +81,7 @@ angular.module('scalearAngularApp')
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
-      $scope.module = angular.copy($scope.course.selected_module)
+      $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
       getLectureCharts()
       getQuizCharts()
@@ -110,7 +112,7 @@ angular.module('scalearAngularApp')
             }
             $scope.timeline['lecture'][lec_id]['filtered'].items = $scope.timeline['lecture'][lec_id]['all'].filterByNotType('markers')
           }
-          adjustModuleItems($scope.lectures, $scope.course.selected_module.items, $scope.module.items)
+          adjustModuleItems($scope.lectures, ModuleModel.getSelectedModule().items, $scope.module.items)
           checkDisplayInclass()
         },
         function() {}
@@ -138,7 +140,7 @@ angular.module('scalearAngularApp')
             }
           }
 
-          adjustModuleItems($scope.quizzes, $scope.course.selected_module.items, $scope.module.items)
+          adjustModuleItems($scope.quizzes, ModuleModel.getSelectedModule().items, $scope.module.items)
           checkDisplayInclass()
         },
         function() {}
@@ -150,7 +152,7 @@ angular.module('scalearAngularApp')
     }
 
     var adjustModuleItems = function(obj, from, to) {
-      var ids = scalear_utils.getKeys(obj)
+      var ids = ScalearUtils.getKeys(obj)
       for(var i in from)
         if(ids.indexOf(from[i].id.toString()) != -1)
           to.push(from[i])
@@ -768,7 +770,7 @@ angular.module('scalearAngularApp')
         tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(text) },
+            { "v": ScalearUtils.getHtmlText(text) },
             { "v": correct },
             { "v": tooltip_text },
             { "v": incorrect },
@@ -826,7 +828,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(text)},
+            { "v": ScalearUtils.getHtmlText(text)},
             { "v": self },
             { "v": tooltip_text },
             { "v": style },
@@ -851,7 +853,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": scalear_utils.getHtmlText(data[ind][1]) },
+            { "v": ScalearUtils.getHtmlText(data[ind][1]) },
             { "v": data[ind][0] }
           ]
         }

@@ -7,12 +7,12 @@ angular.module('scalearAngularApp')
    return {
      title: function() { return title; },
      pageName: function(){ return page_name.replace('.', '_'); },
-     setTitle: function(newTitle, subtitle) { 
+     setTitle: function(newTitle, subtitle) {
       page_name = newTitle
      	title = $filter('translate')(newTitle)
      	if(subtitle)
      		title+=subtitle
-     	$rootScope.current = newTitle 
+     	$rootScope.current = newTitle
      	$log.debug($rootScope.current)
      },
      startTour: function(){

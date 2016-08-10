@@ -301,7 +301,7 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
-            VideoInformation.totalDuration =  player_controls.getDuration()
+            VideoInformation.duration =  player_controls.getDuration()
           });
 
         player.on('playing',
@@ -578,7 +578,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', function($rootScope, $log, $window, $cookieStore, $timeout) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel', function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel) {
   return {
     transclude: true,
     restrict: 'E',
@@ -626,14 +626,17 @@ angular.module('scalearAngularApp')
           $(".squarebrackets_right").css("left", ((scope.video.end_time / scope.duration) * 100) + '%')
           $(".repeating_green_pattern").css("left", ((scope.video.start_time / scope.duration) * 100) + '%')
         } else if (scope.editing == 'quiz') {
-          var current_quiz = scope.timeline.items.filter(function(item) {
-            return item.data && item.data.selected
-          })[0]
-          $(".squarebrackets_left").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
-          $(".squarebrackets_right").css("left", ((current_quiz.data.end_time / scope.duration) * 100) + '%')
-          $(".quiz_circle").css("left", ((current_quiz.data.time / scope.duration) * 100) - 0.51 + '%')
-          $(".repeating_grey_pattern").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
-          $(".repeating_orange_pattern").css("left", ((current_quiz.data.time / scope.duration) * 100) + '%')
+          // var current_quiz = scope.timeline.items.filter(function(item) {
+          //   return item.data && item.data.selected
+          // })[0]
+          var current_quiz = VideoQuizModel.getSelectedVideoQuiz()
+          if(current_quiz){
+            $(".squarebrackets_left").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".squarebrackets_right").css("left", ((current_quiz.end_time / scope.duration) * 100) + '%')
+            $(".quiz_circle").css("left", ((current_quiz.time / scope.duration) * 100) - 0.51 + '%')
+            $(".repeating_grey_pattern").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".repeating_orange_pattern").css("left", ((current_quiz.time / scope.duration) * 100) + '%')
+          }
         }
       }
 

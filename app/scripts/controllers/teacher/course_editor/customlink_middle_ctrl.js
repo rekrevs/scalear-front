@@ -1,14 +1,6 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('customLinkMiddleCtrl', ['$stateParams', '$scope',function ($stateParams, $scope) {
-
-   	var unwatch = $scope.$watch('items_obj["customlink"]['+$stateParams.customlink_id+']', function(){
-      if($scope.items_obj && $scope.items_obj["customlink"][$stateParams.customlink_id]){
-        $scope.link=$scope.items_obj["customlink"][$stateParams.customlink_id]
-        unwatch()
-      }
-    })
-}]);
-
-
+  .controller('customLinkMiddleCtrl', ['$stateParams', '$scope', 'ItemsModel', function($stateParams, $scope, ItemsModel) {
+    $scope.link = ItemsModel.getLink($stateParams.customlink_id).setAsSelected()
+  }]);

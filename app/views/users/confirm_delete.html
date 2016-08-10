@@ -10,7 +10,7 @@
                     <div ng-if="!user.saml">
                         <label>
                             <div class="text-left with-tiny-margin-bottom" ><span translate>account.password</span>:</div>
-                            <input type="password" id="del_con_pwd" class="no-margin" ng-model="pass" name="key" placeholder="{{'account.password.current_password'|translate}}" ng-class="{error: form.server_error}" required />
+                            <input type="password" id="del_con_pwd" class="no-margin" ng-model="user.pass" name="key" placeholder="{{'account.password.current_password'|translate}}" ng-class="{error: form.server_error}" required />
                             <small class='error' ng-if='form.submitted && form.key.$error.required' translate="error_message.required"></small>
                             <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
                         </label>

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
   $scope.deleteAccount = function () {
   	if($scope.user.saml || $scope.form.key.$valid){
     	$scope.form.processing=true;
-      User.delete_account({password:$scope.pass}, {}, function() {
+      User.delete_account({password:$scope.user.pass}, {}, function() {
           $rootScope.current_user = null;
           $scope.form.processing=false;
           $modalInstance.close();

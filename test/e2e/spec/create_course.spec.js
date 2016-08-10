@@ -16,7 +16,7 @@ describe("Teacher", function(){
 	})
 	it('should create course', function(){
 		new_course.open()
-		new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 	it('should get the enrollment key and enroll students', function(){
 		course_info.open()

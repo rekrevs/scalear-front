@@ -669,7 +669,7 @@ angular.module('scalearAngularApp')
             "<label class='text-left' translate>editor.explanation</label>" +
           "</div>" +
           "<div class='small-7 left columns no-padding'>" +
-            "<rich-textarea class='no-margin explain' type='text' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
+            "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
           "</div>" +
         "</div>" +
 
@@ -683,7 +683,7 @@ angular.module('scalearAngularApp')
         "<div ng-if=quiz.match_type == 'Match Text'>"+
         "<div class='row'>" +
           "<div class='small-10 columns'>" +
-            "<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />" +
+            "<div><input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' /></div>" +
             "<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "</div>" +
         "</div>" +
@@ -703,7 +703,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin explain' type='text' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
+        "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
         "</div>" +
 
         "</ng-form>"
@@ -733,7 +733,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
+        "<rich-textarea class='no-margin' class='explain'  name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +
@@ -765,7 +765,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
+        "<rich-textarea class='no-margin' class='explain' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +

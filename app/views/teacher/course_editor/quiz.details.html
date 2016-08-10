@@ -15,7 +15,7 @@
 	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.required_module" type="checkbox" ng-model="quiz.required"  ng-change='updateQuiz()'>
 	          <span class="size-12" translate>editor.details.in_order</span>
-	        </span>      
+	        </span>
 	    </td>
 	  </tr>
 	  <tr id="bg_fix" style="height:60px" >
@@ -27,9 +27,9 @@
 	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.graded_module" type="checkbox" ng-model="quiz.graded"  ng-change='updateQuiz()'>
 	          <span class="size-12" translate>editor.details.required</span>
-	        </span>      
+	        </span>
 	    </td>
-	  </tr>		
+	  </tr>
 <!-- 		<tr ng-if="quiz.quiz_type=='quiz'">
 			<td class="right-border"><span translate>editor.details.retries</span>:</td>
 			<td>
@@ -66,10 +66,10 @@
 		<tr>
 			<td class="right-border"><span translate>editor.details.due_date</span></td>
 			<td>
-				<input type="checkbox" ng-model="quiz.due_date_enabled" ng-change="updateDueDate();updateQuiz()" class="no-margin">
+				<input type="checkbox" ng-model="due_date_enabled" ng-change="updateDueDate();updateQuiz()" class="no-margin">
 				<span class="size-12" translate>editor.details.has_due_date</span>
-				<div ng-show="quiz.due_date_enabled">
-					<span ng-hide="quiz.disable_module_due_controls">
+				<div ng-show="due_date_enabled">
+					<span ng-hide="disable_module_due_controls">
 						<input type="checkbox" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
 						<span class="size-12" translate>editor.details.use_module_due</span>
 					</span>

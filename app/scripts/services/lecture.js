@@ -144,7 +144,6 @@ angular.module('scalearAngularApp')
       function validateUrl() {
         var deferred = $q.defer();
         if(VideoInformation.invalidUrl(lecture.url)) {
-          console.log("am i here?");
           deferred.resolve($translate('editor.details.incompatible_video_link'));
         } else {
           validate()

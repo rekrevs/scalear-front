@@ -26,7 +26,6 @@ angular.module('scalearAngularApp')
 
       $scope.course.getAnnouncements()
         .then(function(announcements) {
-          console.log("Ana sa7 wala he?");
           $scope.announcements = announcements
         })
     }

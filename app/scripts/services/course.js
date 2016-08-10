@@ -49,7 +49,6 @@ angular.module('scalearAngularApp')
     var selected_course;
 
     $rootScope.$on("Course:get_current_courses", function() {
-      console.log("DID I COME FROM EVENT?");
       currentCourses();
     })
 

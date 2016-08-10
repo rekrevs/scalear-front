@@ -45,7 +45,6 @@ angular.module('scalearAngularApp')
     }
 
     function getQuiz(id) {
-      console.log(id, items_obj['quiz'])
       return items_obj['quiz'][id]
     }
 

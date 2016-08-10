@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
     }
 
     function getEditableQuestions() {
-      getQuestions()
+      return getQuestions()
         .then(function(data) {
           questions = data.questions
           questions.forEach(function(question, index) {
@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
     return {
       getQuestions: getQuestions,
       getEditableQuestions: getEditableQuestions,
-      getSolvableQuestions:getSolvableQuestions
+      getSolvableQuestions:getSolvableQuestions,
       addQuestion: addQuestion,
       removeQuestion: removeQuestion,
       updateQuestions: updateQuestions,

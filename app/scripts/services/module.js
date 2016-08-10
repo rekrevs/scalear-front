@@ -94,7 +94,6 @@ angular.module('scalearAngularApp')
     }
 
     function create() {
-      console.log("course = ", course);
       return Module.newModule({ course_id: course.id }, {})
         .$promise
         .then(function(data) {

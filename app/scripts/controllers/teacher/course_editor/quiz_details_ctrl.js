@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
       };
 
       $scope.updateDueDate = function() {
-        var enabled = $scope.quiz.due_date_enabled
+        var enabled = $scope.due_date_enabled
         var due_date = new Date($scope.quiz.due_date)
         if(CourseEditor.isDueDateDisabled($scope.quiz.due_date) && enabled)
           var years = -200
@@ -32,8 +32,8 @@ angular.module('scalearAngularApp')
         }
 
         $scope.quiz.due_date = due_date
-        $scope.quiz.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.quiz.due_date)
-        $scope.quiz.due_date_module = !$scope.quiz.disable_module_due_controls && $scope.quiz.due_date_enabled
+        $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.quiz.due_date)
+        $scope.quiz.due_date_module = !$scope.disable_module_due_controls && $scope.due_date_enabled
       }
 
 

@@ -111,7 +111,6 @@ angular.module('scalearAngularApp')
 
     $scope.showOnlineQuiz = function(quiz) {
       $scope.selected_quiz = VideoQuizModel.getSelectedVideoQuiz()
-      console.log("$scope.selected_quiz", $scope.selected_quiz);
       $scope.last_details_state = DetailsNavigator.getStatus()
       if($scope.selected_quiz != quiz) {
         saveOpenEditor()
@@ -305,14 +304,11 @@ angular.module('scalearAngularApp')
     }
 
     function saveOpenEditor() {
-      console.log("saving open editor")
       var promise = $q.when(false)
       if($scope.editing_mode) {
         if($scope.selected_marker) {
-          console.log("promise is marker");
           promise = $scope.saveMarkerBtn($scope.selected_marker, { exit: true })
         } else if($scope.selected_quiz) {
-          console.log("promise is quiz");
           promise = $scope.saveQuizBtn({ exit: true })
         }
       }
@@ -325,7 +321,6 @@ angular.module('scalearAngularApp')
       if($scope.selected_marker != marker) {
         saveOpenEditor()
           .then(function(error) {
-            console.log("error is", error);
             if(!error) {
               $scope.editing_mode = false;
               $timeout(function() {

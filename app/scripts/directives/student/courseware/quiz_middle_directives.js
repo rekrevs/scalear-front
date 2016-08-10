@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
 			studentAnswers:"=",
 			submitted:"=",
 			correct:"=",
-			explanation:"="			
+			explanation:"="
 		},
 		restrict: 'E',
 		templateUrl:'/views/student/lectures/student_quiz.html',
@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
 				return ++scope.index
 			}
 			scope.updateValues= function(ques){
-				scope.values=0;			
+				scope.values=0;
 				if(scope.studentAnswers[ques]=="" && scope.studentAnswers[ques]==null)// ocq/mcq not solved
 					scope.values=0;
 			    else if(typeof(scope.studentAnswers[ques])=="number" || (typeof(scope.studentAnswers[ques])=="string" && scope.studentAnswers[ques].length>0)) //ocq solved
@@ -42,11 +42,10 @@ angular.module('scalearAngularApp')
 			            html:true,
 			            trigger:$rootScope.is_mobile? 'click' : 'hover',
 			            placement:"left"
-					}					
+					}
 			}
-      
+
       		scope.$watch('explanation', function(newval){
-      			console.log('explanation', scope.explanation)
       			if(Object.keys(scope.explanation).length){
       				updateExplanation()
       			}

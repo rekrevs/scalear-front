@@ -19,7 +19,6 @@ angular.module('scalearAngularApp')
         var url = generateYoutubeApiVideoUrl(id)
         $http.jsonp(url).then(function(resp) {
           youtube_video_information = resp.data
-          console.log("youtube_video_information", youtube_video_information)
           deferred.resolve(youtube_video_information)
         })
         .catch(function(resp){

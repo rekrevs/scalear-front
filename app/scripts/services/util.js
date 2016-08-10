@@ -72,7 +72,6 @@ angular.module('scalearAngularApp')
         return obj
       },
       urlWithProtocol: function(url) {
-        console.log("URL is", url);
         if(url)
           return url.match(/^http/) ? url : 'http://' + url;
         else

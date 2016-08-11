@@ -1,16 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope', '$compile', '$translate', '$filter', '$location', 'Module', 'ErrorHandler', '$interval','Lecture','Quiz', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location, Module, ErrorHandler, $interval, Lecture, Quiz) {
+  .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope', '$compile', '$translate', '$filter', '$location', 'Module', 'ErrorHandler', '$interval', 'Lecture', 'Quiz', 'UserSession', 'ScalearUtils', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter, $location, Module, ErrorHandler, $interval, Lecture, Quiz, UserSession, ScalearUtils) {
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
     $rootScope.subheader_message = $translate("dashboard.whats_new")
     $scope.eventSources = [];
-    $scope.filtered_events = [];
-    $scope.calendar_year = []
-    $scope.monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"], // Names of months for drop-down and formatting
+    var calendar_year_cache = []
+    var current_user = null
 
+    UserSession.getCurrentUser()
+      .then(function(user) {
+        current_user = user
+        getCalendar()
+        getAnnouncements();
+        // getMonthData(getDateString())
+      })
 
     $scope.toggleLargeCalendar = function() {
       $scope.large_calendar = !$scope.large_calendar
@@ -18,201 +24,182 @@ angular.module('scalearAngularApp')
         resizeCalendar()
       })
     }
-    var changeLang = function() {
-      if($scope.eventSources && $scope.myCalendar) {
-        angular.element($scope.myCalendar.children()).remove();
-        var obj = ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv;
-        obj.eventSources = $scope.eventSources;
-        $scope.myCalendar.fullCalendar(obj);
-      }
-    }
 
     $scope.preventDropDownHide = function(event) {
       event.preventDefault()
       event.stopPropagation()
     }
 
-    var resizeCalendar = function() {
+    function resizeCalendar() {
       angular.element('#studentCalendar').fullCalendar('render');
     }
 
-    $scope.eventRender = function(event, element) {
+    function getDateString(date, val) {
+      var d = date? new Date(date) :  new Date()
+      d.setMonth((d.getMonth() % 12) + (val || 0))
+      return d.toLocaleString("en-us", { month: "long", year: "numeric" })
+    }
+
+    function eventRender(event, element) {
       $(".tooltip.tip-top").remove()
       element.attr({ 'tooltip-html-unsafe': event.tooltip_string, 'tooltip-append-to-body': true });
       $compile(element)($scope);
     };
 
-
-    var getCalendar = function(year) {
-      Dashboard.getDashboard({ year: JSON.stringify(year) }, function(data) {
-        $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + data.key
-        $scope.calendar_pop = {
-          content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
-          html: true,
-          placement: 'right'
+    function calendarSetup() {
+      $scope.uiConfig = {
+        calendar: {
+          header: {
+            right: 'today prev,next',
+            left: 'title'
+          },
+          eventRender: eventRender,
+          eventDrop: eventDrop,
+          firstDay: current_user.first_day
         }
+      };
 
-        $scope.uiConfig = {
-          calendar: {
-            header: {
-              right: 'today prev,next',
-              left: 'title'
-            },
-            eventRender: $scope.eventRender
+      if(current_user.roles[0].id != 2) {
+        $scope.uiConfig.calendar.editable = true
+      }
+
+      angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
+    }
+
+    function viewRender(view, element) {
+       getMonthData(view.title)
+    }
+
+    function getMonthData(month_title) {
+      var to_retrive = []
+      var month_length = 3
+      for(var i = -1; i < month_length - 1; i++) {
+        var month = getDateString(month_title, i)
+        if(calendar_year_cache.indexOf(month) == -1) {
+          to_retrive.push(month)
+          calendar_year_cache.push(month)
+        }
+      }
+      if(to_retrive.length) {
+        getCalendar(to_retrive)
+      }
+    }
+
+    function eventDrop(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+      var group = { "due_date": event.start }
+      if(event.lecture_id) {
+        Lecture.update({
+            course_id: event.course_id,
+            lecture_id: event.lecture_id
+          }, {
+            lecture: group
+          },
+          function(response) {
+            responseSucces(response)
+          },
+          function(response) {
+            responseFail(response, revertFunc, event)
           }
-        };
-        if($rootScope.current_user.roles[0].id != 2) {
-          $scope.uiConfig.calendar.editable = true
-        }
-        angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
+        );
+      } else if(event.quiz_id) {
+        Quiz.update({
+            course_id: event.course_id,
+            quiz_id: event.quiz_id
+          }, {
+            quiz: group
+          },
+          function(response) {
+            responseSucces(response)
+          },
+          function(response) {
+            responseFail(response, revertFunc, event)
+          }
+        );
+
+      } else {
+        Module.update({
+            course_id: event.course_id,
+            module_id: event.group_id
+          }, {
+            group: group
+          },
+          function(response) {
+            responseSucces(response)
+          },
+          function(response) {
+            responseFail(response, revertFunc, event)
+          }
+        );
+      }
+    }
+
+    function responseSucces(response) {
+      if(response.notice) {
+        ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 4000, "success");
+      }
+    }
+
+    function responseFail(response, revertFunc, item) {
+      revertFunc()
+      if(response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
+        var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
+      } else {
+        var message = Object.keys(response.data.errors)[0].replace("_", " ") + " " + response.data.errors[Object.keys(response.data.errors)[0]][0]
+      }
+      ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 4000, "error");
+    }
+
+    function setupPopover(key) {
+      $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + key
+      $scope.calendar_pop = {
+        content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
+        html: true,
+        placement: 'right'
+      }
+    }
+
+    function getCalendar() {
+      Dashboard.getDashboard({}, function(data) {
+        calendarSetup()
+        setupPopover(data.key)
         $scope.calendar = data;
         for(var element in $scope.calendar.events) {
-          $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
-            // $scope.calendar.events[element].title = $scope.calendar.events[element].course_short_name +" : "+ $scope.calendar.events[element].title + ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:mm');
-          $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
-          // $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+
-          $scope.calendar.events[element].title = $scope.calendar.events[element].course_short_name + ": " + $scope.calendar.events[element].item_title
+          var event = $scope.calendar.events[element]
+          event.start = new Date(event.start)
+          event.item_title = event.title.replace(" due", "");
+          event.title = event.course_short_name + ": " + event.item_title
+          event.tooltip_string = event.title + "<br />" + $translate('events.due') + " " + $translate('global.at') + " " + $filter('date')(event.start, 'HH:mm')
 
-          $scope.calendar.events[element].tooltip_string = $scope.calendar.events[element].title + "<br />" + $translate('events.due') + " " + $translate('global.at') + " " + $filter('date')($scope.calendar.events[element].start, 'HH:mm')
-          if($scope.calendar.events[element].status == 1)
-            $scope.calendar.events[element].tooltip_string += "<br />" + $translate("events.completed_on_time")
-          else if($scope.calendar.events[element].status == 2)
-            $scope.calendar.events[element].tooltip_string += "<br />" + $translate("events.completed") + " " + $scope.calendar.events[element].days + " " + $translate("time.days") + " " + $translate("events.late")
-          if($rootScope.current_user.roles[0].id == 2) {
-            if($scope.calendar.events[element].quiz_id)
-              $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", { course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, quiz_id: $scope.calendar.events[element].quiz_id }, { absolute: true })
-            else if($scope.calendar.events[element].lecture_id)
-              $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", { course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, lecture_id: $scope.calendar.events[element].lecture_id }, { absolute: true })
-            else
-              $scope.calendar.events[element].url = $state.href("course.module.courseware", { course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id }, { absolute: true })
-          } else
-            $scope.calendar.events[element].url = $state.href("course.module.progress", { course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id }, { absolute: true })
-
+          if(event.status == 1) {
+            event.tooltip_string += "<br />" + $translate("events.completed_on_time")
+          } else if(event.status == 2) {
+            event.tooltip_string += "<br />" + $translate("events.completed") + " " + event.days + " " + $translate("time.days") + " " + $translate("events.late")
+          }
+          var params = { course_id: event.course_id, module_id: event.group_id }
+          var url = "course.module"
+          if(current_user.roles[0].id == 2) {
+            url += ".courseware"
+            if(event.quiz_id) {
+              url += ".quiz"
+              params.quiz_id = event.quiz_id
+            } else if(event.lecture_id) {
+              url += ".lecture"
+              params.lecture_id = event.lecture_id
+            }
+          } else {
+            url = ".progress"
+          }
+          event.url = $state.href(url, params, { absolute: true })
         }
         $scope.calendar.className = ["truncate"]
-        $scope.uiConfig.calendar.eventDrop = function(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
-          var group = { "due_date": event.start }
-          if(event.lecture_id){
-              Lecture.update({
-                course_id: event.course_id,
-                lecture_id: event.lecture_id
-              }, {
-                lecture: group
-              },
-              function(response) {
-                response_succes(response)
-              },
-              function(response) {
-                response_fail(response,revertFunc,event)
-              }
-            );
-          }
-          else if(event.quiz_id){
-              Quiz.update({
-                course_id: event.course_id,
-                quiz_id: event.quiz_id
-              }, {
-                quiz: group
-              },
-              function(response) {
-                response_succes(response)
-              },
-              function(response) {
-                response_fail(response,revertFunc,event)
-              }
-            );
-
-          }
-          else{
-            Module.update({
-                course_id: event.course_id,
-                module_id: event.group_id
-              }, {
-                group: group
-              },
-              function(response) {
-                response_succes(response)
-              },
-              function(response) {
-                response_fail(response,revertFunc,event)
-              }
-            );
-          }
-
-
-        }
-
-        String.prototype.capitalizeFirstLetter = function() {
-            return this.charAt(0).toUpperCase() + this.slice(1);
-        }
-
-        var response_succes =  function(response) {
-              if(response.notice) {
-                ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 2000, "success");
-              }
-            }
-
-        var response_fail = function(response,revertFunc,item) {
-              revertFunc()
-              $rootScope.show_alert = "error";
-              if (response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time"){
-                var message =  Object.keys(response.data.errors)[0].replace("_"," ").capitalizeFirstLetter()+"("+response.data.appearance_time+") "+response.data.errors[Object.keys(response.data.errors)[0]][0]
-              }
-              else{
-                var message = Object.keys(response.data.errors)[0].replace("_"," ")+" "+response.data.errors[Object.keys(response.data.errors)[0]][0]
-              }
-              ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 4000, "error");
-            }
-
-
-        $scope.uiConfig.calendar.viewRender = function(view, element) {
-        var months_to_get = []
-        var month_year = []
-        var current_month = $scope.monthNames.indexOf(view.title.split(" ")[0])
-        var current_year = parseInt(view.title.split(" ")[1])
-        months_to_get.push((current_month-1)%12 + 1)
-        months_to_get.push((current_month)%12 + 1)
-        months_to_get.push((current_month+1)%12 + 1)
-        if(!($scope.calendar_year.indexOf(view.title) >= 0)) {
-          month_year.push(view.title)
-          $scope.calendar_year.push(view.title)
-        }
-        if(months_to_get[0] == 0){
-          var prev_month = $scope.monthNames[11]+" "+(current_year-1).toString()
-        }
-        else{
-          var prev_month = $scope.monthNames[(months_to_get[0]-1)]+" "+current_year.toString()
-        }
-        if(!($scope.calendar_year.indexOf(prev_month) >= 0)) {
-          month_year.push(prev_month)
-          $scope.calendar_year.push(prev_month)
-        }
-
-        if(months_to_get[2] == 1){
-          var next_month = $scope.monthNames[0]+" "+((current_year+1)).toString()
-        }
-        else{
-          var next_month = $scope.monthNames[(months_to_get[2]-1)]+" "+current_year.toString()
-        }
-        if(!($scope.calendar_year.indexOf(next_month) >= 0)) {
-          month_year.push(next_month)
-          $scope.calendar_year.push(next_month)
-        }
-        if (month_year.length !=0) {getCalendar(month_year)}
-
-        }
-
-        $scope.uiConfig.calendar.firstDay = $rootScope.current_user.first_day;
-        $scope.eventSources.push($scope.calendar);
+        $scope.eventSources.push({events:$scope.calendar.events});
         $timeout(function() {
-          // changeLang()
           resizeCalendar()
         }, 300)
       })
     }
 
-
-    var getAnnouncements = function() {
+    function getAnnouncements() {
       NewsFeed.index({}, function(data) {
         $scope.events = []
         $scope.latest_announcements = data.latest_announcements
@@ -223,7 +210,7 @@ angular.module('scalearAngularApp')
             resizeCalendar()
           }, 300)
         })
-      }, function() {})
+      })
     }
 
     $scope.exportCalendar = function() {
@@ -234,13 +221,5 @@ angular.module('scalearAngularApp')
       }
       cal.download("calendar");
     }
-
-    getAnnouncements();
-    var monthyear = new Date()
-    monthyear =  $scope.monthNames[(monthyear.getMonth+1)]+" "+monthyear.getFullYear().toString()
-    getCalendar(monthyear);
-    $scope.calendar_year.push(monthyear )
-
-
 
   }]);

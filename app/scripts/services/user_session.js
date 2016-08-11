@@ -3,11 +3,12 @@
 angular.module('scalearAngularApp')
   .factory('UserSession', ['$rootScope', 'User', 'Home', '$q', '$log', '$translate', function($rootScope, User, Home, $q, $log, $translate) {
 
-    var current_user = null
+    var current_user = null;
+    var deferred_current_user = null;
 
     function getCurrentUser(argument) {
-      var deferred = $q.defer();
-      if(!current_user) {
+      if(!deferred_current_user) {
+        deferred_current_user = $q.defer();
         User.getCurrentUser()
           .$promise
           .then(function(data) {
@@ -24,11 +25,10 @@ angular.module('scalearAngularApp')
               user.shared = data.shared
               user.accepted_shared = data.accepted_shared
               setCurrentUser(user)
-              deferred.resolve(user)
+              deferred_current_user.resolve(user)
               return getNotifications()
-
             } else {
-              deferred.reject()
+              deferred_current_user.reject()
             }
           })
           .then(function(response) {
@@ -37,10 +37,8 @@ angular.module('scalearAngularApp')
               current_user.shared_items = response.shared_items
             }
           })
-      } else {
-        deferred.resolve(current_user)
       }
-      return deferred.promise;
+      return deferred_current_user.promise;
     }
 
     function getNotifications() {
@@ -54,6 +52,7 @@ angular.module('scalearAngularApp')
 
     function removeCurrentUser() {
       current_user = null
+      deferred_current_user = null
       $rootScope.current_user = null
     }
 

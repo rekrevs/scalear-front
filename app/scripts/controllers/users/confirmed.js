@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
     }
     $scope.privacyPopover = function() {
       ngDialog.openConfirm({
-          template: 'views/privacy_popover.html',
+          template: '/views/privacy_popover.html',
           className: 'ngdialog-theme-default dialogwidth800',
           showClose: false,
           scope: $scope

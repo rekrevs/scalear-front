@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
             for(var item_type in quiz.requirements) {
               for(var index in quiz.requirements[item_type]) {
                 var item = ItemsModel.getById(quiz.requirements[item_type][index], item_type)
-                if(!item.is_done) {
+                if(!item.done) {
                   $scope.passed_requirments = false
                 }
               }

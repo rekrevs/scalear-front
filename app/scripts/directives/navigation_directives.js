@@ -194,8 +194,8 @@ angular.module('scalearAngularApp')
             time = 700
           }
           $timeout(function() {
-            if(!item.is_done) {
-              item.is_done = true
+            if(!item.done) {
+              item.done = true
               item.blink = true
               $timeout(function() {
                 item.blink = false
@@ -244,7 +244,7 @@ angular.module('scalearAngularApp')
                 ContentNavigator.close()
               })
               $state.go('course.module.student_inclass', { 'module_id': module.id })
-            } else if((module.lectures.length + module.quizzes.length) > 0) {
+            } else if(module.sub_items_size > 0) {
               Module.getLastWatched({
                   course_id: $stateParams.course_id,
                   module_id: module.id
@@ -254,8 +254,8 @@ angular.module('scalearAngularApp')
                     $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
                     scope.currentitem = { id: data.last_watched }
                   } else {
-                    $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': module.quizzes[0].id })
-                    scope.currentitem = { id: module.quizzes[0].id }
+                    $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': data.first_quiz_id })
+                    scope.currentitem = { id: data.first_quiz_id }
                   }
                 })
             } else

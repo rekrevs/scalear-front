@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
     }
 
     function getSolvableQuestions() {
-      getQuestions()
+      return getQuestions()
         .then(function(data) {
           questions = data.questions
           return data

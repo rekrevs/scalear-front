@@ -162,7 +162,7 @@ angular.module('scalearAngularApp')
               for(var item_type in lec.requirements) {
                 for(var index in lec.requirements[item_type]) {
                   var item = ItemsModel.getById(lec.requirements[item_type][index], item_type)
-                  if(!item.is_done){
+                  if(!item.done){
                     $scope.passed_requirments = false
                   }
                 }
@@ -205,7 +205,7 @@ angular.module('scalearAngularApp')
         //     $scope.total_duration-=1
       var duration_milestones = [0, 25, 75]
       var quiz_time_offset = 0
-      $scope.lecture.online_quizzes.forEach(function(quiz) {
+      $scope.lecture.video_quizzes.forEach(function(quiz) {
         if(quiz.time >= $scope.total_duration - 2) {
           quiz.time = ($scope.total_duration - 2) + quiz_time_offset
           quiz_time_offset += 0.2
@@ -244,7 +244,7 @@ angular.module('scalearAngularApp')
         })
       })
 
-      $scope.lecture.annotated_markers.forEach(function(marker) {
+      $scope.lecture.annotations.forEach(function(marker) {
         if(marker.annotation) {
           $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
             showAnnotation(marker.annotation)
@@ -286,9 +286,10 @@ angular.module('scalearAngularApp')
         }, { percent: milestone },
         function(data) {
           $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-          if(data.lecture_done && !lecture.is_done) {
+          if(data.lecture_done && !lecture.done) {
+            console.log(lecture)
             lecture.markDone()
-            $scope.timeline['lecture'][lecture.id].meta.is_done = data.lecture_done
+            // $scope.timeline['lecture'][lecture.id].meta.done = data.lecture_done
           } else if(milestone == 100)
             $scope.not_done_msg = true
           $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
@@ -402,7 +403,7 @@ angular.module('scalearAngularApp')
 
     var checkIfQuizSolved = function() {
       if($scope.quiz_mode) {
-        if(!$scope.selected_quiz.is_quiz_solved && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
+        if(!$scope.selected_quiz.solved_quiz && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
           returnToQuiz($scope.selected_quiz.time)
         else {
           if($scope.display_review_message) {
@@ -683,7 +684,7 @@ angular.module('scalearAngularApp')
     var displayResult = function(data) {
       if(data.msg != "Empty") { // he chose sthg
         if($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
-          $scope.selected_quiz.is_quiz_solved = true;
+          $scope.selected_quiz.solved_quiz = true;
           if($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey')
             var sub_message = $rootScope.is_mobile? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           showNotification('lectures.messages.thank_you_answer', sub_message || "")
@@ -709,7 +710,7 @@ angular.module('scalearAngularApp')
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           showNotification(verdict, sub_message, middle_msg)
 
-          $scope.selected_quiz.is_quiz_solved = true;
+          $scope.selected_quiz.solved_quiz = true;
         }
         $scope.display_review_message = true
         var percent_view = Math.round((($scope.lecture_player.controls.getTime() / $scope.total_duration) * 100))
@@ -749,9 +750,9 @@ angular.module('scalearAngularApp')
     }
 
     var getNextQuizTime = function(time, max_time) {
-      for(var i in $scope.lecture.online_quizzes) {
-        if($scope.lecture.online_quizzes[i].time > time && $scope.lecture.online_quizzes[i].time <= time + max_time) {
-          return $scope.lecture.online_quizzes[i].time
+      for(var i in $scope.lecture.video_quizzes) {
+        if($scope.lecture.video_quizzes[i].time > time && $scope.lecture.video_quizzes[i].time <= time + max_time) {
+          return $scope.lecture.video_quizzes[i].time
         }
       }
     }

@@ -35,7 +35,7 @@
 							</li>
 							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass)}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" >
 								<div bo-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
-									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
+									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.done}" ></i>
 									<i bo-if="!(item.appearance_time | visible) && !item.inclass" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}"></i>
 									<i bo-if="item.class_name == 'lecture' && !item.inclass" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
 									<i bo-if="item.class_name == 'lecture' && item.inclass" class="fi-comment-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>

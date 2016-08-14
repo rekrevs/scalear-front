@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('coursewareCtrl', ['$scope', '$stateParams', '$log', 'Module', 'Timeline', 'Page', '$state', 'ModuleModel', function($scope, $stateParams, $log, Module, Timeline, Page, $state, ModuleModel) {
+  .controller('coursewareCtrl', ['$scope', '$stateParams', '$log', 'Module', 'Timeline', 'Page', '$state', 'ModuleModel', 'ItemsModel', function($scope, $stateParams, $log, Module, Timeline, Page, $state, ModuleModel, ItemsModel) {
 
     Page.setTitle('navigation.lectures');
     Page.startTour();
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
       $scope.module_items = module.items
       Module.getStudentModule({ course_id: $stateParams.course_id, module_id: module.id },
         function(data) {
-          $scope.module_lectures = JSON.parse(data.module_lectures);
+          $scope.module_lectures = data.module_lectures;
 
           // arrange timeline
           $scope.timeline = {}
@@ -20,57 +20,57 @@ angular.module('scalearAngularApp')
           for(var l in $scope.module_lectures) {
             var lec = $scope.module_lectures[l]
             $scope.timeline['lecture'][lec.id] = new Timeline()
-            $scope.timeline['lecture'][lec.id].meta = lec
+            $scope.timeline['lecture'][lec.id].meta = angular.extend(lec, ItemsModel.getLecture(lec.id))
 
             // remove quizzes with no answers - else - add it to timeline.
-            for(var element = lec.online_quizzes.length - 1; element >= 0; element--) {
-              if(lec.online_quizzes[element].online_answers.length == 0 && lec.online_quizzes[element].question_type != "Free Text Question")
-                lec.online_quizzes.splice(element, 1);
+            for(var element = lec.video_quizzes.length - 1; element >= 0; element--) {
+              if(lec.video_quizzes[element].online_answers.length == 0 && lec.video_quizzes[element].question_type != "Free Text Question")
+                lec.video_quizzes.splice(element, 1);
               else
-                $scope.timeline['lecture'][lec.id].add(lec.online_quizzes[element].time, "quiz", lec.online_quizzes[element])
+                $scope.timeline['lecture'][lec.id].add(lec.video_quizzes[element].time, "quiz", lec.video_quizzes[element])
             }
 
-            for(var type in lec.current_confused) {
-              $scope.timeline['lecture'][lec.id].add(lec.current_confused[type].time, "confused", lec.current_confused[type])
+            for(var type in lec.user_confused) {
+              $scope.timeline['lecture'][lec.id].add(lec.user_confused[type].time, "confused", lec.user_confused[type])
             }
 
             // will be the same timeline later to be able to put in one and filter. (so both will be lecture, no discussion)
-            for(var type in lec.posts_public) {
-              $scope.timeline['lecture'][lec.id].add(lec.posts_public[type].post.time, "discussion", lec.posts_public[type].post)
+            for(var type in lec.posts) {
+              $scope.timeline['lecture'][lec.id].add(lec.posts[type].post.time, "discussion", lec.posts[type].post)
             }
 
-            for(var i in lec.notes) {
-              $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
+            for(var i in lec.lecture_notes) {
+              $scope.timeline['lecture'][lec.id].add(lec.lecture_notes[i].time, "note", lec.lecture_notes[i])
             }
-            for(var i in lec.titled_markers) {
-              $scope.timeline['lecture'][lec.id].add(lec.titled_markers[i].time, "marker", lec.titled_markers[i])
+            for(var i in lec.title_markers) {
+              $scope.timeline['lecture'][lec.id].add(lec.title_markers[i].time, "marker", lec.title_markers[i])
             }
           }
           $log.debug("timeline", $scope.timeline)
-          showModuleCourseware(module)
+          // showModuleCourseware(module)
         }
       );
     }
 
     init();
 
-    var showModuleCourseware = function(module) {
-      if(module.items.length) {
-        if(!$state.params.lecture_id && !$state.params.quiz_id) {
-          Module.getLastWatched({
-              course_id: $stateParams.course_id,
-              module_id: module.id
-            },
-            function(data) {
-              if(data.last_watched != -1) {
-                $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
-              } else {
-                $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': module.quizzes[0].id })
-              }
-            })
-        }
-      } else
-        $state.go('course.course_information')
-    }
+    // var showModuleCourseware = function(module) {
+    //   if(module.items.length) {
+    //     if(!$state.params.lecture_id && !$state.params.quiz_id) {
+    //       Module.getLastWatched({
+    //           course_id: $stateParams.course_id,
+    //           module_id: module.id
+    //         },
+    //         function(data) {
+    //           if(data.last_watched != -1) {
+    //             $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
+    //           } else {
+    //             $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': module.quizzes[0].id })
+    //           }
+    //         })
+    //     }
+    //   } else
+    //     $state.go('course.course_information')
+    // }
 
   }]);

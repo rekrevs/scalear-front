@@ -20,16 +20,16 @@ angular.module('scalearAngularApp')
 			var calculateDone = function(){
 				if(optional){
 					var done = function(item){
-						return (item.is_done && item.class_name!="customlink")
+						return (item.done && item.class_name!="customlink")
 					}
 				}
 				else{
 					var done = function(item){
-						return (item.is_done && item.graded)
+						return (item.done && item.graded)
 					}
 				}
 				return scope.module().items.filter(done).length
-			}			
+			}
 
 			scope.$on('$destroy', function(){
 				unwatch()

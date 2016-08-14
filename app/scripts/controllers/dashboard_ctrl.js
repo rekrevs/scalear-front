@@ -58,10 +58,7 @@ angular.module('scalearAngularApp')
           firstDay: current_user.first_day
         }
       };
-
-      if(current_user.roles[0].id != 2) {
-        $scope.uiConfig.calendar.editable = true
-      }
+      $scope.uiConfig.calendar.editable = true
 
       angular.extend($scope.uiConfig.calendar, ($scope.current_lang == "en") ? full_calendar_en : full_calendar_sv)
     }
@@ -177,7 +174,7 @@ angular.module('scalearAngularApp')
           }
           var params = { course_id: event.course_id, module_id: event.group_id }
           var url = "course.module"
-          if(current_user.roles[0].id == 2) {
+          if(event.role == 2) {
             url += ".courseware"
             if(event.quiz_id) {
               url += ".quiz"
@@ -186,6 +183,7 @@ angular.module('scalearAngularApp')
               url += ".lecture"
               params.lecture_id = event.lecture_id
             }
+            event.editable = false
           } else {
             url = ".progress"
           }

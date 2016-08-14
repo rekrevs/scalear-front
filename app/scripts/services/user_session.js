@@ -29,6 +29,7 @@ angular.module('scalearAngularApp')
               return getNotifications()
             } else {
               deferred_current_user.reject()
+              removeCurrentUser()
             }
           })
           .then(function(response) {
@@ -36,6 +37,9 @@ angular.module('scalearAngularApp')
               current_user.invitation_items = response.invitations
               current_user.shared_items = response.shared_items
             }
+          })
+          .catch(function() {
+            removeCurrentUser()
           })
       }
       return deferred_current_user.promise;

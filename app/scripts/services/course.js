@@ -62,6 +62,9 @@ angular.module('scalearAngularApp')
             setCourseRole(resp.role)
             deferred_role.resolve(resp.role)
           })
+          .catch(function() {
+            removeCourseRole()
+          })
       }
       return deferred_role.promise;
     }
@@ -125,9 +128,10 @@ angular.module('scalearAngularApp')
       return Course.getCourseware({ course_id: id })
         .$promise
         .then(function(data) {
-          data.course = JSON.parse(data.course);
+          console.log('student course', data)
+          // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          $rootScope.$broadcast("Course:set_modules", data.course.groups)
+          $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })
       return deferred.promise;

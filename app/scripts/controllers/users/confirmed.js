@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
     $rootScope.subheader_message = $translate("intro.title")
     UserSession.getCurrentUser()
       .then(function(user) {
-        $scope.current_user = current_user
+        $scope.current_user = user
       })
     $scope.intro_url = scalear_api.teacher_welcome_video
 

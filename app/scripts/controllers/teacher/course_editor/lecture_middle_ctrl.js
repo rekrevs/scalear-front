@@ -493,7 +493,7 @@ angular.module('scalearAngularApp')
       })
 
       $scope.$on("start_trim_video", function() {
-        startTimeMode()
+        startTrimMode()
       })
 
       $scope.$on("close_trim_video", function() {

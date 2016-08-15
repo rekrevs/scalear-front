@@ -1,6 +1,6 @@
 'use strict';
 angular.module('scalearAngularApp')
-  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ValidateTime', 'VideoInformation', 'UserSession', function($log, $translate, Forum, $state, $rootScope, User, $filter, ValidateTime, VideoInformation, UserSession) {
+  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ScalearUtils', 'VideoInformation', 'UserSession', function($log, $translate, Forum, $state, $rootScope, User, $filter, ScalearUtils, VideoInformation, UserSession) {
     return {
       restrict: "E",
       templateUrl: "/views/forum/question_block.html",
@@ -11,17 +11,21 @@ angular.module('scalearAngularApp')
       link: function(scope, element, attrs) {
         UserSession.getCurrentUser().then(function(user) {
           scope.current_user = user
+          init()
         })
-        scope.preview_as_student = $rootScope.preview_as_student
-        scope.ask_button_clicked = false
-        scope.choices = [{ text: $translate('discussion.private_discussion'), value: 0 }, { text: $translate('discussion.public_discussion'), value: 1 }];
-        scope.privacy = scope.choices[scope.current_user.discussion_pref];
-        scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
-        $('.text_block').focus();
 
-        if(scope.item.data && scope.item.data.isEdit) {
-          scope.privacy = (scope.item.data.privacy == 0) ? scope.choices[0] : scope.choices[1]
-          scope.current_question = scope.item.data.content
+        function init() {
+          scope.preview_as_student = $rootScope.preview_as_student
+          scope.ask_button_clicked = false
+          scope.choices = [{ text: $translate('discussion.private_discussion'), value: 0 }, { text: $translate('discussion.public_discussion'), value: 1 }];
+          scope.privacy = scope.choices[scope.current_user.discussion_pref];
+          scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
+          $('.text_block').focus();
+
+          if(scope.item.data && scope.item.data.isEdit) {
+            scope.privacy = (scope.item.data.privacy == 0) ? scope.choices[0] : scope.choices[1]
+            scope.current_question = scope.item.data.content
+          }
         }
 
         var arrayToSeconds = function(a) {
@@ -34,10 +38,10 @@ angular.module('scalearAngularApp')
               scope.current_user.discussion_pref = scope.privacy.value;
               User.alterPref({}, { privacy: scope.privacy.value })
             }
-            scope.time_error = ValidateTime(item.time, true, VideoInformation.duration)
+            scope.time_error = ScalearUtils.validateTime(item.time, VideoInformation.duration)
             if(!(scope.time_error)) {
               scope.ask_button_clicked = true
-              item.time = arrayToSeconds(item.time.split(':'))
+              item.time = ScalearUtils.arrayToSeconds(item.time.split(':'))
               Forum.createPost({
                   post: {
                     content: scope.current_question,
@@ -65,17 +69,10 @@ angular.module('scalearAngularApp')
 
         scope.updateQuestion = function(question) {
           if(scope.current_question && scope.current_question.length && scope.current_question.trim() != "") {
-
-            scope.time_error = ValidateTime(question.time, true, VideoInformation.duration)
-
-
-
+            scope.time_error = ScalearUtils.validateTime(question.time, VideoInformation.duration)
             if(!(scope.time_error)) {
-
-
-
               scope.ask_button_clicked = true
-              question.time = arrayToSeconds(question.time.split(':'))
+              question.time = ScalearUtils.arrayToSeconds(question.time.split(':'))
               Forum.updatePost({ post_id: question.data.id }, {
                   content: scope.current_question,
                   time: question.time
@@ -195,10 +192,10 @@ angular.module('scalearAngularApp')
 
         scope.deleteComment = function(comment) {
           Forum.deleteComment({ comment_id: comment.comment.id, post_id: scope.item.data.id }, function(response) {
-              var index = scope.item.data.comments.indexOf(comment);
-              scope.item.data.comments.splice(index, 1);
-              scope.error_message = null
-            })
+            var index = scope.item.data.comments.indexOf(comment);
+            scope.item.data.comments.splice(index, 1);
+            scope.error_message = null
+          })
         }
 
         scope.reply = function(discussion, current_reply) {

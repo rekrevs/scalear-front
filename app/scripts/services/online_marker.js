@@ -51,6 +51,7 @@ angular.module('scalearAngularApp')
             lecture_id: lecture.id,
             time: insert_time,
           })
+          .$promise
           .then(function(data) {
             var marker = createInstance(data.marker)
             $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", marker.time, 'marker', marker)

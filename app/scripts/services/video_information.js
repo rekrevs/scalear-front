@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .factory('VideoInformation', ['$http', '$q', function($http, $q) {
 
-    var youtube_video_information = null
+    var youtube_video_information = {}
 
     function generateYoutubeApiVideoUrl(id) {
       return "https://www.googleapis.com/youtube/v3/videos?id=" +
@@ -15,17 +15,18 @@ angular.module('scalearAngularApp')
 
     function requestInfoFromYoutube(id) {
       var deferred = $q.defer();
-      if(!youtube_video_information) {
-        var url = generateYoutubeApiVideoUrl(id)
+      var url = generateYoutubeApiVideoUrl(id)
+      if(!youtube_video_information[url]) {
         $http.jsonp(url).then(function(resp) {
-          youtube_video_information = resp.data
-          deferred.resolve(youtube_video_information)
+          youtube_video_information[url] = resp.data
+          deferred.resolve(youtube_video_information[url])
         })
         .catch(function(resp){
+          youtube_video_information = {}
           deferred.reject(resp)
         })
       } else {
-        deferred.resolve(youtube_video_information)
+        deferred.resolve(youtube_video_information[url])
       }
       return deferred.promise;
     }

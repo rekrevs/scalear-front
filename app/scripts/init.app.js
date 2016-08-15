@@ -115,16 +115,20 @@ angular.module('scalearAngularApp')
                 })
             }
             if(to.name === 'home') {
-              $state.go("dashboard")
-            } else if(to.name === 'confirmed') {
-              if(from.name === 'show_confirmation') {
-                $state.go("confirmed")
-              } else {
+              $state.go('course_list');
+              // $state.go("dashboard")
+            }
+            if(to.name === 'confirmed' && current_user.intro_watched) {
+              // if(from.name === 'show_confirmation') {
+              //   $state.go("confirmed")
+              // }
+              // else {
                 $state.go("home");
                 ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
                 URLInformation.redirect = $state.href(to, toParams)
-              }
-            } else if(!current_user.intro_watched && to.name !== "edit_account") {
+              // }
+            }
+            else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
               $state.go('confirmed')
               s = 1;
             } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page

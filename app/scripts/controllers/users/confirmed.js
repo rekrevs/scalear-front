@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
       .then(function(user) {
         $scope.current_user = user
+        $scope.privacyPopover();
       })
     $scope.intro_url = scalear_api.teacher_welcome_video
 
@@ -32,12 +33,15 @@ angular.module('scalearAngularApp')
       completion['intro_watched'] = true;
       User.updateCompletionWizard({ id: $scope.current_user.id }, { completion_wizard: completion },
         function() {
-          $scope.current_user.completion_wizard = {}
-          $scope.current_user.completion_wizard.intro_watched = true;
+          UserSession.allowRefetchOfUser()
+          // $scope.current_user.completion_wizard = {}
+          // $scope.current_user.completion_wizard.intro_watched = true;
+
           $state.go('course_list');
         }
       );
     }
+
     $scope.privacyPopover = function() {
       ngDialog.openConfirm({
           template: '/views/privacy_popover.html',
@@ -57,7 +61,7 @@ angular.module('scalearAngularApp')
     }
 
 
-    $scope.privacyPopover();
+
 
 
   }]);

@@ -13,8 +13,8 @@ angular.module('scalearAngularApp')
         function() {
           $timeout(function() {
             $scope.sending = false;
-            $rootScope.$emit('$stateChangeStart', { name: 'confirmed' }, {}, { name: 'show_confirmation' })
-
+            $state.go("confirmed")
+            // $rootScope.$emit('$stateChangeStart', { name: 'confirmed' }, {}, { name: 'show_confirmation' })
           }, 2500)
         },
         function(data) {

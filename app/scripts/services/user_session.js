@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
               user.shared = data.shared
               user.accepted_shared = data.accepted_shared
               setCurrentUser(user)
-              deferred_current_user.resolve(user)
+              deferred_current_user.resolve(current_user)
               return getNotifications()
             } else {
               deferred_current_user.reject()
@@ -60,6 +60,10 @@ angular.module('scalearAngularApp')
       $rootScope.current_user = null
     }
 
+    function allowRefetchOfUser(){
+      deferred_current_user = null
+    }
+
     function logout() {
       return User.signOut({}, function() {
         removeCurrentUser()
@@ -68,7 +72,8 @@ angular.module('scalearAngularApp')
 
     return {
       getCurrentUser: getCurrentUser,
-      logout: logout
+      logout: logout,
+      allowRefetchOfUser:allowRefetchOfUser
     };
 
 

@@ -93,6 +93,7 @@ angular.module('scalearAngularApp')
     }
     else if(URLInformation.redirect){
        $window.location.href= URLInformation.redirect
+       URLInformation.redirect = null
     }
     else{
       $state.go("dashboard");

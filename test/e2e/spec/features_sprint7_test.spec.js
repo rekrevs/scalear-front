@@ -13,7 +13,8 @@ var NewCourse = require('./pages/new_course');
 var scroll = require('./lib/utils').scroll;
 var sleep = require('./lib/utils').sleep;
 var Video = require('./pages/video');
-
+var AccountInformation = require('./pages/account_information');
+var StudentList = require('./pages/teacher/student_list');
 var params = browser.params;
 
 var header = new Header()
@@ -28,7 +29,8 @@ var share_window = new ShareModal()
 var shared = new SharedPage()
 var new_course = new NewCourse()
 var video = new Video();
-
+var	info = new AccountInformation();
+var student_list = new StudentList();
 // SCAL-876 Account info: Delete Account ubtton should be
 xdescribe("Delete Account button",function(){
 	it("should login",function(){
@@ -48,7 +50,7 @@ xdescribe("Delete Account button",function(){
 })
 // SCAL-1017: Add email address to after-registration page frontend: check on email in users/thanks
 // SCAL-571 At first login we should show the privacy policy and require students to click "I understand"	check on I understand when new user confirm
-xdescribe("guerrillamail teacher ",function(){
+xdescribe("Add User ",function(){
 	describe("Sign up Teacher 1",function(){
 		describe("guerrillamail",function(){
 			it("should sign up as teacher",function(){
@@ -137,10 +139,10 @@ xdescribe("guerrillamail teacher ",function(){
 	})
 })
 
- // SCAL-1309: Videos should stay at the end and not go back to the beginning
+// SCAL-1309: Videos should stay at the end and not go back to the beginning
 // SCAL-1023:Add course view controls at bottom of All Courses page
 // SCAL-878: Feedback form should not show "course" if not in a course
-describe("Videos should stay at the end",function(){
+xdescribe("Videos should stay at the end",function(){
 	describe("student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student1.email, params.password)
@@ -183,5 +185,123 @@ describe("Videos should stay at the end",function(){
         })
 
 	})
+})
+
+// SCAL-1154: Allow users to pick first day of the week for calendar
+xdescribe("Pick first day of the week for Calendar",function(){
+	it("should login",function(){
+        login_page.sign_in(params.teacher1.email, params.password)
+   })
+    it("should change first day to Sat",function(){
+        header.open_account_information()
+        info.choose_first_day(6)
+        info.save(params.password)
+        header.open_dashboard()
+        $('tr th').getText().then(function (text) { expect(text).toEqual("Sat") });
+    })
+    it("should change first day to Sun",function(){
+        header.open_account_information()
+        info.choose_first_day(0)
+        info.save(params.password)
+        header.open_dashboard()
+        $('tr th').getText().then(function (text) { expect(text).toEqual("Sun") });
+    })
+    it("should logout", function() {
+      header.logout()
+    })
+})
+
+// SCAL-1283: Export student list	
+xdescribe("Export student list",function(){
+	describe("teacher ",function(){		
+		it("should login",function(){
+		    login_page.sign_in(params.teacher1.email, params.password)
+		})
+		it('should open student list', function(){
+			course_list.open()
+			course_list.open_teacher_course(1)
+			student_list.open()
+		})
+
+		it('check export student message appears', function(){
+			student_list.click_export_student_list()
+			expect(student_list.export_student_list_message.isDisplayed()).toBe(true);
+		})
+		it('check export student message does not appear', function(){
+			sleep(7000)
+			expect(student_list.export_student_list_message.isDisplayed()).toBe(false);
+		})
+		it("should logout", function() {
+		  header.logout()
+		})
+    })
+})
+
+
+// SCAL-1332: Export course clarification	frontend: check on button “Export anonymized course data” and when clicked “"Your anonymized course data will be emailed to you shortly.” appears 
+xdescribe("Export course clarification",function(){
+	describe("teacher ",function(){		
+		it("should login",function(){
+		    login_page.sign_in(params.teacher1.email, params.password)
+		})
+		it('should open student list', function(){
+			course_list.open()
+			course_list.open_teacher_course(1)
+			course_info.open()
+		})
+
+		it('check export student message appears', function(){
+			course_info.click_export_anonymized_data()
+			expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
+		})
+		it('check export student message does not appear', function(){
+			sleep(7000)
+			expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(false);
+		})
+		it("should logout", function() {
+		  header.logout()
+		})
+    })
+})
+
+//SCAL-1282: Enable/disable registration
+//SCAL-967:Need an "add course URL"
+describe("Need an 'add course URL' and  Enable/disable registration",function(){
+	describe("teacher ",function(){		
+		it("should login",function(){
+		    login_page.sign_in(params.teacher1.email, params.password)
+		})
+		it('should open student list', function(){
+			course_list.open()
+			course_list.open_teacher_course(1)
+			student_list.open()
+		})
+
+		it('should removed student from course', function(){
+			student_list.click_remove_student()
+			expect(student_list.student_delete_button.count()).toEqual(3)
+			student_list.delete_student(0)
+			// expect(student_list.export_student_list_message.isDisplayed()).toBe(true);
+		})
+		it('should open student list', function(){
+			// course_list.open()
+			// course_list.open_teacher_course(1)
+			// course_info.open()
+		})
+
+		it('should disable registration', function(){
+			// course_info.click_export_anonymized_data()
+			// expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
+		})
+		
+		it('should copy url link to params', function(){
+			// course_info.click_export_anonymized_data()
+			// expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
+		})
+
+		it("should logout", function() {
+		  header.logout()
+		})
+    })
 })
 

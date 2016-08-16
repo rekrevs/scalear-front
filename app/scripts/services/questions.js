@@ -7,7 +7,6 @@ angular.module('scalearAngularApp')
 
     function getQuestions() {
       var quiz = ItemsModel.getSelectedItem();
-      console.log("quiz", quiz);
       return Quiz.getQuestions({
           course_id: quiz.course_id,
           quiz_id: quiz.id

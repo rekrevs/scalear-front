@@ -79,7 +79,7 @@
         </td>
       </tr> -->
   <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
-    <td class="right-border small-4"><span translate>editor.details.in_order</span></td>
+    <td class="right-border small-4"><span translate>editor.details.in_order</span>:</td>
     <td class="small-8">
       <input type="checkbox" ng-model="lecture.required_module" ng-change="updateLecture()" class="no-margin">
       <span class="size-12" translate>editor.details.use_module_in_order</span>
@@ -91,7 +91,7 @@
     </td>
   </tr>
   <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
-    <td class="right-border small-4"><span translate>editor.details.required</span></td>
+    <td class="right-border small-4"><span translate>editor.details.required</span>:</td>
     <td class="small-8">
       <input type="checkbox" ng-model="lecture.graded_module" ng-change="updateLecture()" class="no-margin">
       <span class="size-12" translate>editor.details.use_module_required</span>
@@ -103,7 +103,7 @@
     </td>
   </tr>
       <tr id="bg_fix" style="height:130px" ng-if="!lecture.inclass">
-        <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
+        <td class="right-border small-4"><span translate>editor.details.appearance_date</span>:</td>
         <td class="small-8">
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.use_module</span>
@@ -125,7 +125,7 @@
         </td>
       </tr>
       <tr style="height:130px">
-        <td class="right-border small-4"><span translate>editor.details.due_date</span></td>
+        <td class="right-border small-4"><span translate>editor.details.due_date</span>:</td>
         <td class="small-8">
           <input type="checkbox" ng-model="due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.has_due_date</span>

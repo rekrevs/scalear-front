@@ -60,7 +60,7 @@ angular.module('scalearAngularApp')
       $rootScope.current_user = null
     }
 
-    function allowRefetchOfUser(){
+    function allowRefetchOfUser() {
       deferred_current_user = null
     }
 
@@ -70,10 +70,19 @@ angular.module('scalearAngularApp')
       }).$promise;
     }
 
+    function deleteUser(pass) {
+      return User.delete_account({ password: pass }, {})
+        .$promise
+        .then(function() {
+          removeCurrentUser()
+        })
+    }
+
     return {
       getCurrentUser: getCurrentUser,
       logout: logout,
-      allowRefetchOfUser:allowRefetchOfUser
+      allowRefetchOfUser: allowRefetchOfUser,
+      deleteUser:deleteUser
     };
 
 

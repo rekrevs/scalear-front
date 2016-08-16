@@ -6,25 +6,25 @@ angular.module('scalearAngularApp')
     Page.setTitle('navigation.account_information')
     $scope.dayNamesOption = [{
       id: 0,
-      name: full_calendar_en["dayNamesShort"][0]
+      name: full_calendar_en["dayNames"][0]
     }, {
       id: 1,
-      name: full_calendar_en["dayNamesShort"][1]
+      name: full_calendar_en["dayNames"][1]
     }, {
       id: 2,
-      name: full_calendar_en["dayNamesShort"][2]
+      name: full_calendar_en["dayNames"][2]
     }, {
       id: 3,
-      name: full_calendar_en["dayNamesShort"][3]
+      name: full_calendar_en["dayNames"][3]
     }, {
       id: 4,
-      name: full_calendar_en["dayNamesShort"][4]
+      name: full_calendar_en["dayNames"][4]
     }, {
       id: 5,
-      name: full_calendar_en["dayNamesShort"][5]
+      name: full_calendar_en["dayNames"][5]
     }, {
       id: 6,
-      name: full_calendar_en["dayNamesShort"][6]
+      name: full_calendar_en["dayNames"][6]
     }]
     $rootScope.subheader_message = $translate('navigation.account_information')
 

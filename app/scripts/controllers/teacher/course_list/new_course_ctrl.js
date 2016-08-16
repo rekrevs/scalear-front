@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter) {
+  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.new_course')
     $rootScope.subheader_message = $translate("navigation.new_course")
     $scope.submitting = false;
     $scope.course = {}
 
-    CourseModel.getUserOtherCourses()
-      .then(function(data) {
+    CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
       })
 
@@ -64,6 +63,7 @@ angular.module('scalearAngularApp')
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {
+            console.log(data)
             $scope.submitting = false;
             $scope.submitted = false;
             if(data.importing) {
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
               $state.go("course.course_editor", { "course_id": data.course.id })
             }
           })
-          .catch(function() {
+          .catch(function(response) {
             $scope.submitting = false;
             $scope.server_errors = response.data.errors
           })

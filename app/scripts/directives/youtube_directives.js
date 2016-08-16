@@ -972,20 +972,20 @@ angular.module('scalearAngularApp')
         scope.$apply()
       })
 
-      player.on('ended', function() {
+      // player.on('ended', function() {
 
-        //for some reason youtube requires clicking the
-        //play button twice to play after video end
-        //simulating first click on play
-        // scope.player.controls.seek(0)
-        $timeout(function() {
-          scope.player.controls.play();
-          scope.player.controls.pause();
-          scope.play_class = "play";
-        }, 1000)
+      //   //for some reason youtube requires clicking the
+      //   //play button twice to play after video end
+      //   //simulating first click on play
+      //   // scope.player.controls.seek(0)
+      //   $timeout(function() {
+      //     scope.player.controls.play();
+      //     scope.player.controls.pause();
+      //     scope.play_class = "play";
+      //   }, 1000)
 
-        scope.$apply()
-      })
+      //   scope.$apply()
+      // })
 
       player.on('pause', function() {
         scope.play_class = "play";

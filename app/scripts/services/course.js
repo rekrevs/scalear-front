@@ -128,9 +128,9 @@ angular.module('scalearAngularApp')
       return Course.getCourseware({ course_id: id })
         .$promise
         .then(function(data) {
-          console.log('student course', data)
           // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
+          
           $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })
@@ -155,14 +155,14 @@ angular.module('scalearAngularApp')
 
     function create(course, import_from_id) {
       var modified_course = angular.copy(course)
-      $scope.submitting = true;
       var d = new Date()
       modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
       modified_course.time_zone = course.time_zone.name;
       return Course.create({ course: modified_course, "import": import_from_id })
         .$promise
-        .then(function() {
+        .then(function(data) {
           $rootScope.$broadcast('Course:get_current_courses')
+          return data
         })
     }
 
@@ -245,7 +245,9 @@ angular.module('scalearAngularApp')
       isTeacher: isTeacher,
       createInstance: createInstance,
       isInstance: isInstance,
-      currentCourses: currentCourses
+      currentCourses: currentCourses,
+      getUserOtherCourses: getUserOtherCourses,
+      create: create
     }
 
   }])

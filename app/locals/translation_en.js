@@ -516,7 +516,7 @@ var translation_en={
         set_date: "Set Date",
         use_module: "Use Module’s Visibility",
         use_module_due: "Use Module’s Due Date",
-        use_module_in_order: "Use Module’s In Order",
+        use_module_in_order: "Use Module’s Order",
         use_module_required: "Use Module’s Required",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",

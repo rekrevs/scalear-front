@@ -19,7 +19,7 @@
       <li toggle-top-bar class="menu-icon"><a class="dark-text" href="">menu</a></li>
     </ul>
     <top-bar-section>
-      <ul ng-if="user.roles[0]" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
+      <ul ng-show="user.roles[0]" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
         <!-- <li class="divider border-grey medium-opacity"></li> -->
         <li ng-if="user.roles.includes(5)"><a class="white-with-hover color-gray-hover size-16-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>statistics.statistics</a></li>
         <li has-dropdown>

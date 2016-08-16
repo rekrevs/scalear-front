@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel) {
 
-    $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id).setAsSelected()
+    $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
+    ItemsModel.setSelectedItem($scope.lecture)
 
     $scope.quiz_layer = {}
     $scope.lecture_player = {}

@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
 
-    $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id).setAsSelected()
+    $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
+    ItemsModel.setSelectedItem($scope.lecture)
     var module = $scope.lecture.module()
     $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
     $scope.disable_module_due_controls = CourseEditor.isDueDateDisabled(module.due_date)

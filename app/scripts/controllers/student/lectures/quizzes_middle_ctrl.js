@@ -5,7 +5,8 @@ angular.module('scalearAngularApp')
     $controller('surveysCtrl', { $scope: $scope });
 
     $scope.course = CourseModel.getSelectedCourse()
-    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id).setAsSelected()
+    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
+    ItemsModel.setSelectedItem($scope.quiz)
 
     $scope.course.warning_message = null
     $scope.studentAnswers = {};

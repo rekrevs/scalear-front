@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('customLinkDetailsCtrl', ['$stateParams', '$scope', '$q', '$filter', 'CustomLink', '$log', 'ItemsModel', 'LinkModel', function($stateParams, $scope, $q, $filter, CustomLink, $log, ItemsModel, LinkModel) {
 
-    $scope.link = ItemsModel.getLink($stateParams.customlink_id).setAsSelected()
+    $scope.link = ItemsModel.getLink($stateParams.customlink_id)
+    ItemsModel.setSelectedItem($scope.link)
 
     $scope.validateLink = function(column, data) {
       var link = { id: $scope.link.id }

@@ -94,6 +94,7 @@ angular.module('scalearAngularApp')
       return UserSession.getCurrentUser()
         .then(function(user) {
           if(user && user.roles) {
+            removeCourseRole()
             return getCourseRole(course_id)
           }
         }).then(function(course_role) {

@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel) {
 
-    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id).setAsSelected()
+    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
+    ItemsModel.setSelectedItem($scope.quiz)
     $scope.course = CourseModel.getSelectedCourse()
     $scope.publish_state = getPublishStatus($scope.quiz)
     $scope.alert = {

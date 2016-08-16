@@ -122,7 +122,8 @@ angular.module('scalearAngularApp')
         module: module,
         remove: remove,
         validate: validate,
-        update:update
+        update:update,
+        setAsSelected:setAsSelected
       })
     }
 

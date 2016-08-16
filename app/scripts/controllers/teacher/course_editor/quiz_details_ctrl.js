@@ -4,7 +4,8 @@ angular.module('scalearAngularApp')
   .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$log', '$state', 'ItemsModel', 'QuizModel', 'CourseEditor',
     function($stateParams, $scope, $log, $state, ItemsModel, QuizModel, CourseEditor) {
 
-      $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id).setAsSelected()
+      $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
+      ItemsModel.setSelectedItem($scope.quiz)
       var module = $scope.quiz.module()
       $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.quiz.due_date)
       $scope.disable_module_due_controls = CourseEditor.isDueDateDisabled(module.due_date)

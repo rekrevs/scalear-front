@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
       $scope.module = ModuleModel.getSelectedModule()
       $scope.link_url = $state.href('course.module.courseware', { module_id: $scope.module.id }, { absolute: true })
       if($scope.module.due_date){
-        $scope.due_date_enabled = !CourseEditor.isDueDateDisabled()
+        $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.module.due_date)
       }
       $scope.module_details_groups = DetailsNavigator.module_details_groups
     })()
@@ -24,12 +24,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateDueDate = function() {
-      var enabled = $scope.due_date_enabled
       var due_date = new Date($scope.module.due_date)
       var week = 7
-      if(CourseEditor.isDueDateDisabled() && enabled)
+      if(CourseEditor.isDueDateDisabled($scope.module.due_date) && !$scope.due_date_enabled)
         var years = -200
-      else if(!CourseEditor.isDueDateDisabled() && !enabled)
+      else if(!CourseEditor.isDueDateDisabled($scope.module.due_date) && $scope.due_date_enabled)
         var years = 200
       else
         var years = 0
@@ -40,9 +39,8 @@ angular.module('scalearAngularApp')
         due_date = appearance_date
         due_date.setDate(appearance_date.getDate() + week)
       }
-
       $scope.module.due_date = due_date
-      $scope.due_date_enabled = !CourseEditor.isDueDateDisabled()
+      $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.module.due_date)
     }
 
 

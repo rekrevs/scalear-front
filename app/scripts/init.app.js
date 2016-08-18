@@ -81,8 +81,9 @@ angular.module('scalearAngularApp')
       return false;
     }
 
-    var showErrorMsg = function() {
-
+    var showErrorMsg = function(link) {
+      ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
+      URLInformation.setRedirectLink(link)
     }
 
 
@@ -94,8 +95,7 @@ angular.module('scalearAngularApp')
       if($tour.isActive()) {
         $tour.end();
       }
-      URLInformation.history = $state.href(from, fromParams)
-      var s = 1;
+      URLInformation.addToHistory($state.href(from, fromParams))
       UserSession.getCurrentUser()
         .then(function(current_user) {
           if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
                 .then(function(role) {
                   if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
                     $state.go("course_list");
-                    ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
+                    showErrorMsg($state.href(to, toParams))
                   }
                 })
             }
@@ -124,19 +124,16 @@ angular.module('scalearAngularApp')
               // }
               // else {
                 $state.go("home");
-                ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
-                URLInformation.redirect = $state.href(to, toParams)
+                showErrorMsg($state.href(to, toParams))
               // }
             }
             else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
               $state.go('confirmed')
-              s = 1;
             } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page
               $state.go("course_list");
             } else if(stateNoAuth(to.name)) {
               $state.go("home");
-              ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
-              URLInformation.redirect = $state.href(to, toParams)
+              showErrorMsg($state.href(to, toParams))
             }
           }
         })
@@ -145,10 +142,15 @@ angular.module('scalearAngularApp')
             $state.go("landing")
           }
           if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
-            console.log("to.name", to.name);
             $state.go("login");
-            ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
-            URLInformation.redirect = $state.href(to, toParams)
+            console.log("not clean hi");
+            var url = $state.href(to, toParams)
+            console.log("url = ", url);
+            console.log("url test = ", /courses\/enroll\?id=/.test(url));
+            if(/courses\/enroll\?id=/.test(url)){
+              URLInformation.setEnrollLink(url)
+            }
+            showErrorMsg(url)
           }
         })
     });

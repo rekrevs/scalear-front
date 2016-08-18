@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', 'scalear_api', '$translate', '$log', 'ngDialog', function($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log, ngDialog) {
+  .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', 'scalear_api', '$translate', '$log', 'ngDialog','URLInformation','$window', function($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log, ngDialog, URLInformation, $window) {
 
     $scope.remaining = 5;
     $scope.privacy_approved
@@ -34,9 +34,12 @@ angular.module('scalearAngularApp')
       User.updateCompletionWizard({ id: $scope.current_user.id }, { completion_wizard: completion },
         function() {
           UserSession.allowRefetchOfUser()
-          // $scope.current_user.completion_wizard = {}
-          // $scope.current_user.completion_wizard.intro_watched = true;
-
+            // $scope.current_user.completion_wizard = {}
+            // $scope.current_user.completion_wizard.intro_watched = true;
+          if(URLInformation.hasEnroll()) {
+            $window.location.href = URLInformation.getEnrollLink()
+            URLInformation.clearEnrollLink()
+          }
           $state.go('course_list');
         }
       );

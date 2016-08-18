@@ -91,9 +91,13 @@ angular.module('scalearAngularApp')
       $state.go("edit_account");
       ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', null, "error");
     }
-    else if(URLInformation.redirect){
-       $window.location.href= URLInformation.redirect
-       URLInformation.redirect = null
+    else if(URLInformation.hasEnroll()){
+      $window.location.href= URLInformation.getEnrollLink()
+       URLInformation.clearEnrollLink()
+    }
+    else if(URLInformation.shouldRedirect()){
+       $window.location.href= URLInformation.getRedirectLink()
+       URLInformation.clearRedirectLink()
     }
     else{
       $state.go("dashboard");

@@ -114,7 +114,7 @@ angular.module('scalearAngularApp')
         }
 
         if(rejection.status == 401 && rejection.config.url.search(re) != -1) {
-          URLInformation.redirect = URLInformation.history
+          // URLInformation.redirect = URLInformation.history
           var $state = $injector.get('$state');
           if($cookieStore.get('preview_as_student')) {
             $log.debug("preview_as_student")

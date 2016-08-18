@@ -57,7 +57,6 @@ angular.module('scalearAngularApp')
     }
 
     function getSelectedItem() {
-      console.log("getting selected", LectureModel.getSelectedLecture(), QuizModel.getSelectedQuiz(), LinkModel.getSelectedLink());
       return LectureModel.getSelectedLecture() || QuizModel.getSelectedQuiz() || LinkModel.getSelectedLink();
     }
 
@@ -73,7 +72,6 @@ angular.module('scalearAngularApp')
     }
 
     function clearAllSelected() {
-      console.log("Clearing selected items");
       LectureModel.clearSelectedLecture()
       QuizModel.clearSelectedQuiz()
       LinkModel.getSelectedLink()

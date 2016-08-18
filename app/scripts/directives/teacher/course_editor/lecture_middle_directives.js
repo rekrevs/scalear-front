@@ -235,7 +235,7 @@ angular.module('scalearAngularApp')
         var hidePopover = function(){
           $('.popover').remove();
         }
-        
+
         scope.$on("$destroy", function() {
           hidePopover()
         })
@@ -267,7 +267,7 @@ angular.module('scalearAngularApp')
           template = "<form name='aform'>" +
           "<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>" +
           "<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>" +
-          "<div><rich-textarea rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required /></div>" +
+          "<div><rich-textarea rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -286,7 +286,6 @@ angular.module('scalearAngularApp')
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
-          // "{{data.explanation}}"+
           // "<textarea medium-editor bind-options='medium_editor_options' rows=3 class='must_save medium-editor-textarea' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
           "<rich-textarea rows=3 class='must_save' ng-model='data.explanation' />"+
           "</label>" +
@@ -383,7 +382,7 @@ angular.module('scalearAngularApp')
         var hidePopover = function(){
           $('.popover').remove();
         }
-        
+
         scope.$on("$destroy", function() {
           hidePopover()
         })
@@ -392,7 +391,7 @@ angular.module('scalearAngularApp')
           scope.save()
           hidePopover()
         }
-        
+
         var template = '<ul class="no-margin">' +
           '<label>' +
           '<span translate>editor.drag.instruction</span>' +
@@ -465,7 +464,7 @@ angular.module('scalearAngularApp')
        var hidePopover = function(){
           $('.popover').remove();
         }
-        
+
         scope.$on("$destroy", function() {
           hidePopover()
         })
@@ -567,8 +566,8 @@ angular.module('scalearAngularApp')
         ]
         $log.debug(scope.quiz)
         if (!scope.quiz.match_type && !scope.isSurvey()) {
-          console.log(scope.quiz) 
-          console.log('scope.quiz') 
+          console.log(scope.quiz)
+          console.log('scope.quiz')
 
           if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers && scope.quiz.answers[0].content !="")
             scope.quiz.match_type =scope.match_types[1].value

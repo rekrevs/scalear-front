@@ -148,7 +148,7 @@ angular.module('scalearAngularApp')
 
 
     $scope.addDoubleClickBind = function(event) {
-      if($scope.editing_mode && !$scope.selected_quiz.hide_quiz_answers && !$scope.selected_quiz.isFreeTextVideoQuiz()) {
+      if($scope.editing_mode && $scope.editing_type == 'quiz' && !$scope.selected_quiz.hide_quiz_answers && !$scope.selected_quiz.isFreeTextVideoQuiz()) {
         var answer_width, answer_height,
           answer_text = "Answer " + ($scope.selected_quiz.answers.length + 1)
 

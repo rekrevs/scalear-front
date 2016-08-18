@@ -91,6 +91,7 @@ angular.module('scalearAngularApp')
           var quiz = createInstance(data.quiz)
           quiz.inclass = lecture.inclass
           $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
+          return quiz;
         })
 
     }

@@ -536,6 +536,7 @@ var translation_en={
         in_order: "In Order",
         retries: "Retries",
         display_text:"Display question over video",
+        display_text_explain:"(Use if the question text is not in the video.)",
         student_link_quiz:"Student link to quiz"
     },
     popover:{

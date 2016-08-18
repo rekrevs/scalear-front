@@ -90,7 +90,7 @@ angular.module('scalearAngularApp')
 }]).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){
 	return{
 		restrict:'E',
-		template:"<ng-form name='aform'>"+
+		template:"<ng-form name='aform' >"+
 					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
 					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
@@ -102,6 +102,7 @@ angular.module('scalearAngularApp')
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
+            // placement:"up",
 						trigger:'hover'
 					}
 				}

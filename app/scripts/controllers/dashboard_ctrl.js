@@ -95,7 +95,7 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event)
+            responseFail(response, revertFunc, event,"Lecture")
           }
         );
       } else if(event.quiz_id) {
@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event)
+            responseFail(response, revertFunc, event,"Quiz")
           }
         );
 
@@ -124,7 +124,7 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event)
+            responseFail(response, revertFunc, event,"Module")
           }
         );
       }
@@ -136,14 +136,16 @@ angular.module('scalearAngularApp')
       }
     }
 
-    function responseFail(response, revertFunc, item) {
+    function responseFail(response, revertFunc, item,type) {
       revertFunc()
       if(response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
-        var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
+        // var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
+        // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit." 
+        var message = $translate("events.drag_due_date_error_part_1")+type+$translate("events.drag_due_date_error_part_2")+type+$translate("events.drag_due_date_error_part_3")
       } else {
         var message = Object.keys(response.data.errors)[0].replace("_", " ") + " " + response.data.errors[Object.keys(response.data.errors)[0]][0]
       }
-      ErrorHandler.showMessage(response.data.errors.appearance_time[0], 'errorMessage', 4000, "error");
+      ErrorHandler.showMessage(message, 'errorMessage', 4000, "error");
     }
 
     function setupPopover(key) {

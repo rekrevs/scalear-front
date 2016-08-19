@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
               if(!data.answers[index].length) {
                 addAnswer("", question)
               } else {
-                question.answers = CourseEditor.expandDragAnswers(data.answers[index][0].id, data.answers[index][0].content, "quiz", question.id, data.answers[index][0].explanation)
+                question.answers = CourseEditor.expandDragAnswers(data.answers[index][0].id, data.answers[index][0].content, "quiz", question.id, data.explanation[data.answers[index][0].id])
               }
             } else {
               question.answers = data.answers[index]

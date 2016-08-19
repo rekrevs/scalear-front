@@ -566,9 +566,6 @@ angular.module('scalearAngularApp')
         ]
         $log.debug(scope.quiz)
         if (!scope.quiz.match_type && !scope.isSurvey()) {
-          console.log(scope.quiz)
-          console.log('scope.quiz')
-
           if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers && scope.quiz.answers[0].content !="")
             scope.quiz.match_type =scope.match_types[1].value
           else

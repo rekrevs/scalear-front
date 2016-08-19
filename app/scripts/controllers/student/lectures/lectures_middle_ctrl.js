@@ -218,6 +218,7 @@ angular.module('scalearAngularApp')
           $scope.selected_quiz = quiz
           $scope.quiz_mode = true
           $scope.check_answer_title = "lectures.button.check_answer"
+          $scope.selected_quiz.actual_display_text = $scope.selected_quiz.display_text 
 
           if(quiz.quiz_type == 'html' || quiz.quiz_type == 'html_survey') {
             $log.debug("HTML quiz")
@@ -870,6 +871,9 @@ angular.module('scalearAngularApp')
 
     $scope.dismissAnnotation = function() {
       $scope.annotation = null
+    }
+    $scope.dismissQuestionText = function() {
+      $scope.selected_quiz.actual_display_text = null
     }
 
     var showAnnotation = function(annotation) {

@@ -1,15 +1,15 @@
 <accordion class="details_accordian" close-others="false">
-  <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
+  <accordion-group class="accordion-group" open="lecture && lecture.url == 'none'" is-open="lecture_details_groups.video">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="video_settings" class="show-inline" translate>content.types.video</div>
-      </div>              
+      </div>
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
       <tr>
         <td class="right-border small-4"><span translate>editor.details.title</span>:</td>
         <td class="small-8">
-            <details-text id="item_name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name" open="lecture.url == 'none'"></details-text>
+          <details-text id="item_name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name" open="lecture.url == 'none'"></details-text>
         </td>
       </tr>
       <tr>
@@ -18,9 +18,24 @@
           <i class='fi-info' tooltip='{{"editor.tooltip.video_info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <big-area id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></big-area> 
+          <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url">
+            <details-url>
         </td>
       </tr>
+      <!-- <tr>
+        <td class="right-border small-4">Start/Stop</td>
+        <td>
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>Start:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>
+          </div>
+          <br />
+          <div class="with-small-margin-bottom">
+            <div class="small-3 columns size-12 no-padding" translate>End:</div>
+            <div class="small-7 columns left size-12 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; color: #555;">{{lecture.end_time | format}}</div>
+          </div>
+        </td>
+      </tr> -->
       <tr>
         <td class="right-border small-4"><span translate>editor.details.description</span>:</td>
         <td class="small-8">
@@ -35,20 +50,20 @@
       </tr>
       <tr>
         <td class="right-border small-4"><span translate>editor.details.student_link_lecture</span>:</td>
-        <td class="break-text small-8" >
-          <span >{{link_url}}</span>
+        <td class="break-text small-8">
+          <span>{{link_url}}</span>
         </td>
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group">
+  <accordion-group class="accordion-group" is-open="lecture_details_groups.settings">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="lec_settings" class="show-inline" translate>global.settings</div>
-      </div>              
+      </div>
     </accordion-heading>
     <table class="table small-12 no-margin">
-      <tr>
+<!--       <tr>
         <td colspan="2">
           <center>
             <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
@@ -56,42 +71,66 @@
               <span class="size-12" translate>editor.details.in_order</span>
             </span>
             <br />
-            <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
+            <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
               <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
               <span class="size-12" translate>editor.details.required</span>
             </span>
-        </center>
+          </center>
         </td>
-      </tr>
-      <tr id="bg_fix" style="height:130px">
-        <td class="right-border small-4"><span translate>editor.details.appearance_date</span></td>
-        <td class="small-8"> 
+      </tr> -->
+  <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
+    <td class="right-border small-4"><span translate>editor.details.in_order</span>:</td>
+    <td class="small-8">
+      <input type="checkbox" ng-model="lecture.required_module" ng-change="updateLecture()" class="no-margin">
+      <span class="size-12" translate>editor.details.use_module_in_order</span>
+      <br>
+        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input ng-disabled="lecture.required_module" type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
+          <span class="size-12" translate>editor.details.in_order</span>
+        </span>
+    </td>
+  </tr>
+  <tr id="bg_fix" style="height:60px" ng-if="!lecture.inclass">
+    <td class="right-border small-4"><span translate>editor.details.required</span>:</td>
+    <td class="small-8">
+      <input type="checkbox" ng-model="lecture.graded_module" ng-change="updateLecture()" class="no-margin">
+      <span class="size-12" translate>editor.details.use_module_required</span>
+      <br>
+        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+          <input ng-disabled="lecture.graded_module" type="checkbox" ng-model="lecture.graded"  ng-change='updateLecture()'>
+          <span class="size-12" translate>editor.details.required</span>
+        </span>
+    </td>
+  </tr>
+      <tr id="bg_fix" style="height:130px" ng-if="!lecture.inclass">
+        <td class="right-border small-4"><span translate>editor.details.appearance_date</span>:</td>
+        <td class="small-8">
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.use_module</span>
-          
           <span ng-hide="!lecture.appearance_time_module">
             <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
-            <div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
+          <div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
             {{lecture.appearance_time | amDateFormat:'DD MMM YYYY, HH:mm'}}
-            </div>
+          </div>
           </span>
           <br />
           <span ng-hide="lecture.appearance_time_module">
-            <span translate>editor.details.set_date</span>:<br>
-            <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
-            <br>
-            <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
+            <span translate>editor.details.set_date</span>:
+          <br>
+          <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
+          <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+          <br>
+          <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
           </span>
         </td>
       </tr>
       <tr style="height:130px">
-        <td class="right-border small-4"><span translate>editor.details.due_date</span></td>
+        <td class="right-border small-4"><span translate>editor.details.due_date</span>:</td>
         <td class="small-8">
-          <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
+          <input type="checkbox" ng-model="due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.has_due_date</span>
-          <div ng-show="lecture.due_date_enabled">
-            <span ng-hide="lecture.disable_module_due_controls">
+          <div ng-show="due_date_enabled">
+            <span ng-hide="disable_module_due_controls">
               <input type="checkbox" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
               <span class="size-12" translate>editor.details.use_module_due</span>
             </span>
@@ -102,22 +141,38 @@
               </div>
             </div>
             <span ng-hide="lecture.due_date_module">
-              <span translate>editor.details.set_date</span>:<br>
-              <details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
-              <br>
-              <details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
-            </span> 
+              <span translate>editor.details.set_date</span>:
+            <br>
+            <details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
+            <br>
+            <details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
+            </span>
           </div>
         </td>
       </tr>
+      <!-- <tr id="bg_fix" style="height:130px" ng-if="lecture.inclass">
+        <td class="right-border small-4"><span translate>Visibility</span></td>
+        <td class="small-8">
+          <input type="checkbox" ng-model="lecture.visible_to_student" ng-change="updateAppearanceDate();updateLecture()" class="no-margin">
+          <span class="size-12" translate>Visible to student</span>
+        </td>
+      </tr> -->
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
-    <accordion-heading class="accordion-heading">
-      <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div class="show-inline" translate>editor.details.quizzes</div>
-      </div>              
-    </accordion-heading>
-    <quiz_list />
-  </accordion-group>
+    <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items|filter:{type:'quiz'}).length" is-open="lecture_details_groups.quizzes">
+      <accordion-heading class="accordion-heading">
+        <div style="padding: 5px;border-bottom: 1px solid white;">
+          <div class="show-inline" translate>editor.details.quizzes</div>
+        </div>
+      </accordion-heading>
+      <quiz_list />
+    </accordion-group>
+    <accordion-group class="accordion-group overflow-auto" open="(lecture.timeline.items| filter:{type:'marker'}).length" is-open="lecture_details_groups.markers">
+      <accordion-heading class="accordion-heading">
+        <div style="padding: 5px;border-bottom: 1px solid white;">
+          <div class="show-inline" translate>editor.details.markers</div>
+        </div>
+      </accordion-heading>
+      <marker_list />
+    </accordion-group>
 </accordion>

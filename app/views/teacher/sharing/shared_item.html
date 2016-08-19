@@ -35,7 +35,7 @@
 			        	<span translate>sharing.copy</span>
 			        	<span translate>sharing.to_course</span>:
 			        </label>
-			        <select class="small-9 medium-8 large-6 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
+			        <select class="small-9 medium-8 large-6 columns" ng-model="selected_course" ng-options="course.short_name+' | '+course.name for course in courses"></select>
 			        <div class="small-3 medium-1 large-1 column left">
 			          	<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="button tiny success" translate>sharing.copy</button>
 		          	</div>
@@ -95,6 +95,6 @@
 		          	</div>
 				</div>
 			</li>
-		</ul>	
+		</ul>
 	</div>
 </div>

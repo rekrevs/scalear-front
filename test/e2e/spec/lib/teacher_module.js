@@ -17,9 +17,9 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 		element(by.model("course.description")).sendKeys(course_description)
 		element(by.model("course.prerequisites")).sendKeys(prerequisites)
 		o_c.scroll(ptor, 1000)
-		
+
 		element(by.buttonText("Create Course")).click();
-		
+
 		ptor.sleep(5000);
 }
 
@@ -33,11 +33,11 @@ exports.get_key_and_enroll = function(ptor, email, password){
 		o_c.sign_in(ptor, email, password);
 		student.join_course(ptor, text);
 		// o_c.logout(ptor);
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 	// locator.by_id(ptor, 'enrollment_key').then(function(element){
 	// 	element.getText().then(function(text){
-			
+
 	// 	})
 	// })
 }
@@ -56,7 +56,7 @@ exports.delete_course = function(ptor,co_no){
 	// })
 	// o_c.open_tray(ptor);
 	// o_c.logout(ptor, o_c.feedback);
-	// o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+	// o_c.sign_in(ptor, params.teacher1.email, params.password, o_c.feedback);
 	// locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
 	// 	x_btn.click().then(function(){
 	// 		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
@@ -109,14 +109,14 @@ exports.add_module = function(ptor){
 		element(by.id('new_module')).click()
 		expect(element.all(by.repeater('module in modules')).count()).toEqual(module_count+1)
 		o_c.hide_dropmenu(ptor);
-	})	
+	})
 }
 
 exports.delete_empty_module = function(ptor, mo_no){
 	// var module_count = 0
 	element.all(by.repeater('module in modules')).count().then(function(count){
 		var module_count = count
-	
+
 		element(by.repeater('module in modules').row(mo_no-1))
 		.then(function(item){
 			item.element(by.className('delete')).click()
@@ -152,13 +152,13 @@ exports.add_course_link = function(ptor){
 		element(by.id('link_item')).click()
 		expect(element.all(by.repeater('link in links')).count()).toEqual(links_count+1)
 		o_c.hide_dropmenu(ptor);
-	})	
+	})
 }
 
 exports.delete_course_link = function(ptor, link_no){
 	element.all(by.repeater('link in links')).count().then(function(count){
 		var links_count = count
-	
+
 		element(by.repeater('link in links').row(link_no-1))
 		.then(function(item){
 			item.element(by.className('delete')).click()
@@ -190,13 +190,13 @@ exports.add_module_link = function(ptor){
 		var links_count = count
 		element(by.id('add_module_link')).click()
 		expect(element.all(by.repeater('doc in module.custom_links')).count()).toEqual(links_count+1)
-	})	
+	})
 }
 
 exports.delete_module_link = function(ptor, link_no){
 	element.all(by.repeater('doc in module.custom_links')).count().then(function(count){
 		var links_count = count
-	
+
 		element(by.repeater('doc in module.custom_links').row(link_no-1))
 		.then(function(item){
 			item.element(by.className('delete')).click()
@@ -230,7 +230,7 @@ exports.edit_module_link_info = function(link_no, name, link){
 exports.delete_item_by_number = function(ptor, mo_no, item_no){
 	element(by.repeater('module in modules').row(mo_no-1)).all(by.repeater('item in module.items')).count().then(function(count){
 		var item_count = count
-		
+
 		element(by.repeater('module in modules').row(mo_no-1))
 		.element(by.repeater('item in module.items').row(item_no-1)).then(function(item){
 			item.element(by.className('delete')).click()
@@ -299,7 +299,7 @@ exports.change_time_zone = function(ptor, value){
 						options[value].click();
 					})
 				})
-			})	
+			})
 		})
 	})
 }
@@ -316,9 +316,9 @@ exports.rename_item = function(ptor, name){
 
 		expect(element(by.id('name')).getText()).toContain(name)
 		// .then(function(){
-		// 	o_c.feedback(ptor, 'successfully updated')			
-			
-		// })	
+		// 	o_c.feedback(ptor, 'successfully updated')
+
+		// })
 	})
 }
 
@@ -562,7 +562,7 @@ exports.add_quiz_header = function(ptor, header){
 	// 			fields[fields.length-1].sendKeys(header);
 	// 		})
 	// 	})
-		
+
 	// })
 }
 
@@ -577,7 +577,7 @@ exports.add_survey_header = function(ptor, header){
 	// 			fields[fields.length-1].sendKeys(header);
 	// 		})
 	// 	})
-		
+
 	// })
 }
 
@@ -727,7 +727,7 @@ exports.open_content_new_online_content = function(ptor){
         	locator.by_id(ptor, 'new_online_content').then(function(btn2){
         		btn2.click().then(function(){
         			locator.by_classname(ptor, 'modal-body').then(function(modal){
-    					expect(modal.isDisplayed()).toEqual(true);    
+    					expect(modal.isDisplayed()).toEqual(true);
   					})
         		})
         	})
@@ -759,13 +759,13 @@ exports.init_lecture = function(ptor, lec_name, lec_url){
 	.then(function(){
 		element(by.className('editable-input')).clear().sendKeys(lec_name)
 		element(by.className('check')).click().then(function(){
-			// o_c.feedback(ptor, 'successfully updated')			
+			// o_c.feedback(ptor, 'successfully updated')
 			element(by.id('url')).click()
 			.then(function(){
 				element(by.className('editable-input')).clear().sendKeys(lec_url)
 				element(by.className('check')).click();
 			})
-		})	
+		})
 	})
 }
 
@@ -862,7 +862,7 @@ exports.open_content_preview = function(ptor){
 
 exports.check_for_teacher_nav_bar = function(ptor){
     locator.by_id(ptor, 'teacher_left_nav').then(function(nav){
-    	expect(nav.isDisplayed()).toEqual(true);    
+    	expect(nav.isDisplayed()).toEqual(true);
   	})
 }
 
@@ -997,7 +997,7 @@ var create_invideo_quiz=function(id){
 	element(by.id(id)).click()
 	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
 }
- 
+
 exports.create_invideo_drag_text_quiz=function(){
 	create_invideo_quiz("drag_text")
 }
@@ -1106,7 +1106,7 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			locator.by_classname(ptor, 'must_save_check').click();
 			// element(by.id("correct_checkbox")).click()
 			element.all(by.model("data.explanation")).then(function(ex){
-				ex[0].sendKeys("explanation 1");	
+				ex[0].sendKeys("explanation 1");
 			})
 
 			ptor.actions().mouseMove(ontop).perform();
@@ -1120,7 +1120,7 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().doubleClick().perform();
 			ptor.actions().click().perform();
 			element.all(by.model("data.explanation")).then(function(ex){
-				ex[0].sendKeys("explanation 2");	
+				ex[0].sendKeys("explanation 2");
 			})
 
 			ptor.actions().mouseMove(ontop).perform();
@@ -1137,7 +1137,7 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			// element(by.className("popover-content")).element(by.className('must_save_check')).click()
 			locator.by_classname(ptor, 'must_save_check').click();
 			element.all(by.model("data.explanation")).then(function(ex){
-				ex[0].sendKeys("explanation 3");	
+				ex[0].sendKeys("explanation 3");
 			})
 
 			ptor.sleep(1000);
@@ -1158,7 +1158,7 @@ exports.make_mcq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
-		
+
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
@@ -1175,7 +1175,7 @@ exports.make_mcq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
-		
+
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Done')).click()
@@ -1206,7 +1206,7 @@ exports.make_ocq_text_questions=function(ptor){
 			ex[1].sendKeys("explanation 2");
 			ex[2].sendKeys("explanation 3");
 		})
-		
+
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Done')).click()
@@ -1226,7 +1226,7 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().click().perform();
 
 		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 1");	
+			ex[0].sendKeys("explanation 1");
 		})
 
 		ptor.actions().mouseMove(ontop).perform();
@@ -1241,22 +1241,22 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().click().perform();
 		locator.by_classname(ptor, 'must_save_check').click();
 		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 2");	
+			ex[0].sendKeys("explanation 2");
 		})
 
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
-        
+
         ptor.sleep(2000);
 
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
-		
+
 		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 3");	
+			ex[0].sendKeys("explanation 3");
 		})
 
 		ptor.sleep(2000);
@@ -1276,7 +1276,7 @@ exports.make_ocq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
-		
+
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
@@ -1293,7 +1293,7 @@ exports.make_ocq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
-		
+
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Done')).click()
@@ -1456,7 +1456,7 @@ exports.create_new_announcement=function(ptor, ann_txt){
 exports.check_number_of_announcments=function(ptor, no_of_ann){
   locator.by_repeater(ptor, 'announcement in announcements').then(function(announcments) {
       expect(announcments.length).toEqual(no_of_ann);
-  });  
+  });
 }
 
 
@@ -1542,7 +1542,7 @@ exports.change_course_info=function(ptor, course_description, prerequisites, sho
    //          });
 		})
 	})
-    
+
  //    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[2]/details-link/a').then(function(disc_lnk){
 	// 	disc_lnk.click();
  //        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){

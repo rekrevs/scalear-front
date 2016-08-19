@@ -21,10 +21,10 @@
                             <flag-button name="flag_comment" flagged="item.comment.user_flag" flag="flagComment()" unflag="unflagComment()"></flag-button>
                         </div>
                         <div class="like-button">
-                           <voting-button votes-count="item.comment.votes_count" voted="item.comment.user_vote" up="upvoteComment()" down="downvoteComment()" direction="horizontal"></voting-button>                            
+                           <voting-button votes-count="item.comment.votes_count" voted="item.comment.user_vote" up="upvoteComment()" down="downvoteComment()" direction="horizontal"></voting-button>
                         </div>
                     </span>
-                    <div class="comment_body break-text" ng-text-truncate="item.comment.content" ng-tt-words-threshold="30"></div>
+                    <div class="comment_body break-text" ng-text-truncate="item.comment.content" ng-tt-words-threshold="30" ></div>
                 </div>
             </td>
         </tr>

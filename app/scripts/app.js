@@ -1,187 +1,12 @@
 'use strict';
 
-angular.module('scalearAngularApp', [
-    'ngCookies',
-    'ngResource',
-    'ngSanitize',
-    'ui.router',
-    'ngTouch',
-    'ui.bootstrap.datepicker',
-    'ui.bootstrap.timepicker',
-    'ui.sortable',
-    'ui.calendar',
-    'ngDragDrop',
-    'pasvaz.bindonce',
-    'infinite-scroll',
-    'xeditable',
-    'googlechart',
-    'pascalprecht.translate',
-    'angularMoment',
-    'textAngular',
-    'highcharts-ng',
-    'config',
-    'chieffancypants.loadingBar',
-    'anguFixedHeaderTable',
-    'mm.foundation',
-    'Mac',
-    'dcbImgFallback',
-    'ngClipboard',
-    'ngTextTruncate',
-    'ngDialog'
-]).constant('headers', {
-    withCredentials: true,
-    'X-Requested-With': 'XMLHttpRequest'
-}).run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour){
-
-    $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
-    $rootScope.show_alert = "";
-    editableOptions.theme = 'default';
-    editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
-    editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
-    editableThemes['default'].errorTpl  = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
-    $rootScope.textAngularOpts = {
-        toolbar: [
-            ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
-            ['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
-            ['insertLink', 'unlink', 'insertImage']
-        ],
-        classes: {
-            // focussed: "focussed",
-            // toolbar: "btn-toolbar",
-            toolbarGroup: "button-group tiny custom_button_group",
-            toolbarButton: "button tiny secondary",
-            // toolbarButtonActive: "active",
-            textEditor: 'form-control',
-            htmlEditor: 'form-control'
-        }
-    }
-
-    $log.debug("lang is " + $rootScope.current_lang);
-    var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'faq','about' ,'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
-    var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
-    var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
-    var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
-
-    //check if route requires no auth
-    var stateNoAuth = function(state) {
-        for (var element in statesThatRequireNoAuth) {
-            var input = statesThatRequireNoAuth[element];
-            if (state.substring(0, input.length) === input)
-                return true;
-        }
-        return false;
-    }
-
-    // check if route does not require authentication
-    var routeClean = function(state) {
-        for (var element in statesThatDontRequireAuth) {
-            var input = statesThatDontRequireAuth[element];
-            if (state.substring(0, input.length) === input)
-                return true
-        }
-        return false;
-    }
-
-    var stateStudent = function(state) {
-        for (var element in statesThatForStudents) {
-            var input = statesThatForStudents[element];
-            if (state.substring(0, input.length) === input)
-                return true
-        }
-        return false;
-    }
-
-    var stateTeacher = function(state) {
-        for (var element in statesThatForTeachers) {
-            var input = statesThatForTeachers[element];
-            if (state.substring(0, input.length) === input)
-                return true
-        }
-        return false;
-    }
-    $window.onbeforeunload = function() {
-        $rootScope.unload = true;
-    }
-
-    $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from){
-        if($tour.isActive()){
-            $tour.end();
-        }             
-
-        UserSession.getRole().then(function(result){
-            var s = 1;
-            if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
-                $state.go("ie");
-            }
-
-            if($rootScope.current_user && $rootScope.current_user.info_complete === false){
-                $state.go('edit_account')
-                s = 2;
-            }
-            else{
-                if($rootScope.current_user && to.name === 'home'){
-                    $state.go("dashboard")
-                } 
-                else if(!$rootScope.current_user && to.name === 'home'){
-                    $state.go("landing")
-                }   
-                if(to.name === 'confirmed'){
-                    if(from.name === 'show_confirmation'){
-                        $state.go("confirmed")
-                    }
-                    else{
-                        $state.go("home");
-                        s = 0;
-                    }
-                }
-                if($rootScope.current_user && !$rootScope.current_user.intro_watched && to.name !== "edit_account"){
-                    $state.go('confirmed')
-                    s = 1;
-                }
-                if (!routeClean(to.name) && result === 0 ){ // user not logged in trying to access a page that needs authentication.
-                    $state.go("login");
-                    s = 0;
-                } else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
-                    $state.go("course_list");
-                    s = 0;
-                } 
-                else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
-                    $state.go("course_list");
-                    s = 0;
-                } 
-                else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 1)// teacher going to home, redirected to courses page
-                    $state.go("course_list");
-                else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
-                    $state.go("course_list");
-                else if (stateNoAuth(to.name)) {
-                    if (result === 1 || result === 2) {
-                        $state.go("home");
-                        s = 0;
-                    }
-                }
-            }
-
-            if (s === 0) {
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);
-                $timeout(function() {
-                    $rootScope.show_alert = "";
-                }, 4000);
-            }
-            if(s === 2){
-                $rootScope.show_alert = "error";
-                ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
-                $timeout(function() {
-                    $rootScope.show_alert = "";
-                }, 4000);
-            }
-        })
-    });
-
-}]).config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider', 'scalear_api',function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider, scalear_api) {
+angular.module('scalearAngularApp')
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider', 'scalear_api','$sceProvider', function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider, scalear_api, $sceProvider) {
     cfpLoadingBarProvider.includeSpinner = true;
 
     $logProvider.debugEnabled(scalear_api.debug)
+
+    $sceProvider.enabled(false);
 
     $translateProvider
         .translations('en', translation_en)
@@ -189,7 +14,7 @@ angular.module('scalearAngularApp', [
         .preferredLanguage('en')
         .useCookieStorage()
 
-    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
+    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
@@ -234,10 +59,17 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/users/signup.html',
             controller: 'UsersStudentCtrl'
         })
+        .state('signup', {
+            url: '/users/signup',
+            templateUrl: '/views/users/unified_signup.html',
+            controller: 'UsersSignUpCtrl',
+            params : { input1: null, input2: null }
+        })
         .state('thanks_for_registering', {
-            url: '/users/thanks?type',
+            url: '/users/thanks',
             templateUrl: '/views/users/thanks.html',
-            controller: 'ThanksForRegisteringCtrl'
+            controller: 'ThanksForRegisteringCtrl',
+            params : {email: null}
         })
         .state('confirmed', {
             url: '/users/confirmed',
@@ -253,6 +85,12 @@ angular.module('scalearAngularApp', [
             url: '/users/password/new',
             templateUrl: '/views/users/password/new.html',
             controller: 'UsersPasswordNewCtrl'
+        })
+        .state('forgot_password_confirmation', {
+            url: '/users/forgot_password_confirmation',
+            templateUrl: '/views/users/password/forgot_password_confirmation.html',
+            controller: 'ForgotPasswordConfirmationCtrl',
+            params : {email: null}
         })
         .state('change_password', {
             url: '/users/password/edit?reset_password_token',
@@ -273,7 +111,7 @@ angular.module('scalearAngularApp', [
             url: '/privacy',
             templateUrl: '/views/privacy.html',
             controller: 'PrivacyCtrl'
-        })            
+        })
         .state('faq', {
             url: '/faq',
             templateUrl: '/views/faq.html',
@@ -284,6 +122,11 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/course_list.html',
             controller: 'courseListCtrl'
         })
+        .state('student_enroll_course', {
+            url: '/courses/enroll?id',
+            templateUrl: '/views/empty_view.html',
+            controller: 'CoursesEnrollCtrl'
+        })
         .state('new_course', {
             url: '/courses/new',
             templateUrl: '/views/teacher/course_list/new_course.html',
@@ -293,12 +136,17 @@ angular.module('scalearAngularApp', [
             url: '/courses/:course_id',
             template: '<ui-view/>',
             controller: 'courseCtrl',
-            resolve:{
-                course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
-                    return courseResolver.init($stateParams.course_id)
+            resolve:{   //Injected 'ModuleModel' because it needs to load with the CourseModel
+                CourseData:['CourseModel','ModuleModel', 'ItemsModel','$stateParams',function(CourseModel, ModuleModel, ItemsModel, $stateParams){
+                    return CourseModel.getData($stateParams.course_id)
                 }]
             }
-        })           
+        })
+        .state('course.content_selector',{
+            url:'/content',
+            templateUrl: '/views/empty_view.html',
+            controller: 'contentSelectorCtrl',
+        })
         .state('course.module',{
             url:'/modules/:module_id',
             templateUrl: '/views/empty_view.html',
@@ -413,6 +261,11 @@ angular.module('scalearAngularApp', [
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })
+        .state('course.module.student_inclass', {
+            url: '/student_inclass',
+            templateUrl: '/views/student/inclass/inclass.html',
+            controller: 'studentInclassCtrl'
+        })
         .state('course.module.courseware.quiz', {
             url: '/quizzes/:quiz_id',
             templateUrl: '/views/student/lectures/quiz.middle.html',
@@ -470,17 +323,17 @@ angular.module('scalearAngularApp', [
         })
         .state('show_shared', {
           url: '/show_shared',
-          templateUrl: '/views/shared.html',
+          templateUrl: '/views/teacher/sharing/shared.html',
           controller: 'sharedCtrl'
         })
         .state('student_getting_started', {
           url: '/help/student/getting_started',
-          templateUrl: '/views/help/student_getting_started.html',
+          templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
         })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',
-          templateUrl: '/views/help/teacher_getting_started.html',
+          templateUrl: '/views/teacher/help/teacher_getting_started.html',
           controller: 'TeacherGettingStartedCtrl'
         })
 }])

@@ -1,32 +1,31 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope','UserSession','Page','$log', function ($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession,Page, $log) {
-        Page.setTitle('confirmations.confirm_account')
-        $scope.user={}
-        $scope.sending=true
-        $log.debug('showing confirmation ')
-        $log.debug($stateParams)
+  .controller('UsersConfirmationShowCtrl', ['$scope', 'User', '$state', '$stateParams', '$timeout', '$rootScope', 'UserSession', 'Page', '$log', function($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession, Page, $log) {
+    Page.setTitle('confirmations.confirm_account')
+    $scope.user = {}
+    $scope.sending = true
+    $log.debug('showing confirmation ')
+    $log.debug($stateParams)
 
-        UserSession.getRole().then(function(result) {
-            if(result==0){
-                User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, 
-                    function(){
-                        $timeout(function(){
-                           $scope.sending=false;
-                           $rootScope.$emit('$stateChangeStart', {name:'confirmed'},{},{name:'show_confirmation'})
-
-                        },2500)
-                    }, 
-                    function(data){
-                        $scope.sending=false;
-                        $scope.user.errors=data.data;
-                    })
-            }
+    UserSession.getCurrentUser().catch(function() {
+      console.log("dsfsdfs")
+      User.show_confirmation({ confirmation_token: $stateParams.confirmation_token },
+        function() {
+          $timeout(function() {
+            $scope.sending = false;
+            $state.go("confirmed")
+            // $rootScope.$emit('$stateChangeStart', { name: 'confirmed' }, {}, { name: 'show_confirmation' })
+          }, 2500)
+        },
+        function(data) {
+          $scope.sending = false;
+          $scope.user.errors = data.data;
         })
+    })
 
-        $scope.$watch('current_lang', function(newval, oldval){
-            if(newval!=oldval)
-                delete $scope.user.errors
-        });
+    $scope.$watch('current_lang', function(newval, oldval) {
+      if(newval != oldval)
+        delete $scope.user.errors
+    });
   }]);

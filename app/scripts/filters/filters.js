@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
       formatted_time = formatted_time.replace('ss', sec);
       formatted_time = formatted_time.replace('s', sec*1+""); // check for single second formatting
       return formatted_time;
-    } 
+    }
     else {
       return hr + ':' + min + ':' + sec;
     }
@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
         min = 1
         sec = 0
       }
-      if (hr == 0){ 
+      if (hr == 0){
         format =format.replace('hh:', "").replace('h:', "")
       }
       else if(hr < 10){ hr  = "0" + hr; }
@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
 
     angular.forEach(input, function(elem,key){
       if(elem.show)
-        result[key] = elem  
+        result[key] = elem
     });
     return result;
   }
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
     var result = [];
     angular.forEach(input, function(elem,key){
       if(!elem.student_hide)
-        result.push(elem) 
+        result.push(elem)
     });
     return result;
   }
@@ -159,13 +159,14 @@ angular.module('scalearAngularApp')
     }
 }).filter("capitalize", function(){
   return function(s){
-    return s[0].toUpperCase() + s.slice(1);
+    if(s && s.length > 0 )
+      return s[0].toUpperCase() + s.slice(1);
   }
 }).filter("anonymous", function(){
   return function(s, role){
-    if(role == 'student'){
+    // if(role == 'student'){
       return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase() +'-'+(md5(s).substring(0,4).toUpperCase())
-    }
+    // }
   }
 }).filter("courseActive", ['$state', function($state){
   return function(id){
@@ -186,4 +187,17 @@ return function(items) {
      if(appearance_time)
       return new Date(appearance_time) <= new Date()
   };
+}).filter('inclassMenuFilter', function() {
+  return function(items) {
+    return items.filter(function (item) {
+      if(item.data)
+        return (item.type!='discussion')? item.data.show : true
+      return false
+    })
+  };
+}).filter('parseUrlFilter', function () {
+    var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
+    return function (text, target) {
+        return text.replace(urlPattern, '<a target="' + target + '" href="$&">$&</a>') ;
+    };
 });

@@ -4,9 +4,9 @@
 }
 </style>
 <center>
-<button type="button" id="del_acc_btn" class="right tiny button alert" ng-click="open()" translate>account.cancel_account</button>
-  <form class="large-6 medium-8 small-12" ng-submit="open_require_password()">
-    <div class="large-12 medium-12 small-12 columns">
+
+  <form class="large-6 medium-8 small-12" ng-submit="openRequirePassword()">
+    <div class="small-12 columns">
         <div class="row">
           <div class="small-push-1 small-centered small-8 columns">
               <h5 style="line-height:1"><small translate>account.required_marked</small></h5>            
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+      <div class="small-12 columns">
           <div class="row">
             <div class="small-4 columns">
                 <label class="with-small-margin-top right" for="setting_user_name">
@@ -25,7 +25,7 @@
             <div class="small-8 columns">
                 <div class="row">
                     <div class="small-9 columns">
-                         <input type="text" id="setting_user_name" ng-model="user.name" ng-class="{error: user.errors.name}" />
+                         <input type="text" id="setting_user_name" ng-model="user.name" ng-class="{error: user.errors.name}" ng-disabled="user.saml" />
                          <small ng-show="user.errors.name" class="error with-tiny-padding">{{user.errors.name.join()}}</small>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
     </div>
 
     <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+      <div class="small-12 columns">
           <div class="row">
               <div class="small-4 columns">
                 <label class="with-small-margin-top right" >
@@ -46,7 +46,7 @@
              <div class="small-8 columns">
               <div class="row">
                 <div class="small-9 columns">
-                  <input type="text" id="setting_last_name" ng-model="user.last_name" ng-class="{error: user.errors.last_name}" />
+                  <input type="text" id="setting_last_name" ng-model="user.last_name" ng-class="{error: user.errors.last_name}" ng-disabled="user.saml"/>
                   <small ng-show="user.errors.last_name" class="error with-tiny-padding">{{user.errors.last_name.join()}}</small>
                 </div>
             </div>
@@ -56,7 +56,7 @@
     </div>
 
     <div class="row">
-        <div class="large-12 medium-12 small-12 columns">
+        <div class="small-12 columns">
             <div class="row">
                 <div class="small-4 columns">
                   <label class="with-small-margin-top right">
@@ -67,7 +67,7 @@
                <div class="small-8 columns">
                 <div class="row">
                   <div class="small-9 columns">
-                    <input type="email" id="setting_user_email" ng-model="user.email" ng-class="{error: user.errors.email}" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" />
+                    <input type="email" id="setting_user_email" ng-model="user.email" ng-class="{error: user.errors.email}" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" ng-disabled="user.saml"/>
                     <small ng-show="user.errors.email" class="error with-tiny-padding">{{user.errors.email.join()}}</small>
                   </div>
                 </div>
@@ -77,7 +77,7 @@
     </div>
 
     <div class="row">
-        <div class="large-12 medium-12 small-12 columns">
+        <div class="small-12 columns">
             <div class="row">
                 <div class="small-4 columns">
                    <label class="with-small-margin-top right">
@@ -88,7 +88,7 @@
                <div class="small-8 columns">
                 <div class="row">
                   <div class="small-9 columns">
-                    <input type="text" id="setting_user_university" ng-model="user.university" ng-class="{error: user.errors.university}" />
+                    <input type="text" id="setting_user_university" ng-model="user.university" ng-class="{error: user.errors.university}" ng-disabled="user.saml"/>
                     <small ng-show="user.errors.university" class="error with-tiny-padding">{{user.errors.university.join()}}</small>
                   </div>
                 </div>
@@ -98,7 +98,7 @@
     </div>
 
     <div class="row">
-        <div class="large-12 medium-12 small-12 columns">
+        <div class="small-12 columns">
             <div class="row">
                 <div class="small-4 columns">
                    <label class="with-small-margin-top right">
@@ -119,17 +119,47 @@
     </div>
 
     <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+      <div class="small-12 columns">
         <div class="row">
-            <div class="small-push-1 small-centered small-8 columns">
+            <div class="small-10 columns small-centered small-push-1">
                   <h5 style="line-height:1"><small translate>account.online_name_comment</small></h5>            
             </div>
           </div>
         </div>
     </div>
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="row">
+                <div class="small-4 columns">
+                   <label class="with-small-margin-top right">
+                      <span translate>account.first_day</span>
+                      <!-- <small style="font-style:italic;" ng-class="{'color-red text-bold': !user.first_day}" >*</small> -->
+                    </label>
+                </div>
+                <div class="small-8 columns">
+                  <div class="row">
+                    <div class="small-9 columns">
+                      <select class="no-margin-bottom"  ng-options="day.name for day in dayNamesOption" ng-model="user.first_day" ng-class="{error: user.errors.first_day}"></select>
+                      <small ng-show="user.errors.first_day" class="error with-tiny-padding">{{user.errors.first_day.join()}}</small>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
 
-    <div class="row with-medium-margin-top">
-      <div class="large-12 medium-12 small-12 columns">
+
+    <div class="row with-medium-margin-top" ng-hide="user.saml">
+      <div class="small-12 columns">
+    <div class="row">
+      <div class="small-12 columns">
+        <div class="row">
+            <div class="small-10 columns small-centered small-push-1">
+                  <h5 style="line-height:1"><small translate>account.password_comment</small></h5>            
+            </div>
+          </div>
+        </div>
+    </div>
         <div class="row">
           <div class="small-4 columns">
               <label class="with-small-margin-top right" >
@@ -143,9 +173,8 @@
         </div>
       </div>
     </div>
-
-    <div class="row">
-        <div class="large-12 medium-12 small-12 columns">
+    <div class="row" ng-hide="user.saml">
+        <div class="small-12 columns">
           <div class="row">
             <div class="small-4 columns">
                 <label class="with-small-margin-top  right" translate>account.password.password_confirmation</label>
@@ -157,13 +186,51 @@
           </div>
         </div>
     </div>
+
+    <br>
+          
     <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+        <div class="small-12 columns">
+            <div class="row">
+               <div class="small-4 columns">
+                 <br>
+                 <label class="with-small-margin-top right">Image</label>
+               </div>
+               <div class="small-4 columns left">
+                 <profile-image class="small-7 no-padding columns" email="user.email" imagesize="165"> 
+                 </profile-image>
+               </div>
+            </div>     
+        </div>
+                   
+    </div>
+      
+    <div class="row">
+        <div class="small-12 columns">
+            <div class="row">
+               <div class="small-0 columns">
+                 <h5 style="line-height:1"> 
+                      <small translate>
+                          account.avatar_comment
+                      </small>
+                      <small>
+                          <a href="https://gravatar.com"> gravatar.com </a>
+                      </small>
+                 </h5>
+               </div>
+            </div>     
+        </div>
+    </div>
+        
+    <br>
+        
+    <div class="row">
+      <div class="small-12 columns">
         <div class="row">
           <div class="small-4 columns">
             <label class="with-small-margin-top right"translate>global.pref_language</label>
           </div>
-          <div class="small-6 small-push-2 columns left">
+          <div class="small-6 columns left">
             <button class="tiny button dropdown under-the-other left" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
               <ul id="languages_list" class="f-dropdown">
                   <li>
@@ -179,13 +246,20 @@
     </div>
 
     <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
+      <div class="small-12 columns">
         <div class="row">
-          <div class="small-6 small-push-6 columns left">
+          <div class="small-4 columns">
+            <label class="with-small-margin-top right"></label>
+          </div>
+            
+          <div class="small-6 columns left">
             <button type="submit" id="update_info" class="tiny button success under-the-other left" translate>button.save_changes</button>
-           </div>
+            <button type="button" id="del_acc_btn" class="right tiny button alert" ng-click="confirmDelete()" translate>account.cancel_account</button>
+          </div>
+            
         </div>
       </div>
     </div>
+      
   </form>
 </center>

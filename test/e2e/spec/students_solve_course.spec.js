@@ -27,17 +27,17 @@ var student_quiz = new StudentQuiz()
 describe("Solve Course",function(){
 	describe("Teacher",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
-	        course_list.open_course(1)
-	    })	
-	    it("should go to edit mode",function(){
+	        course_list.open_student_course(1)
+	    })
+		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
-		})    
-	    it("should open first quiz in first module",function(){
+		})
+		it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).item(4).open()
 	    	sleep(3000)
@@ -46,44 +46,44 @@ describe("Solve Course",function(){
     	it('should make quiz not in order', function(){
 			course_editor.change_quiz_inorder()
 		})
-	    it('make quiz not required', function(){
+		it('make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
-	    it("should increase retries number",function(){
+		it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
-	    it("should open second lecture in second module",function(){
+		it("should open second lecture in second module",function(){
 	    	navigator.module(2).open()
 	    	navigator.module(2).item(2).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-	    it('should make lecture not in order', function(){
+		it('should make lecture not in order', function(){
 			course_editor.open_lecture_settings()
 	        course_editor.change_lecture_inorder()
 	    })
-	    it("should open first quiz in second module",function(){
+		it("should open first quiz in second module",function(){
 	    	navigator.module(2).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-	    it('should make quiz not required', function(){
+		it('should make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
-	    it("should increase retries number",function(){
+		it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
 
-	    it("should logout",function(){
+		it("should logout",function(){
 			header.logout()
 		})
 	})
 
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -93,9 +93,11 @@ describe("Solve Course",function(){
 		describe("First Module",function(){
 			it("should open first module",function(){
 				navigator.module(1).open()
+				// navigator.module(1).item(1).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
+				browser.refresh()
 				video.wait_till_ready()
 				video.play()
 				video.seek(9)
@@ -116,14 +118,21 @@ describe("Solve Course",function(){
 				student_lec.show_explanation(1)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 1")
+
 				student_lec.show_explanation(2)
+				sleep(2000)
 				expect(student_lec.explanation_title).toContain("Incorrect")
 				expect(student_lec.explanation_content).toContain("explanation 2")
+
 				student_lec.show_explanation(3)
+				sleep(2000)
 				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 3")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -151,6 +160,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -175,12 +187,15 @@ describe("Solve Course",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
 				student_lec.decline_review_inclass()
 			})
-			it('should watch video and pass by all milestones', function(){
+			it('should watch video and pass by all milestones 100 %', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
 		        video.seek(99);
@@ -213,6 +228,10 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
+				sleep(10000)
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -240,6 +259,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -259,6 +281,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -339,10 +364,10 @@ describe("Solve Course",function(){
 		        expect(student_quiz.status).toContain(0+"/"+2)
 		    })
 
-		    it('should check submit button enabled',function(){
+			it('should check submit button enabled',function(){
 		        expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
-		    it("should check for optional tag",function(){
+			it("should check for optional tag",function(){
 		    	expect(student_quiz.optional_tag.isDisplayed()).toBe(true)
     			expect(student_quiz.optional_tag.getText()).toEqual("Optional")
 		    })
@@ -416,10 +441,10 @@ describe("Solve Course",function(){
 		        expect(student_quiz.status).toContain(0+"/"+1)
 		    })
 
-		    it('should check submit button enabled',function(){
+			it('should check submit button enabled',function(){
 		        expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
-		    it("should check for optional tag",function(){
+			it("should check for optional tag",function(){
 		    	expect(student_quiz.optional_tag.isPresent()).toBe(false)
 		    })
 			it('should answer mcq incorrect', function(){
@@ -499,6 +524,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -526,6 +554,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -550,6 +581,9 @@ describe("Solve Course",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -591,6 +625,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -618,6 +655,9 @@ describe("Solve Course",function(){
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -640,6 +680,9 @@ describe("Solve Course",function(){
 				expect(student_lec.notification).toContain("Incorrect")
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -723,7 +766,7 @@ describe("Solve Course",function(){
 	})
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -746,6 +789,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -765,6 +811,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -786,6 +835,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -817,6 +869,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -836,6 +891,9 @@ describe("Solve Course",function(){
 				student_lec.check_answer()
 			})
 			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
 				student_lec.wait_for_vote()
 			})
 			it('should request that the question not be reviewed in class', function(){
@@ -971,12 +1029,12 @@ describe("Solve Course",function(){
 			// })
 			it("should logout",function(){
 				header.logout()
-			})			
+			})
 		})
 	})
 	// describe("First Student",function(){
 	// 	it("should login", function(){
-	// 		login_page.sign_in(params.student_mail, params.password)
+	// 		login_page.sign_in(params.student1.email, params.password)
 	// 	})
 	// 	var navigator = new ContentNavigator(0)
 	// 	it('should open first course', function(){

@@ -20,12 +20,12 @@ var student_lec = new StudentLecture()
 describe("Course Validation",function(){
 	describe("Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 			course_info.student.open()
 		})
 		it('should check course information', function(){
@@ -61,18 +61,18 @@ describe("Course Validation",function(){
 
 // 	it('should sign in as teacher', function(){
 // 		// o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 	})
 
 // 	it('should create_course', function(){
 // 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-// 		// ptor.sleep(5000);	
+// 		// ptor.sleep(5000);
 // 	})
 
-	
+
 // 	//test
 // 	it('should go to info page and change info', function(){
-// 		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 		// o_c.open_course_list(ptor)
 // 		// o_c.open_course(ptor, 1);
 // 		o_c.open_course_info(ptor);
@@ -80,7 +80,7 @@ describe("Course Validation",function(){
 // 	})
 
 // 	it('should get the enrollment key and enroll student', function(){
-// 		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+// 		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 // 	})
 
 // 	// it('should log out from teacher then login as a student', function(){

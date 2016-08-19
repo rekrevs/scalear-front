@@ -21,7 +21,7 @@ describe("Discussions",function(){
 	// })
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -33,6 +33,7 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
 			navigator.close()
+			browser.refresh()
 		})
 		it("should seek to 15%",function(){
 			video.seek(15)
@@ -61,13 +62,14 @@ describe("Discussions",function(){
             expect(student_lec.lecture(1).items.count()).toEqual(5)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -103,13 +105,14 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 
 	describe("Third Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student3_mail, params.password)
+			login_page.sign_in(params.student3.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -138,20 +141,21 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
 			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
 		})
-		it("should add comment",function(){			
+		it("should add comment",function(){
 			student_lec.lecture(1).discussion(1).add_comment()
 			student_lec.lecture(1).discussion(1).type_comment("second comment")
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(1).comment(2).title).toEqual("second comment")
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -210,12 +214,13 @@ describe("Discussions",function(){
             expect(student_lec.lecture(2).items.count()).toEqual(4)
 		})
         it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -234,7 +239,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(2).comments.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(2).comment(2).text).toContain("Flagged comment")
-		})	
+		})
 		it("should vote second comment",function(){
 			expect(student_lec.lecture(1).discussion(2).comment(2).vote_count).toEqual("1")
 			student_lec.lecture(1).discussion(2).comment(2).vote()
@@ -256,12 +261,13 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(0)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 	describe("Second Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student2_mail, params.password)
+			login_page.sign_in(params.student2.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -286,12 +292,13 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).items.count()).toEqual(3)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})
 	describe("First Student",function(){
 		it("should login", function(){
-			login_page.sign_in(params.student_mail, params.password)
+			login_page.sign_in(params.student1.email, params.password)
 		})
 		it('should open first course', function(){
 			course_list.open()
@@ -311,6 +318,7 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(2).items.count()).toEqual(3)
 		})
 		it("should logout",function(){
+			student_lec.close_timeline()
 			header.logout()
 		})
 	})

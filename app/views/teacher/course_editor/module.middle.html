@@ -10,27 +10,27 @@
 			<tbody>
 				<tr>
 					<td class="right-border"translate>groups.statistics.videos</td>
-					<td ><b>{{module.total_lectures || 0}} ({{module.total_time | formattime: 'hh:mm:ss'}} total)</b></td>
+					<td ><b>{{module_statistics.total_lectures || 0}} ({{module_statistics.total_time | formattime: 'hh:mm:ss'}} total)</b></td>
 				</tr>
 				<tr>
 					<td class="right-border"translate>groups.statistics.video_quizzes</td>
-					<td ><b>{{module.total_questions || 0}}</b></td>
+					<td ><b>{{module_statistics.total_questions || 0}}</b></td>
 				</tr>
 				<tr>
 					<td class="right-border"translate>groups.statistics.quizzes</td>
-					<td ><b>{{module.total_quizzes || 0}} ({{module.total_quiz_questions || 0}} <span translate>groups.statistics.questions</span>)</b></td>
+					<td ><b>{{module_statistics.total_quizzes || 0}} ({{module_statistics.total_quiz_questions || 0}} <span translate>groups.statistics.questions</span>)</b></td>
 				</tr>
 				<tr>
 					<td class="right-border"translate>groups.statistics.surveys</td>
-					<td ><b>{{module.total_surveys || 0}} ({{module.total_survey_questions || 0}} <span translate>groups.statistics.questions</span>)</b></td>
+					<td ><b>{{module_statistics.total_surveys || 0}} ({{module_statistics.total_survey_questions || 0}} <span translate>groups.statistics.questions</span>)</b></td>
 				</tr>
 				<tr>
 					<td class="right-border"translate>groups.statistics.customlinks</td>
-					<td ><b>{{module.total_links || 0}}</b></td>
+					<td ><b>{{module_statistics.total_links || 0}}</b></td>
 				</tr>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 </div>
 <br />
 <div>
@@ -39,7 +39,7 @@
 			<button class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>editor.button.add_content</span></button>
 		</div>
 		<div class="small-12 medium-8 columns left">
-			<p class="no-margin-bottom" translate>editor.home.choose_add</p>
+			<p class="no-margin-bottom" style="margin-top:10px" translate>editor.home.choose_add</p>
 		</div>
 	</div>
 </div>

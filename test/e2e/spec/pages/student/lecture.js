@@ -66,6 +66,9 @@ Lecture.prototype = Object.create({}, {
 		this.note_area.sendKeys(text)
 		this.note_area.sendKeys(protractor.Key.ENTER)
 	}},
+	edit_note:{value:function(num){
+		this.note(num).element(by.className('ng-binding')).click()
+	}},
 	delete_note:{value:function(num){
 		this.note(num).element(by.className('delete')).click()
 		this.note(num).element(by.className('alert')).click()
@@ -101,7 +104,7 @@ LecturePage.prototype=Object.create({},{
 		this.confused_button.click()
 	}},
 	add_discussion:{value:function(){this.discussion_button.click()}},
-	check_answer_button:{get:function(){return element(by.buttonText('Check Answer'))}},
+	check_answer_button:{get:function(){return element(by.className("check_answer_button"))}},
 	check_answer:{value:function(){this.check_answer_button.click()}},
 	quiz_layer:{get:function(){return element(by.className('ontop'))}},
 	review_panel:{get:function(){return element(by.className('review_panel'))}},
@@ -111,9 +114,11 @@ LecturePage.prototype=Object.create({},{
 	next:{value:function(){this.next_button.click()}},
 	notification:{get:function(){return element(by.tagName("notification")).getText()}},
 	wait_for_quiz:{value:function(){
-		var quiz_layer = this.quiz_layer
+		// var quiz_layer = this.quiz_layer
+		var check_button = this.check_answer_button
 		browser.driver.wait(function() {
-	        return quiz_layer.isDisplayed().then(function(disp) {
+	        return check_button.isDisplayed().then(function(disp) {
+
 	            return disp;
 	        }, 100000);
 	    });

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log','$window', function ($scope, $stateParams, $timeout, Module, $translate, $log, $window){
-  		
+  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log','$window', 'ModuleModel', function ($scope, $stateParams, $timeout, Module, $translate, $log, $window, ModuleModel){
+
 	$scope.statistics_player={}
 	$scope.statistics_player.events={}
-	$scope.module= $scope.course.selected_module
+	$scope.module= ModuleModel.getSelectedModule()
 	$scope.types=['confused', 'back', 'pauses', 'questions']
 
 	var getStudentStatistics = function(){
@@ -86,8 +86,8 @@ angular.module('scalearAngularApp')
 			},
 			"legend": 'none',
 			chartArea:{
-				left: 35, 
-				width:getChartWidth() 
+				left: 35,
+				width:getChartWidth()
 			},
 			"bar":{"groupWidth":5}
 		}
@@ -171,12 +171,12 @@ angular.module('scalearAngularApp')
 				$scope.lecture_url = lec+"&controls=1&autohide=1&fs=1&theme=light"
 			}
 			else{
-				$scope.lecture_url = lec 
+				$scope.lecture_url = lec
 			}
 		}
 		else
 			$scope.statistics_player.controls.seek_and_pause(to_seek)
 	}
 
-	getStudentStatistics()   
+	getStudentStatistics()
 }]);

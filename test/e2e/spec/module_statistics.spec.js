@@ -25,14 +25,14 @@ var navigator = new ContentNavigator(1)
 describe("Module Statistics",function(){
 	describe("Teacher",function(){
 		it("should login as teacher",function(){
-			login_page.sign_in(params.teacher_mail, params.password)
+			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
 	        sub_header.open_edit_mode()
 	    })
-	    
+
 	    it("should open first module ", function(){
 	    	navigator.module(1).open()
 		})
@@ -44,7 +44,7 @@ describe("Module Statistics",function(){
 		it("should create a new module",function(){
 			navigator.add_module()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("0 (0:00 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("0 (0 Questions)")
@@ -59,7 +59,7 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("1 (06:05 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("0 (0 Questions)")
@@ -78,12 +78,12 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("1 (06:05 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("1")
 	    	expect(course_editor.total_quiz_questions).toEqual("0 (0 Questions)")
 		})
-		
+
 		it("should add a quiz",function(){
 			navigator.module(3).open_content_items()
 			content_items.add_quiz()
@@ -100,7 +100,7 @@ describe("Module Statistics",function(){
 			question.add_answer()
 			question.type_answer("answer 2")
 			question.add_answer()
-			question.type_answer("answer 3")			
+			question.type_answer("answer 3")
 
 			quiz.add_question()
 			var question = quiz.question(3)
@@ -118,7 +118,7 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("1 (06:05 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("1")
 	    	expect(course_editor.total_quiz_questions).toEqual("1 (2 Questions)")
@@ -132,7 +132,7 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("1 (06:05 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("1 (2 Questions)")
@@ -141,7 +141,7 @@ describe("Module Statistics",function(){
 		it("should delete lecture ", function(){
 	    	navigator.module(3).item(1).delete()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("0 (0:00 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("1 (2 Questions)")
@@ -154,7 +154,7 @@ describe("Module Statistics",function(){
 		it("should delete quiz question header",function(){
 			sleep(3000)
 			scroll_top()
-			
+
 			quiz.question(1).delete()
 			expect(quiz.questions.count()).toEqual(2)
 			quiz.save()
@@ -163,7 +163,7 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("0 (0:00 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("1 (2 Questions)")
@@ -180,7 +180,7 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("0 (0:00 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("1 (1 Questions)")
@@ -191,14 +191,14 @@ describe("Module Statistics",function(){
 		it("should open module ", function(){
 	    	navigator.module(3).open()
 		})
-		it("should check module statistics",function(){			
+		it("should check module statistics",function(){
 			expect(course_editor.total_time).toEqual("0 (0:00 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("0")
 	    	expect(course_editor.total_quiz_questions).toEqual("0 (0 Questions)")
 		})
 	})
 
-	describe("Revert Changes - Teacher",function(){		
+	describe("Revert Changes - Teacher",function(){
 		it("should delete module",function(){
 			navigator.module(3).delete()
 			expect(navigator.modules.count()).toEqual(2)

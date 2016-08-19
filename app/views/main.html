@@ -33,10 +33,10 @@
                         <a class="font-small page-scroll" href="#started">Getting Started</a>
                     </li>
                     <li>
-                        <a id="login" class="font-small visible-xs visible-sm visible-md visible-lg" ng-click='goTo("login")'>Sign In</a>
+                        <a id="login" class="font-small btn btn-golden " ui-sref="login">Sign In/Up</a>
                     </li>
-                    <li>
-                        <a class="font-small visible-md visible-lg btn btn-golden" dropdown-toggle="#signup_list_small">
+                    <!-- <li>
+                        <a class="font-small visible-md visible-lg btn btn-golden" ui-sref="signup">
                             <span>Sign Up</span>
                             <span class="caret"></span>
                         </a>
@@ -45,8 +45,7 @@
                             <li role="separator" class="divider" style="margin:0"></li>
                             <li><a ui-sref="student_signup" class="signup_list_item">I'm a Student</a></li>
                         </ul>
-                    </li>
-
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -59,17 +58,17 @@
                     <div class="intro-lead-in-custom">
                         <img src="images/landing/sl-logo-transparent2.png" style="width: 80%;">
                     </div>
-                    <div class="intro-heading" style="padding: 0px 16%;">Active Learning Online And In-class</div>                    
-                    <a class="btn btn-xl" ng-click='goTo("login")'>Sign In</a>
-                    <a class="btn btn-xl btn-golden" dropdown-toggle="#signup_list">
+                    <div class="intro-heading" style="padding: 0px 16%;">Active Learning Online And In-class</div>
+                    <a class="btn btn-xl btn-golden" ui-sref="login">Sign In or Sign Up</a>
+                    <!-- <a class="btn btn-xl btn-golden" ui-sref="signup">
                         <span>Sign Up</span>
                         <span class="caret"></span>
-                    </a>
-                     <ul id="signup_list" class="dropdown-menu" style="padding:0">
+                    </a> -->
+                    <!--  <ul id="signup_list" class="dropdown-menu" style="padding:0">
                         <li><a ui-sref="teacher_signup" class="signup_list_item">I'm a Teacher</a></li>
                         <li role="separator" class="divider" style="margin:0"></li>
                         <li><a ui-sref="student_signup" class="signup_list_item">I'm a Student</a></li>
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -89,7 +88,7 @@
                     <span class="fa-stack fa-4x">
                         <img src="images/landing/materials.png" class="img-responsive" alt="">
                     </span>
-                    
+
                     <h4 class="service-heading">Student Preparation</h4>
                     <p class="text-muted text-left">Get students ready for class with interactive online lectures, in-video quizzes, surveys, voting, and student-led discussions.</p>
                 </div>
@@ -197,7 +196,7 @@
                         <h4>Getting Started for Students</h4>
                         <p class="text-muted text-left">Learn how to work with interactive online lectures, ask questions, take notes, and tips for how to learn the most with ScalableLearning.</p>
                     </div>
-                </div>   
+                </div>
                 <div class="col-sm-12 col-md-4 portfolio-item" >
                     <a class="portfolio-link" data-toggle="modal" style="border: 1px solid; cursor: default;">
                         <div class="portfolio-hover">
@@ -209,13 +208,13 @@
                     </a>
                      <div class="portfolio-caption">
                         <h4>Getting Help</h4>
-                        <p class="text-muted text-left">Use the Help menu to browse our 
-                            <a target="_blank" ng-href="{{scalear_api.instruction_manual}}">manual</a>, 
+                        <p class="text-muted text-left">Use the Help menu to browse our
+                            <a target="_blank" ng-href="{{scalear_api.instruction_manual}}">manual</a>,
                             <a target="_blank" ng-href="{{scalear_api.flipped_manual}}">guide to flipped classroom teaching</a>
-                            , visit the 
+                            , visit the
                             <a target="_blank" ng-href="{{scalear_api.teacher_forum_link}}">teacher forum</a>
-                            , and 
-                            <a class="page-scroll" href="#contact">contact us</a> 
+                            , and
+                            <a class="page-scroll" href="#contact">contact us</a>
                             with questions and comments.
                         </p>
                     </div>
@@ -255,10 +254,10 @@
                     <p class="text-muted">ScalableLearning turns online lectures into an active, social learning experience. Students can interact with the material, each other, and their teacher through online discussions, in-video quizzes, and voting.</p>
                     <p class="text-muted">Teachers receive feedback on how well students understood the material and can respond to questions and discussions right in the video. By bringing interactivity and social interaction to online videos, ScalableLearning is a powerful tool for enhancing distance education.</p>
                 </div>
-    
+
             </div>
         </div>
-    </section>   
+    </section>
 
     <section id="team" >
         <div class="section_container">
@@ -364,13 +363,13 @@
                                 <div class="form-group">
                                     <textarea class="form-control" placeholder="Questions or comments *" id="message" required data-validation-required-message="Please enter a message." ng-model="comment_data"></textarea>
                                     <p class="help-block text-danger" ng-show="!comment_data && submitted">Please add a message</p>
-                                    
+
                                 </div>
                             </div>
                             <div class="clearfix"></div>
                             <div class="col-lg-12 text-center">
                                 <div id="success"></div>
-                                <button ng-hide="show_thanks" type="submit" ng-click="send_technical();submitted=true" class="btn btn-xl">Contact Us</button>
+                                <button ng-hide="show_thanks" type="submit" ng-click="sendTechnical();submitted=true" class="btn btn-xl">Contact Us</button>
                                 <button ng-show="show_thanks" class="btn btn-xl">Thanks!</button>
                                 <loading size="small" show="sending_technical" />
                             </div>

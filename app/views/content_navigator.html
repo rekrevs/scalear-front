@@ -12,14 +12,14 @@
 					</accordion-group>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
 						<accordion-heading class="accordion-heading">
-							<div bindonce bo-id="'module_'+module.id" class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+							<div bindonce bo-id="'module_'+module.id" class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;display:inline-block;width: 100%;">
 								<div class="row" style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
 									<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
 										<module-progress-check class="left" module="module" />
 									</div>
 									<div class="small-9 columns no-padding">
 										<i bo-if="!(module.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
-										<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
+										<div class=" module_name" bo-text="module.name"></div>
 									</div>
 									<div class="small-2 no-padding text-right columns">
 										<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
@@ -28,15 +28,24 @@
 							</div>
 						</accordion-heading>
 						<ul>
-							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
+							<li class="inclass_button disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; padding: 2px; min-height: 24px;background: #F08A24;box-shadow: 1px 0px 4px grey;border-radius: 2px;color:white;width:100%" ng-if="module.has_inclass" ui-sref="course.module.student_inclass({ module_id: module.id })">
+								<div class="position-relative" style="height: 30px;">
+									<div class="show-inline valign-middle left text-left" style="padding-left:15px;line-height: 2.5">Start In-class Session</div>
+								</div>
+							</li>
+							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass)}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" >
 								<div bo-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
-									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
-									<i bo-if="!(item.appearance_time | visible)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{item.appearance_time| fromNow}}"></i>
-									<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.done}" ></i>
+									<i bo-if="!(item.appearance_time | visible) && !item.inclass" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}"></i>
+									<i bo-if="item.class_name == 'lecture' && !item.inclass" class="fi-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
+									<i bo-if="item.class_name == 'lecture' && item.inclass" class="fi-comment-video with-tiny-margin-right left color-gray" bo-title="'content_navigator.lecture' | translate"></i>
 									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'content_navigator.quiz' | translate"></i>
 									<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'content_navigator.survey' | translate"></i>
-									<div class="truncate-65 show-inline valign-middle left text-left" bo-text="item.name"></div>
-									<div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
+									<div class="show-inline valign-middle left text-left" style="width: 65%;" bo-text="item.name"></div>
+									<div class="no-padding text-right">
+										<small class="color-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></small>
+									</div>
+									<!-- <div class="color-dark-grey" bo-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div> -->
 								</div>
 								<a bo-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
 									<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>

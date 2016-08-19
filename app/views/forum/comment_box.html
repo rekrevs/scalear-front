@@ -1,4 +1,9 @@
 <span bindonce style="margin-top: 5px;">
 	<a href="" ng-hide="showfield" ng-click="toggleField()" class="comment_button" translate>discussion.comment</a>
-	<textarea name="comment_area" ng-show="showfield" style="overflow: hidden;padding: 4px; width: 90%; resize: none;" ng-model="comment" bo-attr bo-attr-placeholder="'discussion.write_comment' | translate" ng-auto-expand ng-enter="submitComment()" ng-blur="hideField()" autofocus></textarea>
+  <div ng-show="showfield">
+    <div  ng-auto-expand style="float:left;width:80%;margin-right:10px">
+  	 <rich-textarea name="comment_area"  style="overflow: hidden;padding: 4px; resize: none;" ng-model="comment" bo-attr bo-attr-placeholder="'discussion.write_comment' | translate"  autofocus />
+    </div>
+    <button class="tiny success button with-small-padding" ng-click="submitComment()">Add comment</button>
+  </div>
 </span>

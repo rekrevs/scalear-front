@@ -7,28 +7,34 @@ angular.module('scalearAngularApp')
     Page.startTour();
     $rootScope.subheader_message = $translate("navigation.courses")
 
-		$scope.column='name'
+    $scope.column='name'
     $scope.course_filter = '!!'
+
     var getAllCourses=function(){
-      $scope.courses=null
+
+      $scope.teacher_courses = null
+      $scope.student_courses = null
       Course.index({},
       function(data){
-        $scope.courses = data
-        $log.debug($scope.courses)
-        $scope.courses.forEach(function(course){
-          if(!course.ended){
-            $scope.course_filter = false
-            return 
-          }
-        })
-      })           
+        $scope.teacher_courses = JSON.parse(data.teacher_courses)
+        $scope.student_courses = JSON.parse(data.student_courses)
+    // Code for removing finshed courses when chosing "All Courses" from main menu
+    //     $scope.courses.forEach(function(course){
+    //        if(!course.ended){
+    //        $scope.course_filter = false;
+    //        return
+    //    }
+    //  })
+     })
     }
 
-    var removeFromCourseList=function(course){
-      $scope.courses.splice($scope.courses.indexOf(course), 1)
-      var course_index = $scope.current_courses.map(function(x){return x.id}).indexOf(course.id)
+    var removeFromCourseList=function(course, user_type){
+      var courses_var = user_type+"_courses"
+      var current_courses_var = "current_"+courses_var
+      $scope[courses_var].splice($scope[courses_var].indexOf(course), 1)
+      var course_index = $scope[current_courses_var].map(function(x){return x.id}).indexOf(course.id)
       if(course_index > -1)
-        $scope.current_courses.splice(course_index, 1)
+        $scope[current_courses_var].splice(course_index, 1)
     }
 
 		$scope.deleteCourse=function(course){
@@ -61,19 +67,19 @@ angular.module('scalearAngularApp')
               $scope.delete=function(){
                 Course.destroy({course_id: course.id},{},
                   function(){
-                    removeFromCourseList(course)
+                    removeFromCourseList(course,"teacher")
                 })
                 $scope.closeThisDialog()
               }
           }]
       });
-			
+
 		}
 
     $scope.unenrollCourse=function(course){
       Course.unenroll({course_id: course.id},{},
         function(){
-          removeFromCourseList(course)
+          removeFromCourseList(course, "student")
         },
         function(){})
     }
@@ -97,5 +103,5 @@ angular.module('scalearAngularApp')
 		}
 
     getAllCourses()
-  		
+
 }]);

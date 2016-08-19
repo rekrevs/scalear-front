@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('CalendarModalCtrl',['$state','$stateParams','$scope','$modalInstance','Course','$window','$rootScope','$timeout', '$filter', '$compile', function ($state,$stateParams ,$scope, $modalInstance, Course, $window, $rootScope, $timeout, $filter, $compile) {
 
 
-  	$scope.eventRender = function( event, element ) { 
+  	$scope.eventRender = function( event, element ) {
          var tooltip_string = event.course_short_name+": "+event.item_title+"<br />Due at  "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
             tooltip_string+="<br />Completed on time"
@@ -17,7 +17,6 @@ angular.module('scalearAngularApp')
 
     var init=function(){
         $scope.eventSources = [];
-        $scope.filtered_events = []
         Course.getCalendarEvents(
             {course_id: $stateParams.course_id},
             function(data){
@@ -45,10 +44,10 @@ angular.module('scalearAngularApp')
 	                        $scope.calendar.events[element].url = $state.href("course.module.courseware", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
 	                }
 	                else
-	                    $scope.calendar.events[element].url=$state.href("course.module.progress", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id}) 
+	                    $scope.calendar.events[element].url=$state.href("course.module.progress", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
                 }
                 $scope.calendar.className = ["truncate"]
-                $scope.eventSources.push($scope.calendar); 
+                $scope.eventSources.push($scope.calendar);
                 $timeout(function(){$(window).resize()})
             },
             function(){}

@@ -1,72 +1,47 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope','ContentNavigator','$log', function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope,ContentNavigator, $log) {
+  .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', 'Page', '$state', '$translate', 'ContentNavigator', '$log', 'CourseModel', 'ScalearUtils', function($scope, $stateParams, Course, Page, $state, $translate, ContentNavigator, $log, CourseModel, ScalearUtils) {
 
-    Page.setTitle('navigation.information');
-    Page.startTour();
+    $scope.course = CourseModel.getSelectedCourse()
+    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
     ContentNavigator.open()
-    $scope.init = function(){
-        Course.show({course_id: $stateParams.course_id},
-            function(data) {
-                $scope.teachers = data.teachers;
-                if($scope.course.discussion_link)
-                    $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
-            }
-        )
-        getAnnouncements()
+
+    $scope.urlWithProtocol = ScalearUtils.urlWithProtocol
+
+    function init() {
+      if($scope.course.discussion_link) {
+        $scope.short_url = ScalearUtils.shorten($scope.course.discussion_link, 20)
+      }
+
+      Course.show({ course_id: $stateParams.course_id },
+        function(data) {
+          $scope.teachers = data.teachers;
+        });
+
+      $scope.course.getStudentDueDateEmail()
+        .then(function(data) {
+          $scope.email_due_date = data.email_due_date
+        })
+
+      $scope.course.getAnnouncements()
+        .then(function(announcements) {
+          $scope.announcements = announcements
+        })
     }
 
-    $scope.goToContent=function(){
-        if($scope.next_item.module != -1){
-            var params = {'module_id': $scope.next_item.module}    
-            params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
-            $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
-        }
+    init()
+
+    $scope.goToContent = function() {
+      if($scope.next_item.module != -1) {
+        var params = { 'module_id': $scope.next_item.module }
+        params[$scope.next_item.item.class_name + '_id'] = $scope.next_item.item.id
+        $state.go('course.module.courseware.' + $scope.next_item.item.class_name, params)
+      }
     }
 
-    $scope.url_with_protocol = function(url) {
-        if (url)
-            return url.match(/^http/) ? url : 'http://' + url;
-        else
-            return url;
-    }
-    $scope.shorten = function(url, l){
-        var length = typeof(l) != "undefined" ? l : 50;
-        var link = url.replace("http://","").replace("https://","");
-        if(link.length <= length)
-            return link
-        var chunk_length = length/2
-        var start_chunk = shortString(link, chunk_length, false);
-        var end_chunk = shortString(link, chunk_length, true);
-        return start_chunk + ".." + end_chunk;
+    $scope.updateStudentDueDateEmail = function(email_due_date) {
+      $scope.course.updateStudentDueDateEmail(email_due_date)
     }
 
-    var shortString = function(s, l, reverse){
-        var stop_chars = [' ','/', '&'];
-        var acceptable_shortness = l * 0.80; // When to start looking for stop characters
-        var text = reverse? s.split("").reverse().join("") : s;
-        var short_s = "";
-
-        for(var i=0; i < l-1; i++){
-            short_s += text[i];
-            if(i >= acceptable_shortness && stop_chars.indexOf(s[i]) >= 0){
-                break;
-            }
-        }
-        if(reverse){ return short_s.split("").reverse().join(""); }
-        return short_s;
-    }
-
-    var getAnnouncements=function(){
-        Course.getAnnouncements(
-            {course_id: $stateParams.course_id},
-            function(data){
-                $log.debug("data",data)
-                $scope.announcements = data
-            }
-        )
-    }
-    $scope.init();
-    
-}]);
+  }]);

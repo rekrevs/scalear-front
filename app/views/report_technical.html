@@ -10,14 +10,19 @@
         <div style="margin-bottom:5px"><b translate>global.email</b>:</div>
         <input type="email" id="report_email" class="string email optional" ng-model="user.email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" />
     </div>
-    <div> 
+    <div>
         <div style="margin-bottom:5px"><b translate>feedback.like_to_comment</b>:</div>
-         <select ng-model="selected_type" ng-options="type.text for type in issue_types">
+         <select ng-model="selected_type" ng-options="type.text for type in issue_types" ng-change="selectedScalableWebsiteTypeEnable(selected_type)">
+        </select>
+
+    </div>
+    <div>
+        <select ng-model="selected_scalable_website_type" ng-options="type.text for type in issue_scalable_website_types" ng-hide="hide_issue_scalable_website_types" >
         </select>
     </div>
     <center>
         <small ng-show="no_text"  class="error text-left">{{no_text}}</small>
-        <textarea rows="5" cols="12" style="height: 170px;" placeholder="{{'feedback.leave_feedback'|translate}}..." ng-model="technical_data">
+        <textarea rows="5" cols="12" style="height: 170px;" placeholder="{{'feedback.leave_feedback'|translate}}" ng-model="technical_data">
         </textarea>
         <loading size="small" show="sending_technical" />
     </center>
@@ -28,6 +33,6 @@
 </div>
 <div class="modal-footer" ng-hide="hide_content">
     <br />
-    <button class="button small" ng-click="send_technical(selected_type, technical_data, user)" translate="button.send"></button>
+    <button class="button small" ng-click="sendTechnical(selected_type, selected_scalable_website_type, technical_data, user)" translate="button.send"></button>
     <button class="button small alert" ng-click="cancel()" translate="button.cancel"></button>
 </div>

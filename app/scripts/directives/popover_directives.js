@@ -62,9 +62,9 @@ angular.module('scalearAngularApp')
 
 			          	if(options.instant_show){
 			          		$timeout(function(){
-			          			element.trigger("click")
+			          			element.trigger(options.instant_show)	
+			          			options.instant_show =false 
 			          		})
-			          		options.instant_show =false
 			          	}
 
 			          	$(document).on("click", function (e) {

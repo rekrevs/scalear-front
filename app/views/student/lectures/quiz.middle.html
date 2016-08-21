@@ -14,13 +14,12 @@
 
 
     <!-- <span class="label size-10 round alert with-tiny-padding with-tiny-margin right" ng-show="quiz.required" translate><small>error_message.required</small></span> -->
-    <span class="label size-10 round blue with-tiny-padding with-tiny-margin right" ng-if="quiz && !quiz.graded" ><span translate>quizzes.optional</span></span>
-
     <h3>
         <i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i>
         <i ng-if="quiz.quiz_type=='survey'" class="fi-clipboard-pencil"></i>
         {{quiz.name}}
-    </h3>
+      <span ng-if="quiz && !quiz.graded" class="color-grey text-italic" style="margin-left: 5px; margin-bottom:5px; font-size: 16px;">(<span translate>lectures.optional</span>)</span>
+  </h3>
     <h5 class="subheader">{{quiz.instructions}}</h5>
     <div class="small-12 columns">
     	<p ng-if="status.attempts<quiz.retries+1">
@@ -39,13 +38,13 @@
     <hr>
     <div class="small-12 columns no-padding">
     	<form name="form">
-            <center class="no_solve" ng-if="!passed_requirments && !should_solve">
+            <center class="no_solve" ng-if="!passed_requirments">
                 <div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
                     <h2 style="top:60px;font-weight:300;font-size:18px" ><span translate>lectures.messages.finish_before_proceeding</span></h2>
                 </div>
             </center>
-            <span ng-if="passed_requirments && should_solve">
-        		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
+            <span ng-if="passed_requirments">
+        		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct" explanation="explanation"></student-quiz>
 
             </span>
     	</form>

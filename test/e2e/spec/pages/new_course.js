@@ -12,9 +12,9 @@ NewCourse.prototype = Object.create({}, {
 	name: { get: function () { return this.name_field.getAttribute('value')}},
 	type_name: { value: function (keys) { return this.name_field.clear().sendKeys(keys)}},
 	
-	duration_field:{get: function(){return element(by.model('course.duration'))}},
-	duration: { get: function () { return this.duration_field.getAttribute('value')}},
-	type_duration: { value: function (keys) { return this.duration_field.clear().sendKeys(keys)}},
+	course_end_date_field:{get: function(){return element(by.model('course.end_date'))}},
+	course_end_date: { get: function () { return this.course_end_date_field.getAttribute('value')}},
+	type_course_end_date: { value: function (keys) { return this.course_end_date_field.clear().sendKeys(keys)}},
 	
 	image_url_field:{get: function(){return element(by.model('course.image_url'))}},
 	image_url: { get: function () { return this.image_url_field.getAttribute('value')}},
@@ -40,10 +40,10 @@ NewCourse.prototype = Object.create({}, {
 	      });
 	    });
 	}},
-	create:{value :function(short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites){
+	create:{value :function(short_name, course_name, course_end_date, discussion_link, image_link, course_description, prerequisites){
 		this.type_shortname(short_name)
 		this.type_name(course_name)
-		this.type_duration(course_duration)
+		this.type_course_end_date(course_end_date)
 		this.type_image_url(image_link)
 		this.type_description(course_description)
 		this.type_prerequisites(prerequisites)

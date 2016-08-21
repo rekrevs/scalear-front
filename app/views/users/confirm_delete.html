@@ -6,18 +6,18 @@
         <div class="small-12 column">
             <p translate>account.confirm_destroy_note</p>
             <div class="small-6 columns small-centered">
-                <form name="form.key">
+                <form name="form.key" >
                     <div ng-if="!user.saml">
                         <label>
                             <div class="text-left with-tiny-margin-bottom" ><span translate>account.password</span>:</div>
-                            <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'account.password.current_password'|translate}}" ng-class="{error: form.server_error}" required />
-                            <small class='error' ng-if='form.submitted && form.key.key.$error.required' translate="error_message.required"></small>
+                            <input type="password" id="del_con_pwd" class="no-margin" ng-model="user.pass" name="key" placeholder="{{'account.password.current_password'|translate}}" ng-class="{error: form.server_error}" required />
+                            <small class='error' ng-if='form.submitted && form.key.$error.required' translate="error_message.required"></small>
                             <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
                         </label>
                         <div class="alert-box secondary" translate>account.password.need_password</div>
                     </div>
-                    <button class="button small alert " id="del_ok_btn" ng-click="ok()" translate="account.cancel_account"></button>
-                    <button class="button small  with-margin-right" ng-click="cancel()" translate="button.cancel"></button>
+                    <input type="button" class="button small  with-margin-right" ng-click="cancel()" ng-value="'button.cancel' | translate"/>
+                    <input type="submit" class="button small alert " id="del_ok_btn" ng-click="deleteAccount()" ng-value="'account.cancel_account' | translate"/>
                     <loading size="small" show="form.processing"></loading>
                 </form>
             </div>

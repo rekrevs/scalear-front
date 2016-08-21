@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$window','$log', '$translate', 'User', 'Page', 'ErrorHandler','ngDialog','MobileDetector','Saml','$location','SWAMID','$cookieStore','$timeout','URLInformation', function ($state, $scope, $rootScope,scalear_api, $window, $log, $translate, User, Page, ErrorHandler,ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout,URLInformation ) {
 
   $scope.user={}
   Page.setTitle('navigation.login')
@@ -11,9 +11,7 @@ angular.module('scalearAngularApp')
   // $cookieStore.remove("saml_provider")
   $scope.previous_provider = $cookieStore.get("login_provider")
 
-  // console.log($location)
   // $scope.saml = $location.$$search
-  // console.log($scope.saml)
   // if(Object.keys($scope.saml).length){
   //   // $scope.saml=JSON.parse($state.params.attributes)
   //   ngDialog.open({
@@ -63,7 +61,7 @@ angular.module('scalearAngularApp')
         $scope.sending = false;
         $rootScope.$broadcast("get_current_courses")
         $scope.is_mobile= MobileDetector.isMobile()
-        if( $scope.is_mobile && ((data.roles[0].id != 2 && MobileDetector.isTablet()) ||  MobileDetector.isPhone)){
+        if( $scope.is_mobile && (MobileDetector.isTablet() ||  MobileDetector.isPhone())){
           ngDialog.open({
             template: 'mobileSupport',
             className: 'ngdialog-theme-default ngdialog-theme-custom',
@@ -91,11 +89,19 @@ angular.module('scalearAngularApp')
   var next=function(user){
     if(!user.info_complete){
       $state.go("edit_account");
-      $rootScope.show_alert = "error";
-      ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
+      ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', null, "error");
     }
-    else
+    else if(URLInformation.hasEnroll()){
+      $window.location.href= URLInformation.getEnrollLink()
+       URLInformation.clearEnrollLink()
+    }
+    else if(URLInformation.shouldRedirect()){
+       $window.location.href= URLInformation.getRedirectLink()
+       URLInformation.clearRedirectLink()
+    }
+    else{
       $state.go("dashboard");
+    }
   }
 
   $scope.samlLogin=function(idp){
@@ -108,11 +114,7 @@ angular.module('scalearAngularApp')
       },
       function(){
         $rootScope.busy_loading = false;
-        $rootScope.show_alert = "error";
-        ErrorHandler.showMessage('Could not reach provider', 'errorMessage', 8000);
-        $timeout(function() {
-            $rootScope.show_alert = "";
-        }, 4000);
+        ErrorHandler.showMessage('Could not reach provider', 'errorMessage', 4000, "error");
       }
     )
   }

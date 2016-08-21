@@ -43,10 +43,10 @@ angular.module('scalearAngularApp')
 
 
 
-  $scope.send_technical=function() {
+  $scope.sendTechnical=function() {
     $scope.submitted = true
     if($scope.user && $scope.user.name && $scope.user.email && $scope.comment_data){
-      $scope.sending_technical = true;      
+      $scope.sending_technical = true;
       Home.contactUs({
         name: $scope.user.name,
         email: $scope.user.email,
@@ -55,13 +55,13 @@ angular.module('scalearAngularApp')
         agent: navigator.userAgent
       },function() {
         $scope.user={}
-        $scope.comment_data = null; 
-        $scope.sending_technical = false; 
-        $scope.show_thanks = true 
-        $scope.submitted = false         
+        $scope.comment_data = null;
+        $scope.sending_technical = false;
+        $scope.show_thanks = true
+        $scope.submitted = false
       });
     }
   }
-   
+
 }]);
 

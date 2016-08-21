@@ -35,6 +35,8 @@ var translation_en={
     lectures: "@:global.videos",
     quiz: "Quiz",
     quizzes: "Quizzes",
+    video_quizzes: "Video Quizzes",
+    video_quiz: "Video Quiz",
     survey: "Survey",
     surveys: "Surveys",
     marker: "Marker",
@@ -44,7 +46,7 @@ var translation_en={
     confused: "Confused",
     really_confused: "Really Confused",
     search: "Search",
-    new_course: "New Course",
+    new_course: "New course",
     required: "Required",
     optional: "Optional",
     students: "Students",
@@ -54,6 +56,8 @@ var translation_en={
     warning:"Warning",
     are_you_sure: "Are you sure you want to proceed?",
     visible: "Visible",
+    leave: "Leave",
+    stay: "Stay",
   },
   mailer:{
     send_email: "Send An Email",
@@ -69,10 +73,14 @@ var translation_en={
     got_some_errors: "Please correct the errors above",
     required:"@:global.required",
     invalid_input: "Invalid Input",
+    due_date_changed:"Due Date has been changed.",
     you_are_not_authorized: "You are not authorized to see requested page",
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",
     change_password_confirmation: "You have successfully changed your password.",
+    export_course: "Your anonymized course data will be emailed to you shortly." ,
+    export_student:"Your student list will be emailed to you shortly.",
+    another_marker: "There is another marker at the same time",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -98,6 +106,8 @@ var translation_en={
     next: "Next",
     submit: "Submit",
     save: "Save",
+    publish: "Publish",
+    unpublish: "Unpublish",
     save_close: "Save and Close",
     close: "Close",
     delete: "Delete",
@@ -128,6 +138,7 @@ var translation_en={
     notifications: "Notifications",
     notification: "Notification",
     dashboard: "Dashboard",
+    settings: "Settings",
     account: "Account",
     show_all_courses: "Show all courses",
     copied_from: "Copied From",
@@ -245,13 +256,16 @@ var translation_en={
     other: "Other",
   },
   enroll_email:{
-    go_to:"Go to",
+    go_to:"(Note: If you have trouble with the above instructions, go to",
     help_enroll:"Help on Enrollment",
     instruction:"Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions.",
     dear_student:"Dear Student",
-    this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive. To get started:",
+    this_term_new_system_part_1:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive.  To get started go to ",
+    this_term_new_system_part_2:" and login with your school email.",
     create_account_with_university: "and create an account with your university email address.",
-    add_course_by_choosing: "Add your course by choosing “Join Course” from the “Courses” menu and entering the Enrollment Key for",
+    add_course_by_choosing_part_1: " login with your school email, then choose 'Join Course' from the 'Courses' menu and use the Enrollment Key ",
+    add_course_by_choosing_part_2: " to join {{short_name}}. If you have any questions please use the 'Support' form in the 'Help' menu.)",
+    add_course_by_url: " Follow this link ",
     sincerely:"Sincerely",
   },
   account:{
@@ -274,6 +288,7 @@ var translation_en={
     last_name: "Last Name",
     screen_name: "Online Name",
     university: "School or University",
+    first_day: "First day of the week for the calendar",
     link: "Website",
     security: "Security",
     online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
@@ -285,7 +300,7 @@ var translation_en={
     login: "@:navigation.login",
     join: "Join",
     remember_me: "Keep me logged in",
-    confirm_destroy: "Are you sure you want to cancel your account?",
+    confirm_destroy: "Are you sure you want to delete your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
     required_marked: "Required fields are marked with *",
     use_school: "Use your School/University Account",
@@ -310,6 +325,9 @@ var translation_en={
     completed: "Completed",
     late: "late",
     due_date_passed: "Due date has passed",
+    drag_due_date_error_part_1:"You cannot move the ",
+    drag_due_date_error_part_2:"'s due date before it's appearance date. To change the appearance date click on the ",
+    drag_due_date_error_part_3:" and choose edit.",
   },
   notification:{
     invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}}",
@@ -336,6 +354,8 @@ var translation_en={
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
     last_update: "Last update: 17-August-2015",
+    understand: "I understand",
+    cancel: "Cancel",
   },
   faq:{
     faq:"Frequently Asked Questions",
@@ -370,6 +390,8 @@ var translation_en={
     small_calendar:"Small Calendar",
     export_calendar: "Export Calendar",
     whats_new: "What's New",
+    as_ical_file: "As File",
+    as_url: "As Link",
   },
   inclass:{
     more: "more",
@@ -384,6 +406,10 @@ var translation_en={
     marker: "@:global.marker",
     primary_marker: "@:global.marker",
     free_text_question:"@:global.free_text_question",
+    confused:"@:global.confused",
+    really_confused:"@:global.really_confused",
+    video_quizzes: "@:global.video_quizzes",
+    video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
     exit: "Exit",
@@ -403,7 +429,7 @@ var translation_en={
     intro_stage:"Intro",
     self_stage:"Self",
     group_stage:"Group",
-    discussion_stage:"Discussion",
+    discussion_stage:"@:global.discussion",
     session_not_started:"The in-class session has not started",
     please_try_or_refresh:"Please try again later or click on the 'Refresh' button below",
     question_not_started:"The in-class question has not started",
@@ -496,6 +522,8 @@ var translation_en={
         set_date: "Set Date",
         use_module: "Use Module’s Visibility",
         use_module_due: "Use Module’s Due Date",
+        use_module_in_order: "Use Module’s Order",
+        use_module_required: "Use Module’s Required",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
         student_link_lecture:"Student link to lecture",
@@ -508,6 +536,8 @@ var translation_en={
         required:"@:global.required",
         in_order: "In Order",
         retries: "Retries",
+        display_text:"Display question over video",
+        display_text_explain:"(Use if the question text is not in the video.)",
         student_link_quiz:"Student link to quiz"
     },
     popover:{
@@ -534,6 +564,8 @@ var translation_en={
         please_choose_an_answer: "Please choose your answer(s).",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         really_confused_use_question: "You could ask a question so the teacher can help you.",
+        navigate_away:"Are you sure you want to navigate away from this page?",
+        change_lost:"Your changes will be lost!",
     },
     timeline:{
         timeline: "Timeline",
@@ -546,7 +578,8 @@ var translation_en={
         quiz:"@:global.quiz",
         marker:"@:global.marker",
         watched:"Watched",
-        quizzes:"quizzes"
+        quizzes:"quizzes",
+        required_quizzes:"required quizzes"        
     },
     button:{
         ask_question: "Ask a Question",
@@ -614,7 +647,8 @@ var translation_en={
     },
     tooltip:{
         see_related: "See related answers to student",
-        quizzes_solved: "quizzes solved",
+        quizzes_solved: "quizzes required solved",
+        quizzes_optional_solved: "quizzes optional solved",
         watched_video: "Watched"
     },
     popover:{
@@ -687,6 +721,7 @@ var translation_en={
     select_all: "Select All",
     deselect_all: "Deselect All",
     done:"@:global.done",
+    export_as: "Export Student List",
   },
   groups:{
     module: "Module",
@@ -696,7 +731,7 @@ var translation_en={
         customlinks:"@:global.customlinks",
         quizzes:"@:global.quizzes",
         surveys:"@:global.surveys",
-        video_quizzes: "Video Quizzes",
+        video_quizzes: "@:global.video_quizzes",
         questions: "@:global.questions",
     },
     delete_popup:{
@@ -719,13 +754,14 @@ var translation_en={
         ta: "TA",
         discussion_forum_link: "Discussion Forum Link",
         enrollment_key: "Enrollment Key",
+        enrollment_url: "Enrollment URL",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
-        receive_due_date_email: "Receive email for due dates of lectures or quizzes",
+        receive_due_date_email: "Receive email reminders of upcoming due dates.",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
-            export_as: "Export course as",
+            export_as: "Export anonymized course data",
             invite: "Invite to Join",
         },
         tooltip:{
@@ -751,6 +787,7 @@ var translation_en={
         messages:{
             no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
             enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
+            create_enroll_instruction: "To create or enroll in a course choose 'New course' or 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         },
         tooltip:{
             unenroll: "Unenroll",
@@ -775,6 +812,7 @@ var translation_en={
     },
     start_date: "Course Start Date",
     end_date: "Course End Date",
+    disable_registration: "Disable Registration After",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",
@@ -873,6 +911,10 @@ var translation_en={
         on_video_survey:{
           title: "On-video Survey",
           desc: "Surveys have no correct answer. Use this if the survey choices are visible in the video."
+        },
+        text_survey:{
+          title: "Text Survey",
+          desc: "Text Surveys have no correct answer on a white background. Use this if the survey choices are not visible in the video."
         }
       },
       types:{

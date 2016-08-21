@@ -60,18 +60,22 @@ Signup.prototype = Object.create({}, {
 		login_obj.sign_up_button.isDisplayed().then(function(result) {
 		    if (result) {
 		    	login_obj.sign_up_button.click()
-		    	if (val == 'teacher'){
-		    		login_obj.sign_teacher_button.click();
-		    	}
-		    	else {
-			    	login_obj.sign_student_button.click();	
-		    	}
+		    	// if (val == 'teacher'){
+		    	// 	login_obj.sign_teacher_button.click();
+		    	// }
+		    	// else {
+			    // 	login_obj.sign_student_button.click();	
+		    	// }
 
 			 }
 		})
 	}},
 	skip_button:{value:function(){
-		element(by.css('[ng-click="watchedIntro()"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="watchedIntro()"]')).click()}})
+		var elm = element(by.css('[ng-click="confirm()"]'));
+		browser.executeScript("arguments[0].scrollIntoView();", elm.getWebElement());
+		elm.click();
+		sleep(5000)
+		element(by.css('[ng-click="watchedIntro()"]')).isPresent().then(function(result) {if (result) {element(by.css('[ng-click="watchedIntro()"]')).click()}})
 	}}
 
 });

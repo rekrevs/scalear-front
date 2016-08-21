@@ -25,7 +25,7 @@ describe("Course Validation",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 			course_info.student.open()
 		})
 		it('should check course information', function(){

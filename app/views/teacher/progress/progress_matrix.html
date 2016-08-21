@@ -45,14 +45,14 @@ table.table_matrix_height{
         <tr bindonce ng-repeat="student in students" >
             <td class="column-width"><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
             <td class="state column-width" bindonce ng-repeat='module in status[student.id] track by $index'>
-               <span bo-if="module[5]>0">
+               <span bo-if="module[7]>0">
                     <center>
-                        <img tooltip=" {{'progress.tooltip.watched_video' | translate}}:{{module[4]}}%, {{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}." tooltip-append-to-body="true" tooltip-placement="top" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
+                        <img tooltip=" {{'progress.tooltip.watched_video' | translate}}:{{module[4]}}%, {{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}, {{module[4]}}/{{module[5]}} {{'progress.tooltip.quizzes_optional_solved' | translate}}." tooltip-append-to-body="true" tooltip-placement="top" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
                         style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         <div ng-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('time.days'|translate)+')'"></div>
                     </center>
                 </span>
-                <span bo-if="!module[5]">
+                <span bo-if="!module[7]">
                     <center>
                         <img class="marker"
                         ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"

@@ -404,7 +404,7 @@ angular.module('scalearAngularApp')
 
     var checkIfQuizSolved = function() {
       if($scope.quiz_mode) {
-        if(!$scope.selected_quiz.solved_quiz && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
+        if(!$scope.selected_quiz.solved_quiz && $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
           returnToQuiz($scope.selected_quiz.time)
         else {
           if($scope.display_review_message) {

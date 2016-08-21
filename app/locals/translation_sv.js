@@ -577,7 +577,8 @@ var translation_sv={
         quiz:"@:global.quiz",
         marker:"@:global.marker",
         watched: "Sedda",
-        quizzes: "quizzar"
+        quizzes: "quizzar",
+        required_quizzes: "required quizzes(t)"
     },
     button:{
         ask_question: "Ställ en fråga",
@@ -646,6 +647,7 @@ var translation_sv={
     tooltip:{
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
+        quizzes_optional_solved: "quizzes optional solved(t)",
         watched_video: "Sett"
     },
     popover:{

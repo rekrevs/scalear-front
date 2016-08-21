@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform' >"+
-					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
+					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' />"+
 					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
@@ -103,7 +103,8 @@ angular.module('scalearAngularApp')
 						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
             // placement:"up",
-						trigger:'hover'
+						trigger:'hover',
+            instant_show:'mouseover'
 					}
 				}
 			})
@@ -113,7 +114,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
+					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop'/>"+
 					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 
 				"</ng-form>",
@@ -225,10 +226,8 @@ angular.module('scalearAngularApp')
             content:"<div ng-bind-html='explanation[data.id][1]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
-            placement:(scope.data.xcoor > 0.5)? "left":"right"
-          }
-          if(scope.quiz.question_type =="OCQ"){
-            scope.explanation_pop.instant_show = "mouseover"
+            placement:(scope.data.xcoor > 0.5)? "left":"right",
+            instant_show: "mouseover"
           }
         }
       })

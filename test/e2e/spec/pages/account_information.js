@@ -47,6 +47,10 @@ AccountInformation.prototype = Object.create({}, {
 
 	update_button:{get:function(){return element(by.id('update_info'))}},
 	save_button:{get: function(){return element(by.id('update_info_modal'))}},
+
+	first_day_field_options:{get: function(){return element(by.model('user.first_day')).all(by.tagName('option'))}},
+	// first_day: { get: function () { return this.first_day_field.getAttribute('value')}},
+	choose_first_day: { value: function (num) {  this.first_day_field_options.then(function(options){options[num].click();});}},
 	
 	open:{value:function(){
 		var header = new Header()

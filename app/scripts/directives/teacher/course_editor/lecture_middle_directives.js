@@ -663,11 +663,11 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       template: "<ng-form name='aform'>" +
-        "<div class ='row collapse' >" +
+        "<div class ='row collapse' ng-if='!isSurvey()' >" +
           "<div class='small-2 columns' style='padding: 10px 0;'>" +
             "<label class='text-left' translate>editor.explanation</label>" +
           "</div>" +
-          "<div class='small-7 left columns no-padding'>" +
+          "<div class='small-7 left columns no-padding' >" +
             "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
           "</div>" +
         "</div>" +

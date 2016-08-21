@@ -37,6 +37,12 @@ CourseInformation.prototype = Object.create({}, {
 	receive_email_button_click:{value:function(){
 		this.receive_email_button.click();
 	}},
+	  export_anonymized_data_button:{get:function(){return element(by.css("[ng-click='exportCourse()']"))}},
+	  click_export_anonymized_data:{value:function(){ 
+	    this.export_anonymized_data_button.click()
+	  }},
+	  export_anonymized_data_message:{get:function(){return element(by.id("server_error"))}},
+
 	open:{value:function(){
 		sub_header.open_course_info()
 		browser.driver.wait(function() {

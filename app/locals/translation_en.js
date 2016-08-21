@@ -578,7 +578,8 @@ var translation_en={
         quiz:"@:global.quiz",
         marker:"@:global.marker",
         watched:"Watched",
-        quizzes:"quizzes"
+        quizzes:"quizzes",
+        required_quizzes:"required quizzes"        
     },
     button:{
         ask_question: "Ask a Question",
@@ -646,7 +647,8 @@ var translation_en={
     },
     tooltip:{
         see_related: "See related answers to student",
-        quizzes_solved: "quizzes solved",
+        quizzes_solved: "quizzes required solved",
+        quizzes_optional_solved: "quizzes optional solved",
         watched_video: "Watched"
     },
     popover:{

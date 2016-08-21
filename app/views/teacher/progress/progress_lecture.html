@@ -94,7 +94,7 @@
 							        </div>
 							    </div>
 								<div style="width: 70%;" bo-text="answer.answer|| '-'"></div>
-								<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue"><pre>{{answer.response}}</pre></i>
+								<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue"><pre ng-bind-html="answer.response"></pre></i>
 								<span ng-show="answer.response && !answer.show_feedback" ><a ng-click="deleteFeedback(answer)" class="button really-tiny alert" style="margin:0 5px" translate>button.delete</a></span>
 								<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'" style="margin-left: 1.25rem;margin-top: 5px">
 									<div><rich-textarea ng-model="answer.temp_response"  style="width: 60%;height:80px" /></div>
@@ -165,7 +165,7 @@
 										</span>
 										<div>
 											<b><span class="comment_screen_name" bo-text="comment.comment.screen_name"></span>:</b>
-											<span class="comment_content" bo-html="comment.comment.content"></span>
+											<span class="comment_content" style="white-space: pre;" bo-html="comment.comment.content"></span>
 										 	<span bo-show="comment.comment.flags_count>0" style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 												<img bo-src='comment.comment.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
 												<span class="comment_flags_count" bo-text="comment.comment.flags_count"></span>

@@ -133,7 +133,7 @@ angular.module('scalearAngularApp')
     };
   }]).directive('announcementItem', ['ErrorHandler', function(ErrorHandler) {
     return {
-      replace: true,
+      // replace: true,
       restrict: "E",
       scope: {
         announcement: '=',

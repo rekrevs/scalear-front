@@ -264,8 +264,12 @@ angular.module('scalearAngularApp')
         }
         var fraction = video_quiz.time % 1
         var new_time = ScalearUtils.arrayToSeconds(video_quiz.formatedTime.split(':'))
-        if(video_quiz.time != new_time + fraction)
-          video_quiz.time = video_quiz.start_time = video_quiz.end_time = new_time
+        if(video_quiz.time != new_time + fraction){
+          video_quiz.time  = new_time
+          if(!video_quiz.inclass){
+            video_quiz.start_time = video_quiz.end_time = new_time
+          }
+        }
 
         return OnlineQuiz.update({ online_quizzes_id: video_quiz.id }, {
           online_quiz: {

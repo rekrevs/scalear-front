@@ -887,7 +887,7 @@ angular.module('scalearAngularApp')
   			else if ($scope.selected_item.type == "charts"){
           if($scope.selected_item.data.hide != null){
     				$scope.selected_item.data.hide = !$scope.selected_item.data.hide
-    				$scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.hide )
+    				$scope.updateHideQuiz($scope.selected_item,!$scope.selected_item.data.hide )
           }
           else if($scope.selected_item.data.show != null){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
@@ -911,7 +911,7 @@ angular.module('scalearAngularApp')
           else if($scope.selected_item.data.quiz_type == 'Quiz'){
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
-              $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
+              $scope.updateHideQuiz($scope.selected_item, !$scope.selected_item.data.show)
             }
             else{
               var q_ind = $scope.inner_highlight_index

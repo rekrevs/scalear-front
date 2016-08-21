@@ -167,8 +167,7 @@ angular.module('scalearAngularApp')
           hide: quiz.data.show
         },
         function() {
-
-          var num = (quiz.data.show ? -1 : 1)
+          var num = (quiz.data.show ? 1 : -1)
           if(quiz.type == "inclass") {
             $scope.inclass_quizzes_time += num * (quiz.data.timers.intro + quiz.data.timers.self + quiz.data.timers.in_group + quiz.data.timers.discussion) / 60
             $scope.inclass_quizzes_count += num

@@ -80,6 +80,7 @@ var translation_sv={
     change_password_confirmation: "Du har nu ändrat ditt lösenord.",
     export_course: "Dina anonymiserade kursdata kommer strax att skickas dig via email",
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
+    another_marker: "Det finns en annan markör på samma gång",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",

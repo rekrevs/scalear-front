@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -44,8 +44,10 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onPlay = function() {
       $scope.slow = false
-      if($scope.selected_quiz)
+      if($scope.selected_quiz){
         $scope.selected_quiz.hide_quiz_answers = true
+        hideQuizBackground()
+      }
     }
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
@@ -60,7 +62,6 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.seek_and_pause(item_data.time);
             if(type == 'quiz') {
               $scope.showOnlineQuiz(item_data)
-              item_data.hide_quiz_answers = false
             } else
               $scope.showOnlineMarker(item_data)
           })
@@ -124,26 +125,37 @@ angular.module('scalearAngularApp')
                 $scope.editing_mode = true;
               })
               $scope.selected_quiz = VideoQuizModel.createInstance(quiz).setAsSelected()
-
+              $scope.selected_quiz.selected = true
+              $scope.selected_quiz.hide_quiz_answers = false
               $scope.editing_type = 'quiz'
               $scope.lecture_player.controls.seek_and_pause(quiz.time)
 
               if($scope.selected_quiz.isTextQuiz()) {
                 $scope.selected_quiz.getTextQuizAnswers()
                 $scope.double_click_msg = ""
-                $scope.quiz_layer.backgroundColor = "white"
-                $scope.quiz_layer.overflowX = 'hidden'
-                $scope.quiz_layer.overflowY = 'auto'
+                showQuizBackground($scope.selected_quiz)
               } else {
                 $scope.selected_quiz.getInVideoQuizAnswers();
                 $scope.double_click_msg = "editor.messages.double_click_new_answer";
-                $scope.quiz_layer.backgroundColor = "transparent"
-                $scope.quiz_layer.overflowX = ''
-                $scope.quiz_layer.overflowY = ''
+                hideQuizBackground()
               }
             }
           })
       }
+    }
+
+    function showQuizBackground(quiz) {
+      if(quiz.isTextQuiz()) {
+        $scope.quiz_layer.backgroundColor = "white"
+        $scope.quiz_layer.overflowX = 'hidden'
+        $scope.quiz_layer.overflowY = 'auto'
+      }
+    }
+
+    function hideQuizBackground() {
+      $scope.quiz_layer.backgroundColor = "transparent"
+      $scope.quiz_layer.overflowX = ''
+      $scope.quiz_layer.overflowY = ''
     }
 
 
@@ -240,6 +252,7 @@ angular.module('scalearAngularApp')
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)
         $scope.selected_quiz.hide_quiz_answers = false
+        showQuizBackground($scope.selected_quiz)
         return true
       }
     }
@@ -268,8 +281,8 @@ angular.module('scalearAngularApp')
     }
 
     function clearQuizVariables() {
-      // if($scope.selected_quiz)
-      //   $scope.selected_quiz.selected = false
+      if($scope.selected_quiz)
+        $scope.selected_quiz.selected = false
       $scope.selected_quiz = null
       $scope.quiz_errors = {}
       $scope.quiz_deletable = false
@@ -347,7 +360,7 @@ angular.module('scalearAngularApp')
         .then(function() {
           var same_markers = $scope.lecture.timeline.getItemsBetweenTimeByType(marker.time, marker.time, "marker")
           if(same_markers.length > 0 && same_markers[0].data.id != marker.id) {
-            $scope.alert.msg = "There is another marker at the same time"
+            $scope.alert.msg = "error_message.another_marker" //"There is another marker at the same time"
             $scope.hide_alerts = false;
             return true
           } else {
@@ -435,6 +448,14 @@ angular.module('scalearAngularApp')
       $scope.selected_inclass_item = item
       $scope.lecture_player.controls.seek_and_pause($scope.selected_inclass_item.data.time)
       $scope.selected_quiz.hide_quiz_answers = $scope.selected_inclass_item.type != 'quiz'
+      if($scope.selected_inclass_item.type == 'quiz'){
+        $scope.selected_quiz.hide_quiz_answers = false
+        showQuizBackground($scope.selected_quiz)
+      }
+      else{
+        $scope.selected_quiz.hide_quiz_answers = true
+        hideQuizBackground()
+      }
     }
 
     $scope.inclassNextItem = function() {
@@ -472,6 +493,11 @@ angular.module('scalearAngularApp')
       }, { "disable_in_input": true, 'propagate': false });
     }
 
+    function removeShortcuts() {
+      shortcut.remove("i");
+      shortcut.remove("m");
+    }
+
     function setUpEventsListeners() {
       $scope.$on("show_online_quiz", function(ev, quiz) {
         $scope.showOnlineQuiz(quiz)
@@ -500,10 +526,18 @@ angular.module('scalearAngularApp')
       $scope.$on("close_trim_video", function() {
         saveTrimVideo()
       })
+
+      $scope.$on("show_quiz_background",function (ev, quiz) {
+         showQuizBackground(quiz)
+      })
+
+      $scope.$on("hide_quiz_background",function (ev) {
+         hideQuizBackground()
+      })
     }
 
     function showUnsavedQuizDialog() {
-      ngDialog.openConfirm({
+      return ngDialog.openConfirm({
         template: '<div class="ngdialog-message">\
                   <h2><b><span translate>lectures.messages.change_lost</span></b></h2>\
                   <span translate>lectures.messages.navigate_away</span>\
@@ -515,27 +549,37 @@ angular.module('scalearAngularApp')
         plain: true,
         className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
         showClose: false,
-      }).then(
-        function(value) {
-          $("#module_" + $state.params.module_id).click()
-        },
-        function(value) {
-          $scope.leave_state = true
-          $state.go(toState, toParams)
-        }
-      );
+      })
     }
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
         if(!$scope.leave_state) {
-          saveOpenEditor().then(function(error) {
-            if(error) {
-              event.preventDefault();
-              showUnsavedQuizDialog()
-            }
-          })
+          event.preventDefault();
+          saveOpenEditor()
+            .then(function(error) {
+              var options = { reload: $scope.preview_as_student }
+              if(error) {
+                showUnsavedQuizDialog()
+                  .catch(function(value) {
+                    if($scope.selected_marker) {
+                      closeMarkerMode()
+                    } else if($scope.selected_quiz) {
+                      $scope.exitQuizBtn()
+                    }
+                    $scope.leave_state = true
+                    $state.go(toState, toParams, options)
+                  })
+              } else {
+                $scope.leave_state = true
+                $state.go(toState, toParams, options)
+              }
+            })
         }
       })
+
+    $scope.$on("$destroy", function() {
+      removeShortcuts()
+    })
 
   }]);

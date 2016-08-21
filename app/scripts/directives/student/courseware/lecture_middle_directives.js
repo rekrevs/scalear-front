@@ -392,7 +392,8 @@ angular.module('scalearAngularApp')
             content:"<div ng-bind-html='explanation[quiz.id]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
-            placement:(scope.data.xcoor > 0.5)? "left":"right"
+            placement:(scope.data.xcoor > 0.5)? "left":"right",
+            container: 'body'
           }
         }
       })

@@ -51,6 +51,9 @@ angular.module('scalearAngularApp')
     }
 
     function clearSelectedLecture() {
+      if(selected_lecture){
+        selected_lecture.destroy()
+      }
       selected_lecture = null
     }
 
@@ -265,6 +268,14 @@ angular.module('scalearAngularApp')
         return 'Lecture'
       }
 
+      function clearTimeline() {
+        lecture.timeline = new Timeline()
+      }
+
+      function destroy() {
+        clearTimeline()
+      }
+
       return angular.extend(lecture, {
         update: update,
         validateUrl: validateUrl,
@@ -276,7 +287,8 @@ angular.module('scalearAngularApp')
         remove: remove,
         module: module,
         setAsSelected:setAsSelected,
-        markDone:markDone
+        markDone:markDone,
+        destroy:destroy
       })
     }
 

@@ -354,6 +354,13 @@ angular.module('scalearAngularApp')
         //     scope.$apply();
         //   }
         // })
+        player.on('seeking', function() {
+          parent.focus()
+          if (player_events.seeking) {
+            player_events.seeking();
+            scope.$apply();
+          }
+        })
 
         player.on('seeked', function() {
           parent.focus()
@@ -578,7 +585,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel', function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter) {
   return {
     transclude: true,
     restrict: 'E',
@@ -738,16 +745,12 @@ angular.module('scalearAngularApp')
 
       scope.rewind= function(){
         var t = scope.player.controls.getTime();
-        scope.player.controls.pause();
-        scope.player.controls.seek(t - 10)
-        scope.player.controls.play();
+        scope.seek()(t - 10)
       }
 
       scope.fastForward =function(){
         var t = scope.player.controls.getTime();
-        scope.player.controls.pause();
-        scope.player.controls.seek(t + 10)
-        scope.player.controls.play();
+        scope.seek()(t + 10)
       }
 
       scope.muteToggle = function() {
@@ -875,6 +878,8 @@ angular.module('scalearAngularApp')
         item.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
         item.data.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
         item.data.hide_quiz_answers = false
+        $rootScope.$broadcast("show_quiz_background", item.data)
+        item.data.formatedTime = $filter('format')(item.data.time)
         scope.seek()(item.data.time)
 
       }
@@ -889,6 +894,7 @@ angular.module('scalearAngularApp')
           meta.position.left = item.prev_quiz_end + start_offset
         item.start_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
+        $rootScope.$broadcast("hide_quiz_background")
         scope.seek()(item.start_time)
       }
 
@@ -902,6 +908,7 @@ angular.module('scalearAngularApp')
           meta.position.left = item.quiz_location + start_offset
         item.end_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
+        $rootScope.$broadcast("hide_quiz_background")
         scope.seek()(item.end_time)
       }
 
@@ -948,6 +955,7 @@ angular.module('scalearAngularApp')
         scope.skip_progress_seek = true
         scope.seek()(quiz.time)
         scope.player.controls.pause()
+        $rootScope.$broadcast("show_quiz_background", quiz)
       }
 
       scope.showQuiz = function(quiz) {
@@ -960,6 +968,7 @@ angular.module('scalearAngularApp')
           if (quiz.data && quiz.data.selected)
             quiz.data.hide_quiz_answers = true
         })
+        $rootScope.$broadcast("hide_quiz_background")
       }
 
       var unwatchMute = scope.$watch("volume", function() {

@@ -78,8 +78,6 @@ angular.module('scalearAngularApp')
     }
 
     return {
-      addToCollection: addToCollection,
-      removeFromCollection: removeFromCollection,
       getLecture: getLecture,
       getQuiz: getQuiz,
       getLink: getLink,

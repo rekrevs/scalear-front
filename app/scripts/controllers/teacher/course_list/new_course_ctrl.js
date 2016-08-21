@@ -15,6 +15,10 @@ angular.module('scalearAngularApp')
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.course.time_zone = $scope.timezones[11] //GMT+0
     $scope.course.start_date = new Date()
+    $scope.course.end_date = new Date()
+    var days_in_week = 7;
+    var default_course_duration =  10 //weeks
+    $scope.course.end_date.setDate($scope.course.start_date.getDate() + (days_in_week * default_course_duration));
     $scope.import_from = null
 
     $scope.addImportInformation = function() {
@@ -56,16 +60,18 @@ angular.module('scalearAngularApp')
       if(!$scope.disable_registration_checked) {
         $scope.course.disable_registration = null
       }
+      else{
+        $scope.course.disable_registration = $scope.course.end_date
+      }
     }
 
     $scope.createCourse = function() {
+      $scope.submitting = true;
       if($scope.form.$valid) {
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {
-            console.log(data)
             $scope.submitting = false;
-            $scope.submitted = false;
             if(data.importing) {
               $state.go("course_list")
             } else {
@@ -77,7 +83,7 @@ angular.module('scalearAngularApp')
             $scope.server_errors = response.data.errors
           })
       } else {
-        $scope.submitted = true
+        $scope.submitting = false;
       }
     }
   }]);

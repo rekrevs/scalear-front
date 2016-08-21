@@ -736,6 +736,20 @@ angular.module('scalearAngularApp')
         }
       }
 
+      scope.rewind= function(){
+        var t = scope.player.controls.getTime();
+        scope.player.controls.pause();
+        scope.player.controls.seek(t - 10)
+        scope.player.controls.play();
+      }
+
+      scope.fastForward =function(){
+        var t = scope.player.controls.getTime();
+        scope.player.controls.pause();
+        scope.player.controls.seek(t + 10)
+        scope.player.controls.play();
+      }
+
       scope.muteToggle = function() {
         scope.volume_class == "mute" ? scope.mute() : scope.unmute()
       }
@@ -1026,9 +1040,21 @@ angular.module('scalearAngularApp')
 
       scope.setSpeed(scope.chosen_speed)
 
-
       shortcut.add("Space", function() {
         scope.play()
+      }, { "disable_in_input": true });
+
+      shortcut.add("j", function() {
+        scope.rewind();
+        scope.$apply()
+      }, { "disable_in_input": true });
+      shortcut.add("k", function() {
+        scope.play()
+        scope.$apply()
+      }, { "disable_in_input": true });
+      shortcut.add("l", function() {
+        scope.fastForward();
+        scope.$apply()
       }, { "disable_in_input": true });
 
       shortcut.add("b", function() {
@@ -1041,6 +1067,9 @@ angular.module('scalearAngularApp')
       scope.$on('$destroy', function() {
         shortcut.remove("b");
         shortcut.remove("Space");
+        shortcut.remove("j");
+        shortcut.remove("k");
+        shortcut.remove("l");
         progress_bar.off('mouseenter', scope.showPlayhead);
         progress_bar.off('mouseleave', scope.hidePlayhead);
         unwatchMute()

@@ -25,7 +25,7 @@ angular.module('scalearAngularApp', [
     'mm.foundation',
     'Mac',
     'dcbImgFallback',
-    'ngClipboard',
+    'ngclipboard',
     'ngTextTruncate',
     'ngDialog',
     'mgo-angular-wizard',

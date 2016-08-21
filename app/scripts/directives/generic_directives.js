@@ -206,13 +206,27 @@ angular.module('scalearAngularApp')
           scope.course = course
           scope.enrollment_url = $location.absUrl().split('courses')[0]+"courses/enroll?id="+scope.course.unique_identifier
           scope.enrollment_url_guest = $location.absUrl().split('courses')[0]+"courses/enroll?id="+scope.course.guest_unique_identifier
-          scope.getTextToCopy = function() {
-            return $("#enrollment_message").text();
+          // scope.getTextToCopy = function() {
+          //   return $("#enrollment_message").text();
+          // }
+          // scope.animateCopy = function() {
+          //   $('#enrollment_message').select()
+          //   $('#enrollment_message, #enrollment_message li').children().animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+          // }
+          scope.copySuccess = function (e) {
+            $('#enrollment_message, #enrollment_message li')
+            .children()
+            .animate({ color: "#428bca" }, "fast")
+            .delay(300)
+            .animate({ color: "black" }, "fast", function () {
+               e.clearSelection();
+            });
           }
-          scope.animateCopy = function() {
-            $('#enrollment_message').select()
-            $('#enrollment_message, #enrollment_message li').children().animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+
+          scope.copyError = function (e) {
+
           }
+
           $modal.open({
             templateUrl: '/views/teacher/course/help_enroll.html',
             scope: scope

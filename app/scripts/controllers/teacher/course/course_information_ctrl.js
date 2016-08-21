@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler',  '$location', 'CourseModel', 'TeacherModel', function($scope, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', function($scope, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
 
     $window.scrollTo(0, 0);
     $scope.in_delete = false;
@@ -113,6 +113,19 @@ angular.module('scalearAngularApp')
 
     $scope.animateCopy = function() {
       $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+    }
+
+    $scope.copySuccess = function(e) {
+      $(e.trigger)
+        .animate({ color: "#428bca" }, "fast")
+        .delay(300)
+        .animate({ color: "black" }, "fast", function() {
+          e.clearSelection();
+        });
+    }
+
+    $scope.copyError = function(e) {
+
     }
 
 

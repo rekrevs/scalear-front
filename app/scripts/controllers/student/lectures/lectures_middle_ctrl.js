@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation','CourseModel','ModuleModel', 'ItemsModel', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window','VideoInformation','CourseModel','ModuleModel', 'ItemsModel','VideoEventLogger', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger) {
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.video_layer = {}
@@ -105,18 +105,6 @@ angular.module('scalearAngularApp')
         $scope.toggleFullscreen();
         $scope.$apply()
       }, { "disable_in_input": true });
-      shortcut.add("j", function() {
-        $scope.rewind();
-        $scope.$apply()
-      }, { "disable_in_input": true });
-      shortcut.add("k", function() {
-        $scope.toggleVideoPlayback();
-        $scope.$apply()
-      }, { "disable_in_input": true });
-      shortcut.add("l", function() {
-        $scope.fast_forward();
-        $scope.$apply()
-      }, { "disable_in_input": true });
     }
 
     var removeShortcuts = function() {
@@ -124,9 +112,6 @@ angular.module('scalearAngularApp')
       shortcut.remove("q");
       shortcut.remove("n");
       shortcut.remove("f");
-      shortcut.remove("j");
-      shortcut.remove("k");
-      shortcut.remove("l");
     }
 
     var goToLecture = function(id) {
@@ -179,23 +164,17 @@ angular.module('scalearAngularApp')
     }
 
     var logVideoEvent =function(event, from_time, to_time){
-      if(from_time != null && from_time >= 0) {
-        console.log('log event', event)
-        Lecture.logVideoEvent({
-          course_id: $state.params.course_id,
-          lecture_id: $state.params.lecture_id
-        },{
-          event: event,
-          from_time: from_time,
-          to_time: to_time,
-          in_quiz: $scope.quiz_mode,
-          speed: VideoInformation.speed,
-          volume: VideoInformation.volume,
-          fullscreen: $scope.fullscreen
-        },function(){
-          console.log("event logged")
-        })
-      }
+      VideoEventLogger.log(
+        $state.params.course_id,
+        $state.params.lecture_id,
+        event,
+        from_time,
+        to_time,
+        $scope.quiz_mode,
+        VideoInformation.speed,
+        VideoInformation.volume,
+        $scope.fullscreen
+      )
     }
 
     $scope.lecture_player.events.onReady = function() {
@@ -218,7 +197,7 @@ angular.module('scalearAngularApp')
           $scope.selected_quiz = quiz
           $scope.quiz_mode = true
           $scope.check_answer_title = "lectures.button.check_answer"
-          $scope.selected_quiz.actual_display_text = $scope.selected_quiz.display_text 
+          $scope.selected_quiz.actual_display_text = $scope.selected_quiz.display_text
 
           if(quiz.quiz_type == 'html' || quiz.quiz_type == 'html_survey') {
             $log.debug("HTML quiz")

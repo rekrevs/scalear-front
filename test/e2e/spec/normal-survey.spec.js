@@ -11,7 +11,7 @@ describe('add required survey',function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
@@ -19,7 +19,7 @@ describe('add required survey',function(){
     })
 
     it('should add a normal survey', function(){
-        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.sign_in(ptor, params.teacher1.email, params.password);
         // o_c.open_course_list(ptor);
         // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
@@ -53,7 +53,7 @@ describe('add required survey',function(){
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+        teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
     })
 
     it('should go to student', function(){
@@ -106,17 +106,17 @@ describe("add not required survey", function(){
 
     it('should sign in as teacher', function(){
         // o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.sign_in(ptor, params.teacher1.email, params.password);
     })
 
     it('should create_course', function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    
+
 
     it('should add a normal survey', function(){
-        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.sign_in(ptor, params.teacher1.email, params.password);
         // o_c.open_course_list(ptor);
         // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
@@ -150,7 +150,7 @@ describe("add not required survey", function(){
     })
 
     it('should get the enrollment key and enroll student', function(){
-       teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+       teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
     })
 
     it('should go to student', function(){
@@ -180,7 +180,7 @@ describe("add not required survey", function(){
     it('should save',function(){
         student.save_survey(ptor);
     })
-    
+
     it('should delete course', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
@@ -201,7 +201,7 @@ describe("add not required survey", function(){
 function check_survey_name(ptor, name){
     o_c.press_content_navigator(ptor)
     element(by.repeater('module in modules').row(0)).click()
-    var quiz = element(by.repeater('item in module.items').row(0)) 
+    var quiz = element(by.repeater('item in module.items').row(0))
     expect(quiz.getText()).toContain(name)
     // expect(quiz.element(by.className('alert')).getText()).toEqual('Required')
     o_c.press_content_navigator(ptor)
@@ -212,6 +212,6 @@ function check_optional_tag_exist(val){
         expect(element.all(by.className('label')).count()).toBe(0)
     }
     else{
-        expect(element.all(by.className('label')).count()).toBe(1) 
+        expect(element.all(by.className('label')).count()).toBe(1)
     }
 }

@@ -391,7 +391,7 @@ module.exports = function(grunt) {
         protractor: {
             options: {
                 configFile: "node_modules/protractor/referenceConf.js", // Default config file
-                keepAlive: true, // If false, the grunt process stops when the test fails.
+                keepAlive: false, // If false, the grunt process stops when the test fails.
                 noColor: false, // If true, protractor will not use colors in its output.
                 debug:false,
                 args: {
@@ -400,7 +400,13 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    configFile: "referenceConf.js", // Target-specific config file
+                    configFile: "referenceConf-dev.js", // Target-specific config file
+                    args: {} // Target-specific arguments
+                }
+            },
+            staging: {
+                options: {
+                    configFile: "referenceConf-staging.js", // Target-specific config file
                     args: {} // Target-specific arguments
                 }
             },
@@ -478,7 +484,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= yeoman.dist %>',
-                    src: ['scripts/**/*.js', 'bower_components/**/*.js', 'styles/**/*.css', '**/*.html'],
+                    src: ['scripts/**/*.js', 'styles/**/*.css', 'images/**/*', 'external_documents/**/*'],
                     dest: '<%= yeoman.dist %>',
                     //ext: '.gz.js'
                 }, ]
@@ -624,8 +630,8 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.16.15(' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        version: '3.18.0 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -649,8 +655,8 @@ module.exports = function(grunt) {
                         ga_token: "UA-66097980-1",
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.16.15(' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        version: '3.18.0 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -674,8 +680,8 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.16.15(' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        version: '3.18.0 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -685,6 +691,56 @@ module.exports = function(grunt) {
                         student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
                         teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     }
+
+                }
+            }],
+            netlify_staging: [{
+                dest: '<%= yeoman.app %>/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        beta:true,
+                        debug: true,
+                        ga_token: "",
+                        host: 'https://scalear-staging2.herokuapp.com',
+                        redirection_url: 'https://scalear-staging2.herokuapp.com/#/',
+                        version: '3.18.0 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
+                    }
+
+                }
+            }],
+            staging_server: [{
+                dest: '<%= yeoman.app %>/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        beta:false,
+                        debug: true,
+                        ga_token: "",
+                        host: 'https://scalear-staging2.herokuapp.com',
+                        redirection_url: 'https://scalear-staging2.herokuapp.com/#/',
+                        version: '3.16.11(' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
+                    },
 
                 }
             }],
@@ -699,8 +755,8 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.16.15(' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        version: '3.18.0 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.2.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -733,7 +789,7 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:server',
-            'ngconstant:dev',
+            target=='staging'?'ngconstant:staging_server':'ngconstant:dev',
             'concurrent:server',
             'autoprefixer',
             'connect:livereload',
@@ -764,12 +820,13 @@ module.exports = function(grunt) {
         'usemin',
         'htmlclean',
         'inline_angular_templates',
-        //'compress',
+        'compress',
         'clean:bower'
     ]);
 
     grunt.registerTask('staging_aws', ['ngconstant:staging', 'build', 'aws_s3:staging', 's3:staging'])
     grunt.registerTask('staging', ['ngconstant:staging', 'build'])
+    grunt.registerTask('netlify_staging', ['ngconstant:netlify_staging', 'build'])
     grunt.registerTask('production', ['ngconstant:prod', 'build'])
     grunt.registerTask('coverage', [
       'clean:coverageE2E',

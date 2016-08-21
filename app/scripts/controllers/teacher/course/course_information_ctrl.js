@@ -31,8 +31,7 @@ angular.module('scalearAngularApp')
     delete modified_course.unique_identifier;
     delete modified_course.modules;
     delete modified_course.selected_module;
-
-    $log.debug(modified_course);
+    delete modified_course.duration;
     var timezone = angular.copy(modified_course.time_zone)
     modified_course.time_zone = timezone.name
     Course.update(
@@ -94,13 +93,10 @@ angular.module('scalearAngularApp')
     $scope.teacher_forum = true
   }
 
-  $scope.updateTeacher = function(index){
+  $scope.updateTeacher = function(teacher){
     Course.updateTeacher(
       {course_id:$stateParams.course_id},
-      {
-        email:$scope.teachers[index].email, 
-        role_id:$scope.teachers[index].role
-      }
+      teacher
     );
   }
 
@@ -138,6 +134,13 @@ angular.module('scalearAngularApp')
   $scope.animateCopy=function(){
      $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
   }
+
+  $scope.updateTeacherEmailDiscussion=function(){
+
+  }
+
+
+
   $scope.getTeachers();
 
 }]);

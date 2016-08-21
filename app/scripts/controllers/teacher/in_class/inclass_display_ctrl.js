@@ -5,6 +5,6 @@ angular.module('scalearAngularApp')
     
     $window.scrollTo(0, 0);
     $scope.$on('player ready',function(){
-    	$scope.nextQuiz()
+    	$scope.nextItem()
     })
 }]);

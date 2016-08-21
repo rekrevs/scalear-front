@@ -20,9 +20,9 @@ angular.module('scalearAngularApp')
 .factory('TimelineFilter', ['$rootScope',function($rootScope) {
     var filter_settings={}
     if ($rootScope.preview_as_student)
-        filter_settings={quiz:true,confused:false, discussion:false, note:false};
+        filter_settings={quiz:true,confused:false, discussion:false, note:false, marker:true};
     else
-        filter_settings={quiz:true,confused:true, discussion:true, note:true};
+        filter_settings={quiz:true,confused:true, discussion:true, note:true, marker:true};
     return {
         get:function(type){return filter_settings[type]},
         set:function(type, val){filter_settings[type] = val},

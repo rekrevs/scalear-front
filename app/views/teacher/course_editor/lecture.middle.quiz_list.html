@@ -1,19 +1,20 @@
 <table class="table small-12 columns quiz_list no-margin-bottom">
 	<tbody>
-		<tr ng-repeat="quiz in quiz_list| filter:'!!'|orderBy:'time'" ng-class="{wheat: quiz.id == selected_quiz_id}">
+		<tr ng-repeat="quiz in lecture.timeline.items|filter:{type:'quiz'}|orderBy:'time'" ng-class="{wheat: quiz.data.id == selected_quiz_id}">
 			<td style="padding: 0.3625rem 0.3rem;">
 				<div class="small-12 columns no-padding">
-					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz)" padded="true" />
+					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz.data)" padded="true" />
+					<span ng-click="showQuiz(quiz.data)">
 						<div class="small-4 columns size-10">
-							<span ng-show="quiz.quiz_type=='survey'" translate>editor.survey</span>
-							<span ng-show="quiz.quiz_type!='survey'" translate>editor.quiz</span>
+							<span translate>{{(quiz.data.quiz_type=='survey'? 'editor.survey' : 'editor.quiz')}}</span>
 						</div>
-						<div class="small-4 left columns size-10" ng-init="quiz.formatedTime = (quiz.time|format)">
-							<span class="looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.formatedTime}}</span>
+						<div class="small-4 left columns size-10">
+							<span class="looks-like-a-link">{{quiz.data.time|format}}</span>
 						</div>
-					<div class="small-12 columns">
-						<span class="quiz_title color-blue2 looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.question}}</span>
-					</div>
+						<div class="small-12 columns">
+							<span class="quiz_title color-blue2 looks-like-a-link">{{quiz.data.question}}</span>
+						</div>
+					</span>
 				</div>
 			</td>
 		</tr>

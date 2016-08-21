@@ -17,6 +17,8 @@ angular.module('scalearAngularApp')
       'show':{method: 'GET', headers:headers},
       'saveTeacher':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
       'updateTeacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
+      'updateStudentDueDateEmail':{ method: 'POST', params: {action: 'update_student_duedate_email'}, headers:headers},
+      'getStudentDueDateEmail':{ method: 'GET', params: {action: 'get_student_duedate_email'}, headers:headers},
       'deleteTeacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
       'getCalendarEvents':{ method: 'GET', params: {action: 'events'}, headers:headers},
       'getAnnouncements':{ method: 'GET', isArray: true , params: {action: 'announcements'}, headers:headers},
@@ -35,6 +37,7 @@ angular.module('scalearAngularApp')
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
       'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}},
+      'exportModuleProgress':{method: 'GET', headers:headers, params: {action: 'export_modules_progress'}},
       'systemWideEmail':{method: 'POST', params: {action: 'send_system_announcement'}, headers:headers},
     });
 

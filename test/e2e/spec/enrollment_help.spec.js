@@ -14,10 +14,10 @@ var course_list = new CourseList()
 var students_page = new Students()
 var account_info = new AccountInformation();
 
-describe("Enrollment Help Check - Teacher",function(){ 
+describe("Enrollment Help Check - Teacher",function(){
     it("should login as teacher",function(){
-        login_page.sign_in(params.teacher_mail, params.password)
-    })   
+        login_page.sign_in(params.teacher1.email, params.password)
+    })
     it("should open course",function(){
         course_list.open()
         course_list.open_course(1)

@@ -9,7 +9,7 @@ var params = ptor.params
 ptor.driver.manage().window().maximize();
 
 
-//equation 
+//equation
 // 570 >> 169
 //(width*169)/570
 // questions coordinates
@@ -26,7 +26,7 @@ var mcq_q3_y = 187; //133-6;
 
 // 	it('should sign in as teacher', function(){
 // 		o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 	})
 
 // 	it('should create_course', function(){
@@ -35,13 +35,13 @@ var mcq_q3_y = 187; //133-6;
 
 // 	//test
 // 	it('should add a module and lecture to create quizzes', function(){
-// 		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+// 		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 // 		// o_c.open_course_list(ptor)
 // 		// o_c.open_course(ptor, 1);
 // 		teacher.add_module(ptor);
 // 		// o_c.press_content_navigator(ptor);
 // 		teacher.open_module(ptor, 1);
-// 		teacher.add_lecture(ptor);			
+// 		teacher.add_lecture(ptor);
 // 		// o_c.press_content_navigator(ptor);
 // 		// ptor.sleep(2000)
 // 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -53,7 +53,7 @@ var mcq_q3_y = 187; //133-6;
 // 		make_mcq_questions_and_check(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
 // 	})
 // 	//end test
-	
+
 // 	it('should clear the course for deletion', function(){
 // 		o_c.to_teacher(ptor);
 // 		o_c.open_course_list(ptor);
@@ -74,7 +74,7 @@ describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -83,12 +83,12 @@ describe("1", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -103,7 +103,7 @@ describe("1", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for no of mcqs ', function(){
@@ -147,7 +147,7 @@ describe("1", function(){
 	    teacher.delete_item_by_number(ptor, 1, 1);
 	    teacher.delete_empty_module(ptor, 1)
 	})
-	
+
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
@@ -160,7 +160,7 @@ describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -169,12 +169,12 @@ describe("2", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -189,7 +189,7 @@ describe("2", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for no of mcqs ', function(){
@@ -242,7 +242,7 @@ describe("check for explanation", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.sign_in(ptor, params.teacher1.email, params.password);
 	})
 
 	it('should create_course', function(){
@@ -251,12 +251,12 @@ describe("check for explanation", function(){
 
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher1.email, params.password);
 		// o_c.open_course_list(ptor);
 		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
+		teacher.add_lecture(ptor);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
@@ -271,7 +271,7 @@ describe("check for explanation", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(2000)
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+		teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
 	})
 
 	it('should login a student and check for no of mcqs ', function(){
@@ -318,7 +318,7 @@ describe("check for explanation", function(){
 	    teacher.delete_item_by_number(ptor, 1, 1);
 	    teacher.delete_empty_module(ptor, 1)
 	})
-	
+
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
@@ -396,11 +396,11 @@ ptor.sleep(2000);
 					check_boxes[0].getLocation().then(function(loc){
                         expect(loc.x-location.x).toBeLessThan(Math.floor((w*q1_x)/ontop_w));
                         expect(loc.y-location.y).toBeLessThan(Math.floor((h*q1_y)/ontop_h));
-                        
+
                         expect(loc.x-location.x).toBeGreaterThan(Math.floor((w*q1_x)/ontop_w)-10);
                         expect(loc.y-location.y).toBeGreaterThan(Math.floor((h*q1_y)/ontop_h)-10);
 					})
-					
+
 					check_boxes[1].getLocation().then(function(loc){
                         expect(loc.x-location.x).toBeLessThan(Math.floor((w*q2_x)/ontop_w));
                         expect(loc.y-location.y).toBeLessThan(Math.floor((h*q2_y)/ontop_h));

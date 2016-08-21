@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title ng-bind="'ScalableLearning'+' - '+Page.title()">ScalableLearning</title>
+    <title ng-bind="Page.title() + ' - ' + '(ScalableLearning)'">ScalableLearning</title>
     <meta name="description" content="">
     <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -29,7 +29,8 @@
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
-
+    <link rel="stylesheet" href="bower_components/angular-wizard/dist/angular-wizard.min.css">
+    
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -38,7 +39,7 @@
 
 
   <body>
-    <loading class="errorpageserver" size="big" show="logging_out" ></loading>
+    <loading class="errorpageserver" size="big" show="busy_loading" ></loading>
     <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block; height: 0px;">
             <div id='server_error' app-messages status="show_alert" style="z-index: 20000;"></div>
@@ -73,7 +74,7 @@
                 <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
                 </content-navigator>
                 <br ng-hide="('**.course.**' | includedByState)"/>
-                <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
+                <div ng-show="ContentNavigator.delayed_navigator_open" class="small-12 medium-4 large-2 columns no-padding no-margin">
                 </div>
                 <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
                 </div>
@@ -142,9 +143,9 @@
     <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
 
-    <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+    <script src="bower_components/sass-bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="bower_components/sass-bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="bower_components/sass-bootstrap/js/bootstrap-popover.js"></script>
     <script src="bower_components/js-md5/js/md5.min.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
@@ -154,9 +155,10 @@
     <script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
     <script src="bower_components/angular-truncate/ng-text-truncate.js"></script>
     <script src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script src="bower_components/jquery-easing-original/jquery.easing.min.js"></script>
     <script src="bower_components/ngDialog/js/ngDialog.min.js"></script>
     <script src="bower_components/ics.js/ics.deps.min.js"></script>
+    <script src="bower_components/angular-wizard/dist/angular-wizard.min.js"></script>
+
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/externals/bootstrap_plugins.js"></script>
@@ -192,6 +194,7 @@
     <script src="scripts/services/teacher/lecture.js"></script>
     <script src="scripts/services/teacher/module.js"></script>
     <script src="scripts/services/teacher/online_quiz.js"></script>
+    <script src="scripts/services/teacher/online_marker.js"></script>
     <script src="scripts/services/teacher/quiz.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
@@ -204,11 +207,13 @@
     <script src="scripts/services/user_session.js"></script>
     <script src="scripts/services/batch_email_service.js"></script>
     <script src="scripts/services/home.js"></script>
+    <script src="scripts/services/saml.js"></script>
     <script src="scripts/services/forum.js"></script>
     <script src="scripts/services/timeline.js"></script>
     <script src="scripts/services/page.js"></script>
     <script src="scripts/services/scaltour.js"></script>
     <script src="scripts/services/util.js"></script>
+    <script src="scripts/services/is_mobile.js"></script>
     <script src="scripts/services/impersonate.js"></script>
     <script src="scripts/services/dashboard.js"></script>
     <script src="scripts/services/content_navigator.js"></script>
@@ -224,18 +229,20 @@
     <script src="scripts/controllers/faq_ctrl.js"></script>
     <script src="scripts/controllers/course_ctrl.js"></script>
     <script src="scripts/controllers/module_ctrl.js"></script>
-    <script src="scripts/controllers/shared_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/shared/shared_ctrl.js"></script>
     <script src="scripts/controllers/report_technical_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
+
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/lecture_marker_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/customlink_details_ctrl.js"></script>
@@ -259,15 +266,22 @@
     <script src="scripts/controllers/teacher/in_class/inclass_module_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/inclass_display_ctrl.js"></script>
 
+    <script src="scripts/controllers/teacher/help/teacher_getting_started_ctrl.js"></script>
+
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/student/course/course_information_ctrl.js"></script>
+    <script src="scripts/controllers/student/course/content_selector_ctrl.js"></script>
 
     <script src="scripts/controllers/student/lectures/courseware_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
+    <script src="scripts/controllers/student/inclass/student_inclass_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
+
+    <script src="scripts/controllers/student/help/student_getting_started_ctrl.js"></script>
 
     <script src="scripts/controllers/users/teacher.js"></script>
     <script src="scripts/controllers/users/student.js"></script>
+    <script src="scripts/controllers/users/signup_ctrl.js"></script>
     <script src="scripts/controllers/users/password/new.js"></script>
     <script src="scripts/controllers/users/password/edit.js"></script>
     <script src="scripts/controllers/users/confirmation/new.js"></script>
@@ -275,13 +289,11 @@
     <script src="scripts/controllers/users/edit.js"></script>
     <script src="scripts/controllers/users/confirm_delete_ctrl.js"></script>
     <script src="scripts/controllers/users/save_account_ctrl.js"></script>
-
-    <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
-    <script src="scripts/controllers/student/dashboard_ctrl.js"></script>
-    <script src="scripts/controllers/help/student_getting_started_ctrl.js"></script>
-    <script src="scripts/controllers/help/teacher_getting_started_ctrl.js"></script>
     <script src="scripts/controllers/users/thanks_for_registering_ctrl.js"></script>
     <script src="scripts/controllers/users/confirmed.js"></script>
+
+    <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
+    <script src="scripts/controllers/dashboard_ctrl.js"></script>
     <script src="scripts/controllers/calendar_modal_ctrl.js"></script>
     <!-- endbuild -->
 </body>

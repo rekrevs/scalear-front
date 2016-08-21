@@ -10,9 +10,9 @@ var login_page = new Login()
 var	new_course = new NewCourse();
 var course_info = new CourseInformation()
 
-describe("Teacher", function(){	
+describe("Teacher", function(){
 	it("should login as teacher",function(){
-		login_page.sign_in(params.teacher_mail, params.password)
+		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should create course', function(){
 		new_course.open()
@@ -22,13 +22,14 @@ describe("Teacher", function(){
 		course_info.open()
 		var enrollment_key = course_info.enrollmentkey
 		header.logout()
-		login_page.sign_in(params.student_mail, params.password)
+		// browser.pause();
+		login_page.sign_in(params.student1.email, params.password)
 		header.join_course(enrollment_key)
 		header.logout()
-		login_page.sign_in(params.student2_mail, params.password)
+		login_page.sign_in(params.student2.email, params.password)
 		header.join_course(enrollment_key)
 		header.logout()
-		login_page.sign_in(params.student3_mail, params.password)
+		login_page.sign_in(params.student3.email, params.password)
 		header.join_course(enrollment_key)
 	})
 

@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
                 scope.module.items.forEach(function(item){
                     if(item.duration){
                         total_calculated_time += parseInt(item.duration)
-                    } 
+                    }
                 })
                 scope.module.total_time = total_calculated_time
             }
@@ -32,32 +32,36 @@ angular.module('scalearAngularApp')
             scope.remove=function(event){
                 event.preventDefault();
                 event.stopPropagation();
-                ngDialog.open({
-                    template:'\
-                        <div class="ngdialog-message">\
-                            <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
-                            <span>\
-                                <span translate>groups.delete_popup.delete_module</span>\
-                                <b>"'+scope.module.name+'"</b>\
-                                <span translate>groups.delete_popup.will_delete</span>\
-                                <span translate>groups.delete_popup.are_you_sure</span>\
-                            </span>\
-                        </div>\
-                        <div class="ngdialog-buttons">\
-                            <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
-                            <button type="button" class="ngdialog-button ngdialog-button-alert delete_confirm" ng-click="delete()" translate>button.delete</button>\
-                        </div>',
-                    plain: true,
-                    className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
-                    showClose:false,
-                    controller: ['$scope', function($scope) {
-                        $scope.delete=function(){
-                            $rootScope.$broadcast("delete_module", scope.module)
-                            $scope.closeThisDialog()
-                        }
-                    }]
+                if(scope.module.items.length>0){
+                    ngDialog.open({
+                        template:'\
+                            <div class="ngdialog-message">\
+                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                                <span>\
+                                    <span translate>groups.delete_popup.delete_module</span>\
+                                    <b>"'+scope.module.name+'"</b>\
+                                    <span translate>groups.delete_popup.will_delete</span>\
+                                    <span translate>groups.delete_popup.are_you_sure</span>\
+                                </span>\
+                            </div>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-alert delete_confirm" ng-click="delete()" translate>button.delete</button>\
+                            </div>',
+                        plain: true,
+                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                        showClose:false,
+                        controller: ['$scope', function($scope) {
+                            $scope.delete=function(){
+                                $rootScope.$broadcast("delete_module", scope.module)
+                                $scope.closeThisDialog()
+                            }
+                        }]
 
-                });
+                    });
+                }
+                else
+                  $rootScope.$broadcast("delete_module", scope.module)  
             }
 
             scope.copy=function(){
@@ -93,7 +97,7 @@ angular.module('scalearAngularApp')
             })
             scope.remove=function(event){
                 event.stopPropagation()
-                event.preventDefault() 
+                event.preventDefault()
                 $rootScope.$broadcast("delete_item", scope.item)
             }
 
@@ -127,12 +131,12 @@ angular.module('scalearAngularApp')
         templateUrl: '/views/teacher/course_editor/module.html',
         link: function(scope,element) {
             scope.module = scope.data()
-            var calculateTime=function(){                
+            var calculateTime=function(){
                 var total_calculated_time = 0
                 scope.module.items.forEach(function(item){
                     if(item.duration){
                         total_calculated_time += parseInt(item.duration)
-                    } 
+                    }
                 })
                 scope.module.total_time = total_calculated_time
             }
@@ -276,7 +280,8 @@ angular.module('scalearAngularApp')
 }]).directive('lectureQuestionsModal', ['$modal',function($modal){
     return{
         scope:{
-            openModal:"="
+            openModal:"=",
+            data:"="
         },
         restrict: 'A',
         replace: true,
@@ -285,16 +290,23 @@ angular.module('scalearAngularApp')
                 $modal.open({
                     templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                     controller: ModalInstanceCtrl,
-                    windowClass: 'large'
+                    windowClass: 'large',
+                    scope:$scope
                 })
             }
             var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
+                $scope.lecture = $scope.data
+                $scope.submitting = false
                 $scope.addQuiz=function(quiz_type, question_type){
-                    $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
+                    if(!$scope.submitting){
+                        $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
+                        $scope.submitting = true
+                    }
                     $modalInstance.close()
                 }
               $scope.cancel = $modalInstance.dismiss
             }]
         }]
+
     }
 }])

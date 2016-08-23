@@ -143,10 +143,7 @@ angular.module('scalearAngularApp')
           }
           if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
             $state.go("login");
-            console.log("not clean hi");
             var url = $state.href(to, toParams)
-            console.log("url = ", url);
-            console.log("url test = ", /courses\/enroll\?id=/.test(url));
             if(/courses\/enroll\?id=/.test(url)){
               URLInformation.setEnrollLink(url)
             }

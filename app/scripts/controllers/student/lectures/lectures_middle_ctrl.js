@@ -334,7 +334,6 @@ angular.module('scalearAngularApp')
           $scope.lecture_player.controls.seek(time)
           if(!$scope.log_event_timeout) {
             $scope.log_event_timeout = $timeout(function() {
-              console.log("timeout", current_time, $scope.seek_to_time)
               logVideoEvent("seek", current_time, $scope.seek_to_time)
               var percent_view = Math.round((($scope.seek_to_time / $scope.total_duration) * 100))
               updateViewPercentage(percent_view, "seek")

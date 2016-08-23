@@ -154,6 +154,7 @@ angular.module('scalearAngularApp')
               var type = VideoInformation.isYoutube(lecture.url)
               if(type) {
                 var id = type[1]
+                VideoInformation.emptyCachedInfo()
                 VideoInformation.requestInfoFromYoutube(id)
                   .then(function(data) {
                     if(data.items.length > 0) {

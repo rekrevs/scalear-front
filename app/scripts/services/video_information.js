@@ -22,13 +22,17 @@ angular.module('scalearAngularApp')
           deferred.resolve(youtube_video_information[url])
         })
         .catch(function(resp){
-          youtube_video_information = {}
+          emptyCachedInfo()
           deferred.reject(resp)
         })
       } else {
         deferred.resolve(youtube_video_information[url])
       }
       return deferred.promise;
+    }
+
+    function emptyCachedInfo(){
+      youtube_video_information = {}
     }
 
     function isYoutube(url) {
@@ -65,7 +69,8 @@ angular.module('scalearAngularApp')
       isMP4: isMP4,
       invalidUrl: invalidUrl,
       getFinalUrl: getFinalUrl,
-      isYoutube: isYoutube
+      isYoutube: isYoutube,
+      emptyCachedInfo:emptyCachedInfo
     };
 
   }]);

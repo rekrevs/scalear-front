@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
         if($state.params.module_id)
             $state.go(state)
         else{
-           ErrorHandler.showMessage($translate('error_message.select_module_first'), 'errorMessage', 0, "error");
+           ErrorHandler.showMessage($translate('error_message.select_module_first'), 'errorMessage', 4000, "error");
         }
     }
 

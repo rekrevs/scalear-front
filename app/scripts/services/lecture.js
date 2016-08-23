@@ -186,7 +186,7 @@ angular.module('scalearAngularApp')
             lecture_id: lecture.id
           }, lecture)
           .$promise
-          .catch(function() {
+          .catch(function(resp) {
             if(resp.status == 422)
               return resp.data.errors.join();
             else

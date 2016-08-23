@@ -9,7 +9,6 @@ angular.module('scalearAngularApp')
       return !!redirect_link;
     }
     function getRedirectLink(){
-      console.log("redirect link is", redirect_link)
       return redirect_link;
     }
     function setRedirectLink(link){
@@ -32,11 +31,9 @@ angular.module('scalearAngularApp')
       return getEnrollLink();
     }
     function getEnrollLink(){
-      console.log("enroll link is", enroll_link);
       return enroll_link ||  $cookieStore.get("enroll_link");
     }
     function clearEnrollLink(){
-      console.log("clearign enroll link");
       enroll_link = null;
       $cookieStore.remove("enroll_link");
     }

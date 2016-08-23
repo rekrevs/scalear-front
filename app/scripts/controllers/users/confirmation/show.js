@@ -9,7 +9,6 @@ angular.module('scalearAngularApp')
     $log.debug($stateParams)
 
     UserSession.getCurrentUser().catch(function() {
-      console.log("dsfsdfs")
       User.show_confirmation({ confirmation_token: $stateParams.confirmation_token },
         function() {
           $timeout(function() {

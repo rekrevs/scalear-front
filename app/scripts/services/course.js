@@ -49,9 +49,7 @@ angular.module('scalearAngularApp')
     var selected_course;
     var deferred_role = null
 
-    $rootScope.$on("Course:get_current_courses", function() {
-      currentCourses();
-    })
+
 
     function getCourseRole(id) {
       if(!deferred_role) {
@@ -70,7 +68,7 @@ angular.module('scalearAngularApp')
     }
 
     function currentCourses() {
-      return Course.currentCourses({}).$promise;
+      return Course.currentCourses({}).$promise
     }
 
     function setCourseRole(role) {
@@ -131,7 +129,7 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          
+
           $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })

@@ -32,6 +32,10 @@ angular.module('scalearAngularApp')
        getCurrentCourses()
     })
 
+    $rootScope.$on("Course:get_current_courses", function() {
+      getCurrentCourses();
+    })
+
     function getCurrentCourses() {
       $scope.current_teacher_courses = null;
       $scope.current_student_courses = null;

@@ -134,7 +134,6 @@ angular.module('scalearAngularApp')
           scope.turncatingcount = 15
         }
         scope.item = scope.data()
-        scope.current_user = scope.current_user
         scope.preview_as_student = $rootScope.preview_as_student
         scope.formattedTime = $filter('format', 'hh:mm:ss')(scope.item.time)
         scope.private_text = $translate("discussion.private_post")
@@ -229,7 +228,6 @@ angular.module('scalearAngularApp')
           .then(function(user) {
             scope.current_user = user
           })
-        scope.current_user = scope.current_user
         scope.preview_as_student = $rootScope.preview_as_student
         scope.flagComment = function() {
           Forum.flagComment({ comment_flag: { comment_id: scope.item.comment.id } },

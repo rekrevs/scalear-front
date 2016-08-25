@@ -168,6 +168,9 @@ var translation_en={
       teacher: "Teacher Registration",
       student: "Student Registration"
     },
+    teacher:"For Teachers",
+    student:"For Students", 
+    int_video:"New to ScalableLearning? Please watch a short introductory video to help you get started.",
   },
   content_navigator:{
     customlink:"@:global.customlink",

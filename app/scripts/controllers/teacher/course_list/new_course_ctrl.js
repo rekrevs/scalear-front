@@ -10,10 +10,13 @@ angular.module('scalearAngularApp')
     Course.newCourse(
       function(data) {
         $scope.importing = data.importing;
-        console.log(data.importing)
         $scope.timezones = scalear_utils.listTimezones()
         $scope.course.time_zone = $scope.timezones[11] //GMT+0
         $scope.course.start_date = new Date()
+        $scope.course.end_date = new Date()
+        var days_in_week = 7;
+        var default_course_duration =  10 //weeks
+        $scope.course.end_date.setDate($scope.course.start_date.getDate() + (days_in_week * default_course_duration));
         $scope.import_from = null
       }
     );
@@ -74,6 +77,8 @@ angular.module('scalearAngularApp')
         )
       } else {
         $scope.submitted = true
+        $scope.submitting = false;
+
       }
     }
   }]);

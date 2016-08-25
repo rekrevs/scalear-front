@@ -5,13 +5,17 @@ table [class*="column"] + [class*="column"]:last-child{
 table.table_matrix_height{
     margin-bottom: 0
 }
+
+table.table_matrix_height tbody{
+    overflow-x: hidden !important;
+}
 .column-width{
     min-width: 115px;
     max-width: 250px
 }
 @media only screen and (min-width:64.063em) {
   .table_matrix_height{
-    height: 55vh !important;
+    height: 54vh !important;
   }
 }
 
@@ -41,7 +45,7 @@ table.table_matrix_height{
             </th>
         </tr>
     </thead>
-    <tbody > <!-- class="scroll_container" -->
+    <tbody> <!-- class="scroll_container" -->
         <tr bindonce ng-repeat="student in students" >
             <td class="column-width"><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
             <td class="state column-width" bindonce ng-repeat='module in status[student.id] track by $index'>

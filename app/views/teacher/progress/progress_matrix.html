@@ -35,7 +35,7 @@ table.table_matrix_height tbody{
         <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'progress.'+stat}}</span>
     </div>
 </div>
-<button class="right button tiny secondary" ng-click="exportProgress()" style="margin-bottom: 10px;" >Export</button>
+<button ng-if="exportProgress != null" class="right button tiny secondary" ng-click="exportProgress()" style="margin-bottom: 10px;" >Export</button>
 <table fixed-header class="table_matrix_height" style="width:100%">
     <thead>
         <tr>

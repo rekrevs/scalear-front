@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log) {
+  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', 'CourseModel', function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log, CourseModel) {
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
+
+    $scope.course = CourseModel.getSelectedCourse()
 
     var getModuleProgress = function(offset, limit) {
       $scope.module_limit = limit

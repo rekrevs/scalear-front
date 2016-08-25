@@ -266,7 +266,7 @@ xdescribe("Export course clarification",function(){
 
 //SCAL-1282: Enable/disable registration
 //SCAL-967:Need an "add course URL"
-describe("Need an 'add course URL' and  Enable/disable registration",function(){
+xdescribe("Need an 'add course URL' and  Enable/disable registration",function(){
 	describe("teacher ",function(){		
 		it("should login",function(){
 		    login_page.sign_in(params.teacher1.email, params.password)
@@ -276,32 +276,100 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			course_list.open_teacher_course(1)
 			student_list.open()
 		})
-
 		it('should removed student from course', function(){
 			student_list.click_remove_student()
 			expect(student_list.student_delete_button.count()).toEqual(3)
 			student_list.delete_student(0)
-			// expect(student_list.export_student_list_message.isDisplayed()).toBe(true);
 		})
-		it('should open student list', function(){
-			// course_list.open()
-			// course_list.open_teacher_course(1)
-			// course_info.open()
+		it('should open course information', function(){
+			course_info.open()
+			course_info.disable_registration_button_click()
 		})
-
-		it('should disable registration', function(){
-			// course_info.click_export_anonymized_data()
-			// expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
+		it('should disable registration ', function(){
+			course_info.display_registration_field.click()
+			
+			var newdate = new Date();
+			newdate.setDate(newdate.getDate() - 7);
+			
+			course_info.type_display_registration_date(newdate)
+			expect(course_info.disable_registration_button.isSelected()).toBe(true);
 		})
 		
-		it('should copy url link to params', function(){
-			// course_info.click_export_anonymized_data()
-			// expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
-		})
+		it('student 1 should cannot join course', function(){
+			course_info.open()
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+			login_page.sign_in(params.student1.email, params.password)
+			header.join_course(enrollment_key)
+			header.reject_join_course.getText().then(function (text) { expect(text).toEqual("Registration is disabled for this course, contact your teacher to enable registration.") });
 
-		it("should logout", function() {
-		  header.logout()
+		})
+		it('teacher should enable ', function(){
+			// sleep(2000)
+			header.close_join_course()
+			header.logout()
+			// sleep(5000)
+		    login_page.sign_in(params.teacher1.email, params.password)
+			course_list.open()
+			course_list.open_teacher_course(1)
+			course_info.open()
+			var enrollment_url = course_info.enrollment_url
+			course_info.disable_registration_button_click()
+			expect(course_info.disable_registration_button.isSelected()).toBe(false);
+			header.logout()
+			login_page.sign_in(params.student1.email, params.password)
+			sleep(2000)
+			browser.driver.get(enrollment_url)
+			sleep(3000)
+			expect(browser.driver.getCurrentUrl()).toContain('information')
 		})
     })
 })
 
+// SCAL-1127:Allow students to change question time 
+describe("Allow students to change question time",function(){
+	describe("Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student1.email, params.password)
+		})
+		var navigator = new ContentNavigator(1)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_student_course(1)
+			// sleep(5000)
+		})
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open()
+			navigator.module(1).item(1).open()
+			navigator.close()
+			browser.refresh()
+		})
+		it('should add a public question', function(){
+			student_lec.add_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(1).type_discussion("Public Question")
+            student_lec.lecture(1).type_time("00:00:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+            student_lec.lecture(1).type_time("01:00:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+            student_lec.lecture(1).type_time("00:04:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
+            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
+            // expect(student_lec.lecture(1).items.count()).toEqual(5)
+			browser.refresh()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+			// student_lec.lecture(1).discussion(1).delete()
+   //          expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+
+		})
+		it("should logout",function(){
+			student_lec.close_timeline()
+			header.logout()
+		})
+	})
+})

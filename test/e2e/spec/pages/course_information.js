@@ -23,6 +23,8 @@ var CourseInformation = function () {};
 CourseInformation.prototype = Object.create({}, {
 	enrollmentkey_field:{get: function(){return element(by.binding('course.unique_identifier'))}},
 	enrollmentkey: {get:function(){return this.enrollmentkey_field.getText() }},
+	enrollment_url_field:{get: function(){return element(by.id('enrollment_url'))}},
+	enrollment_url: {get:function(){return this.enrollment_url_field.getText() }},
 	teachers:{get:function(){return element.all(by.repeater('teacher in teachers'))}},
 	student:{get:function(){return new StudentCourseInformation()}},
 	add_teacher_button:{get:function(){return element(by.className('add-teacher-button'))}},
@@ -37,12 +39,33 @@ CourseInformation.prototype = Object.create({}, {
 	receive_email_button_click:{value:function(){
 		this.receive_email_button.click();
 	}},
-	  export_anonymized_data_button:{get:function(){return element(by.css("[ng-click='exportCourse()']"))}},
-	  click_export_anonymized_data:{value:function(){ 
-	    this.export_anonymized_data_button.click()
-	  }},
-	  export_anonymized_data_message:{get:function(){return element(by.id("server_error"))}},
+	disable_registration_button:{get:function(){return element(by.css('[ng-change="toggleRegistrationCheck()"]'))}},
+	disable_registration_button_click:{value:function(){
+		this.disable_registration_button.click();
+	}},
 
+	display_registration_field:{get: function(){return element(by.css('[ng-show="formData.disable_registration_checked"]'))}},
+
+	display_registration_date: { get: function () { return element(by.css('[ng-model="$data"]')) }},
+	type_display_registration_date: { value: function (keys) { 
+		 this.display_registration_date.clear().sendKeys(keys)
+		 return element(by.css('[type="submit"]')).click()
+	}},
+
+
+	// course_end_date: { get: function () { return this.course_end_date_field.getAttribute('value')}},
+	// type_course_end_date: { value: function (keys) { return this.course_end_date_field.clear().sendKeys(keys)}},
+
+
+	// disable_registration_button_checked:{get:function(){
+		// return this.disable_registration_button.;
+	// }},
+
+	export_anonymized_data_button:{get:function(){return element(by.css("[ng-click='exportCourse()']"))}},
+	click_export_anonymized_data:{value:function(){ 
+	    this.export_anonymized_data_button.click()
+	}},
+	export_anonymized_data_message:{get:function(){return element(by.id("server_error"))}},
 	open:{value:function(){
 		sub_header.open_course_info()
 		browser.driver.wait(function() {

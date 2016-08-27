@@ -58,6 +58,12 @@ Header.prototype= Object.create({}, {
 		element(by.name('key')).sendKeys(key)
     	element(by.buttonText('Enroll')).click()
 	}},
+	reject_join_course:{get:function(key){
+		return element(by.css('[ng-if="form.server_error"]'))
+	}},
+	close_join_course:{value:function(key){
+		element(by.css('[ng-click="cancelEnroll()"]')).click()
+	}},	
 	reject_share_notification:{value:function(num){this.share_notifications.get(num-1).element(by.className('alert')).click()}},
 	accept_share_notification:{value:function(num){this.share_notifications.get(num-1).element(by.className('success')).click()}},
 	reject_invitation_notification:{value:function(num){this.invitation_notifications.get(num-1).element(by.className('alert')).click()}},

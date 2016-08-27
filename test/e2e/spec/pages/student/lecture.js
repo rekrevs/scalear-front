@@ -77,10 +77,12 @@ Lecture.prototype = Object.create({}, {
 	discussion:{value:function(num){return new Discussion(this.discussions.get(num-1))}},
 	items:{get:function(){return this.field.all(by.repeater('item in timeline[l.id].items'))}},
 	editable_discussion:{get:function(){return this.field.element(by.id('show_question'))}},
-	type_discussion:{value:function(text){this.editable_discussion.element(by.tagName('textarea')).clear().sendKeys(text)}},
+	type_discussion:{value:function(text){this.editable_discussion.element(by.css('div[ng-model="current_question"]')).clear().sendKeys(text)}},
 	discussion_types:{get:function(){return this.editable_discussion.element(by.tagName('select')).all(by.tagName('option'))}},
 	change_discussion_public:{value:function(){this.discussion_types.get(1).click()}},
 	change_discussion_private:{value:function(){this.discussion_types.get(0).click()}},
+	time_feild:{get:function(){return this.editable_discussion.element(by.model('item.time'))}},
+	type_time:{value:function(text){this.time_feild.clear().sendKeys(text)}},
 	save_discussion:{value:function(){ this.editable_discussion.element(by.buttonText('Ask')).click()}},
 })
 

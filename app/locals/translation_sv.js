@@ -168,6 +168,9 @@ var translation_sv={
       teacher: "Lärare, registrering",
       student: "Student, registrering"
     },
+    teacher:"For Teachers(t)",
+    student:"For Students(t)", 
+    int_video:"New to ScalableLearning? Please watch a short introductory video to help you get started.(t_",
   },
   content_navigator:{
     customlink:"@:global.customlink",

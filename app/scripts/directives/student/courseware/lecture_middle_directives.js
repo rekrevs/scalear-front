@@ -95,7 +95,6 @@ angular.module('scalearAngularApp')
 					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
-
 			scope.$watch('explanation[answer.id]', function(newval){
 				if(scope.explanation && scope.explanation[scope.answer.id]){
 					scope.mypop={
@@ -108,6 +107,9 @@ angular.module('scalearAngularApp')
 					}
 				}
 			})
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.answer.id] = null
+      });
     }
 	}
 }]).directive('studentHtmlOcq',['$translate','$log',function($translate, $log){
@@ -133,7 +135,9 @@ angular.module('scalearAngularApp')
 					}
 				}
 			})
-
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.answer.id] = null
+      });
 			// if(scope.answer.correct){
 			// 	scope.radioChange(scope.answer);
 			// }
@@ -162,6 +166,9 @@ angular.module('scalearAngularApp')
           }
         }
       })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
   }
 }
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
@@ -171,7 +178,12 @@ angular.module('scalearAngularApp')
               "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
               "</ng-form>"+
-              "<div ng-bind-html='explanation[quiz.id]'></div>"
+              "<div ng-bind-html='explanation[quiz.id]'></div>",
+    link:function(scope){
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
+    }
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
   return {
@@ -231,6 +243,9 @@ angular.module('scalearAngularApp')
           }
         }
       })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.data.id] = null
+      });
       setup()
     }
   };
@@ -370,6 +385,10 @@ angular.module('scalearAngularApp')
           angular.element('#'+scope.data.id).css('background-color', bg_color)
         }
       })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.data.id] = null
+      });
+
   	  setup()
 
     }
@@ -396,6 +415,9 @@ angular.module('scalearAngularApp')
           }
         }
       })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
       setup()
     }
   }

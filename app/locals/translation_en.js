@@ -50,6 +50,8 @@ var translation_en={
     required: "Required",
     optional: "Optional",
     students: "Students",
+    teacher:"teacher",
+    student:"student", 
     done: "Done",
     correct: "Correct",
     incorrect: "Incorrect",
@@ -161,8 +163,8 @@ var translation_en={
     administration: "Administration",
     add_teacher: "Add Teacher/TA",
     student_list: "Student List",
-    join_course: "Join a new course",
-    new_course: "@:global.new_course",
+    join_course: "Join a new course (student)",
+    new_course: "Create a new course (teacher)",
     review: "Review",
     register:{
       teacher: "Teacher Registration",
@@ -866,8 +868,8 @@ var translation_en={
   help:{
     getting_started:{
         getting_started: "Getting Started",
-        student:"For Students",
-        teacher:"For Teachers",
+        student:"for Students",
+        teacher:"for Teachers",
     },
     support: "Support",
     teacher_forum: "Teacher Forum",

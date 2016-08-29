@@ -59,11 +59,12 @@ angular.module('scalearAngularApp')
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
         if(!$scope.lecture_player.controls.paused()) {
           $timeout(function() {
-            $scope.lecture_player.controls.seek_and_pause(item_data.time);
             if(type == 'quiz') {
+              $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            } else
-              $scope.showOnlineMarker(item_data)
+            } 
+            else
+              $scope.showOnlineMarkerAnnotationOnly(item_data)
           })
         }
       })
@@ -332,6 +333,7 @@ angular.module('scalearAngularApp')
     $scope.showOnlineMarker = function(marker) {
       var promise = $q.when(false)
       $scope.selected_marker = MarkerModel.getSelectedMarker()
+              $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
       if($scope.selected_marker != marker) {
         saveOpenEditor()
           .then(function(error) {
@@ -347,7 +349,15 @@ angular.module('scalearAngularApp')
           })
       }
     }
-
+    $scope.showOnlineMarkerAnnotationOnly = function(marker) {
+      var promise = $q.when(false)
+      $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
+      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
+        $scope.selected_marker = null
+      })
+    }
+    $scope.dismissAnnotation = function() {
+    }
     $scope.deleteMarkerButton = function(marker) {
       if($scope.selected_marker == marker) {
         closeMarkerMode()

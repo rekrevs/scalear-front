@@ -50,6 +50,8 @@ var translation_sv={
     required: "Nödvändig",
     optional: "Valfri",
     students: "Studenter",
+    teacher:"lärare",
+    student:"student", 
     done: "Klart",
     correct: "Korrekt",
     incorrect: "Felaktig",
@@ -161,8 +163,8 @@ var translation_sv={
     administration: "Administrera",
     add_teacher: "Lägg till lärare",
     student_list: "Lista av studenter",
-    join_course: "Delta i en ny kurs",
-    new_course: "@:global.new_course",
+    join_course: "Delta i en ny kurs (student)(t)",
+    new_course: "Create a new course (teacher)(t)",
     review: "Bedöm",
     register:{
       teacher: "Lärare, registrering",
@@ -866,8 +868,8 @@ var translation_sv={
   help:{
     getting_started:{
         getting_started: "Komma igång",
-        student:"För studenter",
-        teacher:"För lärare",
+        student:"för studenter",
+        teacher:"för lärare",
     },
     support: "Support",
     teacher_forum: "Lärarforum",

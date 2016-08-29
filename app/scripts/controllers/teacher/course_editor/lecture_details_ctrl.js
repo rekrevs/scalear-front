@@ -6,7 +6,8 @@ angular.module('scalearAngularApp')
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
     var module = $scope.lecture.module()
-    $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
+    $scope.setting ={}
+    $scope.setting.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
     $scope.disable_module_due_controls = CourseEditor.isDueDateDisabled(module.due_date)
     $scope.link_url = $state.href('course.module.courseware.lecture', { module_id: module.id, lecture_id: $scope.lecture.id }, { absolute: true })
     $scope.lecture_details_groups = DetailsNavigator.lecture_details_groups;
@@ -32,7 +33,7 @@ angular.module('scalearAngularApp')
 
     $scope.updateDueDate = function() {
       var offset = 200
-      var enabled = $scope.due_date_enabled
+      var enabled = $scope.setting.due_date_enabled
       var due_date = new Date($scope.lecture.due_date)
       var week = 7
       var years = 0
@@ -49,8 +50,8 @@ angular.module('scalearAngularApp')
       }
 
       $scope.lecture.due_date = due_date
-      $scope.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
-      $scope.lecture.due_date_module = !$scope.disable_module_due_controls && $scope.due_date_enabled
+      $scope.setting.due_date_enabled = !CourseEditor.isDueDateDisabled($scope.lecture.due_date)
+      $scope.lecture.due_date_module = !$scope.disable_module_due_controls && $scope.setting.due_date_enabled
     }
 
     $scope.visible = function(appearance_time) {

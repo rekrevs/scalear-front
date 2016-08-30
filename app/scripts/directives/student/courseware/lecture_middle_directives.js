@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
 
 			scope.updateValues= function(){
 				scope.values=0
-				if(scope.quiz.quiz_type=="html" || scope.quiz.quiz_type=="html_survey" && scope.quiz.question_type=="OCQ"){
+				if( (scope.quiz.quiz_type=="html" || scope.quiz.quiz_type=="html_survey") && scope.quiz.question_type=="OCQ"){
           if(typeof(scope.studentAnswers[scope.quiz.id])=="string")
 						scope.values+=1
 				}

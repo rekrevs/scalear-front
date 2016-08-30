@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel) {
+  .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel','ModuleModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel, ModuleModel) {
 
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
     ItemsModel.setSelectedItem($scope.quiz)
     $scope.course = CourseModel.getSelectedCourse()
+    $scope.module = ModuleModel.getSelectedModule()
     $scope.publish_state = getPublishStatus($scope.quiz)
     $scope.alert = {
       type: "alert",
@@ -65,7 +66,8 @@ angular.module('scalearAngularApp')
 
     function savePublish(publishstate) {
       $scope.saveQuestions()
-      $scope.quiz.appearance_time = publishstate ? new Date() : $scope.course.end_date
+      $scope.quiz.appearance_time = publishstate ? $scope.module.appearance_time : $scope.course.end_date
+      $scope.quiz.appearance_time_module = publishstate
       $scope.quiz.update()
         .then(function(quiz) {
           $scope.publish_state = getPublishStatus(quiz)
@@ -73,7 +75,7 @@ angular.module('scalearAngularApp')
     }
 
     function getPublishStatus(quiz) {
-      return(new Date() < new Date(quiz.appearance_time))
+      return(!quiz.appearance_time_module)
     }
 
     function addShortucts() {

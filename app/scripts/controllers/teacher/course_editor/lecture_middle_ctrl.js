@@ -333,7 +333,6 @@ angular.module('scalearAngularApp')
     $scope.showOnlineMarker = function(marker) {
       var promise = $q.when(false)
       $scope.selected_marker = MarkerModel.getSelectedMarker()
-              $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
       if($scope.selected_marker != marker) {
         saveOpenEditor()
           .then(function(error) {

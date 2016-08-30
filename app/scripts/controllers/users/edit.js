@@ -78,9 +78,12 @@ angular.module('scalearAngularApp')
         User.update_account({}, {
             user: $scope.user
           },
-          function() {},
+          function() {
+            $state.go("home")
+          },
           function(response) {
             $scope.user.errors = response.data.errors
+            $scope.user.first_day = $scope.dayNamesOption[user.first_day]
           })
       }
     }

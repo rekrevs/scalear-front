@@ -18,8 +18,8 @@ angular.module('scalearAngularApp')
         scope.accept = function() {
           Home.acceptCourse({}, { invitation: scope.id },
             function(data) {
-              Scope.current_user.invitations = data.invitations
-              delete Scope.current_user.invitation_items[scope.id]
+              scope.current_user.invitations = data.invitations
+              delete scope.current_user.invitation_items[scope.id]
               $state.go('course.edit_course_information', { course_id: scope.notification.course_id });
               $rootScope.$broadcast('Course:get_current_courses')
             }
@@ -29,8 +29,8 @@ angular.module('scalearAngularApp')
         scope.reject = function() {
           Home.rejectCourse({}, { invitation: scope.id },
             function(data) {
-              Scope.current_user.invitations = data.invitations
-              delete Scope.current_user.invitation_items[scope.id]
+              scope.current_user.invitations = data.invitations
+              delete scope.current_user.invitation_items[scope.id]
             }
           )
         }

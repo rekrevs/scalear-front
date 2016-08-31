@@ -620,8 +620,11 @@ angular.module('scalearAngularApp')
           end_time: scope.player.controls.getVideoEndTime(),
         }
         scope.$watch('editing', function() {
-          if (scope.editing == 'video')
+          if (scope.editing == 'video'){
+            scope.video.start_time= scope.player.controls.getVideoStartTime(),
+            scope.video.end_time= scope.player.controls.getVideoEndTime(),
             scope.duration = scope.player.controls.getAbsoluteDuration();
+          }
           else
             scope.duration = scope.player.controls.getDuration();
         })

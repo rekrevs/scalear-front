@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
         $cookieStore.put('login_provider', 'scalablelearning')
         $log.debug("login success")
         $scope.sending = false;
-        $rootScope.$broadcast("get_current_courses")
+        $rootScope.$broadcast("Course:get_current_courses")
         $scope.is_mobile= MobileDetector.isMobile()
         if( $scope.is_mobile && (MobileDetector.isTablet() ||  MobileDetector.isPhone())){
           ngDialog.open({

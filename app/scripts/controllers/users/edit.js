@@ -79,6 +79,7 @@ angular.module('scalearAngularApp')
             user: $scope.user
           },
           function() {
+            UserSession.allowRefetchOfUser()
             $state.go("home")
           },
           function(response) {

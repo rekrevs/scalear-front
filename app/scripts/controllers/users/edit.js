@@ -84,7 +84,7 @@ angular.module('scalearAngularApp')
           },
           function(response) {
             $scope.user.errors = response.data.errors
-            $scope.user.first_day = $scope.dayNamesOption[user.first_day]
+            $scope.user.first_day = $scope.dayNamesOption[$scope.user.first_day]
           })
       }
     }

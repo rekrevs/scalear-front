@@ -208,7 +208,7 @@ angular.module('scalearAngularApp')
             VideoInformation.requestInfoFromYoutube(video_id)
               .then(function(data) {
                 var duration = ScalearUtils.parseDuration(data.items[0].contentDetails.duration)
-                lecture.duration = lecture.duration || (duration.hour * (60 * 60) + duration.minute * (60) + duration.second)
+                lecture.duration = (duration.hour * (60 * 60) + duration.minute * (60) + duration.second)
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
                 update().then(function() {

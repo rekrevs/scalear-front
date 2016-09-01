@@ -66,10 +66,10 @@ angular.module('scalearAngularApp')
 
         scope.saveData = function() {
           $timeout(function() {
-            if(scope.text !== scope.value) {
+            // if(scope.text !== scope.value) {
               scope.text = scope.value
               scope.save()
-            }
+            // }
           })
         }
 

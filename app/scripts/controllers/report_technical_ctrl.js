@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ReportTechnicalCtrl', ['$scope', '$modalInstance', '$log', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', '$state', 'UserSession', function($scope, $modalInstance, $log, $rootScope, Home, $translate, $stateParams, $location, $interval, $state, UserSession) {
+  .controller('ReportTechnicalCtrl', ['$scope', '$modalInstance', '$log', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', '$state', 'UserSession','scalear_api', function($scope, $modalInstance, $log, $rootScope, Home, $translate, $stateParams, $location, $interval, $state, UserSession,scalear_api) {
 
     $scope.issue_types = [{ value: "system", text: $translate('feedback.system') }]
     if($state.includes("course")) {
@@ -55,7 +55,8 @@ angular.module('scalearAngularApp')
               url: $location.url(),
               problem: data,
               lang: $rootScope.current_lang,
-              agent: navigator.userAgent
+              agent: navigator.userAgent,
+              version: scalear_api.version
             },
             function() {
               angular.element('.reveal-modal').css('height', 'auto');

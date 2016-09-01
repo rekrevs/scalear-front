@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('SaveAccountCtrl', ['$scope', '$modalInstance', 'User', '$log', '$window', '$state', 'user_new', 'ErrorHandler', '$translate', 'UserSession', function($scope, $modalInstance, User, $log, $window, $state, user_new, ErrorHandler, $translate, UserSession) {
+  .controller('SaveAccountCtrl', ['$scope', '$modalInstance', 'User', '$log', '$window', '$state', 'user_new', 'ErrorHandler', '$translate', 'UserSession','day_options', function($scope, $modalInstance, User, $log, $window, $state, user_new, ErrorHandler, $translate, UserSession, day_options) {
 
     $window.scrollTo(0, 0);
     $scope.user = user_new
-
-    UserSession.getCurrentUser()
-      .then(function(user) {
-        $scope.current_user = user
-      })
+    $scope.dayNamesOption = day_options
+    // UserSession.getCurrentUser()
+    //   .then(function(user) {
+    //     $scope.current_user = user
+    //   })
 
     $scope.update_account = function() {
       $scope.sending = true;
@@ -18,18 +18,23 @@ angular.module('scalearAngularApp')
       User.update_account({}, {
         user: $scope.user
       }, function(response) {
-        $scope.sending = false;
-        if($scope.current_user.intro_watched == false) {
+        $modalInstance.close();
+        if($scope.user.intro_watched == false) {
           $state.go('confirmed')
         }
-        $scope.user.current_password = null;
-        $modalInstance.close();
-        if(response.password_confrimation) {
-          ErrorHandler.showMessage($translate("error_message.change_password_confirmation"), 'errorMessage', 4000, "success");
+        else{
+          UserSession.allowRefetchOfUser()
+          $state.go("home")
         }
+        // $scope.sending = false;
+        // $scope.user.current_password = null;
+        // if(response.password_confirmation) {
+        //   ErrorHandler.showMessage($translate("error_message.change_password_confirmation"), 'errorMessage', 4000, "success");
+        // }
       }, function(response) {
         $scope.sending = false;
         $scope.user.errors = response.data.errors
+        $scope.user.first_day = $scope.dayNamesOption[$scope.user.first_day]
         $scope.user.current_password = null;
         if(!response.data.errors.current_password) {
           $modalInstance.close();

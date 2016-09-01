@@ -70,6 +70,9 @@ angular.module('scalearAngularApp')
           resolve: {
             user_new: function() {
               return $scope.user;
+            },
+            day_options:function(){
+              return $scope.dayNamesOption
             }
           }
         })

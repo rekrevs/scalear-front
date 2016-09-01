@@ -99,27 +99,22 @@ angular.module('scalearAngularApp')
       UserSession.getCurrentUser()
         .then(function(current_user) {
           if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
-            console.log("IE state")
             $state.go("ie");
           }
           if(!current_user.info_complete) {
-            console.log("Info complete state")
-            $state.go('edit_account')
+            $state.go('edit_account', {},{notify: false})
             ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 4000, "error");
           } else {
             if(toParams.course_id) {
-              console.log("course state")
               CourseModel.getCourseRole(toParams.course_id)
                 .then(function(role) {
                   if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
-                    console.log("course list state")
                     $state.go("course_list");
                     showErrorMsg($state.href(to, toParams))
                   }
                 })
             }
             if(to.name === 'home') {
-              console.log("from home to course state")
               $state.go('course_list');
               // $state.go("dashboard")
             }
@@ -128,19 +123,15 @@ angular.module('scalearAngularApp')
               //   $state.go("confirmed")
               // }
               // else {
-                console.log("from confirmed to home")
                 $state.go("home");
                 showErrorMsg($state.href(to, toParams))
               // }
             }
             else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
-              console.log("to confirmed state")
               $state.go('confirmed')
             } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page
-              console.log("teacher going home redirect to course state")
               $state.go("course_list");
             } else if(stateNoAuth(to.name)) {
-              console.log("teacher going no-auth going home")
               $state.go("home");
               showErrorMsg($state.href(to, toParams))
             }
@@ -148,11 +139,9 @@ angular.module('scalearAngularApp')
         })
         .catch(function() {
           if(to.name === 'home') {
-            console.log("catch from home to landing")
             $state.go("landing")
           }
           if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
-            console.log("catch not logged in trying to access auth page go to login")
             $state.go("login");
             var url = $state.href(to, toParams)
             if(/courses\/enroll\?id=/.test(url)){

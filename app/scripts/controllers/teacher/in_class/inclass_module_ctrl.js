@@ -852,7 +852,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(data[ind][1]) },
+            { "v": ScalearUtils.getHtmlText(data[ind][2]) },
             { "v": data[ind][0] }
           ]
         }

@@ -95,6 +95,7 @@ angular.module('scalearAngularApp')
     function createInstance(lecture) {
 
       if(isInstance(lecture)) {
+          $rootScope.$broadcast("update_module_time", lecture.group_id);
         return lecture;
       }
 

@@ -158,7 +158,11 @@ angular.module('scalearAngularApp')
                 VideoInformation.requestInfoFromYoutube(id)
                   .then(function(data) {
                     if(data.items.length > 0) {
-                      deferred.resolve();
+                        if(data.items[0].status.uploadStatus === "processed"){
+                            deferred.resolve();
+                        } else {
+                            deferred.reject($translate('editor.details.vidoe_not_exist'));
+                        }
                     } else {
                       deferred.reject($translate('editor.details.vidoe_not_exist'));
                     }

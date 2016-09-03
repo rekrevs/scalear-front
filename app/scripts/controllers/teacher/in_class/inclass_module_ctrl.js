@@ -853,7 +853,7 @@ angular.module('scalearAngularApp')
         var row = {
           "c": [
             { "v": ScalearUtils.getHtmlText(data[ind][2]) },
-            { "v": data[ind][0] }
+            { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) }
           ]
         }
         formated_data.rows.push(row)

@@ -244,7 +244,7 @@ angular.module('scalearAngularApp')
         }
       })
       scope.$on("$destroy", function() {
-        scope.explanation[scope.data.id] = null
+         scope.explanation && (scope.explanation[scope.data.id] = null)
       });
       setup()
     }

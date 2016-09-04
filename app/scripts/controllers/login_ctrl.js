@@ -53,6 +53,7 @@ angular.module('scalearAngularApp')
 
   $scope.login = function(){
     $scope.sending = true;
+    UserSession.allowRefetchOfUser()
     User.signIn({},
       {"user":$scope.user},
       function(data){

@@ -42,7 +42,7 @@
                                         <img bo-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                     </span>
                                     <span translate>discussion.q</span>
-                                    <span bo-if="item.data.user_id != current_user.id" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="{{turncatingcount}}"></span>
+                                    <span bo-if="item.data.user_id != current_user.id" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="{{turncatingcount}}" style="white-space: pre-line"></span>
                                     <span bo-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
                                         <span class="discussion_title break-text" ng-bind-html="item.data.content"></span>
                                         <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>

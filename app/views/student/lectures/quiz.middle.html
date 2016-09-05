@@ -17,10 +17,11 @@
     <h3>
         <i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i>
         <i ng-if="quiz.quiz_type=='survey'" class="fi-clipboard-pencil"></i>
-        {{quiz.name}}
+        <!-- {{quiz.name}} -->
+        <div ng-bind-html="quiz.name" ></div>
       <span ng-if="quiz && !quiz.graded" class="color-grey text-italic" style="margin-left: 5px; margin-bottom:5px; font-size: 16px;">(<span translate>lectures.optional</span>)</span>
   </h3>
-    <h5 class="subheader">{{quiz.instructions}}</h5>
+    <h5 class="subheader" ng-bind-html="quiz.instructions"></h5>
     <div class="small-12 columns">
     	<p ng-if="status.attempts<quiz.retries+1">
     		<span translate="quizzes.attempt_number"></span>:
@@ -72,8 +73,8 @@
         </div>
 
          <div ng-if="element[1]=='Free Text Question' && survey_free[element[0]].student_show" style="margin-top:60px">
-            <div style="margin:10px 15px">Free Text Question | {{survey_free[element[0]].title}}</div>
-            <free-text-table ng-if="survey_free[element[0]].answers" survey-id="1" question="survey_free[element[0]]" related-answers="related_answers" display-only="true"/>
+            <div style="margin:10px 15px">Free Text Question | <span ng-bind-html="survey_free[element[0]].title" style="display: inline;" class="ng-binding"></span></div>
+            <free-text-table ng-if="survey_free[element[0]].answers" survey-id="1" question="survey_free[element[0]]"  related-answers="related_answers" display-only="true"/>
         </div>
     </div>
 

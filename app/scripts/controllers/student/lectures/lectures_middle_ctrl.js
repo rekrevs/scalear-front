@@ -182,7 +182,11 @@ angular.module('scalearAngularApp')
       $scope.total_duration = $scope.lecture_player.controls.getDuration()
         // if($scope.lecture_player.controls.youtube)
         //     $scope.total_duration-=1
-      var duration_milestones = [0, 25, 75]
+      var duration_milestones = [0]
+      for (var each_30_second = 30; each_30_second < $scope.total_duration; each_30_second = each_30_second +30) {
+        duration_milestones.push(((each_30_second / $scope.total_duration ) * 100))
+      }
+
       var quiz_time_offset = 0
       $scope.lecture.video_quizzes.forEach(function(quiz) {
         if(quiz.time >= $scope.total_duration - 2) {

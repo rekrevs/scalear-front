@@ -440,6 +440,7 @@ var translation_en={
     please_try_or_refresh:"Please try again later or click on the 'Refresh' button below",
     question_not_started:"The in-class question has not started",
     click_next_question: "Click on 'Next' when the question shows up",
+    multiple_choice:"multiple choice",
   },
   editor:{
     explanation: "Explanation",

@@ -440,6 +440,7 @@ var translation_sv={
     please_try_or_refresh:"Var god försök igen eller tryck på uppdatera-knappen (refresh) nedan",
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
+    multiple_choice:"multiple choice(t)",
   },
   editor:{
     explanation: "Förklaring",

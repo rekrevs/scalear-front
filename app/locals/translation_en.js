@@ -293,6 +293,7 @@ var translation_en={
     last_name: "Last Name",
     screen_name: "Online Name",
     university: "School or University",
+    saml_disable_edit: "Name, email, and school information provided by UNIVERSITY. If you need to change this information, please contact UNIVERSITY technical support.",
     first_day: "First day of the week for the calendar",
     link: "Website",
     security: "Security",

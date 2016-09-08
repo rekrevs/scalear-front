@@ -293,6 +293,7 @@ var translation_sv={
     last_name: "Efternamn",
     screen_name: "Ditt online-namn",
     university: "Skola eller universitet",
+    saml_disable_edit: "Name, email, and school information provided by UNIVERSITY. If you need to change this information, please contact UNIVERSITY technical support.(t)",
     first_day: "Första dagen i veckan för kalendern",
     link: "Hemsida",
     security: "Säkerhet",

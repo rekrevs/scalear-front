@@ -293,6 +293,7 @@ var translation_sv={
     last_name: "Efternamn",
     screen_name: "Ditt online-namn",
     university: "Skola eller universitet",
+    saml_disable_edit: "Name, email, and school information provided by UNIVERSITY. If you need to change this information, please contact UNIVERSITY technical support.(t)",
     first_day: "Första dagen i veckan för kalendern",
     link: "Hemsida",
     security: "Säkerhet",
@@ -439,6 +440,7 @@ var translation_sv={
     please_try_or_refresh:"Var god försök igen eller tryck på uppdatera-knappen (refresh) nedan",
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
+    multiple_choice:"multiple choice(t)",
   },
   editor:{
     explanation: "Förklaring",

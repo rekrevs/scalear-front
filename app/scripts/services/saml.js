@@ -678,7 +678,7 @@ angular.module('scalearAngularApp')
 					    "url": {
 					      "en": "http://www.gu.se"
 					    },
-					    "entityID": "https://idp.it.gu.se/idp/shibboleth"
+					    "entityID": "https://idp3.it.gu.se/idp/shibboleth"
 					  },
 					  {
 					    "description": {

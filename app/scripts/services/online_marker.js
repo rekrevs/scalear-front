@@ -135,7 +135,7 @@ angular.module('scalearAngularApp')
       function validateTime() {
         var deferred = $q.defer()
         var errors = {}
-        errors.time_error = ScalearUtils.validateTime(marker.formatedTime, VideoInformation.duration)
+        errors.time_error = ScalearUtils.validateTimeWithDuration(marker.formatedTime, VideoInformation.duration)
         if(errors.time_error) {
           deferred.reject(errors)
         } else {

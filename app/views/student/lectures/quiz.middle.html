@@ -73,7 +73,7 @@
         </div>
 
          <div ng-if="element[1]=='Free Text Question' && survey_free[element[0]].student_show" style="margin-top:60px">
-            <div style="margin:10px 15px">Free Text Question | <span ng-bind-html="survey_free[element[0]].title" style="display: inline;" class="ng-binding"></span></div>
+            <div style="margin:10px 15px">Free Text Question | <span ng-bind-html="survey_free[element[0]].title" ></span></div>
             <free-text-table ng-if="survey_free[element[0]].answers" survey-id="1" question="survey_free[element[0]]"  related-answers="related_answers" display-only="true"/>
         </div>
     </div>

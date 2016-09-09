@@ -2,6 +2,25 @@
 
 angular.module('scalearAngularApp')
   .service('ScalearUtils', ['$rootScope', '$translate', function($rootScope, $translate) {
+    var  validateTime = function(time, video_duration, bolean_duration) {
+        var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+        if(int_regex.test(time)) {
+          var hhmm = time.split(':'); // split hours and minutes
+          var hours = parseInt(hhmm[0]); // get hours and parse it to an int
+          var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
+          var seconds = parseInt(hhmm[2]);
+          // check if hours or minutes are incorrect
+          var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
+          if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
+            return $translate('editor.incorrect_format_time')
+          } else if ( bolean_duration && (video_duration <= calculated_duration || calculated_duration <= 0) ){
+            return $translate('editor.time_outside_range')
+          }
+        } else {
+          return $translate('editor.incorrect_format_time')
+        }
+      }
+
     return {
       getKeys: function(obj) {
         return Object.keys ? Object.keys(obj) : (function(obj) {
@@ -134,39 +153,11 @@ angular.module('scalearAngularApp')
         var r = this.gcd(w, h);
         return(w / r) + ":" + (h / r)
       },
-      validateTime: function(time, video_duration) {
-        var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-        if(int_regex.test(time)) {
-          var hhmm = time.split(':'); // split hours and minutes
-          var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-          var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-          var seconds = parseInt(hhmm[2]);
-          // check if hours or minutes are incorrect
-          var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
-          if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-            return $translate('editor.incorrect_format_time')
-          } else if(video_duration <= calculated_duration || calculated_duration <= 0) {
-            return $translate('editor.time_outside_range')
-          }
-        } else {
-          return $translate('editor.incorrect_format_time')
-        }
+      validateTimeWithDuration: function(time, video_duration) {
+        return validateTime(time, video_duration,true)
       },
-      validateTime_not_duration: function(time, video_duration) {
-        var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-        if(int_regex.test(time)) {
-          var hhmm = time.split(':'); // split hours and minutes
-          var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-          var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-          var seconds = parseInt(hhmm[2]);
-          // check if hours or minutes are incorrect
-          var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
-          if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-            return $translate('editor.incorrect_format_time')
-          }
-        } else {
-          return $translate('editor.incorrect_format_time')
-        }
+      validateTimeWithoutDuration: function(time, video_duration) {
+        return validateTime(time, video_duration,false)
       },
       arrayToSeconds: function(a) {
         return(+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) // minutes are worth 60 seconds. Hours are worth 60 minutes.

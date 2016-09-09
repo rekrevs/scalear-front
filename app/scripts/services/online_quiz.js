@@ -306,12 +306,12 @@ angular.module('scalearAngularApp')
       function validateTime() {
         var deferred = $q.defer()
         var errors = {}
-        errors.time_error = ScalearUtils.validateTime(video_quiz.formatedTime, VideoInformation.duration)
+        errors.time_error = ScalearUtils.validateTimeWithDuration(video_quiz.formatedTime, VideoInformation.duration)
         if(video_quiz.inclass) {
-          errors.intro_timer_error = ScalearUtils.validateTime_not_duration(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
-          errors.self_timer_error = ScalearUtils.validateTime_not_duration(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
-          errors.group_timer_error = ScalearUtils.validateTime_not_duration(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
-          errors.discussion_timer_error = ScalearUtils.validateTime_not_duration(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
+          errors.intro_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
+          errors.self_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
+          errors.group_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
+          errors.discussion_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
         }
         if(errors.time_error || errors.intro_timer_error || errors.self_timer_error || errors.group_timer_error || errors.discussion_timer_error) {
           deferred.reject(errors)

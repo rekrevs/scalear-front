@@ -88,6 +88,7 @@ angular.module('scalearAngularApp')
           data.lecture.class_name = 'lecture'
           var lecture = createInstance(data.lecture)
           $rootScope.$broadcast("Item:added", lecture)
+          $rootScope.$broadcast('update_module_statistics')
           return lecture
         })
     }

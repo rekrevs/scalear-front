@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', 'scalear_api','ngDialog', function ($scope, $log,Page, $rootScope, Home, $state, $location, scalear_api, ngDialog){
-	Page.setTitle('Welcome!')
+	Page.setTitle('ScalableLearning: Active in-class and online learning for teachers, students, and flipped classroom teaching.')
   $scope.play_teacher= false
   $scope.play_student= false
   $scope.beta = scalear_api.beta

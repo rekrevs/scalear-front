@@ -5,7 +5,9 @@
         </center>
     </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 1em;float: left;color:lightgray;width:44%;">{{selected_item.name}}<span ng-if="selected_timeline_item.type == 'primary_marker'">: {{selected_timeline_item.data.title}}</span></div>
+        <div class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 1em;float: left;color:lightgray;width:44%;">{{selected_item.name}}
+            <span ng-if="selected_timeline_item.type == 'primary_marker'" ng-bind-html='" : "+selected_timeline_item.data.title'></span>
+        </div>
         <div ng-show="(inclass_session == 1 || inclass_session >= 4) && selected_timeline_item.type=='inclass'" style="color:white;float:left;padding-top: 5px;color:gray;font-size: 18px">
             <div >{{stage_counter | format}}</div>
         </div>
@@ -120,7 +122,7 @@
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;left:0">
         <div class="bottom-left left">
             <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()" class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
-            <span ng-show="(inclass_session == 2 || inclass_session == 3)" style="color:gray; background:black;padding-left:10%">
+            <span ng-show="(inclass_session == 2 || inclass_session == 3)" style="color:white; background:black;padding-left:10%">
                 ({{(session_votes || 0)+'/'+(session_max_votes || 0)}})
             </span>
         </div>

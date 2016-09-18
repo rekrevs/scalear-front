@@ -43,6 +43,7 @@ angular.module('scalearAngularApp')
           data.link.class_name = "customlink"
           var link = createInstance(data.link)
           $rootScope.$broadcast("Item:added", link)
+          $rootScope.$broadcast('update_module_statistics')
           return link
         });
     }

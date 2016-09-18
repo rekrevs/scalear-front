@@ -147,9 +147,9 @@ angular.module('scalearAngularApp')
 
         var getColor = function(estimate) {
           $log.debug(estimate)
-          if (estimate > 25)
+          if (estimate > 12)
             return 'red'
-          else if (estimate > 15)
+          else if (estimate > 8)
             return 'orange'
           else
             return 'black'
@@ -159,7 +159,7 @@ angular.module('scalearAngularApp')
           scope.review_estimate = reviewEstimateCalculator()
           scope.inclass_estimate = inclassEstimateCalculator()
           scope.total_inclass_estimate = scope.review_estimate + scope.inclass_estimate
-          scope.total_estimate_color = getColor(scope.total_inclass_estimate)
+          scope.review_estimate_color = getColor(scope.review_estimate)
         });
       }
     };

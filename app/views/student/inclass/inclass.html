@@ -63,8 +63,8 @@ ul.connected_blocks {
 <div class="small-12 columns no-padding" style="margin-bottom: 10px;">
   <ul class="connected_blocks">
     <li ng-class="{'active': inclass_status==1}" style="background:lightgrey;color:black"translate>inclass.intro_stage</li>
-    <li ng-class="{'active': inclass_status==2}" style="background:#008CBA"translate>inclass.self_stage</li>
-    <li ng-class="{'active': inclass_status==3}" style="background:#43AC6A"translate>inclass.group_stage</li>
+    <li ng-class="{'active': inclass_status==2}" style="background:#008CBA"><span translate>inclass.self_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
+    <li ng-class="{'active': inclass_status==3}" style="background:#43AC6A"><span translate>inclass.group_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
     <li ng-class="{'active': inclass_status>=4}" style="background:darkorange" translate>inclass.discussion_stage</li>
   </ul>
 </div>

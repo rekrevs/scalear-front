@@ -35,7 +35,6 @@ angular.module('scalearAngularApp')
       }
       items_obj[item.class_name][item.id] = it
       $rootScope.$broadcast("update_module_time", item.group_id)
-      $rootScope.$broadcast('update_module_statistics')
     }
 
     function removeFromCollection(item) {

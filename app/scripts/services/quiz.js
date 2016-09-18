@@ -71,6 +71,7 @@ angular.module('scalearAngularApp')
           data.quiz.class_name = 'quiz'
           var quiz = createInstance(data.quiz)
           $rootScope.$broadcast("Item:added", quiz)
+          $rootScope.$broadcast('update_module_statistics')
           return quiz
         })
     }

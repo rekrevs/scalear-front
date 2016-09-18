@@ -156,6 +156,10 @@ angular.module('scalearAngularApp')
       for(var i in from)
         if(ids.indexOf(from[i].id.toString()) != -1)
           to.push(from[i])
+
+      to.sort(function(a, b) {
+        return a.position - b.position;
+      });
     }
 
     $scope.updateHideQuiz = function(quiz) {

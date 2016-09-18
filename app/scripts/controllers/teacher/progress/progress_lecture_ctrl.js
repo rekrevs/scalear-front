@@ -507,7 +507,7 @@ angular.module('scalearAngularApp')
 
     $scope.makeSurveyVisible=function(quiz, val){
       quiz.meta.visible = val
-      Quiz.makeVisible({quiz_id:quiz.meta.id},{visible:val})
+      Quiz.makeVisible({course_id:quiz.meta.course_id,quiz_id:quiz.meta.id},{visible:val})
     }
 
   $scope.sendComment=function(discussion){

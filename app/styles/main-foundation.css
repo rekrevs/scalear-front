@@ -2650,7 +2650,6 @@ body.ngdialog-open { overflow: initial !important; }
     font-size: inherit;
     line-height: inherit;
     text-rendering: optimizeLegibility;
-    display: inline;
 }
 
 .medium-toolbar-arrow-under:after{

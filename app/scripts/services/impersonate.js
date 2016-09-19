@@ -38,13 +38,17 @@ angular.module('scalearAngularApp')
           var params = { course_id: $state.params.course_id }
           if($state.params.module_id) {
             if($state.current.name.indexOf("customlink") == -1 && $state.current.name.indexOf("overview") == -1) {
+              console.log("6") 
               $state.go($state.current.name.replace("course_editor", "courseware"), $state.params, { reload: true })
             } else {
+              console.log("7") 
               $state.go('course.module.courseware', $state.params, { reload: true })
             }
           } else if($state.includes("course.edit_course_information")) {
+            console.log("8") 
             $state.go('course.course_information', params, { reload: true })
           } else {
+            console.log("9") 
             $state.go('course', params, { reload: true })
           }
 
@@ -84,6 +88,7 @@ angular.module('scalearAngularApp')
       start: function() {
         UserSession.getCurrentUser()
           .then(function(user) {
+            console.log("sasdasdasdasdasdkmasdnas dasjdnasjd asndklas dkasndkas dkasdkla sd")
             current_user = user
             previewStart()
           })

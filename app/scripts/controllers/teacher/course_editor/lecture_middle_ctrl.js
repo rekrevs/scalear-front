@@ -563,8 +563,11 @@ angular.module('scalearAngularApp')
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
+        console.log("stateChangeStart")
+        console.log(!$scope.leave_state)
         if(!$scope.leave_state) {
           event.preventDefault();
+
           saveOpenEditor()
             .then(function(error) {
               var options = { reload: $scope.preview_as_student }

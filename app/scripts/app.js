@@ -339,11 +339,9 @@ angular.module('scalearAngularApp')
         .state('preview', {
           url: '/preview',
           params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null },
-          // templateUrl: '/views/teacher/help/teacher_getting_started.html',
           controller: ['Preview','$state',function(Preview,$state){
-                        console.log($state.params)
-                        Preview.start()
-                    }
-                ]
+                Preview.start()
+            }
+          ]
         })
 }])

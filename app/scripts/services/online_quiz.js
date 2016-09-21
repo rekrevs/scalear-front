@@ -107,10 +107,10 @@ angular.module('scalearAngularApp')
       quiz.end_formatedTime = $filter('format')(quiz.end_time)
       if(!(quiz.inclass && quiz.inclass_session))
         quiz.inclass_session = { intro: 120, self: 120, in_group: 120, discussion: 120 }
-      quiz.inclass_session.intro_formatedTime = $filter('format')(quiz.inclass_session.intro)
-      quiz.inclass_session.self_formatedTime = $filter('format')(quiz.inclass_session.self)
-      quiz.inclass_session.group_formatedTime = $filter('format')(quiz.inclass_session.in_group)
-      quiz.inclass_session.discussion_formatedTime = $filter('format')(quiz.inclass_session.discussion)
+      quiz.intro_formatedTime = $filter('format')(quiz.intro)
+      quiz.self_formatedTime = $filter('format')(quiz.self)
+      quiz.group_formatedTime = $filter('format')(quiz.in_group)
+      quiz.discussion_formatedTime = $filter('format')(quiz.discussion)
       selected_video_quiz = quiz
       return getSelectedVideoQuiz()
     }
@@ -257,10 +257,10 @@ angular.module('scalearAngularApp')
 
       function update() {
         if(video_quiz.inclass) {
-          video_quiz.inclass_session.intro = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.intro_formatedTime.split(':'))
-          video_quiz.inclass_session.self = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.self_formatedTime.split(':'))
-          video_quiz.inclass_session.in_group = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.group_formatedTime.split(':'))
-          video_quiz.inclass_session.discussion = ScalearUtils.arrayToSeconds(video_quiz.inclass_session.discussion_formatedTime.split(':'))
+          video_quiz.intro = ScalearUtils.arrayToSeconds(video_quiz.intro_formatedTime.split(':'))
+          video_quiz.self = ScalearUtils.arrayToSeconds(video_quiz.self_formatedTime.split(':'))
+          video_quiz.in_group = ScalearUtils.arrayToSeconds(video_quiz.group_formatedTime.split(':'))
+          video_quiz.discussion = ScalearUtils.arrayToSeconds(video_quiz.discussion_formatedTime.split(':'))
         }
         var fraction = video_quiz.time % 1
         var new_time = ScalearUtils.arrayToSeconds(video_quiz.formatedTime.split(':'))
@@ -279,12 +279,12 @@ angular.module('scalearAngularApp')
             question: video_quiz.question,
             inclass: video_quiz.inclass,
             graded: video_quiz.graded,
+            intro: video_quiz.intro,
+            self: video_quiz.self,
+            in_group: video_quiz.in_group,
+            discussion: video_quiz.discussion,
             display_text: video_quiz.display_text
           },
-          intro_timer: video_quiz.inclass_session.intro,
-          self_timer: video_quiz.inclass_session.self,
-          group_timer: video_quiz.inclass_session.in_group,
-          discussion_timer: video_quiz.inclass_session.discussion,
         }).$promise
       }
 
@@ -308,10 +308,10 @@ angular.module('scalearAngularApp')
         var errors = {}
         errors.time_error = ScalearUtils.validateTimeWithDuration(video_quiz.formatedTime, VideoInformation.duration)
         if(video_quiz.inclass) {
-          errors.intro_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.intro_formatedTime, VideoInformation.duration)
-          errors.self_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.self_formatedTime, VideoInformation.duration)
-          errors.group_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.group_formatedTime, VideoInformation.duration)
-          errors.discussion_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.inclass_session.discussion_formatedTime, VideoInformation.duration)
+          errors.intro_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.intro_formatedTime, VideoInformation.duration)
+          errors.self_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.self_formatedTime, VideoInformation.duration)
+          errors.group_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.group_formatedTime, VideoInformation.duration)
+          errors.discussion_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.discussion_formatedTime, VideoInformation.duration)
         }
         if(errors.time_error || errors.intro_timer_error || errors.self_timer_error || errors.group_timer_error || errors.discussion_timer_error) {
           deferred.reject(errors)

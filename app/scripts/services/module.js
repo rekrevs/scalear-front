@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
       'getQuizChart': { method: 'GET', params: { action: 'get_quiz_chart_angular' }, headers: headers },
       'getSurveyChart': { method: 'GET', params: { action: 'get_survey_chart_angular' }, headers: headers },
       'getStudentStatistics': { method: 'GET', params: { action: 'get_student_statistics_angular' }, headers: headers },
-      'changeModuleStatus': { method: 'POST', params: { action: 'change_status_angular' }, headers: headers },
+      'changeModuleStatus': { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       'displayQuizzes': { method: 'GET', params: { action: 'display_quizzes_angular' }, headers: headers },
       'displayQuestions': { method: 'GET', params: { action: 'display_questions_angular' }, headers: headers },
       'displaySurveys': { method: 'GET', params: { action: 'display_surveys_angular' }, headers: headers },

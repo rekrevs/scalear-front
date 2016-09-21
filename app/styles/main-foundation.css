@@ -2652,6 +2652,10 @@ body.ngdialog-open { overflow: initial !important; }
     text-rendering: optimizeLegibility;
 }
 
+.medium-editor-p:first-child {
+    display: inline-block;
+}
+
 .medium-toolbar-arrow-under:after{
   top: 100px;
 }

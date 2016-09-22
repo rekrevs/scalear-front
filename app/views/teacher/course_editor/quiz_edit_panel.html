@@ -51,8 +51,7 @@
         <lable style="padding-left:10px"><span>Inclass</span> <input class="inclass_choice" type="radio" name="inclass" ng-model="selected_quiz.inclass" ng-value="true" ></lable>
         </div>
         </div> -->
-        <!-- <div ng-show="selected_quiz.inclass"> -->
-        <div >
+        <div ng-show="lecture.inclass  || lecture.distance_peer" >
             <div class="row" style="text-align:left;margin-left:0;">
                 <div class="small-11 left columns" >
                     <lable>

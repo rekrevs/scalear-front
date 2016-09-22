@@ -61,12 +61,21 @@ angular.module('scalearAngularApp')
       return(instance.instanceType && instance.instanceType() == "Lecture");
     }
 
-    function create(inclass) {
+    function create(video_type) {
+      var inclass =  false
+      var distance_peer = false
+      if(video_type== 1){
+        inclass = true
+      }
+      if(video_type== 2){
+        distance_peer = true
+      }
       var module = ModuleModel.getSelectedModule()
       return Lecture.newLecture({
           course_id: module.course_id,
           group: module.id,
-          inclass: inclass
+          inclass: inclass,
+          distance_peer: distance_peer
         })
         .$promise
         .then(function(data) {

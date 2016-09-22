@@ -68,7 +68,7 @@ angular.module('scalearAngularApp')
       var start_time = insert_time
       var end_time = insert_time
 
-      if(lecture.inclass) {
+      if(lecture.inclass || lecture.distance_peer) {
         var offset = 5
         var caluclated_offset = (offset * video_duration) / 100
 
@@ -89,7 +89,7 @@ angular.module('scalearAngularApp')
         .$promise
         .then(function(data) {
           var quiz = createInstance(data.quiz)
-          quiz.inclass = lecture.inclass
+          // quiz.inclass = lecture.inclass
           $rootScope.$broadcast("Lecture:" + lecture.id + ":add_to_timeline", quiz.time, 'quiz', quiz)
           return quiz;
         })
@@ -102,9 +102,12 @@ angular.module('scalearAngularApp')
 
     function setSelectedVideoQuiz(quiz) {
       // quiz.selected = true
+      console.log()
       quiz.formatedTime = $filter('format')(quiz.time)
       quiz.start_formatedTime = $filter('format')(quiz.start_time)
       quiz.end_formatedTime = $filter('format')(quiz.end_time)
+      
+      // #####  check for quiz.inclass and for new table for 
       if(!(quiz.inclass && quiz.inclass_session))
         quiz.inclass_session = { intro: 120, self: 120, in_group: 120, discussion: 120 }
       quiz.intro_formatedTime = $filter('format')(quiz.intro)
@@ -256,7 +259,9 @@ angular.module('scalearAngularApp')
       }
 
       function update() {
-        if(video_quiz.inclass) {
+              var lecture = ItemsModel.getSelectedItem();
+              console.log(lecture)
+        if(lecture.inclass || lecture.distance_peer) {
           video_quiz.intro = ScalearUtils.arrayToSeconds(video_quiz.intro_formatedTime.split(':'))
           video_quiz.self = ScalearUtils.arrayToSeconds(video_quiz.self_formatedTime.split(':'))
           video_quiz.in_group = ScalearUtils.arrayToSeconds(video_quiz.group_formatedTime.split(':'))
@@ -266,7 +271,7 @@ angular.module('scalearAngularApp')
         var new_time = ScalearUtils.arrayToSeconds(video_quiz.formatedTime.split(':'))
         if(video_quiz.time != new_time + fraction){
           video_quiz.time  = new_time
-          if(!video_quiz.inclass){
+          if(!lecture.inclass && !lecture.distance_peer){
             video_quiz.start_time = video_quiz.end_time = new_time
           }
         }
@@ -304,10 +309,12 @@ angular.module('scalearAngularApp')
       }
 
       function validateTime() {
+        var lecture = ItemsModel.getSelectedItem();
         var deferred = $q.defer()
         var errors = {}
         errors.time_error = ScalearUtils.validateTimeWithDuration(video_quiz.formatedTime, VideoInformation.duration)
-        if(video_quiz.inclass) {
+
+        if(lecture.inclass || lecture.distance_peer) {
           errors.intro_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.intro_formatedTime, VideoInformation.duration)
           errors.self_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.self_formatedTime, VideoInformation.duration)
           errors.group_timer_error = ScalearUtils.validateTimeWithoutDuration(video_quiz.group_formatedTime, VideoInformation.duration)

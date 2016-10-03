@@ -1213,10 +1213,14 @@ angular.module('scalearAngularApp')
                     // $scope.invited_by_student
                     console.log($scope.invited_by_student)
                     console.log(student)
-                    var index = $scope.invited_by_student.findIndex(x => x[1] == student[1])
-                    console.log(index)                
-                    delete $scope.invited_by_student[index]
+                    var index = $scope.invited_by_student.findIndex(function(x){return x[1] == student[1]})
+                    // var index = $scope.invited_by_student.findIndex(x => x[1] == student[1])
+                    console.log(index)
                     console.log($scope.invited_by_student.length)
+                    console.log($scope.invited_by_student)
+                    $scope.invited_by_student.splice(index, 1);
+                    console.log($scope.invited_by_student.length)
+                    console.log($scope.invited_by_student)
 
                   }
                 })

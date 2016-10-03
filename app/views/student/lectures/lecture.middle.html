@@ -1,3 +1,59 @@
+<style>
+ul.connected_blocks {
+  margin: 0;
+}
+
+.connected_blocks li {
+  width: 20%;
+  height: 2.4em;
+  text-align: center;
+  line-height: 2em;
+  margin: 0;
+  display: inline-block;
+  color: white;
+  position: relative;
+  font-size: 14px;
+  float: left;
+  padding: 3px;
+}
+
+.connected_blocks li.active {
+  border: 4px solid black;
+  padding: 0;
+}
+
+.inclass_lecture .panel {
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+.rotate-90 {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.panel {
+  margin-bottom: 2px
+}
+
+.self_quiz .panel.selected {
+  background: #B3D0EA;
+  border: 2px solid #008CBA;
+}
+
+.group_quiz .panel.selected {
+  background: #B4EAC8;
+  border: 2px solid #43AC6A;
+}
+.choice{
+  cursor: pointer;
+}
+</style>
+
 <span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down show-for-portrait" style="margin:0px">
 	 <span ng-show='key=="due"'>
 	 	<span translate>events.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "time."+alert_message[2] | translate}}</span>)
@@ -54,9 +110,11 @@
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>button.replay</button>
 								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>button.next</span></button>
 									</div>
+									<div ng-show="quiz_mode || distance_peer_session_id" class="right" style="position:relative;right:30%">
+										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/>
+									</div>
 									<div ng-show="quiz_mode" class="right" style="position:relative;right:30%">
 										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" >{{check_answer_title | translate}}</button>
-										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/>
 									</div>
 						    	</progress-bar>
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass>
@@ -70,13 +128,41 @@
 								</div>
 					    </video_container>
 				</form>
+                <div ng-show="(distance_peer_status == 3 || distance_peer_status == 4)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px 	grey;margin-top:0.45em;" class="stage_timer">
+                    <center>{{status_counter | format}}</center>
+                </div>
 				<div ng-show="!fullscreen && passed_requirments" class="row no-margin with-tiny-margin-top">
 					<center class="small-block-grid-3">
 						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
 						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
 						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
 						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
+						<div ng-hide='distance_peer_session_id'>
+							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer'   ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
+						</div>
 					</center>
+					<center id="preview_inclass_panel" ng-show ='distance_peer_session_id'>
+						<div style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
+							<ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
+								<li style="display:none"></li>
+						      	<div> you are in a distance peer session with student {{email}} </div>
+								<!-- <button type="button"  class="tiny success button no-margin check_answer_button" ng-click="endDistancePeerSession()" >{{end_session | translate}}</button> -->
+								<button type="button"  class="tiny success button no-margin" style="background-color: red;" ng-click="endDistancePeerSession()" >END session</button>
+						    </ul>
+							<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
+							  <ul class="connected_blocks">
+							    <li ng-class="{'active': distance_peer_status==1}" style="background:lightgrey;color:black"translate>inclass.video_stage</li>
+							    <li ng-class="{'active': distance_peer_status==2}" style="background:grey;color:black"translate>inclass.intro_stage</li>
+							    <li ng-class="{'active': distance_peer_status==3}" style="background:#008CBA"><span translate>inclass.self_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
+							    <li ng-class="{'active': distance_peer_status==4}" style="background:#43AC6A"><span translate>inclass.group_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
+							    <li ng-class="{'active': distance_peer_status>=5}" style="background:darkorange" translate>inclass.end_video_stage</li>
+							  </ul>
+							</div>
+
+					    </div>
+					</center>
+
+
 <!-- 					<center>
 						<div style="display:inline-block" class=" small with-tiny-margin-bottom">
 							<div><small>Watched:{{watched_percentage}}%</small></div>

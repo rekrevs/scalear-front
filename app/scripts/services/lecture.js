@@ -35,6 +35,18 @@ angular.module('scalearAngularApp')
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
       "logVideoEvent": { method: 'POST', ignoreLoadingBar: true, params: { action: 'log_video_event' }, headers: headers },
+      "checkIfInvited": { method: 'GET', ignoreLoadingBar: false, params: { action: 'check_if_invited_distance_peer' }, headers: headers },
+      "invitedStudent": { method: 'GET', ignoreLoadingBar: true, params: { action: 'invite_student_distance_peer' }, headers: headers },
+      "checkInvitedStudentAccepted": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_invited_student_accepted_distance_peer' }, headers: headers },
+      "acceptInvation": { method: 'GET', ignoreLoadingBar: true, params: { action: 'accept_invation_distance_peer' }, headers: headers },
+      "caneclDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'cancel_session_distance_peer' }, headers: headers },
+      "checkIfInDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_in_distance_peer_session' }, headers: headers },
+      // "endDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'end_distance_peer_session' }, headers: headers },
+      "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
+      "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
+
+
+
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {

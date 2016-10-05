@@ -41,7 +41,6 @@ angular.module('scalearAngularApp')
       "acceptInvation": { method: 'GET', ignoreLoadingBar: true, params: { action: 'accept_invation_distance_peer' }, headers: headers },
       "caneclDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'cancel_session_distance_peer' }, headers: headers },
       "checkIfInDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_in_distance_peer_session' }, headers: headers },
-      // "endDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'end_distance_peer_session' }, headers: headers },
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
 

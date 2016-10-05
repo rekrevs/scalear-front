@@ -17,7 +17,6 @@
     </div>
   </form>
 </div>
-
 <div class="well well-lg" style="text-align: left;" ng-show="check_if_invited">
   <h3><span translate>distance_peer.invited_by</span></h3>
   <p translate>distance_peer.invited_by_instruction</p>
@@ -25,7 +24,7 @@
     <div ng-click="acceptInvation(student)" class="button" >join {{student[0]}}</div>
   </div>
   <div>
-    <a id="invite" ng-click="caneclAllDistancePeerSession();changeToInviteStatus()" class="button success tiny right" translate>courses.information.button.invite_another</a>
+    <a id="invite" ng-click="caneclAllDistancePeerSession();changeToInviteStatus()" class="button success tiny right" translate>distance_peer.invite_another_button</a>
     <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclAllDistancePeerSession();closeModal()" translate>button.cancel</a>
   </div>        
 </div>
@@ -35,17 +34,11 @@
   <p translate>distance_peer.wait_for_acceptance_instruction</p>
     <div> {{invited_student}}</div>
   <div>
-    <a id="invite" ng-click="caneclDistancePeerSession(distance_peer_id);changeToInviteStatus()" class="button success tiny right" translate>courses.information.button.invite_another</a>
+    <a id="invite" ng-click="caneclDistancePeerSession(distance_peer_id);changeToInviteStatus()" class="button success tiny right" translate>distance_peer.invite_another_button</a>
     <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclDistancePeerSession(distance_peer_id);closeModal()" translate>button.cancel</a>
   </div>        
 </div>
 
 <div class="well well-lg" style="text-align: left;" ng-show="waiting_response_of_back_end">
   <h3><span translate>distance_peer.waiting_response_of_back_end</span></h3>
-<!--   <p translate>distance_peer.wait_for_acceptance_instruction</p>
-    <div> {{invited_student}}</div>
-  <div>
-    <a id="invite" ng-click="caneclDistancePeerSession(distance_peer_id);changeToInviteStatus()" class="button success tiny right" translate>courses.information.button.invite_another</a>
-    <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclDistancePeerSession(distance_peer_id);closeModal()" translate>button.cancel</a>
-  </div>         -->
 </div>

@@ -233,15 +233,14 @@ angular.module('scalearAngularApp')
       $scope.backup_quiz = angular.copy(quiz)
     }
 
-//  timer code 
-    // var showSelfQuizOnlineDistancePeer = function(quiz){
-    //     $scope.lecture_player.controls.pause()
-    //     // $scope.can_start_this_status = true
-    //     console.log("status dfndfsdf dsf sdfs")
-    //     // console.log($scope.distance_peer_id)
-    //     showQuizOnline(quiz)
-    //     // $scope.distance_peer_status = 3
-    // }
+
+    var clearStudentAnswer = function(){
+        console.log("clearStudentAnswer")
+        $scope.selected_quiz.online_answers.forEach(function(answer) {
+          if(answer.selected)
+            answer.selected = null;
+        })
+    }
 
     var checkIfDistancePeerStatusIsSync = function(distance_peer_id,status,new_quiz_time , quiz) {
       Lecture.checkIfDistancePeerStatusIsSync({
@@ -259,12 +258,8 @@ angular.module('scalearAngularApp')
           $scope.next_quiz_time = new_quiz_time
           cancelStatusTimer()
           if(status == 3 || status == 4){
-            // showSelfQuizOnlineDistancePeer(quiz)
-            // $scope.lecture_player.controls.pause()
-            // $scope.can_start_this_status = true
             console.log("status quiz", status)
             console.log(quiz)
-            // console.log($scope.distance_peer_id)
             showQuizOnline(quiz)
             // cancelStatusTimer()
             if(status == 3){
@@ -273,6 +268,7 @@ angular.module('scalearAngularApp')
             else{
               var timer = quiz.in_group
             }
+            clearStudentAnswer()
             setStatusTimer(timer)
             // cancelStatusTimer()
             startStatusTimer() 
@@ -554,19 +550,48 @@ angular.module('scalearAngularApp')
     //   }
     // }
 
-
-
     var checkIfQuizSolved = function() {
       console.log("checkIfQuizSolved")
       if($scope.quiz_mode) {
-        console.log("checkIfQuizSolved 1234567890987654321")
-        console.log(!$scope.selected_quiz.solved_quiz )
-        console.log( $scope.selected_quiz.graded )
-        console.log( $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
-        // console.log( $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
-        if(!$scope.selected_quiz.solved_quiz && $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time){
-          console.log("checkIfQuizSolved 1234567890987654321")
-          returnToQuiz($scope.selected_quiz.time-0.1)
+        console.log("quiz_mode")
+        if( $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time){
+          console.log("quiz")
+          console.log( $scope.selected_quiz.online_answers)
+          if($scope.distance_peer_session_id){
+            console.log("in distance_peer_messages")
+            if ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") { 
+              console.log("html")
+              console.log($scope.answer_form.$error.atleastone)
+              if($scope.answer_form.$error.atleastone ) {
+                returnToQuiz($scope.selected_quiz.time)
+              }
+              else{
+               clearQuiz()    
+              }
+
+            }
+            else{
+              console.log("not html")
+              var selected_answers = []
+              $scope.selected_quiz.online_answers.forEach(function(answer) {
+                if(answer.selected)
+                  selected_answers.push(answer.id)
+              })
+              if(selected_answers.length == 0) {
+                returnToQuiz($scope.selected_quiz.time)
+              }
+              else{
+                 clearQuiz()
+              }
+            }
+          }
+          else{
+            if (!$scope.selected_quiz.solved_quiz)
+            {
+              console.log("checkIfQuizSolved 1234567890987654321")
+              returnToQuiz($scope.selected_quiz.time-0.1)            
+            }
+          }
         }
         else {
           if($scope.display_review_message) {
@@ -796,20 +821,12 @@ angular.module('scalearAngularApp')
             lecture_id: $state.params.lecture_id
           }, {
             quiz: $scope.selected_quiz.id,
-            answer: $scope.studentAnswers[$scope.selected_quiz.id]
+            answer: $scope.studentAnswers[$scope.selected_quiz.id],
+            in_group: $scope.distance_peer_status == 4,
+            distance_peer: $scope.distance_peer_session_id != null
           },
           function(data) {
-          if ($scope.distance_peer_session_id && $scope.distance_peer_status == 3){
-            cancelStatusTimer()
-            changeStatusAndWaitTobeSync(4,$scope.selected_quiz.time,$scope.selected_quiz)
-          }
-          else if( $scope.distance_peer_session_id && $scope.distance_peer_status == 4){
-            cancelStatusTimer()
-            changeStatusAndWaitTobeSync(5,$scope.selected_quiz.end_time,$scope.selected_quiz)
-          }
-          else{
-            displayResult(data)
-          }
+            changeQuizStatus(data)
         });
       } else {
         $log.debug("invalid form")
@@ -855,22 +872,30 @@ angular.module('scalearAngularApp')
           lecture_id: $state.params.lecture_id
         }, {
           quiz: $scope.selected_quiz.id,
-          answer: selected_answers
+          answer: selected_answers,
+          in_group: $scope.distance_peer_status == 4,
+          distance_peer: $scope.distance_peer_session_id != null
         },
         function(data) {
-          if ($scope.distance_peer_session_id && $scope.distance_peer_status == 3){
-            cancelStatusTimer()
-            changeStatusAndWaitTobeSync(4,$scope.selected_quiz.time,$scope.selected_quiz)
-          }
-          else if( $scope.distance_peer_session_id && $scope.distance_peer_status == 4){
-            cancelStatusTimer()
-            changeStatusAndWaitTobeSync(5,$scope.selected_quiz.end_time,$scope.selected_quiz)
-          }
-          else{
-            displayResult(data)
-          }
+          changeQuizStatus(data)
         }
       )
+    }
+
+
+    var changeQuizStatus = function(data){
+      if ($scope.distance_peer_session_id && $scope.distance_peer_status == 3){
+        cancelStatusTimer()
+        changeStatusAndWaitTobeSync(4,$scope.selected_quiz.time,$scope.selected_quiz)
+      }
+      else if( $scope.distance_peer_session_id && $scope.distance_peer_status == 4){
+        cancelStatusTimer()
+        changeStatusAndWaitTobeSync(5,$scope.selected_quiz.end_time,$scope.selected_quiz)
+        displayResult(data)
+      }
+      else{
+        displayResult(data)
+      }
     }
 
     var displayResult = function(data) {

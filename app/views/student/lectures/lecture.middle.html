@@ -154,8 +154,8 @@ ul.connected_blocks {
 							  <ul class="connected_blocks">
 							    <li ng-class="{'active': distance_peer_status==1}" style="background:lightgrey;color:black;  width: 100%;" ng-show="distance_peer_status==1" translate>distance_peer.video_stage</li>
 							    <li ng-class="{'active': distance_peer_status==2}" style="background:lightgrey;color:black" ng-hide="distance_peer_status==1" translate>distance_peer.intro_stage</li>
-							    <li ng-class="{'active': distance_peer_status==3}" style="background:#008CBA" ng-hide="distance_peer_status==1" ><span translate>distance_peer.self_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
-							    <li ng-class="{'active': distance_peer_status==4}" style="background:#43AC6A" ng-hide="distance_peer_status==1"><span translate>distance_peer.group_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
+							    <li ng-class="{'active': distance_peer_status==3}" style="background:#008CBA" ng-hide="distance_peer_status==1" ><span translate>distance_peer.self_stage</span><span ng-if="selected_quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
+							    <li ng-class="{'active': distance_peer_status==4}" style="background:#43AC6A" ng-hide="distance_peer_status==1"><span translate>distance_peer.group_stage</span><span ng-if="selected_quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
 							    <li ng-class="{'active': distance_peer_status>=5}" style="background:darkorange" ng-hide="distance_peer_status==1" translate>distance_peer.end_video_stage</li>
 							  </ul>
 							</div>

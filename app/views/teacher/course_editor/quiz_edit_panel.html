@@ -63,7 +63,7 @@
                     </lable>
                 </div>
             </div>
-            <div class="row" style="text-align:left;margin-left:0;">
+            <div class="row" style="text-align:left;margin-left:0;" ng-hide="lecture.distance_peer">
                 <div class="small-4 columns"><span translate>editor.intro_timer</span>:</div>
                 <div class="small-3 left columns no-padding" style="margin-bottom: 5px;">
                     <input type="text" ng-model="selected_quiz.intro_formatedTime" style="height: 30px;margin-bottom:0;">
@@ -84,7 +84,7 @@
                     <small class="error position-absolute z-one" ng-show="quiz_errors.group_timer_error" ng-bind="quiz_errors.group_timer_error"></small>
                 </div>
             </div>
-            <div class="row" style="text-align:left;margin-left:0;">
+            <div class="row" style="text-align:left;margin-left:0;" ng-hide="lecture.distance_peer">
                 <div class="small-4 columns"><span translate>editor.discussion_timer</span>:</div>
                 <div class="small-3 left columns no-padding">
                     <input type="text" ng-model="selected_quiz.discussion_formatedTime" style="height: 30px;margin-bottom:0;">

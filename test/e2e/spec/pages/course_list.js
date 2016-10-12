@@ -4,11 +4,11 @@ var sleep = require('../lib/utils').sleep;
 
 var CourseList = function () {};
 
-CourseList.prototype = Object.create({}, {	
+CourseList.prototype = Object.create({}, {
 	courses:{get:function(){return element(by.id('main_course_list')).all(by.repeater('course in courses'))}},
 	teacher_courses:{get:function(){return element(by.id('main_course_list')).all(by.repeater('course in teacher_courses'))}},
 	student_courses:{get:function(){return element(by.id('main_course_list')).all(by.repeater('course in student_courses'))}},
-	
+
 	open:{value:function(){
 		var header = new Header()
 		header.open_courses()
@@ -34,7 +34,7 @@ CourseList.prototype = Object.create({}, {
 		course.element(by.className('delete')).click()
 		course.element(by.className('alert')).click()
 		sleep(1000);
-		element(by.className('delete_confirm')).click()		
+		element(by.className('delete_confirm')).click()
 	}}
 
 });

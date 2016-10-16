@@ -334,7 +334,7 @@ var translation_en={
     deleting_profile: "Data Retention and Deleting your profile",
     deleting_profile_details: "Your data is retained in the system while you have a valid account to enable you to enroll in future classes. If you delete your account, then all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research",
     legal_entity: "Legal Entity",
-    legal_entity_details: "ScalableLearning is provided by SICS Swedish ICT AB, Färögatan 33, SE-16451 Kista, Sweden.",
+    legal_entity_details: "ScalableLearning is provided by SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
     code_conduct: "GÉNAT Data Protection Code of Conduct",
     code_conduct_details: "This privacy policy complies with the GÉNAT Data Protection Code of conduct version 1.0, 14 June 2013. http://www.geant.net/uri/dataprotection-code-of-conduct/v1",
     policy_changes: "Privacy policy changes",

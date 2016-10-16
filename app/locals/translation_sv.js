@@ -334,7 +334,7 @@ var translation_sv={
     deleting_profile: "Ta bort din profil",
     deleting_profile_details: "Dina data sparas i systemet så länge du har ett gällande konto för du ska ha möjlighet att registrera dig för nya kurser. Om du raderar ditt konto, kommer alla din personligt identifierbara information att tas bort från systemet. Notera att det kan dröja en tid innan denna information har raderats från befintliga backupsystem. Ditt anonymiserade användarbeteende kan komma att sparas i forskningssyfte.",
     legal_entity: "Juridisk person",
-    legal_entity_details: "ScalableLearning tillhandahålls av SICS Swedish ICT AB, Färögatan 33, SE-16451 Kista, Sweden.",
+    legal_entity_details: "ScalableLearning tillhandahålls av SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
     code_conduct: "GÉNAT Data Protection Code of Conduct",
     code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013. http://www.geant.net/uri/dataprotection-code-of-conduct/v1",
     policy_changes: "Förändringar av sekretesspolicyn",

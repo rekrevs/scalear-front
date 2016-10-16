@@ -339,7 +339,7 @@ var translation_sv={
     code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013. http://www.geant.net/uri/dataprotection-code-of-conduct/v1",
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
-    last_update: "Senast uppdaterad: 2015-08-17",
+    last_update: "Senast uppdaterad: 2016-10-07",
   },
   faq:{
     faq:"Vanliga frågor",

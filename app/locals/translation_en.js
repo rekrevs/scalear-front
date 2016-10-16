@@ -339,7 +339,7 @@ var translation_en={
     code_conduct_details: "This privacy policy complies with the GÉNAT Data Protection Code of conduct version 1.0, 14 June 2013. http://www.geant.net/uri/dataprotection-code-of-conduct/v1",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
-    last_update: "Last update: 7-October-2016",
+    last_update: "Last update: 07-October-2016",
   },
   faq:{
     faq:"Frequently Asked Questions",

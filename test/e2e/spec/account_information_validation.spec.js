@@ -50,6 +50,7 @@ describe("Check Teacher account information", function(){
 	})
 
 	it("should check for new info", function(){
+		info.open()
 		expect(info.firstname).toEqual(fname_new);
 		expect(info.lastname).toEqual(lname_new);
 		// expect(info.email).toEqual(mail_new);
@@ -73,6 +74,7 @@ describe("Check Teacher account information", function(){
 	})
 
 	it("should check for old info", function(){
+		info.open()
 		expect(info.firstname).toEqual(params.teacher1.f_name);
 		expect(info.lastname).toEqual(params.teacher1.l_name);
 		expect(info.email).toEqual(params.teacher1.email);

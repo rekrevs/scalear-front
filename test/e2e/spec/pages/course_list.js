@@ -35,6 +35,13 @@ CourseList.prototype = Object.create({}, {
 		course.element(by.className('alert')).click()
 		sleep(1000);
 		element(by.className('delete_confirm')).click()
+	}},
+	delete_teacher_course:{value:function(num){
+		var course = this.teacher_courses.get(num-1)
+		course.element(by.className('delete')).click()
+		course.element(by.className('alert')).click()
+		sleep(1000);
+		element(by.className('delete_confirm')).click()
 	}}
 
 });

@@ -1,3 +1,25 @@
+Date.prototype.addDays = function(days)
+{
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+
+}
+// addDays = function(days)
+// {
+//     var dat = new Date();
+//     dat.setDate(dat.getDate() + days);
+//     return dat;
+// }
+// var future = function(dat){
+//   var days= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+//   var months = ["January", "February", "March",
+// "April", "May", "June", "July", "August", "September",
+// "October", "November", "December"];
+//   var future = ''+days[dat.getDay()]+', '+ dat.getDate()+' '+months[dat.getMonth()]+' ' + dat.getFullYear();
+//   return future
+// }
+
 var params= {
     frontend: 'http://scalear-staging2.herokuapp.com/#/',
 
@@ -36,10 +58,10 @@ var params= {
         email: "student4@email.com",
     },
     teacher1:{
-        f_name: "teacher",
-        l_name: "1",
-        online_name: "teacher1@sharklasers.com",
-        university: "test univerisity",
+        f_name: "Test_1",
+        l_name: "teacher_1",
+        online_name: "screen teacher 001",
+        university: "uni_1",
         email: "teacher1@email.com",
     },
     teacher2:{
@@ -63,14 +85,6 @@ var params= {
         university: "uniAdmin",
         email: "admin@scalable-learning.com",
     },
-    // teacher_mail:  'teacher1@email.com',
-    // teacher2_mail: 'teacher2@email.com',
-    // teacher3_mail: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    // student_mail:  'student1@email.com',
-    // student2_mail: 'student2@email.com',
-    // student3_mail: 'student3@email.com',
-    // student4_mail: 'student4@email.com',
-    // student5_mail: 'student5@email.com',
     password: 'password',
     admin_email:   'admin@scalable-learning.com',
     admin_password:"admin_account_password",
@@ -87,7 +101,7 @@ var params= {
 
     short_name: "csc-test",
     course_name: "aesting course 100",
-    course_duration: new Date(Date.now() + (1000  * 60 * 60  * 24  *7)).toDateString(),
+    course_end_date: new Date().addDays(30),
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -179,12 +193,12 @@ exports.config = {
       },
     specs: [
         // 'test/e2e/spec/create_course.spec.js', // done xx
-        'test/e2e/spec/fill_course.spec.js', // done
-        // 'test/e2e/spec/course_information_validation.spec.js', // done
-        // 'test/e2e/spec/account_information_validation.spec.js', // done
-        // 'test/e2e/spec/enrollment_help.spec.js', // done
-        // 'test/e2e/spec/course_editor_basic.spec.js',
-        // 'test/e2e/spec/course_editor_copy.spec.js',
+        // 'test/e2e/spec/fill_course.spec.js', // done xx
+        // 'test/e2e/spec/course_information_validation.spec.js', // done xx (fixed the coure duration/end date)
+        // 'test/e2e/spec/account_information_validation.spec.js', // done xx (teacher 1 data were changed in the conf.)
+        // 'test/e2e/spec/enrollment_help.spec.js', // done xx
+        'test/e2e/spec/course_editor_basic.spec.js', // (student can only see 3 out of 6 items)
+        // 'test/e2e/spec/course_editor_copy.spec.js', // xx (created delete_teacher_course method)
         // 'test/e2e/spec/course_editor_sharing.spec.js',
         // 'test/e2e/spec/module_statistics.spec.js', // done
         // 'test/e2e/spec/announcements.spec.js', // done

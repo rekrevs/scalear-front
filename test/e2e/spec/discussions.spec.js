@@ -26,7 +26,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		it('should open first lecture in first module', function(){
 			navigator.open()
@@ -73,7 +73,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
@@ -116,7 +116,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
@@ -159,7 +159,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
@@ -224,7 +224,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
@@ -271,7 +271,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teahcer_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
@@ -302,7 +302,7 @@ describe("Discussions",function(){
 		})
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){

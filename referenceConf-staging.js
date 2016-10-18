@@ -1,24 +1,19 @@
+Date.prototype.addDays_test = function(days)
+{
+  var month = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"];
+var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    var  op = weekdays[dat.getDay()]+', '+ dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
+    return op;
+};
 Date.prototype.addDays = function(days)
 {
     var dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
     return dat;
-
 }
-// addDays = function(days)
-// {
-//     var dat = new Date();
-//     dat.setDate(dat.getDate() + days);
-//     return dat;
-// }
-// var future = function(dat){
-//   var days= ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-//   var months = ["January", "February", "March",
-// "April", "May", "June", "July", "August", "September",
-// "October", "November", "December"];
-//   var future = ''+days[dat.getDay()]+', '+ dat.getDate()+' '+months[dat.getMonth()]+' ' + dat.getFullYear();
-//   return future
-// }
 
 var params= {
     frontend: 'http://scalear-staging2.herokuapp.com/#/',
@@ -102,6 +97,7 @@ var params= {
     short_name: "csc-test",
     course_name: "aesting course 100",
     course_end_date: new Date().addDays(30),
+    course_end_date_test: new Date().addDays_test(30),
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -194,29 +190,29 @@ exports.config = {
     specs: [
         // 'test/e2e/spec/create_course.spec.js', // done xx
         // 'test/e2e/spec/fill_course.spec.js', // done xx
-        // 'test/e2e/spec/course_information_validation.spec.js', // done xx (fixed the coure duration/end date)
-        // 'test/e2e/spec/account_information_validation.spec.js', // done xx (teacher 1 data were changed in the conf.)
+        // 'test/e2e/spec/course_information_validation.spec.js', // done xx
+        // 'test/e2e/spec/account_information_validation.spec.js', // done xx (teacher 1 data were changed in the conf-stag file.)
         // 'test/e2e/spec/enrollment_help.spec.js', // done xx
-        'test/e2e/spec/course_editor_basic.spec.js', // (student can only see 3 out of 6 items)
-        // 'test/e2e/spec/course_editor_copy.spec.js', // xx (created delete_teacher_course method)
-        // 'test/e2e/spec/course_editor_sharing.spec.js',
-        // 'test/e2e/spec/module_statistics.spec.js', // done
-        // 'test/e2e/spec/announcements.spec.js', // done
-        // 'test/e2e/spec/teacher-managment.spec.js', // done
-        // 'test/e2e/spec/students_solve_course.spec.js',
-        // 'test/e2e/spec/notes.spec.js', // done
-        // 'test/e2e/spec/discussions.spec.js', // done
+        // 'test/e2e/spec/course_editor_basic.spec.js', // xx
+        // 'test/e2e/spec/course_editor_copy.spec.js', // xx
+        // 'test/e2e/spec/course_editor_sharing.spec.js', // (teacher2@email.com is not a teacher mail!!)
+        // 'test/e2e/spec/module_statistics.spec.js', // done xx
+        // 'test/e2e/spec/announcements.spec.js', // done xx (students can't see announcements in dashboard)
+        // 'test/e2e/spec/teacher-managment.spec.js', // done xx
+        // 'test/e2e/spec/students_solve_course.spec.js', // (video loading problem for students)
+        // 'test/e2e/spec/notes.spec.js', // done xx
+        // 'test/e2e/spec/discussions.spec.js', // done (awaits student solve course)
         // 'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/progress-completion-module.spec.js',
-        // 'test/e2e/spec/validations.spec.js',
-        // 'test/e2e/spec/delete_course.spec.js',
+        // xx (awaits student solve course) 'test/e2e/spec/progress-completion-module.spec.js', (awaits student solve course)
+        // 'test/e2e/spec/validations.spec.js', // xx (checking date issue)
+        // 'test/e2e/spec/delete_course.spec.js', // xx
 
 
         // to test email features locall
 
         // 'test/e2e/spec/add_user.spec.js',
-        // 'test/e2e/spec/create_course.spec.js', // Done
-        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/create_course.spec.js', // Done xx
+        // 'test/e2e/spec/fill_course.spec.js',// Done xx
         // 'test/e2e/spec/email_notification.spec.js',  // Done
         // 'test/e2e/spec/delete_user.spec.js',  // Done
 

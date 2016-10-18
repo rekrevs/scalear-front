@@ -208,7 +208,7 @@ describe("check course review", function(){
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()
@@ -556,7 +556,7 @@ describe("check course review", function(){
 					})
 					it("should open quiz 2 in first module ",function(){
 						course_list.open()
-						course_list.open_course(1)
+						course_list.open_student_course(1)
 						navigator.module(1).open()
 						navigator.module(1).item(5).open()
 					})
@@ -573,7 +573,7 @@ describe("check course review", function(){
 				})
 				it("should open course",function(){
 					course_list.open()
-					course_list.open_course(1)
+					course_list.open_teacher_course(1)
 				})
 				it("should go to review mode",function(){
 					sub_header.open_review_mode()
@@ -647,7 +647,7 @@ describe("check course review", function(){
 					})
 					it("should open first moduel",function(){
 						course_list.open()
-						course_list.open_course(1)
+						course_list.open_student_course(1)
 						navigator.module(1).open()
 						navigator.module(1).item(6).open()
 					})
@@ -663,7 +663,7 @@ describe("check course review", function(){
 				})
 				it("should open course",function(){
 					course_list.open()
-					course_list.open_course(1)
+					course_list.open_teacher_course(1)
 				})
 				it("should go to review mode",function(){
 					sub_header.open_review_mode()
@@ -685,7 +685,7 @@ describe("check course review", function(){
 						})
 						it("should open first moduel",function(){
 							course_list.open()
-							course_list.open_course(1)
+							course_list.open_student_course(1)
 							navigator.module(1).open()
 							navigator.module(1).item(6).open()
 						})
@@ -720,7 +720,7 @@ describe("check course review", function(){
 						})
 						it('should open first lecture in first module', function(){
 							course_list.open()
-							course_list.open_course(1)
+							course_list.open_student_course(1)
 							navigator.module(1).open()
 							navigator.module(1).item(1).open()
 						})
@@ -1110,5 +1110,3 @@ function roundToNearestQuarter(percent, duration){
   	if (sec < 10) { sec  = "0" + sec; }
   	return  min + ':' + sec;
 }
-
-

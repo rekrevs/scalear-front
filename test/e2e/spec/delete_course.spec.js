@@ -24,7 +24,7 @@ describe("Deleting Course",function(){
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
@@ -217,7 +217,7 @@ describe("Deleting Course",function(){
 
 		it("should delete course",function(){
 			course_list.open()
-			course_list.delete_course(1)
+			course_list.delete_teacher_course(1)
 			expect(course_list.courses.count()).toEqual(0)
 		})
 		it("should logout",function(){

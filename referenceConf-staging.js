@@ -208,6 +208,12 @@ exports.config = {
         // 'test/e2e/spec/delete_course.spec.js', // xx
 
 
+        //rewritten tests
+        // 'test/e2e/spec/preview-as-student.spec.js', // xx
+
+        // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
+
+
         // to test email features locall
 
         // 'test/e2e/spec/add_user.spec.js',

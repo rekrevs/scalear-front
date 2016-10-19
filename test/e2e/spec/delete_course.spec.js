@@ -218,7 +218,7 @@ describe("Deleting Course",function(){
 		it("should delete course",function(){
 			course_list.open()
 			course_list.delete_teacher_course(1)
-			expect(course_list.courses.count()).toEqual(0)
+			expect(course_list.teacher_courses.count()).toEqual(0)
 		})
 		it("should logout",function(){
 			header.logout()

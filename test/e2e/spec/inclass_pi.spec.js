@@ -34,17 +34,18 @@ var d_q3_y = 190;
 
 
 describe("PI Inclass", function() {
-  describe("Teacher", function() {
-    var module_count
-    var teacher_browser = browser
-    var student_browser = utils.new_session()
+  var module_count
+  var teacher_browser = browser
+  var student_browser = utils.new_session()
+
+  describe('Teacher', function(){
     it("should login", function() {
       login_page.sign_in(params.teacher1.email, params.password)
     })
 
     it("should open course", function() {
       course_list.open()
-      course_list.open_course(1)
+      course_list.open_teacher_course(2)
     })
 
     it("should go to inclass mode", function() {
@@ -59,7 +60,7 @@ describe("PI Inclass", function() {
     })
 
     it("should check correct inclass review content", function() {
-      expect(inclass_page.title).toEqual("In-class Review: PI module 1")
+      expect(inclass_page.title).toEqual("In-class Review:PI module 1")
       expect(inclass_page.display_button.isDisplayed()).toEqual(true);
       expect(inclass_page.display_button.isEnabled()).toEqual(true);
       var module = inclass_page.module_item(1)
@@ -79,12 +80,13 @@ describe("PI Inclass", function() {
       expect(inclass_page.total_review_discussions).toEqual("0")
       expect(inclass_page.total_review_surveys).toEqual("0")
     })
-
+  })
+  describe('Student', function(){
     it("should go to student mode",function(){
       utils.switch_browser(student_browser)
       login_page.sign_in(params.student1.email, params.password)
       course_list.open()
-      course_list.open_course(1)
+      course_list.open_student_course(2)
     })
 
     it("should open student inclass",function(){
@@ -94,14 +96,15 @@ describe("PI Inclass", function() {
       sleep(6000)
     })
 
+    // different strings
     it("should have correct student inclass content",function(){
       expect(student_inclass_page.title).toEqual("PI module 1")
-      expect(student_inclass_page.get_block_text(1)).toEqual("Intro")
       expect(student_inclass_page.get_block_text(1)).toEqual("Intro")
       expect(student_inclass_page.get_block_text(2)).toEqual("Self")
       expect(student_inclass_page.get_block_text(3)).toEqual("Group")
       expect(student_inclass_page.get_block_text(4)).toEqual("Discussion")
     })
+
 
     it("should show no class running",function(){
       expect(student_inclass_page.noclass.isDisplayed()).toEqual(true)
@@ -119,6 +122,36 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.refresh_button.isDisplayed()).toEqual(true)
     })
 
+  })
+
+  describe('Teacher', function(){
+    utils.switch_browser(teacher_browser)
+    it('Should start in class review First Stage', function(){
+      inclass_page.start_inclass_review();
+      expect(review_model.review_model.isDisplayed()).toEqual(true)
+      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
+      expect(review_model.question_block.isDisplayed()).toEqual(true)
+      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ")
+      expect(review_model.get_block(1).getAttribute('class')).toContain("active")
+      // expect(element(by.className('active')).getText()).toContain('Intro')
+      expect(review_model.get_block_text(2)).toEqual("Self")
+      expect(review_model.get_block_text(3)).toEqual("Group")
+      expect(review_model.get_block_text(4)).toEqual("Discussion")
+      expect(review_model.get_block_text(5)).toEqual("")
+      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
+      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.chart.isDisplayed()).toEqual(false)
+      expect(review_model.next_button.isDisplayed()).toEqual(true)
+      expect(review_model.prev_button.isDisplayed()).toEqual(true)
+      expect(review_model.exit_button.isDisplayed()).toEqual(true)
+
+
+      // expect(review_model.review_model.isDisplayed()).toEqual(true)
+    })
+  })
+
+  describe('Student', function(){
+    utils.switch_browser(student_browser)
     it("should go to next stage",function(){
       student_inclass_page.refresh()
     })
@@ -141,7 +174,35 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.intro.getText()).toContain("Click on 'Next' when the question shows up")
       expect(student_inclass_page.intro_next_button.isDisplayed()).toEqual(true)
     })
+  })
 
+  describe('Teacher', function(){
+    utils.switch_browser(teacher_browser)
+
+    it('Should go to the Self Stage', function(){
+      review_model.next()
+      expect(review_model.review_model.isDisplayed()).toEqual(true)
+      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
+      expect(review_model.question_block.isDisplayed()).toEqual(true)
+      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ")
+
+      expect(review_model.get_block(2).getAttribute('class')).toContain("active")
+      // expect(element(by.className('active')).getText()).toContain('Self')
+      expect(review_model.get_block_text(1)).toEqual("Intro")
+      expect(review_model.get_block_text(3)).toEqual("Group")
+      expect(review_model.get_block_text(4)).toEqual("Discussion")
+      expect(review_model.get_block_text(5)).toEqual("")
+      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
+      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.chart.isDisplayed()).toEqual(false)
+      expect(review_model.next_button.isDisplayed()).toEqual(true)
+      expect(review_model.prev_button.isDisplayed()).toEqual(true)
+      expect(review_model.exit_button.isDisplayed()).toEqual(true)
+    })
+
+  })
+  describe('Student', function(){
+    utils.switch_browser(student_browser)
     it("should go to next stage",function(){
       student_inclass_page.intro_next()
     })
@@ -266,6 +327,43 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
     })
 
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.self_next()
+      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+  })
+  describe('Teacher', function(){
+    utils.switch_browser(teacher_browser)
+
+    // it('Should check for voters count', function(){
+    //   expect(element(by.binding('session_votes')).getText()).toBe('(1/1)')
+    // })
+
+    it('Should go to the Group Stage', function(){
+      review_model.next()
+      expect(review_model.review_model.isDisplayed()).toEqual(true)
+      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
+      expect(review_model.question_block.isDisplayed()).toEqual(true)
+      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ")
+
+      expect(review_model.get_block(3).getAttribute('class')).toContain("active")
+      // expect(element(by.className('active')).getText()).toContain('Group')
+      expect(review_model.get_block_text(1)).toEqual("Intro")
+      expect(review_model.get_block_text(2)).toEqual("Self")
+      expect(review_model.get_block_text(4)).toEqual("Discussion")
+      expect(review_model.get_block_text(5)).toEqual("")
+      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
+      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.chart.isDisplayed()).toEqual(false)
+      expect(review_model.next_button.isDisplayed()).toEqual(true)
+      expect(review_model.prev_button.isDisplayed()).toEqual(true)
+      expect(review_model.exit_button.isDisplayed()).toEqual(true)
+    })
+
+  })
+  describe('Student', function(){
+    utils.switch_browser(student_browser)
     it("should go to next stage",function(){
       student_inclass_page.self_next()
     })
@@ -416,6 +514,46 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
     })
 
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.group_next()
+      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+  })
+
+  describe('Teacher', function(){
+    utils.switch_browser(teacher_browser)
+
+    it('Should go to the Discussion Stage', function(){
+      review_model.next()
+      expect(review_model.review_model.isDisplayed()).toEqual(true)
+      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
+      expect(review_model.question_block.isDisplayed()).toEqual(true)
+      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ")
+
+      expect(review_model.get_block(4).getAttribute('class')).toContain("active")
+
+      expect(review_model.get_block_text(1)).toEqual("Intro")
+      expect(review_model.get_block_text(2)).toEqual("Self")
+      expect(review_model.get_block_text(3)).toEqual("Group")
+      expect(review_model.get_block_text(5)).toEqual("")
+      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
+      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.chart.isDisplayed()).toEqual(false)
+      expect(review_model.next_button.isDisplayed()).toEqual(true)
+      expect(review_model.prev_button.isDisplayed()).toEqual(true)
+      expect(review_model.exit_button.isDisplayed()).toEqual(true)
+      expect(review_model.chart.isDisplayed()).toEqual(true)
+    })
+
+    // it('Should check the chart info', function(){
+    //
+    // })
+
+  })
+
+  describe('Student', function(){
+    utils.switch_browser(student_browser)
     it("should go to next stage",function(){
       student_inclass_page.group_next()
     })
@@ -427,7 +565,7 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
       expect(student_inclass_page.group.isDisplayed()).toEqual(false)
       expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
       expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
       expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(2)
       expect(student_inclass_page.discussion_self_selected_choice(1).getText()).toContain("Answer 2")
@@ -446,7 +584,7 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
       expect(student_inclass_page.group.isDisplayed()).toEqual(false)
       expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
       expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
       expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(2)
       expect(student_inclass_page.discussion_self_selected_choice(1).getText()).toContain("Answer 2")
@@ -456,12 +594,43 @@ describe("PI Inclass", function() {
       expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 3")
       expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
     })
+  })
 
-    it("should go to teacher inclass review",function(){
-      utils.switch_browser(teacher_browser)
-      inclass_page.start_inclass_review()
-      review_model.wait_till_ready()
-    })
+
+
+  // describe('Teacher', function(){
+  //   utils.switch_browser(teacher_browser)
+  //
+  // })
+  // describe('Teacher', function(){
+  //   utils.switch_browser(teacher_browser)
+  //
+  // })
+  // describe('Teacher', function(){
+  //   utils.switch_browser(teacher_browser)
+  //
+  // })
+  // describe('Student', function(){
+  //   utils.switch_browser(student_browser)
+  //
+  // })
+  // describe('Student', function(){
+  //   utils.switch_browser(student_browser)
+  //
+  // })
+  // describe('Student', function(){
+  //   utils.switch_browser(student_browser)
+  //
+  // })
+
+
+
+
+
+
+
+
+  xdescribe("Teacher", function() {
 
     // it("should have correct review content",function() {
     //   expect(review_model.lecture_title).toEqual("PI lecture1 video quizzes")

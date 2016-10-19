@@ -107,6 +107,23 @@ var params= {
     teacher_lname: "1" ,
     teacher_univer: "test univerisity" ,
 
+    video1: {
+      duration: {
+        min: 4,
+        sec: 47
+      }
+    },
+
+    prepare: function(custom_browser) {
+        var this_browser = custom_browser || browser
+        this_browser.driver.manage().window().maximize();
+        this_browser.driver.get(params.frontend);
+        this_browser.driver.wait(function() {
+            return this_browser.element(by.id('login')).isPresent()
+        }, 30000)
+        this_browser.element(by.id('login')).click();
+    }
+
 }
 
 
@@ -212,6 +229,11 @@ exports.config = {
         // 'test/e2e/spec/preview-as-student.spec.js', // xx
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
+
+        // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
+
+        'test/e2e/spec/inclass_pi.spec.js', //
+
 
 
         // to test email features locall

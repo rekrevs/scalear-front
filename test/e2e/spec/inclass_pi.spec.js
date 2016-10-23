@@ -135,7 +135,7 @@ student2_browser = utils.new_session()
   describe('Student 2 go inClass', function(){
     it("should go to student mode",function(){
       utils.switch_browser(student2_browser)
-      login_page.sign_in(params.student1.email, params.password)
+      login_page.sign_in(params.student2.email, params.password)
       course_list.open()
       course_list.open_student_course(2)
     })
@@ -186,7 +186,7 @@ student2_browser = utils.new_session()
       expect(review_model.question_block.isDisplayed()).toEqual(true)
       expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ")
       expect(review_model.get_block(1).getAttribute('class')).toContain("active")
-      // expect(element(by.className('active')).getText()).toContain('Intro')
+      expect(review_model.get_block_text(1)).toEqual("Intro")
       expect(review_model.get_block_text(2)).toEqual("Self")
       expect(review_model.get_block_text(3)).toEqual("Group")
       expect(review_model.get_block_text(4)).toEqual("Discussion")
@@ -271,6 +271,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block(2).getAttribute('class')).toContain("active")
       // expect(element(by.className('active')).getText()).toContain('Self')
       expect(review_model.get_block_text(1)).toEqual("Intro")
+      expect(review_model.get_block_text(2)).toEqual("Self")
       expect(review_model.get_block_text(3)).toEqual("Group")
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
@@ -283,7 +284,7 @@ student2_browser = utils.new_session()
     })
 
   })
-  describe('Student solve Self Qs', function(){
+  describe('Student  1 solve Self Qs', function(){
 
     it("should go to next stage",function(){
       utils.switch_browser(student_browser)
@@ -422,10 +423,150 @@ student2_browser = utils.new_session()
       expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
     })
   })
+
+  describe('Student 2 solve Self Qs', function(){
+
+    it("should go to next stage",function(){
+      utils.switch_browser(student2_browser)
+      student_inclass_page.intro_next()
+    })
+
+    it("should show the self question choices", function(){
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.self_choices.count()).toEqual(3)
+      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
+    })
+
+    it("should vote without selecting any choice",function(){
+      student_inclass_page.self_vote()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_note.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
+      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
+      student_inclass_page.self_next()
+      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+      student_inclass_page.self_retry()
+
+    })
+
+    it("should select first and third choice",function(){
+      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.self_choice(3).getAttribute('class')).not.toContain("selected")
+      student_inclass_page.self_choice(1).click()
+      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
+      student_inclass_page.self_choice(3).click()
+      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
+    })
+
+    it("should check that selected answers remain after browser refresh",function(){
+      // browser.refresh()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.self_choices.count()).toEqual(3)
+      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should vote for selected answer and check selected answers",function(){
+      student_inclass_page.self_vote()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.self_selected_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.self_selected_choice(2).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
+    })
+
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.self_next()
+      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+
+    it("should retry quiz student inclass",function(){
+      student_inclass_page.self_retry()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.self_choices.count()).toEqual(3)
+      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should change selected answer",function(){
+      student_inclass_page.self_choice(1).click()
+      student_inclass_page.self_choice(2).click()
+      sleep(2000)
+      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.self_choice(2).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should vote with new selected answer and check selected answers",function(){
+      student_inclass_page.self_vote()
+      // browser.refresh()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
+
+      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.self_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
+    })
+
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.self_next()
+      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+  })
   describe('Teacher start Group stage', function(){
 
 
-    // it('Should check for voters count', function(){
+    // it('Should check for solvers count', function(){
     //   expect(element(by.binding('session_votes')).getText()).toBe('(1/1)')
     // })
 
@@ -441,6 +582,7 @@ student2_browser = utils.new_session()
       // expect(element(by.className('active')).getText()).toContain('Group')
       expect(review_model.get_block_text(1)).toEqual("Intro")
       expect(review_model.get_block_text(2)).toEqual("Self")
+      expect(review_model.get_block_text(3)).toEqual("Group")
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
@@ -452,10 +594,186 @@ student2_browser = utils.new_session()
     })
 
   })
-  describe('Student solve group Qs', function(){
+  describe('Student 1 solve group Qs', function(){
 
     it("should go to next stage",function(){
       utils.switch_browser(student_browser)
+      student_inclass_page.self_next()
+    })
+
+    it("should show the group question choices",function(){
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
+
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.group_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_note.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
+    })
+
+    it("should vote without selecting any choice",function(){
+      student_inclass_page.group_vote()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_note.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
+
+      // expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
+      // expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
+      // expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
+      // expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
+
+      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
+      student_inclass_page.group_next()
+      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+      student_inclass_page.group_retry()
+    })
+
+    it("should select first and third choice",function(){
+      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.group_choice(3).getAttribute('class')).not.toContain("selected")
+      student_inclass_page.group_choice(1).click()
+      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
+      student_inclass_page.group_choice(3).click()
+      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
+    })
+
+    it("should check that selected answers remain after browser refresh",function(){
+      // browser.refresh()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.group_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should vote for selected answer and check selected answers",function(){
+      student_inclass_page.group_vote()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      sleep(2000)
+
+      // expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
+      // expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
+      // expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
+      // expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
+
+      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_selected_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.group_selected_choice(2).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
+
+
+      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
+    })
+
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.group_next()
+      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+
+    it("should retry quiz student inclass",function(){
+      student_inclass_page.group_retry()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
+
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.group_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
+      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should change selected answer",function(){
+      student_inclass_page.group_choice(1).click()
+      student_inclass_page.group_choice(2).click()
+      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
+      expect(student_inclass_page.group_choice(2).getAttribute('class')).toContain("selected")
+      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
+    })
+
+    it("should vote with new selected answer and check selected answers",function(){
+      student_inclass_page.group_vote()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
+
+      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
+
+      expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
+
+
+      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.group_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
+
+
+      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
+    })
+
+    it("should try to go to next stage in student inclass",function(){
+      student_inclass_page.group_next()
+      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    })
+  })
+
+  describe('Student 2 solve group Qs', function(){
+
+    it("should go to next stage",function(){
+      utils.switch_browser(student2_browser)
       student_inclass_page.self_next()
     })
 
@@ -644,6 +962,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(1)).toEqual("Intro")
       expect(review_model.get_block_text(2)).toEqual("Self")
       expect(review_model.get_block_text(3)).toEqual("Group")
+      expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
       expect(review_model.connected_blocks.count()).toEqual(5)
@@ -659,10 +978,65 @@ student2_browser = utils.new_session()
 
   })
 
-  describe('Student go to Discussion', function(){
+  describe('Student 1 go to Discussion', function(){
 
     it("should go to next stage",function(){
       utils.switch_browser(student_browser)
+      student_inclass_page.group_next()
+    })
+
+    it("should show the discussion stage",function(){
+      // browser.refresh()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
+
+
+      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
+
+
+      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
+    })
+
+    it("should try to go to next stage",function(){
+      student_inclass_page.discussion_continue()
+      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
+      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
+      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
+      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
+      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
+      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
+      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
+    })
+  })
+
+
+  describe('Student 2 go to Discussion', function(){
+
+    it("should go to next stage",function(){
+      utils.switch_browser(student2_browser)
       student_inclass_page.group_next()
     })
 
@@ -731,6 +1105,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(2)).toEqual("Self")
       expect(review_model.get_block_text(3)).toEqual("Group")
       expect(review_model.get_block_text(4)).toEqual("Discussion")
+      expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
       expect(review_model.connected_blocks.count()).toEqual(5)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
@@ -772,26 +1147,6 @@ student2_browser = utils.new_session()
 
 
 
-  // describe('Teacher', function(){
-  //   utils.switch_browser(teacher_browser)
-  //
-  // })
-  // describe('Teacher', function(){
-  //   utils.switch_browser(teacher_browser)
-  //
-  // })
-  // describe('Student', function(){
-  //   utils.switch_browser(student_browser)
-  //
-  // })
-  // describe('Student', function(){
-  //   utils.switch_browser(student_browser)
-  //
-  // })
-  // describe('Student', function(){
-  //   utils.switch_browser(student_browser)
-  //
-  // })
 
 
 

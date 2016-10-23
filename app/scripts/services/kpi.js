@@ -8,7 +8,9 @@ angular.module('scalearAngularApp')
       {
         'readData':{method: 'GET', headers:headers, params: {action: 'read_data'} },
         'readTotals':{method: 'GET', headers:headers, params: {action: 'read_totals'} },
-        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} }
+        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} },
+        'readTotalsForDuration':{method: 'GET', headers:headers, params: {action: 'read_totals_for_duration'} },
+        
       });
 
 }])

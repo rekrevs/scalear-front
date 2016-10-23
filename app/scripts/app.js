@@ -321,6 +321,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/statistics/statistics.html',
           controller: 'statisticsCtrl'
         })
+        .state('school_statistics', {
+          url: '/school_statistics',
+          templateUrl: '/views/statistics/school_statistics.html',
+          controller: 'schoolStatisticsCtrl'
+        })
         .state('show_shared', {
           url: '/show_shared',
           templateUrl: '/views/teacher/sharing/shared.html',

@@ -360,7 +360,7 @@ var translation_sv={
     legal_entity: "Juridisk person",
     legal_entity_details: "ScalableLearning tillhandahålls av SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
     code_conduct: "GÉNAT Data Protection Code of Conduct",
-    code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013. http://www.geant.net/uri/dataprotection-code-of-conduct/v1",
+    code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013.",
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
     last_update: "Senast uppdaterad: 2016-10-07",

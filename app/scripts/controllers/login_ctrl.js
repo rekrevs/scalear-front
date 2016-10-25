@@ -3,30 +3,6 @@
 angular.module('scalearAngularApp')
   .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession',"$http", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http) {
 
-
-    // var acl = ["localhost:9000","test.scalable-learning.com"];
-    // var options = {
-    //   "title": "Scalable Learning",
-    //   "feeds": ["edugain", "swamid"]
-    // };
-    // var djc = DiscoJuice.Hosted.getConfig(options);
-
-    // djc.always = true;
-    // djc.callback = IdPDiscovery.setup(djc, acl);
-
-    // $("body").DiscoJuice(djc);
-
-
-
-    $http.get("https://md.nordu.net/entities/https%3A%2F%2Fsaml.sys.kth.se%2Fidp%2Fshibboleth").then(function(resp){
-      console.log("hello world");
-      console.log("resp", resp);
-    }).catch(function(a){
-      console.log("goodbuy", a);
-    })
-
-
-
     $scope.user = {}
     Page.setTitle('navigation.login')
     $('#user_email').select()
@@ -129,7 +105,14 @@ angular.module('scalearAngularApp')
       $rootScope.busy_loading = true;
       Saml.Login({ idp: idp.entityID },
         function(resp) {
-          $(resp.saml_url).appendTo('body').submit();
+          if(resp.action == "POST"){
+            $(resp.saml_url).appendTo('body').submit();
+          }
+          else{
+            console.log(resp.saml_url)
+            var str = "<html><body><form id='form' name='form' method='GET' action='"+resp.saml_url+"'></form></body></html>"
+            $(str).appendTo('body').submit();
+          }
         },
         function() {
           $rootScope.busy_loading = false;

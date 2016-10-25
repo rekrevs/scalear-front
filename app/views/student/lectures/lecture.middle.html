@@ -138,7 +138,7 @@ ul.connected_blocks {
 						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
 						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
 						<div ng-hide='distance_peer_session_id'>
-							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer'   ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
+							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer' style="background: green" ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
 						</div>
 					</center>
 					<center id="preview_inclass_panel" ng-show ='distance_peer_session_id'>

@@ -251,6 +251,11 @@ angular.module('scalearAngularApp')
         player.removeTrackEvent(id)
       }
 
+      player_controls.getTrackEvents = function(){
+        return player.getTrackEvents()
+      }
+
+
       player_controls.replay = function() {
         player_controls.pause()
         player_controls.seek(0)

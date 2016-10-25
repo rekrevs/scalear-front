@@ -110,8 +110,7 @@ angular.module('scalearAngularApp')
           }
           else{
             console.log(resp.saml_url)
-            var str = "<html><body><form id='form' name='form' method='GET' action='"+resp.saml_url+"'></form></body></html>"
-            $(str).appendTo('body').submit();
+            window.location = resp.saml_url
           }
         },
         function() {

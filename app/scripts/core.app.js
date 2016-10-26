@@ -29,5 +29,6 @@ angular.module('scalearAngularApp', [
     'ngTextTruncate',
     'ngDialog',
     'mgo-angular-wizard',
-    'angular-medium-editor'
+    'angular-medium-editor',
+    'smart-table'
 ])

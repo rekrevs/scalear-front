@@ -1,41 +1,240 @@
-<!-- build:css(.tmp/styles) styles/statistics.css --> 
-<link rel="stylesheet" href="styles/teacher/statistics.css" /> 
-<!-- endbuild --> 
-<center> 
-  <div> 
-    <span translate>statistics.report_period</span> 
-    <span> 
-          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" /> 
-          <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small> 
-    </span> 
-    <span translate>statistics.to</span> 
-    <span> 
-          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/> 
-          <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small> 
-    </span> 
-    <button ng-click="showStatistics()" class="button "><span translate>statistics.generate_report</span></button> 
-  </div> 
-</center> 
- 
- 
-  <div ng-show="show_statistics" > 
-    <div > 
-      <span><b>{{total_students}}</b></span> ( <span><b>{{active_students}}</b> active</span>) students in <span><b>{{total_courses}}</b>courses</span> taugh by <span><b>{{total_teachers}}</b></span>(<span><b>{{active_teachers}}</b>active</span>) teachers 
-    </div> 
-    <div > 
-      <span><b>{{total_hours}}</b> of video watched</span> ( {{total_student_watched}} students, {{total_course_been_watched}} courses ) 
-    </div> 
-    <div > 
-      <span><b>{{total_online_quiz_solved}}</b> online quizzes answered </span> 
-        {{total_online_quiz_course}} courses , {{total_online_quiz_lecture}} Lectures, {{total_online_quiz_student}} students 
-    </div> 
-    <div > 
-      <span><b>{{total_questions}}</b> online questions asked </span> ( {{total_questions_students}} students, {{total_questions_courses}} courses, {{total_questions_lectures}} Video ) 
-    </div> 
-    <div > 
-      <span><b>{{total_questions_answered_teachers}}</b> online teachers answers </span> , <span><b>{{total_questions_answered_students}}</b> online students answers </span>  
-    </div> 
-    <div ng-repeat="course in course_data"> 
-        <div>{{course}}</div> 
-      </div> 
- 
+<!-- build:css(.tmp/styles) styles/statistics.css -->
+<link rel="stylesheet" href="styles/teacher/statistics.css" />
+<!-- endbuild -->
+<center>
+  <div>
+    <span translate>statistics.report_period</span>
+    <span>
+          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
+          <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
+    </span>
+    <span translate>statistics.to</span>
+    <span>
+          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
+          <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
+    </span>
+    <button ng-click="showStatistics()" class="button "><span translate>statistics.generate_report</span></button>
+  </div>
+</center>
+
+
+  <div ng-show="show_statistics" >
+    <div class="row adminRow">
+      <div  class = 'column small-12 medium-6 large-4'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clipboard"></i>
+          </div>
+          <div class="adminNum">
+            {{total_courses}}
+          </div>
+          <p>
+            Courses
+          </p>
+
+          <div class="row">
+            <div class="column small-6">
+              {{total_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-6" >
+              {{total_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4' >
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clock adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            <!-- {{total_hours}} -->
+            19
+          </div>
+          <p>
+            Hours watched
+          </p>
+          <div class="row">
+            <div class="column small-6">
+              {{total_student_watched}} <i class="fi-torsos-all" tooltip="Average per Student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-6">
+              {{total_course_been_watched}} <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4 '>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clipboard-pencil  "></i>
+          </div>
+          <div class="adminNum">
+            {{total_online_quiz_solved}}
+          </div>
+          <p>
+            Online Quizzes Solved
+          </p>
+
+          <div class="row">
+            <div class="column small-4">
+              {{total_online_quiz_student}}
+              <i class="fi-torsos-all" tooltip="Average per student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_online_quiz_course}}
+              <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_online_quiz_lecture}}
+              <i class="fi-video" tooltip="Average per video" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4' >
+        <div class="adminTile">
+          <div class='adminIcon'>
+            <span >&#63;</span>
+          </div>
+          <div class="adminNum">
+            {{total_questions}}
+          </div>
+          <p>
+            Online Questions asked
+          </p>
+          <div class="row">
+            <div class="column small-4">
+              {{total_questions_students}}
+              <i class="fi-torsos-all" tooltip="average per student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_questions_courses}}
+              <i class="fi-clipboard" tooltip="average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_questions_lectures}}
+              <i class="fi-video" tooltip="average per video" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torso-business adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            {{total_questions_answered_teachers}}
+          </div>
+          <p>
+            Online Teachers' Answers
+          </p>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4 end'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torsos-all adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            {{total_questions_answered_students}}
+          </div>
+          <p>
+            Online Students' Answers
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class='row adminRow'>
+      <table st-table='displayed_course_data' class='table table striped cloumn small-12 adminTable' st-safe-src="course_data_array">
+        <thead>
+          <tr >
+            <th st-sort='short_name'>Course Name</th>
+            <th st-sort='active_students'>Active Students</th>
+            <th st-sort='active_teachers'>Active Teachers</th>
+            <th st-sort='questions'>Questions</th>
+            <th st-sort='solved_online_quiz'>Solved Quizzes</th>
+            <th st-sort='total_view'>Total view</th>
+          </tr>
+          <tr>
+            <th colspan="6"><input st-search="" placeholder="Search" type="text"/></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='course in displayed_course_data'>
+            <td>{{course.short_name}}</td>
+            <td>{{course.active_students}}</td>
+            <td>{{course.active_teachers}}</td>
+            <td>{{course.questions}}</td>
+            <td>{{course.solved_online_quiz}}</td>
+            <td>{{course.total_view}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <div class="row">
+      <div  class = 'column small-12 medium-4 large-3'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torsos-all"></i>
+            <span><b>{{total_courses}}</b> courses</span>
+          </div>
+
+          <span><b>{{total_students}}</b></span> ( <span><b>{{active_students}}</b> active</span>) students in <span><b>{{total_courses}}</b> courses</span> taught by <span><b>{{total_teachers}}</b></span>(<span><b>{{active_teachers}}</b>active</span>) teachers
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-4 large-3' >
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clock adminIcon"></i>
+          </div>
+
+          <span><b>{{total_hours}}</b> of video watched</span> ( {{total_student_watched}} students, {{total_course_been_watched}} courses )
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-4 large-3 '>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-heart adminIcon"></i>
+          </div>
+
+          <span><b>{{total_online_quiz_solved}}</b> online quizzes answered </span>
+            {{total_online_quiz_course}} courses , {{total_online_quiz_lecture}} Lectures, {{total_online_quiz_student}} students
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-4 large-3' >
+        <div class="adminTile">
+          <div class='adminIcon'>
+            <span >&#63;</span>
+          </div>
+
+          <span><b>{{total_questions}}</b> online questions asked </span> ( {{total_questions_students}} students, {{total_questions_courses}} courses, {{total_questions_lectures}} Video )
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-4 large-3 end'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torso-business adminIcon"></i>
+          </div>
+
+          <span><b>{{total_questions_answered_teachers}}</b> online teachers answers </span> , <span><b>{{total_questions_answered_students}}</b> online students answers </span>
+        </div>
+
+      </div>
+    </div> -->
+
+  </div>

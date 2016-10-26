@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     function validateDate() {
       var deferred = $q.defer()
       var errors = {}
-      
+
       if( !($scope.report.start_date instanceof Date) ){
         errors.start_date = "not a Date"
         deferred.reject(errors)
@@ -43,30 +43,20 @@ angular.module('scalearAngularApp')
       validateDate()
       .then(function(errors) {
         $scope.show_statistics =  true
-        // Kpi.readTotals(
-        //   {
-        //     school:true
-        //   },
-        //   function(data) {
-        //     angular.extend($scope, data)
-        //   },
-        //   function() {}
-        // )
         Kpi.readTotalsForDuration(
           {
             start_date:$scope.report.start_date,
             end_date:$scope.report.end_date
           },
           function(data) {
-            // console.log("saassdasdadadas")
             console.log(data)
-            // console.log(data.total_hours)
-            // data.total_hours = secondsToHoursString(data.total_hours)
-            // console.log(secondsToHoursString(data.total_hours))
-            // console.log(data.total_hours)
             angular.extend($scope, data)
-            // console.log(data.Course_data)
-            // $scope.loading_totals = false
+
+            $scope.course_data_array = []
+            angular.forEach($scope.course_data, function(value, key){
+              $scope.course_data_array.push(value)
+            })
+
           },
           function() {}
         )
@@ -89,11 +79,64 @@ angular.module('scalearAngularApp')
       return date
     }
 
-    var init = function() {
-      $scope.loading_totals = true
+    // var init = function() {
+    //   $scope.loading_totals = true
+    //
+    // }
+    // init()
 
+    $scope.falData = [{
+        "firstName": "Cox",
+        "lastName": "Carney",
+        "company": "Enormo",
+        "employed": true
+    },
+    {
+        "firstName": "Lorraine",
+        "lastName": "Wise",
+        "company": "Comveyer",
+        "employed": false
+    },
+    {
+        "firstName": "Nancy",
+        "lastName": "Waters",
+        "company": "Fuelton",
+        "employed": false
+    }]
+
+
+
+
+
+
+
+
+    var firstnames = ['Laurent', 'Blandine', 'Olivier', 'Max'];
+var lastnames = ['Renard', 'Faivre', 'Frere', 'Eponge'];
+var dates = ['1987-05-21', '1987-04-25', '1955-08-27', '1966-06-06'];
+var id = 1;
+
+function generateRandomItem(id) {
+
+    var firstname = firstnames[Math.floor(Math.random() * 3)];
+    var lastname = lastnames[Math.floor(Math.random() * 3)];
+    var birthdate = dates[Math.floor(Math.random() * 3)];
+    var balance = Math.floor(Math.random() * 2000);
+
+    return {
+        id: id,
+        firstName: firstname,
+        lastName: lastname,
+        birthDate: new Date(birthdate),
+        balance: balance
     }
-    init()
+}
+
+$scope.rowCollection = [];
+
+   for (id; id < 5; id++) {
+       $scope.rowCollection.push(generateRandomItem(id));
+   }
 
 
   }]);

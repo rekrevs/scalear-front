@@ -2709,6 +2709,13 @@ th[st-sort]{
 .adminRow:nth-of-type(2){
   padding: 1.9375rem;
 }
+.st-sort-ascent:before{
+    content: '\25B2';
+  }
+
+.st-sort-descent:before{
+    content: '\25BC';
+}
 @media (max-width: 1024px){
   .row .adminRow{
     width: 100%;

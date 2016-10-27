@@ -208,7 +208,7 @@ var translation_en={
     button:{
         ask: "Ask",
         cancel:"@:button.cancel",
-        edit:"@:global.edit"
+        save:"@:button.save"
     }
   },
   context_menu:{

@@ -2670,10 +2670,25 @@ body.ngdialog-open { overflow: initial !important; }
 
 
 /**********School Admin*****/
+.adminUni{
+  font-size: 2.5rem;
+  margin: .5rem 1.7rem .9rem 1.7rem;
+}
+.adminUni + section{
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid black;
+  margin: .5rem 1.7rem;
+}
+.adminBtn, .adminBtn:focus{
+  background: rgb(0,128,0);
+  margin: 0 1.9rem;
+}
+.adminBtn:hover, .adminBtn:active{
+  background: #5da423;
+}
 .adminTile{
   border:1px solid #E4E4E4;
   background: whitesmoke;
-  /*width: 95%;*/
   height: 13.8rem;
   text-align: center;
   margin: 1rem;
@@ -2704,6 +2719,7 @@ th[st-sort]{
 .adminTile p{
   font-weight: bold;
   padding: 0 5px;
+  margin-bottom: 15px;
 
 }
 .adminRow:nth-of-type(2){
@@ -2720,5 +2736,9 @@ th[st-sort]{
   .row .adminRow{
     width: 100%;
   }
+}
+
+.adminRow .row {
+  font-size: 1.2rem;
 }
 /**************************/

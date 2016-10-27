@@ -1,9 +1,25 @@
 <!-- build:css(.tmp/styles) styles/statistics.css -->
 <link rel="stylesheet" href="styles/teacher/statistics.css" />
 <!-- endbuild -->
+<section class='adminUni'>
+  Royal Institute of Technology (.kth.se)
+</section>
+<section>
+  <span translate>statistics.report_period</span>
+  <span>
+        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
+        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
+  </span>
+  <span translate>statistics.to</span>
+  <span>
+        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
+        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
+  </span>
+  <button ng-click="showStatistics()" class="button adminBtn"><span translate>statistics.generate_report</span></button>
+</section>
 <center>
   <div>
-    <span translate>statistics.report_period</span>
+    <!-- <span translate>statistics.report_period</span>
     <span>
           <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
           <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
@@ -12,8 +28,8 @@
     <span>
           <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
           <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
-    </span>
-    <button ng-click="showStatistics()" class="button "><span translate>statistics.generate_report</span></button>
+    </span> -->
+    <!-- <button ng-click="showStatistics()" class="button "><span translate>statistics.generate_report</span></button> -->
   </div>
 </center>
 
@@ -181,60 +197,5 @@
         </tbody>
       </table>
     </div>
-
-    <!-- <div class="row">
-      <div  class = 'column small-12 medium-4 large-3'>
-        <div class="adminTile">
-          <div class="adminIcon">
-            <i class="fi-torsos-all"></i>
-            <span><b>{{total_courses}}</b> courses</span>
-          </div>
-
-          <span><b>{{total_students}}</b></span> ( <span><b>{{active_students}}</b> active</span>) students in <span><b>{{total_courses}}</b> courses</span> taught by <span><b>{{total_teachers}}</b></span>(<span><b>{{active_teachers}}</b>active</span>) teachers
-        </div>
-
-      </div>
-      <div class = 'column small-12 medium-4 large-3' >
-        <div class="adminTile">
-          <div class="adminIcon">
-            <i class="fi-clock adminIcon"></i>
-          </div>
-
-          <span><b>{{total_hours}}</b> of video watched</span> ( {{total_student_watched}} students, {{total_course_been_watched}} courses )
-        </div>
-
-      </div>
-      <div class = 'column small-12 medium-4 large-3 '>
-        <div class="adminTile">
-          <div class="adminIcon">
-            <i class="fi-heart adminIcon"></i>
-          </div>
-
-          <span><b>{{total_online_quiz_solved}}</b> online quizzes answered </span>
-            {{total_online_quiz_course}} courses , {{total_online_quiz_lecture}} Lectures, {{total_online_quiz_student}} students
-        </div>
-
-      </div>
-      <div class = 'column small-12 medium-4 large-3' >
-        <div class="adminTile">
-          <div class='adminIcon'>
-            <span >&#63;</span>
-          </div>
-
-          <span><b>{{total_questions}}</b> online questions asked </span> ( {{total_questions_students}} students, {{total_questions_courses}} courses, {{total_questions_lectures}} Video )
-        </div>
-
-      </div>
-      <div class = 'column small-12 medium-4 large-3 end'>
-        <div class="adminTile">
-          <div class="adminIcon">
-            <i class="fi-torso-business adminIcon"></i>
-          </div>
-
-          <span><b>{{total_questions_answered_teachers}}</b> online teachers answers </span> , <span><b>{{total_questions_answered_students}}</b> online students answers </span>
-        </div>
-
-      </div>
-    </div> -->
 
   </div>

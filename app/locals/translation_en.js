@@ -272,6 +272,19 @@ var translation_en={
     add_course_by_choosing_part_2: " to join {{short_name}}. If you have any questions please use the 'Support' form in the 'Help' menu.)",
     add_course_by_url: " Follow this link ",
     sincerely:"Sincerely",
+    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:",
+    if_problem:'if there are problems:',
+    ask_student:'Ask	the	student to',
+    check_spam:'check	SPAM	filters',
+    conf_email:'for	the	confirmation	email.',
+    enroll_manual:'enroll	manually',
+    by_go: 'by	going	 to',
+    and_joining:'and	joining	 with	the enrollment key',
+    contact: 'Contact	support',
+    from_help: 'from	the	Help	menu.',
+    guest_stu:'Guest	Students:',
+    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to',
+    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key'
   },
   account:{
     password:{

@@ -272,6 +272,19 @@ var translation_sv={
     add_course_by_choosing_part_2: " för att delta i {{short_name}}. Om du har några frågor, var god använd 'Support' formuläret under menyn 'Hjälp'.",
     add_course_by_url: " Följ denna länk",
     sincerely:"Vänliga hälsningar",
+    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:(t)",
+    if_problem:'if there are problems:(t)',
+    ask_student:'Ask	the	student to(t)',
+    check_spam:'check	SPAM	filters(t)',
+    conf_email:'for	the	confirmation	email.(t)',
+    enroll_manual:'enroll	manually(t)',
+    by_go: 'by	going	 to(t)',
+    and_joining:'and	joining	 with	the enrollment key(t)',
+    contact: 'Contact	support(t)',
+    from_help: 'from	the	Help	menu.(t)',
+    guest_stu:'Guest	Students:(t)',
+    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to(t)',
+    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key(t)'
   },
   account:{
     password:{

@@ -486,7 +486,8 @@ var translation_sv={
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
-        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering"
+        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering",
+        click_add_note: "Click or type 'm' to add a note(t)"
     },
     drag:{
         start: "Start",
@@ -564,7 +565,8 @@ var translation_sv={
         add_question: "Lägg till fråga",
         add_header: "Lägg till rubrik",
         add_module: "Lägg till modul",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Add Note(t)'
     }
   },
   lectures:{

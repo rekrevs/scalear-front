@@ -486,7 +486,8 @@ var translation_en={
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
-        click_add_marker:"Click or type 'm' to add a marker"
+        click_add_marker:"Click or type 'm' to add a marker",
+        click_add_note: "Click or type 'm' to add a note"
     },
     drag:{
         start: "Start",
@@ -564,7 +565,8 @@ var translation_en={
         add_question: "Add Question",
         add_header: "Add Header",
         add_module: "Add Module",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Add Note'
     }
   },
   lectures:{

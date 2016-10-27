@@ -487,7 +487,7 @@ var translation_en={
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
         click_add_marker:"Click or type 'm' to add a marker",
-        click_add_note: "Click or type 'm' to add a note"
+        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing."
     },
     drag:{
         start: "Start",

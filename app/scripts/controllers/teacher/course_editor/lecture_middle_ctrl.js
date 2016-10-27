@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
             if(type == 'quiz') {
               $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            } 
+            }
             else
               $scope.showOnlineMarkerAnnotationOnly(item_data)
           })
@@ -306,17 +306,20 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.addOnlineMarker = function() {
+    $scope.addOnlineMarker = function(silent) {
       var insert_time = $scope.lecture_player.controls.getTime()
       MarkerModel.addMarker(insert_time)
         .then(function(marker) {
           $scope.lecture_player.controls.seek_and_pause(insert_time)
-          if(!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
+          if((!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz')) && !silent)
             $scope.showOnlineMarker(marker)
           addItemToVideoQueue(marker, "marker")
-          DetailsNavigator.open()
+
+          silent? ($scope.lecture_player.controls.play(insert_time)):(DetailsNavigator.open())
         })
     }
+
+
 
     function saveOpenEditor() {
       var promise = $q.when(false)
@@ -499,6 +502,10 @@ angular.module('scalearAngularApp')
 
       shortcut.add("m", function() {
         $scope.addOnlineMarker()
+      }, { "disable_in_input": true, 'propagate': false });
+
+      shortcut.add("Shift+m", function() {
+        $scope.addOnlineMarker(true)
       }, { "disable_in_input": true, 'propagate': false });
     }
 

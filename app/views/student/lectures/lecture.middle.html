@@ -106,7 +106,7 @@ ul.connected_blocks {
 									</quiz>
 								</youtube>
 								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">
-									<div ng-show="video_end" style="position: relative;top: -78px;left: 47%;z-index:1000">
+									<div ng-show="video_end && !distance_peer_session_id" style="position: relative;top: -78px;left: 47%;z-index:1000">
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>button.replay</button>
 								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>button.next</span></button>
 									</div>
@@ -131,25 +131,9 @@ ul.connected_blocks {
                 <div ng-show="(distance_peer_status == 3 || distance_peer_status == 4)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px 	grey;margin-top:0.45em;" class="stage_timer">
                     <center>{{status_counter | format}}</center>
                 </div>
-				<div ng-show="!fullscreen && passed_requirments" class="row no-margin with-tiny-margin-top">
-					<center class="small-block-grid-3">
-						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
-						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
-						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
-						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
-						<div ng-hide='distance_peer_session_id'>
-							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer' style="background: green" ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
-						</div>
-					</center>
+				<div ng-show="!fullscreen && passed_requirments && show_progressbar" class="row no-margin with-tiny-margin-top">
 					<center id="preview_inclass_panel" ng-show ='distance_peer_session_id'>
 						<div style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
-							<ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
-								<li style="display:none"></li>
-						      	<div ng-bind='distance_peer_messages'></div>
-						      	<div><span translate>distance_peer.in_distance_peer</span><span>{{email}}</span></div>
-								<!-- <button type="button"  class="tiny success button no-margin check_answer_button" ng-click="endDistancePeerSession()" >{{end_session | translate}}</button> -->
-								<button type="button"  class="tiny success button no-margin" style="background-color: red;font-size: 14px;" ng-click="endDistancePeerSession()"translate>distance_peer.end_session</button>
-						    </ul>
 							<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
 							  <ul class="connected_blocks">
 							    <li ng-class="{'active': distance_peer_status==1}" style="background:lightgrey;color:black;  width: 100%;" ng-show="distance_peer_status==1" translate>distance_peer.video_stage</li>
@@ -159,11 +143,27 @@ ul.connected_blocks {
 							    <li ng-class="{'active': distance_peer_status>=5}" style="background:darkorange" ng-hide="distance_peer_status==1" translate>distance_peer.end_video_stage</li>
 							  </ul>
 							</div>
+							<ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
+								<!-- <li style="display:none"></li> -->
+						      	<!-- <span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system_part_1</span><a href="{{enrollment_url}}"> -->
+				                <div translate translate-values='{name: name}'>distance_peer.in_distance_peer</div>
+						      	<div ng-bind='distance_peer_message_in_box'></div>
+								<!-- <button type="button"  class="tiny success button no-margin check_answer_button" ng-click="endDistancePeerSession()" >{{end_session | translate}}</button> -->
+								<button type="button"  class="tiny success button no-margin" style="background-color: #b30000;font-size: 14px;" ng-click="endDistancePeerSession()"translate>distance_peer.end_peer_instruction</button>
+						    </ul>
+
 
 					    </div>
 					</center>
-
-
+					<center class="small-block-grid-3">
+						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
+						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
+						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
+						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
+						<div ng-hide='distance_peer_session_id'>
+							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer' style="background: green" ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
+						</div>
+					</center>
 <!-- 					<center>
 						<div style="display:inline-block" class=" small with-tiny-margin-bottom">
 							<div><small>Watched:{{watched_percentage}}%</small></div>

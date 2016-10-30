@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', function($scope, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
 
     $window.scrollTo(0, 0);
     $scope.in_delete = false;
@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.enrollment_url = $location.absUrl().split('courses')[0] + "courses/enroll?id=" + $scope.course.unique_identifier
+    $scope.course_info_url = $state.href('course.course_information', { course_id: $scope.course.id }, { absolute: true })
 
     Page.startTour()
     ContentNavigator.close()

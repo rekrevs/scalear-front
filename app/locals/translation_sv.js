@@ -781,6 +781,7 @@ var translation_sv={
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
         enrollment_url: "URL för registrering",
+        course_link: "Course Link(t)",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
         receive_due_date_email: "Få påminnelse om kommande senaste färdigdatum.",

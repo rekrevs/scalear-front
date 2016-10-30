@@ -781,6 +781,7 @@ var translation_en={
         discussion_forum_link: "Discussion Forum Link",
         enrollment_key: "Enrollment Key",
         enrollment_url: "Enrollment URL",
+        course_link: "Course Link",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
         receive_due_date_email: "Receive email reminders of upcoming due dates.",

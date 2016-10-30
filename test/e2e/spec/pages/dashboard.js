@@ -13,6 +13,7 @@ Dashboard.prototype= Object.create({}, {
 	      });
 	    });
 	}},
+
 })
 
 module.exports = Dashboard;

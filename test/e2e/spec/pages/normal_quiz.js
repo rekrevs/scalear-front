@@ -41,13 +41,15 @@ NormalQuiz.prototype = Object.create({}, {
 	add_header_button:{get:function(){return element(by.name('add_header'))}},
 	add_question_button:{get:function(){return element(by.name('add_question'))}},
 	save_button:{get:function(){return element(by.name('save_quiz'))}},
+	publish_button:{get:function(){return element(by.name('save_publish'))}},
 	header_field:{get:function(){return element.all(by.className('ta-text')).last()}},
 	questions:{get:function(){return element.all(by.repeater('question in questions'))}},
 	question:{value:function(num){return new Question(this.questions.get(num-1))}},
 	add_header:{value:function(){this.add_header_button.click()}},
-	type_header:{value:function(text){this.header_field.sendKeys(text)}},	
+	type_header:{value:function(text){this.header_field.sendKeys(text)}},
 	add_question:{value:function(){this.add_question_button.click()}},
 	save:{value:function(){this.save_button.click()}},
+	publish:{value:function(){this.publish_button.click()}},
 })
 
 module.exports = NormalQuiz;

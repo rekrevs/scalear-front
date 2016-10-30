@@ -51,7 +51,7 @@ StudentInclass.prototype= Object.create({}, {
   discussion_group_selected_choices:{get:function(){return this.discussion.all(by.repeater("choice in group_quiz.answers"))}},
   discussion_group_selected_choice:{value:function(num){return this.discussion_group_selected_choices.get(num-1)}},
   discussion_continue_button:{get:function(){return this.discussion.element(by.className("continue_btn"))}},
-  discussion_continue:{get:function(){return this.discussion_continue_button.click()}},
+  discussion_continue:{value:function(){return this.discussion_continue_button.click()}},
 })
 
 module.exports = StudentInclass;

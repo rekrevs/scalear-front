@@ -1,99 +1,141 @@
-var locator = require('./lib/locators');
-var o_c = require('./lib/openers_and_clickers');
-var teacher = require('./lib/teacher_module');
-var student = require('./lib/student_module');
+var Login = require('./pages/login');
+var NewCourse = require('./pages/new_course');
+var Header = require('./pages/header');
+var CourseInformation = require('./pages/course_information');
+var ContentNavigator = require('./pages/content_navigator');
+var CourseEditor = require('./pages/course_editor');
+var ContentItems = require('./pages/content_items');
+var CourseList = require('./pages/course_list');
+var Dashboard = require('./pages/dashboard');
 
-var ptor = protractor.getInstance();
-var params = ptor.params
-ptor.driver.manage().window().maximize();
 
-var element = 'Module 1';
-var date;
+var params = browser.params;
 
-var current_date = new Date();
-var month = new Array();
+var login_page = new Login()
+var new_course = new NewCourse();
+var header = new Header();
+var course_info = new CourseInformation();
+var course_editor = new CourseEditor()
+var navigator = new ContentNavigator(1);
+var content_items = new ContentItems();
+var course_list = new CourseList();
+var dashboard = new Dashboard();
 
-month[0] = "January";
-month[1] = "February";
-month[2] = "March";
-month[3] = "April";
-month[4] = "May";
-month[5] = "June";
-month[6] = "July";
-month[7] = "August";
-month[8] = "September";
-month[9] = "October";
-month[10] = "November";
-month[11] = "December";
+
+
+// var element = 'Module 1';
+// var date;
+//
+// var current_date = new Date();
+// var month = new Array();
+//
+// month[0] = "January";
+// month[1] = "February";
+// month[2] = "March";
+// month[3] = "April";
+// month[4] = "May";
+// month[5] = "June";
+// month[6] = "July";
+// month[7] = "August";
+// month[8] = "September";
+// month[9] = "October";
+// month[10] = "November";
+// month[11] = "December";
 
 describe("should check calendar functionality", function(){
 
-  it('should sign in as teacher', function(){
-    o_c.press_login(ptor)
-    o_c.sign_in(ptor, params.teacher1.email, params.password);
+  it('should login as teacher', function(){
+    login_page.sign_in(params.teacher1.email,params.password)
   })
 
   it('should create_course', function(){
-    teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+    new_course.open()
+    new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
   })
 
-  //test
-  it('should add a couple of module and lectures', function(){
-    // o_c.sign_in(ptor, params.teacher1.email, params.password);
-    // o_c.open_course_list(ptor)
-    // o_c.open_course(ptor, 1);
-    // o_c.open_content_editor(ptor);
-    teacher.add_module(ptor);
-    teacher.add_module(ptor);
-    // o_c.press_content_navigator(ptor)
-    teacher.open_module(ptor, 1);
-    teacher.add_lecture(ptor);
-    teacher.add_lecture(ptor);
+  xdescribe('should add a couple of module and lectures', function(){
+    it("should create modules", function() {
+      expect(navigator.modules.count()).toEqual(0)
+      course_editor.add_module();
+      course_editor.rename_module("module 1")
+      expect(navigator.modules.count()).toEqual(1)
+      navigator.add_module();
+      course_editor.rename_module("module 2")
+      expect(navigator.modules.count()).toEqual(2)
+    })
 
-    teacher.open_module(ptor, 2);
-    teacher.add_lecture(ptor);
-    teacher.add_lecture(ptor);
-    teacher.add_lecture(ptor);
+    it("should add items to the first module", function() {
+      var module = navigator.module(1)
+      module.open()
+      module.open_content_items()
+      content_items.add_video()
+      course_editor.rename_item("lecture1 video quizzes")
+      course_editor.change_item_url(params.url1)
+        // video.wait_till_ready()
 
-  })
+      module.open_content_items()
+      content_items.add_video()
+      course_editor.rename_item("lecture2 text quizzes")
+      course_editor.change_item_url(params.url1)
+        // video.wait_till_ready()
 
-  it('should get the enrollment key and enroll student', function(){
-    teacher.get_key_and_enroll(ptor, params.student1.email, params.password);
+    })
+
+    it("should add items to the second module", function() {
+      var module = navigator.module(2)
+      module.open()
+      module.open_content_items()
+      content_items.add_video()
+      course_editor.rename_item("lecture4 video quizzes")
+      course_editor.change_item_url(params.url1)
+        // video.wait_till_ready()
+
+      module.open_content_items()
+      content_items.add_video()
+      course_editor.rename_item("lecture5 text quizzes")
+      course_editor.change_item_url(params.url1)
+        // video.wait_till_ready()
+
+    })
   })
 
   it('should check if the calendar is visible', function(){
-    // o_c.to_student(ptor);
-    ptor.sleep(3000)
-    ptor.navigate().refresh();
-    all_events_specific_month(ptor, 2);
-    ptor.sleep(3000)
+    dashboard.open()
+    expect(element.all(by.className('fc-event-title')).count()).toEqual(2);
+    
   })
 
-  it('should clear the course for deletion', function(){
-      o_c.to_teacher(ptor);
-      o_c.open_course_list(ptor);
-      o_c.open_course(ptor, 1);
-      teacher.open_module(ptor, 2);
-      teacher.delete_item_by_number(ptor, 2, 1);
-      teacher.delete_item_by_number(ptor, 2, 1);
-      teacher.delete_item_by_number(ptor, 2, 1);
-      teacher.delete_empty_module(ptor, 2)
-
-
-      teacher.open_module(ptor, 1);
-      teacher.delete_item_by_number(ptor, 1, 1);
-      teacher.delete_item_by_number(ptor, 1, 1);
-      teacher.delete_empty_module(ptor, 1)
+  xit('should get the enrollment key and enroll student', function(){
+    course_info.open()
+		var enrollment_key = course_info.enrollmentkey
+		header.logout()
+		// browser.pause();
+		login_page.sign_in(params.student1.email, params.password)
+		header.join_course(enrollment_key)
+		header.logout()
+		login_page.sign_in(params.student2.email, params.password)
+		header.join_course(enrollment_key)
   })
 
-  it('should delete course', function(){
-      o_c.open_course_list(ptor);
-      teacher.delete_course(ptor, 1);
-      o_c.logout(ptor);
+  xit('should check if the calendar is visible', function(){
+
   })
 
+
+
+  xit('should delete course', function(){
+    course_list.open()
+    course_list.delete_teacher_course(1)
+    expect(course_list.courses.count()).toEqual(0)
+  })
+
+  xit("should logout",function(){
+    header.logout()
+  })
 
 })
+
+
 
 
 /////////////////////////////////////////////////////////

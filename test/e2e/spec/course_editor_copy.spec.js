@@ -21,11 +21,11 @@ describe("Course Editor Copy", function(){
         })
         it('should create another course', function(){
             new_course.open()
-            new_course.create("short_name", "course_name", "15", params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+            new_course.create("short_name", "course_name",params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         })
         it('should open first course', function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -38,7 +38,7 @@ describe("Course Editor Copy", function(){
 
         it('should open second course', function(){
             course_list.open()
-            course_list.open_course(2)
+            course_list.open_teacher_course(2)
         })
 
         it('should paste module', function(){
@@ -60,7 +60,7 @@ describe("Course Editor Copy", function(){
         })
         it('should open first course', function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should copy first lecture in second module",function(){
             sub_header.open_edit_mode()
@@ -69,7 +69,7 @@ describe("Course Editor Copy", function(){
         })
         it('should open second course', function(){
             course_list.open()
-            course_list.open_course(2)
+            course_list.open_teacher_course(2)
         })
         it('should paste lecture in new module', function(){
             sub_header.open_edit_mode()
@@ -92,7 +92,7 @@ describe("Course Editor Copy", function(){
         })
         it('should open first course', function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it('should paste same lecture in first module', function(){
             sub_header.open_edit_mode()
@@ -122,7 +122,7 @@ describe("Course Editor Copy", function(){
         })
         it('should open second course', function(){
             course_list.open()
-            course_list.open_course(2)
+            course_list.open_teacher_course(2)
         })
          it('should paste survey in second module', function(){
             sub_header.open_edit_mode()
@@ -138,7 +138,7 @@ describe("Course Editor Copy", function(){
     describe("Teacher", function(){
         it("should navigate to second course",function(){
             course_list.open()
-            course_list.open_course(2)
+            course_list.open_teacher_course(2)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -176,15 +176,15 @@ describe("Course Editor Copy", function(){
 
         it('should delete course', function(){
             course_list.open()
-            course_list.delete_course(2)
-            expect(course_list.courses.count()).toEqual(1)
+            course_list.delete_teacher_course(2)
+            expect(course_list.teacher_courses.count()).toEqual(1)
         })
     })
 
     describe("Revert Changes - Teacher", function(){
         it("should navigate to first course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         var navigator = new ContentNavigator(1)
         it("should go to edit mode",function(){

@@ -53,17 +53,17 @@ var d_q3_x = 169;
 var d_q3_y = 190;
 
 
-xdescribe("Lecture validation", function(){
+describe("Lecture validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should create course', function(){
 		new_course.open()
-		new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 	it("should open course",function(){
 		course_list.open()
-		course_list.open_course(2)
+		course_list.open_teacher_course(2)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -87,23 +87,23 @@ xdescribe("Lecture validation", function(){
 		error_feedback("Name can't be blank");
 		cancel_editing();
 	})
-	it('should change the duedate checkout box to null',function(){
+
+	it('should change the duedate checkbox to null',function(){
 		navigator.module(1).open()
 		course_editor.open_lecture_settings();
-		element(by.model('module.due_date_enabled')).then(function(due_check){
-			due_check.click();
-			expect(due_check.getAttribute('checked')).toBe(null)
-		})
+		var due_check= element(by.model('due_date_enabled'))
+		due_check.click()
+		expect(due_check.getAttribute('checked')).toBe(null)
 	})
 	it('should change time of module', function(){
 		change_appearance_date(getAfterNextWeek("dd-mmmm-yyyy"));
-		expect(element(by.css('[src="images/error.png"]')).isDisplayed()).toEqual(true)
+		expect(element(by.css('[src*="error.png"]')).isDisplayed()).toEqual(true)
 		change_appearance_date(getYesterday("dd-mmmm-yyyy"));
 	})
 
-	describe("Due Date change lecture module",function(){
-		it('should change module duedate checkout box to tree',function(){
-			element(by.model('module.due_date_enabled')).then(function(due_check){
+	describe("Due Date change module",function(){
+		it('should change module duedate checkbox to true',function(){
+			element(by.model('due_date_enabled')).then(function(due_check){
 				due_check.click();
 				expect(due_check.getAttribute('checked')).toBe("true")
 			})
@@ -126,21 +126,21 @@ xdescribe("Lecture validation", function(){
 		})
 		it('should change module duedate checkout box to null',function(){
 			navigator.module(1).open()
-			element(by.id("lec_settings")).click()
-			element(by.model('module.due_date_enabled')).then(function(due_check){
+			// element(by.id("lec_settings")).click()
+			element(by.model('due_date_enabled')).then(function(due_check){
 			due_check.click();
 			expect(due_check.getAttribute('checked')).toBe(null)
 			})
 		})
 		it('should change lecture due date to after next week  ',function(){
 			navigator.module(1).item(1).open()
-			element(by.id("lec_settings")).click()
+			// element(by.id("lec_settings")).click()
 			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
 		})
 		it('should change module due date to next week',function(){
 			navigator.module(1).open()
-			element(by.id("lec_settings")).click()
-			element(by.model('module.due_date_enabled')).then(function(due_check){
+		 //  element(by.id("lec_settings")).click()
+			element(by.model('due_date_enabled')).then(function(due_check){
 				due_check.click();
 				expect(due_check.getAttribute('checked')).toBe("true")
 				// change_due_date(getNextWeek("dd-mmmm-yyyy"));
@@ -149,7 +149,7 @@ xdescribe("Lecture validation", function(){
 		it('should check that lecture due date change to module next week ',function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
-			element(by.id("lec_settings")).click()
+			// element(by.id("lec_settings")).click()
 			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
 			element.all(by.tagName('details-date')).then(function(dates){
 				dates[1].getText().then(function(dat){
@@ -159,75 +159,75 @@ xdescribe("Lecture validation", function(){
 		})
 	})
 
-	it("should create quiz", function(){
-		navigator.module(1).open()
-		navigator.module(1).item(1).open()
-		navigator.close()
-		video.seek(20)
-		invideo_quiz.create(invideo_quiz.ocq)
-		expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
-		invideo_quiz.rename("OCQ QUIZ")
-		invideo_quiz.add_answer(q1_x, q1_y)
-		invideo_quiz.type_explanation("explanation 1")
-		invideo_quiz.hide_popover()
-		invideo_quiz.add_answer(q2_x, q2_y)
-		invideo_quiz.mark_correct()
-		invideo_quiz.type_explanation("explanation 2")
-		invideo_quiz.hide_popover()
-		invideo_quiz.add_answer(q3_x, q3_y)
-		invideo_quiz.type_explanation("explanation 3")
-		invideo_quiz.hide_popover()
-		invideo_quiz.save_quiz()
-		expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
-		browser.refresh()
-	})
-	it("should validate name", function(){
-		invideo_quiz.open(1)
-		invideo_quiz.rename(" ")
-		invideo_quiz.save_quiz()
-		error_feedback_quiz("Question can't be blank", 1)
-		invideo_quiz.rename("OCQ QUIZ")
-		invideo_quiz.save_quiz()
-	})
-	it("should validate time",function(){
-		invideo_quiz.open(1)
-		invideo_quiz.change_time('00:00:00')
-		save_quiz()
-		error_feedback_quiz("Time Outside Video Range",2)
-		invideo_quiz.change_time('00:00:0')
-		save_quiz()
-		error_feedback_quiz("Incorrect Format for Time",2)
-		invideo_quiz.change_time('0:00:00')
-		save_quiz()
-		error_feedback_quiz("Incorrect Format for Time",2)
-		invideo_quiz.change_time('0:00:000')
-		save_quiz()
-		error_feedback_quiz("Incorrect Format for Time",2)
-		invideo_quiz.change_time('00:01:16')
-		invideo_quiz.save_quiz()
-	})
-
-	it("should delete course",function(){
-			course_list.open()
-			course_list.delete_course(2)
-			expect(course_list.courses.count()).toEqual(1)
-	})
-	it("should logout",function(){
-		header.logout()
-	})
+	// it("should create quiz", function(){
+	// 	navigator.module(1).open()
+	// 	navigator.module(1).item(1).open()
+	// 	navigator.close()
+	// 	video.seek(20)
+	// 	invideo_quiz.create(invideo_quiz.ocq)
+	// 	expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
+	// 	invideo_quiz.rename("OCQ QUIZ")
+	// 	invideo_quiz.add_answer(q1_x, q1_y)
+	// 	invideo_quiz.type_explanation("explanation 1")
+	// 	invideo_quiz.hide_popover()
+	// 	invideo_quiz.add_answer(q2_x, q2_y)
+	// 	invideo_quiz.mark_correct()
+	// 	invideo_quiz.type_explanation("explanation 2")
+	// 	invideo_quiz.hide_popover()
+	// 	invideo_quiz.add_answer(q3_x, q3_y)
+	// 	invideo_quiz.type_explanation("explanation 3")
+	// 	invideo_quiz.hide_popover()
+	// 	invideo_quiz.save_quiz()
+	// 	expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
+	// 	browser.refresh()
+	// })
+	// // it("should validate name", function(){
+	// // 	invideo_quiz.open(1)
+	// // 	invideo_quiz.rename(" ")
+	// // 	invideo_quiz.save_quiz()
+	// // 	error_feedback_quiz("Question can't be blank", 1)
+	// // 	invideo_quiz.rename("OCQ QUIZ")
+	// // 	invideo_quiz.save_quiz()
+	// // })
+	// it("should validate time",function(){
+	// 	invideo_quiz.open(1)
+	// 	invideo_quiz.change_time('00:00:00')
+	// 	save_quiz()
+	// 	error_feedback_quiz("Time Outside Video Range",2)
+	// 	invideo_quiz.change_time('00:00:0')
+	// 	save_quiz()
+	// 	error_feedback_quiz("Incorrect Format for Time",2)
+	// 	invideo_quiz.change_time('0:00:00')
+	// 	save_quiz()
+	// 	error_feedback_quiz("Incorrect Format for Time",2)
+	// 	invideo_quiz.change_time('0:00:000')
+	// 	save_quiz()
+	// 	error_feedback_quiz("Incorrect Format for Time",2)
+	// 	invideo_quiz.change_time('00:01:16')
+	// 	invideo_quiz.save_quiz()
+	// })
+	//
+	// it("should delete course",function(){
+	// 		course_list.open()
+	// 		course_list.delete_teacher_course(2)
+	// 		expect(course_list.teacher_courses.count()).toEqual(1)
+	// })
+	// it("should logout",function(){
+	// 	header.logout()
+	// })
 })
 
-describe("Video validation", function(){
+xdescribe("Video validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
 	it('should create course', function(){
 		new_course.open()
-		new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 	it("should open course",function(){
 		course_list.open()
-		course_list.open_course(2)
+		course_list.open_teacher_course(2)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -262,8 +262,8 @@ describe("Video validation", function(){
 
 	it('should make sure that the lecture url is set correctly', function(){
 	    course_editor.change_item_url("https://www.youtube.com/watch?v=SKqBmAHwSkg")
-      	course_editor.open_video_settings()
-      	expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
+      // course_editor.open_video_settings()
+      expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
 	})
 
 	xit('should try setting the url to blank', function(){
@@ -309,9 +309,11 @@ describe("Video validation", function(){
 	})
 
 	it('should change the lecture to be not in order', function(){
-		element(by.model('lecture.required')).click().then(function(){
+		element(by.model('lecture.required_module')).click().then(function(){
 			browser.refresh();
 		})
+		course_editor.open_lecture_settings()
+		element(by.model('lecture.required')).click()
 	})
 
 	it('should now not be in order', function(){
@@ -322,9 +324,12 @@ describe("Video validation", function(){
 	})
 
 	it('should change the lecture to be not required', function(){
-		element(by.model('lecture.graded')).click().then(function(){
+		course_editor.open_lecture_settings()
+		element(by.model('lecture.graded_module')).click().then(function(){
 			browser.refresh();
 		})
+		course_editor.open_lecture_settings()
+		element(by.model('lecture.graded')).click()
 	})
 
 	it('should now not be required', function(){
@@ -339,7 +344,7 @@ describe("Video validation", function(){
 			expect(appearance_check.getAttribute('checked')).toBe('true')
 		})
 
-		element(by.model('lecture.due_date_enabled')).then(function(due_enabled){
+		element(by.model('setting.due_date_enabled')).then(function(due_enabled){
 			expect(due_enabled.getAttribute('checked')).toBe('true')
 		})
 
@@ -349,6 +354,7 @@ describe("Video validation", function(){
 	})
 
 	it('should try changing the appearance date to an invalid date - before module appearance', function(){
+		course_editor.open_lecture_settings()
 		element(by.model('lecture.appearance_time_module')).then(function(appearance_check){
 			appearance_check.click();
 			expect(appearance_check.getAttribute('checked')).toBe(null)
@@ -379,10 +385,10 @@ describe("Video validation", function(){
 	})
 })
 
-describe("Quiz validation", function(){
+xdescribe("Quiz validation", function(){
 	it("should open course",function(){
 		course_list.open()
-		course_list.open_course(2)
+		course_list.open_teacher_course(2)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -421,9 +427,11 @@ describe("Quiz validation", function(){
 	})
 
 	it('should change the quiz to be not in order', function(){
-		element(by.model('quiz.required')).click().then(function(){
+		element(by.model('quiz.required_module')).click().then(function(){
 			browser.refresh();
 		})
+
+		element(by.model('quiz.required')).click()
 	})
 
 	it('should now not be in order', function(){
@@ -434,9 +442,10 @@ describe("Quiz validation", function(){
 	})
 
 	it('should change the quiz to be not required', function(){
-		element(by.model('quiz.graded')).click().then(function(){
+		element(by.model('quiz.graded_module')).click().then(function(){
 			browser.refresh();
 		})
+		element(by.model('quiz.graded')).click()
 	})
 
 	it('should now not be required', function(){
@@ -447,11 +456,11 @@ describe("Quiz validation", function(){
 	})
 
 	it('should be using module\'s visiblity and due times bt default', function(){
-		element(by.model('quiz.appearance_time_module')).then(function(appearance_check){
-			expect(appearance_check.getAttribute('checked')).toBe('true')
-		})
+		// element(by.model('quiz.appearance_time_module')).then(function(appearance_check){
+		// 	expect(appearance_check.getAttribute('checked')).toBe('true')
+		// })
 
-		element(by.model('quiz.due_date_enabled')).then(function(due_enabled){
+		element(by.model('due_date_enabled')).then(function(due_enabled){
 			expect(due_enabled.getAttribute('checked')).toBe('true')
 		})
 
@@ -460,7 +469,7 @@ describe("Quiz validation", function(){
 		})
 	})
 
-	it('should try changing the appearance date to an invalid date - before module appearance', function(){
+	xit('should try changing the appearance date to an invalid date - before module appearance', function(){
 		element(by.model('quiz.appearance_time_module')).then(function(appearance_check){
 			appearance_check.click();
 			expect(appearance_check.getAttribute('checked')).toBe(null)
@@ -469,13 +478,13 @@ describe("Quiz validation", function(){
 		error_feedback('Appearance time must be after module appearance time');
 	})
 
-	it('should try changing the appearance date to an invalid date - after due date', function(){
+	xit('should try changing the appearance date to an invalid date - after due date', function(){
 		change_appearance_date(getAfterNextWeek("dd-mmmm-yyyy"));
 		error_feedback('Appearance time must be before due time');
 		cancel_editing();
 	})
 
-	it('should try changing the due date to an invalid date - before appearance', function(){
+	xit('should try changing the due date to an invalid date - before appearance', function(){
 		element(by.model('quiz.due_date_module')).then(function(due_check){
 			due_check.click();
 			expect(due_check.getAttribute('checked')).toBe(null)
@@ -485,7 +494,8 @@ describe("Quiz validation", function(){
 	})
 
 	it('should try changing the due date to an invalid date - after module\'s due date', function(){
-		change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
+		element(by.model('quiz.due_date_module')).click();
+		change_due_date(getAfterNextWeek("dd-mmmm-yyyy"), 0);
 		error_feedback('Due date must be before module due date');
 		cancel_editing();
 	})
@@ -493,8 +503,8 @@ describe("Quiz validation", function(){
 
 	it("should delete course",function(){
 		course_list.open()
-		course_list.delete_course(2)
-		expect(course_list.courses.count()).toEqual(1)
+		course_list.delete_teacher_course(2)
+		expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
 		header.logout()
@@ -557,9 +567,11 @@ function change_appearance_time(hours, minutes){
 	})
 }
 
-function change_due_date(date){
+function change_due_date(date, indx){
+	if(indx == null)
+		indx = 1
 	element.all(by.tagName('details-date')).then(function(dates){
-		dates[1].click().then(function(){
+		dates[indx].click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(date);
 			element(by.className('check')).click();
 		})

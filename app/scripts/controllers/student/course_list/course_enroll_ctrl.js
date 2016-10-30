@@ -5,14 +5,14 @@ angular.module('scalearAngularApp')
 
     Course.enroll({}, { unique_identifier: $stateParams.id },
       function(data) {
-        $state.go("course.course_information", { course_id: data.course.id })
-        $rootScope.$broadcast('Course:get_current_courses')
+        $scope.go_to_course(data)
       },
       function(response) {
-        if(response.status == 422){
-          ErrorHandler.showMessage(response.data.errors, 'errorMessage', 4000, "error");
-          $state.go("course_list")
-        }
+        $scope.go_to_course(response, true)
       })
 
+    $scope.go_to_course = function(obj, error){
+      error? ($state.go("course.course_information", { course_id: obj.data.course.id })):($state.go("course.course_information", { course_id: obj.course.id }))
+      $rootScope.$broadcast('Course:get_current_courses')
+    }
   }]);

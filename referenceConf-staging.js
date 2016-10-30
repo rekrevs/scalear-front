@@ -232,7 +232,7 @@ exports.config = {
 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!, cannot get some elements)
 
-        'test/e2e/spec/inclass_pi.spec.js', //(refresh problem, counting isn't working)
+        'test/e2e/spec/inclass_pi.spec.js', //(refresh problem)
 
 
 

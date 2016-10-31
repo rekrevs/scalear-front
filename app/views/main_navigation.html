@@ -22,7 +22,7 @@
       <ul ng-show="user.roles[0]" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
         <!-- <li class="divider border-grey medium-opacity"></li> -->
         <li ng-if="user.roles.includes(5)"><a class="white-with-hover color-gray-hover size-16-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>statistics.statistics</a></li>
-        <li ng-if="user.roles.includes(9)"><a class="white-with-hover color-gray-hover size-16-light" id="school_statistics" ui-sref-active="nav-item-active" ui-sref="school_statistics" translate>statistics.school_statistics</a></li>
+        <li ng-if="user.roles.includes(9)"><a class="white-with-hover color-gray-hover size-16-light" id="school_statistics" ui-sref-active="nav-item-active" ui-sref="school_statistics" translate>statistics.statistics</a></li>
         <li has-dropdown>
           <a ng-show="user.intro_watched && user.info_complete" class="white-with-hover color-gray-hover size-16-light" id="dashboard" ng-class="{'nav-item-active':('dashboard' | includedByState)}" translate>navigation.dashboard</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="styles/teacher/statistics.css" />
 <!-- endbuild -->
 <section class='adminUni'>
-  Royal Institute of Technology (.kth.se)
+  {{current_user.university}} ({{current_user.email.split("@")[1]}})
 </section>
 <section>
   <span translate>statistics.report_period</span>
@@ -36,10 +36,10 @@
 
           <div class="row">
             <div class="column small-6">
-              {{total_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
+              {{active_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
             </div>
             <div class="column small-6" >
-              {{total_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
+              {{active_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
             </div>
           </div>
         </div>
@@ -51,8 +51,9 @@
             <i class="fi-clock adminIcon"></i>
           </div>
           <div class="adminNum">
-            <!-- {{total_hours}} -->
-            19
+            {{total_hours}}
+            <!-- {{ScalearUtils.toHourMin(total_hours)}} -->
+            <!-- 19 -->
           </div>
           <p>
             Hours watched
@@ -179,6 +180,7 @@
             <td>{{course.questions}}</td>
             <td>{{course.solved_online_quiz}}</td>
             <td>{{course.total_view}}</td>
+            <!-- <td>{{ScalearUtils.toHourMin(course.total_view)}}</td> -->
           </tr>
         </tbody>
       </table>

@@ -42,7 +42,9 @@ angular.module('scalearAngularApp')
     $scope.showStatistics = function(){
       validateDate()
       .then(function(errors) {
-        $scope.show_statistics =  true
+        $scope.loading =  true
+        $scope.show_statistics =  false
+
         Kpi.readTotalsForDuration(
           {
             start_date:$scope.report.start_date,
@@ -50,14 +52,21 @@ angular.module('scalearAngularApp')
           },
           function(data) {
             console.log(data)
+            $scope.show_statistics =  true
+            $scope.loading = false
             // console.log(data[])
             data["total_hours"] = ScalearUtils.toHourMin(data["total_hours"])
+            data["total_student_watched"] = ScalearUtils.toHourMin(data["total_student_watched"])
+            data["total_course_been_watched"] = ScalearUtils.toHourMin(data["total_course_been_watched"])
+            
+
             // data.course_data.forEach
             angular.extend($scope, data)
 
             $scope.course_data_array = []
             angular.forEach($scope.course_data, function(value, key){
               console.log(value)
+              value["id"] = key
               value["total_view"] = ScalearUtils.toHourMin(value["total_view"])
               $scope.course_data_array.push(value)
             })

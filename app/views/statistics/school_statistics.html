@@ -18,8 +18,10 @@
   <button ng-click="showStatistics()" class="button adminBtn"><span translate>statistics.generate_report</span></button>
 </section>
 
-
-
+  <!-- <div ng-show="loading" > -->
+        <loading size="big" show="loading">
+      </loading>
+<!-- </div> -->
   <div ng-show="show_statistics" >
     <div class="row adminRow">
       <div  class = 'column small-12 medium-6 large-4'>
@@ -174,7 +176,9 @@
         </thead>
         <tbody>
           <tr ng-repeat='course in displayed_course_data'>
-            <td>{{course.short_name}}</td>
+          <!-- {{course.id}} -->
+
+            <td><a ui-sref="course.edit_course_information({ course_id: course.id })">{{course.short_name}}</a></td>
             <td>{{course.active_students}}</td>
             <td>{{course.active_teachers}}</td>
             <td>{{course.questions}}</td>
@@ -185,5 +189,4 @@
         </tbody>
       </table>
     </div>
-
   </div>

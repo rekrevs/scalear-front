@@ -168,7 +168,7 @@ angular.module('scalearAngularApp')
     };
   }]).directive('detailsDate', ['$timeout', function($timeout) {
     return {
-      template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | amDateFormat:"dddd, DD MMMM YYYY" ) || ("global.empty"|translate) }}<i ng-class="overclass"></i></a>',
+      template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-ng-change="pastTime()" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | amDateFormat:"dddd, DD MMMM YYYY" ) || ("global.empty"|translate) }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope: {
         date: "=",
@@ -186,14 +186,29 @@ angular.module('scalearAngularApp')
               }, { "disable_in_input": false });
             });
           },
-          scope.saveData = function(data) {
-            $timeout(function() {
-              scope.save({
-                data: data,
-                type: scope.column
+          // scope.saveData = function(data) {
+          //   $timeout(function() {
+          //     scope.save({
+          //       data: data,
+          //       type: scope.column
+          //     })
+          //   })
+          // },
+          scope.pastTime = function(){
+            var previousTime = new Date(scope.date)
+            scope.saveData = function(data) {
+              data.setHours(previousTime.getHours());
+              data.setMinutes(previousTime.getMinutes());
+              console.log(data);
+              $timeout(function() {
+                scope.save({
+                  data: data,
+                  type: scope.column
+                })
               })
-            })
+            }
           }
+
       }
     };
   }]).directive('detailsArea', ['$timeout', function($timeout) {

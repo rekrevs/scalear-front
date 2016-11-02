@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="styles/teacher/statistics.css" />
 <!-- endbuild -->
 <section class='adminUni'>
-  Royal Institute of Technology (.kth.se)
+  {{current_user.university}} ({{current_user.email.split("@")[1]}})
 </section>
 <section>
   <span translate>statistics.report_period</span>
@@ -15,11 +15,13 @@
         <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
         <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
   </span>
-  <button ng-click="showStatistics()" class="button adminBtn"><span translate>statistics.generate_report</span></button>
+  <button ng-click="showStatistics()" ng-disabled="loading" class="button adminBtn"><span translate>statistics.generate_report</span></button>
 </section>
 
-
-
+  <!-- <div ng-show="loading" > -->
+        <loading size="big" show="loading">
+      </loading>
+<!-- </div> -->
   <div ng-show="show_statistics" >
     <div class="row adminRow">
       <div  class = 'column small-12 medium-6 large-4'>
@@ -36,10 +38,10 @@
 
           <div class="row">
             <div class="column small-6">
-              {{total_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
+              {{active_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
             </div>
             <div class="column small-6" >
-              {{total_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
+              {{active_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
             </div>
           </div>
         </div>
@@ -51,8 +53,9 @@
             <i class="fi-clock adminIcon"></i>
           </div>
           <div class="adminNum">
-            <!-- {{total_hours}} -->
-            19
+            {{total_hours}}
+            <!-- {{ScalearUtils.toHourMin(total_hours)}} -->
+            <!-- 19 -->
           </div>
           <p>
             Hours watched
@@ -175,7 +178,9 @@
         </thead>
         <tbody>
           <tr ng-repeat='course in displayed_course_data'>
-            <td>{{course.short_name}}</td>
+          <!-- {{course.id}} -->
+
+            <td><a ui-sref="course.edit_course_information({ course_id: course.id })">{{course.short_name}}</a></td>
             <td>{{course.active_students}}</td>
             <td>{{course.active_teachers}}</td>
             <td>{{course.questions}}</td>
@@ -183,9 +188,9 @@
             <td>{{course.start_date}}</td>
             <td>{{course.end_date}}</td>
             <td>{{course.total_view}}</td>
+            <!-- <td>{{ScalearUtils.toHourMin(course.total_view)}}</td> -->
           </tr>
         </tbody>
       </table>
     </div>
-
   </div>

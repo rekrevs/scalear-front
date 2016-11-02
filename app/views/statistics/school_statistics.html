@@ -165,10 +165,12 @@
             <th st-sort='active_teachers'>Active Teachers</th>
             <th st-sort='questions'>Questions</th>
             <th st-sort='solved_online_quiz'>Solved Quizzes</th>
+            <th st-sort='start_date'>Start Date</th>
+            <th st-sort='end_date'>End Date</th>
             <th st-sort='total_view'>Total view</th>
           </tr>
           <tr>
-            <th colspan="6"><input st-search="" placeholder="Search" type="text"/></th>
+            <th colspan="8"><input st-search="" placeholder="Search" type="text"/></th>
           </tr>
         </thead>
         <tbody>
@@ -178,6 +180,8 @@
             <td>{{course.active_teachers}}</td>
             <td>{{course.questions}}</td>
             <td>{{course.solved_online_quiz}}</td>
+            <td>{{course.start_date}}</td>
+            <td>{{course.end_date}}</td>
             <td>{{course.total_view}}</td>
           </tr>
         </tbody>

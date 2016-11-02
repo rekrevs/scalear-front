@@ -152,14 +152,7 @@ angular.module('scalearAngularApp')
     }
 
     var checkDisplayInclass = function() {
-      angular.forEach($scope.lectures, function(lecture){
-        if (lecture.confused) {
-          $scope.confused = true;
-        }
-      })
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused)
-
-
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count)
 
     }
 
@@ -277,7 +270,7 @@ angular.module('scalearAngularApp')
           hide: value,
           very:very
         }, function(){
-          console.log($scope);
+          (value)? ($scope.confused_count -= 1):($scope.confused_count += 1)
           checkDisplayInclass()
         }
       )

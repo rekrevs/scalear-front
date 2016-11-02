@@ -10,8 +10,6 @@ var Login = require('./pages/login');
 var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
-var Inclass = require('./pages/teacher/inclass');
-var InclassReviewModel = require('./pages/teacher/inclass_review_model');
 var scroll_top = require('./lib/utils').scroll_top;
 
 var params = browser.params;
@@ -25,8 +23,6 @@ var invideo_quiz = new InvideoQuiz();
 var quiz = new NormalQuiz();
 var content_items = new ContentItems()
 var navigator = new ContentNavigator(1)
-var inclass_page = new Inclass()
-var review_model = new InclassReviewModel
 
 var q1_x = 169;
 var q1_y = 127;

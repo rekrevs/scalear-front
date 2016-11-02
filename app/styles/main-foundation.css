@@ -2686,6 +2686,9 @@ body.ngdialog-open { overflow: initial !important; }
 .adminBtn:hover, .adminBtn:active{
   background: #5da423;
 }
+.adminBtn:disabled, .adminBtn[disabled]:hover{
+  background: #dddddd;
+}
 .adminTile{
   border:1px solid #E4E4E4;
   background: whitesmoke;

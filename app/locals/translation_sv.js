@@ -830,6 +830,7 @@ var translation_sv={
   },
   statistics:{
     statistics: "Statistik",
+    administration: "Administration(t)",
     statistics_dashboard: "Statistikpanelen",
     registration: "Registrering",
     report_period: "Report Period(t)",

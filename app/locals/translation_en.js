@@ -830,6 +830,7 @@ var translation_en={
   },
   statistics:{
     statistics: "Statistics",
+    administration: "Administration",
     statistics_dashboard: "Statistics Dashboard",
     registration: "Registration",
     report_period: "Report Period",

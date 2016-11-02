@@ -96,6 +96,7 @@ angular.module('scalearAngularApp')
           $log.debug(data)
           $scope.inclass_quizzes_time = 0
           angular.extend($scope, data)
+          $scope.confused_count = 0
           for(var lec_id in $scope.lectures) {
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for(var type in $scope.lectures[lec_id]) {
@@ -106,6 +107,9 @@ angular.module('scalearAngularApp')
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show) {
                   $scope.inclass_quizzes_time += ($scope.lectures[lec_id][type][it][1].timers.intro + $scope.lectures[lec_id][type][it][1].timers.self + $scope.lectures[lec_id][type][it][1].timers.in_group + $scope.lectures[lec_id][type][it][1].timers.discussion) / 60
+                }
+                if(type == "confused"){
+                  $scope.confused_count += $scope.lectures[lec_id][type].length
                 }
 
               }
@@ -148,7 +152,15 @@ angular.module('scalearAngularApp')
     }
 
     var checkDisplayInclass = function() {
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count)
+      angular.forEach($scope.lectures, function(lecture){
+        if (lecture.confused) {
+          $scope.confused = true;
+        }
+      })
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused)
+
+
+
     }
 
     var adjustModuleItems = function(obj, from, to) {
@@ -254,7 +266,7 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideConfused=function(lec_id, time, value, very){
+    $scope.updateHideConfused = function(lec_id, time, value, very){
       Lecture.confusedShowInclass(
         {
           course_id:$stateParams.course_id,
@@ -264,8 +276,13 @@ angular.module('scalearAngularApp')
           time: time,
           hide: value,
           very:very
+        }, function(){
+          console.log($scope);
+          checkDisplayInclass()
         }
       )
+
+
     }
 
     var openModal = function() {

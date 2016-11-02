@@ -5,6 +5,7 @@ var ContentItem = function () {};
 ContentItem.prototype = Object.create({}, {
 	video_item:{get:function(){return element(by.id('video_item'))}},
   pi_video_item:{get:function(){return element(by.id('pi_video_item'))}},
+	dist_video_item:{get:function(){return element(by.css('[class="th green"]'))}},
 	quiz_item:{get:function(){return element(by.id('quiz_item'))}},
 	survey_item:{get:function(){return element(by.id('survey_item'))}},
 	link_item:{get:function(){return element(by.id('link_item'))}},

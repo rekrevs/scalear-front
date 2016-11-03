@@ -3,9 +3,9 @@ var SubHeader = require('./sub_header');
 
 var Announcement = function () {};
 
-Announcement.prototype = Object.create({}, {	
+Announcement.prototype = Object.create({}, {
 	new_button:{get:function(){return element(by.id('new_announcement'))}},
-	editor:{get:function(){return element(by.className('ta-editor'))}},
+	editor:{get:function(){return element(by.model('announcement.announcement'))}},
 	save_button:{get:function(){return element(by.id('save_button'))}},
 	posts:{get:function(){return element.all(by.repeater('announcement in announcements'))}},
 	open:{value:function(){

@@ -32,7 +32,7 @@ describe("Solve Course",function(){
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
-	        course_list.open_student_course(1)
+	        course_list.open_teacher_course(1)
 	    })
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
@@ -88,7 +88,7 @@ describe("Solve Course",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		describe("First Module",function(){
 			it("should open first module",function(){

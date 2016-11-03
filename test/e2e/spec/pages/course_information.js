@@ -7,7 +7,7 @@ StudentCourseInformation.prototype = Object.create({},{
 	course_name:{get:function(){return element(by.id('course_code_name')).getText()}},
 	description:{get:function(){return element(by.binding('course.description')).getText()}},
 	prerequisites:{get:function(){return element(by.binding('course.prerequisites')).getText()}},
-	duration:{get:function(){return element(by.binding('course.duration')).getText()}},
+	end_date:{get:function(){return element(by.binding('course.end_date')).getText()}},
 	open:{value:function(){
 		element(by.id('course_info')).click();
 		browser.driver.wait(function() {
@@ -47,7 +47,7 @@ CourseInformation.prototype = Object.create({}, {
 	display_registration_field:{get: function(){return element(by.css('[ng-show="formData.disable_registration_checked"]'))}},
 
 	display_registration_date: { get: function () { return element(by.css('[ng-model="$data"]')) }},
-	type_display_registration_date: { value: function (keys) { 
+	type_display_registration_date: { value: function (keys) {
 		 this.display_registration_date.clear().sendKeys(keys)
 		 return element(by.css('[type="submit"]')).click()
 	}},
@@ -62,7 +62,7 @@ CourseInformation.prototype = Object.create({}, {
 	// }},
 
 	export_anonymized_data_button:{get:function(){return element(by.css("[ng-click='exportCourse()']"))}},
-	click_export_anonymized_data:{value:function(){ 
+	click_export_anonymized_data:{value:function(){
 	    this.export_anonymized_data_button.click()
 	}},
 	export_anonymized_data_message:{get:function(){return element(by.id("server_error"))}},

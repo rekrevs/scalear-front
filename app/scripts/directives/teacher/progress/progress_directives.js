@@ -27,9 +27,9 @@ angular.module('scalearAngularApp')
 
         if (scope.show_popover) {
           var template = "<div style='font-size:14px; color: black;'>" +
-            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[5]})' style='margin:0 4px 4px 4px'><span translate>progress.popover.original</span> " +
-            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[5]})' style='margin:0 4px 4px 4px' value='Finished on Time' translate><span translate>progress.popover.on_time</span> " +
-            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[5]})' style='margin:0 4px 4px 4px' value='Not Finished' translate><span translate>progress.popover.not_done</span>" +
+            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[7]})' style='margin:0 4px 4px 4px'><span translate>progress.popover.original</span> " +
+            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[7]})' style='margin:0 4px 4px 4px' value='Finished on Time' translate><span translate>progress.popover.on_time</span> " +
+            "<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], status:student.status[module[0]] , lecture_quiz:module[7]})' style='margin:0 4px 4px 4px' value='Not Finished' translate><span translate>progress.popover.not_done</span>" +
             "</div>"
           scope.popover_options = {
             content: template,

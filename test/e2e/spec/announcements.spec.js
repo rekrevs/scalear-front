@@ -22,7 +22,7 @@ describe("Teacher",function(){
 	})
 	it("should open course",function(){
         course_list.open()
-        course_list.open_course(1)
+        course_list.open_teacher_course(1)
     })
 	it('should go make announcements', function(){
 		announcement.open()
@@ -33,7 +33,7 @@ describe("Teacher",function(){
 	})
 	it('should another create course', function(){
 		new_course.open()
-		new_course.create("short_name", "course_name", "15", params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.create("short_name", "course_name", params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 	it('should go make announcements', function(){
 		announcement.open()
@@ -65,7 +65,7 @@ describe("Student",function(){
 	var navigator = new ContentNavigator(0)
 	it('should check announcements in first course information', function(){
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_student_course(1)
 		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 1")
@@ -75,7 +75,7 @@ describe("Student",function(){
 
 	it('should check announcements in second course information', function(){
 		course_list.open()
-		course_list.open_course(2)
+		course_list.open_student_course(2)
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 4")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 5")
@@ -101,7 +101,7 @@ describe("Teacher",function(){
 	})
 	it("should go to first course",function(){
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_teacher_course(1)
 	})
 	it('should delete announcement', function(){
 		announcement.open()
@@ -128,7 +128,7 @@ describe("Student",function(){
 	var navigator = new ContentNavigator(0)
 	it('should check announcements in first course information', function(){
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_student_course(1)
 		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(2)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 2")
@@ -136,7 +136,7 @@ describe("Student",function(){
 	})
 	it('should check announcements in second course information', function(){
 		course_list.open()
-		course_list.open_course(2)
+		course_list.open_student_course(2)
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 4")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 5")
@@ -161,7 +161,7 @@ describe("Revert Changes - Teacher",function(){
 	})
 	it("should go to first course",function(){
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_teacher_course(1)
 	})
 	it('should delete announcement', function(){
 		announcement.open()
@@ -174,8 +174,8 @@ describe("Revert Changes - Teacher",function(){
 		course_list.open()
 	})
 	it('should delete second course', function(){
-		course_list.delete_course(2)
-		expect(course_list.courses.count()).toEqual(1)
+		course_list.delete_teacher_course(2)
+		expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
 		header.logout()

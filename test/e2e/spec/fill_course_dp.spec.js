@@ -10,8 +10,6 @@ var Login = require('./pages/login');
 var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
-var Inclass = require('./pages/teacher/inclass');
-var InclassReviewModel = require('./pages/teacher/inclass_review_model');
 var scroll_top = require('./lib/utils').scroll_top;
 
 var params = browser.params;
@@ -25,8 +23,6 @@ var invideo_quiz = new InvideoQuiz();
 var quiz = new NormalQuiz();
 var content_items = new ContentItems()
 var navigator = new ContentNavigator(1)
-var inclass_page = new Inclass()
-var review_model = new InclassReviewModel
 
 var q1_x = 169;
 var q1_y = 127;
@@ -63,11 +59,11 @@ describe("Filling Course", function() {
       sub_header.open_edit_mode()
     })
 
-    it("should create PI modules", function() {
+    it("should create Distance modules", function() {
       navigator.modules.count().then(function(count) {
         module_count = count
         course_editor.add_module();
-        course_editor.rename_module("PI module 1")
+        course_editor.rename_module("Distance module 1")
         expect(navigator.modules.count()).toEqual(++module_count)
       })
     })
@@ -76,22 +72,22 @@ describe("Filling Course", function() {
       browser.refresh()
       var module = navigator.module(module_count)
       module.open_content_items()
-      content_items.add_pi_video()
-      course_editor.rename_item("PI lecture1 video quizzes")
+      content_items.add_dist_video()
+      course_editor.rename_item("Distance lecture1 video quizzes")
       course_editor.change_item_url(params.url1)
 
       module.open_content_items()
-      content_items.add_pi_video()
-      course_editor.rename_item("PI lecture2 text quizzes")
+      content_items.add_dist_video()
+      course_editor.rename_item("Distance lecture2 text quizzes")
       course_editor.change_item_url(params.url1)
 
       module.open_content_items()
-      content_items.add_pi_video()
-      course_editor.rename_item("PI lecture3 video surveys")
+      content_items.add_dist_video()
+      course_editor.rename_item("Distance lecture3 video surveys")
       course_editor.change_item_url(params.url1)
     })
 
-    it("should open first lecture in pi module", function() {
+    it("should open first lecture in Distance module", function() {
       // navigator.module(module_count).open()
       navigator.module(module_count).item(1).open()
       sleep(3000)
@@ -122,7 +118,7 @@ describe("Filling Course", function() {
       expect(course_editor.preview_inclass_button.isDisplayed()).toEqual(true)
     })
     it("should rename and add answers to quiz", function() {
-      invideo_quiz.rename("PI MCQ QUIZ")
+      invideo_quiz.rename("Distance MCQ QUIZ")
       invideo_quiz.add_answer(q1_x, q1_y)
       invideo_quiz.mark_correct()
       invideo_quiz.type_explanation("explanation 1")
@@ -150,6 +146,11 @@ describe("Filling Course", function() {
       expect(video.quizzes_events.count()).toEqual(1)
     })
 
+    it("should have correct number of quiz events in progress bar", function() {
+      sleep(2000)
+      expect(video.quizzes_events.count()).toEqual(1)
+    })
+
     it("should open quiz from progress bar", function() {
       video.seek(20)
       video.open_quiz(1)
@@ -168,11 +169,10 @@ describe("Filling Course", function() {
       var quiz_time_string = utils.percent_to_time_string(video_percent, total_duration)
       expect(video.current_time).toEqual(quiz_time_string)
       expect(invideo_quiz.time).toEqual("0" + quiz_time_string)
-      expect(invideo_quiz.intro_time).toEqual("00:02:00")
       expect(invideo_quiz.self_time).toEqual("00:02:00")
       expect(invideo_quiz.group_time).toEqual("00:02:00")
-      expect(invideo_quiz.discussion_time).toEqual("00:02:00")
     })
+
     it("should display preview inclass panel", function() {
       expect(course_editor.preview_inclass_panel.isPresent()).toEqual(false)
       course_editor.open_preview_inclass()
@@ -216,36 +216,6 @@ describe("Filling Course", function() {
     })
 
 
-    // video.seek(20)
-    // invideo_quiz.create(invideo_quiz.ocq)
-    // expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
-    // invideo_quiz.rename("OCQ QUIZ")
-    // invideo_quiz.add_answer(q1_x, q1_y)
-    // invideo_quiz.type_explanation("explanation 1")
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.add_answer(q2_x, q2_y)
-    // invideo_quiz.mark_correct()
-    // invideo_quiz.type_explanation("explanation 2")
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.add_answer(q3_x, q3_y)
-    // invideo_quiz.type_explanation("explanation 3")
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.save_quiz()
-    // expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
-
-    // video.seek(30)
-    // invideo_quiz.create(invideo_quiz.drag)
-    // expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
-    // invideo_quiz.rename("DRAG QUIZ")
-    // scroll_top()
-    // invideo_quiz.add_answer_drag(d_q1_x, d_q1_y)
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.add_answer_drag(d_q2_x, d_q2_y)
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.add_answer_drag(d_q3_x, d_q3_y)
-    // invideo_quiz.hide_popover()
-    // invideo_quiz.save_quiz()
-    // expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
 
   })
 })

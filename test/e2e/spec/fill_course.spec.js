@@ -349,6 +349,7 @@ describe("Filling Course", function() {
       question.type_answer("answer 3")
       expect(question.answers.count()).toEqual(3)
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -415,6 +416,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -460,6 +462,7 @@ describe("Filling Course", function() {
       question.type_title('free question')
       question.change_type_free_text()
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -663,6 +666,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
 
     })
@@ -730,6 +734,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -775,6 +780,7 @@ describe("Filling Course", function() {
       question.type_title('free question')
       question.change_type_free_text()
 
+      quiz.publish()
       quiz.save()
     })
 

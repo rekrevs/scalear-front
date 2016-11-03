@@ -234,7 +234,7 @@ exports.config = {
 
         // 'test/e2e/spec/inclass_pi.spec.js', //(refresh problem)
 
-        'test/e2e/spec/fill_course_dp.spec.js',
+        // 'test/e2e/spec/fill_course_dp.spec.js',
 
 
 

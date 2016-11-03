@@ -867,8 +867,11 @@ var translation_en={
   },
   statistics:{
     statistics: "Statistics",
+    administration: "Administration",
     statistics_dashboard: "Statistics Dashboard",
     registration: "Registration",
+    report_period: "Report Period",
+    generate_report: "Generate Report",
     login: "@:navigation.login",
     lecture_views: "Lecture Views",
     questions_asked: "Questions Asked",

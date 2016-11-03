@@ -867,8 +867,11 @@ var translation_sv={
   },
   statistics:{
     statistics: "Statistik",
+    administration: "Administration(t)",
     statistics_dashboard: "Statistikpanelen",
     registration: "Registrering",
+    report_period: "Report Period(t)",
+    generate_report: "Generate Report(t)",
     login: "@:navigation.login",
     lecture_views: "Videos visade",
     questions_asked: "Frågor ställda",

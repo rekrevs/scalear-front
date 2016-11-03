@@ -1,0 +1,196 @@
+<!-- build:css(.tmp/styles) styles/statistics.css -->
+<link rel="stylesheet" href="styles/teacher/statistics.css" />
+<!-- endbuild -->
+<section class='adminUni'>
+  {{current_user.university}} ({{current_user.email.split("@")[1]}})
+</section>
+<section>
+  <span translate>statistics.report_period</span>
+  <span>
+        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
+        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
+  </span>
+  <span translate>statistics.to</span>
+  <span>
+        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
+        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
+  </span>
+  <button ng-click="showStatistics()" ng-disabled="loading" class="button adminBtn"><span translate>statistics.generate_report</span></button>
+</section>
+
+  <!-- <div ng-show="loading" > -->
+        <loading size="big" show="loading">
+      </loading>
+<!-- </div> -->
+  <div ng-show="show_statistics" >
+    <div class="row adminRow">
+      <div  class = 'column small-12 medium-6 large-4'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clipboard"></i>
+          </div>
+          <div class="adminNum">
+            {{total_courses}}
+          </div>
+          <p>
+            Courses
+          </p>
+
+          <div class="row">
+            <div class="column small-6">
+              {{active_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-6" >
+              {{active_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4' >
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clock adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            {{total_hours}}
+            <!-- {{ScalearUtils.toHourMin(total_hours)}} -->
+            <!-- 19 -->
+          </div>
+          <p>
+            Hours watched
+          </p>
+          <div class="row">
+            <div class="column small-6">
+              {{total_student_watched}} <i class="fi-torsos-all" tooltip="Average per Student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-6">
+              {{total_course_been_watched}} <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4 '>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-clipboard-pencil  "></i>
+          </div>
+          <div class="adminNum">
+            {{total_online_quiz_solved}}
+          </div>
+          <p>
+            Online Quizzes Solved
+          </p>
+
+          <div class="row">
+            <div class="column small-4">
+              {{total_online_quiz_student}}
+              <i class="fi-torsos-all" tooltip="Average per student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_online_quiz_course}}
+              <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_online_quiz_lecture}}
+              <i class="fi-video" tooltip="Average per video" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4' >
+        <div class="adminTile">
+          <div class='adminIcon'>
+            <span >&#63;</span>
+          </div>
+          <div class="adminNum">
+            {{total_questions}}
+          </div>
+          <p>
+            Online Questions asked
+          </p>
+          <div class="row">
+            <div class="column small-4">
+              {{total_questions_students}}
+              <i class="fi-torsos-all" tooltip="average per student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_questions_courses}}
+              <i class="fi-clipboard" tooltip="average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+            <div class="column small-4">
+              {{total_questions_lectures}}
+              <i class="fi-video" tooltip="average per video" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torso-business adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            {{total_questions_answered_teachers}}
+          </div>
+          <p>
+            Online Teachers' Answers
+          </p>
+        </div>
+
+      </div>
+      <div class = 'column small-12 medium-6 large-4 end'>
+        <div class="adminTile">
+          <div class="adminIcon">
+            <i class="fi-torsos-all adminIcon"></i>
+          </div>
+          <div class="adminNum">
+            {{total_questions_answered_students}}
+          </div>
+          <p>
+            Online Students' Answers
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class='row adminRow'>
+      <table st-table='displayed_course_data' class='table table striped cloumn small-12 adminTable' st-safe-src="course_data_array">
+        <thead>
+          <tr >
+            <th st-sort='short_name'>Course Name</th>
+            <th st-sort='active_students'>Active Students</th>
+            <th st-sort='active_teachers'>Active Teachers</th>
+            <th st-sort='questions'>Questions</th>
+            <th st-sort='solved_online_quiz'>Solved Quizzes</th>
+            <th st-sort='start_date'>Start Date</th>
+            <th st-sort='end_date'>End Date</th>
+            <th st-sort='total_view'>Total view</th>
+          </tr>
+          <tr>
+            <th colspan="8"><input st-search="" placeholder="Search" type="text"/></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat='course in displayed_course_data'>
+          <!-- {{course.id}} -->
+
+            <td><a ui-sref="course.edit_course_information({ course_id: course.id })">{{course.short_name}}</a></td>
+            <td>{{course.active_students}}</td>
+            <td>{{course.active_teachers}}</td>
+            <td>{{course.questions}}</td>
+            <td>{{course.solved_online_quiz}}</td>
+            <td>{{course.start_date}}</td>
+            <td>{{course.end_date}}</td>
+            <td>{{course.total_view}}</td>
+            <!-- <td>{{ScalearUtils.toHourMin(course.total_view)}}</td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

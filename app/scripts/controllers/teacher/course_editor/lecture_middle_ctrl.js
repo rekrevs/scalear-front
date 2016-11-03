@@ -155,9 +155,9 @@ angular.module('scalearAngularApp')
       $scope.lecture.timeline.items.forEach(function(item) {
         if (item.type == 'quiz') {
           var quiz = item.data
-          if (quiz.time == parseInt(new_time + 1))
+          if (parseInt(quiz.time) == parseInt(new_time + 1))
             new_time += 2
-          else if (quiz.time == parseInt(new_time))
+          else if (parseInt(quiz.time) == parseInt(new_time))
             new_time += 1
             // else if (quiz.time == parseInt(new_time - 1))
             //   new_time += 1

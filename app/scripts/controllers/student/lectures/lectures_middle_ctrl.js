@@ -422,7 +422,7 @@ angular.module('scalearAngularApp')
         }
         // quiz time
         // add que for self and group time && remove the progress bar && start the timer 
-        var b = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.4), function(){   
+        var b = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time ), function(){   
           if($scope.lecture.start_time + (quiz.time) >= $scope.next_stop_time)
             console.log("status , quiz time ", $scope.distance_peer_status)
             if ($scope.distance_peer_status == 2 ){
@@ -1270,8 +1270,8 @@ angular.module('scalearAngularApp')
     var checkIfCanLeaveStatus = function() {
       console.log($scope.lecture_player.controls.getTime().toFixed(2) )
       console.log( $scope.next_stop_time.toFixed(2) )
-      console.log($scope.lecture_player.controls.getTime().toFixed(2) >=  $scope.next_stop_time.toFixed(2) )
-      if(   $scope.lecture_player.controls.getTime().toFixed(2) >=  $scope.next_stop_time.toFixed(2) ) {
+      console.log( parseInt($scope.lecture_player.controls.getTime().toFixed(2) ) >=  parseInt($scope.next_stop_time.toFixed(2)) )
+      if(   parseInt($scope.lecture_player.controls.getTime().toFixed(2) ) >=  parseInt($scope.next_stop_time.toFixed(2)) ) {
         console.log("YOU CAN NO LEAVE STATE ")
         $scope.seek($scope.next_stop_time)
         $scope.lecture_player.controls.pause()      

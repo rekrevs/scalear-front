@@ -795,14 +795,10 @@ angular.module('scalearAngularApp')
     }
   }
 
-	$scope.createChart = function(data,student_count, options, formatter, type,distance_peer_boolean) {
+	$scope.createChart = function(data,student_count, options, formatter, type,self_group_boolean) {
 		var chart = {};
-    console.log('itemitemitemitemitemitem')
-    console.log(arguments)
-    console.log('itemitemitemitemitemitem')
-    // console.log(item)
-    if(distance_peer_boolean){
-      chart = $scope.createChartDistance_peer(data,student_count, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatInclassQuizChartData')
+    if(self_group_boolean){
+      chart = $scope.createChartSelfGroup(data,student_count, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatSelfGroupChartData')
     }
     else{
   		chart.type = "ColumnChart"
@@ -831,7 +827,7 @@ angular.module('scalearAngularApp')
 
 
 
-    $scope.createChartDistance_peer = function(data,student_count, options, formatter) {
+    $scope.createChartSelfGroup = function(data,student_count, options, formatter) {
       var chart = {
         type: "ColumnChart",
         options: {
@@ -851,9 +847,9 @@ angular.module('scalearAngularApp')
             "gridlines": {
                   "count": 7
               },
-              // "viewWindow":{"max":student_count},
-            "viewWindowMode": 'maximized',
-            "textPosition": 'none'
+              "viewWindow":{"max":student_count},
+            // "viewWindowMode": 'maximized',
+            // "textPosition": 'none'
           }
         },
         data: $scope[formatter](data)
@@ -861,7 +857,7 @@ angular.module('scalearAngularApp')
       angular.extend(chart.options, options)
       return chart
     }
-    $scope.formatInclassQuizChartData = function(data) {
+    $scope.formatSelfGroupChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [{
         "label": $translate('global.students'),
@@ -900,8 +896,8 @@ angular.module('scalearAngularApp')
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
           group_count = data[ind][3] || 0,
-          self = Math.floor((self_count / 10) * 100),
-          group = Math.floor((group_count / 10) * 100),
+          self = self_count ,
+          group = group_count ,
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate('inclass.self_stage')+": " + self_count + ", "+$translate('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {

@@ -186,27 +186,18 @@ angular.module('scalearAngularApp')
               }, { "disable_in_input": false });
             });
           },
-          // scope.saveData = function(data) {
-          //   $timeout(function() {
-          //     scope.save({
-          //       data: data,
-          //       type: scope.column
-          //     })
-          //   })
-          // },
-          scope.pastTime = function(){
-            var previousTime = new Date(scope.date)
-            scope.saveData = function(data) {
-              data.setHours(previousTime.getHours());
-              data.setMinutes(previousTime.getMinutes());
-              console.log(data);
-              $timeout(function() {
-                scope.save({
-                  data: data,
-                  type: scope.column
-                })
+          scope.saveData = function(data) {
+            scope.date.setHours(scope.previousTime.getHours());
+            scope.date.setMinutes(scope.previousTime.getMinutes());
+            $timeout(function() {
+              scope.save({
+                data: data,
+                type: scope.column
               })
-            }
+            })
+          }
+          scope.pastTime = function(){
+            scope.previousTime = new Date(scope.date)
           }
 
       }

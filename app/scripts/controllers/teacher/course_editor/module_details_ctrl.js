@@ -19,8 +19,7 @@ angular.module('scalearAngularApp')
       return temp_module.validate()
     };
 
-    $scope.updateModule = function(dat) {
-      $scope.module.due_date = dat
+    $scope.updateModule = function() {
       $scope.module.update()
     }
 

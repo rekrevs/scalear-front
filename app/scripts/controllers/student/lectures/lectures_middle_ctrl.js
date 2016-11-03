@@ -309,9 +309,7 @@ angular.module('scalearAngularApp')
           cancelcheckIfDistancePeerStatusIsSyncTimer()
           // showNotification('lectures.the_another_student_finished_status')
           // $scope.distance_peer_messages = $translate("distance_peer.the_another_student_finished_status")
-          showAnnotation($translate("distance_peer.the_another_student_finished_status"))
-
-
+          showAnnotation($translate("distance_peer.the_another_student_finished_status" , {name: $scope.name})  )
           $scope.distance_peer_status = status
           if($scope.distance_peer_status==1)
             $scope.distance_peer_message_in_box = $translate("distance_peer.message_video",{name: $scope.name})
@@ -331,7 +329,10 @@ angular.module('scalearAngularApp')
           if(status == 3 || status == 4){
             console.log("status quiz", status)
             console.log(quiz)
+            $scope.hide_quiz_button = true            
             showQuizOnline(quiz)
+            $interval(function() {$scope.hide_quiz_button = false}, 5000)
+
             // cancelStatusTimer()
             if(status == 3){
               var timer = quiz.self
@@ -383,9 +384,10 @@ angular.module('scalearAngularApp')
           console.log(response)
           if(status != 6 ){
             // $scope.distance_peer_messages = $translate("distance_peer.waiting_the_another_student_to_finish")
-            showAnnotation($translate("distance_peer.waiting_the_another_student_to_finish"))
             // checkIfDistancePeerStatusIsSync($scope.distance_peer_id,status,new_quiz_time,quiz);
             startcheckIfDistancePeerStatusIsSyncTimer($scope.distance_peer_session_id,status,new_quiz_time,quiz)
+            console.log("showAnnotation")
+            showAnnotation($translate("distance_peer.waiting_the_another_student_to_finish", {name: $scope.name}))
           }
           else{
             console.log("after comeback from ackend")
@@ -606,8 +608,8 @@ angular.module('scalearAngularApp')
         if($scope.next_stop_time < time && $scope.distance_peer_session_id){  // if in distance_peer session do not seek after next quiz time
           // user flash to say toy can not seek after the quiz
           console.log("you can not seek to time after quiz")
-          showAnnotation($translate("distance_peer.prevent_seek_forward"))
           $scope.lecture_player.controls.pause()
+          showAnnotation($translate("distance_peer.prevent_seek_forward"))
         }
         else{  
           if(time >= 0 && $scope.show_progressbar) {
@@ -738,12 +740,14 @@ angular.module('scalearAngularApp')
       $log.debug("playing ")
       checkIfQuizSolved()
       console.log($scope.quiz_mode)
+      $scope.dismissAnnotation()
+
       if(!$scope.quiz_mode && $scope.distance_peer_session_id){
+        console.log("checkIfCanLeaveStatus")
         checkIfCanLeaveStatus()
       }
       // $scope.distance_peer_messages = null
-      $scope.dismissAnnotation()
-
+      
       $scope.video_end = false
       logVideoEvent("play", $scope.lecture_player.controls.getTime())
     }
@@ -838,10 +842,19 @@ angular.module('scalearAngularApp')
           $scope.resize.big()
           $scope.$apply()
         });
-      } else if(ScalearUtils.calculateScreenRatio() == "4:3") {
+      } 
+      else if(ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }
       } else if(ScalearUtils.calculateScreenRatio() == "16:9") {
-        $scope.video_layer = { 'paddingBottom': '51.7%' }
+        if ($scope.distance_peer_session_id) {
+          $scope.video_layer = { 'paddingBottom': '44.7%' }
+        }
+        else
+          {
+            $scope.video_layer = { 'paddingBottom': '51.7%' }
+          }
+        ;
+        
       }
     }
 
@@ -1008,8 +1021,8 @@ angular.module('scalearAngularApp')
       else if( $scope.distance_peer_session_id && $scope.distance_peer_status == 4){
 
         cancelStatusTimer()
-        changeStatusAndWaitTobeSync(5,$scope.selected_quiz.end_time,$scope.selected_quiz)
         displayResult(data)
+        changeStatusAndWaitTobeSync(5,$scope.selected_quiz.end_time,$scope.selected_quiz)
       }
       else{
         displayResult(data)
@@ -1211,7 +1224,7 @@ angular.module('scalearAngularApp')
 
     $scope.endDistancePeerSession =function(){
       $scope.dismissAnnotation()
-
+      clearQuiz()
       changeStatusAndWaitTobeSync(6,null)
     }
 
@@ -1226,7 +1239,8 @@ angular.module('scalearAngularApp')
       .then(function(response){
         if(response.status == "dead") {
           cancelcheckIfDistancePeerIsAliveTimer()
-          showAnnotation("Student 2 ended the distancePeer session")
+          // showAnnotation("Student 2 ended the distancePeer session")
+          showAnnotation($translate("distance_peer.other_student_ended_session",{name: $scope.name}))
           // clean Up the varaiable
           clearDistancePeerVariables()
           cancelcheckIfDistancePeerStatusIsSyncTimer()
@@ -1254,11 +1268,14 @@ angular.module('scalearAngularApp')
 //  Distance peer methods 
 
     var checkIfCanLeaveStatus = function() {
-      if( $scope.lecture_player.controls.getTime() >=  $scope.next_stop_time ) {
-        // console.log("YOU CAN NO LEAVE STATE ")
-        showAnnotation($translate("distance_peer.can_not_leave_this_part"))
+      console.log($scope.lecture_player.controls.getTime().toFixed(2) )
+      console.log( $scope.next_stop_time.toFixed(2) )
+      console.log($scope.lecture_player.controls.getTime().toFixed(2) >=  $scope.next_stop_time.toFixed(2) )
+      if(   $scope.lecture_player.controls.getTime().toFixed(2) >=  $scope.next_stop_time.toFixed(2) ) {
+        console.log("YOU CAN NO LEAVE STATE ")
         $scope.seek($scope.next_stop_time)
         $scope.lecture_player.controls.pause()      
+        showAnnotation($translate("distance_peer.can_not_leave_this_status",{name: $scope.name}))
       }
     }
 

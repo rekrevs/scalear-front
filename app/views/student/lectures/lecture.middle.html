@@ -18,7 +18,7 @@ ul.connected_blocks {
 }
 
 .connected_blocks li.active {
-  border: 4px solid black;
+  border: 4px solid grey;
   padding: 0;
 }
 
@@ -101,7 +101,9 @@ ul.connected_blocks {
 											<b><span translate>global.note</span>:</b>
 											<span translate>lectures.messages.did_not_get_credit</span>
 										</div>
-										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && !selected_quiz "/>
+										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && lecture.distance_peer "/>
+										<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && !selected_quiz && !lecture.distance_peer"/>
+
 										<annotation text="selected_quiz.question" close="dismissQuestionText" ng-if="selected_quiz.actual_display_text"/>
 									</quiz>
 								</youtube>
@@ -114,11 +116,36 @@ ul.connected_blocks {
 										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/>
 									</div>
 									<div ng-show="quiz_mode" class="right" style="position:relative;right:30%">
-										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" >{{check_answer_title | translate}}</button>
+										<button type="button" ng-hide="hide_quiz_button" class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" >{{check_answer_title | translate}}</button>
 									</div>
 						    	</progress-bar>
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass>
 								<div ng-show="fullscreen" class="row with-tiny-padding-top with-tiny-padding-bottom black">
+									<center id="preview_inclass_panel" ng-show ='distance_peer_session_id' style="" >
+										<div style="border: 1px solid black;width:96%;background-color: black;color: white;" class="with-margin-bottom">
+											<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
+											  <ul class="connected_blocks">
+											    <li ng-class="{'active': distance_peer_status==1}" style="background:lightgrey;color:black;  width: 100%;" ng-show="distance_peer_status==1" translate>distance_peer.video_stage</li>
+											    <li ng-class="{'active': distance_peer_status==2}" style="background:lightgrey;color:black" ng-hide="distance_peer_status==1" translate>distance_peer.intro_stage</li>
+											    <li ng-class="{'active': distance_peer_status==3}" style="background:#008CBA" ng-hide="distance_peer_status==1" ><span translate>distance_peer.self_stage</span><span ng-if="selected_quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
+											    <li ng-class="{'active': distance_peer_status==4}" style="background:#43AC6A" ng-hide="distance_peer_status==1"><span translate>distance_peer.group_stage</span><span ng-if="selected_quiz.question_type== 'MCQ'" >( <span translate>  distance_peer.multiple_choice </span> )</span></li>
+											    <li ng-class="{'active': distance_peer_status>=5}" style="background:darkorange" ng-hide="distance_peer_status==1" translate>distance_peer.end_video_stage</li>
+											  </ul>
+											</div>
+							                <div ng-show="(distance_peer_status == 3 || distance_peer_status == 4)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px 	grey;margin-top:0.45em;" class="stage_timer left">
+						    	                <center>{{status_counter | format}}</center>
+						        	        </div>
+											<ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
+												<!-- <li style="display:none"></li> -->
+										      	<!-- <span translate translate-values='{course_name: course.name}'>enroll_email.this_term_new_system_part_1</span><a href="{{enrollment_url}}"> -->
+								                <div translate translate-values='{name: name}'>distance_peer.in_distance_peer</div>
+										      	<div ng-bind='distance_peer_message_in_box'></div>
+												<!-- <button type="button"  class="tiny success button no-margin check_answer_button" ng-click="endDistancePeerSession()" >{{end_session | translate}}</button> -->
+												<button type="button"  class="tiny success button no-margin" style="background-color: #b30000;font-size: 14px;" ng-click="endDistancePeerSession()"translate>distance_peer.end_peer_instruction</button>
+										    </ul>
+
+									    </div>
+									</center>
 									<center>
 										<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}"  translate>lectures.button.new_note</button>
 										<button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}"  translate>lectures.button.ask_question</button>

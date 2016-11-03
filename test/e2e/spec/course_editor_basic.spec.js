@@ -28,7 +28,7 @@ describe("Teacher in the course editor", function(){
 	var navigator = new ContentNavigator(1)
 	it("should open course",function(){
         course_list.open()
-        course_list.open_course(1)
+        course_list.open_teacher_course(1)
     })
 
 	it("should go to edit mode",function(){
@@ -94,7 +94,7 @@ describe("Student", function(){
 	var navigator = new ContentNavigator(1)
 	it('should have correct number of modules and lectures with same order', function(){
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_student_course(1)
 		expect(navigator.modules.count()).toEqual(2)
 		var module1 = navigator.module(1)
 		module1.open()
@@ -134,7 +134,7 @@ describe("Revert Changes - Teacher", function(){
 	it("should sign in and navigate to course",function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 		course_list.open()
-		course_list.open_course(1)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()

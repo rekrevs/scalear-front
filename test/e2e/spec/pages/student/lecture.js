@@ -37,15 +37,17 @@ Discussion.prototype = Object.create({}, {
 	comments:{get:function(){return this.field.all(by.repeater("comment_data in item.data.comments"))}},
 	comment:{value:function(num){return new Comment(this.comments.get(num-1))}},
 	comment_button:{get:function(){return this.field.element(by.className("comment_button"))}},
+	add_comment_button:{get:function(){return this.field.element(by.className("success"))}},
 	comment_area:{get:function(){return this.field.element(by.name("comment_area"))}},
 	add_comment:{value:function(){this.comment_button.click()}},
 	type_comment:{value:function(text){
 		this.comment_area.sendKeys(text)
-		this.comment_area.sendKeys(protractor.Key.ENTER)
+		this.add_comment_button.click()
+		// this.comment_area.sendKeys(protractor.Key.ENTER)
 	}},
 	text:{get:function(){return this.field.getText()}},
 	title:{get:function(){return this.field.element(by.className('discussion_title')).getText()}},
-	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},	
+	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
 		this.field.element(by.className('alert')).click()
@@ -62,9 +64,8 @@ Lecture.prototype = Object.create({}, {
 	note:{value:function(num){return this.notes.get(num-1)}},
 	note_area:{get:function(){return this.field.element(by.className("editable-controls")).element(by.tagName("textarea"))}},
 	type_note:{value:function(text){
-		this.note_area.clear()
-		this.note_area.sendKeys(text)
-		this.note_area.sendKeys(protractor.Key.ENTER)
+		element(by.css('[ng-model="$data"]')).clear().sendKeys(text).sendKeys(protractor.Key.ENTER)
+		
 	}},
 	edit_note:{value:function(num){
 		this.note(num).element(by.className('ng-binding')).click()
@@ -169,9 +170,9 @@ LecturePage.prototype=Object.create({},{
 			browser.driver.actions().mouseMove(drag).perform();
 			browser.driver.actions().mouseDown().perform();
 			browser.driver.actions().mouseMove(droppables.get(text.split(' ')[1]-1)).perform();
-        	browser.driver.actions().mouseUp().perform(); 
+        	browser.driver.actions().mouseUp().perform();
 		})
-		
+
 	}},
 	answer_text_drag_incorrect:{value:function(){
 		var arrows = this.text_drag_arrows
@@ -221,7 +222,7 @@ LecturePage.prototype=Object.create({},{
 		            browser.driver.actions().dragAndDrop(arrow[2], arrow[0]).perform()
 		          else if(text == 'answer 2')
 		            browser.driver.actions().dragAndDrop(arrow[2], arrow[1]).perform()
-		        }) 
+		        })
 		    })
 	  	})
 	}}

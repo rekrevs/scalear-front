@@ -61,10 +61,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveQuiz = function(action) {
+      $scope.save_inprogress = true
       if($scope.form.$valid || action == "save") { //validate only if submit.
         $scope.submitted = false;
         $scope.quiz.studentSolve($scope.studentAnswers, action)
           .then(function(data) {
+            $scope.save_inprogress = false
             $scope.status = data.status;
             $scope.alert_messages = data.alert_messages;
             $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
@@ -77,6 +79,7 @@ angular.module('scalearAngularApp')
               $scope.quiz.markDone()
           })
       } else { // client validation error.
+        $scope.save_inprogress = false
         $scope.submitted = true;
       }
     };

@@ -31,7 +31,7 @@ describe("Teacher Management",function(){
 		})
 		it("should open course",function(){
 	        course_list.open()
-	        course_list.open_course(1)
+	        course_list.open_teacher_course(1)
 	    })
 	    var navigator = new ContentNavigator(1)
 		it('should check number of teachers intially', function(){
@@ -77,7 +77,7 @@ describe("Teacher Management",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 			course_info.student.open()
 		})
 		it("should check number of teacher ",function(){
@@ -96,7 +96,7 @@ describe("Revert Changes",function(){
         })
         it('should open course information', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 			course_info.open()
 			expect(course_info.teachers.count()).toEqual(2)
 		})

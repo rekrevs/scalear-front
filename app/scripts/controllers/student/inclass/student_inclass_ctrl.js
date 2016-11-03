@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
         })
         if(selected_answers.length == 0) {
           $scope.showNotification("lectures.messages.please_choose_an_answer")
-          return
+          return false
         }
         if(quiz.question_type == "OCQ" && selected_answers.length == 1)
           selected_answers = selected_answers[0]
@@ -119,6 +119,7 @@ angular.module('scalearAngularApp')
       quiz.done = true
 
       saveQuizAnswer(quiz, selected_answers)
+      return true
     }
 
     var saveHtmlQuizAnswer = function(quiz, selected_answers) {
@@ -147,7 +148,7 @@ angular.module('scalearAngularApp')
         })
         if(selected_count == 0) {
           $scope.showNotification("lectures.messages.please_choose_an_answer")
-          return
+          return false
         }
         if(quiz.question_type == "OCQ" && first_selected)
           selected_answers = first_selected
@@ -155,6 +156,7 @@ angular.module('scalearAngularApp')
       quiz.done = true
 
       saveHtmlQuizAnswer(quiz, selected_answers)
+      return true
     }
 
     var saveNote = function(note_text, time, in_group) {
@@ -172,11 +174,12 @@ angular.module('scalearAngularApp')
 
     $scope.checkAnswer = function(quiz, note_text) {
       $scope.removeNotification()
-      quiz.quiz_type == "html" ? sendHtmlAnswers(quiz) : sendAnswers(quiz)
-
-      if(note_text && $scope.last_note[quiz.in_group ? "group: " : "self"] !== note_text)
-        saveNote(note_text, Math.ceil(quiz.time), quiz.in_group)
-      WizardHandler.wizard().next()
+      var success = quiz.quiz_type == "html" ? sendHtmlAnswers(quiz) : sendAnswers(quiz)
+      if(success){
+        if(note_text && $scope.last_note[quiz.in_group ? "group: " : "self"] !== note_text)
+          saveNote(note_text, Math.ceil(quiz.time), quiz.in_group)
+        WizardHandler.wizard().next()
+      }
     }
 
     $scope.showNotification = function(msg) {

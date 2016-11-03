@@ -48,7 +48,7 @@
 				<span translate>editor.button.add_video_quiz</span>
 			</button>
 		</span>
-		<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
+		<span ng-show="editing_mode && editing_type=='quiz' && ( lecture.inclass || lecture.distance_peer)">
 			<button class="button small preview_inclass" ng-click="togglePreviewInclass()">
 				<span translate>editor.preview_inclass</span>
 			</button>
@@ -71,7 +71,7 @@
 	<div class="small-12 small-centered columns">
 		<center ng-if="editing_mode" style="margin-bottom:10px" >
 			<div ng-switch on='editing_type'>
-				<div ng-switch-when='quiz'><quiz-edit-panel /></div>
+				<div ng-switch-when='quiz'><quiz-edit-panel  /></div>
 				<div ng-switch-when='marker'><marker-edit-panel /></div>
 				<div ng-switch-when='video'><video-edit-panel /></div>
 			</div>

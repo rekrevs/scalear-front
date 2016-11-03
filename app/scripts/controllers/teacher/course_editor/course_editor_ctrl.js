@@ -95,17 +95,19 @@ angular.module('scalearAngularApp')
 
     function addItemBytype(type, module_id) {
       if(type == 'video')
-        $scope.addLecture(false)
+        $scope.addLecture(0)
       else if(type == 'inclass_video')
-        $scope.addLecture(true)
+        $scope.addLecture(1)
+      else if(type == 'distance_peer')
+        $scope.addLecture(2)
       else if(type == 'link')
         $scope.addCustomLink(module_id || $state.params.module_id)
       else
         $scope.addQuiz(type)
     }
 
-    $scope.addLecture = function(inclass) {
-      LectureModel.create(inclass)
+    $scope.addLecture = function(video_type) {
+      LectureModel.create(video_type)
         .then(function(lecture) {
           emptyClipboard()
           $state.go('course.module.course_editor.lecture', { lecture_id: lecture.id })

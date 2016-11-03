@@ -30,7 +30,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -80,7 +80,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -128,7 +128,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -152,7 +152,7 @@ describe("Sharing a non existing module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -231,7 +231,7 @@ describe("Sharing a non existing module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -267,7 +267,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
          it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -344,7 +344,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -365,7 +365,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -388,7 +388,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -409,7 +409,7 @@ describe("Rollback changes",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -446,7 +446,7 @@ describe("Rollback changes",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()

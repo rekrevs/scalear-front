@@ -795,30 +795,131 @@ angular.module('scalearAngularApp')
     }
   }
 
-	$scope.createChart = function(data,student_count, options, formatter, type) {
+	$scope.createChart = function(data,student_count, options, formatter, type,self_group_boolean) {
 		var chart = {};
-		chart.type = "ColumnChart"
-		chart.options = {
-		    "colors": ['green', 'gray'],
-		    "isStacked": "true",
-		    "fill": 20,
-		    "height": 135,
-		    "displayExactValues": true,
-		    "fontSize": 10,
-		    "legend": {"position":"none"},
-		    "chartArea":{"left": 30, "width": "95%"},
-		    "vAxis": {
-		        "gridlines": {
-		            "count": 7
-		        },
-		        "viewWindow":{"max":student_count}
-		    }
-		};
-		angular.extend(chart.options,options)
+    if(self_group_boolean){
+      chart = $scope.createChartSelfGroup(data,student_count, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatSelfGroupChartData')
+    }
+    else{
+  		chart.type = "ColumnChart"
+  		chart.options = {
+  		    "colors": ['green', 'gray'],
+  		    "isStacked": "true",
+  		    "fill": 20,
+  		    "height": 135,
+  		    "displayExactValues": true,
+  		    "fontSize": 10,
+  		    "legend": {"position":"none"},
+  		    "chartArea":{"left": 30, "width": "95%"},
+  		    "vAxis": {
+  		        "gridlines": {
+  		            "count": 7
+  		        },
+  		        "viewWindow":{"max":student_count}
+  		    }
+  		};
+  		angular.extend(chart.options,options)
 
-		chart.data = $scope[formatter](data, type)
+  		chart.data = $scope[formatter](data, type) 
+    }
 		return chart
 	}
+
+
+
+    $scope.createChartSelfGroup = function(data,student_count, options, formatter) {
+      var chart = {
+        type: "ColumnChart",
+        options: {
+          "colors": ['green', 'gray'],
+          "isStacked": "false",
+          "fill": 20,
+          "height": 135,
+          "displayExactValues": true,
+          "legend": { "position": 'none' },
+          "fontSize": 10,
+          "chartArea":{"left": 30, "width": "95%"},
+          // "chartArea": { width: '82%' },
+          "tooltip": { "isHtml": true },
+          "vAxis": {
+            // "ticks": [25, 50, 75, 100],
+            // "maxValue": 100,
+            "gridlines": {
+                  "count": 7
+              },
+              "viewWindow":{"max":student_count},
+            // "viewWindowMode": 'maximized',
+            // "textPosition": 'none'
+          }
+        },
+        data: $scope[formatter](data)
+      };
+      angular.extend(chart.options, options)
+      return chart
+    }
+    $scope.formatSelfGroupChartData = function(data) {
+      var formated_data = {}
+      formated_data.cols = [{
+        "label": $translate('global.students'),
+        "type": "string"
+      }, {
+        "label": $translate('inclass.self_stage'),
+        "type": "number"
+      }, {
+        "type": "string",
+        "p": {
+          "role": "tooltip",
+          "html": true
+        }
+      }, {
+        "type": "string",
+        "p": {
+          "role": "style",
+        }
+      }, {
+        "label": $translate('inclass.group_stage'),
+        "type": "number"
+      }, {
+        "type": "string",
+        "p": {
+          "role": "tooltip",
+          "html": true
+        }
+      }, {
+        "type": "string",
+        "p": {
+          "role": "style",
+        }
+      }]
+      formated_data.rows = []
+      for(var ind in data) {
+        var text = data[ind][2],
+          self_count = data[ind][0] || 0,
+          group_count = data[ind][3] || 0,
+          self = self_count ,
+          group = group_count ,
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate('inclass.self_stage')+": " + self_count + ", "+$translate('inclass.group_stage')+": " + group_count + "</div>",
+          style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
+        var row = {
+          "c": [
+            { "v": ScalearUtils.getHtmlText(text)},
+            { "v": self },
+            { "v": tooltip_text },
+            { "v": style },
+            { "v": group },
+            { "v": tooltip_text },
+            { "v": style }
+          ]
+        }
+        formated_data.rows.push(row)
+      }
+      return formated_data
+    }
+
+
+
+
+
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){

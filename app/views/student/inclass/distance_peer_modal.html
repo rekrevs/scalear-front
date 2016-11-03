@@ -1,0 +1,73 @@
+<!--[htmlclean-protect]-->
+<div class="well well-lg" style="text-align: left;" ng-show="invite_student">
+  <h3><span translate>distance_peer.invited</span></h3>
+  <p translate>distance_peer.invited_instruction</p>
+  <p translate>distance_peer.distance_peer_instruction</p>
+  
+  <br>
+  <form name='email_form' novalidate>
+    <div class="left columns">
+<!--         <div>
+            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'global.email'|translate}}" ng-model="invited_student.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}" class="with-tiny-margin-bottom"/>
+            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>error_message.invalid_email</small>
+            <small class="error" ng-show="!(email_form.email.$dirty && email_form.email.$invalid)&& invited_student.errors.email">{{invited_student.errors.email}}</small>
+        </div> -->
+
+  <!-- <center> -->
+      <div ng-show="students" id="invited_students">
+          <form name="email_form">
+              <div class="small-12 row">
+                  <!-- <div class="small-6 medium-3 large-3 columns"> -->
+                      <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText"/>
+                  <!-- </div> -->
+              </div>
+              <div class="small-12" >
+                <div ng-repeat="student in students | filter: searchText" ng-class="{'border-grey dark-medium-grey': student.checked}" ng-click="inviteStudent(student)">
+                  <span class="small-6 medium-3 large-2 columns left with-medium-margin-bottom" >
+                    <div class="panel looks-like-a-link small-12 medium-12 large-11 with-small-padding no-border" ng-class="{'border-grey dark-medium-grey': student.checked}">
+                      <div class="with-tiny-padding">
+                        <li class="fn truncate"><small>{{student.full_name}}</small></li>
+                        <li class="email truncate"><small>{{student.email}}</small></li>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </div>
+          </form>
+      </div>
+  <!-- </center> -->
+
+        <div>
+            <!-- <a id="invite" ng-click="inviteStudent()" class="button success tiny right" translate>courses.information.button.invite</a> -->
+            <a class="button alert tiny right with-tiny-margin-right" ng-click="closeModal()" translate>button.cancel</a>
+        </div>
+    </div>
+  </form>
+</div>
+<div class="well well-lg" style="text-align: left;" ng-show="check_if_invited">
+  <h3><span translate>distance_peer.invited_by</span></h3>
+  <p translate>distance_peer.invited_by_instruction</p>
+  <div ng-repeat="student in invited_by_student" >
+    <div ng-click="acceptInvation(student)" class="button" >join {{student[0]}}</div>
+  </div>
+  <div>
+    <a id="invite" ng-click="caneclAllDistancePeerSession();changeToInviteStatus()" class="button success tiny right" translate>distance_peer.invite_another_button</a>
+    <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclAllDistancePeerSession();closeModal()" translate>button.cancel</a>
+  </div>        
+</div>
+
+<div class="well well-lg" style="text-align: left;" ng-show="wait_for_acceptance">
+  <h3><span translate>distance_peer.wait_for_acceptance</span></h3>
+  <p translate>distance_peer.wait_for_acceptance_instruction</p>
+    <div> {{invited_student}}</div>
+  <div>
+    <a id="invite" ng-click="caneclDistancePeerSession(distance_peer_id);changeToInviteStatus()" class="button success tiny right" translate>distance_peer.invite_another_button</a>
+    <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclDistancePeerSession(distance_peer_id);closeModal()" translate>button.cancel</a>
+  </div>        
+</div>
+
+<div class="well well-lg" style="text-align: left;" ng-show="waiting_response_of_back_end">
+  <h3><span translate>distance_peer.waiting_response_of_back_end</span></h3>
+        <loading size="big" show="waiting_response_of_back_end">
+      </loading>
+</div>

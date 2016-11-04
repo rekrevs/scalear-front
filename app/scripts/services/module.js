@@ -186,7 +186,6 @@ angular.module('scalearAngularApp')
         delete modified_module.created_at;
         delete modified_module.updated_at;
         delete modified_module.total_time;
-
         return Module.update({
             course_id: module.course_id,
             module_id: module.id

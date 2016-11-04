@@ -209,7 +209,7 @@ var translation_en={
     button:{
         ask: "Ask",
         cancel:"@:button.cancel",
-        edit:"@:global.edit"
+        save:"@:button.save"
     }
   },
   context_menu:{
@@ -273,6 +273,19 @@ var translation_en={
     add_course_by_choosing_part_2: " to join {{short_name}}. If you have any questions please use the 'Support' form in the 'Help' menu.)",
     add_course_by_url: " Follow this link ",
     sincerely:"Sincerely",
+    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:",
+    if_problem:'if there are problems:',
+    ask_student:'Ask	the	student to',
+    check_spam:'check	SPAM	filters',
+    conf_email:'for	the	confirmation	email.',
+    enroll_manual:'enroll	manually',
+    by_go: 'by	going	 to',
+    and_joining:'and	joining	 with	the enrollment key',
+    contact: 'Contact	support',
+    from_help: 'from	the	Help	menu.',
+    guest_stu:'Guest	Students:',
+    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to',
+    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key'
   },
   account:{
     password:{
@@ -517,7 +530,8 @@ var translation_en={
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
-        click_add_marker:"Click or type 'm' to add a marker"
+        click_add_marker:"Click or type 'm' to add a marker",
+        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing."
     },
     drag:{
         start: "Start",
@@ -596,7 +610,8 @@ var translation_en={
         add_question: "Add Question",
         add_header: "Add Header",
         add_module: "Add Module",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Add Note'
     }
   },
   lectures:{
@@ -799,6 +814,7 @@ var translation_en={
         discussion_forum_link: "Discussion Forum Link",
         enrollment_key: "Enrollment Key",
         enrollment_url: "Enrollment URL",
+        course_link: "Course Link",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
         receive_due_date_email: "Receive email reminders of upcoming due dates.",

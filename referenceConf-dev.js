@@ -1,29 +1,26 @@
+Date.prototype.addDays_test = function(days)
+{
+  var month = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"];
+var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    var  op = weekdays[dat.getDay()]+', '+ ((dat.getDate()<10)? "0":"") + dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
+    return op;
+};
 Date.prototype.addDays = function(days)
 {
     var dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
     return dat;
 }
+
 var params= {
     //local
     frontend: 'http://localhost:9000/#',
-
-    // admin_mail:    'admin@scalear.com',
-    // teacher_mail:  'teacher1@sharklasers.com',
-    // teacher2_mail: 'teacher2@sharklasers.com',
-    // teacher3_mail: "teacher3@sharklasers.com",
-    // teacher3_mail: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-
-    // student_mail:  'studenttest@sharklasers.com',
-    // student2_mail: 'studenttest2@sharklasers.com',
-    // student3_mail: 'studenttest3@sharklasers.com',
-    // student4_mail: 'studenttest4@sharklasers.com',
-    // student5_mail: 'studenttest5@sharklasers.com',
     admin_password:"password",
     password: 'password',
-    // student_name_list: ['Student 1','Student 2','Student 3'],
-    // student_name_list: ['Test_1 student','Test_2 student','Test_3 student'],
-
+    student_name_list: ['Test_1 student','Test_2 student','Test_3 student'],
 
     student1:{
         f_name: "Test_1",
@@ -100,9 +97,8 @@ var params= {
 
     short_name: "csc-test",
     course_name: "aesting course 100",
-    // course_duration: '19',
     course_end_date: new Date().addDays(30),
-
+    course_end_date_test: new Date().addDays_test(30),
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -111,8 +107,8 @@ var params= {
     guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
     // guerrillamail_first_name: "student",
-    teacher_first_name: "teacher",
-    student_name: "Student",
+    // teacher_first_name: "teacher",
+    // student_name: "Student",
     // guerrillamail_last_name: "4",
     guerrillamail_sch_uni_name: "test univerisity",
 
@@ -206,8 +202,7 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/fill_course_pi.spec.js', // Done
-        // 'test/e2e/spec/inclass_pi.spec.js', // Done
+
         // 'test/e2e/spec/create_course.spec.js', // Done
         // 'test/e2e/spec/fill_course.spec.js',// Done
         // 'test/e2e/spec/course_information_validation.spec.js',// Done
@@ -230,7 +225,10 @@ exports.config = {
 
         // 'test/e2e/spec/delete_course.spec.js',
 
-        'test/e2e/spec/features_sprint7_test.spec.js'
+        // 'test/e2e/spec/features_sprint7_test.spec.js'
+
+        'test/e2e/spec/fill_course_pi.spec.js', // Done
+        // 'test/e2e/spec/inclass_pi.spec.js', // Done
 
         // to test email features locall
 

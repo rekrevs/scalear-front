@@ -65,7 +65,7 @@ Lecture.prototype = Object.create({}, {
 	note_area:{get:function(){return this.field.element(by.className("editable-controls")).element(by.tagName("textarea"))}},
 	type_note:{value:function(text){
 		element(by.css('[ng-model="$data"]')).clear().sendKeys(text).sendKeys(protractor.Key.ENTER)
-		
+
 	}},
 	edit_note:{value:function(num){
 		this.note(num).element(by.className('ng-binding')).click()

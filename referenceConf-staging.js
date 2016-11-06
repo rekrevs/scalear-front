@@ -56,8 +56,8 @@ var params= {
         email: "student4@email.com",
     },
     teacher1:{
-        f_name: "Test",
-        l_name: "teacher_1",
+        f_name: "teacher",
+        l_name: "1",
         online_name: "screen teacher 001",
         university: "uni_1",
         email: "teacher1@email.com",
@@ -215,17 +215,17 @@ exports.config = {
         // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
         // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)(@email.com is considered student) (teacher 1 data were changed in the conf-stag file.)
         // 'test/e2e/spec/enrollment_help.spec.js', // done(11/16)
-        // 'test/e2e/spec/course_editor_basic.spec.js', // xx
-        // 'test/e2e/spec/course_editor_copy.spec.js', // xx
-        // 'test/e2e/spec/course_editor_sharing.spec.js', // (teacher2@email.com is not a teacher mail!!)
-        // 'test/e2e/spec/module_statistics.spec.js', // done xx
-        // 'test/e2e/spec/announcements.spec.js', // done xx (students can't see announcements in dashboard)
-        // 'test/e2e/spec/teacher-managment.spec.js', // done xx
-        // 'test/e2e/spec/students_solve_course.spec.js', // (video loading problem for students)
-        // 'test/e2e/spec/notes.spec.js', // done xx
+        // 'test/e2e/spec/course_editor_basic.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_editor_copy.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_editor_sharing.spec.js', // (teacher2@email.com is not a teacher mail!!)!!
+        // 'test/e2e/spec/module_statistics.spec.js', // done(11/16)
+        // 'test/e2e/spec/announcements.spec.js', // (students can't see announcements in dashboard)!!
+        // 'test/e2e/spec/teacher-managment.spec.js', // (cannot invite teachers)
+        // 'test/e2e/spec/students_solve_course.spec.js', // done(11/16) (inOrder Functionality & explanation targeting)
+        'test/e2e/spec/notes.spec.js', // done xx
         // 'test/e2e/spec/discussions.spec.js', // done (awaits student solve course)
-        // 'test/e2e/spec/progress-module.spec.js',
-        // xx (awaits student solve course) 'test/e2e/spec/progress-completion-module.spec.js', (awaits student solve course)
+        // 'test/e2e/spec/progress-module.spec.js', xx (awaits student solve course)
+        // 'test/e2e/spec/progress-completion-module.spec.js', (awaits student solve course)
         // 'test/e2e/spec/validations.spec.js', // xx (checking date issue)
         // 'test/e2e/spec/delete_course.spec.js', // xx
 

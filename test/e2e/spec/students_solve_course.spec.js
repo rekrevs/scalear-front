@@ -25,7 +25,7 @@ var student_lec = new StudentLecture()
 var student_quiz = new StudentQuiz()
 
 describe("Solve Course",function(){
-	describe("Teacher",function(){
+	xdescribe("Teacher",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
@@ -37,41 +37,40 @@ describe("Solve Course",function(){
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
 		})
-		it("should open first quiz in first module",function(){
+		xit("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-    	it('should make quiz not in order', function(){
-			course_editor.change_quiz_inorder()
-		})
-		it('make quiz not required', function(){
+
+		xit('make quiz not required', function(){
+					course_editor.change_quiz_useModule_required()
 	        course_editor.change_quiz_required()
 	    })
-		it("should increase retries number",function(){
-	    	course_editor.change_quiz_retries(1)
-			expect(course_editor.quiz_retries.getText()).toEqual("1")
-	    })
-		it("should open second lecture in second module",function(){
-	    	navigator.module(2).open()
-	    	navigator.module(2).item(2).open()
-	    	sleep(3000)
-	    	scroll_top()
-	    })
-		it('should make lecture not in order', function(){
-			course_editor.open_lecture_settings()
-	        course_editor.change_lecture_inorder()
-	    })
-		it("should open first quiz in second module",function(){
+
+		it('Should open second quiz in first module', function(){
+			navigator.module(1).open()
+			navigator.module(1).item(5).open()
+			sleep(3000)
+			scroll_top()
+		})
+
+		it('should make quiz not in order', function(){
+			course_editor.change_quiz_useModule_inorder()
+			course_editor.change_quiz_inorder()
+		})
+
+		xit("should open first quiz in second module",function(){
 	    	navigator.module(2).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-		it('should make quiz not required', function(){
+		xit('should make quiz not required', function(){
+					course_editor.change_quiz_useModule_required()
 	        course_editor.change_quiz_required()
 	    })
-		it("should increase retries number",function(){
+		xit("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
@@ -81,7 +80,7 @@ describe("Solve Course",function(){
 		})
 	})
 
-	describe("First Student",function(){
+	xdescribe("First Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student1.email, params.password)
 		})
@@ -255,7 +254,8 @@ describe("Solve Course",function(){
 			})
 			it("should check explanation",function(){
 				student_lec.show_explanation(2)
-				expect(student_lec.explanation_title).toContain("Correct")
+				// expect(student_lec.explanation_title).toContain("Correct")
+				expect(student_lec.explanation_content).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
@@ -369,7 +369,7 @@ describe("Solve Course",function(){
 		    })
 			it("should check for optional tag",function(){
 		    	expect(student_quiz.optional_tag.isDisplayed()).toBe(true)
-    			expect(student_quiz.optional_tag.getText()).toEqual("Optional")
+    			expect(student_quiz.optional_tag.getText()).toEqual("(Optional)")
 		    })
 
 			it('should answer mcq incorrect', function(){
@@ -759,6 +759,7 @@ describe("Solve Course",function(){
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
 			})
+
 			it("should logout",function(){
 				header.logout()
 			})
@@ -771,7 +772,7 @@ describe("Solve Course",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 		})
 		describe("First Module",function(){
 			it("should seek video to 9%",function(){

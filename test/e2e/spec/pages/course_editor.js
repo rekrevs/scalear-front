@@ -40,18 +40,22 @@ CourseEditor.prototype = Object.create({}, {
 	change_lecture_inorder:{value:function(){this.lecture_inorder_checkbox.click()}},
 	lecture_required_checkbox:{get:function(){return element(by.model('lecture.graded'))}},
 	change_lecture_required:{value:function(){this.lecture_inorder_checkbox.click()}},
+	quiz_module_required_checkbox:{get:function(){return element(by.model('quiz.graded_module'))}},
 	quiz_required_checkbox:{get:function(){return element(by.model('quiz.graded'))}},
 	quiz_retries:{get:function(){return element(by.tagName('details-number'))}},
 	trim_modal:{get:function (){ return element(by.id('trim-modal'))}},
 	trim:{value:function () {this.trim_modal.element(by.id('trim-btn')).click()}},
 	cancel_trim:{value:function () {this.trim_modal.element(by.id('cancel-btn')).click()}},
+	change_quiz_useModule_required:{value:function(){this.quiz_module_required_checkbox.click()}},
 	change_quiz_required:{value:function(){this.quiz_required_checkbox.click()}},
 	change_quiz_retries:{value:function(num){
 		this.quiz_retries.click()
 		element(by.className('editable-input')).sendKeys(num)
 		element(by.className('check')).click()
 	}},
+	quiz_module_inorder_checkbox:{get:function(){return element(by.model('quiz.required_module'))}},
 	quiz_inorder_checkbox:{get:function(){return element(by.model('quiz.required'))}},
+	change_quiz_useModule_inorder:{value:function(){this.quiz_module_inorder_checkbox.click()}},
 	change_quiz_inorder:{value:function(){this.quiz_inorder_checkbox.click()}},
 	open:{value: function(){
 		element(by.id('content')).click();

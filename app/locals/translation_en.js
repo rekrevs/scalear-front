@@ -752,7 +752,7 @@ var translation_en={
   },
   quizzes:{
     used_up_all: "Used up all",
-    attempts: "attempts",
+    attempts: " attempts",
     attempt_number: "Attempt number",
     must_choose_answer: "Must choose at least one answer",
     optional:"@:global.optional",

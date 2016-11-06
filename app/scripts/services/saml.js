@@ -69,12 +69,12 @@ angular.module('scalearAngularApp')
                 }
               },
               "displayName": {
-                "sv": "UTRECH",
-                "en": "UTRECH",
-                "id": "UTRECH"
+                "sv": "Utrecht universitet",
+                "en": "Utrecht University",
+                "id": "Utrecht University"
               },
               "name": {
-                "en": "UTRECH"
+                "en": "Utrecht University"
               },
               "url": {
                 "en": "http://www.hig.se"

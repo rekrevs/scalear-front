@@ -5,7 +5,10 @@ Date.prototype.addDays_test = function(days)
 var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     var dat = new Date(this.valueOf());
     dat.setDate(dat.getDate() + days);
-    var  op = weekdays[dat.getDay()]+', '+ dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
+    var datNum;
+    (dat.getDate()<10)? (datNum = '0'+dat.getDate()):(datNum = dat.getDate())
+
+    var  op = weekdays[dat.getDay()]+', '+ datNum +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
     return op;
 };
 Date.prototype.addDays = function(days)
@@ -53,7 +56,7 @@ var params= {
         email: "student4@email.com",
     },
     teacher1:{
-        f_name: "Test_1",
+        f_name: "Test",
         l_name: "teacher_1",
         online_name: "screen teacher 001",
         university: "uni_1",
@@ -207,11 +210,11 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        // 'test/e2e/spec/create_course.spec.js', // done xx
-        // 'test/e2e/spec/fill_course.spec.js', // done xx
-        // 'test/e2e/spec/course_information_validation.spec.js', // done xx
-        // 'test/e2e/spec/account_information_validation.spec.js', // done xx (teacher 1 data were changed in the conf-stag file.)
-        // 'test/e2e/spec/enrollment_help.spec.js', // done xx
+        // 'test/e2e/spec/create_course.spec.js', // done(11/16)
+        // 'test/e2e/spec/fill_course.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
+        // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)(@email.com is considered student) (teacher 1 data were changed in the conf-stag file.)
+        // 'test/e2e/spec/enrollment_help.spec.js', // done(11/16)
         // 'test/e2e/spec/course_editor_basic.spec.js', // xx
         // 'test/e2e/spec/course_editor_copy.spec.js', // xx
         // 'test/e2e/spec/course_editor_sharing.spec.js', // (teacher2@email.com is not a teacher mail!!)

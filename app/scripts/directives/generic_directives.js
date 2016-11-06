@@ -229,6 +229,11 @@ angular.module('scalearAngularApp')
 
           $modal.open({
             templateUrl: '/views/teacher/course/help_enroll.html',
+            controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
+              $scope.close = function () {
+               $modalInstance.dismiss();
+             };
+           }],
             scope: scope
           })
         }

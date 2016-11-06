@@ -81,15 +81,15 @@ var params= {
         email: "admin@scalable-learning.com",
     },
     password: 'password',
-    admin_email:   'admin@scalable-learning.com',
-    admin_password:"admin_account_password",
+    // admin_email:   'admin@scalable-learning.com',
+    // admin_password:"admin_account_password",
     student_name_list: ['Student 1','Student 2','Student 3'],
 
     guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
     guerrillamail_first_name: "student",
-    teacher_first_name: "teacher",
-    student_name: "Student",
+    // teacher_first_name: "teacher",
+    // student_name: "Student",
 
     guerrillamail_last_name: "4",
     guerrillamail_sch_uni_name: "test univerisity",
@@ -103,15 +103,17 @@ var params= {
     course_description: 'too many words',
     prerequisites: '1- course 1 2- course 2 3- course 3',
 
-    teacher_fname: "teacher" ,
-    teacher_lname: "1" ,
-    teacher_univer: "test univerisity" ,
+    // teacher_fname: "teacher" ,
+    // teacher_lname: "1" ,
+    // teacher_univer: "test univerisity" ,
 
-    video1: {
-      duration: {
-        min: 4,
-        sec: 47
-      }
+    video1:{
+        url:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+        duration:{ min:4, sec:47},
+    },
+    video2:{
+        url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+        duration:{ min:6, sec:5},
     },
 
     prepare: function(custom_browser) {
@@ -230,9 +232,11 @@ exports.config = {
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
 
-        // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!, cannot get some elements)
+        // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
 
-        'test/e2e/spec/inclass_pi.spec.js', //(refresh problem, counting isn't working)
+        // 'test/e2e/spec/inclass_pi.spec.js', //(refresh problem)
+
+        // 'test/e2e/spec/fill_course_dp.spec.js',
 
 
 

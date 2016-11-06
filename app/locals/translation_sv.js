@@ -209,7 +209,7 @@ var translation_sv={
     button:{
         ask: "Fråga",
         cancel:"@:button.cancel",
-        edit:"@:global.edit"
+        save:"@:button.save"
     }
   },
   context_menu:{
@@ -273,6 +273,19 @@ var translation_sv={
     add_course_by_choosing_part_2: " för att delta i {{short_name}}. Om du har några frågor, var god använd 'Support' formuläret under menyn 'Hjälp'.",
     add_course_by_url: " Följ denna länk",
     sincerely:"Vänliga hälsningar",
+    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:(t)",
+    if_problem:'if there are problems:(t)',
+    ask_student:'Ask	the	student to(t)',
+    check_spam:'check	SPAM	filters(t)',
+    conf_email:'for	the	confirmation	email.(t)',
+    enroll_manual:'enroll	manually(t)',
+    by_go: 'by	going	 to(t)',
+    and_joining:'and	joining	 with	the enrollment key(t)',
+    contact: 'Contact	support(t)',
+    from_help: 'from	the	Help	menu.(t)',
+    guest_stu:'Guest	Students:(t)',
+    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to(t)',
+    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key(t)'
   },
   account:{
     password:{
@@ -517,7 +530,8 @@ var translation_sv={
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
-        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering"
+        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering",
+        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing(t)"
     },
     drag:{
         start: "Start",
@@ -596,7 +610,8 @@ var translation_sv={
         add_question: "Lägg till fråga",
         add_header: "Lägg till rubrik",
         add_module: "Lägg till modul",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Add Note(t)'
     }
   },
   lectures:{
@@ -799,6 +814,7 @@ var translation_sv={
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
         enrollment_url: "URL för registrering",
+        course_link: "Course Link(t)",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
         receive_due_date_email: "Få påminnelse om kommande senaste färdigdatum.",

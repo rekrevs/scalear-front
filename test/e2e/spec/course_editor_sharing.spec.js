@@ -23,7 +23,7 @@ var new_course = new NewCourse()
 var navigator = new ContentNavigator(1)
 var content_items= new ContentItems()
 
-describe("Sharing a module",function(){
+xdescribe("Sharing a module",function(){
     describe("Teacher1",function(){
         it("should login as teacher",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -58,7 +58,7 @@ describe("Sharing a module",function(){
         })
         it('should create course', function(){
             new_course.open()
-            new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+            new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         })
         it('should reject shared data', function(){
             header.show_notification()
@@ -145,7 +145,7 @@ describe("Sharing a module",function(){
     })
 })
 
-describe("Sharing a non existing module",function(){
+xdescribe("Sharing a non existing module",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -260,7 +260,7 @@ describe("Sharing a non existing module",function(){
         })
     })
 })
-describe("Sharing single items",function(){
+xdescribe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -402,7 +402,7 @@ describe("Sharing single items",function(){
         })
     })
 })
-describe("Rollback changes",function(){
+xdescribe("Rollback changes",function(){
     describe("Teacher2",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher2.email, params.password)
@@ -433,8 +433,8 @@ describe("Rollback changes",function(){
         })
         it("should delete course",function(){
             course_list.open()
-            course_list.delete_course(1)
-            expect(course_list.courses.count()).toEqual(0)
+            course_list.delete_teacher_course(1)
+            expect(course_list.teacher_courses.count()).toEqual(0)
         })
         it("should logout",function(){
             header.logout()

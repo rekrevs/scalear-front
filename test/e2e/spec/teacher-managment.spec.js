@@ -73,19 +73,19 @@ describe("Teacher Management",function(){
     describe("Student1",function(){
     	it("should login", function(){
 			login_page.sign_in(params.student1.email, params.password)
-		})
-		var navigator = new ContentNavigator(1)
-		it('should open course information', function(){
-			course_list.open()
-			course_list.open_student_course(1)
-			course_info.student.open()
-		})
-		it("should check number of teacher ",function(){
-			expect(course_info.teachers.count()).toEqual(2)
-		})
-		it("should logout",function(){
-            header.logout()
-        })
+			})
+			var navigator = new ContentNavigator(1)
+			it('should open course information', function(){
+				course_list.open()
+				course_list.open_student_course(1)
+				course_info.student.open()
+			})
+			it("should check number of teacher ",function(){
+				expect(course_info.teachers.count()).toEqual(2)
+			})
+			it("should logout",function(){
+	            header.logout()
+	    })
     })
 })
 describe("Revert Changes",function(){
@@ -113,7 +113,7 @@ describe("Revert Changes",function(){
         })
         it("should check that course has been removed",function(){
         	course_list.open()
-        	expect(course_list.courses.count()).toEqual(0)
+        	expect(course_list.teacher_courses.count()).toEqual(0)
         })
         it("should logout",function(){
             header.logout()

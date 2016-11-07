@@ -86,6 +86,15 @@ angular.module('scalearAngularApp')
         return quiz;
       }
 
+      $rootScope.$on("Module:" + quiz.group_id + ":updated", function(evt, module) {
+        if(quiz.required_module) {
+          quiz.required = module.required;
+        }
+        if(quiz.graded_module) {
+          quiz.graded = module.graded;
+        }
+      })
+
       function instanceType() {
         return "Quiz"
       }

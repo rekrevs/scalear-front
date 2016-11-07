@@ -187,14 +187,16 @@ angular.module('scalearAngularApp')
             });
           },
           scope.saveData = function(data) {
-            scope.date.setHours(scope.previousTime.getHours());
-            scope.date.setMinutes(scope.previousTime.getMinutes());
-            $timeout(function() {
-              scope.save({
-                data: data,
-                type: scope.column
+            if(scope.previousTime){
+              scope.date.setHours(scope.previousTime.getHours());
+              scope.date.setMinutes(scope.previousTime.getMinutes());
+              $timeout(function() {
+                scope.save({
+                  data: data,
+                  type: scope.column
+                })
               })
-            })
+            }
           }
           scope.pastTime = function(){
             scope.previousTime = new Date(scope.date)

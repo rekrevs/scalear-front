@@ -306,7 +306,7 @@ angular.module('scalearAngularApp')
         }
 
         scope.preview = function() {
-          Preview.start()
+          $state.go("preview",$state.params, { reload: true })
         }
 
         scope.addModule = function() {

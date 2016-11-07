@@ -38,6 +38,13 @@ angular.module('scalearAngularApp')
           var params = { course_id: $state.params.course_id }
           if($state.params.module_id) {
             if($state.current.name.indexOf("customlink") == -1 && $state.current.name.indexOf("overview") == -1) {
+              if ($state.params.lecture_id){
+                $state.current.name = "course.module.course_editor.lecture"
+              }
+              else{
+                $state.current.name = "course.module.course_editor.quiz"
+              }
+              $cookieStore.put('state', $state.current.name)
               $state.go($state.current.name.replace("course_editor", "courseware"), $state.params, { reload: true })
             } else {
               $state.go('course.module.courseware', $state.params, { reload: true })

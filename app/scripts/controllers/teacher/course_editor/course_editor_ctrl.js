@@ -198,7 +198,7 @@ angular.module('scalearAngularApp')
           },
           selected_item: function() {
             if(data.item) {
-              return ItemModel.getById(data.item.id, data.item.class_name)
+              return ItemsModel.getById(data.item.id, data.item.class_name)
             }
           }
         }

@@ -752,7 +752,7 @@ var translation_sv={
   },
   quizzes:{
     used_up_all: "Använt upp alla",
-    attempts: "försök",
+    attempts: " försök",
     attempt_number: "Försök nummer",
     must_choose_answer: "Måste välja minst ett svar",
     optional:"@:global.optional",

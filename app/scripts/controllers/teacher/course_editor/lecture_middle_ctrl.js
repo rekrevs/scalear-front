@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
             if(type == 'quiz') {
               $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            }
+            } 
             else
               $scope.showOnlineMarkerAnnotationOnly(item_data)
           })
@@ -211,17 +211,24 @@ angular.module('scalearAngularApp')
     };
 
     $scope.saveQuizBtn = function(options) {
+      $scope.quiz_errors = {}
       return $scope.selected_quiz.validate()
-        .then(function() {
-          removeItemFromVideoQueue($scope.selected_quiz);
-          addItemToVideoQueue($scope.selected_quiz, "quiz");
-          $scope.selected_quiz.update()
-          return saveQuizAnswers(options)
+        .then(function(data) {
+            if(! (data && data.errors) ){
+              removeItemFromVideoQueue($scope.selected_quiz);
+              addItemToVideoQueue($scope.selected_quiz, "quiz");
+              $scope.selected_quiz.update()
+              return saveQuizAnswers(options)
+            }
+            else{
+              angular.extend($scope.quiz_errors, data.errors)
+              return true
+            }
         })
-        .catch(function(errors) {
-          angular.extend($scope.quiz_errors, errors)
-          return true
-        })
+        // .catch(function(errors) {
+        //   angular.extend($scope.quiz_errors, errors)
+        //   return true
+        // })
     }
 
     function saveQuizAnswers(options) {
@@ -504,11 +511,11 @@ angular.module('scalearAngularApp')
         $scope.addOnlineMarker()
       }, { "disable_in_input": true, 'propagate': false });
 
-      shortcut.add("Shift+m", function() {
-        $scope.addOnlineMarker(true)
-      }, { "disable_in_input": true, 'propagate': false });
+      shortcut.add("Shift+m", function() { 
+        $scope.addOnlineMarker(true) 
+      }, { "disable_in_input": true, 'propagate': false }); 
     }
-
+    
     function removeShortcuts() {
       shortcut.remove("i");
       shortcut.remove("m");

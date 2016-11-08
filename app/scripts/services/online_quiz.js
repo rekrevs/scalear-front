@@ -330,8 +330,17 @@ angular.module('scalearAngularApp')
 
       function validate() {
         return validateName()
-          .then(function() {
-            return validateTime()
+          .then(function(data) {
+            if(!(data.name_error ) ){
+              return validateTime()
+              .catch(function(errors){
+                console.log(errors)
+                return {errors: errors}
+              })
+            }
+            else{
+                return {errors: data}
+            }
           })
       }
 

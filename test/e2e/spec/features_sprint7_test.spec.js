@@ -355,17 +355,23 @@ describe("Allow students to change question time",function(){
             student_lec.lecture(1).type_time("01:00:00")
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+	        student_lec.lecture(1).type_time("01:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
             student_lec.lecture(1).type_time("00:04:00")
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-            // expect(student_lec.lecture(1).items.count()).toEqual(5)
 			browser.refresh()
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
-			// student_lec.lecture(1).discussion(1).delete()
-   //          expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-
+		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
+		it("should delete discussion post",function(){
+			student_lec.lecture(1).discussion(1).delete()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 		})
 		it("should logout",function(){
 			student_lec.close_timeline()

@@ -60,12 +60,12 @@ var Lecture = function (elem) {
 
 Lecture.prototype = Object.create({}, {
 	confused:{get:function(){return this.field.all(by.name('confused-timeline-item'))}},
-	notes:{get:function(){return this.field.all(by.name('notes-timeline-item'))}},
+	notes:{get:function(){return this.field.all(by.css('[name="notes-timeline-item"]'))}},
 	note:{value:function(num){return this.notes.get(num-1)}},
 	note_area:{get:function(){return this.field.element(by.className("editable-controls")).element(by.tagName("textarea"))}},
 	type_note:{value:function(text){
 		element(by.css('[ng-model="$data"]')).clear().sendKeys(text).sendKeys(protractor.Key.ENTER)
-		
+
 	}},
 	edit_note:{value:function(num){
 		this.note(num).element(by.className('ng-binding')).click()

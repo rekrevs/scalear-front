@@ -4,6 +4,7 @@ var CourseList = require('./pages/course_list');
 var Students = require('./pages/teacher/students');
 var AccountInformation = require('./pages/account_information');
 var refresh = require('./lib/utils').refresh;
+var sleep = require('./lib/utils').sleep;
 var Login = require('./pages/login');
 var params = browser.params;
 

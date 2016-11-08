@@ -2,7 +2,7 @@
 var Question = function(elem){
 	this.field = elem
 }
-Question.prototype= Object.create({},{	
+Question.prototype= Object.create({},{
 	answers:{get:function(){return this.field.all(by.tagName('input'))}},
 	mark_answer:{value:function(num){this.answers.get(num-1).click()}},
 	free_text_area:{get:function(){return this.field.element(by.tagName('textarea'))}},
@@ -58,11 +58,11 @@ Question.prototype= Object.create({},{
 			            browser.driver.actions().dragAndDrop(arrow[0], arrow[2]).perform()
 			          else if(text == 'answer 2')
 			            browser.driver.actions().dragAndDrop(arrow[1], arrow[2]).perform()
-			        }) 
+			        })
 			    })
 		    })
-	  	}	
-	}}	
+	  	}
+	}}
 })
 
 var QuizPage= function(){}
@@ -73,10 +73,11 @@ QuizPage.prototype=Object.create({},{
 	save_button:{get:function(){return element(by.buttonText('Save'))}},
 	next_button:{get:function(){return element(by.id('next_button'))}},
 	save:{value:function(){return this.save_button.click()}},
-	submit:{value:function(){this.submit_button.click()}},	
+	submit:{value:function(){this.submit_button.click()}},
 	next:{value:function(){this.next_button.click()}},
 	status:{get:function(){return element(by.binding('status.attempts')).getText()}},
-	optional_tag:{get:function(){return element(by.className('label'))}},
+	// optional_tag:{get:function(){return element(by.className('label'))}},
+	optional_tag:{get:function(){return element(by.css('[ng-if="quiz && !quiz.graded"]'))}},
 	incorrect:{get:function(){return element.all(by.className('incorrect'))}},
 	correct:{get:function(){return element.all(by.className('correct'))}},
 	under_review:{get:function(){return element.all(by.className('under_review'))}},

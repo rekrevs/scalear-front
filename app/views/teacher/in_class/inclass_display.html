@@ -43,7 +43,9 @@
             </div>
             <div ng-if="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')" class="question_block">
                 <div class="quiz" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-                    <div style="padding-left:5px;" ng-bind-html="selected_timeline_item.data.title"></div>
+                    <div style="padding-left:5px;"  ><span ng-bind-html='selected_timeline_item.data.title'></span> 
+                      <span ng-if="selected_timeline_item.data.question_type == 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span>
+                  </div>
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
@@ -179,7 +181,7 @@
             <button ng-class="button_class" ng-click="nextSubItem()" class="next_btn button reall-tiny secondary"><i class="fi-next" /></button>
         </div>
         <div class="bottom-right no-padding-top right">
-            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray; background:black">{{min_counter +':'+ sec_counter}}</button>
+            <button ng-disabled="true" ng-class="button_class" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:white; background:black">{{min_counter +':'+ sec_counter}}</button>
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished" ; ng-click="togglePause()"><span translate>{{button_names[6]}}</span></button>
             <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished" ; ng-click="togglePause()"><span translate>{{button_names[7]}}</span></button>
             <span ng-hide="selected_item.class_name=='quiz'">

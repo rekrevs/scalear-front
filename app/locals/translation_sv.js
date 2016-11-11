@@ -20,8 +20,8 @@ var translation_sv={
     duration: "Längd",
     video: "Video",
     videos: "videos",
-    inclass_lecture: "I klassrummet Video",
-    distance_peer_lecture: "Distance-peer Video(t)",
+    inclass_lecture: "I klassrummet video",
+    distance_peer_lecture: "Distance-peer video",
     customlink:"Länk",
     customlinks:"Länkar",
     title: "Titel",
@@ -164,16 +164,16 @@ var translation_sv={
     administration: "Administrera",
     add_teacher: "Lägg till lärare",
     student_list: "Lista av studenter",
-    join_course: "Delta i en ny kurs (student)(t)",
-    new_course: "Create a new course (teacher)(t)",
+    join_course: "Delta i en ny kurs (elev)",
+    new_course: "Skapa en ny kurs (lärare)",
     review: "Bedöm",
     register:{
       teacher: "Lärare, registrering",
       student: "Student, registrering"
     },
-    teacher:"For Teachers(t)",
-    student:"For Students(t)",
-    int_video:"New to ScalableLearning? Please watch a short introductory video to help you get started.(t_",
+    teacher:"För lärare",
+    student:"För elever",
+    int_video:"Ny på ScalableLearning? Prova att se en kort introduktions-video för att komma igång fortare.",
   },
   content_navigator:{
     customlink:"@:global.customlink",
@@ -252,7 +252,7 @@ var translation_sv={
     leave_feedback:"Ge oss alla detaljer. Ju mer vi vet, dess då lättare och bättre kan vi hjälpa dig.",
     course_content: "Mitt kursinnehåll",
     system: "Scalable Learnings webbplats",
-    none: "Please select one...",
+    none: "Var god välj en...",
     no_access: "Jag får inte access till mitt konto",
     question_before_sign: "Innan jag registrerar mig har jag en fråga",
     request_feature: "Jag skulle vilja föreslå ny funktionalitet",
@@ -273,19 +273,33 @@ var translation_sv={
     add_course_by_choosing_part_2: " för att delta i {{short_name}}. Om du har några frågor, var god använd 'Support' formuläret under menyn 'Hjälp'.",
     add_course_by_url: " Följ denna länk",
     sincerely:"Vänliga hälsningar",
-    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:(t)",
-    if_problem:'if there are problems:(t)',
-    ask_student:'Ask	the	student to(t)',
-    check_spam:'check	SPAM	filters(t)',
-    conf_email:'for	the	confirmation	email.(t)',
-    enroll_manual:'enroll	manually(t)',
-    by_go: 'by	going	 to(t)',
-    and_joining:'and	joining	 with	the enrollment key(t)',
-    contact: 'Contact	support(t)',
-    from_help: 'from	the	Help	menu.(t)',
-    guest_stu:'Guest	Students:(t)',
-    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to(t)',
-    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key(t)'
+
+    to_get_started:"För	att	få	igång	era	eleverna,	skicka	följande	email	till	er	klass:",
+
+    if_problem:'om där uppstår problem:',
+
+    ask_student:'Be	eleven	att',
+
+    check_spam:'kontrollera	SPAM	filtren',
+
+    conf_email:'för	konfirmations-mail.',
+
+    enroll_manual:'registrera	manuellt',
+
+    by_go: 'genom	att	 gå	 till',
+
+    and_joining:'och	gå	 med	 genom	 att	 använda	registrerings-nyckeln',
+
+    contact: 'Kontakta	support',
+
+    from_help: 'från	Hjälp-menyn.',
+
+    guest_stu:'Gäststudent:',
+
+    you_may:'Du 	kan	invitera	andra	att	gå	med	din	 kurs	som	gäster	genom	att	 gå	till',
+
+    guest_may:'Gäster	kan	se	allt	online	material,	men	deras	svar	och	frågot	kommer	inte	 att	synas	för	läraren.	Gäster	kan	registrera	sig	via	länken	ovan	eller	med	en	registrerings-nyckel	för	gäster'
+
   },
   account:{
     password:{
@@ -307,7 +321,7 @@ var translation_sv={
     last_name: "Efternamn",
     screen_name: "Ditt online-namn",
     university: "Skola eller universitet",
-    saml_disable_edit: "Name, email, and school information provided by UNIVERSITY. If you need to change this information, please contact UNIVERSITY technical support.(t)",
+    saml_disable_edit: "Namn, email och information tillhandahållen av högskolan/universitet. Om du behöver ändra något i denna info var vänlig ta kontakt med högskolans/universitetets tekniska support.",
     first_day: "Första dagen i veckan för kalendern",
     link: "Hemsida",
     security: "Säkerhet",
@@ -458,37 +472,39 @@ var translation_sv={
     please_try_or_refresh:"Var god försök igen eller tryck på uppdatera-knappen (refresh) nedan",
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
-    multiple_choice:"multiple choice(t)",
+    multiple_choice:"multipla val",
   },
   distance_peer:{
-    invited: 'Invite a student to Join a Distance Peer Session(t)' ,
-    invited_instruction: 'Choose a student(t)' ,
-    distance_peer_instruction: 'Please call up your partner while you do these questions so you can discuss them in real-time. Remember that for the Individual quizzes you are both supposed to answer on your own, but when you get to the Group part of the quiz you are encouraged to discuss the answers together.(t)', 
-    invited_by: 'You are invited by(t)' ,
-    invited_by_instruction: 'Click on button of student you want to join (t)' ,
-    wait_for_acceptance: 'Wait For Acceptance(t)' ,
-    wait_for_acceptance_instruction: 'Wait For Acceptance from student or you cancel the invitation(t)' ,
-    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session(t)' , 
-    invite_another_button: "Invite another student to join(t)",
-    video_stage: 'Please watch the video.(t)', 
-    intro_stage: "Quiz:Intro(t)", 
-    self_stage: 'Quiz:Self(t)', 
+    invited: 'Bjud in en elev för en Distance Peer session' ,
+    invited_instruction: 'Välj en elev' ,
+    distance_peer_instruction: 'Ring upp din partner medans du går igenom frågorna så att ni kan diskutera dem i realtid. Kom ihåg att för individuella quiz så ska ni svara var för sig, men för grupp-delen av ett quiz så uppmuntras ni att diskutera svaret sinsemellan.', 
+    invited_by: 'Du är inbjuden' ,
+    invited_by_instruction: 'Tryck på knappen för den elev du vill samarbeta med ' ,
+    wait_for_acceptance: 'Vänta på acceptans' ,
+    wait_for_acceptance_instruction: 'Vänta på acceptans från elev eller inhibera inbjudan ' ,
+    waiting_response_of_back_end: 'Kontrollera om du är inbjuden att delta i en Distance Peer session ' , 
+    invite_another_button: "Bjud in en annan elev",
+    video_stage: 'Var god se videon.', 
+    intro_stage: "Quiz:Intro", 
+    self_stage: 'Quiz:Själv', 
     multiple_choice: '@:inclass.multiple_choice',
-    group_stage: 'Quiz:Group(t)', 
-    end_video_stage: 'Quiz:End(t)',
-    end_session: "End Distance Peer Instruction(t)",
-    in_distance_peer: 'You are participating in a distance peer instruction lesson with {{name}}.(t)', 
-    the_another_student_finished_status: '{{name}} finished this status, you can resume(t)', 
-    waiting_the_another_student_to_finish: 'Waiting {{name}} to finish this status(t)', 
-    click_on_button_below_to_end_session: 'Click on button below to end distance peer session(t)',
-    message_video: 'Please watch the video and complete the quizzes.(t)',
-    message_quiz_intro: 'Please watch the quiz introduction.(t)',
-    message_quiz_end: 'Please watch the quiz end.(t)',
-    message_quiz_self: 'Please answer the quiz on your own. (Do not discuss it with {{name}} at this time.)(t)',
-    message_quiz_group: 'Please discuss your answer with {{name}} and choose your final answer. (You do not have to choose the same answers.)(t)',
-    prevent_seek_forward: 'you can not seek to time after quiz(t)',
-    can_not_leave_this_part: '{{name}} did not finish this status, you can not go to the next status', 
-    other_student_ended_session: '{{name} ended the distance peer session} (t)',
+    group_stage: 'Quiz:Grupp', 
+    end_video_stage: 'Quiz:Slut',
+    end_session: "Avsluta Distance Peer sessionen",
+    in_distance_peer: 'Du deltar i en Distance Peer session med namnet {{name}}.', 
+    the_another_student_finished_status: '{{name}} har slutfört denna del, du kan fortsätta', 
+    waiting_the_another_student_to_finish: 'Väntar på att {{name}} ska slutföra denna del', 
+    click_on_button_below_to_end_session: 'Klicka på knappen nedan för att avsluta Distance Peer sessionen',
+    message_video: 'Var god se filmen och besvara quizzarna.',
+    message_quiz_intro: 'Var god se quiz-introduktionen.',
+    message_quiz_end: 'Var god se den avslutande delen.',
+
+    message_quiz_self: 'Var god besvara detta quiz på egen hand. (Diskutera det inte med {{name}} i detta steg.)',
+    message_quiz_group: 'Var god diskutera dit svar med {{name}} och välj ett slutligt svar. (Ni behöver inte välja samma svar.)',
+
+    prevent_seek_forward: 'du kan inte spola fram filmen till en tidpunkt efter ett quiz',
+    can_not_leave_this_part: '{{name}} har inte avslutat denna del än, så du kan inte fortsätta till nästa del', 
+    other_student_ended_session: '{{name}} avslutade Distance Peer sessionen',
   },
   editor:{
     explanation: "Förklaring",
@@ -531,7 +547,7 @@ var translation_sv={
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
         click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering",
-        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing(t)"
+        click_add_note: "Klicka eller skriv 'm' för att lägga till en notering. Tryck 'shift-m' för att lägga till en notering och fortsätta uppspelningen"
     },
     drag:{
         start: "Start",
@@ -570,7 +586,7 @@ var translation_sv={
         duration: "@:global.duration",
         details: "Detaljer",
         video:"@:global.video",
-        video_type: "Video Type(t)",
+        video_type: "Video-typ",
         add_video: "Lägg till länk till videon",
         add_description: "Lägg till beskrivning",
         title:"@:global.title",
@@ -611,7 +627,7 @@ var translation_sv={
         add_header: "Lägg till rubrik",
         add_module: "Lägg till modul",
         preview_student:"@:global.preview_student",
-        add_note : 'Add Note(t)'
+        add_note : 'Lägg till en notering'
     }
   },
   lectures:{
@@ -637,7 +653,7 @@ var translation_sv={
         marker:"@:global.marker",
         watched: "Sedda",
         quizzes: "quizzar",
-        required_quizzes: "required quizzes(t)"
+        required_quizzes: "erfoderliga quiz"
     },
     button:{
         ask_question: "Ställ en fråga",
@@ -646,7 +662,7 @@ var translation_sv={
         exit_fullscreen: "Gå ur helskärmsläge",
         fullscreen: "Helskärm",
         check_answer: "Kontrollera svaret",
-        start_distance_peer: "Start Distance Peer(t)",
+        start_distance_peer: "Starta Distance Peer",
         submit: "@:button.submit",
     },
     tooltip:{
@@ -707,7 +723,7 @@ var translation_sv={
     tooltip:{
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
-        quizzes_optional_solved: "quizzes optional solved(t)",
+        quizzes_optional_solved: "extra quiz lösta",
         watched_video: "Sett"
     },
     popover:{
@@ -814,7 +830,7 @@ var translation_sv={
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
         enrollment_url: "URL för registrering",
-        course_link: "Course Link(t)",
+        course_link: "Kurslänk",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
         receive_due_date_email: "Få påminnelse om kommande senaste färdigdatum.",
@@ -883,11 +899,11 @@ var translation_sv={
   },
   statistics:{
     statistics: "Statistik",
-    administration: "Administration(t)",
+    administration: "Administration",
     statistics_dashboard: "Statistikpanelen",
     registration: "Registrering",
-    report_period: "Report Period(t)",
-    generate_report: "Generate Report(t)",
+    report_period: "Rapport-period",
+    generate_report: "Generera rapport",
     login: "@:navigation.login",
     lecture_views: "Videos visade",
     questions_asked: "Frågor ställda",

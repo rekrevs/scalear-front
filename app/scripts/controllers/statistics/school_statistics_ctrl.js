@@ -1,8 +1,18 @@
 angular.module('scalearAngularApp')
-  .controller('schoolStatisticsCtrl', ['$scope', 'Kpi', 'Page', '$rootScope', '$translate', '$modal', '$q', 'ScalearUtils', function($scope, Kpi, Page, $rootScope, $translate, $modal, $q, ScalearUtils) {
+  .controller('schoolStatisticsCtrl', ['$scope', 'Kpi', 'Page', '$rootScope', '$translate', '$modal', '$q', 'ScalearUtils', 'UserSession','User', function($scope, Kpi, Page, $rootScope, $translate, $modal, $q, ScalearUtils, UserSession, User) {
 
     Page.setTitle('statistics.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
+    $scope.subdomains = ["it.uu.se", "physic.uu.se"]
+
+    UserSession.getCurrentUser()
+      .then(function(user) {
+        User.getSubdomains({ id: user.id },
+          function(data) {
+            $scope.subdomains = data.subdomains
+          })
+      })
+
 
     $scope.show_statistics = false;
     $scope.report = {}
@@ -12,6 +22,7 @@ angular.module('scalearAngularApp')
     var days_in_week = 7;
     var default_report_duration = 4 //weeks
     $scope.report.start_date.setDate($scope.report.end_date.getDate() - (days_in_week * default_report_duration));
+    $scope.report.selected_domain = ""
 
     function validateDate() {
       var deferred = $q.defer()
@@ -43,7 +54,8 @@ angular.module('scalearAngularApp')
 
           Kpi.readTotalsForDuration({
               start_date: $scope.report.start_date,
-              end_date: $scope.report.end_date
+              end_date: $scope.report.end_date,
+              domain: $scope.report.selected_domain
             },
             function(data) {
               console.log(data)
@@ -57,7 +69,6 @@ angular.module('scalearAngularApp')
 
               $scope.course_data_array = []
               angular.forEach($scope.course_data, function(value, key) {
-                console.log(value)
                 value["id"] = key
                 value["total_view"] = ScalearUtils.toHourMin(value["total_view"])
                 $scope.course_data_array.push(value)
@@ -77,7 +88,8 @@ angular.module('scalearAngularApp')
     $scope.exportCSV = function() {
       Kpi.exportSchoolStatistics({
         start_date: $scope.report.start_date,
-        end_date: $scope.report.end_date
+        end_date: $scope.report.end_date,
+        domain: $scope.report.selected_domain
       })
     }
   }]);

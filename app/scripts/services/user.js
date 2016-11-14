@@ -20,6 +20,9 @@ angular.module('scalearAngularApp')
         'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers},
         'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
         'userExist': { method: 'GET', headers: headers , params: {action: 'user_exist'}},
+        'getSubdomains': { method: 'GET', headers: headers , params: {action: 'get_subdomains'}},
+
+
       });
 
 }]);

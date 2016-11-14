@@ -4,16 +4,28 @@
 <section class='adminUni' ng-show="current_user">
   {{current_user.university}} ({{current_user.email.split("@")[1]}})
 </section>
-<section>
+<section ng-if="subdomains">
+  <ul>
+    <li>
+      <input type="radio" name="domain-radio" ng-model="report.selected_domain" value=""/>
+      <span>All</span>
+    </li>
+    <li ng-repeat="domain in subdomains">
+      <input type="radio" name="domain-radio" ng-model="report.selected_domain" value="{{domain}}"/>
+      <span>Limit to <b>{{domain}}</b> email addresses</span>
+    </li>
+  </ul>
+</section>
+<section class="adminDates">
   <span translate>statistics.report_period</span>
   <span>
-        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
-        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
+    <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 15%;" />
+    <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
   </span>
   <span translate>statistics.to</span>
   <span>
-        <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
-        <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
+    <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.end_date" ng-required="true" ng-class="{error: errors.end_start}" style="display: inline;width: 15%;"/>
+    <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
   </span>
   <button ng-click="showStatistics()" ng-disabled="loading" class="button adminBtn"><span translate>statistics.generate_report</span></button>
 </section>

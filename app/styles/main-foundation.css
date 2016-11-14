@@ -2674,7 +2674,7 @@ body.ngdialog-open { overflow: initial !important; }
   font-size: 2.5rem;
   margin: .5rem 1.7rem .9rem 1.7rem;
 }
-.adminUni + section{
+.adminDates{
   padding-bottom: 1.25rem;
   border-bottom: 1px solid black;
   margin: .5rem 1.7rem;

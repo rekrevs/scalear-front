@@ -228,11 +228,14 @@ angular.module('scalearAngularApp')
         } else if($scope.inclass_status == 3) {
           group_answers.push(answer)
         }
-      } else {
+      } 
+      else {
         if($scope.inclass_status == 2) {
-          self_answers.splice(self_answers.indexOf(answer), 1)
+          // self_answers.splice(self_answers.indexOf(answer), 1)
+          self_answers = self_answers.filter(function(a) {return a.id != answer.id})          
         } else if($scope.inclass_status == 3) {
-          group_answers.splice(group_answers.indexOf(answer), 1)
+          // group_answers.splice(group_answers.indexOf(answer), 1)
+          group_answers = group_answers.filter(function(a) {return a.id != answer.id})
         }
         answer.selected = false
       }

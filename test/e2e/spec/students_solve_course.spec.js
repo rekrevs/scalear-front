@@ -25,7 +25,7 @@ var student_lec = new StudentLecture()
 var student_quiz = new StudentQuiz()
 
 describe("Solve Course",function(){
-	xdescribe("Teacher",function(){
+	describe("Teacher",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
@@ -37,18 +37,21 @@ describe("Solve Course",function(){
 		it("should go to edit mode",function(){
 			sub_header.open_edit_mode()
 		})
-		xit("should open first quiz in first module",function(){
+		it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
 
-		xit('make quiz not required', function(){
+		it('make quiz not required', function(){
 					course_editor.change_quiz_useModule_required()
 	        course_editor.change_quiz_required()
 	    })
-
+		it("should increase retries number",function(){
+	    	course_editor.change_quiz_retries(1)
+			expect(course_editor.quiz_retries.getText()).toEqual("1")
+	    })
 		it('Should open second quiz in first module', function(){
 			navigator.module(1).open()
 			navigator.module(1).item(5).open()
@@ -61,16 +64,17 @@ describe("Solve Course",function(){
 			course_editor.change_quiz_inorder()
 		})
 
-		xit("should open first quiz in second module",function(){
-	    	navigator.module(2).item(4).open()
+		it("should open first quiz in second module",function(){
+			navigator.module(2).open()
+			navigator.module(2).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
-		xit('should make quiz not required', function(){
+		it('should make quiz not required', function(){
 					course_editor.change_quiz_useModule_required()
 	        course_editor.change_quiz_required()
 	    })
-		xit("should increase retries number",function(){
+		it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
 			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
@@ -80,7 +84,7 @@ describe("Solve Course",function(){
 		})
 	})
 
-	xdescribe("First Student",function(){
+	describe("First Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student1.email, params.password)
 		})
@@ -200,8 +204,9 @@ describe("Solve Course",function(){
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+		        // video.current_time.then(function(result){expect(result).toEqual("0:04:46")} )
+		        video.current_time.then(function(result){expect(result).not.toEqual("0:00:00")} )
 			})
-
 			it('should go to the second lecture', function(){
 				student_lec.next()
 			})
@@ -252,11 +257,11 @@ describe("Solve Course",function(){
 			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
-			it("should check explanation",function(){
-				student_lec.show_explanation(2)
+			it("should check explanation",function(){  ///     the answer is correct, all explanaation are viewed 
+				// student_lec.show_explanation(2)
 				// expect(student_lec.explanation_title).toContain("Correct")
-				expect(student_lec.explanation_content).toContain("Correct")
-				expect(student_lec.explanation_content).toContain("explanation 2")
+				expect(student_lec.explanation_content_num(2)).toContain("Correct")
+				expect(student_lec.explanation_content_num(2)).toContain("explanation 2")
 			})
 			it('wait for the voting question', function(){
 				video.play()
@@ -650,9 +655,13 @@ describe("Solve Course",function(){
 				expect(student_lec.notification).toContain("Correct")
 			})
 			it("should check explanation",function(){
-				student_lec.show_explanation(2)
-				expect(student_lec.explanation_title).toContain("Correct")
-				expect(student_lec.explanation_content).toContain("explanation 2")
+				// student_lec.show_explanation(2)
+				// expect(student_lec.explanation_title).toContain("Correct")
+				// expect(student_lec.explanation_content).toContain("explanation 2")
+				expect(student_lec.explanation_content_num(2)).toContain("Correct")
+				expect(student_lec.explanation_content_num(2)).toContain("explanation 2")
+
+				
 			})
 			it('wait for the voting question', function(){
 				video.play()
@@ -773,6 +782,7 @@ describe("Solve Course",function(){
 		it('should open first course', function(){
 			course_list.open()
 			course_list.open_student_course(1)
+			navigator.module(1).item(1).open()
 		})
 		describe("First Module",function(){
 			it("should seek video to 9%",function(){

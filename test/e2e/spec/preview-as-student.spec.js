@@ -21,8 +21,13 @@ var sub_header = new SubHeader()
 describe("go to preview as student mode", function(){
     it('should sign in as teacher', function(){
         login_page.sign_in(params.teacher1.email, params.password)
-        // course_list.open()
-        // course_list.open_teacher_course(2)
+    })
+    it("should open course", function() {
+      course_list.open()
+      course_list.open_teacher_course(2)
+    })
+    it("should go to edit mode", function() {
+      sub_header.open_edit_mode()
     })
 
     it('should create_course', function(){
@@ -115,6 +120,7 @@ describe("go to preview as student mode", function(){
 
     describe('Should be in the Same lecture', function(){
       it('should be in lecture 1 in student preview', function(){
+        browser.refresh()
         navigator.module(1).open()
         navigator.module(1).item(1).open()
         element(by.className('orange')).click();

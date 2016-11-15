@@ -154,9 +154,16 @@ LecturePage.prototype=Object.create({},{
 	text_drag_container:{get:function(){return this.quiz_layer.all(by.className("drag-sort"))}},
 	text_drag_items:{get:function(){return this.text_drag_container.all(by.tagName('li'))}},
 	text_drag_arrows:{get:function(){return this.text_drag_container.all(by.className('looks-like-a-hook'))}},
+	
 	explanation_title:{get:function(){return element(by.className('popover-title')).getText()}},
 	explanation_popover:{get:function(){return element(by.className('popover'))}},
 	explanation_content:{get:function(){return this.explanation_popover.getText()}},
+
+	explanation_title_num:{value:function(num){return element.all(by.className('popover-title')).get(num-1).getText()}},
+	// explanation_popover_num:{get:function(num){return element.all(by.className('popover')).get(num-1) }},
+	explanation_content_num:{value:function(num){return element.all(by.className('popover')).get(num-1).getText() }},
+
+	
 	show_explanation:{value:function(num){
 		browser.driver.actions().mouseMove(this.answers.get(num-1)).perform();
 		browser.driver.actions().mouseMove({x: 5, y: 5}).perform();

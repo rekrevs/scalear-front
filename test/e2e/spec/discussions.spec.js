@@ -14,14 +14,30 @@ var login_page = new Login()
 var student_lec = new StudentLecture()
 
 describe("Discussions",function(){
-	// describe("Teacher",function(){
-	// 	it("should logout",function(){
-	// 		header.logout()
-	// 	})
-	// })
 	describe("First Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student1.email, params.password)
+		})
+		var navigator = new ContentNavigator(1)
+		it('check course view controls appears all the time', function(){
+			course_list.open()
+			expect(element.all(by.model('searchText')).isDisplayed()).toEqual([ true ]);
+			browser.executeScript('$("body").scrollTop(1000);') //Note that your code is represented as a String here!         
+			expect(element.all(by.model('searchText')).isDisplayed()).toEqual([ true ]);
+		})
+		it('check feedback doesnot show course in options', function(){
+			header.open_support()
+			element(by.css('[ng-model="selected_type"]')).all(by.tagName('option')).count().then(function(result){expect(result).toEqual(1)} )
+			header.close_support()
+		})
+
+		it('should open first course', function(){
+			course_list.open_student_course(1)
+		})
+		it('check feedback does show course in options', function(){
+			header.open_support()
+			element(by.css('[ng-model="selected_type"]')).all(by.tagName('option')).count().then(function(result){expect(result).toEqual(2)} )
+			header.close_support()
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
@@ -33,7 +49,35 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).item(1).open()
 			navigator.close()
+			// browser.refresh()
+		})
+		it('should add a public question', function(){
+			student_lec.add_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(1).type_discussion("Public Question")
+            student_lec.lecture(1).type_time("00:00:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+            student_lec.lecture(1).type_time("01:00:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+	        student_lec.lecture(1).type_time("01:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(true)
+            student_lec.lecture(1).type_time("00:04:00")
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
+            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
 			browser.refresh()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
+		it("should delete discussion post",function(){
+			student_lec.lecture(1).discussion(1).delete()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 		})
 		it("should seek to 15%",function(){
 			video.seek(15)

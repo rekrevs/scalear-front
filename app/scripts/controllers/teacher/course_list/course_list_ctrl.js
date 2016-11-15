@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout) {
 
     Page.setTitle('navigation.courses')
     Page.startTour();
@@ -9,15 +9,24 @@ angular.module('scalearAngularApp')
 
     $scope.column='name'
     $scope.course_filter = '!!'
+    $scope.teacher_courses = []
+    $scope.student_courses = []
 
-    var getAllCourses=function(){
-
-      $scope.teacher_courses = null
-      $scope.student_courses = null
-      Course.index({},
+  var getAllCourses=function(offset, limit){ 
+      $scope.course_limit =  limit, 
+      $scope.course_offset = offset 
+      Course.index({ 
+        offset:$scope.course_offset,  
+        limit: $scope.course_limit 
+      }, 
       function(data){
-        $scope.teacher_courses = JSON.parse(data.teacher_courses)
-        $scope.student_courses = JSON.parse(data.student_courses)
+        $scope.teacher_courses = $scope.teacher_courses.concat(JSON.parse(data.teacher_courses)  )
+        $scope.student_courses = $scope.student_courses.concat(JSON.parse(data.student_courses)  )
+        
+        $scope.total = data.total 
+        $timeout(function(){ 
+            $scope.getRemainingCourse() 
+        }) 
     // Code for removing finshed courses when chosing "All Courses" from main menu
     //     $scope.courses.forEach(function(course){
     //        if(!course.ended){
@@ -27,6 +36,16 @@ angular.module('scalearAngularApp')
     //  })
      })
     }
+
+    $scope.getRemainingCourse = function(){ 
+      if($scope.course_offset+$scope.course_limit<=parseInt($scope.total)) 
+          getAllCourses($scope.course_offset+$scope.course_limit,$scope.course_limit)  
+      else{ 
+          // $scope.loading_lectures=false  
+          $log.debug("no more") 
+      //  disableInfinitScrolling() 
+      } 
+    } 
 
     var removeFromCourseList=function(course, user_type){
       var courses_var = user_type+"_courses"
@@ -102,6 +121,6 @@ angular.module('scalearAngularApp')
 			$scope.is_reverse = !$scope.is_reverse
 		}
 
-    getAllCourses()
+    getAllCourses(0,10)
 
 }]);

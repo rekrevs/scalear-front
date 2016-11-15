@@ -1,8 +1,11 @@
 <!-- build:css(.tmp/styles) styles/statistics.css -->
 <link rel="stylesheet" href="styles/teacher/statistics.css" />
 <!-- endbuild -->
-<section class='adminUni' ng-show="current_user">
+<section class='adminUni' ng-show="current_user.roles.includes(9)">
   {{current_user.university}} ({{current_user.email.split("@")[1]}})
+</section>
+<section class='adminUni' ng-show="current_user.roles.includes(5)">
+  All
 </section>
 <section ng-if="subdomains">
   <ul>

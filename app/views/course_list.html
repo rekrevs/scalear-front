@@ -46,12 +46,12 @@
       <a class="button tiny green" ui-sref="new_course" translate>courses.list.button.new_course</a>
     </center>
   </div> -->
-  <div ng-if="student_courses">
+  <div ng-if="student_courses.length > 0">
     <h5 class="muted" style="border-bottom: 1px solid lightgray;"><strong>Student</strong></h5>
     <course-item ng-repeat="course in student_courses|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
     <hr />
   </div>
-  <div ng-if="teacher_courses">
+  <div ng-if="teacher_courses.length > 0">
     <h5 class="muted" style="border-bottom: 1px solid lightgray;"><strong>Teacher</strong></h5>
     <teacher-course-item ng-repeat="course in teacher_courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher"></teacher-course-item>
     <hr />

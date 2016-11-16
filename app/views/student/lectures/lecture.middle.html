@@ -121,7 +121,7 @@ ul.connected_blocks {
 						    	</progress-bar>
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass>
 								<div ng-show="fullscreen" class="row with-tiny-padding-top with-tiny-padding-bottom black">
-									<center id="preview_inclass_panel" ng-show ='distance_peer_session_id' style="" >
+									<center id="distance_peer_panel_full_screen" ng-show ='distance_peer_session_id' style="" >
 										<div style="border: 1px solid black;width:96%;background-color: black;color: white;" class="with-margin-bottom">
 											<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
 											  <ul class="connected_blocks">
@@ -155,11 +155,11 @@ ul.connected_blocks {
 								</div>
 					    </video_container>
 				</form>
-                <div ng-show="(distance_peer_status == 3 || distance_peer_status == 4)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px 	grey;margin-top:0.45em;" class="stage_timer">
+                <div ng-show="(distance_peer_status == 3 || distance_peer_status == 4)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px 	grey;margin-top:0.45em;" id="stage_timer_distance_peer" class="stage_timer">
                     <center>{{status_counter | format}}</center>
                 </div>
 				<div ng-show="!fullscreen && passed_requirments && show_progressbar" class="row no-margin with-tiny-margin-top">
-					<center id="preview_inclass_panel" ng-show ='distance_peer_session_id'>
+					<center id="distance_peer_panel" ng-show ='distance_peer_session_id'>
 						<div style="border: 1px solid lightgrey;width:96%" class="with-margin-bottom">
 							<div class="small-12 columns no-padding" style="margin-bottom: 10px;">
 							  <ul class="connected_blocks">

@@ -43,6 +43,7 @@
   <div ng-repeat="student in invited_by_student" >
     <div ng-click="acceptInvation(student)" class="button" >join {{student[0]}}</div>
   </div>
+  <div>{{cancelled_invited_by_student}}</div> 
   <div>
     <a id="invite" ng-click="caneclAllDistancePeerSession();changeToInviteStatus()" class="button success tiny right" translate>distance_peer.invite_another_button</a>
     <a class="button alert tiny right with-tiny-margin-right" ng-click="caneclAllDistancePeerSession();closeModal()" translate>button.cancel</a>

@@ -10,12 +10,8 @@ var Login = require('./pages/login');
 var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
-
-// var Inclass = require('./pages/teacher/inclass');
-// var inclass_page = new Inclass()
 var StudentDP = require('./pages/student/inclass_dp');
-var student_dp = new StudentDP()
-
+var StudentLecture = require('./pages/student/lecture');
 var InclassReviewModel = require('./pages/teacher/inclass_review_model');
 var scroll_top = require('./lib/utils').scroll_top;
 
@@ -31,6 +27,8 @@ var quiz = new NormalQuiz();
 var content_items = new ContentItems()
 var navigator = new ContentNavigator(1)
 var review_model = new InclassReviewModel
+var student_dp = new StudentDP()
+var student_lec = new StudentLecture()
 
 var d_q3_y = 190;
 
@@ -57,11 +55,13 @@ student2_browser = utils.new_session()
                             // Student 2 finish video state and both go intro video
 
                           // Part 3
-                            // student 1 refresh the page and intro state 
+                            // student 1 refresh the page and seek to intro state 
                             // Student 1 & 2 finsih intro state go to self quiz state
 
                           // Part 4
                             // student 1 refresh the page and self quiz state 
+                            // student 1 try to play and is prevented
+                            // student 1 try to check answer without solving and is prevented                             
                             // Student 1 & 2 finsih self quiz state go to group quiz state
 
                           // Part 5
@@ -78,11 +78,8 @@ student2_browser = utils.new_session()
 
 
 
-// Part 1
-  // Student 1 invite student 2 and cancel
-  // Student 1 invite student 2 and student 2 refuse 
-  // Student 1 invite student 2 also invite student 1 and both begin distance peer session
-  describe('Invitation', function(){  
+
+  describe('Sign In', function(){  
     describe('Student 1', function(){
       it("should go to lecture",function(){
         utils.switch_browser(student_browser)
@@ -95,7 +92,6 @@ student2_browser = utils.new_session()
         navigator.module(1).open()
       })
     })
-
     describe('Student 2 ', function(){
       it("should go to student mode",function(){
         utils.switch_browser(student2_browser)
@@ -107,6 +103,47 @@ student2_browser = utils.new_session()
       it('should open first lecture in first module', function(){
         navigator.open()
         navigator.module(1).open()
+        // sleep
+      })
+    })
+  })
+
+// Part 1
+  // Student 1 invite student 2 and cancel  
+  // Student 1 invite student 2 and student 2 refuse (lesa)
+  // Student 1 invite student 2 also invite student 1 and both begin distance peer session
+  describe('Invitation', function(){  
+    describe('Student 1', function(){
+      it("should invite student 2",function(){
+        utils.switch_browser(student_browser)
+        student_dp.wait_modal()
+        expect(student_dp.modal_student(1).getText()).toContain(params.student2.email)
+        student_dp.modal_invite_student(1)
+        expect(student_dp.modal.getText()).toContain("Wait For Acceptance")
+      })
+    })
+    describe('Student 2 ', function(){
+      it("should check student 1 invitation",function(){
+        utils.switch_browser(student2_browser)
+        browser.refresh()
+        student_dp.wait_modal()
+        expect(student_dp.modal.getText()).toContain("You are invited by")
+      })
+    })
+    describe('Student 1', function(){
+      it("should cancel invitation to student 2",function(){
+        utils.switch_browser(student_browser)
+        student_dp.modal_invite_another_wait_for_acceptance()
+      })
+    })
+    describe('Student 2 ', function(){
+      it("should accpet student 1 invitation and website show invitation is cancelled",function(){
+        utils.switch_browser(student2_browser)
+        student_dp.wait_modal()
+        expect(student_dp.modal.getText()).toContain("You are invited by")
+        student_dp.modal_accept_invitation()
+        sleep(5000)
+        expect(student_dp.modal.getText()).toContain(" cancelled the invitation")
       })
     })
     describe('Student 1', function(){
@@ -118,1220 +155,344 @@ student2_browser = utils.new_session()
       })
     })
     describe('Student 2 ', function(){
-      it("should check student 1 invitation",function(){
+      it("should accpet student 1 invitation and website show invitation is cancelled",function(){
         utils.switch_browser(student2_browser)
         browser.refresh()
-        sleep(10000)
+        student_dp.wait_modal()
         expect(student_dp.modal.getText()).toContain("You are invited by")
+        student_dp.modal_accept_invitation()
+      })
+    })    
+  })
+
+// Part 2
+  // student 1 try to seek forward and is prevented 
+  // Student 1 finish video state and waiting student 2
+  // Student 2 finish video state and both go intro video
+  describe('Video State', function(){  
+    describe('Student 1', function(){
+      it("should check distance state panel & end peer instruction button are shown",function(){
+        utils.switch_browser(student_browser)
+        video.wait_till_ready()
+        sleep(5000)
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Please watch the video")
+      })
+      it("should try to seek forward and to be prevented",function(){
+        video.seek(99)
+        sleep(1000)
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("you can not seek to time after quiz")
+      })
+      it("should play video and watch video state",function(){
+        video.play()
+        student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("to finish this status")
+        // video.seek(8)
+      })
+      it("should try and to be prevented",function(){
+        video.play()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("did not finish this status, you can not go to the next status")
+      })
+    })
+    describe('Student 2 ', function(){
+      it("should play video and watch video state",function(){
+        utils.switch_browser(student2_browser)
+        video.wait_till_ready()
+        video.seek(3)
+        video.play()
+        student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("to finish this status")
+      })
+    })
+  })
+
+
+// Part 3
+  // student 1 refresh the page and intro state 
+  // Student 1 & 2 finsih intro state go to self quiz state
+  describe('Quiz:Intro State', function(){  
+    describe('Student 1', function(){
+      it("should be able to begin quiz intro state ",function(){
+        utils.switch_browser(student_browser)
+        sleep(7000)
+        // student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+      })
+    })
+    describe('Student 2', function(){
+      it("should be able to begin quiz intro state ",function(){
+        utils.switch_browser(student2_browser)
+        // sleep(7000)
+        // student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
       })
     })
     describe('Student 1', function(){
-      it("should cancel invitation to student 2",function(){
+      it("should refresh page and seek after video state(start time of quiz)",function(){
         utils.switch_browser(student_browser)
-        // browser.refresh()
-
-        expect(student_dp.modal.getText()).toContain("Wait For Acceptance")
-        sleep(10000)
-        // expect(student_dp.modal_cancel_and_invite.outerHTML).toContain("Wait For Acceptance")
-
-        expect(student_dp.modal_cancel_and_invite_another).toContain("Wait For Acceptance")
-
-        // student_dp.modal_cancel_and_invite_another()
-        sleep(2000)
+        browser.refresh()
+        video.wait_till_ready()
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
+        video.seek(8)
+        video.play()
+        student_dp.wait_state_to_finished()
+      })      
+    })
+    describe('Student 2 ', function(){
+      it("should play video and watch intro state",function(){
+        utils.switch_browser(student2_browser)
+        // video.wait_till_ready()
+        video.seek(8)
+        video.play()
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+        student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("to finish this status")
       })
-      it("should cancel invitation to student 2",function(){
-        expect(student_dp.modal.isDisplayed()).toEqual(false)        
+    })    
+  })
+
+// Part 4
+  // student 1 refresh the page and self quiz state 
+  // student 1 try to play and is prevented
+  // student 1 try to check answer without solving and is prevented                             
+  // Student 1 & 2 finsih self quiz state go to group quiz state
+
+  describe('Quiz:self State', function(){  
+    describe('Student 1', function(){
+      it("should be able to begin quiz self state ",function(){
+        utils.switch_browser(student_browser)
+        sleep(7000)
+        // expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        // expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Self")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
       })
-
-
+    })
+    describe('Student 2', function(){
+      it("should be able to begin quiz Self state ",function(){
+        utils.switch_browser(student2_browser)
+        // expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        // expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Self")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
+      })
+    })
+    describe('Student 1', function(){
+      it("should refresh page and seek after video state(start time of quiz)",function(){
+        utils.switch_browser(student_browser)
+        browser.refresh()
+        video.wait_till_ready()
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
+        video.current_time.then(function(result){expect(result).toEqual("0:00:28")} )
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should try to play video and prevented",function(){
+        video.play()
+        expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should try to check quiz without solving  and prevented",function(){
+        student_lec.check_answer()
+        expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should answer quiz",function(){
+        student_lec.mark_answer(1)
+        student_lec.mark_answer(3)
+        student_lec.check_answer()
+        // expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+    })
+    describe('Student 2', function(){
+      it("should answer quiz",function(){
+        utils.switch_browser(student2_browser)
+        student_lec.mark_answer(1)
+        student_lec.mark_answer(3)
+        student_lec.check_answer()
+        // expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
     })
   })
 
+// Part 5
+  // Student 1 & 2 finsih group quiz state go to end state
 
 
-
-
-
-  xdescribe('Teacher start inClass', function(){
-
-    it('Should start in class review First Stage', function(){
-      utils.switch_browser(teacher_browser)
-      inclass_page.start_inclass_review();
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-      expect(review_model.get_block(1).getAttribute('class')).toContain("active")
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-
-
-      // expect(review_model.review_model.isDisplayed()).toEqual(true)
+  describe('Quiz:group State', function(){  
+    describe('Student 1', function(){
+      it("should be able to begin quiz group state ",function(){
+        utils.switch_browser(student_browser)
+        sleep(7000)
+        // expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        // expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Group")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
+      })
+    })
+    describe('Student 2', function(){
+      it("should be able to begin quiz Group state ",function(){
+        utils.switch_browser(student2_browser)
+        // expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        // expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Group")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
+      })
+    })
+    describe('Student 1', function(){
+      it("should refresh page and seek after video state(start time of quiz)",function(){
+        utils.switch_browser(student_browser)
+        browser.refresh()
+        video.wait_till_ready()
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
+        video.current_time.then(function(result){expect(result).toEqual("0:00:28")} )
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(true);
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should try to play video and prevented",function(){
+        video.play()
+        expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should try to check quiz without solving  and prevented",function(){
+        student_lec.check_answer()
+        expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+      it("should answer quiz",function(){
+        student_lec.mark_answer(1)
+        student_lec.mark_answer(3)
+        student_lec.check_answer()
+        // expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
+    })
+    describe('Student 2', function(){
+      it("should answer quiz",function(){
+        utils.switch_browser(student2_browser)
+        student_lec.mark_answer(1)
+        student_lec.mark_answer(3)
+        student_lec.check_answer()
+        // expect(student_lec.notification).toContain("Please choose the correct answer(s)")
+        expect(video.is_paused()).toEqual(true);
+      })
     })
   })
 
-  xdescribe('Student 1 go to intro', function(){
+// Part 6
+  // Student 1 & 2 finsih end state go to intro state
 
-    it("should go to next stage",function(){
-      utils.switch_browser(student_browser)
-      student_inclass_page.refresh()
-    })
 
-    it("should show student inclass intro",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(1).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.intro.getText()).toContain("The in-class question has not started")
-      expect(student_inclass_page.intro.getText()).toContain("Click on 'Next' when the question shows up")
-      expect(student_inclass_page.intro_next_button.isDisplayed()).toEqual(true)
+  describe('Quiz:End State', function(){  
+    describe('Student 1', function(){
+      it("should be able to begin quiz End state ",function(){
+        utils.switch_browser(student_browser)
+        sleep(7000)
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:End")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+        video.play()
+      })
     })
-
-    it("should try to go to next stage student inclass",function(){
-      student_inclass_page.intro_next()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(1).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.intro.getText()).toContain("The in-class question has not started")
-      expect(student_inclass_page.intro.getText()).toContain("Click on 'Next' when the question shows up")
-      expect(student_inclass_page.intro_next_button.isDisplayed()).toEqual(true)
+    describe('Student 2', function(){
+      it("should be able to begin quiz End state ",function(){
+        utils.switch_browser(student2_browser)
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:End")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+        video.play()
+      })
     })
+    describe('Student 1', function(){
+      it("should play the video",function(){
+        utils.switch_browser(student_browser)
+        student_dp.wait_state_to_finished()
+      })      
+    })
+    describe('Student 2 ', function(){
+      it("should play the video",function(){
+        utils.switch_browser(student_browser)
+        student_dp.wait_state_to_finished()
+      })      
+    })    
   })
 
-  xdescribe('Student 2 go to intro', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student2_browser)
-      student_inclass_page.refresh()
+  // Part 7
+    // student 1 & 2 are in the intro state
+    // student 1 end session 
+    // DP session is ended for student 2
+  describe('Quiz:Intro State', function(){  
+    describe('Student 1', function(){
+      it("should be able to begin video state ",function(){
+        utils.switch_browser(student_browser)
+        sleep(7000)
+        // student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Please watch the video")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+      })
     })
-
-    it("should show student inclass intro",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(1).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.intro.getText()).toContain("The in-class question has not started")
-      expect(student_inclass_page.intro.getText()).toContain("Click on 'Next' when the question shows up")
-      expect(student_inclass_page.intro_next_button.isDisplayed()).toEqual(true)
+    describe('Student 2', function(){
+      it("should be able to begin video state ",function(){
+        utils.switch_browser(student2_browser)
+        // sleep(7000)
+        // student_dp.wait_state_to_finished()
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
+        expect(student_dp.distance_peer_panel.getText()).toContain("Please watch the video")
+        expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
+      })
     })
-
-    it("should try to go to next stage student inclass",function(){
-      student_inclass_page.intro_next()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(1).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.intro.getText()).toContain("The in-class question has not started")
-      expect(student_inclass_page.intro.getText()).toContain("Click on 'Next' when the question shows up")
-      expect(student_inclass_page.intro_next_button.isDisplayed()).toEqual(true)
+    describe('Student 1', function(){
+      it("should end distance peer ",function(){
+        utils.switch_browser(student_browser)
+        student_dp.end_distance_peer_click()
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(false);        
+      })
+      it("should logout", function() {
+        header.logout()
+      })      
     })
-  })
-
-  xdescribe('Teacher start Self stage', function(){
-
-
-    it('Should go to the Self Stage', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.next()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(2).getAttribute('class')).toContain("active")
-      // expect(element(by.className('active')).getText()).toContain('Self')
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-    })
-
-  })
-  xdescribe('Student  1 solve Self Qs', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student_browser)
-      student_inclass_page.intro_next()
-    })
-
-    it("should show the self question choices", function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-    })
-
-    it("should vote without selecting any choice",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
-
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-
-      // expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      // expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-      // student_inclass_page.self_next()
-      // expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      // expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-      // student_inclass_page.self_retry()
-
-    })
-
-    it("should select first and third choice",function(){
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.self_choice(1).click()
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.self_choice(3).click()
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-    })
-
-    it("should check that selected answers remain after browser refresh",function(){
-      browser.refresh()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote for selected answer and check selected answers",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_selected_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_selected_choice(2).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.self_next()
-      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-
-    it("should retry quiz student inclass",function(){
-      student_inclass_page.self_retry()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should change selected answer",function(){
-      student_inclass_page.self_choice(1).click()
-      student_inclass_page.self_choice(2).click()
-      sleep(2000)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote with new selected answer and check selected answers",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-
-      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.self_next()
-      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
+    describe('Student 2', function(){
+      it("should wait to distance peer session to be ended",function(){
+        utils.switch_browser(student2_browser)
+        sleep(25000)
+        expect(student_dp.annotation.isDisplayed()).toEqual(true);
+        expect(student_dp.annotation.getText()).toContain("ended the distance peer session")
+        expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(false);        
+      })
+      it("should logout", function() {
+        header.logout()
+      })
     })
   })
-
-  xdescribe('Student 2 solve Self Qs', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student2_browser)
-      student_inclass_page.intro_next()
-    })
-
-    it("should show the self question choices", function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-    })
-
-    it("should vote without selecting any choice",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
-
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-
-
-      // expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      // expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-      // student_inclass_page.self_next()
-      // expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      // expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-      // student_inclass_page.self_retry()
-
-    })
-
-    it("should select first and third choice",function(){
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.self_choice(1).click()
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.self_choice(3).click()
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-    })
-
-    it("should check that selected answers remain after browser refresh",function(){
-      browser.refresh()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote for selected answer and check selected answers",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_selected_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_selected_choice(2).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.self_next()
-      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-
-    it("should retry quiz student inclass",function(){
-      student_inclass_page.self_retry()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.self_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.self_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should change selected answer",function(){
-      student_inclass_page.self_choice(1).click()
-      student_inclass_page.self_choice(2).click()
-      sleep(2000)
-      expect(student_inclass_page.self_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.self_choice(2).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.self_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote with new selected answer and check selected answers",function(){
-      student_inclass_page.self_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(2).getAttribute('class')).toContain("active")
-
-      expect(student_inclass_page.self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.self_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.self_next()
-      expect(student_inclass_page.self_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.self_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-  })
-  xdescribe('Teacher start Group stage', function(){
-
-
-    // it('Should check for solvers count', function(){
-    //   expect(element(by.binding('session_votes')).getText()).toBe('(1/1)')
-    // })
-
-    it('Should go to the Group Stage', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.next()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(3).getAttribute('class')).toContain("active")
-      // expect(element(by.className('active')).getText()).toContain('Group')
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-    })
-
-  })
-  xdescribe('Student 1 solve group Qs', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student_browser)
-      student_inclass_page.self_next()
-    })
-
-    it("should show the group question choices",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-    })
-
-    it("should vote without selecting any choice",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
-
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_note.isDisplayed()).toEqual(true)
-
-    })
-
-    it("should select first and third choice",function(){
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.group_choice(1).click()
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.group_choice(3).click()
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-    })
-
-    it("should check that selected answers remain after browser refresh",function(){
-      browser.refresh()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote for selected answer and check selected answers",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      sleep(2000)
-
-      expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
-
-      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_selected_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_selected_choice(2).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.group_next()
-      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-
-    it("should retry quiz student inclass",function(){
-      student_inclass_page.group_retry()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should change selected answer",function(){
-      student_inclass_page.group_choice(1).click()
-      student_inclass_page.group_choice(2).click()
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote with new selected answer and check selected answers",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.group_next()
-      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-  })
-
-  xdescribe('Student 2 solve group Qs', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student2_browser)
-      student_inclass_page.self_next()
-    })
-
-    it("should show the group question choices",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_note.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-    })
-
-    it("should vote without selecting any choice",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.getText()).toContain("Please choose your answer")
-
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_note.isDisplayed()).toEqual(true)
-
-      
-    })
-
-    it("should select first and third choice",function(){
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.group_choice(1).click()
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      student_inclass_page.group_choice(3).click()
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-    })
-
-    it("should check that selected answers remain after browser refresh",function(){
-      browser.refresh()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote for selected answer and check selected answers",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      sleep(2000)
-
-      expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
-
-      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_selected_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_selected_choice(2).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.group_next()
-      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-
-    it("should retry quiz student inclass",function(){
-      student_inclass_page.group_retry()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_choice(1).getText()).toContain("Answer 1")
-      expect(student_inclass_page.group_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.group_vote_button.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.alert_box.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should change selected answer",function(){
-      student_inclass_page.group_choice(1).click()
-      student_inclass_page.group_choice(2).click()
-      expect(student_inclass_page.group_choice(1).getAttribute('class')).not.toContain("selected")
-      expect(student_inclass_page.group_choice(2).getAttribute('class')).toContain("selected")
-      expect(student_inclass_page.group_choice(3).getAttribute('class')).toContain("selected")
-    })
-
-    it("should vote with new selected answer and check selected answers",function(){
-      student_inclass_page.group_vote()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.get_block(3).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(true)
-
-      expect(student_inclass_page.group_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_self_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.group_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.group_retry_btn.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_next_btn.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage in student inclass",function(){
-      student_inclass_page.group_next()
-      expect(student_inclass_page.group_wait_alert.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.group_wait_alert.getText()).toContain("Please wait for the teacher to continue")
-    })
-  })
-
-  xdescribe('Teacher start Discussion stage', function(){
-
-
-    it('Should go to the Discussion Stage', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.next()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(4).getAttribute('class')).toContain("active")
-
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-      expect(review_model.chart.isDisplayed()).toEqual(true)
-    })
-
-    // it('Should check the chart info', function(){
-    //
-    // })
-
-  })
-
-  xdescribe('Student 1 go to Discussion', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student_browser)
-      student_inclass_page.group_next()
-    })
-
-    it("should show the discussion stage",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-
-
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage",function(){
-      student_inclass_page.discussion_continue()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-  })
-
-
-  xdescribe('Student 2 go to Discussion', function(){
-
-    it("should go to next stage",function(){
-      utils.switch_browser(student2_browser)
-      student_inclass_page.group_next()
-    })
-
-    it("should show the discussion stage",function(){
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-
-
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-
-
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-
-    it("should try to go to next stage",function(){
-      student_inclass_page.discussion_continue()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-  })
-
-  xdescribe('Teacher Start last Stage', function(){
-
-    it('Should go to the Last Stage', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.next()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(5).getAttribute('class')).toContain("active")
-
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-      expect(review_model.chart.isDisplayed()).toEqual(true)
-    })
-
-    xit('Should go to the blackscreen', function(){
-      review_model.next()
-      expect(element(by.className('blackscreen')).getText()).toEqual('Review finished. Press ESC to end')
-
-    })
-
-    xit('Should be back to inClass Review', function(){
-      browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
-      expect(inclass_page.title).toEqual("In-class Review:PI module 1")
-      expect(inclass_page.display_button.isDisplayed()).toEqual(true);
-      expect(inclass_page.display_button.isEnabled()).toEqual(true);
-      var module = inclass_page.module_item(1)
-      expect(module.title).toEqual("PI lecture1 video quizzes")
-      expect(module.inclass_quizzes.count()).toEqual(1)
-      var inclass_quiz = module.inclass_quiz(1)
-      expect(inclass_quiz.title).toEqual("Quiz: PI MCQ QUIZ")
-      expect(inclass_quiz.visibility_box.isSelected()).toEqual(true)
-
-      expect(inclass_page.total_inclass_time).toEqual("8");
-      expect(inclass_page.total_pi_time).toEqual("8")
-      expect(inclass_page.total_pi_quizzes).toEqual("1")
-      expect(inclass_page.total_review_time).toEqual("0")
-      expect(inclass_page.total_review_quizzes).toEqual("0")
-      expect(inclass_page.total_review_discussions).toEqual("0")
-      expect(inclass_page.total_review_surveys).toEqual("0")
-
-    })
-
-  })
-
-  xdescribe('Student 1 should try to continue', function(){
-    it("should try to go to next stage",function(){
-      utils.switch_browser(student_browser)
-      student_inclass_page.discussion_continue()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-  })
-
-  xdescribe('Student 2 should try to continue', function(){
-    it("should try to go to next stage",function(){
-      utils.switch_browser(student2_browser)
-      student_inclass_page.discussion_continue()
-      expect(student_inclass_page.noclass.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.intro.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.self_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.group_answered.isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion.isDisplayed()).toEqual(true)
-      expect(student_inclass_page.get_block(4).getAttribute('class')).toContain("active")
-      expect(student_inclass_page.discussion_self_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_self_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_self_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_self_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_group_selected_choices.count()).toEqual(3)
-      expect(student_inclass_page.discussion_group_selected_choice(1).isDisplayed()).toEqual(false)
-      expect(student_inclass_page.discussion_group_selected_choice(2).getText()).toContain("Answer 2")
-      expect(student_inclass_page.discussion_group_selected_choice(3).getText()).toContain("Answer 3")
-      expect(student_inclass_page.discussion_continue_button.isDisplayed()).toEqual(true)
-    })
-  })
-
-  xdescribe('Teacher should go back', function(){
-
-    it('Should be back to discussions', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.previous()
-
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(4).getAttribute('class')).toContain("active")
-
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-      expect(review_model.chart.isDisplayed()).toEqual(true)
-
-    })
-    it('Should be back to Group', function(){
-      review_model.previous()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(3).getAttribute('class')).toContain("active")
-      // expect(element(by.className('active')).getText()).toContain('Group')
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-
-    })
-    it('Should be back to Self', function(){
-      review_model.previous()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(2).getAttribute('class')).toContain("active")
-      // expect(element(by.className('active')).getText()).toContain('Self')
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-    })
-    it('Should be back to Intro', function(){
-      review_model.previous()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-      expect(review_model.get_block(1).getAttribute('class')).toContain("active")
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-    })
-
-    it('Should try to get before Intro', function(){
-      review_model.previous()
-      expect(review_model.review_model.isDisplayed()).toEqual(true)
-      expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
-      expect(review_model.question_block.isDisplayed()).toEqual(true)
-      expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-      expect(review_model.get_block(1).getAttribute('class')).toContain("active")
-      expect(review_model.get_block_text(1)).toEqual("Intro")
-      expect(review_model.get_block_text(2)).toEqual("Self")
-      expect(review_model.get_block_text(3)).toEqual("Group")
-      expect(review_model.get_block_text(4)).toEqual("Discussion")
-      expect(review_model.get_block_text(5)).toEqual("")
-      expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
-      expect(review_model.chart.isDisplayed()).toEqual(false)
-      expect(review_model.next_button.isDisplayed()).toEqual(true)
-      expect(review_model.prev_button.isDisplayed()).toEqual(true)
-      expect(review_model.exit_button.isDisplayed()).toEqual(true)
-    })
-
-  })
-
-  xdescribe('Teacher end it', function(){
-
-    it('Should go to the blackscreen', function(){
-      utils.switch_browser(teacher_browser)
-      review_model.next()
-      review_model.next()
-      review_model.next()
-      review_model.next()
-      review_model.next()
-      expect(element(by.className('blackscreen')).getText()).toEqual('Review finished. Press ESC to end')
-
-    })
-
-    it('Should be back to inClass Review', function(){
-      browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
-      expect(inclass_page.title).toEqual("In-class Review: PI module 1")
-      expect(inclass_page.display_button.isDisplayed()).toEqual(true);
-      expect(inclass_page.display_button.isEnabled()).toEqual(true);
-      var module = inclass_page.module_item(1)
-      expect(module.title).toEqual("PI lecture1 video quizzes")
-      expect(module.inclass_quizzes.count()).toEqual(1)
-      var inclass_quiz = module.inclass_quiz(1)
-      expect(inclass_quiz.title).toEqual("Quiz: PI MCQ QUIZ")
-      expect(inclass_quiz.visibility_box.isSelected()).toEqual(true)
-
-      expect(inclass_page.total_inclass_time).toEqual("8");
-      expect(inclass_page.total_pi_time).toEqual("8")
-      expect(inclass_page.total_pi_quizzes).toEqual("1")
-      expect(inclass_page.total_review_time).toEqual("0")
-      expect(inclass_page.total_review_quizzes).toEqual("0")
-      expect(inclass_page.total_review_discussions).toEqual("0")
-      expect(inclass_page.total_review_surveys).toEqual("0")
-    })
-    it("should delete items in first module and module itself",function(){
-          // it("should go to edit mode", function() {
-      sub_header.open_edit_mode()
-    // })
-      var module = navigator.module(1)
-      module.open()
-      expect(module.items.count()).toEqual(3)
-      module.item(3).delete()
-      expect(module.items.count()).toEqual(2)
-      module.item(2).delete()
-      expect(module.items.count()).toEqual(1)
-      module.item(1).delete()
-      expect(module.items.count()).toEqual(0)
-      module.delete()
-      expect(navigator.modules.count()).toEqual(0)
-    })
-    it("should logout", function() {
-      header.logout()
-    })
-
-  })
-
 })

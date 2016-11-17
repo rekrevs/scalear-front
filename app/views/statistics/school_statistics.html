@@ -7,7 +7,8 @@
 <section class='adminUni' ng-show="current_user.roles.includes(5)">
   All
 </section>
-<section ng-if="subdomains">
+<!-- <section ng-if="subdomains"> -->
+<section ng-if="subdomains.length > 0">
   <ul>
     <li>
       <input type="radio" name="domain-radio" ng-model="report.selected_domain" value=""/>

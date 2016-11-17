@@ -3,7 +3,6 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('statistics.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
-    $scope.subdomains = ["it.uu.se", "physic.uu.se"]
 
     UserSession.getCurrentUser()
       .then(function(user) {

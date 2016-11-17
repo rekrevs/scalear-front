@@ -488,7 +488,8 @@ var translation_en={
     message_quiz_group: 'Please discuss your answer with {{name}} and choose your final answer. (You do not have to choose the same answers.)',
     prevent_seek_forward: 'you can not seek to time after quiz',
     can_not_leave_this_status: '{{name}} did not finish this status, you can not go to the next status',
-    other_student_ended_session: '{{name} ended the distance peer session} ',
+    other_student_ended_session: '{{name}} ended the distance peer session ',
+    student_cancelled:'{{name}} cancelled the invitation',
   },
   editor:{
     explanation: "Explanation",

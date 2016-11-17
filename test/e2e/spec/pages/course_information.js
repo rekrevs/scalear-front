@@ -65,7 +65,7 @@ CourseInformation.prototype = Object.create({}, {
 	click_export_anonymized_data:{value:function(){
 	    this.export_anonymized_data_button.click()
 	}},
-	export_anonymized_data_message:{get:function(){return element(by.id("server_error"))}},
+	export_anonymized_data_message:{get:function(){return element(by.className("errorMessage")) }},
 	open:{value:function(){
 		sub_header.open_course_info()
 		browser.driver.wait(function() {

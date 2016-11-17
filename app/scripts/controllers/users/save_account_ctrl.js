@@ -24,8 +24,10 @@ angular.module('scalearAngularApp')
         }
         else{
           UserSession.allowRefetchOfUser()
-          $state.go("home")
-        }
+          // $state.go("home")
+          // $scope.user.first_day = {}
+          $scope.user.first_day = $scope.dayNamesOption[$scope.user.first_day]
+      }
         // $scope.sending = false;
         // $scope.user.current_password = null;
         // if(response.password_confirmation) {

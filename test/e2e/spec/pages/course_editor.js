@@ -94,10 +94,10 @@ CourseEditor.prototype = Object.create({}, {
 		this.change_item_url_link(url)
 		var self = this
 		browser.driver.wait(function() {
-      return self.trim_modal.isPresent().then(function(disp) {
-        return disp;
-      }, 100000);
-    });
+			return self.trim_modal.isPresent().then(function(disp) {
+				return disp;
+			}, 100000);
+		});
     this.cancel_trim()
 	}},
 	get_item_url:{value: function(){

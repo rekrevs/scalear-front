@@ -10,6 +10,7 @@ var SharedPage = require('./pages/shared_page');
 var NewCourse = require('./pages/new_course');
 var scroll = require('./lib/utils').scroll;
 var sleep = require('./lib/utils').sleep;
+var StudentList = require('./pages/teacher/student_list');
 
 var params = browser.params;
 
@@ -22,6 +23,7 @@ var student_lec = new StudentLecture()
 var share_window = new ShareModal()
 var shared = new SharedPage()
 var new_course = new NewCourse()
+var student_list = new StudentList();
 
 
 describe("Teacher Management",function(){
@@ -29,29 +31,70 @@ describe("Teacher Management",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
-		it("should open course",function(){
-	        course_list.open()
-	        course_list.open_teacher_course(1)
-	    })
-	    var navigator = new ContentNavigator(1)
-		it('should check number of teachers intially', function(){
-			// course_info.open()
-			expect(course_info.teachers.count()).toEqual(1)
+
+		// SCAL-1283: Export student list	
+		describe("Export student list",function(){
+			it('should open student list', function(){
+				course_list.open()
+				course_list.open_teacher_course(1)
+				student_list.open()
+			})
+
+			it('check export student message appears', function(){
+				student_list.click_export_student_list()
+				expect(student_list.export_student_list_message.isDisplayed()).toBe(true);
+			})
+			it('check export student message does not appear', function(){
+				sleep(7000)
+				expect(student_list.export_student_list_message.isDisplayed()).toBe(false);
+			})
 		})
-		it('should add a teacher', function(){
-			expect(course_info.email_field.isDisplayed()).toEqual(false);
-			expect(course_info.role_field.isDisplayed()).toEqual(false);
-			course_info.add_teacher()
-			expect(course_info.email_field.isDisplayed()).toEqual(true);
-			expect(course_info.role_field.isDisplayed()).toEqual(true);
-			course_info.type_email(params.teacher2.email)
-			course_info.select_role(2)
-			course_info.invite()
-			expect(course_info.teachers.count()).toEqual(2)
+
+
+		// SCAL-1332: Export course clarification	frontend: check on button “Export anonymized course data” and when clicked “"Your anonymized course data will be emailed to you shortly.” appears 
+		describe("Export course clarification",function(){
+			it('should open student list', function(){
+				course_list.open()
+				course_list.open_teacher_course(1)
+				course_info.open()
+			})
+
+			it('check export student message appears', function(){
+				course_info.click_export_anonymized_data()
+				expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(true);
+			})
+			it('check export student message does not appear', function(){
+				sleep(7000)
+				expect(course_info.export_anonymized_data_message.isDisplayed()).toBe(false);
+			})
 		})
-		it("should logout",function(){
-            header.logout()
-        })
+
+		describe("add teacher 2 ",function(){
+			it("should open course",function(){
+		        course_list.open()
+		        course_list.open_teacher_course(1)
+		    })
+		    var navigator = new ContentNavigator(1)
+			it('should check number of teachers intially', function(){
+				// course_info.open()
+				expect(course_info.teachers.count()).toEqual(1)
+			})
+
+			it('should add a teacher', function(){
+				expect(course_info.email_field.isDisplayed()).toEqual(false);
+				expect(course_info.role_field.isDisplayed()).toEqual(false);
+				course_info.add_teacher()
+				expect(course_info.email_field.isDisplayed()).toEqual(true);
+				expect(course_info.role_field.isDisplayed()).toEqual(true);
+				course_info.type_email(params.teacher2.email)
+				course_info.select_role(2)
+				course_info.invite()
+				expect(course_info.teachers.count()).toEqual(2)
+			})
+			it("should logout",function(){
+	            header.logout()
+	        })
+	     })
     })
     describe("Teacher2",function(){
         it("should login",function(){

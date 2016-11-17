@@ -162,7 +162,7 @@ ModuleProgress.prototype = Object.create({}, {
 	module_item:{value:function(value){return new ModuleItem(this.module_items.get(value-1))}},
 	module_item_inclass:{value:function(value){return this.module_item(value).all(by.className("show_inclass")) }},
 	time_estimate:{get:function(){return element(by.className('time_estimate'))}},
-	time_estimate_total_time:{get:function(){return this.time_estimate.element(by.css('[ng-style="{color: total_estimate_color}"]')).getText()}},
+	time_estimate_total_time:{get:function(){return this.time_estimate.element(by.tagName('h6')).getText()}},
 	module_completion_table:{get:function(){return element(by.className('table_matrix_height'))}},
 	module_completion:{value:function(){return new ModuleCompletionTable(this.module_completion_table)}},
 	module_graph_table:{get:function(){return element(by.tagName('tbody'))}},

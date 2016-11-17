@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger','$modal','Course','$q', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger,$modal,Course,$q) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger','$modal','Course','$q','ErrorHandler', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger,$modal,Course,$q,ErrorHandler) {
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.video_layer = {}
@@ -733,7 +733,7 @@ angular.module('scalearAngularApp')
       console.log("returnToQuiz")
       $scope.seek(time)
       $scope.lecture_player.controls.pause()
-      showNotification('lectures.answer_question')
+      showNotification('lectures.choose_correct_answer')
     }
 
     $scope.lecture_player.events.onPlay = function() {
@@ -1455,6 +1455,7 @@ angular.module('scalearAngularApp')
                   else if(response.invite_status == "invited_by"){
                     $scope.waiting_response_of_back_end=false
                     $scope.check_if_invited = true
+                    $scope.cancelled_invited_by_student = null
                     $scope.wait_for_acceptance = false 
                     $scope.invite_student =false
                     $scope.invited_by_student = response.invite
@@ -1494,7 +1495,7 @@ angular.module('scalearAngularApp')
                     $scope.invited_by_student.splice(index, 1);
                     console.log($scope.invited_by_student.length)
                     console.log($scope.invited_by_student)
-
+                    $scope.cancelled_invited_by_student = $translate("distance_peer.student_cancelled",{name: student[0] } );
                   }
                 })
               }

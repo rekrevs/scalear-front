@@ -498,13 +498,12 @@ var translation_sv={
     message_video: 'Var god se filmen och besvara quizzarna.',
     message_quiz_intro: 'Var god se quiz-introduktionen.',
     message_quiz_end: 'Var god se den avslutande delen.',
-
     message_quiz_self: 'Var god besvara detta quiz på egen hand. (Diskutera det inte med {{name}} i detta steg.)',
     message_quiz_group: 'Var god diskutera dit svar med {{name}} och välj ett slutligt svar. (Ni behöver inte välja samma svar.)',
-
     prevent_seek_forward: 'du kan inte spola fram filmen till en tidpunkt efter ett quiz',
     can_not_leave_this_part: '{{name}} har inte avslutat denna del än, så du kan inte fortsätta till nästa del', 
     other_student_ended_session: '{{name}} avslutade Distance Peer sessionen',
+    student_cancelled:'{{name}} cancelled the invitation(t)', 
   },
   editor:{
     explanation: "Förklaring",

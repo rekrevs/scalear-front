@@ -23,7 +23,7 @@ var new_course = new NewCourse()
 var navigator = new ContentNavigator(1)
 var content_items= new ContentItems()
 
-xdescribe("Sharing a module",function(){
+describe("Sharing a module",function(){
     describe("Teacher1",function(){
         it("should login as teacher",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -145,7 +145,7 @@ xdescribe("Sharing a module",function(){
     })
 })
 
-xdescribe("Sharing a non existing module",function(){
+describe("Sharing a non existing module",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -260,7 +260,7 @@ xdescribe("Sharing a non existing module",function(){
         })
     })
 })
-xdescribe("Sharing single items",function(){
+describe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher1.email, params.password)
@@ -353,6 +353,7 @@ xdescribe("Sharing single items",function(){
             course_editor.add_module()
         })
         it('should open view shared', function(){
+            browser.refresh()
             header.open_shared()
         })
         it("should add data to course",function(){
@@ -402,7 +403,7 @@ xdescribe("Sharing single items",function(){
         })
     })
 })
-xdescribe("Rollback changes",function(){
+describe("Rollback changes",function(){
     describe("Teacher2",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher2.email, params.password)

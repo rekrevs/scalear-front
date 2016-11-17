@@ -222,6 +222,7 @@ describe("check course review", function(){
 				expect(element(by.id('progress_lec_video')).isPresent()).toEqual(true)
 			})
 			it('should display the module progress chart showing that the two students finished on time', function(){
+				refresh()
 				expect(module_progress.getModuleChartValueAt(1)).toBe('1')
 				refresh()
 				expect(module_progress.getModuleChartValueAt(4)).toBe('2')
@@ -737,15 +738,15 @@ describe("check course review", function(){
 							header.logout()
 						})
 					})
-					it("teacher should login",function(){
-						login_page.sign_in(params.teacher1.email, params.password)
-					})
+					// it("teacher should login",function(){
+					// 	login_page.sign_in(params.teacher1.email, params.password)
+					// })
 				})
 			})
 		})
-		it("should logout",function(){
-			header.logout()
-		})
+		// it("should logout",function(){
+		// 	header.logout()
+		// })
 	})
 })
 

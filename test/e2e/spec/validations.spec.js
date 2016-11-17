@@ -153,71 +153,71 @@ describe("Lecture validation", function(){
 			change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
 			element.all(by.tagName('details-date')).then(function(dates){
 				dates[1].getText().then(function(dat){
-					expect(dat.split('/')[0]).toBe(getNextWeek("dd"))
+					expect(dat.split(' ')[1]).toBe(getAfterNextWeek("dd"))
 				})
 			})
 		})
 	})
 
-	// it("should create quiz", function(){
-	// 	navigator.module(1).open()
-	// 	navigator.module(1).item(1).open()
-	// 	navigator.close()
-	// 	video.seek(20)
-	// 	invideo_quiz.create(invideo_quiz.ocq)
-	// 	expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
-	// 	invideo_quiz.rename("OCQ QUIZ")
-	// 	invideo_quiz.add_answer(q1_x, q1_y)
-	// 	invideo_quiz.type_explanation("explanation 1")
-	// 	invideo_quiz.hide_popover()
-	// 	invideo_quiz.add_answer(q2_x, q2_y)
-	// 	invideo_quiz.mark_correct()
-	// 	invideo_quiz.type_explanation("explanation 2")
-	// 	invideo_quiz.hide_popover()
-	// 	invideo_quiz.add_answer(q3_x, q3_y)
-	// 	invideo_quiz.type_explanation("explanation 3")
-	// 	invideo_quiz.hide_popover()
-	// 	invideo_quiz.save_quiz()
-	// 	expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
-	// 	browser.refresh()
-	// })
-	// // it("should validate name", function(){
-	// // 	invideo_quiz.open(1)
-	// // 	invideo_quiz.rename(" ")
-	// // 	invideo_quiz.save_quiz()
-	// // 	error_feedback_quiz("Question can't be blank", 1)
-	// // 	invideo_quiz.rename("OCQ QUIZ")
-	// // 	invideo_quiz.save_quiz()
-	// // })
-	// it("should validate time",function(){
-	// 	invideo_quiz.open(1)
-	// 	invideo_quiz.change_time('00:00:00')
-	// 	save_quiz()
-	// 	error_feedback_quiz("Time Outside Video Range",2)
-	// 	invideo_quiz.change_time('00:00:0')
-	// 	save_quiz()
-	// 	error_feedback_quiz("Incorrect Format for Time",2)
-	// 	invideo_quiz.change_time('0:00:00')
-	// 	save_quiz()
-	// 	error_feedback_quiz("Incorrect Format for Time",2)
-	// 	invideo_quiz.change_time('0:00:000')
-	// 	save_quiz()
-	// 	error_feedback_quiz("Incorrect Format for Time",2)
-	// 	invideo_quiz.change_time('00:01:16')
-	// 	invideo_quiz.save_quiz()
-	// })
-	//
-	// it("should delete course",function(){
-	// 		course_list.open()
-	// 		course_list.delete_teacher_course(2)
-	// 		expect(course_list.teacher_courses.count()).toEqual(1)
-	// })
-	// it("should logout",function(){
-	// 	header.logout()
-	// })
+	it("should create quiz", function(){
+		navigator.module(1).open()
+		navigator.module(1).item(1).open()
+		navigator.close()
+		video.seek(20)
+		invideo_quiz.create(invideo_quiz.ocq)
+		expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
+		invideo_quiz.rename("OCQ QUIZ")
+		invideo_quiz.add_answer(q1_x, q1_y)
+		invideo_quiz.type_explanation("explanation 1")
+		invideo_quiz.hide_popover()
+		invideo_quiz.add_answer(q2_x, q2_y)
+		invideo_quiz.mark_correct()
+		invideo_quiz.type_explanation("explanation 2")
+		invideo_quiz.hide_popover()
+		invideo_quiz.add_answer(q3_x, q3_y)
+		invideo_quiz.type_explanation("explanation 3")
+		invideo_quiz.hide_popover()
+		invideo_quiz.save_quiz()
+		expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
+		browser.refresh()
+	})
+	it("should validate name", function(){
+		invideo_quiz.open(1)
+		invideo_quiz.rename(" ")
+		invideo_quiz.save_quiz()
+		error_feedback_quiz("Question can't be blank", 1)
+		invideo_quiz.rename("OCQ QUIZ")
+		invideo_quiz.save_quiz()
+	})
+	it("should validate time",function(){
+		invideo_quiz.open(1)
+		invideo_quiz.change_time('00:00:00')
+		save_quiz()
+		error_feedback_quiz("Time Outside Video Range",2)
+		invideo_quiz.change_time('00:00:0')
+		save_quiz()
+		error_feedback_quiz("Incorrect Format for Time",2)
+		invideo_quiz.change_time('0:00:00')
+		save_quiz()
+		error_feedback_quiz("Incorrect Format for Time",2)
+		invideo_quiz.change_time('0:00:000')
+		save_quiz()
+		error_feedback_quiz("Incorrect Format for Time",2)
+		invideo_quiz.change_time('00:01:16')
+		invideo_quiz.save_quiz()
+	})
+	
+	it("should delete course",function(){
+			course_list.open()
+			course_list.delete_teacher_course(2)
+			expect(course_list.teacher_courses.count()).toEqual(1)
+	})
+	it("should logout",function(){
+		header.logout()
+	})
 })
 
-xdescribe("Video validation", function(){
+describe("Video validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
@@ -261,28 +261,31 @@ xdescribe("Video validation", function(){
 	})
 
 	it('should make sure that the lecture url is set correctly', function(){
+		// cancel_editing();
 	    course_editor.change_item_url("https://www.youtube.com/watch?v=SKqBmAHwSkg")
       // course_editor.open_video_settings()
-      expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
+      // expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
 	})
-
-	xit('should try setting the url to blank', function(){
-	    course_editor.change_item_url(" ")
-		error_feedback("Url can't be blank");
+	it('should make sure that the lecture url is set correctly', function(){
+	  expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
+	})
+	it('should try setting the url to blank', function(){
+	    course_editor.change_item_url_link(" ")
+		error_feedback("Invalid movie type. Please provide a YouTube or .mp4 URL.");
 		cancel_editing();
 	})
 
-	xit('should try setting a Vimeo url', function(){
+	it('should try setting a Vimeo url', function(){
 		// change_lecture_url('http://vimeo.com/109672232');
-	    course_editor.change_item_url("http://vimeo.com/109672232")
-		error_feedback("Invalid Input");
+	    course_editor.change_item_url_link("http://vimeo.com/109672232")
+		error_feedback("Invalid movie type. Please provide a YouTube or .mp4 URL.");
 		cancel_editing();
 	})
 
-	xit('should try setting a .mov url', function(){
+	it('should try setting a .mov url', function(){
 		// change_lecture_url('http://it.uu.se/katalog/davbl791/wide-test.mov');
-	    course_editor.change_item_url("http://it.uu.se/katalog/davbl791/wide-test.mov")
-		error_feedback("Invalid Input");
+	    course_editor.change_item_url_link("http://it.uu.se/katalog/davbl791/wide-test.mov")
+		error_feedback("Invalid movie type. Please provide a YouTube or .mp4 URL.");
 		cancel_editing();
 	})
 
@@ -383,9 +386,15 @@ xdescribe("Video validation", function(){
 		error_feedback('Due date must be before module due date');
 		cancel_editing();
 	})
+	it("should logout",function(){
+		header.logout()
+	})
 })
 
-xdescribe("Quiz validation", function(){
+describe("Quiz validation", function(){
+	it('should sign in as teacher', function(){
+		login_page.sign_in(params.teacher1.email, params.password)
+	})
 	it("should open course",function(){
 		course_list.open()
 		course_list.open_teacher_course(2)
@@ -411,12 +420,7 @@ xdescribe("Quiz validation", function(){
 		cancel_editing();
 	})
 
-
-
 	it('should be in order and required by default', function(){
-
-		// navigator.module(1).open()
-		// course_editor.open_lecture_settings()
 		element(by.model('quiz.required')).then(function(in_order){
 			expect(in_order.getAttribute('checked')).toBe('true');
 		})
@@ -469,37 +473,24 @@ xdescribe("Quiz validation", function(){
 		})
 	})
 
-	xit('should try changing the appearance date to an invalid date - before module appearance', function(){
-		element(by.model('quiz.appearance_time_module')).then(function(appearance_check){
-			appearance_check.click();
-			expect(appearance_check.getAttribute('checked')).toBe(null)
-		})
-		change_appearance_date(getYesterday("dd-mmmm-yyyy"));
-		error_feedback('Appearance time must be after module appearance time');
-	})
+	it('should be publish quiz', function(){
+		browser.refresh()
+		element(by.name("save_publish")).click()
+		expect(element(by.css('[tooltip="Not currently visible to students."]')).isPresent() ).toEqual(false)
+		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 
-	xit('should try changing the appearance date to an invalid date - after due date', function(){
-		change_appearance_date(getAfterNextWeek("dd-mmmm-yyyy"));
-		error_feedback('Appearance time must be before due time');
-		cancel_editing();
 	})
-
-	xit('should try changing the due date to an invalid date - before appearance', function(){
-		element(by.model('quiz.due_date_module')).then(function(due_check){
-			due_check.click();
-			expect(due_check.getAttribute('checked')).toBe(null)
-		})
-		change_due_date(getYesterday("dd-mmmm-yyyy"));
-		error_feedback('Appearance time must be before due time');
+	it('should be unpublish quiz', function(){
+		element(by.name("save_publish")).click()
+		expect(element(by.css('[tooltip="Not currently visible to students."]')).isDisplayed() ).toEqual(true)
+		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(true)
 	})
-
-	it('should try changing the due date to an invalid date - after module\'s due date', function(){
-		element(by.model('quiz.due_date_module')).click();
-		change_due_date(getAfterNextWeek("dd-mmmm-yyyy"), 0);
-		error_feedback('Due date must be before module due date');
-		cancel_editing();
+	it('should be publish quiz', function(){
+		browser.refresh()
+		element(by.name("save_publish")).click()
+		expect(element(by.css('[tooltip="Not currently visible to students."]')).isPresent() ).toEqual(false)
+		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 	})
-
 
 	it("should delete course",function(){
 		course_list.open()

@@ -4,7 +4,7 @@
 <section class='adminUni' ng-show="current_user">
   {{current_user.university}} ({{current_user.email.split("@")[1]}})
 </section>
-<section ng-if="subdomains">
+<section ng-if="subdomains.length > 0">
   <ul>
     <li>
       <input type="radio" name="domain-radio" ng-model="report.selected_domain" value=""/>

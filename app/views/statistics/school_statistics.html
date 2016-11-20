@@ -49,10 +49,10 @@
         </p>
         <div class="row">
           <div class="column small-6">
-            {{active_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            {{total_students}} <i class="fi-torsos-all" tooltip="Total Students" tooltip-placement="top" tooltip-append-to-body="true"></i>
           </div>
           <div class="column small-6">
-            {{active_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            {{total_teachers}} <i class="fi-torso-business" tooltip="Total Teachers" tooltip-placement="top" tooltip-append-to-body="true"></i>
           </div>
         </div>
       </div>
@@ -168,8 +168,8 @@
           <th st-sort='short_name'>Course Name</th>
           <th st-sort='short_name'>Teacher Name</th>
           <th st-sort='short_name'>Teacher Email</th>
-          <th st-sort='active_students'>Active Students</th>
-          <th st-sort='active_teachers'>Active Teachers</th>
+          <th st-sort='students'>Active Students</th>
+          <th st-sort='teachers'>Active Teachers</th>
           <th st-sort='questions'>Questions</th>
           <th st-sort='solved_online_quiz'>Solved Quizzes</th>
           <th st-sort='start_date'>Start Date</th>
@@ -187,8 +187,8 @@
           <td><a ui-sref="course.edit_course_information({ course_id: course.id })">{{course.short_name}}</a></td>
           <td>{{course.full_name}}</td>
           <td>{{course.email}}</td>
-          <td>{{course.active_students}}</td>
-          <td>{{course.active_teachers}}</td>
+          <td>{{course.students}}</td>
+          <td>{{course.teachers}}</td>
           <td>{{course.questions}}</td>
           <td>{{course.solved_online_quiz}}</td>
           <td>{{course.start_date}}</td>

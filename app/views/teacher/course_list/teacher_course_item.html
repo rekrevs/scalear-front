@@ -40,25 +40,25 @@
 			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
 				<i class="fi-torsos-all size-18"></i><small class="with-small-margin-left" translate>courses.list.number_of_students</small>
 				<div class="with-medium-margin-left">
-					<small class="truncate" >{{course.enrollments.length}}</small>
+					<small class="truncate" >{{course.enrollments}}</small>
 				</div>
 			</div>
 			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
 				<i class="fi-video size-18"></i><small class="with-small-margin-left" translate>courses.list.lectures</small>
 				<div class="with-medium-margin-left">
-					<small class="truncate" >{{course.lectures.length}}</small>
+					<small class="truncate" >{{course.lectures}}</small>
 				</div>
 			</div>
 			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
 				<i class="fi-clipboard-notes size-18"></i><small class="with-small-margin-left" translate>courses.list.quizzes</small>
 				<div class="with-medium-margin-left">
-					<small class="truncate"  ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})" >{{course.quiz.length}}</small>
+					<small class="truncate" >{{course.quiz}}</small>
 				</div>
 			</div>
 			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom left">
 				<i class="fi-clipboard-pencil size-18"></i><small class="with-small-margin-left" translate>courses.list.surveys</small>
 				<div class="with-medium-margin-left">
-					<small class="truncate" ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})">{{course.survey.length}}</small>
+					<small class="truncate" >{{course.survey}}</small>
 				</div>
 			</div>
 		</div>

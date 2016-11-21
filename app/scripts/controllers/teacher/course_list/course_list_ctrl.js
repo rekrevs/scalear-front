@@ -12,6 +12,23 @@ angular.module('scalearAngularApp')
     $scope.teacher_courses = []
     $scope.student_courses = []
 
+
+    var getCoursesFirstTime = function(){  
+      var limit_course = 200 
+        Course.index({   
+          offset:0,    
+          limit: limit_course   
+        },   
+        function(data){  
+        $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
+        $scope.student_courses = $scope.student_courses.concat(data.student_courses)
+
+          for(var i=limit_course;i<data.total;i+=limit_course){  
+            getAllCourses(i,limit_course)    
+          }  
+        })  
+    } 
+
   var getAllCourses=function(offset, limit){ 
       $scope.course_limit =  limit, 
       $scope.course_offset = offset 
@@ -20,13 +37,14 @@ angular.module('scalearAngularApp')
         limit: $scope.course_limit 
       }, 
       function(data){
-        $scope.teacher_courses = $scope.teacher_courses.concat(JSON.parse(data.teacher_courses)  )
-        $scope.student_courses = $scope.student_courses.concat(JSON.parse(data.student_courses)  )
-        
-        $scope.total = data.total 
-        $timeout(function(){ 
-            $scope.getRemainingCourse() 
-        }) 
+        $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
+        $scope.student_courses = $scope.student_courses.concat(data.student_courses)
+
+        // $scope.total = data.total 
+        // $timeout(function(){ 
+        //     $scope.getRemainingCourse() 
+        // }) 
+
     // Code for removing finshed courses when chosing "All Courses" from main menu
     //     $scope.courses.forEach(function(course){
     //        if(!course.ended){
@@ -121,6 +139,7 @@ angular.module('scalearAngularApp')
 			$scope.is_reverse = !$scope.is_reverse
 		}
 
-    getAllCourses(0,10)
+    // getAllCourses(0,10)
+    getCoursesFirstTime()  
 
 }]);

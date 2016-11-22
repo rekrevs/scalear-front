@@ -268,8 +268,9 @@ angular.module('scalearAngularApp')
         $scope.quiz_layer.backgroundColor = "white"
         $scope.quiz_layer.overflowX = 'hidden'
         $scope.quiz_layer.overflowY = 'auto'
-        if(quiz.question_type.toUpperCase() == "DRAG")
-          $scope.studentAnswers[quiz.id] = quiz.online_answers[0].answer;
+        if(quiz.question_type.toUpperCase() == "DRAG"){
+          $scope.studentAnswers[quiz.id] = quiz.online_answers_drag;
+        }
       } else {
         $scope.quiz_layer.backgroundColor = ""
         $scope.quiz_layer.overflowX = ''

@@ -55,12 +55,12 @@ angular.module('scalearAngularApp')
                   item.data = response.post
                   scope.error_message = null
                   scope.current_question = ''
-                  scope.$emit("discussion_updated")
                 },
                 function() {
                   $log.debug("failure")
                 }
               )
+              scope.$emit("discussion_updated")
             }
 
           } else

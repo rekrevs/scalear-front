@@ -9,6 +9,12 @@ angular.module('scalearAngularApp')
         User.getSubdomains({ id: user.id },
           function(data) {
             $scope.subdomains = data.subdomains
+            if($scope.subdomains.length == 1)
+              $scope.report.selected_domain = $scope.subdomains[0]
+            else{
+              $scope.report.selected_domain = 'All'
+              $scope.subdomains.unshift('All');              
+            }
           })
       })
 
@@ -21,7 +27,6 @@ angular.module('scalearAngularApp')
     var days_in_week = 7;
     var default_report_duration = 4 //weeks
     $scope.report.start_date.setDate($scope.report.end_date.getDate() - (days_in_week * default_report_duration));
-    $scope.report.selected_domain = ""
 
     function validateDate() {
       var deferred = $q.defer()

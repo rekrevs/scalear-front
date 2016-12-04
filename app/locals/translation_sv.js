@@ -83,6 +83,7 @@ var translation_sv={
     change_password_confirmation: "Du har nu ändrat ditt lösenord.",
     export_course: "Dina anonymiserade kursdata kommer strax att skickas dig via email",
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
+    export_school_administration: "Statistics will be exported to CSV and sent to your Email(t)",
     another_marker: "Det finns en annan markör på samma gång",
     slow:{
         server: "Videoservern",

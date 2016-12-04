@@ -1,5 +1,5 @@
 angular.module('scalearAngularApp')
-  .controller('schoolStatisticsCtrl', ['$scope', 'Kpi', 'Page', '$rootScope', '$translate', '$modal', '$q', 'ScalearUtils', 'UserSession','User', function($scope, Kpi, Page, $rootScope, $translate, $modal, $q, ScalearUtils, UserSession, User) {
+  .controller('schoolStatisticsCtrl', ['$scope', 'Kpi', 'Page', '$rootScope', '$translate', '$modal', '$q', 'ScalearUtils', 'UserSession','User','ErrorHandler', function($scope, Kpi, Page, $rootScope, $translate, $modal, $q, ScalearUtils, UserSession, User,ErrorHandler) {
 
     Page.setTitle('statistics.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
@@ -89,6 +89,10 @@ angular.module('scalearAngularApp')
         start_date: $scope.report.start_date,
         end_date: $scope.report.end_date,
         domain: $scope.report.selected_domain
+      },function(response){
+          if(response.notice) {
+            ErrorHandler.showMessage($translate("error_message.export_school_administration"), 'errorMessage', 4000, 'success');
+          }
       })
     }
   }]);

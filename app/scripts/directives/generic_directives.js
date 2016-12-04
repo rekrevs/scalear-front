@@ -156,8 +156,9 @@ angular.module('scalearAngularApp')
       link: function(scope, element, attrs) {
         scope.$watch('active', function() {
           if(screenfull.enabled) {
-            if(scope.active)
+            if(scope.active){              
               screenfull.request(angular.element(element)[0]);
+            }
             else
               screenfull.exit()
           }

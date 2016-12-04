@@ -64,19 +64,19 @@ angular.module('scalearAngularApp')
                   $rootScope.$broadcast("delete_module", scope.module)  
             }
 
-            scope.copy=function(){
+            scope.copy=function(event){
                 $log.debug("copy")
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.module)
             }
 
-            scope.paste=function(){
+            scope.paste=function(event){
                 $log.debug("Paste")
                 event.preventDefault();
                 $rootScope.$broadcast('paste_item', scope.module.id)
             }
 
-            scope.share=function(){
+            scope.share=function(event){
                 $log.debug("Share")
                 event.preventDefault();
                 $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
@@ -101,19 +101,19 @@ angular.module('scalearAngularApp')
                 $rootScope.$broadcast("delete_item", scope.item)
             }
 
-            scope.copy=function(){
-                $log.debug("copy")
+            scope.copy=function(event){
+                $log.debug("copy")         
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.item)
             }
 
-            scope.paste=function(){
+            scope.paste=function(event){
                 $log.debug("Paste")
                 event.preventDefault();
                 $rootScope.$broadcast('paste_item', scope.item.group_id)
             }
 
-            scope.share=function(){
+            scope.share=function(event){
                 $log.debug("Share")
                 event.preventDefault();
                 $rootScope.$broadcast('share_copy', {module_id:scope.item.group_id, item: scope.item})

@@ -2,8 +2,7 @@ angular.module('scalearAngularApp')
   .controller('schoolStatisticsCtrl', ['$scope', 'Kpi', 'Page', '$rootScope', '$translate', '$modal', '$q', 'ScalearUtils', 'UserSession','User','ErrorHandler', function($scope, Kpi, Page, $rootScope, $translate, $modal, $q, ScalearUtils, UserSession, User,ErrorHandler) {
 
     Page.setTitle('statistics.statistics');
-    $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
-
+    $rootScope.subheader_message = $translate.instant("statistics.statistics_dashboard") 
     UserSession.getCurrentUser()
       .then(function(user) {
         User.getSubdomains({ id: user.id },
@@ -18,27 +17,35 @@ angular.module('scalearAngularApp')
           })
       })
 
-
     $scope.show_statistics = false;
     $scope.report = {}
     $scope.errors = {}
-    $scope.report.start_date = new Date()
-    $scope.report.end_date = new Date()
     var days_in_week = 7;
     var default_report_duration = 4 //weeks
-    $scope.report.start_date.setDate($scope.report.end_date.getDate() - (days_in_week * default_report_duration));
+    // $scope.report.start_date = new Date()
+    // $scope.report.end_date = new Date()
+    // $scope.report.start_date.setDate($scope.report.end_date.getDate() - (days_in_week * default_report_duration));
 
+    $scope.report.start_date = moment().subtract(30,'days').format('DD-MMMM-YYYY')
+    $scope.report.end_date = moment().format('DD-MMMM-YYYY')
+    
     function validateDate() {
       var deferred = $q.defer()
       var errors = {}
 
-      if (!($scope.report.start_date instanceof Date)) {
+      $scope.report.start_date = new Date($scope.report.start_date)
+      $scope.report.end_date = new Date($scope.report.end_date)
+      console.log($scope.report.start_date)
+      console.log($scope.report.end_date)
+
+      if (($scope.report.start_date == "Invalid Date")) {
         errors.start_date = "not a Date"
         deferred.reject(errors)
-      } else if (!($scope.report.end_date instanceof Date)) {
+      } else if (($scope.report.end_date == "Invalid Date")) {
         errors.end_date = "not a Date"
         deferred.reject(errors)
-      } else if (!($scope.report.start_date < $scope.report.end_date)) {
+      } else 
+      if (!($scope.report.start_date < $scope.report.end_date)) {
         errors.start_date = "must be before end date"
         deferred.reject(errors)
       } else {
@@ -47,10 +54,15 @@ angular.module('scalearAngularApp')
 
         deferred.resolve(errors)
       }
+      $scope.report.start_date = moment($scope.report.start_date).format('DD-MMMM-YYYY')
+      $scope.report.end_date = moment($scope.report.end_date).format('DD-MMMM-YYYY')
       return deferred.promise
     }
 
     $scope.showStatistics = function() {
+      console.log(typeof($scope.report.start_date))
+      console.log(typeof($scope.report.end_date))
+
       validateDate()
         .then(function(errors) {
           $scope.loading = true
@@ -96,7 +108,7 @@ angular.module('scalearAngularApp')
         domain: $scope.report.selected_domain
       },function(response){
           if(response.notice) {
-            ErrorHandler.showMessage($translate("error_message.export_school_administration"), 'errorMessage', 4000, 'success');
+            ErrorHandler.showMessage($translate.instant("error_message.export_school_administration"), 'errorMessage', 4000, 'success');
           }
       })
     }

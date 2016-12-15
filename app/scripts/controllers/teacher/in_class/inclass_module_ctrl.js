@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
     $window.scrollTo(0, 0);
     $scope.course = CourseModel.getSelectedCourse()
 
-    Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.in_class') + ': ' + $scope.course.name);
     $scope.inclass_player = {}
     $scope.inclass_player.events = {}
 
@@ -430,7 +430,7 @@ angular.module('scalearAngularApp')
         current_item.data.color = "black"
         if(current_item.type == 'inclass') {
           timers = current_item.data.timers
-          current_item.data.inclass_title = $translate('inclass.self_stage')
+          current_item.data.inclass_title = $translate.instant('inclass.self_stage')
           current_item.data.status = 2
           current_item.data.background = "#008CBA"
           current_item.data.color = "white"
@@ -441,14 +441,14 @@ angular.module('scalearAngularApp')
           item_index++
 
           var group_quiz = angular.copy(current_item)
-          group_quiz.data.inclass_title = $translate('inclass.group_stage')
+          group_quiz.data.inclass_title = $translate.instant('inclass.group_stage')
           group_quiz.data.status = 3
           group_quiz.data.background = "#43AC6A"
           group_quiz.data.timer = timers.in_group
           sub_items.splice(++item_index, 0, group_quiz);
 
           var discussion = angular.copy(current_item)
-          discussion.data.inclass_title = $translate('inclass.discussion_stage')
+          discussion.data.inclass_title = $translate.instant('inclass.discussion_stage')
           discussion.data.status = 4
           discussion.data.background = "darkorange"
           discussion.data.color = "white"
@@ -462,7 +462,7 @@ angular.module('scalearAngularApp')
           continue;
         }
       }
-      sub_items[0].data.inclass_title = $translate('inclass.intro_stage')
+      sub_items[0].data.inclass_title = $translate.instant('inclass.intro_stage')
       sub_items[0].data.background = "lightgrey"
       sub_items[0].data.color = "black"
       sub_items[0].data.timer = timers.intro
@@ -503,9 +503,9 @@ angular.module('scalearAngularApp')
         current_item.data.color = "black"
          if(current_item.type != "markers") {
           if(current_item.type == "discussion")
-            sub_items[item_index].data.inclass_title = $translate("inclass.discussion")
+            sub_items[item_index].data.inclass_title = $translate.instant("inclass.discussion")
           else if(current_item.type.indexOf('confused') !=-1)
-            sub_items[item_index].data.inclass_title = $translate("inclass.confused")
+            sub_items[item_index].data.inclass_title = $translate.instant("inclass.confused")
           else if(current_item.type != "primary_marker"){
 
             sub_items[item_index].data.inclass_title = current_item.data.type
@@ -742,10 +742,10 @@ angular.module('scalearAngularApp')
     $scope.formatLectureChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [{
-        "label": $translate('global.students'),
+        "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate('lectures.correct'),
+        "label": $translate.instant('lectures.correct'),
         "type": "number"
       }, {
         "type": "string",
@@ -754,7 +754,7 @@ angular.module('scalearAngularApp')
           "html": true
         }
       }, {
-        "label": $translate('lectures.incorrect'),
+        "label": $translate.instant('lectures.incorrect'),
         "type": "number"
       }, {
         "type": "string",
@@ -799,10 +799,10 @@ angular.module('scalearAngularApp')
     $scope.formatInclassQuizChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [{
-        "label": $translate('global.students'),
+        "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate('inclass.self_stage'),
+        "label": $translate.instant('inclass.self_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -816,7 +816,7 @@ angular.module('scalearAngularApp')
           "role": "style",
         }
       }, {
-        "label": $translate('inclass.group_stage'),
+        "label": $translate.instant('inclass.group_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -837,7 +837,7 @@ angular.module('scalearAngularApp')
           group_count = data[ind][3] || 0,
           self = Math.floor((self_count / 10) * 100),
           group = Math.floor((group_count / 10) * 100),
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate('inclass.self_stage')+": " + self_count + ", "+$translate('inclass.group_stage')+": " + group_count + "</div>",
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
@@ -858,8 +858,8 @@ angular.module('scalearAngularApp')
     $scope.formatSurveyChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [
-        { "label": $translate('global.students'), "type": "string" },
-        { "label": $translate('progress.chart.answered'), "type": "number" }
+        { "label": $translate.instant('global.students'), "type": "string" },
+        { "label": $translate.instant('progress.chart.answered'), "type": "number" }
       ]
       formated_data.rows = []
       for(var ind in data) {
@@ -1011,7 +1011,7 @@ angular.module('scalearAngularApp')
           $scope.button_class = 'small_font_button'
       } else {
         $scope.button_class = 'big_font_button'
-        $scope.button_names = [$translate('inclass.exit'), '', '', $translate('inclass.hide'), $translate('inclass.show'), '5sec', $translate('inclass.pause'), $translate('inclass.resume')]
+        $scope.button_names = [$translate.instant('inclass.exit'), '', '', $translate.instant('inclass.hide'), $translate.instant('inclass.show'), '5sec', $translate.instant('inclass.pause'), $translate.instant('inclass.resume')]
       }
       $scope.hide_text = $scope.hide_questions ? $scope.button_names[4] : $scope.button_names[3]
     }

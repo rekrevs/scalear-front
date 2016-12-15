@@ -47,16 +47,16 @@ angular.module('scalearAngularApp')
 
     $scope.grade_options= [{
       value: 0, // not set
-      text: $translate('quizzes.grade.under_review')
+      text: $translate.instant('quizzes.grade.under_review')
     }, {
       value: 1, // wrong
-      text: $translate('quizzes.grade.incorrect')
+      text: $translate.instant('quizzes.grade.incorrect')
     }, {
       value: 2,
-      text: $translate('quizzes.grade.partial')
+      text: $translate.instant('quizzes.grade.partial')
     }, {
       value: 3,
-      text: $translate('quizzes.grade.correct')
+      text: $translate.instant('quizzes.grade.correct')
     }]
 
   	var init= function(){
@@ -636,11 +636,11 @@ angular.module('scalearAngularApp')
     var formated_data ={}
     formated_data.cols=
         [
-            {"label": $translate('global.students'),"type": "string"},
-            {"label": $translate('global.students'),"type": "number"}
+            {"label": $translate.instant('global.students'),"type": "string"},
+            {"label": $translate.instant('global.students'),"type": "number"}
         ]
     formated_data.rows= []
-    var x_titles=[$translate('progress.chart.not_started_watching'), $translate('progress.chart.watched')+" <= 50%", $translate('progress.chart.watched')+" > 50%", $translate('progress.chart.completed_on_time'), $translate('progress.chart.completed_late')]
+    var x_titles=[$translate.instant('progress.chart.not_started_watching'), $translate.instant('progress.chart.watched')+" <= 50%", $translate.instant('progress.chart.watched')+" > 50%", $translate.instant('progress.chart.completed_on_time'), $translate.instant('progress.chart.completed_late')]
     for(var ind in data)
     {
         var row=
@@ -660,13 +660,13 @@ angular.module('scalearAngularApp')
 		var formated_data = {}
 		formated_data.cols =
 	    [{
-		    "label": $translate('global.students'),
+		    "label": $translate.instant('global.students'),
 		    "type": "string"
 		}, {
-		    "label": $translate('lectures.correct'),
+		    "label": $translate.instant('lectures.correct'),
 		    "type": "number"
 		}, {
-		    "label": $translate('lectures.incorrect'),
+		    "label": $translate.instant('lectures.incorrect'),
 		    "type": "number"
 		}]
 		formated_data.rows = []
@@ -675,13 +675,13 @@ angular.module('scalearAngularApp')
 		    if (data[ind][1] == "gray") {
 		        text = data[ind][2]
             if(type != 'Survey')
-              text+= " (" + $translate('lectures.incorrect') + ")";
+              text+= " (" + $translate.instant('lectures.incorrect') + ")";
 		        correct = 0
 		        incorrect = data[ind][0]
 		    } else {
 		        text = data[ind][2]
             if(type != 'Survey')
-              text+= " (" + $translate('lectures.correct') + ")";
+              text+= " (" + $translate.instant('lectures.correct') + ")";
 		        correct = data[ind][0]
 		        incorrect = 0
 		    }
@@ -703,24 +703,24 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols =
           [{
-          "label": $translate('global.students'),
+          "label": $translate.instant('global.students'),
           "type": "string"
       }, {
-          "label": $translate('lectures.correct'),
+          "label": $translate.instant('lectures.correct'),
           "type": "number"
       }, {
-          "label": $translate('lectures.incorrect'),
+          "label": $translate.instant('lectures.incorrect'),
           "type": "number"
       }]
       formated_data.rows = []
       var text, correct, incorrect
       for (var ind in data) {
           if (!data[ind][1]) {
-              text = data[ind][2] + " " + "(" + $translate('lectures.incorrect') + ")";
+              text = data[ind][2] + " " + "(" + $translate.instant('lectures.incorrect') + ")";
               correct = 0
               incorrect = data[ind][0]
           } else {
-              text = data[ind][2] + " " + "(" + $translate('lectures.correct') + ")";
+              text = data[ind][2] + " " + "(" + $translate.instant('lectures.correct') + ")";
               correct = data[ind][0]
               incorrect = 0
           }
@@ -743,8 +743,8 @@ angular.module('scalearAngularApp')
     var formated_data ={}
     formated_data.cols=
         [
-            {"label": $translate('global.students'),"type": "string"},
-            {"label": $translate('progress.chart.answered'),"type": "number"}
+            {"label": $translate.instant('global.students'),"type": "string"},
+            {"label": $translate.instant('progress.chart.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -765,8 +765,8 @@ angular.module('scalearAngularApp')
   //   var formated_data = {}
   //   formated_data.cols=
   //       [
-  //           {"label": $translate('global.students'),"type": "string"},
-  //           {"label": $translate('progress.chart.answered'),"type": "number"},
+  //           {"label": $translate.instant('global.students'),"type": "string"},
+  //           {"label": $translate.instant('progress.chart.answered'),"type": "number"},
   //       ]
   //   formated_data.rows = []
   //   for (var ind in data) {
@@ -860,10 +860,10 @@ angular.module('scalearAngularApp')
     $scope.formatSelfGroupChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [{
-        "label": $translate('global.students'),
+        "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate('inclass.self_stage'),
+        "label": $translate.instant('inclass.self_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -877,7 +877,7 @@ angular.module('scalearAngularApp')
           "role": "style",
         }
       }, {
-        "label": $translate('inclass.group_stage'),
+        "label": $translate.instant('inclass.group_stage'),
         "type": "number"
       }, {
         "type": "string",
@@ -898,7 +898,7 @@ angular.module('scalearAngularApp')
           group_count = data[ind][3] || 0,
           self = self_count ,
           group = group_count ,
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate('inclass.self_stage')+": " + self_count + ", "+$translate('inclass.group_stage')+": " + group_count + "</div>",
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [

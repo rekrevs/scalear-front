@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate("dashboard.whats_new")
+    $rootScope.subheader_message = $translate.instant("dashboard.whats_new") 
     $scope.eventSources = [];
     var calendar_year_cache = []
     var current_user = null
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
       }
     }
 
-    function eventDrop(event, dayDelta, minuteDelta, allDay, revertFunc, jsEvent, ui, view) {
+    function eventDrop( event, delta, revertFunc, jsEvent, ui, view ) {
       var group = { "due_date": event.start }
       if(event.lecture_id) {
         Lecture.update({
@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
 
     function responseSucces(response) {
       if(response.notice) {
-        ErrorHandler.showMessage($translate("error_message.due_date_changed"), 'errorMessage', 4000, "success");
+        ErrorHandler.showMessage($translate.instant("error_message.due_date_changed"), 'errorMessage', 4000, "success");
       }
     }
 
@@ -141,7 +141,7 @@ angular.module('scalearAngularApp')
       if(response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
         // var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
         // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit." 
-        var message = $translate("events.drag_due_date_error_part_1")+type+$translate("events.drag_due_date_error_part_2")+type+$translate("events.drag_due_date_error_part_3")
+        var message = $translate.instant("events.drag_due_date_error_part_1")+type+$translate.instant("events.drag_due_date_error_part_2")+type+$translate.instant("events.drag_due_date_error_part_3")
       } else {
         var message = Object.keys(response.data.errors)[0].replace("_", " ") + " " + response.data.errors[Object.keys(response.data.errors)[0]][0]
       }
@@ -167,12 +167,12 @@ angular.module('scalearAngularApp')
           event.start = new Date(event.start)
           event.item_title = event.title.replace(" due", "");
           event.title = event.course_short_name + ": " + event.item_title
-          event.tooltip_string = event.title + "<br />" + $translate('events.due') + " " + $translate('global.at') + " " + $filter('date')(event.start, 'HH:mm')
+          event.tooltip_string = event.title + "<br />" + $translate.instant('events.due') + " " + $translate.instant('global.at') + " " + $filter('date')(event.start, 'HH:mm')
 
           if(event.status == 1) {
-            event.tooltip_string += "<br />" + $translate("events.completed_on_time")
+            event.tooltip_string += "<br />" + $translate.instant("events.completed_on_time")
           } else if(event.status == 2) {
-            event.tooltip_string += "<br />" + $translate("events.completed") + " " + event.days + " " + $translate("time.days") + " " + $translate("events.late")
+            event.tooltip_string += "<br />" + $translate.instant("events.completed") + " " + event.days + " " + $translate.instant("time.days") + " " + $translate.instant("events.late")
           }
           var params = { course_id: event.course_id, module_id: event.group_id }
           var url = "course.module"

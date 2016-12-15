@@ -41,7 +41,7 @@ angular.module('scalearAngularApp')
           Course.exportStudentCsv({course_id: $stateParams.course_id},
             function(response){
               if (response.notice){
-                ErrorHandler.showMessage($translate("error_message.export_student"), 'errorMessage', 2000, "success");
+                ErrorHandler.showMessage($translate.instant("error_message.export_student"), 'errorMessage', 2000, "success");
             }
           })
         }

@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
     var next = function(user) {
       if (!user.info_complete) {
         $state.go("edit_account");
-        ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', null, "error");
+        ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', null, "error");
       } else if (URLInformation.hasEnroll()) {
         $window.location.href = URLInformation.getEnrollLink()
         URLInformation.clearEnrollLink()

@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', 'Page', '$state', '$translate', 'ContentNavigator', '$log', 'CourseModel', 'ScalearUtils', function($scope, $stateParams, Course, Page, $state, $translate, ContentNavigator, $log, CourseModel, ScalearUtils) {
 
     $scope.course = CourseModel.getSelectedCourse()
-    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.information') + ': ' + $scope.course.name);
     ContentNavigator.open()
 
     $scope.urlWithProtocol = ScalearUtils.urlWithProtocol

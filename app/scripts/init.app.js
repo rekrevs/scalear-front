@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
     }
 
     var showErrorMsg = function(link) {
-      ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
+      ErrorHandler.showMessage('Error ' + ': ' + $translate.instant("error_message.you_are_not_authorized"), 'errorMessage', 4000, "error");
       URLInformation.setRedirectLink(link)
     }
 
@@ -103,7 +103,7 @@ angular.module('scalearAngularApp')
           }
           if(!current_user.info_complete) {
             $state.go('edit_account', {},{notify: false})
-            ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 4000, "error");
+            ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', 4000, "error");
           } else {
             if(toParams.course_id) {
               CourseModel.getCourseRole(toParams.course_id)

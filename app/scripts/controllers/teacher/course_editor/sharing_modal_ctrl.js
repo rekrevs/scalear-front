@@ -6,6 +6,8 @@ angular.module('scalearAngularApp')
   		var init =function(){ 
         $scope.selected_module = selected_module
         $scope.selected_item = selected_item
+        $scope.selected_teacher = {}
+
         $scope.deSelectAll($scope.selected_module)
         if($scope.selected_item)
           $scope.selectItem($scope.selected_module, $scope.selected_item, null);
@@ -13,7 +15,8 @@ angular.module('scalearAngularApp')
           $scope.selectAll($scope.selected_module)
   		}
 
-  		$scope.shareItem= function(){
+  		$scope.shareItem= function(data){
+        console.log($scope.selected_teacher.email)
   			var selected = {modules:[], lectures:[], quizzes:[], customlinks:[]}
 				if($scope.selected_module.selected)
 					selected.modules.push($scope.selected_module.id)
@@ -30,12 +33,12 @@ angular.module('scalearAngularApp')
 					})
 
         if(!selected.modules.length && !selected.lectures.length && !selected.quizzes.length && !selected.customlinks.length){
-          $scope.errors = $translate('sharing.nothing_selected')
+          $scope.errors = $translate.instant('sharing.nothing_selected')
         }
-        else if(!$scope.selected_teacher)
-          $scope.errors = $translate('sharing.please_enter_email')
+        else if(!$scope.selected_teacher.email)
+          $scope.errors = $translate.instant('sharing.please_enter_email')
         else{
-          SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
+          SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher.email}, 
           	function(){
                 $modalInstance.close();
             },

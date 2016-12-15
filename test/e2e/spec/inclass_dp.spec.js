@@ -83,11 +83,13 @@ student2_browser = utils.new_session()
         utils.switch_browser(student_browser)
         login_page.sign_in(params.student1.email, params.password)
         course_list.open()
-        course_list.open_student_course(2)
+        course_list.open_student_course(1)
       })
       it('should open first lecture in first module', function(){
         navigator.open()
-        navigator.module(1).open()
+        // navigator.modules.count().then(function(count) {
+        //   navigator.module(count).open()
+        // })
       })
     })
     describe('Student 2 ', function(){
@@ -95,13 +97,13 @@ student2_browser = utils.new_session()
         utils.switch_browser(student2_browser)
         login_page.sign_in(params.student2.email, params.password)
         course_list.open()
-        course_list.open_student_course(2)
+        course_list.open_student_course(1)
       })
-
       it('should open first lecture in first module', function(){
         navigator.open()
-        navigator.module(1).open()
-        // sleep
+        // navigator.modules.count().then(function(count) {
+        //   navigator.module(count).open()
+        // })
       })
     })
   })
@@ -116,7 +118,12 @@ student2_browser = utils.new_session()
         utils.switch_browser(student_browser)
         student_dp.wait_modal()
         expect(student_dp.modal_student(1).getText()).toContain(params.student2.email)
-        student_dp.modal_invite_student(1)
+        expect(student_dp.modal_student(1).getText()).toContain(params.student2.email)
+        expect(student_dp.modal_invite_email(0).getText()).toContain(params.student2.email)
+        student_dp.modal_invite_email(0).click()
+        // student_dp.modal_student(1).click()
+        // student_dp.modal_invite_student(0)
+
         expect(student_dp.modal.getText()).toContain("Wait For Acceptance")
       })
     })
@@ -148,7 +155,8 @@ student2_browser = utils.new_session()
       it("should invite student 2",function(){
         utils.switch_browser(student_browser)
         expect(student_dp.modal_student(1).getText()).toContain(params.student2.email)
-        student_dp.modal_invite_student(1)
+        // student_dp.modal_invite_student(1)
+        student_dp.modal_invite_email(0).click()
         expect(student_dp.modal.getText()).toContain("Wait For Acceptance")
       })
     })
@@ -493,4 +501,32 @@ student2_browser = utils.new_session()
       })
     })
   })
+
+  describe('Teacher ', function(){
+    it("should go to lecture",function(){
+      utils.switch_browser(student_browser)
+      login_page.sign_in(params.teacher1.email, params.password)
+      course_list.open()
+      course_list.open_teacher_course(1)
+    })
+    it("should delete items in first module and module itself",function(){
+      sub_header.open_edit_mode()
+      navigator.modules.count().then(function(count) {
+        module_count = count
+        var module = navigator.module(module_count)
+        module.open()
+        expect(module.items.count()).toEqual(1)
+        module.item(1).delete()
+        expect(module.items.count()).toEqual(0)
+        module.delete()
+        expect(navigator.modules.count()).toEqual(2)
+      })
+    })
+    it("should logout", function() {
+      course_list.open()
+      header.logout()
+    })
+  })
+
+
 })

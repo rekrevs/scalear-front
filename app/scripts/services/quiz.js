@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .factory('Quiz', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host + '/:lang/courses/:course_id/quizzes/:quiz_id/:action', { course_id: $stateParams.course_id, lang: $translate.uses() }, {
+    return $resource(scalear_api.host + '/:lang/courses/:course_id/quizzes/:quiz_id/:action', { course_id: $stateParams.course_id, lang: $translate.use() }, {
       'create': { method: 'POST', headers: headers },
       'newQuiz': { method: 'POST', params: { action: 'new_or_edit' }, headers: headers },
       'index': { method: 'GET', isArray: true, headers: headers },

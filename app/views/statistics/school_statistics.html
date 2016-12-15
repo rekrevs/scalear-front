@@ -13,11 +13,11 @@
     <span>
      Limit to <select class="no-margin-bottom" style="display: inline;width: 15%;"  ng-options="domain for domain in subdomains" ng-model="report.selected_domain" ></select> email addresses
     </span>
-  <br>  
+    <br>  
   </section>
   <span translate>statistics.report_period</span>
   <span>
-    <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 25%;" />
+    <input name="date" type="text"   datepicker-popup="dd-MMMM-yyyy" ng-model="report.start_date" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 25%;" />
     <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.start_date">{{errors.start_date}}</small>
   </span>
   <span translate>statistics.to</span>

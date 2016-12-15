@@ -3,8 +3,11 @@ Date.prototype.addDays_test = function(days)
   var month = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"];
 var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    var dat = new Date(this.valueOf());
-    dat.setDate(dat.getDate() + days);
+    // var dat = new Date(this.valueOf());
+    var dat = new Date().addDays(days );
+    
+    // dat.setDate(dat.getDate() + days);
+
     var  op = weekdays[dat.getDay()]+', '+ ((dat.getDate()<10)? "0":"") + dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
     return op;
 };
@@ -98,8 +101,14 @@ var params= {
     short_name: "csc-test",
     course_name: "aesting course 100",
     course_start_date: new Date().getDate() - 7,
-    course_end_date: new Date().addDays(30),
-    course_end_date_test: new Date().addDays_test(30),
+ 
+    course_end_date: new Date().addDays(28),
+     // course_end_date: new Date().getDate() + 30,
+    
+    // course_end_date_test: new Date().addDays(30),
+    course_end_date_test: new Date().addDays_test(28),
+ 
+
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -217,21 +226,21 @@ exports.config = {
         // 'test/e2e/spec/teacher-managment.spec.js', // done(11/16)
         // 'test/e2e/spec/students_solve_course.spec.js', // done(11/16) (inOrder Functionality )
         // 'test/e2e/spec/notes.spec.js', // done(11/16)
-        // 'test/e2e/spec/discussions.spec.js', //done(11/16)
-        // 'test/e2e/spec/progress-module.spec.js', //done(11/16)
-        // 'test/e2e/spec/progress-completion-module.spec.js', //done(11/16)  //missing to change grade of quiz or lecture and check it       
-        // 'test/e2e/spec/validations.spec.js', //
+        'test/e2e/spec/discussions.spec.js', //done(11/16)
+        'test/e2e/spec/progress-module.spec.js', //done(11/16)
+        'test/e2e/spec/progress-completion-module.spec.js', //done(11/16)  //missing to change grade of quiz or lecture and check it       
+        'test/e2e/spec/validations.spec.js', //
         // 'test/e2e/spec/preview-as-student.spec.js',         
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
+        // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
+        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/delete_course.spec.js', //
 
        
         //rewritten tests
 
-        // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
 

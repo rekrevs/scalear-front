@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .factory('User', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope','$log' ,'$translate',function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $log ,$translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/:lang/users/:id/:action', {lang:$translate.uses()},
+    return $resource(scalear_api.host+'/:lang/users/:id/:action', {lang:$translate.use()},
       {
         'getCurrentUser': { method: 'GET', headers: headers , ignoreLoadingBar: true, params: {action: 'get_current_user'}},
         'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},

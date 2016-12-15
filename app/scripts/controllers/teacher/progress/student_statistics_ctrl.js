@@ -47,8 +47,8 @@ angular.module('scalearAngularApp')
 	$scope.formatStatisticsChartData = function(data){
 		var formated_data ={}
 		formated_data.cols=[
-			{"label": $translate('global.students'),"type": "timeofday"},
-			{"label": "#"+$translate('global.students'),"type": "number"}
+			{"label": $translate.instant('global.students'),"type": "timeofday"},
+			{"label": "#"+$translate.instant('global.students'),"type": "number"}
 		]
 		formated_data.rows= []
 		for(var ind in data){
@@ -102,7 +102,7 @@ angular.module('scalearAngularApp')
 	}
 
 	var getReallyConfused= function(data){
-		data.cols.push({"label": $translate('progress.really_confused'),"type": "number"})
+		data.cols.push({"label": $translate.instant('progress.really_confused'),"type": "number"})
 		for (var i in data.rows)
 		if($scope.statistics.really_confused[i]){
 			var d = new Date($scope.statistics.really_confused[i][0]*1000)
@@ -135,7 +135,7 @@ angular.module('scalearAngularApp')
 		new_time[1]=time[1]<10? "0"+time[1] : time[1]
 		new_time[2]=time[2]<10? "0"+time[2] : time[2]
 		var formatted_time = new_time[0]+":"+new_time[1]+":"+new_time[2]
-		var html = "<div style='padding:8px 0 0 5px'><b>"+formatted_time+"</b><br>#"+$translate('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
+		var html = "<div style='padding:8px 0 0 5px'><b>"+formatted_time+"</b><br>#"+$translate.instant('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
 		for(var i in questions){
 			html +="<div style='width:400px;margin-left:5px;overflow-wrap:break-word'>- "+questions[i]+"</div><br>"
 		}

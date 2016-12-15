@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     $scope.course = CourseModel.getSelectedCourse()
     $scope.formData.disable_registration_checked = !!$scope.course.disable_registration
     $scope.roles = [{ value: 3, text: 'courses.information.professor' }, { value: 4, text: 'courses.information.ta' }];
-    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.information') + ': ' + $scope.course.name);
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.enrollment_url = $location.absUrl().split('courses')[0] + "courses/enroll?id=" + $scope.course.unique_identifier
     $scope.course_info_url = $state.href('course.course_information', { course_id: $scope.course.id }, { absolute: true })
@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
       $scope.course.exportCourse()
         .then(function(response) {
           if(response.notice) {
-            ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+            ErrorHandler.showMessage($translate.instant("error_message.export_course"), 'errorMessage', 4000, 'success');
           }
         })
     }

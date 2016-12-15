@@ -223,14 +223,19 @@ describe("check course review", function(){
 			})
 			it('should display the module progress chart showing that the two students finished on time', function(){
 				refresh()
+					sleep(10000)
 				expect(module_progress.getModuleChartValueAt(1)).toBe('1')
 				refresh()
+					sleep(10000)
 				expect(module_progress.getModuleChartValueAt(4)).toBe('2')
 			})
 			it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
 				expect(module_progress.module_items.count()).toBe(modules_items['New Module'].length)
-				modules_items['New Module'].forEach(function(item, i){
+				modules_items['New Module'].forEach(function(item, i){					
 					var total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
+					// console.log(module_progress.module_item(i+1))
+					// console.log(module_progress.module_item(i+1).items)
+					// console.log(total)
 					expect(module_progress.module_item(i+1).items.count()).toBe(total)
 					var summary = "("
 					if(item.duration)
@@ -263,20 +268,27 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(1)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(3)).toBe('2')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(4)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 3
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(1)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(2)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(3)).toBe('2')
 				})
 				it('should have correct discussion titles and content',function(){
@@ -350,18 +362,24 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(1)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(3)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(5)).toBe('1')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(4)).toBe('1')
 					refresh()
+					sleep(8000)
 					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 3
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1')
 				})
 				it('should display correct total In-Class time',function(){
@@ -389,11 +407,14 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(4)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(5)).toBe('1')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(5)).toBe('2')
 				})
 				it('should display correct total In-Class time',function(){
@@ -404,6 +425,7 @@ describe("check course review", function(){
 			})
 			describe('Quiz 1',function(){
 				it('should display correct quiz titles',function(){
+					sleep(5000)
 					var question = modules_items['New Module'][3].questions[0]
 					expect(module_progress.module_item(4).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
 
@@ -417,18 +439,24 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
 					//  Quiz 3
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(1)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')
 				})
 				it('should have correct freetext answer',function(){
@@ -467,22 +495,30 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(1)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(5)).toBe('1')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(5)).toBe('1')
 					//  Quiz 3
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(1)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2)).toBe('2')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')
 				})
 				it('should have correct freetext answer',function(){
@@ -606,11 +642,14 @@ describe("check course review", function(){
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(2)).toBe('1')
 					// Quiz 2
 					refresh()
+					sleep(5000)
 					expect(module_progress.module_item(6).question_quiz(2).getModuleChartValueAt(2)).toBe('1')
 				})
 				it('should display freetext question statistics correct',function(){
@@ -718,6 +757,29 @@ describe("check course review", function(){
 					describe('Student 1',function(){
 						it(" login in",function(){
 							login_page.sign_in(params.student1.email, params.password)
+						})
+						it('should open first lecture in first module', function(){
+							course_list.open()
+							course_list.open_student_course(1)
+							navigator.module(1).open()
+							navigator.module(1).item(1).open()
+						})
+						// it("should open timeline",function(){
+						// 	// student_lec.open_timeline()
+						// })
+						it("should delete discussion post",function(){
+							student_lec.lecture(1).discussion(1).delete()
+							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+							expect(student_lec.lecture(1).items.count()).toEqual(3)
+						})
+						it("should logout",function(){
+							student_lec.open_timeline()
+							header.logout()
+						})
+					})
+					describe('Student 2',function(){
+						it(" login in",function(){
+							login_page.sign_in(params.student2.email, params.password)
 						})
 						it('should open first lecture in first module', function(){
 							course_list.open()

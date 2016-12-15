@@ -5,16 +5,16 @@ angular.module('scalearAngularApp')
     
     $scope.grade_options= [{
          value: 0, // not set
-         text: $translate('quizzes.grade.under_review')
+         text: $translate.instant('quizzes.grade.under_review')
      }, {
          value: 1, // wrong
-         text: $translate('quizzes.grade.incorrect')
+         text: $translate.instant('quizzes.grade.incorrect')
      }, {
          value: 2,
-         text: $translate('quizzes.grade.partial')
+         text: $translate.instant('quizzes.grade.partial')
      }, {
          value: 3,
-         text: $translate('quizzes.grade.correct')
+         text: $translate.instant('quizzes.grade.correct')
      }]
 
     $scope.showFeedback = function(answers, index, flag){

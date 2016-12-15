@@ -12,12 +12,12 @@ angular.module('scalearAngularApp')
           // check if hours or minutes are incorrect
           var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
           if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-            return $translate('editor.incorrect_format_time')
+            return $translate.instant('editor.incorrect_format_time')
           } else if ( bolean_duration && (video_duration <= calculated_duration || calculated_duration <= 0) ){
-            return $translate('editor.time_outside_range')
+            return $translate.instant('editor.time_outside_range')
           }
         } else {
-          return $translate('editor.incorrect_format_time')
+          return $translate.instant('editor.incorrect_format_time')
         }
       }
 

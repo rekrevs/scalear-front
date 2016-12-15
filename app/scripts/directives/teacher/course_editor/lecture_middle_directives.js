@@ -556,13 +556,13 @@ angular.module('scalearAngularApp')
         }
 
         scope.quiz_types = [
-          { value: "MCQ", text: $translate('content.questions.quiz_types.mcq') },
-          { value: "OCQ", text: $translate('content.questions.quiz_types.ocq') },
-          { value: "Free Text Question", text: $translate('content.questions.quiz_types.text') }
+          { value: "MCQ", text: $translate.instant('content.questions.quiz_types.mcq') },
+          { value: "OCQ", text: $translate.instant('content.questions.quiz_types.ocq') },
+          { value: "Free Text Question", text: $translate.instant('content.questions.quiz_types.text') }
         ]
         scope.match_types = [
-          { value: 'Free Text', text: $translate('content.questions.quiz_types.free_text') },
-          { value: 'Match Text', text: $translate('content.questions.quiz_types.match_text') }
+          { value: 'Free Text', text: $translate.instant('content.questions.quiz_types.free_text') },
+          { value: 'Match Text', text: $translate.instant('content.questions.quiz_types.match_text') }
         ]
         $log.debug(scope.quiz)
         if (!scope.quiz.match_type && !scope.isSurvey()) {
@@ -573,7 +573,7 @@ angular.module('scalearAngularApp')
         }
 
         if (!scope.isSurvey()) {
-          scope.quiz_types.push({ value: "drag", text: $translate('content.questions.quiz_types.drag') })
+          scope.quiz_types.push({ value: "drag", text: $translate.instant('content.questions.quiz_types.drag') })
         }
 
         scope.addAnswer = scope.add()

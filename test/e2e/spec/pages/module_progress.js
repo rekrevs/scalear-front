@@ -106,8 +106,10 @@ var Student = function(elem){
 }
 
 Student.prototype = Object.create({}, {
-	name:{get:function(){return this.field.element(by.css('[bo-text="student.full_name"]')).getText()}},
-	email:{get:function(){return this.field.element(by.css('[bo-text="student.full_name"]')).getAttribute('tooltip')}},
+	// name:{get:function(){return this.field.element(by.css('[tooltip="{{::student.email}}"]')).getText()}},
+	// email:{get:function(){return this.field.element(by.css('[tooltip="{{::student.email}}"]')).getAttribute('tooltip')}},
+	name:{get:function(){return this.field.element(by.tagName('td')).element(by.tagName('span')).getText()}},
+	email:{get:function(){return this.field.element(by.tagName('td')).element(by.tagName('span')).getAttribute('tooltip')}},
 	columns_count:{value:function(){return this.field.all(by.className("state")).count() }},
 	column_item:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('src') }},
 	column_item_tooltip:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('tooltip') }},
@@ -158,7 +160,7 @@ var ModuleProgress = function () {};
 ModuleProgress.prototype = Object.create({}, {
 	module_chart:{get:function(){return element(by.className('progress_chart'))}},
 	module_chart_columns:{get:function(){return this.module_chart.element(by.tagName('svg')).all(by.tagName('g'))}},
-	module_items:{get:function(){return element.all(by.repeater('module_item in module.items'))}},
+	module_items:{get:function(){return element.all(by.repeater('module_item in ::module.items'))}},
 	module_item:{value:function(value){return new ModuleItem(this.module_items.get(value-1))}},
 	module_item_inclass:{value:function(value){return this.module_item(value).all(by.className("show_inclass")) }},
 	time_estimate:{get:function(){return element(by.className('time_estimate'))}},

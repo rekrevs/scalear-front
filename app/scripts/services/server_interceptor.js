@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
         // successful request
         // change language to current language
         var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
-        config.url = config.url.replace(regex, scalear_api.host + "/" + $translate.uses() + "/");
+        config.url = config.url.replace(regex, scalear_api.host + "/" + $translate.use() + "/");
         return config || $q.when(config);
       },
 
@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
             $interval.cancel($rootScope.stop);
             $rootScope.stop = undefined;
           }
-          ErrorHandler.showMessage($translate("error_message.connected"), 'errorMessage', 4000, "success");
+          ErrorHandler.showMessage($translate.instant("error_message.connected"), 'errorMessage', 4000, "success");
         }
 
         // if (response.data.notice && response.config.url.search(re) != -1) {
@@ -140,7 +140,7 @@ angular.module('scalearAngularApp')
             $rootScope.server_error = true;
 
             if(rejection.data == "")
-              ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('error_message.cant_connect_to_server'), 'errorMessage', 8000, "error");
+              ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate.instant('error_message.cant_connect_to_server'), 'errorMessage', 8000, "error");
             else
               ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 10000, "error");
           }

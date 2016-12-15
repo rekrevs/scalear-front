@@ -47,12 +47,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.changeLanguage = function(key) {
-      $translate.uses(key);
+      $translate.use(key);
       $rootScope.current_lang = key;
       $window.moment.locale(key);
     };
 
-    $scope.changeLanguage($translate.uses());
+    $scope.changeLanguage($translate.use());
 
     //Google Analytics
     ga('create', scalear_api.ga_token);

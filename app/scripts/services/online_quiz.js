@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .factory('OnlineQuiz', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host + '/:lang/online_quizzes/:online_quizzes_id/:action', { lang: $translate.uses() }, {
+    return $resource(scalear_api.host + '/:lang/online_quizzes/:online_quizzes_id/:action', { lang: $translate.use() }, {
       'update': { method: 'PUT', headers: headers },
       'destroy': { method: 'DELETE', headers: headers },
       'getQuizList': { method: 'GET', params: { action: 'get_quiz_list_angular' }, headers: headers },
@@ -170,7 +170,7 @@ angular.module('scalearAngularApp')
 
       function removeHtmlAnswer(index) {
         if(video_quiz.answers.length <= 1) {
-          ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
+          ErrorHandler.showMessage('Error ' + ': ' + $translate.instant("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
         } else
           video_quiz.answers.splice(index, 1);
       }

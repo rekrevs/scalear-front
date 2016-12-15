@@ -15,6 +15,7 @@ StudentDP.prototype= Object.create({}, {
   }},
   modal_students:{get:function(){return this.modal.all(by.repeater('student in students'))}},
 	modal_student:{value:function(num){return this.modal_students.get(num-1) }},
+  modal_invite_email:{value:function(num){return this.modal_student(num-1).element(by.tagName('span')) }},
   modal_invite_student:{value:function(num){return this.modal_student(num-1).element(by.tagName('span')).click() }},
   modal_cancel_invitation_wait_for_acceptance:{value:function(num){return element(by.css("#wait_for_acceptance_modal a.right")).click() }},
   modal_invite_another_wait_for_acceptance:{value:function(num){return element(by.css("#wait_for_acceptance_modal a#invite")).click() }},

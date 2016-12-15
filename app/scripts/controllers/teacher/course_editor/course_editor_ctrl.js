@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('courseEditorCtrl', ['$rootScope', '$scope', '$state', '$translate', '$log', 'Page', '$modal', '$timeout', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'CourseModel', 'ModuleModel', 'ItemsModel', 'LectureModel', 'QuizModel', 'LinkModel', function($rootScope, $scope, $state, $translate, $log, Page, $modal, $timeout, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, CourseModel, ModuleModel, ItemsModel ,LectureModel, QuizModel, LinkModel) {
 
     $scope.course = CourseModel.getSelectedCourse()
-    Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
     DetailsNavigator.open()

@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
     $scope.player.controls = {}
     $scope.player.events = {}
     Page.setTitle('Welcome to ScalableLearning');
-    $rootScope.subheader_message = $translate("intro.title")
+    $rootScope.subheader_message = $translate.instant("intro.title")
     $scope.student_or_teacher = null 
     UserSession.getCurrentUser()
       .then(function(user) {

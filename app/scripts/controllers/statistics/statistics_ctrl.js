@@ -2,7 +2,7 @@ angular.module('scalearAngularApp')
   .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate','$modal', function ($scope, Kpi, Page, $rootScope, $translate, $modal) {
 
     Page.setTitle('statistics.statistics');
-    $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
+    $rootScope.subheader_message = $translate.instant("statistics.statistics_dashboard")
     $scope.close_selector = false;
 
     var init = function() {
@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
             enabled: false
           },
           subtitle: {
-            text: document.ontouchstart === undefined ? $translate('statistics.drag_to_zoom') : $translate('statistics.pinch_to_zoom')
+            text: document.ontouchstart === undefined ? $translate.instant('statistics.drag_to_zoom') : $translate.instant('statistics.pinch_to_zoom')
           },
           plotOptions: {
             area: {
@@ -91,6 +91,7 @@ angular.module('scalearAngularApp')
           type: 'line',
           name: '#',
           pointInterval: 24 * 3600 * 1000,
+          data:[],
           pointStart: Date.UTC(2013, 0, 1)
         }],
         title: {
@@ -125,7 +126,7 @@ angular.module('scalearAngularApp')
             chart_data[ind] = elem.value
           })
           $scope.chartConfig.series[0].data = chart_data
-          $scope.chartConfig.title.text = $translate('statistics.' + key.toLowerCase()) + " " + $translate('statistics.rate_from') + " " + start_date + " " + $translate('statistics.to') + " " + end_date
+          $scope.chartConfig.title.text = $translate.instant('statistics.' + key.toLowerCase()) + " " + $translate.instant('statistics.rate_from') + " " + start_date + " " + $translate.instant('statistics.to') + " " + end_date
           $scope.chartConfig.loading = false
           $scope.stats_title = 'statistics.' + $scope.selected_series.toLowerCase()
         },

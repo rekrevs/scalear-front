@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .factory('Lecture', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host + '/:lang/courses/:course_id/lectures/:lecture_id/:action', { course_id: $stateParams.course_id, lecture_id: '@id', lang: $translate.uses() }, {
+    return $resource(scalear_api.host + '/:lang/courses/:course_id/lectures/:lecture_id/:action', { course_id: $stateParams.course_id, lecture_id: '@id', lang: $translate.use() }, {
       'create': { method: 'POST', headers: headers },
       'index': { method: 'GET', isArray: true, headers: headers },
       'update': { method: 'PUT', headers: headers },
@@ -169,7 +169,7 @@ angular.module('scalearAngularApp')
       function validateUrl() {
         var deferred = $q.defer();
         if(VideoInformation.invalidUrl(lecture.url)) {
-          deferred.resolve($translate('editor.details.incompatible_video_link'));
+          deferred.resolve($translate.instant('editor.details.incompatible_video_link'));
         } else {
           validate()
             .then(function() {
@@ -183,20 +183,20 @@ angular.module('scalearAngularApp')
                         if(data.items[0].status.uploadStatus === "processed"){
                             deferred.resolve();
                         } else {
-                            deferred.reject($translate('editor.details.vidoe_not_exist'));
+                            deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                         }
                     } else {
-                      deferred.reject($translate('editor.details.vidoe_not_exist'));
+                      deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                     }
                   })
                   .catch(function() {
-                    deferred.reject($translate('editor.details.vidoe_not_exist'));
+                    deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                     return deferred.promise
                   })
               } else if(VideoInformation.isMP4(lecture.url)) {
                 deferred.resolve()
               } else {
-                deferred.reject($translate('editor.details.incompatible_video_link'))
+                deferred.reject($translate.instant('editor.details.incompatible_video_link'))
               }
             })
             .catch(function(msg) {

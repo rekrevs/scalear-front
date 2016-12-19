@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
         .translations('sv', translation_sv)
         .preferredLanguage('en')
         .useCookieStorage()
-        .useSanitizeValueStrategy('sanitize');
+        .useSanitizeValueStrategy('escape');
 
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 

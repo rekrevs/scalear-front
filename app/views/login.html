@@ -94,14 +94,14 @@
             <div class="line-through" translate>global.or</div>
 
             <div class="row">
-                <div ng-show="!show_scalable_login" class="button small-10 small-centered columns saml use_scalable_button" ng-click="showLoginForm()" translate>account.use_scalable</div>
+                <div ng-show="!show_scalable_login"  class="button small-10 small-centered columns saml use_scalable_button" ng-click="showLoginForm();hideProviders()" translate>account.use_scalable</div>
             </div>
-            <span ng-show="show_scalable_login" ng-click="hideProviders()">
+            <span ng-show="show_scalable_login" >
                 <div class="row">
                     <div class="small-10 small-centered columns text-left" style="margin:5px 0">
                         <div><span translate>account.login_with</span> Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></div>
                     </div>
-                </div>
+                </div>            
                 <div class="row">
                     <div class="small-10 small-centered columns">
                         <form novalidate>

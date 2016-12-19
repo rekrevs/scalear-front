@@ -33,9 +33,12 @@ angular.module('scalearAngularApp')
         User.samlSignup({}, {
           user: $scope.user,
           // role_id: $scope.user.role_ids
-        }, function(data) {
-
+        }).$promise
+        .then(function(data) {
           $state.go('confirmed');
+        })
+        .catch(function(response){
+          $scope.user.errors = response.data.errors
         })
       } else {
         if(!$scope.user.password_confirmation) {
@@ -45,7 +48,7 @@ angular.module('scalearAngularApp')
         User.signUp({}, {
           user: $scope.user
         }, function() {
-          $state.go('thanks_for_registering',{ email : $scope.user.email}); 
+          $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {
           $scope.user.errors = response.data.errors
         })

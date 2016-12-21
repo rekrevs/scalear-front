@@ -3,8 +3,10 @@ Date.prototype.addDays_test = function(days)
   var month = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"];
 var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    var dat = new Date(this.valueOf());
-    dat.setDate(dat.getDate() + days);
+    // var dat = new Date(this.valueOf());
+    var dat = new Date().addDays(days ); 
+    
+    // dat.setDate(dat.getDate() + days);
     var  op = weekdays[dat.getDay()]+', '+ ((dat.getDate()<10)? "0":"") + dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
     return op;
 };
@@ -18,21 +20,21 @@ Date.prototype.addDays = function(days)
 var params= {
     //local
     frontend: 'http://localhost:9000/#',
-    admin_password:"password",
-    password: 'password',
+    admin_password:"password1234",
+    password: 'password1234',
     student_name_list: ['Test_1 student','Test_2 student','Test_3 student'],
 
     student1:{
         f_name: "Test_1",
         l_name: "student",
-        online_name: "studenttest@sharklasers.com",
+        online_name: "studenttest1",
         university: "uni",
         email: "studenttest@sharklasers.com",
     },
     student2:{
         f_name: "Test_2",
         l_name: "student",
-        online_name: "studenttest2@sharklasers.com",
+        online_name: "studenttest2",
         university: "uni",
         email: "studenttest2@sharklasers.com",
     },
@@ -46,7 +48,7 @@ var params= {
     student4:{
         f_name: "Student",
         l_name: "4",
-        online_name: "studenttest3",
+        online_name: "studenttest4",
         university: "test univerisity",
         email: "studenttest3@sharklasers.com",
     },
@@ -54,14 +56,14 @@ var params= {
         f_name: "teacher",
         l_name: "1",
         online_name: "teacher1@sharklasers.com",
-        university: "test univerisity",
+        university: "uni",
         email: "teacher1@sharklasers.com",
     },
     teacher2:{
         f_name: "teacher",
         l_name: "test",
         online_name: "teacher test",
-        university: "world university",
+        university: "uni",
         email: "teacher2@sharklasers.com",
     },
     teacher3:{
@@ -98,8 +100,13 @@ var params= {
     short_name: "csc-test",
     course_name: "aesting course 100",
     course_start_date: new Date().getDate() - 7,
-    course_end_date: new Date().addDays(30),
-    course_end_date_test: new Date().addDays_test(30),
+
+    course_end_date: new Date().addDays(28), 
+    // course_end_date: new Date().addDays(30),
+    
+    // course_end_date_test: new Date().addDays_test(30),
+    course_end_date_test: new Date().addDays_test(28),     
+
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
@@ -224,14 +231,14 @@ exports.config = {
         // 'test/e2e/spec/preview-as-student.spec.js',         
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
+        // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
+        'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/delete_course.spec.js', //
 
        
         //rewritten tests
 
-        // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
 

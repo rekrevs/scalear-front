@@ -57,7 +57,7 @@ describe("Filling Course", function() {
 
     it("should open course", function() {
       course_list.open()
-      course_list.open_teacher_course(2)
+      course_list.open_teacher_course(1)
     })
     it("should go to edit mode", function() {
       sub_header.open_edit_mode()

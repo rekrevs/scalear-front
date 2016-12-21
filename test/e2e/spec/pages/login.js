@@ -22,7 +22,7 @@ Login.prototype = Object.create({}, {
 	prev_provider_type_password: { value: function (keys) { return this.prev_provider_password_field.clear().sendKeys(keys); }},
 
 	prev_provider_login_button:{get:function(){return element(by.className('previous_provider')).element(by.id('login_btn'))}},
-	use_scalable_account_button:{get:function(){return element(by.css('[ng-click="showLoginForm()"]'))}},
+	use_scalable_account_button:{get:function(){return element(by.css('[ng-click="showLoginForm();hideProviders()"]'))}},
 
 	sign_in:{value:function(email, password){
 		element(by.id('login')).isDisplayed().then(function(result) {

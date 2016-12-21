@@ -53,7 +53,7 @@ describe("Filling Course", function() {
 
     it("should open course", function() {
       course_list.open()
-      course_list.open_teacher_course(2)
+      course_list.open_teacher_course(1)
     })
     it("should go to edit mode", function() {
       sub_header.open_edit_mode()
@@ -214,7 +214,10 @@ describe("Filling Course", function() {
       course_editor.inclass_prev()
       expect(video.current_time).toEqual(start_time_string)
     })
-
+    it("should save quiz", function() { 
+      invideo_quiz.save_quiz() 
+    }) 
+    
     it("should logout", function() {
       header.logout()
     })

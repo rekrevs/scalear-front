@@ -50,7 +50,7 @@ student2_browser = utils.new_session()
 
     it("should open course", function() {
       course_list.open()
-      course_list.open_teacher_course(2)
+      course_list.open_teacher_course(1)
     })
 
     it("should go to inclass mode", function() {
@@ -92,7 +92,7 @@ student2_browser = utils.new_session()
       utils.switch_browser(student_browser)
       login_page.sign_in(params.student1.email, params.password)
       course_list.open()
-      course_list.open_student_course(2)
+      course_list.open_student_course(1)
     })
 
     it("should open student inclass",function(){
@@ -136,7 +136,7 @@ student2_browser = utils.new_session()
       utils.switch_browser(student2_browser)
       login_page.sign_in(params.student2.email, params.password)
       course_list.open()
-      course_list.open_student_course(2)
+      course_list.open_student_course(1)
     })
 
     it("should open student inclass",function(){
@@ -1341,17 +1341,20 @@ student2_browser = utils.new_session()
           // it("should go to edit mode", function() {
       sub_header.open_edit_mode()
     // })
-      var module = navigator.module(1)
-      module.open()
-      expect(module.items.count()).toEqual(3)
-      module.item(3).delete()
-      expect(module.items.count()).toEqual(2)
-      module.item(2).delete()
-      expect(module.items.count()).toEqual(1)
-      module.item(1).delete()
-      expect(module.items.count()).toEqual(0)
-      module.delete()
-      expect(navigator.modules.count()).toEqual(0)
+      navigator.modules.count().then(function(count) { 
+        module_count = count 
+        var module = navigator.module(module_count) 
+        module.open() 
+        expect(module.items.count()).toEqual(3) 
+        module.item(3).delete() 
+        expect(module.items.count()).toEqual(2) 
+        module.item(2).delete() 
+        expect(module.items.count()).toEqual(1) 
+        module.item(1).delete() 
+        expect(module.items.count()).toEqual(0) 
+        module.delete() 
+        expect(navigator.modules.count()).toEqual(0) 
+      }) 
     })
     it("should logout", function() {
       header.logout()

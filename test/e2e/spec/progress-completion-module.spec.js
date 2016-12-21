@@ -47,6 +47,7 @@ describe("Module Completion", function(){
 				navigator.module(1).open()
 				element(by.className('module-completion')).click()
 				expect(browser.driver.getCurrentUrl()).toContain('progress/students')
+				sleep(2000)
 			})
 			it ("should check number of students", function(){
 				module_progress.module_completion().students_count().then(function(coun){expect(coun).toEqual(3)})

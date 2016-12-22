@@ -87,9 +87,9 @@ student2_browser = utils.new_session()
       })
       it('should open first lecture in first module', function(){
         navigator.open()
-        // navigator.modules.count().then(function(count) {
-        //   navigator.module(count).open()
-        // })
+        navigator.modules.count().then(function(count) { 
+          navigator.module(count).open() 
+        }) 
       })
     })
     describe('Student 2 ', function(){
@@ -101,9 +101,9 @@ student2_browser = utils.new_session()
       })
       it('should open first lecture in first module', function(){
         navigator.open()
-        // navigator.modules.count().then(function(count) {
-        //   navigator.module(count).open()
-        // })
+        navigator.modules.count().then(function(count) { 
+          navigator.module(count).open() 
+        }) 
       })
     })
   })
@@ -123,7 +123,6 @@ student2_browser = utils.new_session()
         student_dp.modal_invite_email(0).click()
         // student_dp.modal_student(1).click()
         // student_dp.modal_invite_student(0)
-
         expect(student_dp.modal.getText()).toContain("Wait For Acceptance")
       })
     })
@@ -501,7 +500,6 @@ student2_browser = utils.new_session()
       })
     })
   })
-
   describe('Teacher ', function(){
     it("should go to lecture",function(){
       utils.switch_browser(student_browser)
@@ -527,6 +525,4 @@ student2_browser = utils.new_session()
       header.logout()
     })
   })
-
-
 })

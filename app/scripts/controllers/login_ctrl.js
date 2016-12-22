@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
             $(resp.saml_url).appendTo('body').submit();
           }
           else{
-            console.log(resp.saml_url)
+            // console.log(resp.saml_url)
             window.location = resp.saml_url
           }
         },

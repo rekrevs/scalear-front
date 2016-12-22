@@ -45,20 +45,20 @@ angular.module('scalearAngularApp')
 
 
     $scope.$watch('distance_peer_session_id', function(newval,oldval){
-      // console.log(newval,oldval)
-      // console.log($scope.check_distance_peer)
-      // console.log($scope.check_distance_peer)
+      // // console.log(newval,oldval)
+      // // console.log($scope.check_distance_peer)
+      // // console.log($scope.check_distance_peer)
 
       // if (!$scope.check_distance_peer){
-        console.log("ininininin")
+        // console.log("ininininin")
         // $scope.check_distance_peer = newval
         if ($scope.distance_peer_session_id &&  $scope.lecture != null){
-          console.log("outoutout")
-          console.log($scope.distance_peer_session_id)
+          // console.log("outoutout")
+          // console.log($scope.distance_peer_session_id)
           // if($scope.check_peer_fuction_is_called ){
-            console.log("outinout")
+            // console.log("outinout")
             // $scope.distance_peer_status = status
-            console.log($scope.distance_peer_status)
+            // console.log($scope.distance_peer_status)
             if(!$scope.distance_peer_status){
               Lecture.checkIfInDistancePeerSession(
               {
@@ -66,9 +66,9 @@ angular.module('scalearAngularApp')
                   lecture_id: $scope.lecture.id
               }).$promise
               .then(function(response){
-                console.log(response)
+                // console.log(response)
                 if(response.distance_peer != "no_peer_session"){
-                  console.log(response.distance_peer)
+                  // console.log(response.distance_peer)
                   // $scope.distance_peer_session_id = response.distance_peer.distance_peer_id
                   // startcheckIfDistancePeerIsAliveTimer()
                   $scope.name = response.name
@@ -117,7 +117,7 @@ angular.module('scalearAngularApp')
     }
 
     var clearDistancePeerVariables = function(){
-      console.log("clearDistancePeerVariables")
+      // console.log("clearDistancePeerVariables")
       $scope.next_stop_time = null
       $scope.distance_peer_status = null
       $scope.distance_peer_session_id = null
@@ -289,7 +289,7 @@ angular.module('scalearAngularApp')
 
 
     var clearStudentAnswer = function(){
-        console.log("clearStudentAnswer")
+        // console.log("clearStudentAnswer")
         $scope.selected_quiz.online_answers.forEach(function(answer) {
           if(answer.selected)
             answer.selected = null;
@@ -297,15 +297,15 @@ angular.module('scalearAngularApp')
     }
 
     var checkIfDistancePeerStatusIsSync = function(distance_peer_id,status,new_quiz_time , quiz) {
-      console.log("connect to data base to check if sync")
-      console.log(distance_peer_id,status,new_quiz_time , quiz)
+      // console.log("connect to data base to check if sync")
+      // console.log(distance_peer_id,status,new_quiz_time , quiz)
       Lecture.checkIfDistancePeerStatusIsSync({
         course_id: $scope.lecture.course_id,
         lecture_id: $scope.lecture.id,
         distance_peer_id: distance_peer_id
       }).$promise
       .then(function(response){
-        console.log(response)
+        // console.log(response)
         if(response.status == "start"){
           cancelcheckIfDistancePeerStatusIsSyncTimer()
           // showNotification('lectures.the_another_student_finished_status')
@@ -328,8 +328,8 @@ angular.module('scalearAngularApp')
           $scope.next_stop_time = new_quiz_time
           cancelStatusTimer()
           if(status == 3 || status == 4){
-            console.log("status quiz", status)
-            console.log(quiz)
+            // console.log("status quiz", status)
+            // console.log(quiz)
             $scope.hide_quiz_button = true            
             showQuizOnline(quiz)
             $interval(function() {$scope.hide_quiz_button = false}, 5000)
@@ -348,7 +348,7 @@ angular.module('scalearAngularApp')
             // cancelStatusTimer()
             startStatusTimer() 
           }
-          console.log("next_stop_time", $scope.next_stop_time)
+          // console.log("next_stop_time", $scope.next_stop_time)
         }
       })
     }
@@ -372,8 +372,8 @@ angular.module('scalearAngularApp')
         };
 
         $scope.lecture_player.controls.pause()
-        console.log("status",status)
-        // console.log($scope.distance_peer_id)
+        // console.log("status",status)
+        // // console.log($scope.distance_peer_id)
         Lecture.changeStatusDistancePeer({
           course_id: $scope.lecture.course_id,
           lecture_id: $scope.lecture.id,
@@ -382,16 +382,16 @@ angular.module('scalearAngularApp')
           distance_peer_id: $scope.distance_peer_session_id
         }).$promise
         .then(function(response){
-          console.log(response)
+          // console.log(response)
           if(status != 6 ){
             // $scope.distance_peer_messages = $translate.instant("distance_peer.waiting_the_another_student_to_finish")
             // checkIfDistancePeerStatusIsSync($scope.distance_peer_id,status,new_quiz_time,quiz);
             startcheckIfDistancePeerStatusIsSyncTimer($scope.distance_peer_session_id,status,new_quiz_time,quiz)
-            console.log("showAnnotation")
+            // console.log("showAnnotation")
             showAnnotation($translate.instant("distance_peer.waiting_the_another_student_to_finish", {name: $scope.name}))
           }
           else{
-            console.log("after comeback from ackend")
+            // console.log("after comeback from ackend")
             clearDistancePeerVariables()
             cancelcheckIfDistancePeerStatusIsSyncTimer()
             cancelcheckIfDistancePeerIsAliveTimer()
@@ -412,29 +412,29 @@ angular.module('scalearAngularApp')
         // add to the 4 time cue start time , quiz , end time , end of the end time(star of new time) 
         // start time
         // addd que to the video with intro time && remove the progress bar
-        console.log("start_time")
-        console.log($scope.lecture_player.controls.getTrackEvents().length)
+        // console.log("start_time")
+        // console.log($scope.lecture_player.controls.getTrackEvents().length)
         if(quiz.start_time != quiz.time ){
           var a = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function(){
             if($scope.lecture.start_time + (quiz.start_time) >= $scope.next_stop_time)
               changeStatusAndWaitTobeSync(2,quiz.time,quiz)
-            else{console.log("intro before")}
+            // else{// console.log("intro before")}
           })
         }
         // quiz time
         // add que for self and group time && remove the progress bar && start the timer 
         var b = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time ), function(){   
           if($scope.lecture.start_time + (quiz.time) >= $scope.next_stop_time)
-            console.log("status , quiz time ", $scope.distance_peer_status)
+            // console.log("status , quiz time ", $scope.distance_peer_status)
             if ($scope.distance_peer_status == 2 ){
               changeStatusAndWaitTobeSync(3, quiz.time , quiz )
             }
             if ($scope.distance_peer_status == 3){
-                console.log("showQuizOnline", 3)
+                // console.log("showQuizOnline", 3)
                 showQuizOnline(quiz)
             }
             else if( $scope.distance_peer_status == 4){
-                console.log("showQuizOnline", 4)
+                // console.log("showQuizOnline", 4)
                 showQuizOnline(quiz)
             }
         })
@@ -449,17 +449,17 @@ angular.module('scalearAngularApp')
               changeStatusAndWaitTobeSync(1,$scope.total_duration,quiz )
             }
           }
-          else{console.log("end before")}
+          // else{// console.log("end before")}
         })
       // }  
     }
 
     $scope.lecture_player.events.onReady = function(close_student_boolean) {
-      console.log("onReady")
+      // console.log("onReady")
       $scope.slow = false
       $scope.total_duration = $scope.lecture_player.controls.getDuration()
       $scope.lecture_player.controls.removeAllTrackEvents()
-      console.log($scope.lecture_player.controls.getTrackEvents().length)
+      // console.log($scope.lecture_player.controls.getTrackEvents().length)
         // if($scope.lecture_player.controls.youtube)
         //     $scope.total_duration-=1
       var duration_milestones = [0]
@@ -469,7 +469,7 @@ angular.module('scalearAngularApp')
       }
 
       checkPeerSession().then(function(){
-        console.log(close_student_boolean)
+        // console.log(close_student_boolean)
         if (!close_student_boolean && $scope.lecture.distance_peer && !$scope.distance_peer_session_id){
           $scope.openStudentList($scope.lecture.id,$scope.lecture.course_id)
         }
@@ -486,9 +486,9 @@ angular.module('scalearAngularApp')
             })
           }
           else{
-            console.log("showQuizDistancePeer normal")
+            // console.log("showQuizDistancePeer normal")
             if (!(quiz.id in $scope.quiz_cue_distance_peer_list)){
-              console.log("showQuizDistancePeer normal")
+              // console.log("showQuizDistancePeer normal")
               quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time ), function(){   
                   showQuizDistancePeer(quiz )
               })
@@ -608,10 +608,10 @@ angular.module('scalearAngularApp')
       var current_time = $scope.lecture_player.controls.getTime()
       $scope.seek_to_time = time
       if(!lecture_id || lecture_id == $scope.lecture.id) { //if current lecture
-        console.log($scope.next_stop_time)
+        // console.log($scope.next_stop_time)
         if($scope.next_stop_time < time && $scope.distance_peer_session_id){  // if in distance_peer session do not seek after next quiz time
           // user flash to say toy can not seek after the quiz
-          console.log("you can not seek to time after quiz")
+          // console.log("you can not seek to time after quiz")
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
         }
@@ -662,7 +662,7 @@ angular.module('scalearAngularApp')
     // }
 
     var checkIfQuizSolved = function() {
-      console.log("checkIfQuizSolved")
+      // console.log("checkIfQuizSolved")
       if(!$scope.distance_peer_session_id){
         if($scope.quiz_mode) {
           if(!$scope.selected_quiz.solved_quiz && $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
@@ -680,10 +680,10 @@ angular.module('scalearAngularApp')
         }
       }
       else{
-        if($scope.quiz_mode){        // console.log("quiz_mode")
-          if( $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time){          // console.log("quiz")          // console.log( $scope.selected_quiz.online_answers)
+        if($scope.quiz_mode){        // // console.log("quiz_mode")
+          if( $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time){          // // console.log("quiz")          // // console.log( $scope.selected_quiz.online_answers)
             // if($scope.distance_peer_session_id){
-            if ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") {               // console.log("html")              // console.log($scope.answer_form.$error.atleastone)
+            if ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") {               // // console.log("html")              // // console.log($scope.answer_form.$error.atleastone)
               if($scope.answer_form.$error.atleastone ) {
                 returnToQuiz($scope.selected_quiz.time)
               }
@@ -692,7 +692,7 @@ angular.module('scalearAngularApp')
               }
             }
             else{
-              console.log("not html")
+              // console.log("not html")
               var selected_answers = []
               $scope.selected_quiz.online_answers.forEach(function(answer) {
                 if(answer.selected)
@@ -734,7 +734,7 @@ angular.module('scalearAngularApp')
     }
 
     var returnToQuiz = function(time) {
-      console.log("returnToQuiz")
+      // console.log("returnToQuiz")
       $scope.seek(time)
       $scope.lecture_player.controls.pause()
       showNotification('lectures.choose_correct_answer')
@@ -743,11 +743,11 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPlay = function() {
       $log.debug("playing ")
       checkIfQuizSolved()
-      console.log($scope.quiz_mode)
+      // console.log($scope.quiz_mode)
       $scope.dismissAnnotation()
 
       if(!$scope.quiz_mode && $scope.distance_peer_session_id){
-        console.log("checkIfCanLeaveStatus")
+        // console.log("checkIfCanLeaveStatus")
         checkIfCanLeaveStatus()
       }
       // $scope.distance_peer_messages = null
@@ -1234,7 +1234,7 @@ angular.module('scalearAngularApp')
 
 
     var checkIfDistancePeerIsAlive =function(){
-      console.log("am alive")
+      // console.log("am alive")
       Lecture.checkIfDistancePeerIsAlive({
         course_id: $scope.lecture.course_id,
         lecture_id: $scope.lecture.id,
@@ -1272,11 +1272,11 @@ angular.module('scalearAngularApp')
 //  Distance peer methods 
 
     var checkIfCanLeaveStatus = function() {
-      console.log($scope.lecture_player.controls.getTime().toFixed(2) )
-      console.log( $scope.next_stop_time.toFixed(2) )
-      console.log( parseInt($scope.lecture_player.controls.getTime().toFixed(2) ) >=  parseInt($scope.next_stop_time.toFixed(2)) )
+      // console.log($scope.lecture_player.controls.getTime().toFixed(2) )
+      // console.log( $scope.next_stop_time.toFixed(2) )
+      // console.log( parseInt($scope.lecture_player.controls.getTime().toFixed(2) ) >=  parseInt($scope.next_stop_time.toFixed(2)) )
       if(   parseInt($scope.lecture_player.controls.getTime().toFixed(2) ) >=  parseInt($scope.next_stop_time.toFixed(2)) ) {
-        console.log("YOU CAN NO LEAVE STATE ")
+        // console.log("YOU CAN NO LEAVE STATE ")
         $scope.seek($scope.next_stop_time)
         $scope.lecture_player.controls.pause()      
         showAnnotation($translate.instant("distance_peer.can_not_leave_this_status",{name: $scope.name}))
@@ -1284,7 +1284,7 @@ angular.module('scalearAngularApp')
     }
 
     var statusTimerCountdown = function() {
-      console.log("1");
+      // console.log("1");
       ($scope.status_counter == 0) ? cancelStatusTimer(): $scope.status_counter--;
     }
 
@@ -1319,10 +1319,10 @@ angular.module('scalearAngularApp')
             lecture_id: $scope.lecture.id
         }).$promise
         .then(function(response){
-          console.log(response)
+          // console.log(response)
           if(response.distance_peer != "no_peer_session"){
-            console.log(response.distance_peer)
-            console.log("33333333333333333333333333333333")
+            // console.log(response.distance_peer)
+            // console.log("33333333333333333333333333333333")
             $scope.distance_peer_session_id = response.distance_peer.distance_peer_id
             startcheckIfDistancePeerIsAliveTimer()
             // cancelcheckIfDistancePeerIsAliveTimer()
@@ -1330,11 +1330,11 @@ angular.module('scalearAngularApp')
             $scope.name = response.name
             // to prevent student seek after quiz, will use variable next_stop_time
             $scope.distance_peer_status =  response.user_distance_peer.status            
-            console.log(response.distance_peer.online_quiz_id) 
+            // console.log(response.distance_peer.online_quiz_id) 
             var index =  $scope.lecture.video_quizzes.map(function(x) {return x.id; }).indexOf(response.distance_peer.online_quiz_id);
             if($scope.distance_peer_status == 1){// = 1  stop = start_time_of_next_quiz
               if($scope.lecture.video_quizzes[index+1]){
-                console.log("next_stop_time", $scope.lecture.video_quizzes[index+1])
+                // console.log("next_stop_time", $scope.lecture.video_quizzes[index+1])
                 $scope.next_stop_time =  $scope.lecture.video_quizzes[index+1].start_time            
               }
               else{
@@ -1347,7 +1347,7 @@ angular.module('scalearAngularApp')
                   $scope.next_stop_time = $scope.lecture.video_quizzes[index].end_time
                 }
               else if( [2,3,4].indexOf($scope.distance_peer_status) != -1) {// = 2,3,4  stop = quiz.time
-                console.log("next_stop_time", $scope.distance_peer_status)
+                // console.log("next_stop_time", $scope.distance_peer_status)
                 $scope.next_stop_time = $scope.lecture.video_quizzes[index].time
                 
                 if ([3,4].indexOf($scope.distance_peer_status) != -1) {
@@ -1363,13 +1363,13 @@ angular.module('scalearAngularApp')
                   startStatusTimer() 
                 }
               }
-              console.log("showQuizDistancePeer referesh")
-              // console.log($scope.lecture.video_quizzes[index].id)
-              // console.log( $scope.quiz_cue_distance_peer_list)
-              // console.log(!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list))
-              // console.log(!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list))
+              // console.log("showQuizDistancePeer referesh")
+              // // console.log($scope.lecture.video_quizzes[index].id)
+              // // console.log( $scope.quiz_cue_distance_peer_list)
+              // // console.log(!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list))
+              // // console.log(!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list))
               if (!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list)){
-                console.log("showQuizDistancePeer referesh")
+                // console.log("showQuizDistancePeer referesh")
                 var quiz_cue = $scope.lecture_player.controls.cue($scope.next_stop_time, function(){   
                   showQuizDistancePeer($scope.lecture.video_quizzes[index])
                 })
@@ -1379,12 +1379,12 @@ angular.module('scalearAngularApp')
             else{
               $scope.next_stop_time =  $scope.total_duration   
             }
-            console.log("NEW STOP TIME ")
-            console.log($scope.next_stop_time)
-            console.log($scope.lecture.video_quizzes)
+            // console.log("NEW STOP TIME ")
+            // console.log($scope.next_stop_time)
+            // console.log($scope.lecture.video_quizzes)
           }
           else{
-            console.log('no_peer_session')
+            // console.log('no_peer_session')
           }
           deferred.resolve()
         });      
@@ -1438,7 +1438,7 @@ angular.module('scalearAngularApp')
                     lecture_id: lecture_id
                 }).$promise
                 .then(function(response){
-                  console.log(response)
+                  // console.log(response)
                   if(response.invite_status == "no_invitation"){
                     $scope.waiting_response_of_back_end=false
                     $scope.check_if_invited = false
@@ -1480,34 +1480,34 @@ angular.module('scalearAngularApp')
                   //   cancelCheckInvitedStudentAcceptedTimer()
                   // }
                   if(response.status != "cancelled"){
-                    console.log("2222222222222222222222222222222222222222222")
+                    // console.log("2222222222222222222222222222222222222222222")
                     $scope.distance_peer_session_id = student[1]
-                    console.log("acceptedddddddddddddd")
+                    // console.log("acceptedddddddddddddd")
                     $scope.closeModal()                
                   }
                   else{
                     // flash that invatiation is caancelled 
-                    console.log("cancelled")      
+                    // console.log("cancelled")      
                     // $scope.invited_by_student
-                    console.log($scope.invited_by_student)
-                    console.log(student)
+                    // console.log($scope.invited_by_student)
+                    // console.log(student)
                     var index = $scope.invited_by_student.findIndex(function(x){return x[1] == student[1]})
                     // var index = $scope.invited_by_student.findIndex(x => x[1] == student[1])
-                    console.log(index)
-                    console.log($scope.invited_by_student.length)
-                    console.log($scope.invited_by_student)
+                    // console.log(index)
+                    // console.log($scope.invited_by_student.length)
+                    // console.log($scope.invited_by_student)
                     $scope.invited_by_student.splice(index, 1);
-                    console.log($scope.invited_by_student.length)
-                    console.log($scope.invited_by_student)
+                    // console.log($scope.invited_by_student.length)
+                    // console.log($scope.invited_by_student)
                     $scope.cancelled_invited_by_student = $translate.instant("distance_peer.student_cancelled",{name: student[0] } );
                   }
                 })
               }
               $scope.caneclAllDistancePeerSession = function(){
                 // cancel all
-                console.log($scope.invited_by_student)
+                // console.log($scope.invited_by_student)
                 $scope.invited_by_student.forEach(function(student){
-                  console.log($scope.student)
+                  // console.log($scope.student)
                   $scope.caneclDistancePeerSession(student[1])
                 })
               }
@@ -1528,21 +1528,21 @@ angular.module('scalearAngularApp')
 
                 }).$promise
                 .then(function(response){
-                  console.log(response)
+                  // console.log(response)
                   if(response.status != 0){
                     cancelCheckInvitedStudentAcceptedTimer()
                     if(response.status == "denied"){
                       $scope.invited_student += " denied your invation"
                     }
                     else if (response.status==1) {
-                      console.log("11111111111111111111111")
+                      // console.log("11111111111111111111111")
 
                       $scope.distance_peer_session_id = $scope.distance_peer_id
                       $scope.closeModal()
                     };
                   }
                   else{
-                    console.log(response)
+                    // console.log(response)
                   }
                 })
               }

@@ -47,12 +47,11 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.close_join_course()
 			header.logout()
 		})
-		it('teacher should enable ', function(){ // enrollment url was removed from information page
-			// sleep(2000)
-			// header.close_join_course()
-			// header.logout()
-			// sleep(5000)
-
+	    it('teacher should enable ', function(){ // enrollment url was removed from information page 
+  		    // sleep(2000) 
+    		// header.close_join_course() 
+      		// header.logout() 
+  			// sleep(5000)
 		    login_page.sign_in(params.teacher1.email, params.password)
 			course_list.open()
 			course_list.open_teacher_course(1)
@@ -75,14 +74,14 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
     })
 	
 	it('should get the enrollment key and enroll students', function(){
-		login_page.sign_in(params.teacher1.email, params.password)
+	    login_page.sign_in(params.teacher1.email, params.password) 
 		course_list.open()
 		course_list.open_teacher_course(1)
 		var enrollment_key = course_info.enrollmentkey
 		header.logout()
-		login_page.sign_in(params.student1.email, params.password)
-		header.join_course(enrollment_key)
-		header.logout()
+	    login_page.sign_in(params.student1.email, params.password) 
+	    header.join_course(enrollment_key) 
+	    header.logout() 		 
 		login_page.sign_in(params.student2.email, params.password)
 		header.join_course(enrollment_key)
 		header.logout()

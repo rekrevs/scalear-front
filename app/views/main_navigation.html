@@ -91,9 +91,9 @@
           <a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ng-show="user.intro_watched && user.info_complete" translate>navigation.help</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">
             <!-- <li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li> -->
-            <li><a class="lighter-grey dark-text" ui-sref="teacher_getting_started" ><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.student</span></a></li>
+            <li><a class="lighter-grey dark-text" ui-sref="teacher_getting_started" ><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.teacher</span></a></li>
             <li class="divider border-grey medium-opacity"></li>
-            <li><a class="lighter-grey dark-text" ui-sref="student_getting_started"><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.teacher</span></a></li>
+            <li><a class="lighter-grey dark-text" ui-sref="student_getting_started"><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.student</span></a></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.flipped_manual}}" target="_blank" translate>help.how_to_flip</a></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.instruction_manual}}" target="_blank" translate>help.instruction_manual</a></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.teacher_forum_link}}" target="_blank" translate>help.teacher_forum</a></li>

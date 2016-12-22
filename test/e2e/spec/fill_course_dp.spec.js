@@ -217,7 +217,6 @@ describe("Filling Course", function() {
     it("should save quiz", function() {
       invideo_quiz.save_quiz()
     })
-
     it("should logout", function() {
       header.logout()
     })

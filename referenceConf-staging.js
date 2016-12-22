@@ -1,3 +1,23 @@
+Date.prototype.addDays_test = function(days)
+{
+  var month = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"];
+var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    var datNum;
+    (dat.getDate()<10)? (datNum = '0'+dat.getDate()):(datNum = dat.getDate())
+
+    var  op = weekdays[dat.getDay()]+', '+ datNum +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
+    return op;
+};
+Date.prototype.addDays = function(days)
+{
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
+
 var params= {
     frontend: 'http://scalear-staging2.herokuapp.com/#/',
 
@@ -7,40 +27,107 @@ var params= {
     q1_y:127,
     q2_y:157,
     q3_y:187,
-
-    teacher_mail:  'teacher1@email.com',
-    teacher2_mail: 'teacher2@email.com',
-    teacher3_mail: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
-    student_mail:  'student1@email.com',
-    student2_mail: 'student2@email.com',
-    student3_mail: 'student3@email.com',
-    student4_mail: 'student4@email.com',
-    student5_mail: 'student5@email.com',
+    student1:{
+        f_name: "Test_1",
+        l_name: "student",
+        online_name: "studenttest1",
+        university: "uni",
+        email: "student1@email.com",
+    },
+    student2:{
+        f_name: "Test_2",
+        l_name: "student",
+        online_name: "studenttest2",
+        university: "uni",
+        email: "student2@email.com",
+    },
+    student3:{
+        f_name: "Test_3",
+        l_name: "student",
+        online_name: "studenttest3",
+        university: "uni",
+        email: "student3@email.com",
+    },
+    student4:{
+        f_name: "Student",
+        l_name: "4",
+        online_name: "studenttest3",
+        university: "test univerisity",
+        email: "student4@email.com",
+    },
+    teacher1:{
+        f_name: "teacher",
+        l_name: "1",
+        online_name: "screen teacher 001",
+        university: "uni_1",
+        email: "teacher1@email.com",
+    },
+    teacher2:{
+        f_name: "teacher",
+        l_name: "test",
+        online_name: "teacher test",
+        university: "world university",
+        email: "teacher2@email.com",
+    },
+    teacher3:{
+        f_name: "teacher",
+        l_name: "3",
+        online_name: "teacher test3",
+        university: "test univerisity",
+        email: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
+    },
+    admin:{
+        f_name: "Administrator",
+        l_name: "Control",
+        online_name: "Admin",
+        university: "uniAdmin",
+        email: "admin@scalable-learning.com",
+    },
     password: 'password',
-    admin_email:   'admin@scalable-learning.com',
-    admin_password:"admin_account_password",
+    // admin_email:   'admin@scalable-learning.com',
+    // admin_password:"admin_account_password",
     student_name_list: ['Student 1','Student 2','Student 3'],
 
     guerrillamail_password: "password1234",
     guerrillamail_url: "https://www.guerrillamail.com/inbox",
     guerrillamail_first_name: "student",
-    teacher_first_name: "teacher",
-    student_name: "Student",
+    // teacher_first_name: "teacher",
+    // student_name: "Student",
 
     guerrillamail_last_name: "4",
     guerrillamail_sch_uni_name: "test univerisity",
 
     short_name: "csc-test",
     course_name: "aesting course 100",
-    course_duration: '19',
+    course_end_date: new Date().addDays(30),
+    course_end_date_test: new Date().addDays_test(30),
     discussion_link: 'www.testing-link.com',
     image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
     course_description: 'too many words',
     prerequisites: '1- course 1 2- course 2 3- course 3',
 
-    teacher_fname: "teacher" ,
-    teacher_lname: "1" , 
-    teacher_univer: "test univerisity" ,
+    // teacher_fname: "teacher" ,
+    // teacher_lname: "1" ,
+    // teacher_univer: "test univerisity" ,
+
+    video1:{
+        url:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+        duration:{ min:4, sec:47},
+    },
+    video2:{
+        url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+        duration:{ min:6, sec:5},
+    },
+
+    prepare: function(custom_browser) {
+        var this_browser = custom_browser || browser
+        this_browser.driver.manage().window().maximize();
+        this_browser.driver.get(params.frontend);
+        this_browser.driver.wait(function() {
+            return this_browser.element(by.id('login')).isPresent()
+        }, 30000)
+        this_browser.element(by.id('login')).click();
+    }
 
 }
 
@@ -123,31 +210,46 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
-        'test/e2e/spec/create_course.spec.js', // done
-        'test/e2e/spec/fill_course.spec.js', // done
-        'test/e2e/spec/course_information_validation.spec.js', // done
-        'test/e2e/spec/account_information_validation.spec.js', // done
-        'test/e2e/spec/enrollment_help.spec.js', // done
-        'test/e2e/spec/course_editor_basic.spec.js',
-        'test/e2e/spec/course_editor_copy.spec.js',
-        'test/e2e/spec/course_editor_sharing.spec.js',
-        'test/e2e/spec/module_statistics.spec.js', // done
-        'test/e2e/spec/announcements.spec.js', // done
-        'test/e2e/spec/teacher-managment.spec.js', // done
-        'test/e2e/spec/students_solve_course.spec.js', 
-        'test/e2e/spec/notes.spec.js', // done
-        'test/e2e/spec/discussions.spec.js', // done
-        'test/e2e/spec/progress-module.spec.js',
-        'test/e2e/spec/progress-completion-module.spec.js',
-        'test/e2e/spec/validations.spec.js',
-        'test/e2e/spec/delete_course.spec.js',
+        // 'test/e2e/spec/create_course.spec.js', // done(11/16)
+        // 'test/e2e/spec/fill_course.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
+        // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)
+        // 'test/e2e/spec/enrollment_help.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_editor_basic.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_editor_copy.spec.js', // done(11/16)
+        // 'test/e2e/spec/course_editor_sharing.spec.js', // done(11/16) (Single sharing isn't working)!!
+        // 'test/e2e/spec/module_statistics.spec.js', // done(11/16)
+        // 'test/e2e/spec/announcements.spec.js', // done(11/16)
+        // 'test/e2e/spec/teacher-managment.spec.js', // done(11/16)
+        // 'test/e2e/spec/students_solve_course.spec.js', // done(11/16) (inOrder Functionality & explanation targeting)
+        // 'test/e2e/spec/notes.spec.js', // done(11/16)
+        // 'test/e2e/spec/discussions.spec.js', //
+        // 'test/e2e/spec/progress-module.spec.js', //
+        // 'test/e2e/spec/progress-completion-module.spec.js', //
+        // 'test/e2e/spec/validations.spec.js', //
+        // 'test/e2e/spec/delete_course.spec.js', //
+
+
+        //rewritten tests
+        // 'test/e2e/spec/preview-as-student.spec.js', // xx
+
+        // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
+
+        // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
+
+        // 'test/e2e/spec/inclass_pi.spec.js', //(refresh problem)
+
+        // 'test/e2e/spec/fill_course_dp.spec.js', (demo)
+        // 'test/e2e/spec/fill_course_dp.spec.js',
+        // 'test/e2e/spec/inclass_dp.spec.js',
+
 
 
         // to test email features locall
 
         // 'test/e2e/spec/add_user.spec.js',
-        // 'test/e2e/spec/create_course.spec.js', // Done
-        // 'test/e2e/spec/fill_course.spec.js',// Done
+        // 'test/e2e/spec/create_course.spec.js', // Done xx
+        // 'test/e2e/spec/fill_course.spec.js',// Done xx
         // 'test/e2e/spec/email_notification.spec.js',  // Done
         // 'test/e2e/spec/delete_user.spec.js',  // Done
 

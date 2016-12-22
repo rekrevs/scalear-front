@@ -1,37 +1,77 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout) {
 
     Page.setTitle('navigation.courses')
     Page.startTour();
     $rootScope.subheader_message = $translate("navigation.courses")
-      
+
     $scope.column='name'
     $scope.course_filter = '!!'
-    
-    var getAllCourses=function(){
-    
-      $scope.courses=null
-      Course.index({},
+    $scope.teacher_courses = []
+    $scope.student_courses = []
+
+
+    var getCoursesFirstTime = function(){  
+      var limit_course = 200 
+        Course.index({   
+          offset:0,    
+          limit: limit_course   
+        },   
+        function(data){  
+        $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
+        $scope.student_courses = $scope.student_courses.concat(data.student_courses)
+
+          for(var i=limit_course;i<data.total;i+=limit_course){  
+            getAllCourses(i,limit_course)    
+          }  
+        })  
+    } 
+
+  var getAllCourses=function(offset, limit){ 
+      $scope.course_limit =  limit, 
+      $scope.course_offset = offset 
+      Course.index({ 
+        offset:$scope.course_offset,  
+        limit: $scope.course_limit 
+      }, 
       function(data){
-        $scope.courses = data
-        $log.debug($scope.courses)
+        $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
+        $scope.student_courses = $scope.student_courses.concat(data.student_courses)
+
+        // $scope.total = data.total 
+        // $timeout(function(){ 
+        //     $scope.getRemainingCourse() 
+        // }) 
+
     // Code for removing finshed courses when chosing "All Courses" from main menu
     //     $scope.courses.forEach(function(course){
     //        if(!course.ended){
     //        $scope.course_filter = false;
-    //        return 
+    //        return
     //    }
     //  })
      })
     }
 
-    var removeFromCourseList=function(course){
-      $scope.courses.splice($scope.courses.indexOf(course), 1)
-      var course_index = $scope.current_courses.map(function(x){return x.id}).indexOf(course.id)
+    $scope.getRemainingCourse = function(){ 
+      if($scope.course_offset+$scope.course_limit<=parseInt($scope.total)) 
+          getAllCourses($scope.course_offset+$scope.course_limit,$scope.course_limit)  
+      else{ 
+          // $scope.loading_lectures=false  
+          $log.debug("no more") 
+      //  disableInfinitScrolling() 
+      } 
+    } 
+
+    var removeFromCourseList=function(course, user_type){
+      var courses_var = user_type+"_courses"
+      var current_courses_var = "current_"+courses_var
+      $scope[courses_var].splice($scope[courses_var].indexOf(course), 1)
+      var course_index = $scope[current_courses_var].map(function(x){return x.id}).indexOf(course.id)
       if(course_index > -1)
-        $scope.current_courses.splice(course_index, 1)
+        $scope[current_courses_var].splice(course_index, 1)
     }
 
 		$scope.deleteCourse=function(course){
@@ -64,19 +104,19 @@ angular.module('scalearAngularApp')
               $scope.delete=function(){
                 Course.destroy({course_id: course.id},{},
                   function(){
-                    removeFromCourseList(course)
+                    removeFromCourseList(course,"teacher")
                 })
                 $scope.closeThisDialog()
               }
           }]
       });
-			
+
 		}
 
     $scope.unenrollCourse=function(course){
       Course.unenroll({course_id: course.id},{},
         function(){
-          removeFromCourseList(course)
+          removeFromCourseList(course, "student")
         },
         function(){})
     }
@@ -99,6 +139,7 @@ angular.module('scalearAngularApp')
 			$scope.is_reverse = !$scope.is_reverse
 		}
 
-    getAllCourses()
-  		
+    // getAllCourses(0,10)
+    getCoursesFirstTime()  
+
 }]);

@@ -10,7 +10,8 @@ Students.prototype= Object.create({}, {
 		sub_header.show_administrator_menu()
 		this.add_student_button.click()
 	}},
-	enrollment_key:{get:function(){return this.enrollment_message.element(by.binding("course.unique_identifier")).getText()}},
+	enrollment_key:{get:function(){return element(by.binding("course.unique_identifier")).getText()}},
+	enrollment_url:{get:function(){return this.enrollment_message.element(by.binding("enrollment_url")).getText()}},
 	teacher_name:{get:function(){return this.enrollment_message.element(by.binding("current_user.name")).getText()}},
 })
 

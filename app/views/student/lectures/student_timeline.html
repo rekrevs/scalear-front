@@ -12,7 +12,7 @@
                     <small style="color: white;" translate> lectures.timeline.watched</small>
                     <small style="color: white;" >{{lecture.watched_percentage}}%</small>
                     <small style="color: white;" >{{lecture.quiz_percentage}}</small>
-                    <small style="color: white;" translate>lectures.timeline.quizzes</small>
+                    <small style="color: white;" translate>lectures.timeline.required_quizzes</small>
                 </span>
 
                 <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>lectures.optional</span>
@@ -20,7 +20,7 @@
             <div style="margin-left: 20px;">
                 <span bo-if="l.description">
                     <h6 class="subheader uppercase" translate>lectures.timeline.description</h6>
-                    <p class="dark-text" bo-text="l.description"></p>
+                    <p class="dark-text" bo-html="l.description"></p>
                 </span>
                 <span bo-if="l.slides && l.slides != 'none'">
                     <h6 class="subheader uppercase" translate>lectures.timeline.slides</h6>

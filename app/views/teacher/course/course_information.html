@@ -36,7 +36,7 @@
                         <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_email</span></label>
                     </li>
                     <li>
-                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher(teacher)" style="cursor: pointer;"></delete-button>
                     </li>
                 </div>
             </div>
@@ -47,8 +47,8 @@
                 <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.information.button.add_teacher</button>
                 <form name='email_form' ng-show="teacher_forum" novalidate>
                     <div class="small-12 columns size-12 with-small-margin-bottom">
-                        <span translate>courses.information.adding_teacher</span> scalable-learning.<br>
-                        <span translate>courses.information.create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
+                        <span translate>courses.information.adding_teacher</span> scalableLearning.<br>
+                        <span translate>courses.information.create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'signup'| href}}</a></span>
                     </div>
                     <div class="small-12 medium-8 large-5 left columns">
                         <div>
@@ -90,21 +90,28 @@
                 <i class="fi-key size-18"></i>
                 <small translate>courses.information.enrollment_key</small>
                 <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}">
-                    <div id="enrollment_key" clip-click="animateCopy()" clip-copy="course.unique_identifier" >{{course.unique_identifier}}</div>
+                    <div id="enrollment_key" ngclipboard data-clipboard-target="#enrollment_key" ngclipboard-success="copySuccess(e);" ngclipboard-error="copyError(e);">{{course.unique_identifier}}</div>
+                </div>
+            </div>
+            <div class="with-small-margin-bottom">
+                <i class="fi-link size-18"></i>
+                <small translate>courses.information.course_link</small>
+                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}">
+                    <div id="enrollment_url" ngclipboard data-clipboard-target="#enrollment_url" ngclipboard-success="copySuccess(e);" ngclipboard-error="copyError(e);" >{{course_info_url}}</div>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
                 <small translate>courses.start_date</small>
                 <div>
-                    <details-date date="course.start_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
+                    <details-date date="course.start_date" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-calendar size-18"></i>
                 <small translate>courses.end_date</small>
                 <div>
-                    <details-date date="course.end_date | amDateFormat:'dddd, DD MMMM YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="end_date"></details-date>
+                    <details-date date="course.end_date" save="updateCourse(data,type)" validate="validateCourse" column="end_date"></details-date>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
@@ -112,6 +119,14 @@
                 <small translate>courses.time_zone</small>
                 <div>
                     <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
+                </div>
+            </div>
+            <div class="with-small-margin-bottom">
+                <i class="fi-calendar size-18"></i>
+                 <small class="with-tiny-margin-left" translate>courses.disable_registration</small><input ng-model="formData.disable_registration_checked" type="checkbox" ng-change="toggleRegistrationCheck()" style="margin-left: 10px;"  >
+                 <div>
+                    <details-date date="course.disable_registration" ng-show="formData.disable_registration_checked" save="updateCourse(data,type)" validate="validateCourse" column="disable_registration" ></details-date>
+                    <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && formData.disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
                 </div>
             </div>
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
@@ -129,7 +144,7 @@
                 </div>
             </div> -->
             <div class="with-small-margin-bottom" page-name="navigation.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
-                <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.information.button.export_as</span> CSV</button>
+                <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.information.button.export_as</span></button>
             </div>
         </div>
     </div>

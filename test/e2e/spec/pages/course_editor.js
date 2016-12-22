@@ -31,27 +31,31 @@ CourseEditor.prototype = Object.create({}, {
 	inclass_next_button:{get:function(){return element(by.className("inclass_next"))}},
 	inclass_prev:{value:function(){this.inclass_prev_button.click(); sleep(1500)}},
 	inclass_next:{value:function(){this.inclass_next_button.click(); sleep(1500)}},
-	total_lecture_questions:{get:function(){return this.module.element(by.binding('module.total_questions')).getText()}},
-	total_quiz_questions:{get:function(){return this.module.element(by.binding('module.total_quiz_questions')).getText()}},
-	total_time:{get:function(){return this.module.element(by.binding('module.total_time')).getText()}},
+	total_lecture_questions:{get:function(){return this.module.element(by.binding('module_statistics.total_questions')).getText()}},
+	total_quiz_questions:{get:function(){return this.module.element(by.binding('module_statistics.total_quiz_questions')).getText()}},
+	total_time:{get:function(){return this.module.element(by.binding('module_statistics.total_time')).getText()}},
 	lecture_settings_accordion:{get:function(){return element(by.id("lec_settings"))}},
 	open_lecture_settings:{value:function(){this.lecture_settings_accordion.click()}},
 	lecture_inorder_checkbox:{get:function(){return element(by.model('lecture.required'))}},
 	change_lecture_inorder:{value:function(){this.lecture_inorder_checkbox.click()}},
 	lecture_required_checkbox:{get:function(){return element(by.model('lecture.graded'))}},
 	change_lecture_required:{value:function(){this.lecture_inorder_checkbox.click()}},
+	quiz_module_required_checkbox:{get:function(){return element(by.model('quiz.graded_module'))}},
 	quiz_required_checkbox:{get:function(){return element(by.model('quiz.graded'))}},
 	quiz_retries:{get:function(){return element(by.tagName('details-number'))}},
 	trim_modal:{get:function (){ return element(by.id('trim-modal'))}},
 	trim:{value:function () {this.trim_modal.element(by.id('trim-btn')).click()}},
 	cancel_trim:{value:function () {this.trim_modal.element(by.id('cancel-btn')).click()}},
+	change_quiz_useModule_required:{value:function(){this.quiz_module_required_checkbox.click()}},
 	change_quiz_required:{value:function(){this.quiz_required_checkbox.click()}},
 	change_quiz_retries:{value:function(num){
 		this.quiz_retries.click()
 		element(by.className('editable-input')).sendKeys(num)
 		element(by.className('check')).click()
 	}},
+	quiz_module_inorder_checkbox:{get:function(){return element(by.model('quiz.required_module'))}},
 	quiz_inorder_checkbox:{get:function(){return element(by.model('quiz.required'))}},
+	change_quiz_useModule_inorder:{value:function(){this.quiz_module_inorder_checkbox.click()}},
 	change_quiz_inorder:{value:function(){this.quiz_inorder_checkbox.click()}},
 	open:{value: function(){
 		element(by.id('content')).click();
@@ -90,10 +94,10 @@ CourseEditor.prototype = Object.create({}, {
 		this.change_item_url_link(url)
 		var self = this
 		browser.driver.wait(function() {
-      return self.trim_modal.isPresent().then(function(disp) {
-        return disp;
-      }, 100000);
-    });
+			return self.trim_modal.isPresent().then(function(disp) {
+				return disp;
+			}, 100000);
+		});
     this.cancel_trim()
 	}},
 	get_item_url:{value: function(){

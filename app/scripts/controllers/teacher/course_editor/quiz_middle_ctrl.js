@@ -1,194 +1,101 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state','$q' ,function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state, $q) {
- 	
- 	var unwatch = $scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
-      if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
-        $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
-        unwatch()
-      }
-    })
+  .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel','ModuleModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel, ModuleModel) {
+
+    $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
+    ItemsModel.setSelectedItem($scope.quiz)
+    $scope.course = CourseModel.getSelectedCourse()
+    $scope.module = ModuleModel.getSelectedModule()
+    $scope.publish_state = getPublishStatus($scope.quiz)
+    $scope.alert = {
+      type: "alert",
+      msg: "error_message.got_some_errors"
+    }
+    $scope.quizSortableOptions = {
+      axis: 'y',
+      dropOnEmpty: false,
+      handle: '.handle',
+      cursor: 'crosshair',
+      items: '.quiz_sort',
+      opacity: 0.4,
+      scroll: true
+    }
+
+    angular.extend($scope, QuestionModel);
+    addShortucts();
+
+    $scope.getEditableQuestions()
+      .then(function(questions) {
+        $scope.questions = questions
+      });
 
     $scope.$on('$destroy', function() {
-        shortcut.remove("Enter");
+      shortcut.remove("Enter");
     });
 
+    $scope.closeAlerts = function() {
+      $scope.hide_alerts = true;
+    }
 
- 	$scope.alert={type:"alert", msg:"error_message.got_some_errors"}
- 
- 	$scope.closeAlerts= function(){
- 		$scope.hide_alerts=true;
- 	}
+    $scope.saveQuestions = function() {
+      if($scope.tform.$valid) {
+        $scope.submitted = false;
+        $scope.hide_alerts = true;
+        QuestionModel.updateQuestions();
+      } else {
+        $scope.submitted = true;
+        $scope.hide_alerts = false;
+      }
+    }
 
- 	var init = function(){
- 		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},
- 			function(data){
- 				$log.debug(data)
-	 			$log.debug("init data is");
-	 			$log.debug(data);
-		 		$scope.questions=data.questions
-			  	$scope.questions.forEach(function(question,index){
-			  		if(question.question_type.toUpperCase() == 'DRAG'){
-						question.answers = []
-						if(!data.answers[index].length)
-							$scope.addHtmlAnswer("", question)
-						else
-							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
-					}
-					else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
-						question.answers=[];
-						$scope.addHtmlAnswer("",question)
-					}
-					else{
-						question.answers = data.answers[index]
-						if(!data.answers[index].length && question.question_type != 'Free Text Question')
-							$scope.addHtmlAnswer("",question)				
-					}	
-			  	});
+    $scope.publish = function() {
+      savePublish(true);
+    }
 
-			  	$scope.quizSortableOptions={
-			 		axis: 'y',
-					dropOnEmpty: false,
-					handle: '.handle',
-					cursor: 'crosshair',
-					items: '.quiz_sort',
-					opacity: 0.4,
-					scroll: true
-			 	}
-				 
-		    });
+    $scope.unpublish = function() {
+      savePublish(false);
+    }
 
-	    shortcut.add("Enter",
-	    	function(){
-				var elem_name=angular.element(document.activeElement).attr('name')
-				if(elem_name =='qlabel')
-					$scope.addQuestion()
-					$scope.$apply()
-			},
-			{"disable_in_input" : false, 'propagate':true});
- 	}
- 	
- 	init();
- 	
- 	var updateQuestions=function(questions){
-		Quiz.updateQuestions(
-			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
-			{questions: questions}
-		);
-	}
- 	
- 	$scope.saveAll=function(){
- 		if($scope.tform.$valid)
- 		{
- 		$scope.submitted=false;
- 		$scope.hide_alerts=true;
-		var data=[]
-		for(var elem in $scope.questions)
-		{
-			if($scope.questions[elem].question_type.toUpperCase() == 'DRAG'){
-				var obj = CourseEditor.mergeDragAnswers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
-				$scope.questions[elem].answers.forEach(function(ans){
-					if(ans.id && obj.id==null){
-						obj.id = ans.id
-						return 
-					}
-				})
-				var y=angular.copy($scope.questions[elem])
-				y.answers=[obj]
-				data[elem]= y
-			}
-			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text'){
-				var y=angular.copy($scope.questions[elem])
-				y.answers=[]
-				data[elem]= y
-			}
-			else
-				data[elem] = $scope.questions[elem]
-		}
- 		updateQuestions(data);
- 	}
- 	else{
- 		$scope.submitted=true;
- 		$scope.hide_alerts=false;
- 	}
- 	}
- 	
- 	$scope.addQuestion=function(){
- 			var new_question={quiz_id:$scope.quiz.id, content:"", question_type:"MCQ"}
- 			new_question.answers = [];
- 			$scope.questions.push(new_question);
- 			$scope.addHtmlAnswer("", new_question);
- 	}
+    $scope.validateQuiz = function(column, data) {
+      var quiz = { id: $scope.quiz.id, course_id: $scope.quiz.course_id, group_id: $scope.quiz.group_id }
+      quiz[column] = data;
+      var temp_quiz = QuizModel.createInstance(quiz);
+      return temp_quiz.validate()
+    };
 
-	$scope.addHtmlAnswer=function(ans, question){
-		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
-		question.answers.push($scope.new_answer)
-	}
- 	
- 	$scope.removeHtmlAnswer = function(index, question){
-		if(question.answers.length>1){
-			question.answers.splice(index, 1);
-		}else{
-			$rootScope.show_alert="error";
-	      	ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
-	      	$timeout(function(){
-	      		$rootScope.show_alert="";	
-	      	},4000);
-		}
-	}
-	
-	$scope.removeQuestion = function(index){
-	  	$scope.questions.splice(index, 1);
-	}
- 
-	$scope.addHeader=function(){
-		var new_header = {quiz_id:$scope.quiz.id, content:"", question_type:"header"}
-		$scope.questions.push(new_header)
-	}
+    function savePublish(publishstate) {
+      $scope.saveQuestions()
+      // $scope.quiz.appearance_time = publishstate ? $scope.module.appearance_time : $scope.course.end_date
+      var appearance_time = new Date($scope.module.appearance_time)
+      $scope.quiz.appearance_time = publishstate ? appearance_time : appearance_time.setFullYear(appearance_time.getFullYear() + 200)
+      $scope.quiz.appearance_time = appearance_time
+      $scope.quiz.appearance_time_module = false
 
-	$scope.removeHeader=function(index){
-		$scope.removeQuestion(index)
-	}
+      console.log($scope.quiz.appearance_time)
+      $scope.quiz.update()
+        .then(function(quiz) {
+          console.log(getPublishStatus(quiz))
+          $scope.publish_state = getPublishStatus(quiz)
+        })
+    }
 
-	$scope.updateQuiz = function() {
-	    var modified_quiz = angular.copy($scope.quiz);
-	    delete modified_quiz.class_name;
-	    delete modified_quiz.created_at;
-	    delete modified_quiz.updated_at;
-	    delete modified_quiz.id;
-	    delete modified_quiz.due_date_enabled;
+    function getPublishStatus(quiz) {
+      console.log(new Date())
+      console.log(new Date(quiz.appearance_time))
 
-	    Quiz.update({
-	            course_id: $stateParams.course_id,
-	            quiz_id: $scope.quiz.id
-	        }, {
-	            quiz: modified_quiz
-	        },
-	        function(data) {
-	            $log.debug(data)
-	        }
-	    );
-	};
+        return  (new Date(quiz.appearance_time) >= new Date())
+    }
 
-	$scope.validateQuiz = function(column, data) {
-	    var d = $q.defer();
-	    var quiz = {}
-	    quiz[column] = data;
-	    Quiz.validateQuiz({
-	        course_id: $stateParams.course_id,
-	        quiz_id: $scope.quiz.id
-	    }, quiz, function() {
-	        d.resolve()
-	    }, function(data) {
-	        $log.debug(data.status);
-	        $log.debug(data);
-	        if (data.status == 422 && data.data.errors)
-	            d.resolve(data.data.errors.join());
-	        else
-	            d.reject('Server Error');
-	    })
-	    return d.promise;
-	};
- 
- }])
+    function addShortucts() {
+      shortcut.add("Enter",
+        function() {
+          var elem_name = angular.element(document.activeElement).attr('name')
+          if(elem_name == 'qlabel') {
+            QuestionModel.addQuestion()
+          }
+          $scope.$apply()
+        }, { "disable_in_input": false, 'propagate': true });
+    };
+
+  }])

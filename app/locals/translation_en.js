@@ -21,6 +21,7 @@ var translation_en={
     video: "Video",
     videos: "Videos",
     inclass_lecture: "In-class Video",
+    distance_peer_lecture: "Distance-peer Video",
     customlink:"Link",
     customlinks:"Links",
     title: "Title",
@@ -35,6 +36,8 @@ var translation_en={
     lectures: "@:global.videos",
     quiz: "Quiz",
     quizzes: "Quizzes",
+    video_quizzes: "Video Quizzes",
+    video_quiz: "Video Quiz",
     survey: "Survey",
     surveys: "Surveys",
     marker: "Marker",
@@ -44,16 +47,20 @@ var translation_en={
     confused: "Confused",
     really_confused: "Really Confused",
     search: "Search",
-    new_course: "New Course",
+    new_course: "New course",
     required: "Required",
     optional: "Optional",
     students: "Students",
+    teacher:"teacher",
+    student:"student",
     done: "Done",
     correct: "Correct",
     incorrect: "Incorrect",
     warning:"Warning",
     are_you_sure: "Are you sure you want to proceed?",
     visible: "Visible",
+    leave: "Leave",
+    stay: "Stay",
   },
   mailer:{
     send_email: "Send An Email",
@@ -69,10 +76,15 @@ var translation_en={
     got_some_errors: "Please correct the errors above",
     required:"@:global.required",
     invalid_input: "Invalid Input",
+    due_date_changed:"Due Date has been changed.",
     you_are_not_authorized: "You are not authorized to see requested page",
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",
     change_password_confirmation: "You have successfully changed your password.",
+    export_course: "Your anonymized course data will be emailed to you shortly." ,
+    export_student:"Your student list will be emailed to you shortly.",
+    export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
+    another_marker: "There is another marker at the same time",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -98,6 +110,8 @@ var translation_en={
     next: "Next",
     submit: "Submit",
     save: "Save",
+    publish: "Publish",
+    unpublish: "Unpublish",
     save_close: "Save and Close",
     close: "Close",
     delete: "Delete",
@@ -128,6 +142,7 @@ var translation_en={
     notifications: "Notifications",
     notification: "Notification",
     dashboard: "Dashboard",
+    settings: "Settings",
     account: "Account",
     show_all_courses: "Show all courses",
     copied_from: "Copied From",
@@ -150,13 +165,16 @@ var translation_en={
     administration: "Administration",
     add_teacher: "Add Teacher/TA",
     student_list: "Student List",
-    join_course: "Join a new course",
-    new_course: "@:global.new_course",
+    join_course: "Join a new course (student)",
+    new_course: "Create a new course (teacher)",
     review: "Review",
     register:{
       teacher: "Teacher Registration",
       student: "Student Registration"
     },
+    teacher:"For Teachers",
+    student:"For Students",
+    int_video:"New to ScalableLearning? Please watch a short introductory video to help you get started.",
   },
   content_navigator:{
     customlink:"@:global.customlink",
@@ -192,7 +210,7 @@ var translation_en={
     button:{
         ask: "Ask",
         cancel:"@:button.cancel",
-        edit:"@:global.edit"
+        save:"@:button.save"
     }
   },
   context_menu:{
@@ -245,14 +263,30 @@ var translation_en={
     other: "Other",
   },
   enroll_email:{
-    go_to:"Go to",
+    go_to:"(Note: If you have trouble with the above instructions, go to",
     help_enroll:"Help on Enrollment",
     instruction:"Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions.",
     dear_student:"Dear Student",
-    this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive. To get started:",
+    this_term_new_system_part_1:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive.  To get started go to ",
+    this_term_new_system_part_2:" and login with your school email.",
     create_account_with_university: "and create an account with your university email address.",
-    add_course_by_choosing: "Add your course by choosing “Join Course” from the “Courses” menu and entering the Enrollment Key for",
+    add_course_by_choosing_part_1: " login with your school email, then choose 'Join Course' from the 'Courses' menu and use the Enrollment Key ",
+    add_course_by_choosing_part_2: " to join {{short_name}}. If you have any questions please use the 'Support' form in the 'Help' menu.)",
+    add_course_by_url: " Follow this link ",
     sincerely:"Sincerely",
+    to_get_started:"To	get	students	started,	send	the	following	email	to	your	class:",
+    if_problem:'if there are problems:',
+    ask_student:'Ask	the	student to',
+    check_spam:'check	SPAM	filters',
+    conf_email:'for	the	confirmation	email.',
+    enroll_manual:'enroll	manually',
+    by_go: 'by	going	 to',
+    and_joining:'and	joining	 with	the enrollment key',
+    contact: 'Contact	support',
+    from_help: 'from	the	Help	menu.',
+    guest_stu:'Guest	Students:',
+    you_may:'You	may	invite	others	to	join	your	 course	as	guests	by	going	 to',
+    guest_may:'Guests	may	see	all	the	online	material,	but	their	answers	and	questions	will	not	 be	visible	to	the	teacher.	Guests	can	enroll	with	the	link	above	or	with	the	guest	enrollment	key'
   },
   account:{
     password:{
@@ -274,6 +308,8 @@ var translation_en={
     last_name: "Last Name",
     screen_name: "Online Name",
     university: "School or University",
+    saml_disable_edit: "Name, email, and school information provided by UNIVERSITY. If you need to change this information, please contact UNIVERSITY technical support.",
+    first_day: "First day of the week for the calendar",
     link: "Website",
     security: "Security",
     online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
@@ -285,7 +321,7 @@ var translation_en={
     login: "@:navigation.login",
     join: "Join",
     remember_me: "Keep me logged in",
-    confirm_destroy: "Are you sure you want to cancel your account?",
+    confirm_destroy: "Are you sure you want to delete your account?",
     confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
     required_marked: "Required fields are marked with *",
     use_school: "Use your School/University Account",
@@ -310,6 +346,9 @@ var translation_en={
     completed: "Completed",
     late: "late",
     due_date_passed: "Due date has passed",
+    drag_due_date_error_part_1:"You cannot move the ",
+    drag_due_date_error_part_2:"'s due date before it's appearance date. To change the appearance date click on the ",
+    drag_due_date_error_part_3:" and choose edit.",
   },
   notification:{
     invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}}",
@@ -330,12 +369,18 @@ var translation_en={
     use_of_cookies: "Use of cookies",
     use_of_cookies_details: "Cookies are used on this website to remember your login information. While you are logged in, a cookie is used to track your login session. This cookie expires when you close your browser window or sign out. If you select “Remember me” when you login, the cookie will remain for two weeks.",
     identifiable_information: "Personally identifiable information",
-    identifiable_information_details: "The personally identifiable information for your account consists of the name and email address you provide when you register an account on the site. This information is attached to your actions on the site.",
-    deleting_profile: "Deleting your profile",
-    deleting_profile_details: "If you delete your account on this site all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research.",
+    identifiable_information_details: "The personally identifiable information for your account consists of the name and email address you provide when you register an account on the site. This information is attached to your actions on the site. You may access, rectify, and delete this information via the Account Information page on the website. We store the IP address of all accesses to the site in the server logs for logged-in and non-logged-in users.",
+    deleting_profile: "Data Retention and Deleting your profile",
+    deleting_profile_details: "Your data is retained in the system while you have a valid account to enable you to enroll in future classes. If you delete your account, then all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research",
+    legal_entity: "Legal Entity",
+    legal_entity_details: "ScalableLearning is provided by SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
+    code_conduct: "GÉNAT Data Protection Code of Conduct",
+    code_conduct_details: "This privacy policy complies with the GÉNAT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
-    last_update: "Last update: 17-August-2015",
+    last_update: "Last update: 07-October-2016",
+    understand: "I understand",
+    cancel: "Cancel",
   },
   faq:{
     faq:"Frequently Asked Questions",
@@ -370,6 +415,8 @@ var translation_en={
     small_calendar:"Small Calendar",
     export_calendar: "Export Calendar",
     whats_new: "What's New",
+    as_ical_file: "As File",
+    as_url: "As Link",
   },
   inclass:{
     more: "more",
@@ -384,6 +431,10 @@ var translation_en={
     marker: "@:global.marker",
     primary_marker: "@:global.marker",
     free_text_question:"@:global.free_text_question",
+    confused:"@:global.confused",
+    really_confused:"@:global.really_confused",
+    video_quizzes: "@:global.video_quizzes",
+    video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
     exit: "Exit",
@@ -403,11 +454,43 @@ var translation_en={
     intro_stage:"Intro",
     self_stage:"Self",
     group_stage:"Group",
-    discussion_stage:"Discussion",
+    discussion_stage:"@:global.discussion",
     session_not_started:"The in-class session has not started",
     please_try_or_refresh:"Please try again later or click on the 'Refresh' button below",
     question_not_started:"The in-class question has not started",
     click_next_question: "Click on 'Next' when the question shows up",
+    multiple_choice:"multiple choice",
+  },
+  distance_peer:{
+    invited: 'Invite a student to Join a Distance Peer Session' ,
+    invited_instruction: 'Choose a student ' ,
+    distance_peer_instruction: 'Please call up your partner while you do these questions so you can discuss them in real-time. Remember that for the Individual quizzes you are both supposed to answer on your own, but when you get to the Group part of the quiz you are encouraged to discuss the answers together.',
+    invited_by: 'You are invited by' ,
+    invited_by_instruction: 'Click on button of student you want to join ' ,
+    wait_for_acceptance: 'Wait For Acceptance' ,
+    wait_for_acceptance_instruction: 'Wait For Acceptance from student or you cancel the invitation' ,
+    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' , 
+    invite_another_button: "Invite another student to join",
+    video_stage: 'Please watch the video.',
+    intro_stage: "Quiz:Intro",
+    self_stage: 'Quiz:Self',
+    multiple_choice: '@:inclass.multiple_choice',
+    group_stage: 'Quiz:Group',
+    end_video_stage: 'Quiz:End',
+    end_peer_instruction: "End Peer Instruction",
+    in_distance_peer: 'You are participating in a distance peer instruction lesson with {{name}}.',
+    the_another_student_finished_status: '{{name}} finished this status, you can resume',
+    waiting_the_another_student_to_finish: 'Waiting {{name}} to finish this status',
+    click_on_button_below_to_end_session: 'Click on button below to end distance peer session',
+    message_video: 'Please watch the video and complete the quizzes.',
+    message_quiz_intro: 'Please watch the quiz introduction.',
+    message_quiz_end: 'Please watch the quiz end.',
+    message_quiz_self: 'Please answer the quiz on your own. (Do not discuss it with {{name}} at this time.)',
+    message_quiz_group: 'Please discuss your answer with {{name}} and choose your final answer. (You do not have to choose the same answers.)',
+    prevent_seek_forward: 'you can not seek to time after quiz',
+    can_not_leave_this_status: '{{name}} did not finish this status, you can not go to the next status',
+    other_student_ended_session: '{{name}} ended the distance peer session ',
+    student_cancelled:'{{name}} cancelled the invitation',
   },
   editor:{
     explanation: "Explanation",
@@ -449,7 +532,8 @@ var translation_en={
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
-        click_add_marker:"Click or type 'm' to add a marker"
+        click_add_marker:"Click or type 'm' to add a marker",
+        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing."
     },
     drag:{
         start: "Start",
@@ -488,6 +572,7 @@ var translation_en={
         duration: "@:global.duration",
         details: "Details",
         video:"@:global.video",
+        video_type: "Video Type",
         add_video: "Add link to video",
         add_description: "Add description",
         title:"@:global.title",
@@ -496,6 +581,8 @@ var translation_en={
         set_date: "Set Date",
         use_module: "Use Module’s Visibility",
         use_module_due: "Use Module’s Due Date",
+        use_module_in_order: "Use Module’s Order",
+        use_module_required: "Use Module’s Required",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
         student_link_lecture:"Student link to lecture",
@@ -508,6 +595,8 @@ var translation_en={
         required:"@:global.required",
         in_order: "In Order",
         retries: "Retries",
+        display_text:"Display question over video",
+        display_text_explain:"(Use if the question text is not in the video.)",
         student_link_quiz:"Student link to quiz"
     },
     popover:{
@@ -523,17 +612,20 @@ var translation_en={
         add_question: "Add Question",
         add_header: "Add Header",
         add_module: "Add Module",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Add Note'
     }
   },
   lectures:{
     messages:{
         thank_you_answer: "Thank you for your answer",
         did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
-        please_choose_one_answer: "Please Choose at least one answer",
+        please_choose_one_answer: "Please choose at least one answer",
         please_choose_an_answer: "Please choose your answer(s).",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         really_confused_use_question: "You could ask a question so the teacher can help you.",
+        navigate_away:"Are you sure you want to navigate away from this page?",
+        change_lost:"Your changes will be lost!",
     },
     timeline:{
         timeline: "Timeline",
@@ -546,7 +638,8 @@ var translation_en={
         quiz:"@:global.quiz",
         marker:"@:global.marker",
         watched:"Watched",
-        quizzes:"quizzes"
+        quizzes:"quizzes",
+        required_quizzes:"required quizzes"
     },
     button:{
         ask_question: "Ask a Question",
@@ -555,7 +648,8 @@ var translation_en={
         exit_fullscreen: "Exit Fullscreen",
         fullscreen: "Fullscreen",
         check_answer: "Check Answer",
-      submit: "@:button.submit"
+        start_distance_peer: "Start Distance Peer",
+        submit: "@:button.submit"
     },
     tooltip:{
         unsolved_quiz: "You have to complete the quiz as part of the video before you can jump to it",
@@ -614,7 +708,8 @@ var translation_en={
     },
     tooltip:{
         see_related: "See related answers to student",
-        quizzes_solved: "quizzes solved",
+        quizzes_solved: "quizzes required solved",
+        quizzes_optional_solved: "quizzes optional solved",
         watched_video: "Watched"
     },
     popover:{
@@ -659,7 +754,7 @@ var translation_en={
   },
   quizzes:{
     used_up_all: "Used up all",
-    attempts: "attempts",
+    attempts: " attempts",
     attempt_number: "Attempt number",
     must_choose_answer: "Must choose at least one answer",
     optional:"@:global.optional",
@@ -687,6 +782,7 @@ var translation_en={
     select_all: "Select All",
     deselect_all: "Deselect All",
     done:"@:global.done",
+    export_as: "Export Student List",
   },
   groups:{
     module: "Module",
@@ -696,7 +792,7 @@ var translation_en={
         customlinks:"@:global.customlinks",
         quizzes:"@:global.quizzes",
         surveys:"@:global.surveys",
-        video_quizzes: "Video Quizzes",
+        video_quizzes: "@:global.video_quizzes",
         questions: "@:global.questions",
     },
     delete_popup:{
@@ -719,13 +815,15 @@ var translation_en={
         ta: "TA",
         discussion_forum_link: "Discussion Forum Link",
         enrollment_key: "Enrollment Key",
+        enrollment_url: "Enrollment URL",
+        course_link: "Course Link",
         taught_by: "Taught by",
         receive_email:"Receive email when a student asks a question",
-        receive_due_date_email: "Receive email for due dates of lectures or quizzes",
+        receive_due_date_email: "Receive email reminders of upcoming due dates.",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
-            export_as: "Export course as",
+            export_as: "Export anonymized course data",
             invite: "Invite to Join",
         },
         tooltip:{
@@ -751,6 +849,7 @@ var translation_en={
         messages:{
             no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
             enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
+            create_enroll_instruction: "To create or enroll in a course choose 'New course' or 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         },
         tooltip:{
             unenroll: "Unenroll",
@@ -775,6 +874,7 @@ var translation_en={
     },
     start_date: "Course Start Date",
     end_date: "Course End Date",
+    disable_registration: "Disable Registration After",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",
@@ -785,8 +885,11 @@ var translation_en={
   },
   statistics:{
     statistics: "Statistics",
+    administration: "Administration",
     statistics_dashboard: "Statistics Dashboard",
     registration: "Registration",
+    report_period: "Report Period",
+    generate_report: "Generate Report",
     login: "@:navigation.login",
     lecture_views: "Lecture Views",
     questions_asked: "Questions Asked",
@@ -825,8 +928,8 @@ var translation_en={
   help:{
     getting_started:{
         getting_started: "Getting Started",
-        student:"For Students",
-        teacher:"For Teachers",
+        student:"for Students",
+        teacher:"for Teachers",
     },
     support: "Support",
     teacher_forum: "Teacher Forum",
@@ -852,6 +955,7 @@ var translation_en={
         customlink:"@:global.customlink",
         video: "@:global.video",
       inclass_video: "@:global.inclass_lecture",
+        distance_peer_video:"@:global.distance_peer_lecture",
         video_desc: "You can add quiz questions on top of the video.",
         quiz: "@:global.quiz",
         survey: "@:global.survey",
@@ -873,6 +977,10 @@ var translation_en={
         on_video_survey:{
           title: "On-video Survey",
           desc: "Surveys have no correct answer. Use this if the survey choices are visible in the video."
+        },
+        text_survey:{
+          title: "Text Survey",
+          desc: "Text Surveys have no correct answer on a white background. Use this if the survey choices are not visible in the video."
         }
       },
       types:{

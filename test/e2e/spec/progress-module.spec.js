@@ -208,7 +208,7 @@ describe("check course review", function(){
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()
@@ -222,6 +222,7 @@ describe("check course review", function(){
 				expect(element(by.id('progress_lec_video')).isPresent()).toEqual(true)
 			})
 			it('should display the module progress chart showing that the two students finished on time', function(){
+				refresh()
 				expect(module_progress.getModuleChartValueAt(1)).toBe('1')
 				refresh()
 				expect(module_progress.getModuleChartValueAt(4)).toBe('2')
@@ -556,7 +557,7 @@ describe("check course review", function(){
 					})
 					it("should open quiz 2 in first module ",function(){
 						course_list.open()
-						course_list.open_course(1)
+						course_list.open_student_course(1)
 						navigator.module(1).open()
 						navigator.module(1).item(5).open()
 					})
@@ -573,7 +574,7 @@ describe("check course review", function(){
 				})
 				it("should open course",function(){
 					course_list.open()
-					course_list.open_course(1)
+					course_list.open_teacher_course(1)
 				})
 				it("should go to review mode",function(){
 					sub_header.open_review_mode()
@@ -647,7 +648,7 @@ describe("check course review", function(){
 					})
 					it("should open first moduel",function(){
 						course_list.open()
-						course_list.open_course(1)
+						course_list.open_student_course(1)
 						navigator.module(1).open()
 						navigator.module(1).item(6).open()
 					})
@@ -663,7 +664,7 @@ describe("check course review", function(){
 				})
 				it("should open course",function(){
 					course_list.open()
-					course_list.open_course(1)
+					course_list.open_teacher_course(1)
 				})
 				it("should go to review mode",function(){
 					sub_header.open_review_mode()
@@ -685,7 +686,7 @@ describe("check course review", function(){
 						})
 						it("should open first moduel",function(){
 							course_list.open()
-							course_list.open_course(1)
+							course_list.open_student_course(1)
 							navigator.module(1).open()
 							navigator.module(1).item(6).open()
 						})
@@ -720,7 +721,7 @@ describe("check course review", function(){
 						})
 						it('should open first lecture in first module', function(){
 							course_list.open()
-							course_list.open_course(1)
+							course_list.open_student_course(1)
 							navigator.module(1).open()
 							navigator.module(1).item(1).open()
 						})
@@ -737,15 +738,15 @@ describe("check course review", function(){
 							header.logout()
 						})
 					})
-					it("teacher should login",function(){
-						login_page.sign_in(params.teacher1.email, params.password)
-					})
+					// it("teacher should login",function(){
+					// 	login_page.sign_in(params.teacher1.email, params.password)
+					// })
 				})
 			})
 		})
-		it("should logout",function(){
-			header.logout()
-		})
+		// it("should logout",function(){
+		// 	header.logout()
+		// })
 	})
 })
 
@@ -1110,5 +1111,3 @@ function roundToNearestQuarter(percent, duration){
   	if (sec < 10) { sec  = "0" + sec; }
   	return  min + ':' + sec;
 }
-
-

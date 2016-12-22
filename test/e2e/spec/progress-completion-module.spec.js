@@ -36,7 +36,7 @@ describe("Module Completion", function(){
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()
@@ -47,6 +47,7 @@ describe("Module Completion", function(){
 				navigator.module(1).open()
 				element(by.className('module-completion')).click()
 				expect(browser.driver.getCurrentUrl()).toContain('progress/students')
+				sleep(2000)
 			})
 			it ("should check number of students", function(){
 				module_progress.module_completion().students_count().then(function(coun){expect(coun).toEqual(3)})
@@ -58,11 +59,11 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(1).name).toEqual(params.student1.f_name +' '+ params.student1.l_name)
 				expect(module_progress.module_completion().student(1).email).toEqual(params.student1.email)
 				expect(module_progress.module_completion().student(1).column_item(1)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(1)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(1)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(2)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(2)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(2)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(3)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(3)).toContain('2/2 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(3)).toContain('2/2 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(4)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(1).column_item(5)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(1).column_item(6)).toContain('Finished_on_Time.png')
@@ -71,11 +72,11 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(2).name).toEqual(params.student2.f_name + " "+ params.student2.l_name)
 				expect(module_progress.module_completion().student(2).email).toEqual(params.student2.email)
 				expect(module_progress.module_completion().student(2).column_item(1)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(1)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(1)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(2)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(2)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(2)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(3)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(3)).toContain('2/2 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(3)).toContain('2/2 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(5)).toContain('Finished_on_Time.png')
 				expect(module_progress.module_completion().student(2).column_item(6)).toContain('Not_Finished.png')
@@ -84,11 +85,11 @@ describe("Module Completion", function(){
 				expect(module_progress.module_completion().student(3).name).toEqual(params.student3.f_name +' '+params.student3.l_name)
 				expect(module_progress.module_completion().student(3).email).toEqual(params.student3.email)
 				expect(module_progress.module_completion().student(3).column_item(1)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(2)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(2)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(2)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(3)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(3)).toContain('0/2 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(3)).toContain('0/2 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item(5)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item(6)).toContain('Not_Finished.png')
@@ -111,33 +112,33 @@ describe("Module Completion", function(){
 			})
 			it ("should check student 1 data ", function(){
 				expect(module_progress.module_completion().student(1).column_item(1)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(1)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(1)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(2)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(2)).toContain('3/3 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(2)).toContain('3/3 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(3)).toContain('Finished_on_Time.png')
-				expect(module_progress.module_completion().student(1).column_item_tooltip(3)).toContain('2/2 quizzes solved')
+				expect(module_progress.module_completion().student(1).column_item_tooltip(3)).toContain('2/2 quizzes required solved')
 				expect(module_progress.module_completion().student(1).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(1).column_item(5)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(1).column_item(6)).toContain('Not_Finished.png')
 			})
 			it ("should check student 2 data ", function(){
 				expect(module_progress.module_completion().student(2).column_item(1)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(1)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(1)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(2)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(2)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(2)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(3)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(2).column_item_tooltip(3)).toContain('0/2 quizzes solved')
+				expect(module_progress.module_completion().student(2).column_item_tooltip(3)).toContain('0/2 quizzes required solved')
 				expect(module_progress.module_completion().student(2).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(5)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(2).column_item(6)).toContain('Not_Finished.png')
 			})
 			it ("should check student 3 data ", function(){
 				expect(module_progress.module_completion().student(3).column_item(1)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(1)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(2)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(2)).toContain('0/3 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(2)).toContain('0/3 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(3)).toContain('Not_Finished.png')
-				expect(module_progress.module_completion().student(3).column_item_tooltip(3)).toContain('0/2 quizzes solved')
+				expect(module_progress.module_completion().student(3).column_item_tooltip(3)).toContain('0/2 quizzes required solved')
 				expect(module_progress.module_completion().student(3).column_item(4)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item(5)).toContain('Not_Finished.png')
 				expect(module_progress.module_completion().student(3).column_item(6)).toContain('Not_Finished.png')
@@ -149,14 +150,14 @@ describe("Module Completion", function(){
 	})
 })
 
-describe("Course Completion", function(){
+xdescribe("Course Completion", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()
@@ -208,7 +209,7 @@ describe("Course Completion", function(){
 			})
 			it("Student 2 should open course",function(){
 				course_list.open()
-				course_list.open_course(1)
+				course_list.open_student_course(1)
 			})
 			it("Student 2 should open first moduel and check if module 1 is Finished_on_Time",function(){
 				navigator.module(1).open()
@@ -222,7 +223,7 @@ describe("Course Completion", function(){
 			})
 			it("Student 1 should open course",function(){
 				course_list.open()
-				course_list.open_course(1)
+				course_list.open_student_course(1)
 			})
 			it("Student 1 should open first moduel and check if module 1 is Finished_on_Time",function(){
 				navigator.module(1).open()
@@ -238,7 +239,7 @@ describe("Course Completion", function(){
 			})
 			it("should open course",function(){
 				course_list.open()
-				course_list.open_course(1)
+				course_list.open_teacher_course(1)
 			})
 			it("should go to review mode",function(){
 				sub_header.open_review_mode()
@@ -265,14 +266,14 @@ describe("Course Completion", function(){
 })
 
 
-describe("Course Graph", function(){
+xdescribe("Course Graph", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_teacher_course(1)
 		})
 		it("should go to review mode",function(){
 			sub_header.open_review_mode()

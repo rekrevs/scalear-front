@@ -54,14 +54,17 @@ ul.connected_blocks {
 }
 </style>
 <div class="student_inclass small-12 column disable_selection">
-	<h3 ng-if="inclass_status>=2"><b>Q.</b> {{quiz.question_title}}</h3>
+	<h3 ng-if="inclass_status>=2">
+    <b>Q.</b>
+    <span ng-bind-html="quiz.question_title"></span>
+  </h3>
   <h3 ng-if="inclass_status<2"><b>{{module.name}}</b><span ng-show="inclass_status> 0">: {{lecture.name}}</span></h3>
 </div>
 <div class="small-12 columns no-padding" style="margin-bottom: 10px;">
   <ul class="connected_blocks">
     <li ng-class="{'active': inclass_status==1}" style="background:lightgrey;color:black"translate>inclass.intro_stage</li>
-    <li ng-class="{'active': inclass_status==2}" style="background:#008CBA"translate>inclass.self_stage</li>
-    <li ng-class="{'active': inclass_status==3}" style="background:#43AC6A"translate>inclass.group_stage</li>
+    <li ng-class="{'active': inclass_status==2}" style="background:#008CBA"><span translate>inclass.self_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
+    <li ng-class="{'active': inclass_status==3}" style="background:#43AC6A"><span translate>inclass.group_stage</span><span ng-if="quiz.question_type== 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span></li>
     <li ng-class="{'active': inclass_status>=4}" style="background:darkorange" translate>inclass.discussion_stage</li>
   </ul>
 </div>
@@ -82,7 +85,7 @@ ul.connected_blocks {
 		</div>
 		<span ng-hide="quiz.done">
 			<div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="self_note" /></div>
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand no-margin" ng-click="sendAnswers(quiz, self_note)">Vote!</button></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand no-margin" ng-click="checkAnswer(quiz, self_note)">Vote!</button></div>
 		</span>
 		<span ng-show="quiz.done && inclass_status==2 ">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -108,7 +111,7 @@ ul.connected_blocks {
 		</div>
 		<span ng-hide="group_quiz.done">
 			<div class="small-12 medium-8 medium-push-2 columns" style="margin:15px 0"><textarea placeholder="Notes..." style="height:55px" ng-model="group_note" /></div>
-			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand success no-margin" ng-click="sendAnswers(group_quiz, group_note)">Vote!</button></div>
+			<div class="small-12 medium-4 columns" style="margin:15px 0"><button class="button expand success no-margin" ng-click="checkAnswer(group_quiz, group_note)">Vote!</button></div>
 		</span>
 		<span ng-show="group_quiz.done && inclass_status==3">
 			<div class="small-4 medium-2 columns no-padding left" >
@@ -182,7 +185,7 @@ ul.connected_blocks {
           <div class="small-11 column" style="padding:0 5px">
             <div class='panel small-12 column choice' ng-repeat='choice in quiz.answers' ng-click="selectAnswer(choice,quiz)" ng-class="{'selected': choice.selected}">
               <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-              <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+              <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
             </div>
           </div>
           </div>
@@ -194,7 +197,7 @@ ul.connected_blocks {
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-            <button class="vote_btn button expand no-margin" ng-click="sendAnswers(quiz, note.self)"><span translate>button.vote</span>!</button>
+            <button class="vote_btn button expand no-margin" ng-click="checkAnswer(quiz, note.self)"><span translate>button.vote</span>!</button>
           </div>
         </div>
       </span>
@@ -209,7 +212,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-repeat="choice in quiz.answers" ng-show="choice.selected">
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -242,7 +245,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column choice' ng-repeat='choice in group_quiz.answers' ng-click="selectAnswer(choice,group_quiz)" ng-class="{'selected': choice.selected}">
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -254,7 +257,7 @@ ul.connected_blocks {
         </div>
         <div class="row no-margin">
           <div class="small-12 medium-4 medium-centered columns" style="margin:15px 0">
-            <button class="vote_btn button expand success no-margin" ng-click="sendAnswers(group_quiz, note.group)" >Vote!</button>
+            <button class="vote_btn button expand success no-margin" ng-click="checkAnswer(group_quiz, note.group)" >Vote!</button>
           </div>
         </div>
       </span>
@@ -269,7 +272,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -282,7 +285,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in group_quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -316,7 +319,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>
@@ -329,7 +332,7 @@ ul.connected_blocks {
             <div class="small-11 column" style="padding:0 5px">
               <div class='panel small-12 column' ng-show="choice.selected" ng-repeat='choice in group_quiz.answers'>
                 <div class="small-2 column size-30"><b>{{intToChar($index)}}</b></div>
-                <div class="small-10 column text-left" style="padding: 0 5px;">{{choice.answer}}</div>
+                <div class="small-10 column text-left" style="padding: 0 5px;" ng-bind-html="choice.answer"></div>
               </div>
             </div>
           </div>

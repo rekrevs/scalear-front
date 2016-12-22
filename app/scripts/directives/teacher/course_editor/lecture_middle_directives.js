@@ -5,14 +5,12 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
-      // controller: 'lectureQuizListCtrl'
     };
   })
   .directive('markerList', function() {
     return {
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/lecture.middle.marker_list.html',
-      // controller: 'lectureMarkerListCtrl'
     };
   })
   .directive('quiz', function() {
@@ -23,25 +21,26 @@ angular.module('scalearAngularApp')
       template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
     };
   })
-  .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate', function($timeout, $q, OnlineQuiz, $translate) {
+  .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate', 'ScalearUtils','VideoInformation', function($timeout, $q, OnlineQuiz, $translate, ScalearUtils, VideoInformation) {
     return {
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/quiz_edit_panel.html',
       link: function(scope, element, attrs) {
         scope.selected_quiz.has_start = scope.selected_quiz.start_time != scope.selected_quiz.time
         scope.selected_quiz.has_end = scope.selected_quiz.end_time != scope.selected_quiz.time
+        scope.invideo_quiz_type = scope.selected_quiz.quiz_type == "invideo"
 
         scope.updateQuizStartTime = function() {
           scope.selected_quiz.start_time = scope.selected_quiz.time
           if (scope.selected_quiz.has_start) {
-            var duration = scope.lecture_player.controls.getDuration()
+            var duration = VideoInformation.duration
             var percent = 5
             var caluclated_percent = (percent * duration) / 100
             scope.selected_quiz.start_time  = (scope.selected_quiz.start_time - caluclated_percent < 0) ? 0 : scope.selected_quiz.start_time - caluclated_percent
           }
         }
 
-				scope.updateQuizEndTime = function() {
+        scope.updateQuizEndTime = function() {
           scope.selected_quiz.end_time = scope.selected_quiz.time
           if (scope.selected_quiz.has_end) {
             var duration = scope.lecture_player.controls.getDuration()
@@ -52,109 +51,10 @@ angular.module('scalearAngularApp')
         }
 
         $timeout(function() {
-          element.find('.quiz_name').select();
+          element.find('.quiz_name').focus();
+          document.execCommand('selectAll', false, null);
         });
 
-        var updateOnlineQuiz = function(quiz) {
-          OnlineQuiz.update({ online_quizzes_id: quiz.id }, {
-            online_quiz: {
-              time: quiz.time,
-              start_time: quiz.start_time,
-              end_time: quiz.end_time,
-              question: quiz.question,
-              inclass: quiz.inclass
-            },
-            intro_timer: quiz.inclass_session.intro,
-            self_timer: quiz.inclass_session.self,
-            group_timer: quiz.inclass_session.in_group,
-            discussion_timer: quiz.inclass_session.discussion,
-          });
-        }
-
-        var validateTime = function(time, check_duration) {
-          var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-          if (int_regex.test(time)) {
-            var hhmm = time.split(':'); // split hours and minutes
-            var hours = parseInt(hhmm[0]); // get hours and parse it to an int
-            var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
-            var seconds = parseInt(hhmm[2]);
-            // check if hours or minutes are incorrect
-            var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
-            if (hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
-              return $translate('editor.incorrect_format_time')
-            } else if (check_duration && (scope.lecture_player.controls.getDuration()) <= calculated_duration || calculated_duration <= 0) {
-              return $translate('editor.time_outside_range')
-            }
-          } else {
-            return $translate('editor.incorrect_format_time')
-          }
-        }
-
-        var validateName = function(quiz) {
-          var d = $q.defer();
-          var doc = {}
-          doc.question = quiz.question;
-          OnlineQuiz.validateName({ online_quizzes_id: quiz.id },
-            doc,
-            function() {
-              d.resolve()
-            },
-            function(data) {
-              if (data.status == 422)
-                d.resolve(data.data.errors.join());
-              else
-                d.reject('Server Error');
-            }
-          )
-          return d.promise;
-        }
-
-        var arrayToSeconds = function(a) {
-          return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) // minutes are worth 60 seconds. Hours are worth 60 minutes.
-        }
-
-        scope.saveEdit = function(quiz) {
-          validateName(quiz).then(function(name_error) {
-            var error = true
-            scope.name_error = name_error
-            if (!name_error) {
-              if (quiz.inclass) {
-                scope.intro_timer_error = validateTime(quiz.inclass_session.intro_formatedTime)
-                scope.self_timer_error = validateTime(quiz.inclass_session.self_formatedTime)
-                scope.group_timer_error = validateTime(quiz.inclass_session.group_formatedTime)
-                scope.discussion_timer_error = validateTime(quiz.inclass_session.discussion_formatedTime)
-                if (!(scope.intro_timer_error || scope.self_timer_error || scope.group_timer_error || scope.discussion_timer_error)) {
-                  quiz.inclass_session.intro = arrayToSeconds(quiz.inclass_session.intro_formatedTime.split(':'))
-                  quiz.inclass_session.self = arrayToSeconds(quiz.inclass_session.self_formatedTime.split(':'))
-                  quiz.inclass_session.in_group = arrayToSeconds(quiz.inclass_session.group_formatedTime.split(':'))
-                  quiz.inclass_session.discussion = arrayToSeconds(quiz.inclass_session.discussion_formatedTime.split(':'))
-                  error = false
-                }
-              } else {
-                scope.time_error = validateTime(quiz.formatedTime, true)
-                if (!scope.time_error) {
-                  var fraction = quiz.time % 1
-                  var new_time = arrayToSeconds(quiz.formatedTime.split(':'))
-                  if(quiz.time != new_time + fraction)
-                    quiz.time = quiz.start_time = quiz.end_time = new_time
-                  error = false
-                }
-              }
-            }
-
-            if (!error) {
-              updateOnlineQuiz(quiz)
-              scope.saveQuizBtn({ exit: true })
-            }
-            // scope.start_time_error = validateTime(quiz.start_formatedTime)
-            // scope.end_time_error = validateTime(quiz.end_formatedTime)
-            // if(!(scope.name_error || scope.time_error || scope.start_time_error || scope.end_time_error) ){
-            // quiz.time = arrayToSeconds(quiz.formatedTime.split(':'))
-            // quiz.start_time = arrayToSeconds(quiz.start_formatedTime.split(':'))
-            // quiz.end_time = arrayToSeconds(quiz.end_formatedTime.split(':'))
-
-          })
-        }
       }
     };
   }])
@@ -166,21 +66,21 @@ angular.module('scalearAngularApp')
         '<div style="margin-top:10px;text-align:left;margin-left:0;">' +
         '<div class="small-12 columns" style="margin-bottom: 5px;"><span translate>editor.title</span>:</div>' +
         '<div class="small-12 left columns" style="margin-bottom: 15px;">' +
-        '<input class="marker_name" type="text" ng-model="selected_marker.title" style="height: 30px;margin-bottom:0;">' +
-        '<small class="error" ng-show="name_error" ng-bind="name_error"></small>' +
+        '<div><rich-textarea class="marker_name" ng-model="selected_marker.title" ></div>' +
+        '<small class="error" ng-show="marker_errors.name_error" ng-bind="marker_errors.name_error"></small>' +
         '</div>' +
         '</div>' +
         '<div style="margin-top:10px;text-align:left;margin-left:0;">' +
         '<div class="small-12 columns" style="margin-bottom: 5px;"><span translate>editor.annotation</span>:</div>' +
         '<div class="small-12 left columns" style="margin-bottom: 15px;">' +
-        '<input class="marker_annotation" type="text" ng-model="selected_marker.annotation" style="height: 30px;margin-bottom:0;">' +
+        '<rich-textarea class="marker_annotation" ng-model="selected_marker.annotation" style="height: 70px;margin-bottom:0;">' +
         '</div>' +
         '</div>' +
         '<div class="row" style="text-align:left;margin-left:0;">' +
         '<div class="small-3 columns"><span translate>editor.marker_time</span>:</div>' +
         '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
         '<input class="marker_time" type="text" ng-model="selected_marker.formatedTime" style="height: 30px;margin-bottom:0;">' +
-        '<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>' +
+        '<small class="error position-absolute z-one" ng-show="marker_errors.time_error" ng-bind="marker_errors.time_error"></small>' +
         '</div>' +
         '</div>' +
         '<delete_button id="delete_marker_button" size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
@@ -189,23 +89,24 @@ angular.module('scalearAngularApp')
         '</div>',
       link: function(scope, element, attrs) {
         $timeout(function() {
-          element.find('.marker_name').select();
+          element.find('.marker_name').focus();
+          document.execCommand('selectAll', false, null);
+          // element.find('.marker_name').select();
         });
 
         var maker_enter_tab_click = function(tab_enter) {
-
           if($("input.marker_name").is(':focus')){
-            $("input.marker_annotation").focus()  
+            $("input.marker_annotation").focus()
           }
           else if($("input.marker_annotation").is(':focus')){
-           $("input.marker_time").focus()  
+           $("input.marker_time").focus()
           }
           else if($("input.marker_time").is(':focus')){
-           $("#save_marker_button").focus()  
+           $("#save_marker_button").focus()
           }
           else if($("#save_marker_button").is(':focus')){
             if(tab_enter == 'enter'){
-             $("#save_marker_button").click()  
+             $("#save_marker_button").click()
             }
             else{
               $("#delete_marker_button").find('a').focus()
@@ -219,14 +120,13 @@ angular.module('scalearAngularApp')
           shortcut.remove("Enter");
           shortcut.remove("Tab");
         }
-        shortcut.add("Enter", function(){
-          maker_enter_tab_click("enter")
-        }, {"disable_in_input" : false});      
+        // shortcut.add("Enter", function(){
+        //   maker_enter_tab_click("enter")
+        // }, {"disable_in_input" : false});
         shortcut.add("Tab", function(){
           maker_enter_tab_click("tab")
-        }, {"disable_in_input" : false});    
+        }, {"disable_in_input" : false});
         scope.$on('$destroy', function() {
-          console.log("destroy");
           removeShortcuts()
         });
       }
@@ -264,8 +164,9 @@ angular.module('scalearAngularApp')
         quiz: "=",
         data: "=",
         list: '=',
+
         save: "&",
-        remove: "&"
+      remove: "&",
       },
       replace: true,
       restrict: 'E',
@@ -315,9 +216,11 @@ angular.module('scalearAngularApp')
         }
         scope.selectField = function() {
           $timeout(function() {
-            var elem = element.find('textarea')[0]
-            if (elem)
-              elem.select()
+            // var elem = element.find('textarea')[0]
+            // if (elem)
+            //   elem.select()
+            $('.popover .answer_text').focus()
+            document.execCommand('selectAll', false, null);
           })
         }
         scope.updateValues = function() {
@@ -329,18 +232,26 @@ angular.module('scalearAngularApp')
           }
         }
 
+        var hidePopover = function(){
+          $('.popover').remove();
+        }
+
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
         scope.close = function() {
           scope.save()
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         scope.delete = function() {
           scope.remove()
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         scope.answerDragStart = function() {
-          angular.element(element.children()[0]).popover('hide')
+          hidePopover()
         }
 
         $rootScope.$on("radioChange", function() {
@@ -349,12 +260,14 @@ angular.module('scalearAngularApp')
 
         scope.answerClass = "component dropped answer_img"
 
+        // scope.medium_editor_options = {placeholder: false}
+
         var template = ""
         if (scope.quiz.quiz_type == 'survey')
           template = "<form name='aform'>" +
           "<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>" +
           "<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>" +
-          "<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>" +
+          "<div><rich-textarea rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -366,13 +279,15 @@ angular.module('scalearAngularApp')
           "<label class='with-small-margin-top'>" +
           "<span translate>editor.answer</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>" +
-          "<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>" +
+          // "<textarea rows=3 class='must_save medium-textarea' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>" +
+          "<div><rich-textarea rows=3 class='must_save answer_text' ng-model='data.answer' ng-class='{error: aform.answer.$error.required}' required ng-init='selectField($event)'/></div>"+
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "</label>" +
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
-          "<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
+          // "<textarea medium-editor bind-options='medium_editor_options' rows=3 class='must_save medium-editor-textarea' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
+          "<rich-textarea rows=3 class='must_save' ng-model='data.explanation' />"+
           "</label>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -385,9 +300,12 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id,
+          // instant_show: !scope.data.id,
           container: 'body',
         }
+        if(!scope.data.id){
+            scope.popover_options.instant_show = 'click'
+          }
 
         scope.$watch('quiz.answers', function() {
           scope.updateValues();
@@ -401,15 +319,14 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: 'E',
       template: "<div>" +
-        "<div class='component dropped_drag'  ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<div pop-over='popover_options' unique='true' class='component dropped_drag'  ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<div >" +
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
-        "<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'></h6>" +
         "</div>" +
         "</div>" +
         "<div class='dragged handle' data-drag='true' style='height: 46px; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<span class='position-header error light-grey dark-text no-margin' style='top: 6px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>editor.drag.start</span></span>" +
-        "<span class='no-margin' >{{data.answer}}</span>" +
+        "<span class='no-margin' ng-bind-html='data.answer'></span>" +
         "</div>" +
         "</div>",
 
@@ -436,7 +353,9 @@ angular.module('scalearAngularApp')
 
         scope.selectField = function() {
           $timeout(function() {
-            element.find('textarea')[0].select()
+            $(".popover .answer_text").focus()
+            document.execCommand('selectAll', false, null);
+            // element.find('textarea')[0].select()
           })
         }
 
@@ -460,25 +379,31 @@ angular.module('scalearAngularApp')
             ans.explanation[scope.data.pos] = ""
         })
 
-        scope.close = function() {
-          scope.save()
-          console.log(element)
-          angular.element(element.find('h6')).popover('hide')
+        var hidePopover = function(){
+          $('.popover').remove();
         }
 
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
+        scope.close = function() {
+          scope.save()
+          hidePopover()
+        }
 
         var template = '<ul class="no-margin">' +
           '<label>' +
           '<span translate>editor.drag.instruction</span>' +
-          '<textarea rows=3 type="text" class="must_save" ng-model="data.answer" />' +
+          '<rich-textarea rows=3 style="resize:vertical;" class="answer_text must_save" ng-model="data.answer" ng-init="selectField()"/>' +
           '</label>' +
           '<label>' +
           '<span translate>editor.drag.correct</span>:' +
-          '<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />' +
+          '<rich-textarea rows=3 style="resize:vertical;" class="must_save" ng-model="data.explanation[pos]" />' +
           '</label>' +
           '<label ng-repeat=\'num in list|filter:"!"+data.pos\' >' +
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
-          '<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
+          '<rich-textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>' +
@@ -491,10 +416,12 @@ angular.module('scalearAngularApp')
             var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
             return scope.data.ycoor < 0.3 ? "bottom" : placement
           },
-          instant_show: !scope.data.id,
+          // instant_show: !scope.data.id,
           container: 'body'
         }
-
+        if(!scope.data.id){
+          scope.popover_options.instant_show = 'click'
+        }
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",
           minHeight: 40,
@@ -507,14 +434,13 @@ angular.module('scalearAngularApp')
     return {
       replace: true,
       restrict: 'E',
+      save: "&",
+      remove: "&",
       template: "<div>" +
-        "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
-        "<div>" +
-				"<h6 class='no-margin' style='text-align:left;resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}'>{{quiz.question}}</h6>"+
-        "</div>" +
-        "</div>" +
+        "<div class='component dropped answer_drag' style='cursor:move;border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\"  pop-over='popover_options'>" +
+        "<h6 class='no-margin' style='text-align:left;resize:none;padding:10px;font-size: 0.1rem' ng-bind-html='quiz.question'></h6>"+
+        "</div>"+
         "</div>",
-
       link: function(scope, element, attrs) {
         scope.calculatePosition = function() {
           var ontop = angular.element('.ontop');
@@ -530,7 +456,53 @@ angular.module('scalearAngularApp')
           scope.data.height = main.height() / (ontop.height());
         }
 
-        console.log(scope.data)
+        // scope.close = function() {
+        //   scope.save()
+        //   angular.element(element.children()[0]).popover('hide')
+        // }
+
+       var hidePopover = function(){
+          $('.popover').remove();
+        }
+
+        scope.$on("$destroy", function() {
+          hidePopover()
+        })
+
+        scope.close = function() {
+          scope.save()
+          hidePopover()
+        }
+
+        scope.delete = function() {
+          scope.remove()
+        }
+
+        var template = "<form name='aform' >" +
+          "<label style='margin-top:10px'>" +
+          "<span translate>editor.explanation</span>" +
+          "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
+          "<rich-textarea rows=3 class='must_save' type='text' ng-model='data.explanation'></textarea>" +
+          "</label>" +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
+          "</form>"
+
+
+
+        scope.popover_options = {
+          content: template,
+          html: true,
+          placement: function() {
+            var placement = (scope.data.xcoor > 0.5) ? "left" : "right"
+            return scope.data.ycoor < 0.3 ? "bottom" : placement
+          },
+          // instant_show: !scope.data.id,
+          container: 'body'
+        }
+        if(!scope.data.id){
+            scope.popover_options.instant_show = 'click'
+          }
+
 
         angular.element(element.children()[0]).resizable({
           containment: ".videoborder",
@@ -559,11 +531,9 @@ angular.module('scalearAngularApp')
       link: function(scope, element, iAttrs) {
 
         scope.isSurvey = function() {
-          if (scope.subtype)
-            return scope.subtype.toUpperCase() == "SURVEY"
-          else
-            return false
+          return scope.subtype && (scope.subtype.toLowerCase() == "survey" || scope.subtype.toLowerCase() == "html_survey")
         }
+
         scope.isFreeText = function() {
           return (scope.quiz.question_type == "Free Text Question")
         }
@@ -571,6 +541,20 @@ angular.module('scalearAngularApp')
         scope.isNormalQuiz = function() {
           return "content" in scope.quiz
         }
+        scope.removeAnswerFreeText = function(){
+          if(scope.isFreeText() ){
+            scope.quiz.answers.forEach(function (value, i) {
+                if(i==0 ){
+                    if((scope.quiz.match_type == "Free Text")){
+                      value.content = ""
+                    }
+                }
+                else
+                {scope.quiz.answers.splice(i, 1);}
+            });
+          }
+        }
+
         scope.quiz_types = [
           { value: "MCQ", text: $translate('content.questions.quiz_types.mcq') },
           { value: "OCQ", text: $translate('content.questions.quiz_types.ocq') },
@@ -581,8 +565,12 @@ angular.module('scalearAngularApp')
           { value: 'Match Text', text: $translate('content.questions.quiz_types.match_text') }
         ]
         $log.debug(scope.quiz)
-        if (!scope.quiz.match_type)
-          scope.quiz.match_type = scope.match_types[0].value
+        if (!scope.quiz.match_type && !scope.isSurvey()) {
+          if(scope.quiz.question_type == "Free Text Question"  && scope.quiz.answers && scope.quiz.answers[0].content !="")
+            scope.quiz.match_type =scope.match_types[1].value
+          else
+            scope.quiz.match_type =scope.match_types[0].value
+        }
 
         if (!scope.isSurvey()) {
           scope.quiz_types.push({ value: "drag", text: $translate('content.questions.quiz_types.drag') })
@@ -590,7 +578,7 @@ angular.module('scalearAngularApp')
 
         scope.addAnswer = scope.add()
         scope.removeQuestion = scope.removeq()
-        element.find('input')[0].focus()
+        // element.find('input')[0].focus()
 
         scope.$on('$destroy', function() {
           shortcut.remove("Enter");
@@ -618,12 +606,17 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       template: "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
-        "<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>" +
+        "<div ng-switch-when='FREE TEXT QUESTION' >"+
+          "<div ng-switch on='quiz.match_type.toUpperCase()'>" +
+            "<div ng-switch-when='MATCH TEXT' ><html_freetextmatch ng-repeat='answer in quiz.answers' /></div>"+
+            "<div ng-switch-when='FREE TEXT' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
+          "</div>"+
+        "</div>" +
         "<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>" +
         "<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>" +
         "<ul  ng-switch-when='DRAG' class='no-padding-top'>" +
         "<h5 class='no-margin-top'><small translate>editor.messages.random_answers</small></h5>" +
-        "<span ui-sortable ng-model='quiz.answers'>" +
+        "<span ui-sortable='answers_sortable_options' ng-model='quiz.answers'>" +
         "<html_drag ng-repeat='answer in quiz.answers' />" +
         "</span>" +
         "</ul>" +
@@ -670,21 +663,48 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       template: "<ng-form name='aform'>" +
-        "<div class='row'>" +
-        "<div class='small-10 columns'>" +
-        "<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />" +
-        "<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
+        "<div class ='row collapse' ng-if='!isSurvey()' >" +
+          "<div class='small-2 columns' style='padding: 10px 0;'>" +
+            "<label class='text-left' translate>editor.explanation</label>" +
+          "</div>" +
+          "<div class='small-7 left columns no-padding' >" +
+            "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
+          "</div>" +
         "</div>" +
+
+        "</ng-form>"
+    }
+
+  }).directive('htmlFreetextmatch', function() {
+    return {
+      restrict: 'E',
+      template: "<ng-form name='aform'>" +
+        "<div ng-if=quiz.match_type == 'Match Text'>"+
+        "<div class='row'>" +
+          "<div class='small-10 columns'>" +
+            "<div><input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' /></div>" +
+            "<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
+          "</div>" +
         "</div>" +
         "<div class='text-left size-12'>" +
-        "<div><br/><span translate>editor.regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>" +
-        "<ul class='size-12'>" +
-        "<li>Waterloo -> <span translate>editor.regex.correct_if</span> 'Waterloo'</li>" +
-        "<li>/(Waterloo|waterloo)/ -> <span translate>editor.regex.correct_for</span> 'Waterloo' , 'waterloo'</li>" +
-        "<li>/[0-9]/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.any_integer</span></li>" +
-        "<li>/(10|14|29)/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.numbers</span></li>" +
-        "</ul>" +
+          "<div><br/><span translate>editor.regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>" +
+            "<ul class='size-12'>" +
+              "<li>Waterloo -> <span translate>editor.regex.correct_if</span> 'Waterloo'</li>" +
+              "<li>/(Waterloo|waterloo)/ -> <span translate>editor.regex.correct_for</span> 'Waterloo' , 'waterloo'</li>" +
+              "<li>/[0-9]/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.any_integer</span></li>" +
+              "<li>/(10|14|29)/ -> <span translate>editor.regex.correct_for</span> <span translate>editor.regex.numbers</span></li>" +
+            "</ul>" +
+          "</div>" +
         "</div>" +
+        "</div>"+
+        "<div class ='row collapse' >" +
+        "<div class='small-2 columns' style='padding: 10px 0;'>" +
+        "<label class='text-left' translate>editor.explanation</label>" +
+        "</div>" +
+        "<div class='small-7 left columns no-padding'>" +
+        "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
+        "</div>" +
+
         "</ng-form>"
     }
 
@@ -699,7 +719,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.answer</label>" +
         "</div>" +
         "<div class='small-7 columns left no-padding'>" +
-        "<input class='no-margin' required name='answer' type='text' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />" + //|| (submitted && aform.$error.atleastone)
+        "<div><rich-textarea class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' /></div>" + //|| (submitted && aform.$error.atleastone)
         "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>" +
         "</div>" +
         "<div class='small-2 columns' ng-if='!isSurvey()'>" +
@@ -707,17 +727,17 @@ angular.module('scalearAngularApp')
         "<input class='valign-middle' ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />" + //atleastone
         "</div>" +
         "</div>" +
-        "<div class ='row collapse' ng-if='show() && !isSurvey()'>" +
+        "<div class ='row collapse' ng-if='!isSurvey()'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<input class='no-margin' type='text' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>" +
+        "<rich-textarea class='no-margin' class='explain'  name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +
         "</div>" +
-        "<hr style='margin: 10px 0;'/>"
+        "<hr style='margin: 0;'/>"
     }
 
   }).directive('htmlOcq', function() {
@@ -731,7 +751,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.answer</label>" +
         "</div>" +
         "<div class='small-7 columns left no-padding'>" +
-        "<input class='no-margin' required name='answer' type='text' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />" + //|| (submitted && aform.$error.atleastone)
+        "<div><rich-textarea class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]'/></div>" + //|| (submitted && aform.$error.atleastone)
         "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>" +
         "</div>" +
         "<div class='small-2 columns' ng-if='!isSurvey()'>" +
@@ -739,12 +759,12 @@ angular.module('scalearAngularApp')
         "<input class='valign-middle' id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>" + //atleastone
         "</div>" +
         "</div>" +
-        "<div class ='row collapse' ng-if='show() && !isSurvey()'>" +
+        "<div class ='row collapse' ng-if='!isSurvey()'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<input class='no-margin' type='text' class='explain' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>" +
+        "<rich-textarea class='no-margin' class='explain' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +

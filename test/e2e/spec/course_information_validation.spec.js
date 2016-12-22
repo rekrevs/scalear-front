@@ -17,6 +17,8 @@ var course_info = new CourseInformation()
 var course_list = new CourseList()
 var student_lec = new StudentLecture()
 
+
+
 describe("Course Validation",function(){
 	describe("Student",function(){
 		it("should login", function(){
@@ -25,7 +27,7 @@ describe("Course Validation",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
-			course_list.open_course(1)
+			course_list.open_student_course(1)
 			course_info.student.open()
 		})
 		it('should check course information', function(){
@@ -33,7 +35,7 @@ describe("Course Validation",function(){
 			expect(course_info.student.course_name).toContain(params.course_name)
 			expect(course_info.student.description).toEqual(params.course_description)
 			expect(course_info.student.prerequisites).toEqual(params.prerequisites)
-			expect(course_info.student.duration).toEqual(params.course_duration)
+			expect(course_info.student.end_date).toEqual(params.course_end_date_test)
 		})
 		it("should logout",function(){
 			header.logout()

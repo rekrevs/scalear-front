@@ -48,7 +48,7 @@ describe("Filling Course", function() {
     })
     it("should open course", function() {
       course_list.open()
-      course_list.open_course(1)
+      course_list.open_teacher_course(1)
     })
     it("should go to edit mode", function() {
       sub_header.open_edit_mode()
@@ -173,6 +173,7 @@ describe("Filling Course", function() {
       invideo_quiz.hide_popover()
       invideo_quiz.save_quiz()
       expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
+      // sleep(5000)
 
       video.seek(30)
       invideo_quiz.create(invideo_quiz.drag)
@@ -213,7 +214,6 @@ describe("Filling Course", function() {
       invideo_quiz.text_answer_correct(3)
       invideo_quiz.save_quiz()
       expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
-
       video.seek(20)
       invideo_quiz.create(invideo_quiz.ocq_text)
       expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
@@ -229,7 +229,6 @@ describe("Filling Course", function() {
       invideo_quiz.type_text_explanation(3, "explanation 3")
       invideo_quiz.save_quiz()
       expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
-
       video.seek(30)
       invideo_quiz.create(invideo_quiz.drag_text)
       expect(invideo_quiz.editor_panel.isDisplayed()).toEqual(true);
@@ -263,6 +262,7 @@ describe("Filling Course", function() {
       invideo_quiz.hide_popover()
       invideo_quiz.save_quiz()
       expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
+      sleep(5000)
 
       video.seek(20)
       invideo_quiz.create(invideo_quiz.ocq_survey)
@@ -276,6 +276,7 @@ describe("Filling Course", function() {
       invideo_quiz.hide_popover()
       invideo_quiz.save_quiz()
       expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
+      sleep(5000)
     })
 
     it("should open first quiz in first module", function() {
@@ -333,7 +334,7 @@ describe("Filling Course", function() {
       var question = quiz.question(6)
       question.type_title('match question')
       question.change_type_match_text()
-      question.type_answer('match answer')
+      question.type_free_answer('match answer')
 
       quiz.add_question()
       expect(quiz.questions.count()).toEqual(7)
@@ -348,6 +349,7 @@ describe("Filling Course", function() {
       question.type_answer("answer 3")
       expect(question.answers.count()).toEqual(3)
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -401,7 +403,7 @@ describe("Filling Course", function() {
       var question = quiz.question(6)
       question.type_title('match question')
       question.change_type_match_text()
-      question.type_answer('match answer')
+      question.type_free_answer('match answer')
 
       quiz.add_question()
       expect(quiz.questions.count()).toEqual(7)
@@ -414,6 +416,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -459,6 +462,7 @@ describe("Filling Course", function() {
       question.type_title('free question')
       question.change_type_free_text()
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -649,7 +653,7 @@ describe("Filling Course", function() {
       var question = quiz.question(6)
       question.type_title('match question')
       question.change_type_match_text()
-      question.type_answer('match answer')
+      question.type_free_answer('match answer')
 
       quiz.add_question()
       expect(quiz.questions.count()).toEqual(7)
@@ -662,6 +666,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
 
     })
@@ -716,7 +721,7 @@ describe("Filling Course", function() {
       var question = quiz.question(6)
       question.type_title('match question')
       question.change_type_match_text()
-      question.type_answer('match answer')
+      question.type_free_answer('match answer')
 
       quiz.add_question()
       expect(quiz.questions.count()).toEqual(7)
@@ -729,6 +734,7 @@ describe("Filling Course", function() {
       question.add_answer()
       question.type_answer("answer 3")
 
+      quiz.publish()
       quiz.save()
     })
 
@@ -774,8 +780,10 @@ describe("Filling Course", function() {
       question.type_title('free question')
       question.change_type_free_text()
 
+      quiz.publish()
       quiz.save()
     })
+
     it("should logout", function() {
       header.logout()
     })

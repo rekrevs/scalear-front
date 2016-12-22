@@ -5,12 +5,17 @@ table [class*="column"] + [class*="column"]:last-child{
 table.table_matrix_height{
     margin-bottom: 0
 }
-.columnName{
+
+table.table_matrix_height tbody{
+    overflow-x: hidden !important;
+}
+.column-width{
     min-width: 115px;
+    max-width: 250px
 }
 @media only screen and (min-width:64.063em) {
   .table_matrix_height{
-    height: 55vh !important;
+    height: 54vh !important;
   }
 }
 
@@ -30,28 +35,28 @@ table.table_matrix_height{
         <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'progress.'+stat}}</span>
     </div>
 </div>
-<button class="right button tiny secondary" ng-click="exportProgress()" style="margin-bottom: 10px;" >Export</button>
-<table fixed-header class="table_matrix_height">
+<button ng-if="exportProgress != null" class="right button tiny secondary" ng-click="exportProgress()" style="margin-bottom: 10px;" >Export</button>
+<table fixed-header class="table_matrix_height" style="width:100%">
     <thead>
         <tr>
-            <th class="columnName"></th>
-            <th class="columnName" ng-repeat="name in columnNames track by $index">
+            <th class="column-width"></th>
+            <th class="column-width" ng-repeat="name in columnNames track by $index">
                 <center><span bindonce bo-text="name"></span></center>
             </th>
         </tr>
     </thead>
-    <tbody > <!-- class="scroll_container" -->
+    <tbody> <!-- class="scroll_container" -->
         <tr bindonce ng-repeat="student in students" >
-            <td><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
-            <td class="state" bindonce ng-repeat='module in status[student.id] track by $index'>
-               <span bo-if="module[5]>0">
+            <td class="column-width"><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
+            <td class="state column-width" bindonce ng-repeat='module in status[student.id] track by $index'>
+               <span bo-if="module[7]>0">
                     <center>
-                        <img tooltip=" {{'progress.tooltip.watched_video' | translate}}:{{module[4]}}%, {{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}." tooltip-append-to-body="true" tooltip-placement="top" class="marker" bo-src="status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]"
-                        style="width:15px; cursor: pointer;">
-                        <div bo-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('time.days'|translate)+')'"></div>
+                        <img tooltip=" {{'progress.tooltip.watched_video' | translate}}:{{module[6]}}%, {{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}, {{module[4]}}/{{module[5]}} {{'progress.tooltip.quizzes_optional_solved' | translate}}." tooltip-append-to-body="true" tooltip-placement="top" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
+                        style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
+                        <div ng-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('time.days'|translate)+')'"></div>
                     </center>
                 </span>
-                <span bo-if="!module[5]">
+                <span bo-if="!module[7]">
                     <center>
                         <img class="marker"
                         ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"

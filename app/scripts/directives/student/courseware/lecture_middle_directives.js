@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
-							"<label style='font-size: 15px;padding-bottom: 10px;font-weight: bold;'>{{quiz.question}}:</label>"+
+							"<label style='font-size: 15px;padding-bottom: 10px;' ng-bind-html='quiz.question'>:</label>"+
 							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'lectures.answer' : 'lectures.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
@@ -70,8 +70,8 @@ angular.module('scalearAngularApp')
 
 			scope.updateValues= function(){
 				scope.values=0
-				if(scope.quiz.quiz_type=="html" && scope.quiz.question_type=="OCQ"){
-					if(typeof(scope.studentAnswers[scope.quiz.id])=="string")
+				if( (scope.quiz.quiz_type=="html" || scope.quiz.quiz_type=="html_survey") && scope.quiz.question_type=="OCQ"){
+          if(typeof(scope.studentAnswers[scope.quiz.id])=="string")
 						scope.values+=1
 				}
 				else{
@@ -90,30 +90,34 @@ angular.module('scalearAngularApp')
 }]).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){
 	return{
 		restrict:'E',
-		template:"<ng-form name='aform'>"+
-					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
+		template:"<ng-form name='aform' >"+
+					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' />"+
+					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
-
 			scope.$watch('explanation[answer.id]', function(newval){
 				if(scope.explanation && scope.explanation[scope.answer.id]){
 					scope.mypop={
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
-						content:'<div>{{explanation[answer.id][1]}}</div>',
+						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
-						trigger:'hover'
+            // placement:"up",
+						trigger:'hover',
+            instant_show:'mouseover'
 					}
 				}
 			})
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.answer.id] = null
+      });
     }
 	}
 }]).directive('studentHtmlOcq',['$translate','$log',function($translate, $log){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
+					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop'/>"+
+					"<p style='display:inline;margin-left:10px' ng-bind-html='answer.answer'></p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.messages.please_choose_one_answer'></span><br/>"+
 
 				"</ng-form>",
 		link: function(scope){
@@ -124,13 +128,16 @@ angular.module('scalearAngularApp')
 					$log.debug("exp changed!!!")
 					scope.mypop={
 						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
-						content:'<div>{{explanation[answer.id][1]}}</div>',
+						content:'<div ng-bind-html="explanation[answer.id][1]"></div>',
 						html:true,
-						trigger:'hover'
+						trigger:'hover',
+            instant_show : "mouseover"
 					}
 				}
 			})
-
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.answer.id] = null
+      });
 			// if(scope.answer.correct){
 			// 	scope.radioChange(scope.answer);
 			// }
@@ -142,18 +149,41 @@ angular.module('scalearAngularApp')
 	}
 
 }]).directive('studentHtmlDrag',function(){
-	return {
-		restrict:'E',
-		replace:true,
-		templateUrl: '/views/student/lectures/html_drag.html'
-	}
+  return {
+    restrict:'E',
+    replace:true,
+    templateUrl: '/views/student/lectures/html_drag.html',
+    link: function(scope){
+
+      scope.$watch('explanation[quiz.id]', function(newval){
+        if(scope.explanation && scope.explanation[scope.quiz.id])
+        {
+          scope.mypop={
+            content:'<div ng-bind-html="explanation[quiz.id][answer]"></div>',
+            html:true,
+            trigger:'hover',
+            container: 'body'
+          }
+        }
+      })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
+  }
+}
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
   return{
     restrict:'E',
     template: "<ng-form name='aform'>"+
               "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
-              "</ng-form>"
+              "</ng-form>"+
+              "<div ng-bind-html='explanation[quiz.id]'></div>",
+    link:function(scope){
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
+    }
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
   return {
@@ -205,13 +235,17 @@ angular.module('scalearAngularApp')
           }
           scope.explanation_pop={
             title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
-            content:"<div>{{explanation[data.id][1]}}</div>",
+            content:"<div ng-bind-html='explanation[data.id][1]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
-            placement:(scope.data.xcoor > 0.5)? "left":"right"
+            placement:(scope.data.xcoor > 0.5)? "left":"right",
+            instant_show: "mouseover"
           }
         }
       })
+      scope.$on("$destroy", function() {
+         scope.explanation && (scope.explanation[scope.data.id] = null)
+      });
       setup()
     }
   };
@@ -292,7 +326,7 @@ angular.module('scalearAngularApp')
           ui.draggable.css('left', (scope.data.xcoor*100)+'%')
           ui.draggable.css('top', (scope.data.ycoor*100)+'%')
           ui.draggable.addClass('dropped')
-          scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.text()
+          scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.html()
           ui.draggable.attr('id', scope.data.id)
           scope.$apply()
         }
@@ -342,7 +376,7 @@ angular.module('scalearAngularApp')
           var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
-            content:"<div>{{explanation[selected_id][1]}}</div>",
+            content:"<div ng-bind-html='explanation[selected_id][1]'></div>",
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:angular.element(elem.children()[1]).position().left > (ontop.width()/2)? "left":"right"
@@ -351,6 +385,10 @@ angular.module('scalearAngularApp')
           angular.element('#'+scope.data.id).css('background-color', bg_color)
         }
       })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.data.id] = null
+      });
+
   	  setup()
 
     }
@@ -358,9 +396,29 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template: '<textarea placeholder={{quiz.question}} ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
     link:function(scope,elem){
+      var setup=function(){
+        scope.explanation_pop={}
+        scope.explanation[scope.data.id] = null
+      }
 
+      scope.$watch('explanation[quiz.id]', function(newval){
+        if(scope.explanation  && scope.explanation[scope.quiz.id]){
+          scope.explanation_pop={
+            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
+            content:"<div ng-bind-html='explanation[quiz.id]'></div>",
+            html:true,
+            trigger:$rootScope.is_mobile? 'click' : 'hover',
+            placement:(scope.data.xcoor > 0.5)? "left":"right",
+            container: 'body'
+          }
+        }
+      })
+      scope.$on("$destroy", function() {
+        scope.explanation[scope.quiz.id] = null
+      });
+      setup()
     }
   }
 }]).directive('studentTimeline', ['$timeout', 'ContentNavigator','TimelineFilter',function($timeout, ContentNavigator,TimelineFilter) {
@@ -372,7 +430,8 @@ angular.module('scalearAngularApp')
       items:'=',
       lecture:'=current',
       seek:'&',
-      open_timeline:'=open'
+      open_timeline:'=open',
+      totalduration: '='
     },
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
@@ -511,9 +570,9 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;" style="padding:0 9px">'+
+    template: '<div e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
                 '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
-                  '{{ value }}'+
+                  '<span ng-bind-html="value"></span>'+
                 '</div>'+
                 '<div style="font-size: 10px; float: right; display: inline-block;">'+
                   '<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>'+
@@ -532,12 +591,12 @@ angular.module('scalearAngularApp')
       });
 
       scope.moveCursorToEnd=function(){
-        $timeout(function() {
-            var textarea = $('.editable-input');
-            var strLength= textarea.val().length;
-            textarea.focus();
-            textarea[0].setSelectionRange(strLength, strLength);
-        });
+        // $timeout(function() {
+        //     var textarea = $('.editable-input');
+        //     var strLength= textarea.val().length;
+        //     textarea.focus();
+        //     textarea[0].setSelectionRange(strLength, strLength);
+        // });
 
         shortcut.add("enter", function(){
           $('form.editable-textarea').submit();
@@ -545,11 +604,11 @@ angular.module('scalearAngularApp')
         shortcut.add("esc", function(){
           $('form.editable-textarea').submit();
         }, {"disable_in_input" : false});
-
       }
+
       scope.show=function(){
         scope.myform.$show()
-        $('.editable-input').focus()
+        $('.medium-editor-textarea').focus()
       }
 
       if(!scope.value)

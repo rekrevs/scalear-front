@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log) {
+  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', 'CourseModel', function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log, CourseModel) {
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
+
+    $scope.course = CourseModel.getSelectedCourse()
 
     var getModuleProgress = function(offset, limit) {
       $scope.module_limit = limit
@@ -60,18 +62,18 @@ angular.module('scalearAngularApp')
     //  $scope.module_scroll_disable = true
     // }
 
-    $scope.updateStatus = function(student_id, module_id, module_status) {
-      if(module_status)
-        module_status = (module_status == "Finished on Time") ? 1 : 2
+    $scope.updateStatus = function(student_id, module_id, status) {
+      if(status)
+        status = (status == "Finished on Time") ? 1 : 2
       else
-        module_status = 0
+        status = 0
 
       Module.changeModuleStatus({
         course_id: $stateParams.course_id,
         module_id: module_id
       }, {
         user_id: student_id,
-        status: module_status
+        status: status
       })
     }
 

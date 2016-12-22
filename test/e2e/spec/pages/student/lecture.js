@@ -37,15 +37,17 @@ Discussion.prototype = Object.create({}, {
 	comments:{get:function(){return this.field.all(by.repeater("comment_data in item.data.comments"))}},
 	comment:{value:function(num){return new Comment(this.comments.get(num-1))}},
 	comment_button:{get:function(){return this.field.element(by.className("comment_button"))}},
+	add_comment_button:{get:function(){return this.field.element(by.className("success"))}},
 	comment_area:{get:function(){return this.field.element(by.name("comment_area"))}},
 	add_comment:{value:function(){this.comment_button.click()}},
 	type_comment:{value:function(text){
 		this.comment_area.sendKeys(text)
-		this.comment_area.sendKeys(protractor.Key.ENTER)
+		this.add_comment_button.click()
+		// this.comment_area.sendKeys(protractor.Key.ENTER)
 	}},
 	text:{get:function(){return this.field.getText()}},
 	title:{get:function(){return this.field.element(by.className('discussion_title')).getText()}},
-	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},	
+	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
 		this.field.element(by.className('alert')).click()
@@ -58,13 +60,12 @@ var Lecture = function (elem) {
 
 Lecture.prototype = Object.create({}, {
 	confused:{get:function(){return this.field.all(by.name('confused-timeline-item'))}},
-	notes:{get:function(){return this.field.all(by.name('notes-timeline-item'))}},
+	notes:{get:function(){return this.field.all(by.css('[name="notes-timeline-item"]'))}},
 	note:{value:function(num){return this.notes.get(num-1)}},
 	note_area:{get:function(){return this.field.element(by.className("editable-controls")).element(by.tagName("textarea"))}},
 	type_note:{value:function(text){
-		this.note_area.clear()
-		this.note_area.sendKeys(text)
-		this.note_area.sendKeys(protractor.Key.ENTER)
+		element(by.css('[ng-model="$data"]')).clear().sendKeys(text).sendKeys(protractor.Key.ENTER)
+
 	}},
 	edit_note:{value:function(num){
 		this.note(num).element(by.className('ng-binding')).click()
@@ -77,10 +78,12 @@ Lecture.prototype = Object.create({}, {
 	discussion:{value:function(num){return new Discussion(this.discussions.get(num-1))}},
 	items:{get:function(){return this.field.all(by.repeater('item in timeline[l.id].items'))}},
 	editable_discussion:{get:function(){return this.field.element(by.id('show_question'))}},
-	type_discussion:{value:function(text){this.editable_discussion.element(by.tagName('textarea')).clear().sendKeys(text)}},
+	type_discussion:{value:function(text){this.editable_discussion.element(by.css('div[ng-model="current_question"]')).clear().sendKeys(text)}},
 	discussion_types:{get:function(){return this.editable_discussion.element(by.tagName('select')).all(by.tagName('option'))}},
 	change_discussion_public:{value:function(){this.discussion_types.get(1).click()}},
 	change_discussion_private:{value:function(){this.discussion_types.get(0).click()}},
+	time_feild:{get:function(){return this.editable_discussion.element(by.model('item.time'))}},
+	type_time:{value:function(text){this.time_feild.clear().sendKeys(text)}},
 	save_discussion:{value:function(){ this.editable_discussion.element(by.buttonText('Ask')).click()}},
 })
 
@@ -151,9 +154,16 @@ LecturePage.prototype=Object.create({},{
 	text_drag_container:{get:function(){return this.quiz_layer.all(by.className("drag-sort"))}},
 	text_drag_items:{get:function(){return this.text_drag_container.all(by.tagName('li'))}},
 	text_drag_arrows:{get:function(){return this.text_drag_container.all(by.className('looks-like-a-hook'))}},
+	
 	explanation_title:{get:function(){return element(by.className('popover-title')).getText()}},
 	explanation_popover:{get:function(){return element(by.className('popover'))}},
 	explanation_content:{get:function(){return this.explanation_popover.getText()}},
+
+	explanation_title_num:{value:function(num){return element.all(by.className('popover-title')).get(num-1).getText()}},
+	// explanation_popover_num:{get:function(num){return element.all(by.className('popover')).get(num-1) }},
+	explanation_content_num:{value:function(num){return element.all(by.className('popover')).get(num-1).getText() }},
+
+	
 	show_explanation:{value:function(num){
 		browser.driver.actions().mouseMove(this.answers.get(num-1)).perform();
 		browser.driver.actions().mouseMove({x: 5, y: 5}).perform();
@@ -167,9 +177,9 @@ LecturePage.prototype=Object.create({},{
 			browser.driver.actions().mouseMove(drag).perform();
 			browser.driver.actions().mouseDown().perform();
 			browser.driver.actions().mouseMove(droppables.get(text.split(' ')[1]-1)).perform();
-        	browser.driver.actions().mouseUp().perform(); 
+        	browser.driver.actions().mouseUp().perform();
 		})
-		
+
 	}},
 	answer_text_drag_incorrect:{value:function(){
 		var arrows = this.text_drag_arrows
@@ -219,7 +229,7 @@ LecturePage.prototype=Object.create({},{
 		            browser.driver.actions().dragAndDrop(arrow[2], arrow[0]).perform()
 		          else if(text == 'answer 2')
 		            browser.driver.actions().dragAndDrop(arrow[2], arrow[1]).perform()
-		        }) 
+		        })
 		    })
 	  	})
 	}}

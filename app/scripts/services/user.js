@@ -8,8 +8,8 @@ angular.module('scalearAngularApp')
       {
         'getCurrentUser': { method: 'GET', headers: headers , ignoreLoadingBar: true, params: {action: 'get_current_user'}},
         'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
-        'sign_out': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
-        'sign_up': { method: 'POST', headers: headers},
+        'signOut': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
+        'signUp': { method: 'POST', headers: headers},
         'reset_password':{method:'POST', headers:headers, params:{action: 'password'}},
         'change_password':{method:'PUT', headers:headers, params:{action: 'password'}},
         'resend_confirmation':{method:'POST', headers:headers, params:{action: 'confirmation'}},
@@ -20,6 +20,9 @@ angular.module('scalearAngularApp')
         'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers},
         'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
         'userExist': { method: 'GET', headers: headers , params: {action: 'user_exist'}},
+        'getSubdomains': { method: 'GET', headers: headers , params: {action: 'get_subdomains'}},
+
+
       });
 
 }]);

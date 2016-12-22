@@ -12,6 +12,7 @@ ReviewModel.prototype= Object.create({},{
   get_block_text:{value:function(num){return this.get_block(num).getText()}},
   next_button:{get:function(){return this.review_model.element(by.className("next_btn"))}},
   prev_button:{get:function(){return this.review_model.element(by.className("prev_btn"))}},
+  exit_button:{get:function(){return this.review_model.element(by.className("exit_btn"))}},
   chart:{get:function () { return this.question_block.element(by.className("original_chart"))}},
   next:{value:function(){this.next_button.click()}},
   previous:{value:function(){this.prev_button.click()}},

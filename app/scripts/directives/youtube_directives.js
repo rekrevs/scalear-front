@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     restrict: "E",
     template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid"
   };
-}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval', function($rootScope, $log, $timeout, $window, $cookieStore, $interval) {
+}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation) {
   return {
     transclude: true,
     restrict: 'E',
@@ -126,14 +126,17 @@ angular.module('scalearAngularApp')
 
       player_controls.mute = function() {
         player.mute();
+        VideoInformation.volume = 0
       }
 
       player_controls.volume = function(val) {
         player.volume(val);
+        VideoInformation.volume = val
       }
 
       player_controls.unmute = function() {
         player.unmute();
+        VideoInformation.volume = 0.8
       }
       player_controls.paused = function() {
         return player.paused();
@@ -149,7 +152,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getDuration = function() {
-        // console.log(scope.start, scope.end)
         // var duration
         // if(scope.start && scope.end)
         //  duration = scope.end - scope.start
@@ -249,6 +251,16 @@ angular.module('scalearAngularApp')
         player.removeTrackEvent(id)
       }
 
+      player_controls.getTrackEvents = function(){
+        return player.getTrackEvents()
+      }
+      player_controls.removeAllTrackEvents = function(){
+        player.getTrackEvents().forEach(function(track){
+          player.removeTrackEvent(track.id)
+        })
+      }
+
+
       player_controls.replay = function() {
         player_controls.pause()
         player_controls.seek(0)
@@ -267,6 +279,8 @@ angular.module('scalearAngularApp')
         } else {
           player.video.playbackRate = speed
         }
+
+        VideoInformation.speed = speed
       }
 
       player_controls.getAvailableQuality = function() {
@@ -284,6 +298,7 @@ angular.module('scalearAngularApp')
           if (paused)
             player_controls.pause()
         }
+        VideoInformation.quality = quality
       }
 
       var setupEvents = function() {
@@ -296,6 +311,7 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
+            VideoInformation.duration =  player_controls.getDuration()
           });
 
         player.on('playing',
@@ -341,10 +357,17 @@ angular.module('scalearAngularApp')
           }
         })
 
-        player.on('canplaythrough', function() {
+        // player.on('canplaythrough', function() {
+        //   parent.focus()
+        //   if (player_events.canPlay) {
+        //     player_events.canPlay();
+        //     scope.$apply();
+        //   }
+        // })
+        player.on('seeking', function() {
           parent.focus()
-          if (player_events.canPlay) {
-            player_events.canPlay();
+          if (player_events.seeking) {
+            player_events.seeking();
             scope.$apply();
           }
         })
@@ -572,7 +595,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', function($rootScope, $log, $window, $cookieStore, $timeout) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter) {
   return {
     transclude: true,
     restrict: 'E',
@@ -607,8 +630,11 @@ angular.module('scalearAngularApp')
           end_time: scope.player.controls.getVideoEndTime(),
         }
         scope.$watch('editing', function() {
-          if (scope.editing == 'video')
+          if (scope.editing == 'video'){
+            scope.video.start_time= scope.player.controls.getVideoStartTime(),
+            scope.video.end_time= scope.player.controls.getVideoEndTime(),
             scope.duration = scope.player.controls.getAbsoluteDuration();
+          }
           else
             scope.duration = scope.player.controls.getDuration();
         })
@@ -620,14 +646,17 @@ angular.module('scalearAngularApp')
           $(".squarebrackets_right").css("left", ((scope.video.end_time / scope.duration) * 100) + '%')
           $(".repeating_green_pattern").css("left", ((scope.video.start_time / scope.duration) * 100) + '%')
         } else if (scope.editing == 'quiz') {
-          var current_quiz = scope.timeline.items.filter(function(item) {
-            return item.data && item.data.selected
-          })[0]
-          $(".squarebrackets_left").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
-          $(".squarebrackets_right").css("left", ((current_quiz.data.end_time / scope.duration) * 100) + '%')
-          $(".quiz_circle").css("left", ((current_quiz.data.time / scope.duration) * 100) - 0.51 + '%')
-          $(".repeating_grey_pattern").css("left", ((current_quiz.data.start_time / scope.duration) * 100) + '%')
-          $(".repeating_orange_pattern").css("left", ((current_quiz.data.time / scope.duration) * 100) + '%')
+          // var current_quiz = scope.timeline.items.filter(function(item) {
+          //   return item.data && item.data.selected
+          // })[0]
+          var current_quiz = VideoQuizModel.getSelectedVideoQuiz()
+          if(current_quiz){
+            $(".squarebrackets_left").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".squarebrackets_right").css("left", ((current_quiz.end_time / scope.duration) * 100) + '%')
+            $(".quiz_circle").css("left", ((current_quiz.time / scope.duration) * 100) - 0.51 + '%')
+            $(".repeating_grey_pattern").css("left", ((current_quiz.start_time / scope.duration) * 100) + '%')
+            $(".repeating_orange_pattern").css("left", ((current_quiz.time / scope.duration) * 100) + '%')
+          }
         }
       }
 
@@ -725,6 +754,16 @@ angular.module('scalearAngularApp')
           scope.player.controls.pause()
           scope.play_class = "play";
         }
+      }
+
+      scope.rewind= function(){
+        var t = scope.player.controls.getTime();
+        scope.seek()(t - 10)
+      }
+
+      scope.fastForward =function(){
+        var t = scope.player.controls.getTime();
+        scope.seek()(t + 10)
       }
 
       scope.muteToggle = function() {
@@ -852,6 +891,8 @@ angular.module('scalearAngularApp')
         item.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
         item.data.time = ((meta.position.left + 6) / scope.progress_bar.width()) * scope.duration
         item.data.hide_quiz_answers = false
+        $rootScope.$broadcast("show_quiz_background", item.data)
+        item.data.formatedTime = $filter('format')(item.data.time)
         scope.seek()(item.data.time)
 
       }
@@ -866,6 +907,7 @@ angular.module('scalearAngularApp')
           meta.position.left = item.prev_quiz_end + start_offset
         item.start_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
+        $rootScope.$broadcast("hide_quiz_background")
         scope.seek()(item.start_time)
       }
 
@@ -879,6 +921,7 @@ angular.module('scalearAngularApp')
           meta.position.left = item.quiz_location + start_offset
         item.end_time = (meta.position.left / scope.progress_bar.width()) * scope.duration
         item.hide_quiz_answers = true
+        $rootScope.$broadcast("hide_quiz_background")
         scope.seek()(item.end_time)
       }
 
@@ -925,6 +968,7 @@ angular.module('scalearAngularApp')
         scope.skip_progress_seek = true
         scope.seek()(quiz.time)
         scope.player.controls.pause()
+        $rootScope.$broadcast("show_quiz_background", quiz)
       }
 
       scope.showQuiz = function(quiz) {
@@ -937,6 +981,7 @@ angular.module('scalearAngularApp')
           if (quiz.data && quiz.data.selected)
             quiz.data.hide_quiz_answers = true
         })
+        $rootScope.$broadcast("hide_quiz_background")
       }
 
       var unwatchMute = scope.$watch("volume", function() {
@@ -963,20 +1008,20 @@ angular.module('scalearAngularApp')
         scope.$apply()
       })
 
-      player.on('ended', function() {
+      // player.on('ended', function() {
 
-        //for some reason youtube requires clicking the
-        //play button twice to play after video end
-        //simulating first click on play
-        scope.player.controls.seek(0)
-        $timeout(function() {
-          scope.player.controls.play();
-          scope.player.controls.pause();
-          scope.play_class = "play";
-        }, 1000)
+      //   //for some reason youtube requires clicking the
+      //   //play button twice to play after video end
+      //   //simulating first click on play
+      //   // scope.player.controls.seek(0)
+      //   $timeout(function() {
+      //     scope.player.controls.play();
+      //     scope.player.controls.pause();
+      //     scope.play_class = "play";
+      //   }, 1000)
 
-        scope.$apply()
-      })
+      //   scope.$apply()
+      // })
 
       player.on('pause', function() {
         scope.play_class = "play";
@@ -995,6 +1040,9 @@ angular.module('scalearAngularApp')
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
         if ($cookieStore.get('volume') != null){
           scope.volume = $cookieStore.get('volume')
+          if(!scope.volume){
+            scope.mute()
+          }
         }
         else{
           scope.volume =  0.8
@@ -1017,9 +1065,21 @@ angular.module('scalearAngularApp')
 
       scope.setSpeed(scope.chosen_speed)
 
-
       shortcut.add("Space", function() {
         scope.play()
+      }, { "disable_in_input": true });
+
+      shortcut.add("j", function() {
+        scope.rewind();
+        scope.$apply()
+      }, { "disable_in_input": true });
+      shortcut.add("k", function() {
+        scope.play()
+        scope.$apply()
+      }, { "disable_in_input": true });
+      shortcut.add("l", function() {
+        scope.fastForward();
+        scope.$apply()
       }, { "disable_in_input": true });
 
       shortcut.add("b", function() {
@@ -1032,6 +1092,9 @@ angular.module('scalearAngularApp')
       scope.$on('$destroy', function() {
         shortcut.remove("b");
         shortcut.remove("Space");
+        shortcut.remove("j");
+        shortcut.remove("k");
+        shortcut.remove("l");
         progress_bar.off('mouseenter', scope.showPlayhead);
         progress_bar.off('mouseleave', scope.hidePlayhead);
         unwatchMute()

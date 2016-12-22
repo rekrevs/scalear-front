@@ -198,6 +198,10 @@ return function(items) {
 }).filter('parseUrlFilter', function () {
     var urlPattern = /(http|ftp|https):\/\/[\w-]+(\.[\w-]+)+([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?/gi;
     return function (text, target) {
+      if(text.indexOf("<img") ===-1){
         return text.replace(urlPattern, '<a target="' + target + '" href="$&">$&</a>') ;
+      } else {
+        return text;
+      }
     };
 });

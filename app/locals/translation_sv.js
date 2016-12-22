@@ -20,7 +20,8 @@ var translation_sv={
     duration: "Längd",
     video: "Video",
     videos: "videos",
-    inclass_lecture: "I klassrummet Video",
+    inclass_lecture: "I klassrummet video",
+    distance_peer_lecture: "Distance-peer video",
     customlink:"Länk",
     customlinks:"Länkar",
     title: "Titel",
@@ -35,6 +36,8 @@ var translation_sv={
     lectures: "@:global.videos",
     quiz: "Quiz",
     quizzes: "Quiz-frågor",
+    video_quizzes: "Video-quiz-frågor",
+    video_quiz: "Video-quiz",
     survey: "Enkät",
     surveys: "Enkäter",
     marker: "Markering",
@@ -48,12 +51,16 @@ var translation_sv={
     required: "Nödvändig",
     optional: "Valfri",
     students: "Studenter",
+    teacher:"lärare",
+    student:"student",
     done: "Klart",
     correct: "Korrekt",
     incorrect: "Felaktig",
     warning:"Varning",
     are_you_sure: "Är du säker på att du vill fortsätta?",
     visible: "Synlig",
+    leave: "Lämna",
+    stay: "Stanna",
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -69,10 +76,15 @@ var translation_sv={
     got_some_errors: "Rätta till felen ovan",
     required:"@:global.required",
     invalid_input: "Ogiltiga indata",
+    due_date_changed: "Färdigdatum har ändrats.",
     you_are_not_authorized: "Du har inte behörighet att visa den begärda sidan",
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",
     change_password_confirmation: "Du har nu ändrat ditt lösenord.",
+    export_course: "Dina anonymiserade kursdata kommer strax att skickas dig via email",
+    export_student: "Listan över dina studenter kommer strax att skickas dig via email",
+    export_school_administration: "Statistics will be exported to CSV and sent to your Email(t)",
+    another_marker: "Det finns en annan markör på samma gång",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -98,6 +110,8 @@ var translation_sv={
     next: "Nästa",
     submit: "Skicka in",
     save: "Spara",
+    publish: "Publicera",
+    unpublish: "Opublicera",
     save_close: "Spara och stäng",
     close: "Stäng",
     delete: "Radera",
@@ -128,6 +142,7 @@ var translation_sv={
     notifications: "Meddelanden",
     notification: "Meddelande",
     dashboard: "Instrumentpanel",
+    settings: "Inställningar",
     account: "Konto",
     show_all_courses: "Visa mina kurser",
     copied_from: "Kopierad från",
@@ -150,13 +165,16 @@ var translation_sv={
     administration: "Administrera",
     add_teacher: "Lägg till lärare",
     student_list: "Lista av studenter",
-    join_course: "Delta i en ny kurs",
-    new_course: "@:global.new_course",
+    join_course: "Delta i en ny kurs (elev)",
+    new_course: "Skapa en ny kurs (lärare)",
     review: "Bedöm",
     register:{
       teacher: "Lärare, registrering",
       student: "Student, registrering"
     },
+    teacher:"För lärare",
+    student:"För elever",
+    int_video:"Ny på ScalableLearning? Prova att se en kort introduktions-video för att komma igång fortare.",
   },
   content_navigator:{
     customlink:"@:global.customlink",
@@ -192,7 +210,7 @@ var translation_sv={
     button:{
         ask: "Fråga",
         cancel:"@:button.cancel",
-        edit:"@:global.edit"
+        save:"@:button.save"
     }
   },
   context_menu:{
@@ -235,7 +253,7 @@ var translation_sv={
     leave_feedback:"Ge oss alla detaljer. Ju mer vi vet, dess då lättare och bättre kan vi hjälpa dig.",
     course_content: "Mitt kursinnehåll",
     system: "Scalable Learnings webbplats",
-    none: "Please select one...",
+    none: "Var god välj en...",
     no_access: "Jag får inte access till mitt konto",
     question_before_sign: "Innan jag registrerar mig har jag en fråga",
     request_feature: "Jag skulle vilja föreslå ny funktionalitet",
@@ -245,14 +263,44 @@ var translation_sv={
     other: "Annat",
   },
   enroll_email:{
-    go_to:"Gå till",
+    go_to:"(Om du inte förstår instruktionerna ovan, gå till",
     help_enroll:"Hjälp med registrering",
     instruction:"Studenter anmäler sig genom att först registrera sig på Scalable Learnings webbplats och sedan mata in kursnyckeln. För att hjälpa eleverna med detta, skicka ett e-postmeddelande med följande instruktioner.",
     dear_student:"Hej!",
-    this_term_new_system:"I kursen {{course_name}} kommer vi att använda verktyget Scalable Learning. För att komma igång:",
-    create_account_with_university: "och skapa ett konto med din e-postadress från universitetet/skolan.",
-    add_course_by_choosing: "Lägg till din kurs genom att välja 'Lägg till kurs' i menyn 'Mina kurser' och ange kursnyckeln för",
+    this_term_new_system_part_1:"För att göra lärandet i {{course_name}} mera interakativt, kommer vi denna termin at använda ScalableLearning. För att komma igång gå till",
+    this_term_new_system_part_2:" och logga in med ditt skol-email.",
+    create_account_with_university_: "och skapa ett konto med din e-postadress från universitetet/skolan.",
+    add_course_by_choosing_part_1: " logga in med ditt skol-email, och välj sedan 'Delta i en ny kurs' under menyn 'Mina kurser' och ange kursnyckel",
+    add_course_by_choosing_part_2: " för att delta i {{short_name}}. Om du har några frågor, var god använd 'Support' formuläret under menyn 'Hjälp'.",
+    add_course_by_url: " Följ denna länk",
     sincerely:"Vänliga hälsningar",
+
+    to_get_started:"För	att	få	igång	era	eleverna,	skicka	följande	email	till	er	klass:",
+
+    if_problem:'om där uppstår problem:',
+
+    ask_student:'Be	eleven	att',
+
+    check_spam:'kontrollera	SPAM	filtren',
+
+    conf_email:'för	konfirmations-mail.',
+
+    enroll_manual:'registrera	manuellt',
+
+    by_go: 'genom	att	 gå	 till',
+
+    and_joining:'och	gå	 med	 genom	 att	 använda	registrerings-nyckeln',
+
+    contact: 'Kontakta	support',
+
+    from_help: 'från	Hjälp-menyn.',
+
+    guest_stu:'Gäststudent:',
+
+    you_may:'Du 	kan	invitera	andra	att	gå	med	din	 kurs	som	gäster	genom	att	 gå	till',
+
+    guest_may:'Gäster	kan	se	allt	online	material,	men	deras	svar	och	frågot	kommer	inte	 att	synas	för	läraren.	Gäster	kan	registrera	sig	via	länken	ovan	eller	med	en	registrerings-nyckel	för	gäster'
+
   },
   account:{
     password:{
@@ -274,6 +322,8 @@ var translation_sv={
     last_name: "Efternamn",
     screen_name: "Ditt online-namn",
     university: "Skola eller universitet",
+    saml_disable_edit: "Namn, email och information tillhandahållen av högskolan/universitet. Om du behöver ändra något i denna info var vänlig ta kontakt med högskolans/universitetets tekniska support.",
+    first_day: "Första dagen i veckan för kalendern",
     link: "Hemsida",
     security: "Säkerhet",
     avatar_comment: 'Du kan byta din avatar på ',
@@ -285,7 +335,7 @@ var translation_sv={
     login: "@:navigation.login",
     join: "Registrera",
     remember_me: "Förbli inloggad",
-    confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
+    confirm_destroy: "Är det riktigt att du vill ta bort ditt konto?",
     confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
     required_marked: "Obligatoriska fält är markerade med *",
     use_school: "Använd kontot på din skola/universitet",
@@ -310,6 +360,9 @@ var translation_sv={
     complete: "Klart",
     late: "sen",
     due_date_passed: "Färdigdatum har passerats",
+    drag_due_date_error_part_1:"Du kan inte flytta ",
+    drag_due_date_error_part_2:"färdigdatum före dess publiceringsdatum. För att ändra publiceringsdatum, klicka på ",
+    drag_due_date_error_part_3:" och välj redigera.",
   },
   notification:{
     invited: "Du har blivit inbjuden till kursen {{course}} av {{user}} som {{role}}",
@@ -330,12 +383,18 @@ var translation_sv={
     use_of_cookies: "Användning av cookies",
     use_of_cookies_details: "Cookies används på denna webbplats för att komma ihåg dina inloggningsuppgifter. Medan du är inloggad används en cookie för att spåra din inloggningssession. Denna cookie upphör att gälla när du stänger webbläsaren eller loggar ut. Om du väljer “Kom ihåg mig” när du loggar in så finns cookien kvar i två veckor.",
     identifiable_information: "Personligt identifierbar information",
-    identifiable_information_details: "Den personligt identifierbara informationen för ditt konto består av ditt namn och den e-postadress du anger när du registrerar ett konto på webbplatsen. Denna information knyts till din aktivitet på sajten.",
+    identifiable_information_details: "Personligt identifierbar information knuten till ditt konto består av det namn och den email-adress som du anger då du registrerar ett konto på webbplatsen. Denna information är knuten till all din aktivitet på webbplatsen. Du kan kan nå, rätta och ta bort denna information via webbplatsens sida för kontoinformation. Vi lagrar IP-adressen för alla åtkomster till platsen i serverloggar för inloggade och icke-inloggade användare.",
     deleting_profile: "Ta bort din profil",
-    deleting_profile_details: "Om du raderar ditt konto på denna webbplats kommer all din personligt identifierbara information att tas bort från vårt system. Observera att det kan ta tid för informationen att tas bort från backup-systemet. Anonymiserad information kan behållas för forskning.",
+    deleting_profile_details: "Dina data sparas i systemet så länge du har ett gällande konto för du ska ha möjlighet att registrera dig för nya kurser. Om du raderar ditt konto, kommer alla din personligt identifierbara information att tas bort från systemet. Notera att det kan dröja en tid innan denna information har raderats från befintliga backupsystem. Ditt anonymiserade användarbeteende kan komma att sparas i forskningssyfte.",
+    legal_entity: "Juridisk person",
+    legal_entity_details: "ScalableLearning tillhandahålls av SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
+    code_conduct: "GÉNAT Data Protection Code of Conduct",
+    code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013.",
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
-    last_update: "Senast uppdaterad: 2015-08-17",
+    last_update: "Senast uppdaterad: 2016-10-07",
+    understand: "I understand",
+    cancel: "Cancel",
   },
   faq:{
     faq:"Vanliga frågor",
@@ -370,6 +429,8 @@ var translation_sv={
     small_calendar:"Liten kalender",
     export_calendar: "Exportera kalender",
     whats_new: "Nyheter",
+    as_ical_file: "Som fil ",
+    as_url: "Som länk ",
   },
   inclass:{
     more: "mer",
@@ -384,6 +445,10 @@ var translation_sv={
     marker: "@:global.marker",
     primary_marker: "@:global.marker",
     free_text_question:"@:global.free_text_question",
+    confused:"@:global.confused",
+    really_confused:"@:global.really_confused",
+    video_quizzes: "@:global.video_quizzes",
+    video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
     exit: "Avsluta",
@@ -408,6 +473,38 @@ var translation_sv={
     please_try_or_refresh:"Var god försök igen eller tryck på uppdatera-knappen (refresh) nedan",
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
+    multiple_choice:"multipla val",
+  },
+  distance_peer:{
+    invited: 'Bjud in en elev för en Distance Peer session' ,
+    invited_instruction: 'Välj en elev' ,
+    distance_peer_instruction: 'Ring upp din partner medans du går igenom frågorna så att ni kan diskutera dem i realtid. Kom ihåg att för individuella quiz så ska ni svara var för sig, men för grupp-delen av ett quiz så uppmuntras ni att diskutera svaret sinsemellan.', 
+    invited_by: 'Du är inbjuden' ,
+    invited_by_instruction: 'Tryck på knappen för den elev du vill samarbeta med ' ,
+    wait_for_acceptance: 'Vänta på acceptans' ,
+    wait_for_acceptance_instruction: 'Vänta på acceptans från elev eller inhibera inbjudan ' ,
+    waiting_response_of_back_end: 'Kontrollera om du är inbjuden att delta i en Distance Peer session ' , 
+    invite_another_button: "Bjud in en annan elev",
+    video_stage: 'Var god se videon.', 
+    intro_stage: "Quiz:Intro", 
+    self_stage: 'Quiz:Själv', 
+    multiple_choice: '@:inclass.multiple_choice',
+    group_stage: 'Quiz:Grupp', 
+    end_video_stage: 'Quiz:Slut',
+    end_session: "Avsluta Distance Peer sessionen",
+    in_distance_peer: 'Du deltar i en Distance Peer session med namnet {{name}}.', 
+    the_another_student_finished_status: '{{name}} har slutfört denna del, du kan fortsätta', 
+    waiting_the_another_student_to_finish: 'Väntar på att {{name}} ska slutföra denna del', 
+    click_on_button_below_to_end_session: 'Klicka på knappen nedan för att avsluta Distance Peer sessionen',
+    message_video: 'Var god se filmen och besvara quizzarna.',
+    message_quiz_intro: 'Var god se quiz-introduktionen.',
+    message_quiz_end: 'Var god se den avslutande delen.',
+    message_quiz_self: 'Var god besvara detta quiz på egen hand. (Diskutera det inte med {{name}} i detta steg.)',
+    message_quiz_group: 'Var god diskutera dit svar med {{name}} och välj ett slutligt svar. (Ni behöver inte välja samma svar.)',
+    prevent_seek_forward: 'du kan inte spola fram filmen till en tidpunkt efter ett quiz',
+    can_not_leave_this_part: '{{name}} har inte avslutat denna del än, så du kan inte fortsätta till nästa del', 
+    other_student_ended_session: '{{name}} avslutade Distance Peer sessionen',
+    student_cancelled:'{{name}} cancelled the invitation(t)', 
   },
   editor:{
     explanation: "Förklaring",
@@ -449,7 +546,8 @@ var translation_sv={
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
-        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering"
+        click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering",
+        click_add_note: "Klicka eller skriv 'm' för att lägga till en notering. Tryck 'shift-m' för att lägga till en notering och fortsätta uppspelningen"
     },
     drag:{
         start: "Start",
@@ -488,6 +586,7 @@ var translation_sv={
         duration: "@:global.duration",
         details: "Detaljer",
         video:"@:global.video",
+        video_type: "Video-typ",
         add_video: "Lägg till länk till videon",
         add_description: "Lägg till beskrivning",
         title:"@:global.title",
@@ -496,6 +595,8 @@ var translation_sv={
         set_date: "Välj datum",
         use_module: "Använd modulens synlighet",
         use_module_due: "Använd modulens färdigdatum",
+        use_module_in_order: "Använd modulens ordning",
+        use_module_required: "Använd modulens nödvändighet",
         vidoe_not_exist: "Videon saknas eller laddas fortfarande upp",
         incompatible_video_link: "Ej valid filmtyp. Var god välj en YouTube eller .mp4 URL.",
         student_link_lecture:"Student-länk till video",
@@ -508,6 +609,8 @@ var translation_sv={
         required:"@:global.required",
         in_order: "I ordning",
         retries: "försök",
+        display_text:"Visa fråga över videon",
+        display_text_explain:"(Använd om frågan texten är inte i videon.)",
         student_link_quiz:"Student-länk till quiz"
     },
     popover:{
@@ -523,7 +626,8 @@ var translation_sv={
         add_question: "Lägg till fråga",
         add_header: "Lägg till rubrik",
         add_module: "Lägg till modul",
-        preview_student:"@:global.preview_student"
+        preview_student:"@:global.preview_student",
+        add_note : 'Lägg till en notering'
     }
   },
   lectures:{
@@ -534,6 +638,8 @@ var translation_sv={
         please_choose_an_answer: "Var god välj ditt (dina) svar",
         finish_before_proceeding:"Se klart tidigare videos innan du fortsätter",
         really_confused_use_question: "Du kan ställa en fråga så att läraren kan hjälpa dig.",
+        navigate_away:"Är du säker på att du vill navigera bort från denna sida?",
+        change_lost:"Alla dina ändringar kommer att gå förlorade!",
     },
     timeline:{
         timeline: "Tidslinje",
@@ -546,7 +652,8 @@ var translation_sv={
         quiz:"@:global.quiz",
         marker:"@:global.marker",
         watched: "Sedda",
-        quizzes: "quizzar"
+        quizzes: "quizzar",
+        required_quizzes: "erfoderliga quiz"
     },
     button:{
         ask_question: "Ställ en fråga",
@@ -555,7 +662,8 @@ var translation_sv={
         exit_fullscreen: "Gå ur helskärmsläge",
         fullscreen: "Helskärm",
         check_answer: "Kontrollera svaret",
-      submit: "@:button.submit",
+        start_distance_peer: "Starta Distance Peer",
+        submit: "@:button.submit",
     },
     tooltip:{
         unsolved_quiz: "Du måste ha svarat på quizen innan du kan hoppa till den",
@@ -615,6 +723,7 @@ var translation_sv={
     tooltip:{
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
+        quizzes_optional_solved: "extra quiz lösta",
         watched_video: "Sett"
     },
     popover:{
@@ -659,7 +768,7 @@ var translation_sv={
   },
   quizzes:{
     used_up_all: "Använt upp alla",
-    attempts: "försök",
+    attempts: " försök",
     attempt_number: "Försök nummer",
     must_choose_answer: "Måste välja minst ett svar",
     optional:"@:global.optional",
@@ -687,6 +796,7 @@ var translation_sv={
     select_all: "Markera alla",
     deselect_all: "Avmarkera alla",
     done:"@:global.done",
+    export_as: "Exportera listan över studenter ",
   },
   groups:{
     module: "Modul",
@@ -696,7 +806,7 @@ var translation_sv={
         customlinks:"@:global.customlinks",
         quizzes:"@:global.quizzes",
         surveys:"@:global.surveys",
-        video_quizzes: "Video-quiz-frågor",
+        video_quizzes: "@:global.video_quizzes",
         questions: "@:global.questions",
     },
     delete_popup:{
@@ -719,13 +829,15 @@ var translation_sv={
         ta: "Lärarassistent",
         discussion_forum_link: "Länk till diskussionsforum",
         enrollment_key: "Kursnyckel",
+        enrollment_url: "URL för registrering",
+        course_link: "Kurslänk",
         taught_by: "Undervisas av",
         receive_email:"Få notifiering via email när student ställer fråga",
-        receive_due_date_email: "Erhålla email angående sista datum för föreläsningar och quizzar",
+        receive_due_date_email: "Få påminnelse om kommande senaste färdigdatum.",
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",
-            export_as: "Exportera kursen som",
+            export_as: "Exportera anonymiserade kursdata",
             invite: "Bjud in",
         },
         tooltip:{
@@ -750,7 +862,8 @@ var translation_sv={
         },
         messages:{
             no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
-            enroll_instruction: "För att anmäla dig till en kurs 'Gå med i en ny kurs' på kurser-menyn och ange kursnyckeln du fått från din lärare",
+            enroll_instruction: "För att anmäla dig till en kurs, välj 'Delta i en ny kurs' under menyn 'Mina kurser' och ange kursnyckeln du fått från din lärare. ",
+            create_enroll_instruction: "För att skapa eller följa en kurs välj 'Skapa ny kurs' eller 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare. "
         },
         tooltip:{
             unenroll: "Avregistrera",
@@ -775,6 +888,7 @@ var translation_sv={
     },
     start_date: "Startdatum",
     end_date: "Slutdatum för kurs",
+    disable_registration: "Stäng registrering efter",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",
@@ -785,8 +899,11 @@ var translation_sv={
   },
   statistics:{
     statistics: "Statistik",
+    administration: "Administration",
     statistics_dashboard: "Statistikpanelen",
     registration: "Registrering",
+    report_period: "Rapport-period",
+    generate_report: "Generera rapport",
     login: "@:navigation.login",
     lecture_views: "Videos visade",
     questions_asked: "Frågor ställda",
@@ -825,8 +942,8 @@ var translation_sv={
   help:{
     getting_started:{
         getting_started: "Komma igång",
-        student:"För studenter",
-        teacher:"För lärare",
+        student:"för studenter",
+        teacher:"för lärare",
     },
     support: "Support",
     teacher_forum: "Lärarforum",
@@ -852,6 +969,7 @@ var translation_sv={
         customlink:"@:global.customlink",
         video: "@:global.video",
       inclass_video: "@global.inclass_lecture",
+        distance_peer_video:"@:global.distance_peer_lecture",
         video_desc: "Du kan lägga till quizfrågor ovanpå videon.",
         quiz: "@:global.quiz",
         survey: "@:global.survey",
@@ -868,11 +986,15 @@ var translation_sv={
         },
         text_quiz:{
           title: "Text-quiz",
-          desc: "Text-quiz på en vit bakgrund. Använd detta om frågesport svaren inte syns i videon",
+          desc: "Text-quiz på en vit bakgrund. Använd detta om frågesport-svaren inte syns i videon",
         },
         on_video_survey:{
           title: "Video-enkät",
-          desc: "Enkäter har inget rätt svar. Använd detta om undersöknings val syns i videon."
+          desc: "Enkäter har inget rätt svar. Använd detta om undersöknings-val syns i videon."
+        },
+        text_survey:{
+          title: "Text enkät ",
+          desc: "Text enkäter visar inte korrekt svar mot vit bakgrund. Använd om alternativen i enkäten inte är synliga i videon. "
         }
       },
       types:{

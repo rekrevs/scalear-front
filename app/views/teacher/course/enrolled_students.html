@@ -62,6 +62,11 @@
               </div>
           </form>
       </div>
+      <div class="small-12 medium-8 columns text-right right">                    
+        <div class="show-inline" ng-init="filterChoice = 'all'">
+            <button type="button" class="button tiny secondary" ng-click="exportStudentsList()" ><span translate>enrolled_students.export_as</span></button>                          
+        </div>
+    </div>
       <loading size="big" show="loading_students">
       </loading>
   </center>

@@ -1,146 +1,134 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
 
-  $window.scrollTo(0, 0);
-  $scope.in_delete = false;
-  $scope.toggle_message = 'courses.information.button.remove_teacher'
-  $scope.roles = [{value:3, text:'courses.information.professor'}, {value:4, text:'courses.information.ta'}];
-  Page.setTitle('navigation.information')
-  Page.startTour()
-  ContentNavigator.close()
-  $scope.timezones=scalear_utils.listTimezones()
+    $window.scrollTo(0, 0);
+    $scope.in_delete = false;
+    $scope.toggle_message = 'courses.information.button.remove_teacher'
+    $scope.formData = {};
+    $scope.course = CourseModel.getSelectedCourse()
+    $scope.formData.disable_registration_checked = !!$scope.course.disable_registration
+    $scope.roles = [{ value: 3, text: 'courses.information.professor' }, { value: 4, text: 'courses.information.ta' }];
+    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
+    $scope.timezones = ScalearUtils.listTimezones()
+    $scope.enrollment_url = $location.absUrl().split('courses')[0] + "courses/enroll?id=" + $scope.course.unique_identifier
+    $scope.course_info_url = $state.href('course.course_information', { course_id: $scope.course.id }, { absolute: true })
 
-  $scope.timezones.forEach(function(zone){
-    if(zone.name == $scope.course.time_zone){
-      $scope.course.time_zone = zone
-      return
+    Page.startTour()
+    ContentNavigator.close()
+    setupTimezone()
+    getTeachers();
+
+    function setupTimezone() {
+      $scope.timezones.forEach(function(zone) {
+        if(zone.name == $scope.course.time_zone) {
+          $scope.course.time_zone = zone
+          return
+        }
+      })
     }
-  })  
 
-  $scope.updateCourse = function(data,type){
-    if(data && data instanceof Date){ 
-          data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
-          $scope.course[type] = data
+    function checkRegistrationField() {
+      if(!$scope.formData.disable_registration_checked) {
+        $scope.course.disable_registration = null
+      } else if(!$scope.course.disable_registration) {
+        $scope.course.disable_registration = $scope.course.end_date
+      }
     }
-    var modified_course=angular.copy($scope.course);
-    delete modified_course.id;
-    delete modified_course.created_at;
-    delete modified_course.updated_at;
-    delete modified_course.unique_identifier;
-    delete modified_course.modules;
-    delete modified_course.selected_module;
-    delete modified_course.duration;
-    var timezone = angular.copy(modified_course.time_zone)
-    modified_course.time_zone = timezone.name
-    Course.update(
-      {course_id:$stateParams.course_id},
-      {course:modified_course},
-      function(){
-        $scope.$emit('get_current_courses')
+
+    $scope.updateCourse = function(data, type) {
+      if(data && data instanceof Date) {
+        data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
+        $scope.course[type] = data
       }
-    );
-  }
+      checkRegistrationField()
+      $scope.course.update()
+    }
 
-	$scope.validateCourse = function(column,data) {
-    var d = $q.defer();
-    var course={}
-    course[column]=data;
-    Course.validateCourse(
-      {course_id:$stateParams.course_id},
-      course,
-      function(){
-        d.resolve()
-      },
-      function(data){
-        if(data.status==422)
-          d.resolve(data.data.errors.join());
-        else
-          d.reject('Server Error');
-      }
-    )
-    return d.promise;
-	};
+    $scope.toggleRegistrationCheck = function() {
+      checkRegistrationField()
+      $scope.updateCourse()
+    }
 
-  $scope.exportCourse = function(){
-    Course.exportCsv({course_id: $stateParams.course_id})
-  }
+    $scope.validateCourse = function(column, data) {
+      var course = { id: $scope.course.id }
+      course[column] = data;
+      var temp_course = CourseModel.createInstance(course)
+      return temp_course.validate()
+    };
 
-  $scope.url_with_protocol = function(url){
-    if(url)
-        return url.match(/^http/)? url: 'http://'+url;
-    else
-        return url;
-  }
+    $scope.exportCourse = function() {
+      $scope.course.exportCourse()
+        .then(function(response) {
+          if(response.notice) {
+            ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+          }
+        })
+    }
 
-  //teachers part
-  $scope.getTeachers = function(){
-    Course.getTeachers({course_id:$stateParams.course_id},
-      function(value){
-           $scope.teachers = value.data;
-           $scope.new_teacher = {};
-       }
-    )
-  }
+    //teachers part
+    function getTeachers() {
+      TeacherModel.getTeachers().then(function(value) {
+        $scope.teachers = value.data;
+        $scope.new_teacher = {};
+      })
+    }
 
-  $scope.toggleDelete = function(){
-    $scope.in_delete = !$scope.in_delete
-    $scope.toggle_message = $scope.in_delete? 'courses.information.done':'courses.information.button.remove_teacher'
-  }
+    $scope.toggleDelete = function() {
+      $scope.in_delete = !$scope.in_delete
+      $scope.toggle_message = $scope.in_delete ? 'courses.information.done' : 'courses.information.button.remove_teacher'
+    }
 
-  $scope.addNewTeacher= function(){
-    $scope.teacher_forum = true
-  }
+    $scope.addNewTeacher = function() {
+      $scope.teacher_forum = true
+    }
 
-  $scope.updateTeacher = function(teacher){
-    Course.updateTeacher(
-      {course_id:$stateParams.course_id},
-      teacher
-    );
-  }
+    $scope.updateTeacher = function(teacher) {
+      TeacherModel.updateTeacher(teacher)
+    }
 
-  $scope.removeNewTeacher = function(){
-    $scope.new_teacher = null
-    $scope.teacher_forum = false
-  }
+    $scope.removeNewTeacher = function() {
+      $scope.new_teacher = null
+      $scope.teacher_forum = false
+    }
 
-  $scope.removeTeacher = function(index){
-    Course.deleteTeacher(
-      {
-        course_id:$stateParams.course_id, 
-        email:$scope.teachers[index].email
-      }, {},
-      function(){
-        $scope.teachers.splice(index, 1);
-      }
-    )
-  }
+    $scope.removeTeacher = function(teacher) {
+      TeacherModel.deleteTeacher(teacher).then(function() {
+        var index = $scope.teachers.indexOf(teacher)
+        if(index != -1)
+          $scope.teachers.splice(index, 1);
+      })
+    }
 
-  $scope.saveTeacher = function(){
-    Course.saveTeacher(
-      {course_id:$stateParams.course_id},
-      {new_teacher:$scope.new_teacher},
-      function() {
-          $scope.getTeachers();
+    $scope.saveTeacher = function() {
+      TeacherModel.saveNewTeacher($scope.new_teacher)
+        .then(function() {
+          getTeachers();
           $scope.teacher_forum = false
-      },
-      function(value) {
-        $scope.new_teacher.errors=value.data.errors
-      }
-    )
-  }
+        })
+        .catch(function(value) {
+          $scope.new_teacher.errors = value.data.errors
+        })
+    }
 
-  $scope.animateCopy=function(){
-     $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
-  }
+    $scope.animateCopy = function() {
+      $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+    }
 
-  $scope.updateTeacherEmailDiscussion=function(){
+    $scope.copySuccess = function(e) {
+      $(e.trigger)
+        .animate({ color: "#428bca" }, "fast")
+        .delay(300)
+        .animate({ color: "black" }, "fast", function() {
+          e.clearSelection();
+        });
+    }
 
-  }
+    $scope.copyError = function(e) {
+
+    }
 
 
 
-  $scope.getTeachers();
-
-}]);
+  }]);

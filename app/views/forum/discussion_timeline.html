@@ -5,11 +5,11 @@
         </p>
     </td>
     <td ng-if="item.data==null || item.data.isEdit" colspan="3" style="padding:0">
-        <question_block item="item" />
+        <question_block item="item"/>
     </td>
-    <td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
+    <td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce="current_user" style="padding: 0px;padding-right: 8px;">
         <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
-            <table style="width: 100%;" class="transparent no-border no-margin">
+            <table style="width: 100%;" class="transparent no-border no-margin" >
                 <tr>
                     <td style="padding-bottom: 0px;">
                         <div>
@@ -34,7 +34,7 @@
                                     <voting-button votes-count="item.data.votes_count" voted="item.data.user_vote" up="upvotePost()" down="downvotePost()" direction="horizontal"></voting-button>
                                 </div>
                             </div>
-                           
+
                             <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                                 <div style="margin-bottom: 5px;">
                                     <span bo-if="item.data.user_id == current_user.id">
@@ -42,9 +42,9 @@
                                         <img bo-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                     </span>
                                     <span translate>discussion.q</span>
-                                    <span bo-if="item.data.user_id != current_user.id" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="30"></span>
+                                    <span bo-if="item.data.user_id != current_user.id" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="{{turncatingcount}}" style="white-space: pre-line"></span>
                                     <span bo-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
-                                        <span class="discussion_title break-text" >{{item.data.content}}</span>
+                                        <span class="discussion_title break-text" ng-bind-html="item.data.content"></span>
                                         <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>
                                     </span>
                                 </div>

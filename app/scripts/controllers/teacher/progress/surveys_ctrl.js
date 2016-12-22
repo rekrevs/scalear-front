@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', '$translate','$log', function ($scope, $stateParams, $timeout, Module, Quiz, $translate, $log) {
+  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', '$translate','$log','ScalearUtils', function ($scope, $stateParams, $timeout, Module, Quiz, $translate, $log,ScalearUtils) {
   	
     $scope.surveysTab = function(){
         $scope.tabState(5)
@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
           var row=
           {"c":
               [
-                  {"v": data[ind][1]},
+                  {"v": ScalearUtils.getHtmlText(data[ind][1])},
                   {"v": data[ind][0]}
               ]
           }
@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
       chart.type = "ColumnChart"
       chart.options = {
           "colors": ['green','gray'],
-          "title": $scope.getSurveyQuestionType(ind) + $scope.getSurveyQuestionTitle(ind),
+          "title": $scope.getSurveyQuestionType(ind) + ScalearUtils.getHtmlText($scope.getSurveyQuestionTitle(ind)),
           "isStacked": "true",
           "fill": 20,
           "height": 200,

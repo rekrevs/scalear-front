@@ -29,7 +29,7 @@ describe("Module Statistics",function(){
 		})
 		it("should open course",function(){
 	        course_list.open()
-	        course_list.open_course(1)
+	        course_list.open_teacher_course(1)
 	        sub_header.open_edit_mode()
 	    })
 
@@ -71,8 +71,14 @@ describe("Module Statistics",function(){
 			video.seek(20)
 			invideo_quiz.create(invideo_quiz.ocq)
 			invideo_quiz.add_answer(params.q_x, params.q1_y)
+			invideo_quiz.mark_correct()
+      invideo_quiz.type_explanation("explanation 1")
+      invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(params.q_x, params.q2_y)
+			invideo_quiz.type_explanation("explanation 2")
+      invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(params.q_x, params.q3_y)
+			invideo_quiz.type_explanation("explanation 2")
 			invideo_quiz.save_quiz()
 		})
 		it("should open module ", function(){

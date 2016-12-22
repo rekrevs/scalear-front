@@ -25,12 +25,12 @@
 									<loading size='small' show='true' style="position:relative;top:70px;" />
 								</span>
 							</div>
-							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveQuizBtn()"/>
-							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'" ng-repeat="answer in selected_quiz.answers" data="answer" list="selected_quiz.allPos" quiz="selected_quiz" remove="selected_quiz.removeAnswer($index)" save="saveQuizBtn()"/>
+							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="selected_quiz.addHtmlAnswer" remove="selected_quiz.removeHtmlAnswer" subtype="selected_quiz.quiz_type"/>
 							<annotation text="selected_marker.annotation" ng-if='selected_marker.annotation && selected_marker.annotation !=""'/>
 						</quiz>
 					</youtube>
-					<progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="current_user.roles[0].id" timeline="lecture.timeline" editing="editing_type">
+					<progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="1" timeline="lecture.timeline" editing="editing_type">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>
@@ -40,15 +40,15 @@
 </div>
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-hide="lecture.url=='none' || (editing_mode && editing_type=='video')">
-		<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_marker' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
-			<span translate>editor.button.add_marker</span>
+		<button class="button small" ng-click="addOnlineMarker($event)" tooltip="{{'editor.tooltip.click_add_note' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
+			<span translate>editor.button.add_note</span>
 		</button>
 		<span ng-show="!editing_mode || (editing_mode && editing_type=='marker')" lecture-questions-modal open-modal="openQuestionsModal" data="lecture">
 			<button id="new_question" class="button small" ng-click="addQuestion()" tooltip="{{'editor.tooltip.click_add_question' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true">
 				<span translate>editor.button.add_video_quiz</span>
 			</button>
 		</span>
-		<span ng-show="editing_mode && editing_type=='quiz' && selected_quiz.inclass">
+		<span ng-show="editing_mode && editing_type=='quiz' && ( lecture.inclass || lecture.distance_peer)">
 			<button class="button small preview_inclass" ng-click="togglePreviewInclass()">
 				<span translate>editor.preview_inclass</span>
 			</button>
@@ -71,7 +71,7 @@
 	<div class="small-12 small-centered columns">
 		<center ng-if="editing_mode" style="margin-bottom:10px" >
 			<div ng-switch on='editing_type'>
-				<div ng-switch-when='quiz'><quiz-edit-panel /></div>
+				<div ng-switch-when='quiz'><quiz-edit-panel  /></div>
 				<div ng-switch-when='marker'><marker-edit-panel /></div>
 				<div ng-switch-when='video'><video-edit-panel /></div>
 			</div>

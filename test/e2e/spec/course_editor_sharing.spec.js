@@ -30,7 +30,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -58,7 +58,7 @@ describe("Sharing a module",function(){
         })
         it('should create course', function(){
             new_course.open()
-            new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+            new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         })
         it('should reject shared data', function(){
             header.show_notification()
@@ -80,7 +80,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -128,7 +128,7 @@ describe("Sharing a module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -152,7 +152,7 @@ describe("Sharing a non existing module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -231,7 +231,7 @@ describe("Sharing a non existing module",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -267,7 +267,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
          it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -344,7 +344,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -353,6 +353,7 @@ describe("Sharing single items",function(){
             course_editor.add_module()
         })
         it('should open view shared', function(){
+            browser.refresh()
             header.open_shared()
         })
         it("should add data to course",function(){
@@ -365,7 +366,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -388,7 +389,7 @@ describe("Sharing single items",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -409,7 +410,7 @@ describe("Rollback changes",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -433,8 +434,8 @@ describe("Rollback changes",function(){
         })
         it("should delete course",function(){
             course_list.open()
-            course_list.delete_course(1)
-            expect(course_list.courses.count()).toEqual(0)
+            course_list.delete_teacher_course(1)
+            expect(course_list.teacher_courses.count()).toEqual(0)
         })
         it("should logout",function(){
             header.logout()
@@ -446,7 +447,7 @@ describe("Rollback changes",function(){
         })
         it("should open course",function(){
             course_list.open()
-            course_list.open_course(1)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()

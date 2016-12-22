@@ -4,6 +4,7 @@ var CourseList = require('./pages/course_list');
 var Students = require('./pages/teacher/students');
 var AccountInformation = require('./pages/account_information');
 var refresh = require('./lib/utils').refresh;
+var sleep = require('./lib/utils').sleep;
 var Login = require('./pages/login');
 var params = browser.params;
 
@@ -20,7 +21,7 @@ describe("Enrollment Help Check - Teacher",function(){
     })
     it("should open course",function(){
         course_list.open()
-        course_list.open_course(1)
+        course_list.open_teacher_course(1)
     })
     it('should check enrollment key is correct in the enrollment message', function(){
         course_info.open()
@@ -34,7 +35,7 @@ describe("Enrollment Help Check - Teacher",function(){
         var firstname = account_info.firstname
         var lastname = account_info.lastname
         course_list.open()
-        course_list.open_course(1)
+        course_list.open_teacher_course(1)
         students_page.open_add_student_modal()
         expect(students_page.teacher_name).toContain(firstname)
         expect(students_page.teacher_name).toContain(lastname)

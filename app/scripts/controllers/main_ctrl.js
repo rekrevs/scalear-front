@@ -6,6 +6,11 @@ angular.module('scalearAngularApp')
   $scope.play_teacher= false
   $scope.play_student= false
   $scope.beta = scalear_api.beta
+  $scope.teacher_welcome_video = scalear_api.teacher_welcome_video
+  $scope.instruction_manual = scalear_api.instruction_manual
+  $scope.flipped_manual = scalear_api.flipped_manual
+  $scope.teacher_forum_link = scalear_api.teacher_forum_link
+  $scope.student_welcom_video = scalear_api.student_welcom_video
   $('a.page-scroll').bind('click', function(event) {
       $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
       event.preventDefault();

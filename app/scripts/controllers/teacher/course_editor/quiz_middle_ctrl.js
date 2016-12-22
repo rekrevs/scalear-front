@@ -72,17 +72,17 @@ angular.module('scalearAngularApp')
       $scope.quiz.appearance_time = appearance_time
       $scope.quiz.appearance_time_module = false
 
-      console.log($scope.quiz.appearance_time)
+      // console.log($scope.quiz.appearance_time)
       $scope.quiz.update()
         .then(function(quiz) {
-          console.log(getPublishStatus(quiz))
+          // console.log(getPublishStatus(quiz))
           $scope.publish_state = getPublishStatus(quiz)
         })
     }
 
     function getPublishStatus(quiz) {
-      console.log(new Date())
-      console.log(new Date(quiz.appearance_time))
+      // console.log(new Date())
+      // console.log(new Date(quiz.appearance_time))
 
         return  (new Date(quiz.appearance_time) >= new Date())
     }

@@ -72,6 +72,13 @@ var params= {
         university: "test univerisity",
         email: "z"+Math.floor(100000*Math.random()+1)+"@sharklasers.com",
     },
+    student1_domain_test:{
+        f_name: "Test_1",
+        l_name: "student",
+        online_name: "studenttest1",
+        university: "uni",
+        email: "student1@email.com",
+    },
     admin:{
         f_name: "Administrator",
         l_name: "Control",
@@ -208,7 +215,7 @@ exports.config = {
       },
     specs: [
 
-        // 'test/e2e/spec/create_course.spec.js', // done(11/16)
+        'test/e2e/spec/create_course.spec.js', // done(11/16)
         // 'test/e2e/spec/fill_course.spec.js', // done(11/16)
         // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
         // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)
@@ -229,7 +236,7 @@ exports.config = {
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        'test/e2e/spec/inclass_dp.spec.js', //(demo)
+        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/delete_course.spec.js', //
 
@@ -243,7 +250,7 @@ exports.config = {
 
         // to test email features locall
 
-        // 'test/e2e/spec/add_user.spec.js',
+        'test/e2e/spec/add_user.spec.js',
         // 'test/e2e/spec/create_course.spec.js',
         // 'test/e2e/spec/fill_course.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',

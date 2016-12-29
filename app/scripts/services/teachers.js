@@ -6,6 +6,14 @@ angular.module('scalearAngularApp')
     function getTeachers() {
       return Course.getTeachers({ course_id: CourseModel.getSelectedCourse().id }).$promise
     }
+    
+    function getSelectedSubdomains() {
+      return Course.getSelectedSubdomains({ course_id: CourseModel.getSelectedCourse().id }).$promise
+    }
+
+    function setSelectedSubdomains(selected_subdomains) {
+      return Course.setSelectedSubdomains({ course_id: CourseModel.getSelectedCourse().id }, {selected_subdomains:selected_subdomains }).$promise
+    }
 
     function updateTeacher(teacher) {
       return Course.updateTeacher({ course_id: CourseModel.getSelectedCourse().id }, teacher).$promise
@@ -24,6 +32,8 @@ angular.module('scalearAngularApp')
 
     return {
       getTeachers: getTeachers,
+      getSelectedSubdomains: getSelectedSubdomains,
+      setSelectedSubdomains: setSelectedSubdomains,
       updateTeacher: updateTeacher,
       deleteTeacher: deleteTeacher,
       saveNewTeacher: saveNewTeacher,

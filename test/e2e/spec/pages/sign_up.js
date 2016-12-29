@@ -53,8 +53,8 @@ Signup.prototype = Object.create({}, {
 	sign_student_button:{get:function(){return element(by.css('[ng-click="setupScreenName(2)"]'))}},
 	sign_up:{value:function(val){
 		element(by.css('[ng-click="previous_provider=null"]')).isPresent().then(function(result) {if (result) { element(by.css('[ng-click="previous_provider=null"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="previous_provider=null"]')).click()}}) }})
-		
-		element(by.css('[ng-click="showLoginForm()"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="showLoginForm()"]')).click()}})
+		element(by.css('[href="#/users/login"]')).click()
+		element(by.css('[ng-click="showLoginForm();hideProviders()"]')).isDisplayed().then(function(result) {if (result) {element(by.css('[ng-click="showLoginForm();hideProviders()"]')).click()}})
 		element(by.id('login')).isDisplayed().then(function(result) {if (result) {element(by.id('login')).click()}})
 		var login_obj = this
 		login_obj.sign_up_button.isDisplayed().then(function(result) {
@@ -70,6 +70,7 @@ Signup.prototype = Object.create({}, {
 			 }
 		})
 	}},
+	go_to_sign_up_with_domain_page:{value:function(){element(by.css('[ng-click="close()"]')).click() }},
 	skip_button:{value:function(){
 		var elm = element(by.css('[ng-click="confirm()"]'));
 		browser.executeScript("arguments[0].scrollIntoView();", elm.getWebElement());

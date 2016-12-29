@@ -27,6 +27,8 @@ angular.module('scalearAngularApp')
       'getCourseEditor': { method: 'GET', params: { action: 'course_editor_angular' }, headers: headers },
       'getGroupItems': { method: 'GET', params: { action: 'get_group_items' }, headers: headers },
       'getTeachers': { method: 'GET', params: { action: 'teachers' }, headers: headers },
+      'getSelectedSubdomains': { method: 'GET', params: { action: 'get_selected_subdomains' }, headers: headers },
+      'setSelectedSubdomains': { method: 'POST', params: { action: 'set_selected_subdomains' }, headers: headers },
       'enroll': { method: 'POST', params: { action: 'enroll_to_course', course_id: null }, headers: headers },
       'getModuleProgress': { method: 'GET', ignoreLoadingBar: true, params: { action: 'module_progress_angular' }, headers: headers },
       'getTotalChart': { method: 'GET', params: { action: 'get_total_chart_angular' }, headers: headers },
@@ -153,11 +155,13 @@ angular.module('scalearAngularApp')
     }
 
     function create(course, import_from_id) {
+      var subdomains = course.selected_subdomain
+      delete course.selected_subdomain
       var modified_course = angular.copy(course)
       var d = new Date()
       modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
       modified_course.time_zone = course.time_zone.name;
-      return Course.create({ course: modified_course, "import": import_from_id })
+      return Course.create({ course: modified_course, "import": import_from_id , "subdomains":subdomains})
         .$promise
         .then(function(data) {
           $rootScope.$broadcast('Course:get_current_courses')

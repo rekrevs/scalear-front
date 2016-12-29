@@ -35,23 +35,24 @@ CourseInformation.prototype = Object.create({}, {
 	invite_button:{get:function(){return element(by.id('invite'))}},
 	invite:{value:function(){this.invite_button.click()}},
 	delete_teacher_button:{get:function(){return element(by.id("delete_teacher"))}},
-	receive_email_button:{get:function(){return element(by.model('teacher.email_discussion'))}},
 	receive_email_button_click:{value:function(){
 		this.receive_email_button.click();
 	}},
 	disable_registration_button:{get:function(){return element(by.css('[ng-change="toggleRegistrationCheck()"]'))}},
-	disable_registration_button_click:{value:function(){
-		this.disable_registration_button.click();
-	}},
-
+	disable_registration_button_click:{value:function(){this.disable_registration_button.click();}},
 	display_registration_field:{get: function(){return element(by.css('[ng-show="formData.disable_registration_checked"]'))}},
-
 	display_registration_date: { get: function () { return element(by.css('[ng-model="$data"]')) }},
 	type_display_registration_date: { value: function (keys) {
 		 this.display_registration_date.clear().sendKeys(keys)
 		 return element(by.css('[type="submit"]')).click()
 	}},
 
+	disable_registration_domain_button:{get: function(){return element(by.css('[ng-click="toggleDomain($event)"]'))}},
+	disable_registration_domain_button_click:{value: function(){this.disable_registration_domain_button.click();}},
+	disable_registration_domain_choose_custom:{value: function(){element(by.id("custom")).click();}},
+	disable_registration_domain_choose_all:{value: function(){element(by.id("all")).click();}},
+	disable_registration_domain_subdomains: {get: function(){return element.all(by.css('[ng-change="updateDomainList()"]')) }},
+	disable_registration_domain_choose_subdomain:{value: function(num){this.disable_registration_domain_subdomains.get(num-1).click();}},
 
 	// course_end_date: { get: function () { return this.course_end_date_field.getAttribute('value')}},
 	// type_course_end_date: { value: function (keys) { return this.course_end_date_field.clear().sendKeys(keys)}},

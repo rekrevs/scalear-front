@@ -129,6 +129,16 @@
                     <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && formData.disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
                 </div>
             </div>
+            <div class="with-small-margin-bottom">
+                <i class="fi-x-circle size-18"></i> <small class="with-tiny-margin-left" tooltip="{{'courses.limit_registration_domain_description' | translate}}" translate>courses.limit_registration_domain</small>
+                <div>
+                  <a class="" ng-click="toggleDomain($event)">
+                      <div ng-repeat="(key , domain) in course_domain.selected_subdomain">
+                        <div ng-show="domain"> {{key}}</div>
+                      </div>  
+                  </a>
+                </div>
+            </div>
             <div class="with-small-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i>
                 <small translate>courses.information.discussion_forum_link</small>

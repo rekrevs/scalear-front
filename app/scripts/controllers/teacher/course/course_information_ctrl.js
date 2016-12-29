@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', '$modal', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel, $modal) {
 
     $window.scrollTo(0, 0);
     $scope.in_delete = false;
@@ -14,11 +14,14 @@ angular.module('scalearAngularApp')
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.enrollment_url = $location.absUrl().split('courses')[0] + "courses/enroll?id=" + $scope.course.unique_identifier
     $scope.course_info_url = $state.href('course.course_information', { course_id: $scope.course.id }, { absolute: true })
-
+    $scope.course_domain={}
+    $scope.subdomains = {}
+    // $scope.course_domain.selected_subdomain ={}
     Page.startTour()
     ContentNavigator.close()
     setupTimezone()
     getTeachers();
+    getSelectedSubdomains();
 
     function setupTimezone() {
       $scope.timezones.forEach(function(zone) {
@@ -72,6 +75,13 @@ angular.module('scalearAngularApp')
       TeacherModel.getTeachers().then(function(value) {
         $scope.teachers = value.data;
         $scope.new_teacher = {};
+      })
+    }
+    
+    function getSelectedSubdomains() {
+      TeacherModel.getSelectedSubdomains().then(function(value) {
+        $scope.course_domain.selected_subdomain = value.selected_domain;
+        $scope.subdomains = value.subdomains;
       })
     }
 
@@ -129,6 +139,57 @@ angular.module('scalearAngularApp')
 
     }
 
+    $scope.toggleDomain = function(event) {
+      event.stopPropagation()      
+      $modal.open({ 
+        template: '<form name="myForm" >\
+                    <div id="selected_subdomain_modal" class="ngdialog-message">\
+                    <h3><b><span translate>courses.limit_registration_domain_description</span></b></h3>\
+                    <ul>\
+                      <li><input type="radio" ng-model="subdomain.boolean" id="all" value="all" ng-change="setBooleanDomain();" translate>all</li>\
+                      <li><input type="radio" ng-model="subdomain.boolean" id="custom" value="custom" ng-change="setBooleanDomain();" translate>custom</li>\
+                      </form>\
+                      <div ng-show=subdomain.boolean=="custom">\
+                        <ul style="margin-bottom: 5px;" ng-repeat="domain in subdomains">\
+                          <input class="valign-middle" ng-change="updateDomainList()" type="checkbox" name="mcq" ng-model="course_domain.selected_subdomain[domain]" style="margin: auto;margin-right: 10px;"/>{{domain}}\
+                        </ul>\
+                      </div>\
+                    </ul>\
+                    </div>',
+        plain: true,
+        scope: $scope,
+        controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
+
+          $scope.subdomain = {}
+          $scope.subdomain.boolean = 'all'
+          if (!$scope.course_domain.selected_subdomain['All']){
+            $scope.subdomain.boolean = 'custom'
+          }
+          $scope.close = function () { 
+            $modalInstance.dismiss(); 
+         };
+
+          $scope.updateDomainList = function(){
+          };
+    
+          $scope.setBooleanDomain= function(){
+            if($scope.subdomain.boolean == "all"){
+              $scope.course_domain.selected_subdomain = {'All':true}
+            }
+            else{
+              delete $scope.course_domain.selected_subdomain['All']; 
+            }
+          };
+       }],
+      }).result.finally(function() {
+          if (Object.keys($scope.course_domain.selected_subdomain).map(function(key) {return $scope.course_domain.selected_subdomain[key];}).indexOf(true) == -1) {
+            $scope.course_domain.selected_subdomain = {'All':true}
+          }
+          TeacherModel.setSelectedSubdomains($scope.course_domain.selected_subdomain).then(function(value) {
+            // ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+          })
+        }); 
+    }
 
 
   }]);

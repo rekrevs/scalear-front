@@ -527,6 +527,7 @@ var translation_sv={
     quiz:"@:global.quiz",
     survey:"@:global.survey",
     marker: "@:global.marker",
+    note: "@:global.note",
     course_editor: "Redigera kurs",
     link_editor:"Redigera länk",
     video_editor:"Redigera video",
@@ -547,7 +548,7 @@ var translation_sv={
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
         click_add_question:"Klicka eller skriv 'i' för att lägga till en fråga.",
         click_add_marker:"Klicka eller skriv 'm' för att lägga till en markering",
-        click_add_note: "Klicka eller skriv 'm' för att lägga till en notering. Tryck 'shift-m' för att lägga till en notering och fortsätta uppspelningen"
+        click_add_note: "Klicka eller skriv 'n' för att lägga till en notering. Tryck 'shift-n' för att lägga till en notering och fortsätta uppspelningen"
     },
     drag:{
         start: "Start",
@@ -604,6 +605,7 @@ var translation_sv={
         due_date: "Färdigdatum",
         quizzes:"@:global.quizzes",
         markers: "Markeringar",
+        note:"Anteckningar",
         student_link_module:"Student-länk till modulen",
         has_due_date: "Har färdigdatum",
         required:"@:global.required",
@@ -889,6 +891,8 @@ var translation_sv={
     start_date: "Startdatum",
     end_date: "Slutdatum för kurs",
     disable_registration: "Stäng registrering efter",
+    limit_registration_domain: "Registrering Skolor",
+    limit_registration_domain_description:"Tillåt endast studenter från specifika skol domäner för att registrera",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",

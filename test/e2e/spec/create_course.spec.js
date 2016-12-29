@@ -47,30 +47,27 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.close_join_course()
 			header.logout()
 		})
-	    it('teacher should enable ', function(){ // enrollment url was removed from information page 
-  		    // sleep(2000) 
-    		// header.close_join_course() 
-      		// header.logout() 
-  			// sleep(5000)
-	
+	    it('teacher should enable registration', function(){ // enrollment url was removed from information page 
 		    login_page.sign_in(params.teacher1.email, params.password)
 			course_list.open()
 			course_list.open_teacher_course(1)
 			course_info.open()
 			var enrollment_url = course_info.enrollment_url
 			course_info.disable_registration_button_click()
-		    // browser.driver.getCurrentUrl().then(function(url) { 
-		    //   browser.get(url); 
-		    // }); 
 			expect(course_info.disable_registration_button.isSelected()).toBe(false);
 			header.logout()
-			// login_page.sign_in(params.student1.email, params.password)
-			// sleep(2000)
-			// browser.driver.get(enrollment_url)
-			// sleep(3000)
-			// expect(browser.driver.getCurrentUrl()).toContain('information')
-			// header.logout()
-			// login_page.sign_in(params.teacher1.email, params.password)
+		})
+	    it('teacher should enable registration for only his email domain', function(){ // enrollment url was removed from information page 
+		    login_page.sign_in(params.teacher1.email, params.password)
+			course_list.open()
+			course_list.open_teacher_course(1)
+			course_info.open()
+			course_info.disable_registration_domain_button_click()
+			course_info.disable_registration_domain_choose_custom()
+			expect(course_info.disable_registration_domain_subdomains.count()).toBe(1);
+			course_info.disable_registration_domain_choose_subdomain(1)
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			header.logout()
 		})
     })
 	
@@ -88,9 +85,14 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 		header.logout()
 		login_page.sign_in(params.student3.email, params.password)
 		header.join_course(enrollment_key)
+		login_page.sign_in(params.student1_domain_test.email, params.password)
+		header.join_course(enrollment_key)
+		expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+		expect(browser.driver.getCurrentUrl()).not.toContain('information')
+        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 	})
-
 	it("should logout",function(){
 		header.logout()
 	})
+
 })

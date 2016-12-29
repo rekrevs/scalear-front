@@ -209,10 +209,10 @@
                      <div class="portfolio-caption">
                         <h4>Getting Help</h4>
                         <p class="text-muted text-left">Use the Help menu to browse our
-                            <a target="_blank" ng-href="{{scalear_api.instruction_manual}}">manual</a>,
-                            <a target="_blank" ng-href="{{scalear_api.flipped_manual}}">guide to flipped classroom teaching</a>
+                            <a target="_blank" ng-href="{{instruction_manual}}">manual</a>,
+                            <a target="_blank" ng-href="{{flipped_manual}}">guide to flipped classroom teaching</a>
                             , visit the
-                            <a target="_blank" ng-href="{{scalear_api.teacher_forum_link}}">teacher forum</a>
+                            <a target="_blank" ng-href="{{teacher_forum_link}}">teacher forum</a>
                             , and
                             <a class="page-scroll" href="#contact">contact us</a>
                             with questions and comments.
@@ -226,11 +226,7 @@
                 </div>
                 <br />
                 <div class="col-sm-12 text-center">
-                    <a class="btn btn-xl" ng-click='goTo("login")'>Sign In</a>
-                    <a class="btn btn-xl btn-golden" dropdown-toggle="#signup_list">
-                        <span>Sign Up</span>
-                        <span class="caret"></span>
-                    </a>
+                    <a class="btn btn-xl btn-golden" ui-sref="login">Sign In or Sign Up</a>
                 </div>
             </div>
         </div>
@@ -258,48 +254,34 @@
                 </div>
             </div>
             <div class="col-lg-12 text-center">ScalableLearning delivers fully active preparation and learning online and in-class.</div> 
-        </div>
-<br>
-<br>
-        <div class="section_container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Use Cases</h2>
-                </div>
-            </div>
-            <div class="row col-lg-12 text-center ">
+            <br>
+            <br>
+            <div class="row text-center ">
                 <table >
                   <tr>
                     <td></td>
-                    <td style="text-align: center;    font-size: 16px;    font-weight: bold;">At Home</td>
-                    <td style="text-align: center;    font-size: 16px;     font-weight: bold;">In-Class</td>
+                    <td style="text-align: center; font-size: 16px; font-weight: bold;">At Home</td>
+                    <td style="text-align: center; font-size: 16px; font-weight: bold;">In-Class</td>
                   </tr>
                   <tr>
-                    <td style="text-align: center;    font-size: 16px;    font-weight: bold; ">Traditional Lectues</td>
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgreen">Solve Problems<br> 
-                            <span class="whitecolor">Active</span><br></div>
-                            <div class="whitecolor backgroundgrey">Alone</div></td>
-                    
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgrey">Listen to Lecture<div class="whitecolor">Passive</div></div><div class="backgroundblue whitecolor">With Teacher</div></td>
+                    <td style="text-align: center; font-size: 16px; font-weight: bold; ">Traditional Lectues</td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgreen">Solve Problems<br><span class="whitecolor">Active</span><br></div><div class="whitecolor backgroundgrey">Alone</div></td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgrey">Listen to Lecture<div class="whitecolor">Passive</div></div><div class="backgroundblue whitecolor">With Teacher</div></td>
                   </tr>
                   <tr>
-                    <td style="text-align: center;    font-size: 16px;    font-weight: bold;" >Traditional Flipped Classroom</td>
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgrey">Listen to Lecture<br><div class="whitecolor">Passive<br>Alone</div></div></td>
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgreen">Solve Problems<br><div class="whitecolor">Active<br>With Peers</div></div></td></tr>
+                    <td style="text-align: center; font-size: 16px; font-weight: bold;" >Traditional Flipped Classroom</td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgrey">Listen to Lecture<br><div class="whitecolor">Passive<br>Alone</div></div></td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgreen">Solve Problems<br><div class="whitecolor">Active<br>With Peers</div></div></td></tr>
                   <tr>
-                    <td style="text-align: center;    font-size: 16px;    font-weight: bold;">Flipped Classroom with Scalable Learnign</td>
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgreen">Interactive Lecture<br><div class="whitecolor">Active<br>Online with Peers</div></div></td>
-                    <td style="text-align: center;    font-size: 16px;"><div class="backgroundgreen">Solve Problems<br><div class="whitecolor">Active with Voting<br>With Peers</div></div></td>
+                    <td style="text-align: center; font-size: 16px;"><span style="font-weight: bold;" >Flipped Classroom with </span>Scalable<span style="color:#5da423">Learning</span></td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgreen">Interactive Lecture<br><div class="whitecolor">Active<br>Online with Peers</div></div></td>
+                    <td style="text-align: center; font-size: 16px;"><div class="backgroundgreen">Solve Problems<br><div class="whitecolor">Active with Voting<br>With Peers</div></div></td>
                   </tr>
-
                 </table>
-
             </div>
         </div>
-
     </section>
-
-    <section id="team" >
+    <section id="team" class="bg-light-gray">
         <div class="section_container">
             <div class="row">
                 <div class="col-lg-12 text-center">
@@ -426,13 +408,13 @@
 
 <script type="text/ng-template" id="teacherIntro">
     <div>
-        <youtube id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='1' controls='1' style="z-index: 1;">
+        <youtube id="intro_video" class="flex-video widescreen with-light-border" url="teacher_welcome_video" autoplay='1' controls='1' style="z-index: 1;">
     </div>
 </script>
 
 <script type="text/ng-template" id="studentIntro">
     <div>
-        <youtube id="intro_video_student" class="flex-video widescreen with-light-border" url="scalear_api.student_welcom_video" autoplay='1' controls='1' style="z-index: 1;">
+        <youtube id="intro_video_student" class="flex-video widescreen with-light-border" url="student_welcom_video" autoplay='1' controls='1' style="z-index: 1;">
     </div>
 </script>
 

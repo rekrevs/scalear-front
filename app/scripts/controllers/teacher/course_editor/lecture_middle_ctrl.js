@@ -507,18 +507,18 @@ angular.module('scalearAngularApp')
         $scope.addQuestion()
       }, { "disable_in_input": true, 'propagate': false });
 
-      shortcut.add("m", function() {
+      shortcut.add("n", function() {
         $scope.addOnlineMarker()
       }, { "disable_in_input": true, 'propagate': false });
 
-      shortcut.add("Shift+m", function() { 
+      shortcut.add("Shift+n", function() { 
         $scope.addOnlineMarker(true) 
       }, { "disable_in_input": true, 'propagate': false }); 
     }
     
     function removeShortcuts() {
       shortcut.remove("i");
-      shortcut.remove("m");
+      shortcut.remove("n");
     }
 
     function setUpEventsListeners() {

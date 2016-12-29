@@ -318,6 +318,7 @@ var translation_en={
     school_email :"School Email",
     sign_up: "Sign up",
     sign_in: "Sign in",
+    can_not_use_domain: "You can not register using this domain. To create an account, login through your school provider.",
     login: "@:navigation.login",
     join: "Join",
     remember_me: "Keep me logged in",
@@ -513,6 +514,7 @@ var translation_en={
     quiz:"@:global.quiz",
     survey:"@:global.survey",
     marker: "@:global.marker",
+    note: "@:global.note",
     course_editor: "Course Editor",
     link_editor:"Link Editor",
     video_editor:"Video Editor",
@@ -533,7 +535,7 @@ var translation_en={
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
         click_add_marker:"Click or type 'm' to add a marker",
-        click_add_note: "Click or type 'm' to add a note. Press 'shift-m' to add a note and continue playing."
+        click_add_note: "Click or type 'n' to add a note. Press 'shift-n' to add a note and continue playing."
     },
     drag:{
         start: "Start",
@@ -590,6 +592,7 @@ var translation_en={
         due_date: "Due Date",
         quizzes:"@:global.quizzes",
         markers: "Markers",
+        note:"Notes",
         student_link_module:"Student link to module",
         has_due_date: "has due date",
         required:"@:global.required",
@@ -875,6 +878,8 @@ var translation_en={
     start_date: "Course Start Date",
     end_date: "Course End Date",
     disable_registration: "Disable Registration After",
+    limit_registration_domain: "Registrable Schools",
+    limit_registration_domain_description: "Allow only students from specific school domains to register",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",

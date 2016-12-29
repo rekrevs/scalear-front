@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
               domain: $scope.report.selected_domain
             },
             function(data) {
-              console.log(data)
+              // console.log(data)
               $scope.show_statistics = true
               $scope.loading = false
               data["total_hours"] = ScalearUtils.toHourMin(data["total_hours"])

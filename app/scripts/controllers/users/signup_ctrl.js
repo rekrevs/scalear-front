@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersSignUpCtrl', ['$scope', 'User', '$state', 'Page', '$filter', '$location', 'ngDialog', function($scope, User, $state, Page, $filter, $location, ngDialog) {
+  .controller('UsersSignUpCtrl', ['$scope', 'User', '$state', 'Page', '$filter', '$location', 'ngDialog', '$modal', function($scope, User, $state, Page, $filter, $location, ngDialog ,$modal) {
     Page.setTitle('account.sign_up')
 
     var setupScreenName = function() {
@@ -50,9 +50,22 @@ angular.module('scalearAngularApp')
         }, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {
-          $scope.user.errors = response.data.errors
+          if(response.data.errors.school_provider){
+            $modal.open({
+              templateUrl: '/views/school_provider_modal.html',
+              controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
+                $scope.close = function () {
+                 $modalInstance.dismiss();
+               };
+             }],
+              scope: $scope
+            })
+          }
+          else
+          {
+            $scope.user.errors = response.data.errors
+          }
         })
-
       }
     }
 

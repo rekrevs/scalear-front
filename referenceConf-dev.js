@@ -253,7 +253,7 @@ exports.config = {
 
         // to test email features locall
 
-        // 'test/e2e/spec/add_user.spec.js',
+        'test/e2e/spec/add_user.spec.js',
         // 'test/e2e/spec/create_course.spec.js',
         // 'test/e2e/spec/fill_course.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',

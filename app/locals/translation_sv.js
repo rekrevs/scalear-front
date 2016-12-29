@@ -332,6 +332,7 @@ var translation_sv={
     school_email:"E-post-adress",
     sign_up: "Registrera dig",
     sign_in: "Logga in",
+    can_not_use_domain: "You can not register using this domain. To create an account, login through your school provider.(t)",
     login: "@:navigation.login",
     join: "Registrera",
     remember_me: "Förbli inloggad",

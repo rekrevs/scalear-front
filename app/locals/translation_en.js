@@ -318,6 +318,7 @@ var translation_en={
     school_email :"School Email",
     sign_up: "Sign up",
     sign_in: "Sign in",
+    can_not_use_domain: "You can not register using this domain. To create an account, login through your school provider.",
     login: "@:navigation.login",
     join: "Join",
     remember_me: "Keep me logged in",

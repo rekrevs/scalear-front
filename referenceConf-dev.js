@@ -232,7 +232,7 @@ exports.config = {
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        'test/e2e/spec/inclass_dp.spec.js', //(demo)
+        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)
 
         // 'test/e2e/spec/delete_course.spec.js', //
 
@@ -246,7 +246,7 @@ exports.config = {
 
         // to test email features locall
 
-        // 'test/e2e/spec/add_user.spec.js',
+        'test/e2e/spec/add_user.spec.js',
         // 'test/e2e/spec/create_course.spec.js',
         // 'test/e2e/spec/fill_course.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',

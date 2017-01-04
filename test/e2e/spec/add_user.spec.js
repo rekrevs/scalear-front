@@ -29,28 +29,9 @@ var shared = new SharedPage()
 var new_course = new NewCourse()
 var video = new Video();
 
-describe("Sign up ",function(){
-		it("should sign up ",function(){
-			signup_page.sign_up('teacher')
-			signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)
-		})
-		it("should check url does not contant thanks pages",function(){
-			sleep(6000)
-			expect(browser.driver.getCurrentUrl()).not.toContain('thanks')
-			expect(browser.driver.getCurrentUrl()).toContain('users/signup')
-			signup_page.go_to_sign_up_with_domain_page()
-		})
-		it("should check url does not contant thanks pages",function(){
-			sleep(2000)
-			expect(browser.driver.getCurrentUrl()).toContain('login')
-		})
-})
 
-
-
-
-xdescribe("Sign up Teacher 1",function(){
-	xdescribe("guerrillamail",function(){
+describe("Sign up Teacher 1",function(){
+	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
 			console.log(params.teacher1.email)
 			// browser.refresh()
@@ -85,7 +66,7 @@ xdescribe("Sign up Teacher 1",function(){
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
-		xdescribe("Guerrilla website tab ",function(){
+		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
 				sleep(22000)
@@ -122,8 +103,8 @@ xdescribe("Sign up Teacher 1",function(){
         })
     })
 })
-xdescribe("Sign up teacher 2",function(){
-	xdescribe("guerrillamail",function(){
+describe("Sign up teacher 2",function(){
+	describe("guerrillamail",function(){
 		it("should sign up as teacher",function(){
 			sleep(4000)
 			// consloe.log(params.teacher2.email)
@@ -158,7 +139,7 @@ xdescribe("Sign up teacher 2",function(){
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
-		xdescribe("Guerrilla website tab ",function(){
+		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
 				sleep(22000)
@@ -196,8 +177,8 @@ xdescribe("Sign up teacher 2",function(){
         })
     })
 })
-xdescribe("Sign up Student 1",function(){
-	xdescribe("guerrillamail",function(){
+describe("Sign up Student 1",function(){
+	describe("guerrillamail",function(){
 		it("should sign up as student",function(){
 
 			sleep(4000)
@@ -233,7 +214,7 @@ xdescribe("Sign up Student 1",function(){
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
-		xdescribe("Guerrilla website tab ",function(){
+		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
 				sleep(22000)
@@ -271,8 +252,8 @@ xdescribe("Sign up Student 1",function(){
         })
     })
 })
-xdescribe("Sign up Student 2",function(){
-	xdescribe("guerrillamail",function(){
+describe("Sign up Student 2",function(){
+	describe("guerrillamail",function(){
 		it("should sign up as student",function(){
 
 			// sleep(4000)
@@ -308,7 +289,7 @@ xdescribe("Sign up Student 2",function(){
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
-		xdescribe("Guerrilla website tab ",function(){
+		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
 				sleep(22000)
@@ -346,8 +327,8 @@ xdescribe("Sign up Student 2",function(){
         })
     })
 })
-xdescribe("Sign up Student 3",function(){
-	xdescribe("guerrillamail",function(){
+describe("Sign up Student 3",function(){
+	describe("guerrillamail",function(){
 		it("should sign up as student",function(){
 
 			// sleep(4000)
@@ -383,7 +364,7 @@ xdescribe("Sign up Student 3",function(){
 			 guerrilla_mail_page.open_last_mail()
 			 sleep(6000)
 		})
-		xdescribe("Guerrilla website tab ",function(){
+		describe("Guerrilla website tab ",function(){
 			it("should confirm the mail",function(){
 				guerrilla_mail_page.confirm_email()
 				sleep(22000)
@@ -440,9 +421,9 @@ xdescribe("Sign up Student 3",function(){
 
 // SCAL-1017: Add email address to after-registration page frontend: check on email in users/thanks
 // SCAL-571 At first login we should show the privacy policy and require students to click "I understand"	check on I understand when new user confirm
-xdescribe("Add User ",function(){
-	xdescribe("Sign up Teacher 1",function(){
-		xdescribe("guerrillamail",function(){
+describe("Add User ",function(){
+	describe("Sign up Teacher 1",function(){
+		describe("guerrillamail",function(){
 			it("should sign up as teacher",function(){
 				console.log(params.teacher3.email)
 				signup_page.sign_up('teacher')
@@ -478,7 +459,7 @@ xdescribe("Add User ",function(){
 				 guerrilla_mail_page.open_last_mail()
 				 sleep(6000)
 			})
-			xdescribe("Guerrilla website tab ",function(){
+			describe("Guerrilla website tab ",function(){
 				it("should confirm the mail",function(){
 					guerrilla_mail_page.confirm_email()
 					sleep(22000)
@@ -514,7 +495,7 @@ xdescribe("Add User ",function(){
 	        })
 	    })
 	})
-	xdescribe("guerrillamail teacher 1",function(){
+	describe("guerrillamail teacher 1",function(){
 		it("should login",function(){
             login_page.sign_in(params.teacher3.email, params.guerrillamail_password)
        })

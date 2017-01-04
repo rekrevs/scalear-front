@@ -4,14 +4,34 @@ var Header = require('./pages/header');
 var Login = require('./pages/login');
 var CourseList = require('./pages/course_list');
 var sleep = require('./lib/utils').sleep;
+var Signup = require('./pages/sign_up');
 
 var params = browser.params;
-
 var header = new Header()
 var login_page = new Login()
 var	new_course = new NewCourse();
 var course_info = new CourseInformation()
 var course_list = new CourseList()
+var signup_page = new Signup()
+
+describe("Email domain .uu.nl is prevented from sign up",function(){
+		it("should sign up ",function(){
+			signup_page.sign_up('teacher')
+			signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)
+		})
+		it("should check url does not contant thanks pages",function(){
+			sleep(6000)
+			expect(browser.driver.getCurrentUrl()).not.toContain('thanks')
+			expect(browser.driver.getCurrentUrl()).toContain('users/signup')
+			signup_page.go_to_sign_up_with_domain_page()
+		})
+		it("should check url does not contant thanks pages",function(){
+			sleep(2000)
+			expect(browser.driver.getCurrentUrl()).toContain('login')
+		})
+})
+
+
 
 describe("Need an 'add course URL' and  Enable/disable registration",function(){
 	describe("teacher ",function(){		
@@ -47,7 +67,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.close_join_course()
 			header.logout()
 		})
-	    it('teacher should enable registration', function(){ // enrollment url was removed from information page 
+	    it('teacher should enable registration', function(){  
 		    login_page.sign_in(params.teacher1.email, params.password)
 			course_list.open()
 			course_list.open_teacher_course(1)
@@ -57,7 +77,35 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			expect(course_info.disable_registration_button.isSelected()).toBe(false);
 			header.logout()
 		})
-	    it('teacher should enable registration for only his email domain', function(){ // enrollment url was removed from information page 
+
+    })
+	
+	describe("Need an 'add course URL' and  Enable/disable registration",function(){
+		// should enable registration for all and S1 , S1Domain should regisiter 
+		it('should enable registration for all and enroll students', function(){
+		    login_page.sign_in(params.teacher1.email, params.password) 
+			course_list.open()
+			course_list.open_teacher_course(1)
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+		    login_page.sign_in(params.student1.email, params.password) 
+		    header.join_course(enrollment_key) 
+		    header.logout() 		 
+			login_page.sign_in(params.student1_domain_test.email, params.password)
+			header.join_course(enrollment_key)
+			course_list.open()
+			expect(course_list.student_courses.count()).toEqual(1)
+		})
+
+		// teacher remover s1domain student
+		it("student1_domain_test should delete course",function(){
+			course_list.delete_student_course(1)
+			expect(course_list.student_courses.count()).toEqual(0)
+			header.logout()
+		})
+
+		// should enable registration for only sharklasers and S2 , S1Domain should try to regisiter and s1domain can not regisiter
+	    it('teacher should enable registration for only his email domain', function(){  
 		    login_page.sign_in(params.teacher1.email, params.password)
 			course_list.open()
 			course_list.open_teacher_course(1)
@@ -69,30 +117,82 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			header.logout()
 		})
-    })
-	
-	it('should get the enrollment key and enroll students', function(){
-	    login_page.sign_in(params.teacher1.email, params.password) 
-		course_list.open()
-		course_list.open_teacher_course(1)
-		var enrollment_key = course_info.enrollmentkey
-		header.logout()
-	    login_page.sign_in(params.student1.email, params.password) 
-	    header.join_course(enrollment_key) 
-	    header.logout() 		 
-		login_page.sign_in(params.student2.email, params.password)
-		header.join_course(enrollment_key)
-		header.logout()
-		login_page.sign_in(params.student3.email, params.password)
-		header.join_course(enrollment_key)
-		login_page.sign_in(params.student1_domain_test.email, params.password)
-		header.join_course(enrollment_key)
-		expect(browser.driver.getCurrentUrl()).toContain('dashboard')
-		expect(browser.driver.getCurrentUrl()).not.toContain('information')
-        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-	})
-	it("should logout",function(){
-		header.logout()
+		it('should get the enrollment key and enroll students and student1_domain_test should not be able to enroll', function(){
+		    login_page.sign_in(params.teacher1.email, params.password) 
+			course_list.open()
+			course_list.open_teacher_course(1)
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+			login_page.sign_in(params.student2.email, params.password)
+			header.join_course(enrollment_key)
+			header.logout()
+			login_page.sign_in(params.student1_domain_test.email, params.password)
+			header.join_course(enrollment_key)
+			expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+			expect(browser.driver.getCurrentUrl()).not.toContain('information')
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			header.logout()
+		})
+
+		// should enable registration for all and S3 , S1Domain should regisiter 
+	    it('teacher should enable registration ', function(){  
+		    login_page.sign_in(params.teacher1.email, params.password)
+			course_list.open()
+			course_list.open_teacher_course(1)
+			course_info.open()
+			course_info.disable_registration_domain_button_click()
+			course_info.disable_registration_domain_choose_all()
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			header.logout()
+		})
+		it('should get the enrollment key and enroll students', function(){
+		    login_page.sign_in(params.teacher1.email, params.password) 
+			course_list.open()
+			course_list.open_teacher_course(1)
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+			login_page.sign_in(params.student3.email, params.password)
+			header.join_course(enrollment_key)
+			header.logout()
+			login_page.sign_in(params.student1_domain_test.email, params.password)
+			header.join_course(enrollment_key)
+			course_list.open()
+			expect(course_list.student_courses.count()).toEqual(1)
+		})
+		// teacher remover s1domain student
+		it("student1_domain_test should delete course",function(){
+			course_list.delete_student_course(1)
+			expect(course_list.student_courses.count()).toEqual(0)
+			header.logout()
+		})
+		// should enable registration for only sharklasers and S1Domain should try to regisiter and s1domain can not regisiter
+	    it('teacher should enable registration for only his email domain', function(){  
+		    login_page.sign_in(params.teacher1.email, params.password)
+			course_list.open()
+			course_list.open_teacher_course(1)
+			course_info.open()
+			course_info.disable_registration_domain_button_click()
+			course_info.disable_registration_domain_choose_custom()
+			expect(course_info.disable_registration_domain_subdomains.count()).toBe(1);
+			course_info.disable_registration_domain_choose_subdomain(1)
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			header.logout()
+		})
+		it('student1_domain_test should not be able to enroll', function(){
+		    login_page.sign_in(params.teacher1.email, params.password) 
+			course_list.open()
+			course_list.open_teacher_course(1)
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+			login_page.sign_in(params.student1_domain_test.email, params.password)
+			header.join_course(enrollment_key)
+			expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+			expect(browser.driver.getCurrentUrl()).not.toContain('information')
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			header.logout()
+		})
+
+
 	})
 
 })

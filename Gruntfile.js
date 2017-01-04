@@ -423,7 +423,7 @@ module.exports = function(grunt) {
             },
             coverageE2E: {
                 options: {
-                    configFile: "referenceConf.js", // Target-specific config file
+                    configFile: "referenceConf-dev.js", // Target-specific config file
                     args: {} // Target-specific arguments
                 }
             },

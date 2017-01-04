@@ -173,7 +173,9 @@
 											<b><span class="comment_screen_name" >{{::comment.comment.screen_name}}</span>:</b>
 											<span class="comment_content" style="white-space: pre-line;" ng-bind-html="::(comment.comment.content)"></span>
 										 	<span ng-show="comment.comment.flags_count>0" style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
-												<img src='comment.comment.flags_count>0 ?"../images/flag-red.png":"../images/flag-grey.png"'/>
+												<!-- <img src='comment.comment.flags_count>0 ?"../images/flag-red.png":"../images/flag-grey.png"'/> -->
+												<img ng-show="comment.comment.flags_count>0"  src="../images/flag-red.png"/>
+												<img ng-hide="comment.comment.flags_count>0"  src="../images/flag-grey.png"/>
 												<span class="comment_flags_count" >{{comment.comment.flags_count}}</span>
 											</span>
 											<span ng-show="::(comment.comment.votes_count>0)" style="float: right; color: black; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">

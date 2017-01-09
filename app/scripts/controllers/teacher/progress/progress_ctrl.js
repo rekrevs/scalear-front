@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', 'CourseModel', function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log, CourseModel) {
+  .controller('progressCtrl', ['$scope', '$stateParams', 'ContentNavigator', 'Page', 'Course', 'Module', '$timeout', '$log', 'CourseModel','ErrorHandler', '$translate',function($scope, $stateParams, ContentNavigator, Page, Course, Module, $timeout, $log, CourseModel,ErrorHandler,$translate) {
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
 
@@ -79,6 +79,12 @@ angular.module('scalearAngularApp')
 
     $scope.export=function () {
       Course.exportModuleProgress({course_id: $stateParams.course_id})
+      .$promise
+      .then(function(response) {
+        if(response.notice) {
+          ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+        }
+      })
     }
 
     getModuleProgress(0, 20)

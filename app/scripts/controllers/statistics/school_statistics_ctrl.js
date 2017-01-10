@@ -77,16 +77,17 @@ angular.module('scalearAngularApp')
               // console.log(data)
               $scope.show_statistics = true
               $scope.loading = false
-              data["total_hours"] = ScalearUtils.toHourMin(data["total_hours"])
-              data["total_student_watched"] = ScalearUtils.toHourMin(data["total_student_watched"])
-              data["total_course_been_watched"] = ScalearUtils.toHourMin(data["total_course_been_watched"])
+              data["total_hours_string"] = ScalearUtils.toHourMin(data["total_hours"])
+              data["total_student_watched_string"] = ScalearUtils.toHourMin(data["total_student_watched"])
+              data["total_course_been_watched_string"] = ScalearUtils.toHourMin(data["total_course_been_watched"])
 
               angular.extend($scope, data)
 
               $scope.course_data_array = []
               angular.forEach($scope.course_data, function(value, key) {
                 value["id"] = key
-                value["total_view"] = ScalearUtils.toHourMin(value["total_view"])
+                value["total_view_string"] = ScalearUtils.toHourMin(value["total_view"])
+                value["total_view"] = value["total_view"] 
                 $scope.course_data_array.push(value)
               })
 
@@ -112,4 +113,13 @@ angular.module('scalearAngularApp')
           }
       })
     }
+
+
+    $scope.sortting={
+        total_view_string: function (value) {
+            //this will sort by the length of the first name string
+            return value.total_view;
+        }
+    }
+
   }]);

@@ -57,7 +57,7 @@
           <i class="fi-clock adminIcon"></i>
         </div>
         <div class="adminNum">
-          {{total_hours}}
+          {{total_hours_string}}
           <!-- {{ScalearUtils.toHourMin(total_hours)}} -->
           <!-- 19 -->
         </div>
@@ -66,10 +66,10 @@
         </p>
         <div class="row">
           <div class="column small-6">
-            {{total_student_watched}} <i class="fi-torsos-all" tooltip="Average per Student" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            {{total_student_watched_string}} <i class="fi-torsos-all" tooltip="Average per Student" tooltip-placement="top" tooltip-append-to-body="true"></i>
           </div>
           <div class="column small-6">
-            {{total_course_been_watched}} <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
+            {{total_course_been_watched_string}} <i class="fi-clipboard" tooltip="Average per course" tooltip-placement="top" tooltip-append-to-body="true"></i>
           </div>
         </div>
       </div>
@@ -162,13 +162,13 @@
           <th st-sort='short_name'>Course Name</th>
           <th st-sort='full_name'>Teacher Name</th>
           <th st-sort='email'>Teacher Email</th>
-          <th st-sort='students'>Active Students</th>
-          <th st-sort='teachers'>Active Teachers</th>
+          <th st-sort='students'>Total Students</th>
+          <th st-sort='teachers'>Total Teachers</th>
           <th st-sort='questions'>Questions</th>
           <th st-sort='solved_online_quiz'>Solved Quizzes</th>
           <th st-sort='start_date'>Start Date</th>
           <th st-sort='end_date'>End Date</th>
-          <th st-sort='total_view'>Total view</th>
+          <th st-sort='sortting.total_view_string' >Total view</th>
         </tr>
         <tr>
           <th colspan="12">
@@ -187,7 +187,7 @@
           <td>{{course.solved_online_quiz}}</td>
           <td>{{course.start_date}}</td>
           <td>{{course.end_date}}</td>
-          <td>{{course.total_view}}</td>
+          <td>{{course.total_view_string}}</td>
         </tr>
       </tbody>
     </table>

@@ -7,6 +7,7 @@ angular.module('scalearAngularApp')
     Page.startTour();
     $rootScope.subheader_message = $translate.instant("dashboard.whats_new") 
     $scope.eventSources = [];
+    $scope.module_summary_data = []
     var calendar_year_cache = []
     var current_user = null
 
@@ -160,8 +161,11 @@ angular.module('scalearAngularApp')
     function getCalendar() {
       Dashboard.getDashboard({}, function(data) {
         calendarSetup()
+
+        getSummaryModule(data.module_summary_id_list);
         setupPopover(data.key)
         $scope.calendar = data;
+
         for(var element in $scope.calendar.events) {
           var event = $scope.calendar.events[element]
           event.start = new Date(event.start)
@@ -211,6 +215,21 @@ angular.module('scalearAngularApp')
           }, 300)
         })
       })
+    }
+
+
+    function getSummaryModule(module_summary_id_list){
+      module_summary_id_list.forEach(function(module_summary_id){
+        console.log(module_summary_id)
+        Module.getDashboardModule({
+          module_id: module_summary_id[0],
+          course_id: module_summary_id[1]
+          },function(data){
+            $scope.module_summary_data.push(data.module)
+        }
+        )
+      })
+
     }
 
     $scope.exportCalendar = function() {

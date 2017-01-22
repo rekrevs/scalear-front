@@ -192,6 +192,7 @@
 							</li>
 						</ul>
 					</li>
+
 					<li ng-if="item.type=='free_question'"  ng-init="percentage = calculateReviewPercent(item.data.review,students_count); color=getReviewColor(percentage)" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
 						<inner_title class="small-10 columns left" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.free_text_question' | translate" itemtitle="item.data.title+' - '+item.data.review+' students ('+percentage+'%) '+('progress.of_student_review' | translate)" color="color"/>
 						<show_box  value="item.data.show" action="updateHideQuiz(item, item.data.show)"/>
@@ -203,6 +204,9 @@
 										<a ng-click="lec.filtered_user = answer.user_id;lec.filter_strict=true" tooltip="{{'progress.tooltip.see_related'|translate}}" class="button really-tiny secondary" style="margin:0 5px" translate>progress.related</a>
 									</span>
 								</span>
+									<div ng-if="::item.type == 'free_question'" style="float:right">
+							        	<details-select value="answer.grade" options="grade_options" save="updateOnlineQuizGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
+							        </div>
 								<div style="width:70%" ng-bind-html="::answer.online_answer"></div>
 							</li>
 						</ul>

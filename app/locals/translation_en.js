@@ -61,6 +61,7 @@ var translation_en={
     visible: "Visible",
     leave: "Leave",
     stay: "Stay",
+    votes: "Votes",
   },
   mailer:{
     send_email: "Send An Email",
@@ -418,6 +419,10 @@ var translation_en={
     whats_new: "What's New",
     as_ical_file: "As File",
     as_url: "As Link",
+    student_completion: "Student Completion",
+    unanswered_questions: "Unanswered Questions",
+    start_inclass: "@:inclass.start_inclass",
+    review_select_inclass_material: "Review & Select In-Class Material",
   },
   inclass:{
     more: "more",

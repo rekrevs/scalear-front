@@ -607,6 +607,14 @@ angular.module('scalearAngularApp')
         {answer_id: answer.id, grade:answer.grade}
     )
   }
+  $scope.updateOnlineQuizGrade = function(answer){
+    OnlineQuiz.updateGrade(
+        {course_id:$stateParams.course_id, online_quizzes_id: answer.online_quiz_id},
+        {answer_id: answer.id, grade:answer.grade}
+    )
+  }
+
+
 
 	$scope.seek=function(time, video){
     $log.debug(video.url)

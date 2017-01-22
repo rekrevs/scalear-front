@@ -61,6 +61,7 @@ var translation_sv={
     visible: "Synlig",
     leave: "Lämna",
     stay: "Stanna",
+    votes: "Röster",
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -432,6 +433,10 @@ var translation_sv={
     whats_new: "Nyheter",
     as_ical_file: "Som fil ",
     as_url: "Som länk ",
+    student_completion: "Studenten Slutför",
+    unanswered_questions: "Obesvarade Frågor",
+    start_inclass: "@:inclass.start_inclass",
+    review_select_inclass_material: "översyn & Välj I Klassen Material",
   },
   inclass:{
     more: "mer",

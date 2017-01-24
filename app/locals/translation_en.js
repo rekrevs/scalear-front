@@ -93,6 +93,7 @@ var translation_en={
     },
   },
   time:{
+    hours: "hours",
     minutes: "minutes",
     seconds: "Seconds",
     weeks: "Weeks",

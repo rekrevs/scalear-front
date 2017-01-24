@@ -8,12 +8,13 @@ angular.module('scalearAngularApp')
       },
       replace: true,
       templateUrl: "/views/dashboard_calendar.html",
-      link: function(scope) {
+      link: function(scope, elem) {
+        console.log("elem is", elem);
         scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
-        scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date)
+        scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
 
         scope.subtitle = scope.moduledata.hour_min + " " +
-          $translate.instant('time.minutes') + ", " +
+          $translate.instant('time.hours') + ", " +
           scope.moduledata.quiz_count + " " +
           $translate.instant('global.quizzes') + ", " +
           scope.moduledata.survey_count + " " +
@@ -21,7 +22,7 @@ angular.module('scalearAngularApp')
           $translate.instant('events.due') + " " +
           $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
           $translate.instant('global.at') + " " +
-          $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm')
+          $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm')+ "."
 
         var student_completion_options = {
           on_time: {
@@ -41,11 +42,11 @@ angular.module('scalearAngularApp')
             color: "#16A53F" //Green:
           },
           more_than_50: {
-            text: "more than 50%",
+            text: "More than 50%",
             color: "#BADAA5" //Pale Green:
           },
           less_than_50: {
-            text: "less than 50%",
+            text: "Less than 50%",
             color: "#F5C09E" //Pale Orange
           },
           not_watched: {
@@ -106,7 +107,8 @@ angular.module('scalearAngularApp')
           options: {
             chart: {
               type: 'bar',
-              margin: [0, 0, 20, 0]
+              margin: [0, 0, 20, 0],
+              spacing: [0, 0, 0, 0]
             },
             plotOptions: {
               series: {
@@ -136,7 +138,8 @@ angular.module('scalearAngularApp')
             }
           },
           size: {
-            height: 100
+            height: 100,
+            width: elem.width()+60
           },
           title: { text: null },
           xAxis: {
@@ -168,6 +171,7 @@ angular.module('scalearAngularApp')
             quiz_xaxis_categories.push('<b>' + scope.moduledata.online_quiz[quiz_data_list][quiz_data]['lecture_name'] + ": </b>" + scope.moduledata.online_quiz[quiz_data_list][quiz_data]['quiz_name'])
             Object.keys(scope.moduledata.online_quiz[quiz_data_list][quiz_data]['data']).forEach(function(quiz_bar) {
               if (quiz_bar == 'review_vote') {
+                scope.review_vote_exist = (scope.moduledata.online_quiz[quiz_data_list][quiz_data]['data'][quiz_bar] > 0)
                 quiz_completion_data_series[quiz_bar].data.push(scope.moduledata.online_quiz[quiz_data_list][quiz_data]['data'][quiz_bar] * -1)
               } else {
                 quiz_completion_data_series[quiz_bar].data.push(scope.moduledata.online_quiz[quiz_data_list][quiz_data]['data'][quiz_bar])
@@ -185,6 +189,7 @@ angular.module('scalearAngularApp')
         })
 
         ////////////////////  quiz and grades main pages
+
         scope.quiz_completion_chart_config = {
           options: {
             chart: {
@@ -193,9 +198,8 @@ angular.module('scalearAngularApp')
                 load: function() {
                   this.myTooltip = new Highcharts.Tooltip(this, this.options.tooltip);
                 },
-                spacing: [0, 0, 0, 0],
-                margin: [0, 0, 10, 0]
-              }
+              },
+              margin: (scope.review_vote_exist)? [0, 0, 0, 0] : [0, 0, 60, 0]
             },
             plotOptions: {
               series: {
@@ -225,7 +229,7 @@ angular.module('scalearAngularApp')
             }
           },
           size: {
-            height: 220
+            height: (scope.review_vote_exist)? 220 : 180
           },
           title: { text: null },
           xAxis: {
@@ -306,7 +310,7 @@ angular.module('scalearAngularApp')
               },
               series: [{
                 showInLegend: false,
-                name: "Never Tried",
+                name: "Never tried",
                 data: [quiz_data.data['never_tried']],
                 color: "#a4a9ad" //silver
               }, {
@@ -316,17 +320,17 @@ angular.module('scalearAngularApp')
                 color: "#551a8b" //purble
               }, {
                 showInLegend: false,
-                name: "Tried, Not Correct",
+                name: "Tried, not correct",
                 data: [quiz_data.data['tried_not_correct']],
                 color: "#E66726" //Orange:
               }, {
                 showInLegend: false,
-                name: "Tried, Correct Finally",
+                name: "Correct, finally",
                 data: [quiz_data.data['tried_correct_finally']],
                 color: "#BADAA5" //Pale Green:
               }, {
                 showInLegend: false,
-                name: "Correct First Try",
+                name: "Correct, first time",
                 data: [quiz_data.data['correct_first_try']],
                 color: "#16A53F" // Green
               }, {

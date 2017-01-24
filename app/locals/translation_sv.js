@@ -93,6 +93,7 @@ var translation_sv={
     }
   },
   time:{
+    hours: "hours (t)",
     minutes: "minuter",
     seconds: "Sekunder",
     weeks: "Veckor",

@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate.instant("dashboard.whats_new") 
+    $rootScope.subheader_message = $translate.instant("dashboard.whats_new")
     $scope.eventSources = [];
     $scope.module_summary_data = []
     var calendar_year_cache = []
@@ -141,7 +141,7 @@ angular.module('scalearAngularApp')
       revertFunc()
       if(response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
         // var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
-        // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit." 
+        // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit."
         var message = $translate.instant("events.drag_due_date_error_part_1")+type+$translate.instant("events.drag_due_date_error_part_2")+type+$translate.instant("events.drag_due_date_error_part_3")
       } else {
         var message = Object.keys(response.data.errors)[0].replace("_", " ") + " " + response.data.errors[Object.keys(response.data.errors)[0]][0]
@@ -221,6 +221,7 @@ angular.module('scalearAngularApp')
     function getSummaryModule(module_summary_id_list){
       module_summary_id_list.forEach(function(module_summary_id){
         console.log(module_summary_id)
+        $scope.course_id = module_summary_id[1]
         Module.getDashboardModule({
           module_id: module_summary_id[0],
           course_id: module_summary_id[1]
@@ -239,6 +240,10 @@ angular.module('scalearAngularApp')
         cal.addEvent($scope.calendar.events[element].title, description, 'Scalable-Learning', $scope.calendar.events[element].start, $scope.calendar.events[element].start);
       }
       cal.download("calendar");
+    }
+
+    $scope.createAnnouncement=function(){
+      $state.go("course.announcements", { course_id: $scope.course_id, show: true})
     }
 
   }]);

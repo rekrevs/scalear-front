@@ -1,42 +1,41 @@
-<div> 
+<div>
+  <div>
+    <h3>
+      <span>{{moduledata.title}} - </span>
+      <span ng-show="moduledata.due_date > 0" style="color:red" ><span translate>events.due</span> {{moduledata.time_left_string}} <span translate>time.minutes</span></span>
+      <span ng-hide="moduledata.due_date > 0" style="color:red" translate>events.due_date_passed</span>
+    </h3>
+    <p><b>{{subtitle}}</b></p>
+    <a class="button small orange module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' translate>dashboard.review_select_inclass_material</a>
+    <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' translate>dashboard.start_inclass</a>
+  </div>
+  <div>
+    <h5><b translate>dashboard.student_completion</b></h5>
+    <highchart id='module_{{moduledata.moduledata.module.id}}' class="chart" config="student_completion_chart_config" style="width: 100%;"></highchart>
+  </div>
+  <div>
+    <h5><b ><span translate>global.quizzes</span> &  <span translate> global.votes</span></b></h5>
+    <highchart id='module_quiz_{{moduledata.module.id}}' class="chart" config="quiz_completion_chart_config" style="width: 100%;"></highchart>
+  </div>
+  <div ng-show="moduledata.unanswered_questions_count>0">
     <div>
-    	<h2>{{moduledata.title}} -
-            <span ng-show="moduledata.due_date > 0" style="color:red" ><span translate>events.due</span> {{moduledata.time_left_string}} <span translate>time.minutes</span></span>
-            <span ng-hide="moduledata.due_date > 0" style="color:red" translate>events.due_date_passed</span>
-        </h2>
-        <h5><b>{{subtitle}}</b></h5>
-        <a class="button small orange module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' translate>dashboard.review_select_inclass_material</a>
-        <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' translate>dashboard.start_inclass</a>
-
-              <!-- $state.go('course.module.student_inclass', { 'module_id': module.id }) -->
-
-    </div>
-    <div>
-        <h5><b translate>dashboard.student_completion</b></h5> 
-        <highchart id='module_{{moduledata.moduledata.module.id}}' class="chart" config="student_completion_chart_config" style="width: 100%;"></highchart>
-    </div> 
-
-    <div>
-        <h5><b ><span translate>global.quizzes</span> &  <span translate> global.votes</span></b></h5> 
-        <highchart id='module_quiz_{{moduledata.module.id}}' class="chart" config="quiz_completion_chart_config" style="width: 100%;"></highchart>
-    </div> 
-    
-    <div>
-        <h5><b ><span translate> dashboard.unanswered_questions </span>( {{moduledata.unanswered_questions_count}} of {{moduledata.posts_total}} )</b></h5> 
-        <div class="center" style="margin-left: 25px;margin-right: 25px;">
-            <div ng-repeat= "lecture in moduledata.unanswered_questions">
-                <div style="background-color:#BADAA5"><b>{{lecture.name}}</b></div> 
-                <div ng-repeat= "question in lecture.question"> 
-                    <span ng-show="question.privacy">[Public]</span>
-                    <span ng-hide="question.privacy">[Privacy]</span>
-                    <span ng-bind-html="question.content"></span> 
-                </div>        
-            </div>
+      <h5 style="margin-bottom: 10px"><b><span translate> dashboard.unanswered_questions </span>( {{moduledata.unanswered_questions_count}} of {{moduledata.posts_total}} )</b></h5>
+      <div class="center" style="margin-left: 25px;margin-right: 25px;">
+        <div ng-repeat="lecture in moduledata.unanswered_questions">
+          <div style="background-color:#BADAA5;padding: 5px;"><b>{{lecture.name}}</b></div>
+          <div ng-repeat="question in lecture.question" ng-click="goTo('course.module.progress' , moduledata.course_id,moduledata.id, 'disc_'+question.id+'+'+question.lecture_id)" class="dashboard_question">
+            <span ng-show="question.privacy">[Public]</span>
+            <span ng-hide="question.privacy">[Privacy]</span>
+            <span ng-bind-html="question.content"></span>
+          </div>
         </div>
-        <br><br>
-    </div> 
-    <div>
-        <a class="button small green module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' translate>dashboard.review_select_inclass_material</a>
-        <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' translate>dashboard.start_inclass</a>
+      </div>
+      <br>
+      <br>
     </div>
+    <div>
+      <a class="button small green module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' translate>dashboard.review_select_inclass_material</a>
+      <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' translate>dashboard.start_inclass</a>
+    </div>
+  </div>
 </div>

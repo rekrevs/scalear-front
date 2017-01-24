@@ -423,6 +423,7 @@ var translation_en={
     unanswered_questions: "Unanswered Questions",
     start_inclass: "@:inclass.start_inclass",
     review_select_inclass_material: "Review & Select In-Class Material",
+    review_quiz: "Review Quiz"
   },
   inclass:{
     more: "more",
@@ -475,7 +476,7 @@ var translation_en={
     invited_by_instruction: 'Click on button of student you want to join ' ,
     wait_for_acceptance: 'Wait For Acceptance' ,
     wait_for_acceptance_instruction: 'Wait For Acceptance from student or you cancel the invitation' ,
-    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' , 
+    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' ,
     invite_another_button: "Invite another student to join",
     video_stage: 'Please watch the video.',
     intro_stage: "Quiz:Intro",
@@ -931,7 +932,7 @@ var translation_en={
     speed: "Speed",
   },
   announcements:{
-    create_announcement: "Create New Announcement",
+    create_announcement: "New Announcement",
     empty: 'No announcements yet.',
     post: "Post announcements to the class here"
   },

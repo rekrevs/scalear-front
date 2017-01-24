@@ -2744,4 +2744,14 @@ th[st-sort]{
 .adminRow .row {
   font-size: 1.2rem;
 }
+
+.dashboard_question{
+  cursor: pointer;
+  padding: 5px;
+}
+.dashboard_question:hover{
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+
+}
 /**************************/

@@ -221,14 +221,16 @@ angular.module('scalearAngularApp')
     function getSummaryModule(module_summary_id_list){
       module_summary_id_list.forEach(function(module_summary_id){
         console.log(module_summary_id)
-        $scope.course_id = module_summary_id[1]
+
         Module.getDashboardModule({
           module_id: module_summary_id[0],
           course_id: module_summary_id[1]
           },function(data){
+            if(data.module.type =="teacher"){
+              $scope.course_id = module_summary_id[1]
+            }
             $scope.module_summary_data.push(data.module)
-        }
-        )
+        })
       })
 
     }

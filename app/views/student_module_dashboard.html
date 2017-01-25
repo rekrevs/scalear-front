@@ -1,8 +1,8 @@
-<div> 
-    <div>
-        <h3>
-      <span>{{moduledata.title}} - </span>
-      <strong style="font-size: 22px;">
+<div>
+  <div class="row collapse with-margin-bottom">
+    <h3>
+      <b><span>{{::moduledata.title}} - </span></b>
+      <span class="size-21 text-bold">
         <span ng-show="moduledata.due_date > 0" style="color:red" >
           <span translate>events.due</span>
           <span>in</span>
@@ -10,66 +10,69 @@
           <span translate>time.hours</span>
         </span>
         <span ng-hide="moduledata.due_date > 0" style="color:red" translate>events.due_date_passed</span>
-      </strong>
+      </span>
     </h3>
-    <p>{{subtitle}}</p>
-
-
+    <div class="color-gray with-small-margin-bottom">{{::subtitle}}</div>
+    <a ng-show="continue_button" class="button small orange" ng-click='goTo(moduledata.course_id, moduledata.id, next_lecture)' translate>{{continue_button}}</a>
+  </div>
+  <div class="row collapse with-margin-bottom" style="height: 100px;">
+    <div class="row collapse with-small-margin-bottom">
+      <div class="small-4 columns">
+        <h5><b translate>dashboard.completion</b></h5>
+      </div>
+      <div class="small-8 columns">
+        <span class="right color-gray">{{::remaining}}</span>
+      </div>
     </div>
-    <div>
-        <h5><b translate>dashboard.completion</b></h5> 
-        <span class="right">{{remaining}}</span>
-        <br>
-        <div style="width:95%;margin-left: auto;margin-right: auto; height: 55px;">
-            <div ng-repeat="module in moduledata.module_completion" id="module_{{module.id}}" ng-style="completion_style[module.id]" style=" width: {{module['duration']}}%;float: left;border: 1px solid #EFE7E7; height: 100%; padding: 1%;  background: linear-gradient(to right, #16A53F {{module['percent_finished']}}%, #a4a9ad 0%);" ng-mouseover=" lectureTooltip(module.id,$event,module.lecture_name)" ng-mouseleave="lectureTooltipLeave(module.id)" >
-                <div style="margin-left: auto;margin-right: auto;width: 25%;">
-                  <i class="fi-play-video center color-white size-30"  ng-show="module['type'] == 'lecture'"></i>
-                  <i class="fi-clipboard-notes center color-white size-30"  ng-hide="module['type'] == 'lecture'"></i>
-                </div>
-            </div> 
-        </div>             
-    </div> 
-<!-- <div id="tooltip"></div> -->
-<br>
-<br>
-
-    <div>
-        <h5><b ><span translate>global.quizzes</span></b></h5> 
-        <div ng-repeat="module in moduledata.module_completion" ng-style="module_style[module.id]" ng-if="module['type'] == 'lecture'" style="width: {{group_width * module.online_quizzes.length}}% ;float: left; height: 70px; ">
-                <div style="height:2%" ></div>
-                <div ng-repeat="online_quiz in module.online_quizzes" style="width:{{100/module.online_quizzes.length}}%;float: left;border:0px solid #000000;height:95%">
-                    <div  ng-if="online_quiz['data'].length==1" style="width:40%;max-width: 40px; height: 100%;margin-left: auto;margin-right: auto;display: block; background-color:{{ quiz_completion_data_series[online_quiz['data'][0]].color  }}" ng-mouseover=" lectureTooltip(module.id,$event,module.lecture_name)" ng-mouseleave="lectureTooltipLeave(module.id)"  pop-over='online_popover[online_quiz.id]' ></div>
-
-                    <div ng-if="online_quiz['data'].length==2" style="height:100%">
-                        <div  style="width:40%; height: 50%;margin-left: auto;margin-right: auto;display: block; background-color:{{ quiz_completion_data_series[online_quiz['data'][0]].color  }}" ng-mouseover=" lectureTooltip(module.id,$event,module.lecture_name)" ng-mouseleave="lectureTooltipLeave(module.id)" pop-over='online_popover[online_quiz.id]'></div>
-                        <div  style="width:40%; height: 50%;margin-left: auto;margin-right: auto;display: block; background-color:{{quiz_completion_data_series[online_quiz['data'][1]].color}}; margin-top: 3%" ng-mouseover=" lectureTooltip(module.id,$event,module.lecture_name)" ng-mouseleave="lectureTooltipLeave(module.id)" pop-over='online_popover[online_quiz.id]'></div>
-                    </div>
-                </div> 
+    <div class="row collapse">
+      <div id="item_{{::item.id}}" ng-repeat="item in moduledata.module_completion" class="item" ng-style="completion_style[item.id]" ng-mouseover="lectureTooltip($event, item);" ng-mouseleave="lectureTooltipLeave(item.id)">
+        <center>
+          <i class="fi-play-video color-white size-21" ng-show="item['type'] == 'lecture'"></i>
+          <i class="fi-clipboard-notes color-white size-21" ng-hide="item['type'] == 'lecture'"></i>
+        </center>
+      </div>
+      <div ng-style="item_tooltip_style" class="text-bold size-12 position-absolute">{{item_tooltip_content}}</div>
+    </div>
+  </div>
+  <div class="row collapse with-margin-bottom">
+    <div class="row collapse with-small-margin-bottom">
+      <div class="small-4 columns">
+        <h5><b><span translate>global.quizzes</span></b></h5>
+      </div>
+      <div class="small-8 columns" ng-show="moduledata.module_done == -1">
+        <span class="right color-gray">Complete the module to see the results</span>
+      </div>
+    </div>
+    <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar" >
+      <div ng-repeat="item in moduledata.module_completion" ng-style="item_style[item.id]" ng-if="item['type'] == 'lecture'" class="left quiz-outer-bar">
+        <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="quiz_bar_style[item.id]" ng-mouseover=" lectureTooltip($event, item)" ng-mouseleave="lectureTooltipLeave(item.id)">
+          <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar"></div>
+          <div ng-if="online_quiz['data'].length==2" class="quiz-inner-bar" >
+            <div style="height: 50%;" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]'></div>
+            <div style="height: 50%;margin-top: 3%" ng-style="online_quiz_group_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]'></div>
+          </div>
         </div>
+      </div>
     </div>
-<br>
-<br>
-<br>
-    <div style="margin-top:25px">
-        <h5><b ><span translate> dashboard.my_questions </span> ({{moduledata.posts_answered}} of {{moduledata.posts_total}} answered)</b></h5> 
-        <div class="center" style="margin-left: 25px;margin-right: 25px;">
-            <div ng-repeat= "lecture in moduledata.unanswered_questions">
-            <!-- {{lecture}} -->
-                <div style="background-color:#BADAA5"><b>{{lecture.name}}</b></div> 
-                <div ng-repeat= "question in lecture.questions" ng-click='goTo(moduledata.course_id, question.group_id, question.lecture_id, question.time)'  class="dashboard_question"> 
-                    <span ng-show="question.privacy">[Public]</span>
-                    <span ng-hide="question.privacy">[Privacy]</span>
-                    <span ng-bind-html="question.content"></span> 
-                    <div class="center" style="margin-left: 50px;margin-right: 50px;">
-                        <div ng-repeat= "comment in question.comments">
-                            <b><span ng-bind-html="comment.name"></span> :</b> <span ng-bind-html="comment.content"></span> 
-                        </div>
-                    </div>
-                </div>
+  </div>
+  <div class="row collapse with-margin-bottom" ng-show="moduledata.posts_answered.length > 0">
+    <div class="row collapse with-small-margin-bottom">
+      <h5><b ><span translate> dashboard.my_questions </span></b> ({{moduledata.posts_answered}} of {{moduledata.posts_total}} answered)</h5>
+    </div>
+    <div class="center" style="margin-left: 25px">
+      <div ng-repeat="lecture in moduledata.unanswered_questions">
+        <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
+        <div ng-repeat="question in lecture.questions" ng-click='goTo(moduledata.course_id, question.group_id, question.lecture_id, question.time)' class="dashboard_question">
+          <span ng-show="question.privacy">[Public]</span>
+          <span ng-hide="question.privacy">[Privacy]</span>
+          <span ng-bind-html="question.content"></span>
+          <div class="center" style="margin-left: 50px">
+            <div ng-repeat="comment in question.comments">
+              <b><span ng-bind-html="comment.name"></span> :</b> <span ng-bind-html="comment.content"></span>
             </div>
+          </div>
         </div>
-        <br><br>
-    </div> 
-
-
+      </div>
+    </div>
+  </div>
 </div>

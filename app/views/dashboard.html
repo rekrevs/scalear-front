@@ -1,32 +1,7 @@
-<style>
-table {
-  border: none !important;
-}
-
-td, th {
-    border: 0px ;
-}
-
-div.highcharts-label.highcharts-tooltip{
-	pointer-events: visible;
-}
-
-div.highcharts-label.highcharts-tooltip span{
-  white-space: normal !important;
-}
-h5{
-  margin: 0
-}
-
-p.medium-editor-p{
-  display: inline-block;
-}
-
-</style>
 <center>
   <loading size="big" show="!eventSources.length"></loading>
 </center>
-<span ng-show="eventSources.length">
+<span class="dashboard" ng-show="eventSources.length">
 	<div class="small-12 large-6 columns" >
     <center>
       <loading size="big" show="module_summary_data.length<=0"></loading>

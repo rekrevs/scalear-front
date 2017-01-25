@@ -1,7 +1,7 @@
 <div>
   <div>
     <h3>
-      <span>{{moduledata.title}} - </span>
+      <b><span>{{moduledata.title}} - </span></b>
       <strong style="font-size: 22px;">
         <span ng-show="moduledata.due_date > 0" style="color:red" >
           <span translate>events.due</span>
@@ -27,9 +27,9 @@
   <div ng-show="moduledata.unanswered_questions_count>0">
     <div>
       <h5 style="margin-bottom: 10px"><b><span translate> dashboard.unanswered_questions </span> ( {{moduledata.unanswered_questions_count}} of {{moduledata.posts_total}} )</b></h5>
-      <div class="center" style="margin-left: 25px;margin-right: 25px;">
+      <div class="center" style="margin-left: 25px">
         <div ng-repeat="lecture in moduledata.unanswered_questions">
-          <div style="background-color:#BADAA5;padding: 5px;"><b>{{lecture.name}}</b></div>
+          <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
           <div ng-repeat="question in lecture.question" ng-click="goTo('course.module.progress' , moduledata.course_id,moduledata.id, 'disc_'+question.id+'+'+question.lecture_id)" class="dashboard_question">
             <span ng-show="question.privacy">[Public]</span>
             <span ng-hide="question.privacy">[Privacy]</span>

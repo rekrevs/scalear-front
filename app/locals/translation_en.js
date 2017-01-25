@@ -421,10 +421,13 @@ var translation_en={
     as_ical_file: "As File",
     as_url: "As Link",
     student_completion: "Student Completion",
+    completion: "Completion",
     unanswered_questions: "Unanswered Questions",
     start_inclass: "@:inclass.start_inclass",
     review_select_inclass_material: "Review & Select In-Class Material",
-    review_quiz: "Review Quiz"
+    review_quiz: "Review Quiz",
+    my_questions: "My Questions",
+    try_again: "Try again" 
   },
   inclass:{
     more: "more",

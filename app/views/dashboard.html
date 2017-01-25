@@ -31,7 +31,8 @@ p.medium-editor-p{
     <center>
       <loading size="big" show="module_summary_data.length<=0"></loading>
     </center>
-		<dashboard-calendar ng-repeat="moduledata in module_summary_data" moduledata="moduledata"></dashboard-calendar>
+		<dashboard-calendar ng-repeat="moduledata in module_summary_data" moduledata="moduledata" ng-if="moduledata.type == 'teacher'"  ></dashboard-calendar>
+		<student-module-dashboard  ng-repeat="moduledata in module_summary_data" moduledata="moduledata" ng-if="moduledata.type == 'student'"></student-module-dashboard>
 	</div>
 	<div class="small-12 large-6 right columns">
 	 	<div class="calendar-container" step-text="Here's a calendar with all the events for the courses you're in." step-index="1" step-placement="top" step-append-to-body="flase" page-name="{{current}}">

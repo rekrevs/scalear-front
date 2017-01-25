@@ -435,10 +435,13 @@ var translation_sv={
     as_ical_file: "Som fil ",
     as_url: "Som länk ",
     student_completion: "Studenten Slutför",
+    student_completion: "Slutför",
     unanswered_questions: "Obesvarade Frågor",
     start_inclass: "@:inclass.start_inclass",
     review_select_inclass_material: "översyn & Välj I Klassen Material",
-    review_quiz: "Review Quiz (t)"
+    review_quiz: "Review Quiz (t)",
+    my_questions: "My Questions (t)",
+    try_again: "Try again (t)" 
   },
   inclass:{
     more: "mer",

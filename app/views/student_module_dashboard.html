@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar" >
-      <div ng-repeat="item in moduledata.module_completion" ng-style="item_style[item.id]" ng-if="item['type'] == 'lecture'" class="left quiz-outer-bar">
+      <div ng-repeat="item in moduledata.module_completion" ng-style="item_style[item.id]" ng-if="item['type'] == 'lecture' && item.online_quizzes.length>0" class="left quiz-outer-bar">
         <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="quiz_bar_style[item.id]" ng-mouseover=" lectureTooltip($event, item)" ng-mouseleave="lectureTooltipLeave(item.id)">
           <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar"></div>
           <div ng-if="online_quiz['data'].length==2" class="quiz-inner-bar" >

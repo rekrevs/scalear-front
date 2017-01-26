@@ -167,6 +167,10 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
+      function isVisible(){
+        return (new Date(quiz.appearance_time) <= new Date())
+      }
+
       return angular.extend(quiz, {
         instanceType: instanceType,
         module: module,
@@ -175,7 +179,8 @@ angular.module('scalearAngularApp')
         remove: remove,
         setAsSelected: setAsSelected,
         markDone: markDone,
-        studentSolve:studentSolve
+        studentSolve:studentSolve,
+        isVisible: isVisible
       })
     }
 

@@ -219,20 +219,25 @@ angular.module('scalearAngularApp')
 
 
     function getSummaryModule(module_summary_id_list){
+      $scope.dashboard_loading = {}
+      $scope.module_summary_id_list= module_summary_id_list
       module_summary_id_list.forEach(function(module_summary_id){
-        console.log(module_summary_id)
+      var module_id = module_summary_id[0]
+      var course_id = module_summary_id[1]
+      $scope.dashboard_loading[module_id] = true
+      console.log(module_summary_id)
 
-        Module.getDashboardModule({
-          module_id: module_summary_id[0],
-          course_id: module_summary_id[1]
-          },function(data){
-            if(data.module.type =="teacher"){
-              $scope.course_id = module_summary_id[1]
-            }
-            $scope.module_summary_data.push(data.module)
+      Module.getDashboardModule({
+        module_id: module_id,
+        course_id: course_id
+        },function(data){
+          if(data.module.type =="teacher"){
+            $scope.course_id = course_id
+          }
+          $scope.module_summary_data.push(data.module)
+          $scope.dashboard_loading[module_id] = false
         })
       })
-
     }
 
     $scope.exportCalendar = function() {

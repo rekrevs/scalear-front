@@ -2788,6 +2788,7 @@ th[st-sort]{
 
 .dashboard .quiz-bar-container{
   height: 60px;
+  margin: auto;
 }
 
 .dashboard .quiz-bar-container .quiz-outer-bar,
@@ -2800,5 +2801,15 @@ th[st-sort]{
 .dashboard .quiz-bar{
   float: left;
   cursor: pointer;
+}
+
+.dashboard svg, .dashboard .highcharts-container {
+   overflow: visible !important;
+}
+
+.dashboard .separator{
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px;
+  padding-bottom: 50px;
 }
 /**************************/

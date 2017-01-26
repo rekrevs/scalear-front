@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive('studentModuleDashboard', ['ErrorHandler', 'ScalearUtils', '$filter', '$translate', '$state', '$compile', '$timeout', function(ErrorHandler, ScalearUtils, $filter, $translate, $state, $compile, $timeout) {
+  .directive('studentModuleSummary', ['ErrorHandler', 'ScalearUtils', '$filter', '$translate', '$state', '$compile', '$timeout', function(ErrorHandler, ScalearUtils, $filter, $translate, $state, $compile, $timeout) {
     return {
       scope: {
         moduledata: '='

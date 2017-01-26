@@ -34,7 +34,7 @@
       <div ng-style="item_tooltip_style" class="text-bold size-12 position-absolute">{{item_tooltip_content}}</div>
     </div>
   </div>
-  <div class="row collapse with-margin-bottom">
+  <div class="row collapse with-margin-bottom" ng-if="moduledata['online_quiz_count'] > 0">
     <div class="row collapse with-small-margin-bottom">
       <div class="small-4 columns">
         <h5><b><span translate>global.quizzes</span></b></h5>

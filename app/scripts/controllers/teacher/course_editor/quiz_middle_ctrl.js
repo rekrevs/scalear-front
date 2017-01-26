@@ -7,7 +7,8 @@ angular.module('scalearAngularApp')
     ItemsModel.setSelectedItem($scope.quiz)
     $scope.course = CourseModel.getSelectedCourse()
     $scope.module = ModuleModel.getSelectedModule()
-    $scope.publish_state = getPublishStatus($scope.quiz)
+    $scope.publish_state_visible = $scope.quiz.isVisible()
+    $scope.module_visible = $scope.module.isVisible()
     $scope.alert = {
       type: "alert",
       msg: "error_message.got_some_errors"
@@ -64,27 +65,16 @@ angular.module('scalearAngularApp')
       return temp_quiz.validate()
     };
 
-    function savePublish(publishstate) {
+    function savePublish(publish) {
       $scope.saveQuestions()
-      // $scope.quiz.appearance_time = publishstate ? $scope.module.appearance_time : $scope.course.end_date
       var appearance_time = new Date($scope.module.appearance_time)
-      $scope.quiz.appearance_time = publishstate ? appearance_time : appearance_time.setFullYear(appearance_time.getFullYear() + 200)
+      if(!publish){
+        appearance_time.setFullYear(appearance_time.getFullYear() + 200)
+      }
       $scope.quiz.appearance_time = appearance_time
       $scope.quiz.appearance_time_module = false
-
-      // console.log($scope.quiz.appearance_time)
+      $scope.publish_state_visible = $scope.quiz.isVisible()
       $scope.quiz.update()
-        .then(function(quiz) {
-          // console.log(getPublishStatus(quiz))
-          $scope.publish_state = getPublishStatus(quiz)
-        })
-    }
-
-    function getPublishStatus(quiz) {
-      // console.log(new Date())
-      // console.log(new Date(quiz.appearance_time))
-
-        return  (new Date(quiz.appearance_time) >= new Date())
     }
 
     function addShortucts() {

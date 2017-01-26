@@ -205,6 +205,10 @@ angular.module('scalearAngularApp')
         }).$promise
       }
 
+      function isVisible(){
+        return (new Date(module.appearance_time) <= new Date())
+      }
+
 
       return angular.extend(module, {
         instanceType: instanceType,
@@ -212,6 +216,7 @@ angular.module('scalearAngularApp')
         validate: validate,
         update: update,
         getStatistics: getStatistics,
+        isVisible:isVisible
       })
     }
 

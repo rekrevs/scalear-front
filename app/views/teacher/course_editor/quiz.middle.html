@@ -32,8 +32,13 @@
 				<button class="button small" name="add_question" ng-click="addQuestion()" translate>editor.button.add_question</button>
 				<button class="button small" name="add_header" ng-click="addHeader()" translate>editor.button.add_header</button>
 				<button class="button small green" name="save_quiz" ng-click="saveQuestions()" translate>button.save</button>
-				<button class="button small green" name="save_publish" ng-click="publish()" ng-if="publish_state" translate>button.publish</button>
-				<button class="button small green" name="save_publish" ng-click="unpublish()" ng-if="!publish_state" translate>button.unpublish</button>
+				<span ng-if="!module_visible">
+					<button class="button small green disabled" tooltip-placement="bottom" tooltip-append-to-body="true" tooltip="{{'editor.tooltip.quiz_publish_status' | translate}}" translate>button.publish</button>
+				</span>
+				<span ng-if="module_visible">
+					<button class="button small green" name="save_publish" ng-click="publish()" ng-if="!publish_state_visible" translate>button.publish</button>
+					<button class="button small green" name="save_publish" ng-click="unpublish()" ng-if="publish_state_visible" translate>button.unpublish</button>
+				</span>
 				</div>
 			</center>
 		</div>

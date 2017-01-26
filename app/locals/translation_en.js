@@ -470,7 +470,7 @@ var translation_en={
     invited_by_instruction: 'Click on button of student you want to join ' ,
     wait_for_acceptance: 'Wait For Acceptance' ,
     wait_for_acceptance_instruction: 'Wait For Acceptance from student or you cancel the invitation' ,
-    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' , 
+    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' ,
     invite_another_button: "Invite another student to join",
     video_stage: 'Please watch the video.',
     intro_stage: "Quiz:Intro",
@@ -535,7 +535,8 @@ var translation_en={
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
         click_add_question:"Click or type 'i' to add a question",
         click_add_marker:"Click or type 'm' to add a marker",
-        click_add_note: "Click or type 'n' to add a note. Press 'shift-n' to add a note and continue playing."
+        click_add_note: "Click or type 'n' to add a note. Press 'shift-n' to add a note and continue playing.",
+        quiz_publish_status: "Module not visible to students. Please make sure module is visible before publishing"
     },
     drag:{
         start: "Start",

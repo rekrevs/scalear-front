@@ -4,14 +4,36 @@
 <span class="dashboard" ng-show="eventSources.length">
   <div class="small-12 large-6 columns" style="z-index: 2">
     <div ng-if="module_summary_id_list.length>0">
-      <div ng-repeat="moduledata in module_summary_data" class="separator">
-        <teacher-module-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'" ></teacher-module-summary>
-        <student-module-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"></student-module-summary>
-      </div>
-      <div ng-repeat="id in module_summary_id_list" style="height: 300px">
-        <center ng-show="dashboard_loading[id[0]]" >
-          <loading size="big" show="true"></loading>
-        </center>
+      <div ng-repeat="moduledata in module_summary" class="separator">
+        <div ng-if="moduledata.loading.summary" style="height: 150px">
+          <center style="position: relative;top:25%">
+            <loading size="big" show="true"></loading>
+          </center>
+        </div>
+        <div ng-if="!moduledata.loading.summary">
+          <teacher-module-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'" />
+          <student-module-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
+
+        <div ng-if="moduledata.loading.online_quiz" style="height: 150px">
+          <center style="position: relative;top:25%">
+            <loading size="big" show="true"></loading>
+          </center>
+        </div>
+        <div ng-if="!moduledata.loading.online_quiz">
+          <teacher-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'"/>
+          <student-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
+
+        <div ng-if="moduledata.loading.discussion" style="height: 150px">
+          <center style="position: relative;top:25%">
+            <loading size="big" show="true"></loading>
+          </center>
+        </div>
+        <div ng-if="!moduledata.loading.discussion">
+          <teacher-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'"/>
+          <student-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
       </div>
     </div>
     <div ng-if="!module_summary_id_list.length" style="height: 300px">
@@ -56,8 +78,7 @@
   </div>
 </span>
 <div id="quiz_bar" ng-hide='true'> </div>
-
-      <!-- <button class="show-inline button really-tiny no-margin left" ng-click="toggleLargeCalendar()" ng-show="events.length" >
+<!-- <button class="show-inline button really-tiny no-margin left" ng-click="toggleLargeCalendar()" ng-show="events.length" >
         <span ng-show="!large_calendar">
           <i class="fi-zoom-in size-10"/>
           <span translate>dashboard.large_calendar</span>

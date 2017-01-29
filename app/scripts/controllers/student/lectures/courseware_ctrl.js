@@ -47,9 +47,9 @@ angular.module('scalearAngularApp')
             }
           }
           $log.debug("timeline", $scope.timeline)
-          if(!$stateParams.lecture_id && !$stateParams.quiz_id){
-            showModuleCourseware(module)
-          }
+          // if(!$stateParams.lecture_id && !$stateParams.quiz_id){
+          //   showModuleCourseware(module)
+          // }
         }
       );
     }

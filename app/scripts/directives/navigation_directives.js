@@ -236,32 +236,16 @@ angular.module('scalearAngularApp')
         }
 
         scope.showModuleCourseware = function(module, event) {
-          if(!scope.currentmodule || scope.currentmodule.id != module.id) {
-            scope.currentmodule = module
-            if(MobileDetector.isPhone()) {
-              event.stopPropagation()
-              $timeout(function() {
-                ContentNavigator.close()
-              })
-              $state.go('course.module.student_inclass', { 'module_id': module.id })
-            } else if(module.sub_items_size > 0) {
-              Module.getLastWatched({
-                  course_id: $stateParams.course_id,
-                  module_id: module.id
-                },
-                function(data) {
-                  if(data.last_watched != -1) {
-                    $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
-                    scope.currentitem = { id: data.last_watched }
-                  } else {
-                    $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': data.first_quiz_id })
-                    scope.currentitem = { id: data.first_quiz_id }
-                  }
-                })
-            } else
-              scope.currentmodule = null
-          } else
-            event.stopPropagation()
+          scope.currentmodule = module
+          if(MobileDetector.isPhone()) {
+            $timeout(function() {
+              ContentNavigator.close()
+            })
+            $state.go('course.module.student_inclass', { 'module_id': module.id })
+          } else {
+            $state.go("course.module.courseware.overview", {'module_id': module.id})
+          }
+          event.stopPropagation()
         }
 
         scope.showItem = function(item, mode) {

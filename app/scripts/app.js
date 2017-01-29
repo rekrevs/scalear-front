@@ -258,6 +258,11 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/student/lectures/courseware.html',
             controller: 'coursewareCtrl'
         })
+        .state('course.module.courseware.overview', {
+            url: '/overview',
+            templateUrl: '/views/student/course/module_overview.html',
+            controller: 'studentModuleOverviewCtrl'
+        })
         .state('course.module.courseware.lecture', {
             url: '/lectures/:lecture_id?time',
             templateUrl: '/views/student/lectures/lecture.middle.html',

@@ -2795,7 +2795,7 @@ th[st-sort]{
 .dashboard .quiz-bar-container .quiz-bar,
 .dashboard .quiz-bar-container .quiz-inner-bar{
   height: 100%;
-  padding:0 3px;
+  padding:0 5px;
 }
 
 .dashboard .quiz-bar{
@@ -2811,5 +2811,12 @@ th[st-sort]{
   border-bottom: 2px solid #ddd;
   margin-bottom: 25px;
   padding-bottom: 50px;
+}
+
+.dashboard .popover{
+  width:350px;
+  padding: 10px;
+  padding-bottom: 0;
+  padding-right: 0;
 }
 /**************************/

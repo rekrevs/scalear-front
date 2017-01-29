@@ -3,7 +3,7 @@
 <!-- endbuild -->
 <div id="main_course_list">
   <center>
-    <loading size="big" show="!(teacher_courses && teacher_courses.length) || (student_courses && student_courses.length)"></loading>
+    <loading size="big" show="!((teacher_courses && teacher_courses.length) || (student_courses && student_courses.length))"></loading>
   </center>
   <div ng-show="(teacher_courses && teacher_courses.length) || (student_courses && student_courses.length)" class="row">
     <div class="small-12 columns course_list">

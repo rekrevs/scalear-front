@@ -1,6 +1,5 @@
-<div>
-  <div class="row collapse with-margin-bottom">
-    <h3>
+<div class="row collapse with-margin-bottom">
+  <h3>
       <b><span>{{::moduledata.title}} - </span></b>
       <span class="size-21 text-bold">
         <span ng-show="moduledata.due_date > 0" style="color:red" >
@@ -12,67 +11,6 @@
         <span ng-hide="moduledata.due_date > 0" style="color:red" translate>events.due_date_passed</span>
       </span>
     </h3>
-    <div class="color-gray with-small-margin-bottom">{{::subtitle}}</div>
-    <a ng-show="continue_button" class="button small orange" ng-click='goTo(moduledata.course_id, moduledata.id, next_lecture)' translate>{{continue_button}}</a>
-  </div>
-  <div class="row collapse with-margin-bottom" style="height: 100px;">
-    <div class="row collapse with-small-margin-bottom">
-      <div class="small-4 columns">
-        <h5><b translate>dashboard.completion</b></h5>
-      </div>
-      <div class="small-8 columns">
-        <span class="right color-gray">{{::remaining}}</span>
-      </div>
-    </div>
-    <div class="row collapse">
-      <div id="item_{{::item.id}}" ng-repeat="item in moduledata.module_completion" class="item" ng-style="completion_style[item.id]" ng-mouseover="lectureTooltip($event, item);" ng-mouseleave="lectureTooltipLeave(item.id)">
-        <center>
-          <i class="fi-play-video color-white size-21" ng-show="item['type'] == 'lecture'"></i>
-          <i class="fi-clipboard-notes color-white size-21" ng-hide="item['type'] == 'lecture'"></i>
-        </center>
-      </div>
-      <div ng-style="item_tooltip_style" class="text-bold size-12 position-absolute">{{item_tooltip_content}}</div>
-    </div>
-  </div>
-  <div class="row collapse with-margin-bottom" ng-if="moduledata['online_quiz_count'] > 0">
-    <div class="row collapse with-small-margin-bottom">
-      <div class="small-4 columns">
-        <h5><b><span translate>global.quizzes</span></b></h5>
-      </div>
-      <div class="small-8 columns" ng-show="moduledata.module_done == -1">
-        <span class="right color-gray">Complete the module to see the results</span>
-      </div>
-    </div>
-    <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar" >
-      <div ng-repeat="item in moduledata.module_completion" ng-style="item_style[item.id]" ng-if="item['type'] == 'lecture' && item.online_quizzes.length>0" class="left quiz-outer-bar">
-        <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="quiz_bar_style[item.id]" ng-mouseover=" lectureTooltip($event, item)" ng-mouseleave="lectureTooltipLeave(item.id)">
-          <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar"></div>
-          <div ng-if="online_quiz['data'].length==2" class="quiz-inner-bar" >
-            <div style="height: 50%;" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]'></div>
-            <div style="height: 50%;margin-top: 3%" ng-style="online_quiz_group_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]'></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row collapse with-margin-bottom" ng-show="moduledata.posts_total.length > 0">
-    <div class="row collapse with-small-margin-bottom">
-      <h5><b ><span translate> dashboard.my_questions </span></b> ({{moduledata.posts_answered}} of {{moduledata.posts_total}} answered)</h5>
-    </div>
-    <div class="center" style="margin-left: 25px">
-      <div ng-repeat="lecture in moduledata.unanswered_questions">
-        <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
-        <div ng-repeat="question in lecture.questions" ng-click='goTo(moduledata.course_id, question.group_id, question.lecture_id, question.time)' class="dashboard_question">
-          <span ng-show="question.privacy">[Public]</span>
-          <span ng-hide="question.privacy">[Privacy]</span>
-          <span ng-bind-html="question.content"></span>
-          <div class="center" style="margin-left: 50px">
-            <div ng-repeat="comment in question.comments">
-              <b><span ng-bind-html="comment.name"></span> :</b> <span ng-bind-html="comment.content"></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="color-gray with-small-margin-bottom">{{::subtitle}}</div>
+  <a ng-show="continue_button" class="button small orange" ng-click='goTo(moduledata.course_id, moduledata.id, next_lecture)' translate>{{continue_button}}</a>
 </div>

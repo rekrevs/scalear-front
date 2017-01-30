@@ -8,6 +8,11 @@
         <span class="right color-gray">{{::remaining}}</span>
       </div>
     </div>
+    <div ng-if="moduledata.loading.online_quiz">
+      <center style="position: relative;top:25%">
+        <loading size="big" show="true"></loading>
+      </center>
+    </div>
     <div class="row collapse completion_container">
       <div ng-repeat="item in moduledata.module_completion" class="item" ng-style="item.completion_style" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)">
         <center>
@@ -18,7 +23,7 @@
       </div>
     </div>
   </div>
-  <div class="row collapse with-margin-bottom" ng-if="moduledata['online_quiz_count'] > 0">
+  <div class="row collapse with-margin-bottom">
     <div class="row collapse with-small-margin-bottom">
       <div class="small-4 columns">
         <h5><b><span translate>global.quizzes</span></b></h5>
@@ -27,7 +32,7 @@
         <span class="right color-gray">Complete the module to see the results</span>
       </div>
     </div>
-    <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar">
+    <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar" ng-show="moduledata.module_completion.length>0">
       <div ng-repeat="item in moduledata.module_completion" ng-style="item.item_style" ng-if="item.type == 'lecture' && item.online_quizzes.length>0" class="left quiz-outer-bar">
         <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="item.quiz_bar_style" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)">
           <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar"></div>

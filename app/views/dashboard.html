@@ -5,34 +5,34 @@
   <div class="small-12 large-6 columns" style="z-index: 2">
     <div ng-if="module_summary_id_list.length>0">
       <div ng-repeat="moduledata in module_summary" class="separator">
+        <div>
+          <teacher-module-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'"  />
+          <student-module-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
         <div ng-if="moduledata.loading.summary" style="height: 150px">
           <center style="position: relative;top:25%">
             <loading size="big" show="true"></loading>
           </center>
         </div>
-        <div ng-if="!moduledata.loading.summary">
-          <teacher-module-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'" />
-          <student-module-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
-        </div>
 
+        <div>
+          <teacher-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'" />
+          <student-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
         <div ng-if="moduledata.loading.online_quiz" style="height: 150px">
           <center style="position: relative;top:25%">
             <loading size="big" show="true"></loading>
           </center>
         </div>
-        <div ng-if="!moduledata.loading.online_quiz">
-          <teacher-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'"/>
-          <student-online-quiz-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
-        </div>
 
+        <div>
+          <teacher-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'" />
+          <student-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
+        </div>
         <div ng-if="moduledata.loading.discussion" style="height: 150px">
           <center style="position: relative;top:25%">
             <loading size="big" show="true"></loading>
           </center>
-        </div>
-        <div ng-if="!moduledata.loading.discussion">
-          <teacher-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'teacher'"/>
-          <student-discussion-summary moduledata="moduledata" ng-if="moduledata.type == 'student'"/>
         </div>
       </div>
     </div>

@@ -2805,6 +2805,7 @@ th[st-sort]{
 
 .dashboard svg, .dashboard .highcharts-container {
    overflow: visible !important;
+   z-index:1 !important;
 }
 
 .dashboard .separator{

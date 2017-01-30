@@ -1,6 +1,11 @@
-<div ng-show="moduledata.unanswered_questions_count>0">
+<div>
   <div>
-    <h5 style="margin-bottom: 10px"><b><span translate> dashboard.unanswered_questions </span> ( {{moduledata.unanswered_questions_count}} of {{moduledata.posts_total}} )</b></h5>
+    <h5 style="margin-bottom: 10px">
+      <b>
+        <span translate>dashboard.unanswered_questions</span>
+        <span ng-show="moduledata.posts_total" >( {{moduledata.unanswered_questions_count}} of {{moduledata.posts_total}} )</span>
+      </b>
+    </h5>
     <div class="center" style="margin-left: 25px">
       <div ng-repeat="lecture in moduledata.unanswered_questions">
         <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
@@ -14,7 +19,7 @@
     <br>
     <br>
   </div>
-  <div>
+  <div ng-show="moduledata.unanswered_questions_count">
     <a class="button small green module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' translate>dashboard.review_select_inclass_material</a>
     <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' translate>dashboard.start_inclass</a>
   </div>

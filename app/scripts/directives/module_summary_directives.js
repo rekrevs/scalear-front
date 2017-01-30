@@ -9,128 +9,134 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/teacher/progress/teacher_module_summary.html",
       link: function(scope, elem) {
-        scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
-        scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
+        var unwatch = scope.$watch("moduledata.duration",function(val){
+          if(val){
+            scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
+            scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
 
-        scope.subtitle = scope.moduledata.hour_min + " " +
-          $translate.instant('time.hours') + ", " +
-          scope.moduledata.quiz_count + " " +
-          $translate.instant('global.quizzes') + ", " +
-          scope.moduledata.survey_count + " " +
-          $translate.instant('global.surveys') + ". " +
-          $translate.instant('events.due') + " " +
-          $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
-          $translate.instant('global.at') + " " +
-          $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
+            scope.subtitle = scope.moduledata.hour_min + " " +
+              $translate.instant('time.hours') + ", " +
+              scope.moduledata.quiz_count + " " +
+              $translate.instant('global.quizzes') + ", " +
+              scope.moduledata.survey_count + " " +
+              $translate.instant('global.surveys') + ". " +
+              $translate.instant('events.due') + " " +
+              $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
+              $translate.instant('global.at') + " " +
+              $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
 
-        var student_completion_options = {
-          on_time: {
-            text: "On-time",
-            color: "#16A53F" // Green
-          },
-          late: {
-            text: "Late",
-            color: "#E66726" //Orange:
-          },
-          incomplete: {
-            text: "Incomplete",
-            color: "#a4a9ad" //silver
-          },
-          completed: {
-            text: "Complete",
-            color: "#16A53F" //Green:
-          },
-          more_than_50: {
-            text: "More than 50%",
-            color: "#BADAA5" //Pale Green:
-          },
-          less_than_50: {
-            text: "Less than 50%",
-            color: "#F5C09E" //Pale Orange
-          },
-          not_watched: {
-            text: "Not Started",
-            color: "#a4a9ad" //silver
-          }
-        }
-
-        var student_completion_data_series = []
-        Object.keys(scope.moduledata.students_completion).forEach(function(student_key) {
-          var bar = {
-            name: student_completion_options[student_key].text,
-            data: [scope.moduledata.students_completion[student_key]],
-            color: student_completion_options[student_key].color
-          }
-          student_completion_data_series.push(bar)
-        })
-
-        scope.student_completion_chart_config = {
-          options: {
-            chart: {
-              type: 'bar',
-              margin: [0, 0, 10, 0],
-              spacing: [0, 0, 0, 0]
-            },
-            plotOptions: {
-              series: {
-                stacking: 'normal'
-              }
-            },
-            legend: {
-              enabled: false
-            },
-            tooltip: {
-              formatter: function() {
-                return '<b style="color:' + this.series.color + '">' + this.series.name + '</b> (' + this.y + ' of ' + scope.moduledata.students_count + ')';
+            var student_completion_options = {
+              on_time: {
+                text: "On-time",
+                color: "#16A53F" // Green
               },
-              positioner: function(labelWidth, labelHeight, point) {
-                var bar_start = point.plotX - point.h
-                var bar_end = point.plotX
-                var mid_point = bar_start + (bar_end - bar_start) / 2
-                var offset = labelWidth / 2
-
-                var tooltipX = mid_point - offset
-                var tooltipY = point.plotY + 20;
-
-                if (tooltipX < 0) {
-                  tooltipX = 0
-                }
-                return {
-                  x: tooltipX,
-                  y: tooltipY
-                };
+              late: {
+                text: "Late",
+                color: "#E66726" //Orange:
+              },
+              incomplete: {
+                text: "Incomplete",
+                color: "#a4a9ad" //silver
+              },
+              completed: {
+                text: "Complete",
+                color: "#16A53F" //Green:
+              },
+              more_than_50: {
+                text: "More than 50%",
+                color: "#BADAA5" //Pale Green:
+              },
+              less_than_50: {
+                text: "Less than 50%",
+                color: "#F5C09E" //Pale Orange
+              },
+              not_watched: {
+                text: "Not Started",
+                color: "#a4a9ad" //silver
               }
             }
-          },
-          size: {
-            height: 100,
-            width: elem.width()
-          },
-          title: { text: null },
-          xAxis: {
-            categories: null,
-            gridLineWidth: 0,
-            labels: { enabled: false },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            lineColor: 'transparent',
-            minorTickLength: 0,
-            tickLength: 0
-          },
-          yAxis: {
-            title: { text: null },
-            gridLineWidth: 0,
-            labels: { enabled: false },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            lineColor: 'transparent',
-            minorTickLength: 0,
-            tickLength: 0,
-            min: 0,
-            max: scope.moduledata.students_count
-          },
-          series: student_completion_data_series
-        }
+
+            var student_completion_data_series = []
+            Object.keys(scope.moduledata.students_completion).forEach(function(student_key) {
+              var bar = {
+                name: student_completion_options[student_key].text,
+                data: [scope.moduledata.students_completion[student_key]],
+                color: student_completion_options[student_key].color
+              }
+              student_completion_data_series.push(bar)
+            })
+
+            scope.student_completion_chart_config = {
+              options: {
+                chart: {
+                  type: 'bar',
+                  margin: [0, 0, 10, 0],
+                  spacing: [0, 0, 0, 0]
+                },
+                plotOptions: {
+                  series: {
+                    stacking: 'normal'
+                  }
+                },
+                legend: {
+                  enabled: false
+                },
+                tooltip: {
+                  formatter: function() {
+                    return '<b style="color:' + this.series.color + '">' + this.series.name + '</b> (' + this.y + ' of ' + scope.moduledata.students_count + ')';
+                  },
+                  positioner: function(labelWidth, labelHeight, point) {
+                    var bar_start = point.plotX - point.h
+                    var bar_end = point.plotX
+                    var mid_point = bar_start + (bar_end - bar_start) / 2
+                    var offset = labelWidth / 2
+
+                    var tooltipX = mid_point - offset
+                    var tooltipY = point.plotY + 20;
+
+                    if (tooltipX < 0) {
+                      tooltipX = 0
+                    }
+                    return {
+                      x: tooltipX,
+                      y: tooltipY
+                    };
+                  }
+                }
+              },
+              size: {
+                height: 100
+                // width: elem.width()
+              },
+              title: { text: null },
+              xAxis: {
+                categories: null,
+                gridLineWidth: 0,
+                labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0
+              },
+              yAxis: {
+                title: { text: null },
+                gridLineWidth: 0,
+                labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0,
+                min: 0,
+                max: scope.moduledata.students_count
+              },
+              series: student_completion_data_series
+            }
+
+            unwatch()
+          }
+        })
 
         scope.goTo = function(state, course_id, group_id, item_id) {
           $state.go(state, { course_id: course_id, module_id: group_id, item_id: item_id })
@@ -186,113 +192,118 @@ angular.module('scalearAngularApp')
         }
 
         var quiz_xaxis_categories = []
-        scope.moduledata.online_quiz.forEach(function(video_quiz) {
-          Object.keys(video_quiz).forEach(function(id) {
-            quiz_xaxis_categories.push('<b>' + video_quiz[id]['lecture_name'] + ": </b>" + video_quiz[id]['quiz_name'])
-            Object.keys(video_quiz[id]['data']).forEach(function(quiz_bar) {
-              if (quiz_bar == 'review_vote') {
-                scope.review_vote_exist = (video_quiz[id]['data'][quiz_bar] > 0)
-                quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar] * -1)
-              } else {
-                quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar])
-              }
+
+        var unwatch = scope.$watch("moduledata.online_quiz",function(val){
+          if(val){
+            scope.moduledata.online_quiz.forEach(function(video_quiz) {
+              Object.keys(video_quiz).forEach(function(id) {
+                quiz_xaxis_categories.push('<b>' + video_quiz[id]['lecture_name'] + ": </b>" + video_quiz[id]['quiz_name'])
+                Object.keys(video_quiz[id]['data']).forEach(function(quiz_bar) {
+                  if (quiz_bar == 'review_vote') {
+                    scope.review_vote_exist = scope.review_vote_exist || (video_quiz[id]['data'][quiz_bar] > 0)
+                    quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar] * -1)
+                  } else {
+                    quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar])
+                  }
+                })
+                if (video_quiz[id].type == 'quiz') {
+                  quiz_completion_data_series['survey_solved'].data.push(0)
+                } else {
+                  quiz_completion_data_series['tried_not_correct'].data.push(0)
+                  quiz_completion_data_series['tried_correct_finally'].data.push(0)
+                  quiz_completion_data_series['correct_first_try'].data.push(0)
+                  quiz_completion_data_series['not_checked'].data.push(0)
+                }
+              })
             })
-            if (video_quiz[id].type == 'quiz') {
-              quiz_completion_data_series['survey_solved'].data.push(0)
-            } else {
-              quiz_completion_data_series['tried_not_correct'].data.push(0)
-              quiz_completion_data_series['tried_correct_finally'].data.push(0)
-              quiz_completion_data_series['correct_first_try'].data.push(0)
-              quiz_completion_data_series['not_checked'].data.push(0)
-            }
-          })
-        })
-
-        scope.quiz_completion_chart_config = {
-          options: {
-            chart: {
-              type: 'column',
-              events: {
-                load: function() {
-                  this.quiz_tooltip = new Highcharts.Tooltip(this, this.options.tooltip);
-                },
-              },
-              margin: (scope.review_vote_exist) ? [10, 0, 10, 0] : [0, 0, 30, 0]
-            },
-            plotOptions: {
-              series: {
-                stacking: 'normal',
-              },
-              column: {
-                pointWidth: 20,
-                events: {
-                  click: function(evt) {
-                    evt.stopPropagation()
-                    this.chart.quiz_tooltip.refresh([evt.point], evt);
-                    var that = this
-                    $(document).click(function() {
-                      that.chart.quiz_tooltip.hide(100)
-                      $(document).off('click');
-                    })
+            scope.quiz_completion_chart_config = {
+              options: {
+                chart: {
+                  type: 'column',
+                  events: {
+                    load: function() {
+                      this.quiz_tooltip = new Highcharts.Tooltip(this, this.options.tooltip);
+                    },
                   },
+                  margin: scope.review_vote_exist? [0, 0, 0, 0] : [0, 0, 30, 0]
+                },
+                plotOptions: {
+                  series: {
+                    stacking: 'normal',
+                  },
+                  column: {
+                    pointWidth: 20,
+                    events: {
+                      click: function(evt) {
+                        evt.stopPropagation()
+                        this.chart.quiz_tooltip.refresh([evt.point], evt);
+                        var that = this
+                        $(document).click(function() {
+                          that.chart.quiz_tooltip.hide(100)
+                          $(document).off('click');
+                        })
+                      },
+                    }
+                  }
+                },
+                legend: { enabled: false },
+                tooltip: {
+                  shared: true,
+                  useHTML: true,
+                  enabled: false,
+                  backgroundColor: "white",
+                  formatter: quizTooltipFormatter,
+                  positioner: function(labelWidth, labelHeight, point) {
+                    var tooltipX = point.plotX - (labelWidth / 2)
+                    var tooltipY =  100
+                    if (tooltipX < 0) {
+                      tooltipX = 0
+                    }
+                    return {
+                      x: tooltipX,
+                      y: tooltipY
+                    }
+                  }
                 }
-              }
-            },
-            legend: { enabled: false },
-            tooltip: {
-              shared: true,
-              useHTML: true,
-              enabled: false,
-              backgroundColor: "white",
-              formatter: quizTooltipFormatter,
-              positioner: function(labelWidth, labelHeight, point) {
-                var tooltipX = point.plotX - (labelWidth / 2)
-                var tooltipY = (scope.review_vote_exist) ? 110 : 100
-                if (tooltipX < 0) {
-                  tooltipX = 0
-                }
-                return {
-                  x: tooltipX,
-                  y: tooltipY
-                }
-              }
-            }
-          },
-          size: {
-            height: (scope.review_vote_exist) ? 165 : 125
-          },
-          title: { text: null },
-          xAxis: {
-            categories: quiz_xaxis_categories,
-            gridLineWidth: 0,
-            labels: { enabled: false },
-            lineColor: 'transparent',
-            labels: { enabled: false },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            lineColor: 'transparent',
-            minorTickLength: 0,
-            tickLength: 0
+              },
+              size: {
+                height:  125
+              },
+              title: { text: null },
+              xAxis: {
+                categories: quiz_xaxis_categories,
+                gridLineWidth: 0,
+                labels: { enabled: false },
+                lineColor: 'transparent',
+                labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0
 
-          },
-          yAxis: {
-            title: { text: null },
-            gridLineWidth: 0,
-            plotLines: [{
-              color: 'black',
-              width: 1,
-              value: 0
-            }],
-            labels: { enabled: false },
-            lineWidth: 0,
-            minorGridLineWidth: 0,
-            lineColor: 'transparent',
-            minorTickLength: 0,
-            tickLength: 0,
-            max: scope.moduledata.students_count
-          },
-          series: quiz_completion_data_series
-        }
+              },
+              yAxis: {
+                title: { text: null },
+                gridLineWidth: 0,
+                plotLines: [{
+                  color: 'black',
+                  width: 1,
+                  value: 0
+                }],
+                labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0,
+                max: scope.moduledata.students_count
+              },
+              series: quiz_completion_data_series
+            }
+            unwatch()
+          }
+        })
 
         function quizTooltipFormatter() {
           var quiz = scope.moduledata.online_quiz[this.points[0].point.index]
@@ -468,7 +479,7 @@ angular.module('scalearAngularApp')
         moduledata: '='
       },
       replace: true,
-      templateUrl: "/views/teacher/progress/teacher_dashboard_summary.html",
+      templateUrl: "/views/teacher/progress/teacher_discussion_summary.html",
       link: function(scope, elem) {
         scope.goTo = function(state, course_id, group_id, item_id) {
           $state.go(state, { course_id: course_id, module_id: group_id, item_id: item_id })
@@ -484,35 +495,39 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/student/progress/student_module_summary.html",
       link: function(scope) {
-        console.log(scope.moduledata)
-        scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
-        scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
 
-        scope.subtitle = scope.moduledata.hour_min + " " +
-          $translate.instant('time.hours') + ", " +
-          scope.moduledata.quiz_count + " " +
-          $translate.instant('global.quizzes') + ", " +
-          scope.moduledata.survey_count + " " +
-          $translate.instant('global.surveys') + ". " +
-          $translate.instant('events.due') + " " +
-          $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
-          $translate.instant('global.at') + " " +
-          $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
+        var unwatch = scope.$watch("moduledata.due_date_string",function(val){
+          if(val){
+            scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
+            scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
 
-          console.log("scope.moduledata.last_viewed", scope.moduledata);
+            scope.subtitle = scope.moduledata.hour_min + " " +
+              $translate.instant('time.hours') + ", " +
+              scope.moduledata.quiz_count + " " +
+              $translate.instant('global.quizzes') + ", " +
+              scope.moduledata.survey_count + " " +
+              $translate.instant('global.surveys') + ". " +
+              $translate.instant('events.due') + " " +
+              $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
+              $translate.instant('global.at') + " " +
+              $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
 
-        if (scope.moduledata.first_lecture == -1) {
-          scope.continue_button = null
-        } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed > -1) {
-          scope.continue_button = "Continue watching"
-          scope.next_lecture = scope.moduledata.last_viewed
-        } else if (scope.moduledata.module_done >= 0 && scope.moduledata.first_lecture != -1) {
-          scope.continue_button = "Watch again"
-          scope.next_lecture = scope.moduledata.first_lecture
-        } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed == -1) {
-          scope.continue_button = "Start watching"
-          scope.next_lecture = scope.moduledata.first_lecture
-        }
+            if (scope.moduledata.first_lecture == -1) {
+              scope.continue_button = null
+            } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed > -1) {
+              scope.continue_button = "Continue watching"
+              scope.next_lecture = scope.moduledata.last_viewed
+            } else if (scope.moduledata.module_done >= 0 && scope.moduledata.first_lecture != -1) {
+              scope.continue_button = "Watch again"
+              scope.next_lecture = scope.moduledata.first_lecture
+            } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed == -1) {
+              scope.continue_button = "Start watching"
+              scope.next_lecture = scope.moduledata.first_lecture
+            }
+
+            unwatch()
+          }
+        })
 
         scope.goTo = function(course_id, group_id, lecture_id, time) {
           $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
@@ -528,11 +543,6 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/student/progress/student_online_quiz_summary.html",
       link: function(scope) {
-        scope.remaining = 'Remaining: ' + ScalearUtils.toHourMin(scope.moduledata.remaining_duration) + " " +
-          $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
-          scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "
-
-        scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
 
         scope.online_quiz_color = {}
         scope.online_quiz_group_color = {}
@@ -598,11 +608,82 @@ angular.module('scalearAngularApp')
           }
         }
 
-        scope.quiz_completion_bar = { "width": scope.moduledata['online_quiz_count'] * 5 }
-        if (scope.quiz_completion_bar["width"] > 100) {
-          scope.quiz_completion_bar["width"] = 100
-        }
-        scope.quiz_completion_bar["width"] += "%"
+        var unwatch = scope.$watch("moduledata.remaining_duration", function(val){
+          if(val){
+            scope.remaining = 'Remaining: ' + ScalearUtils.toHourMin(scope.moduledata.remaining_duration) + " " +
+              $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
+              scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "
+
+            scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
+
+            scope.quiz_completion_bar = { "width": scope.moduledata['online_quiz_count'] * 5 }
+            if (scope.quiz_completion_bar["width"] > 100) {
+              scope.quiz_completion_bar["width"] = 100
+            }
+            scope.quiz_completion_bar["width"] += "%"
+
+            scope.online_popover = {}
+            scope.online_quiz_name = {}
+            scope.content = {}
+            var online_quiz_index = 0
+
+            scope.moduledata.module_completion.forEach(function(item) {
+              item.completion_style = {
+                "position": "relative",
+                "width": item['duration'] + "%",
+                "background": "linear-gradient(to right, #16A53F " + item['percent_finished'] + "%, #a4a9ad 0%)"
+              }
+              item.item_style = {}
+              item.quiz_bar_style = {}
+
+              if (item.type == 'lecture') {
+                item.item_style["width"] = scope.group_width * item['online_quizzes'].length + "%"
+                item.quiz_bar_style["width"] = 100 / item['online_quizzes'].length + "%"
+
+                item['online_quizzes'].forEach(function(online_quiz) {
+
+                  scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']
+                  if (scope.moduledata.module_done == -1) {
+                    scope.online_quiz_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series["not_done"].color
+                    }
+                    scope.online_quiz_group_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series["not_done"].color
+                    }
+                    scope.content[online_quiz.id] = scope.quiz_completion_data_series["not_done"].name
+                  } else if (online_quiz['data'].length == 2) {
+                    scope.online_quiz_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
+                    }
+                    scope.online_quiz_group_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
+                    }
+                    scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name + scope.quiz_completion_data_series[online_quiz['data'][1]].name
+                  } else {
+                    scope.online_quiz_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
+                    }
+                    scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
+                  }
+                  scope.online_popover[online_quiz['id']] = {
+                    title: "<b ng-bind-html='online_quiz_name[online_quiz.id]'></b> ",
+                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;'></div> " +
+                      "<div class='right' style='bottom: 10px;right: 10px;'>" +
+                      "<a ng-hide='moduledata.module_done == -1' class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
+                      "</div>",
+                    html: true,
+                    trigger: 'click',
+                  }
+                  if (online_quiz_index / scope.moduledata['online_quiz_count'] > 0.5) {
+                    scope.online_popover[online_quiz['id']]['placement'] = 'left'
+                  }
+                  online_quiz_index += 1
+                })
+              }
+            })
+            unwatch()
+          }
+        })
 
         scope.lectureTooltip = function(item) {
           item.item_style["border"] = "2px solid #000000"
@@ -615,66 +696,6 @@ angular.module('scalearAngularApp')
           item.item_style["border"] = 'none'
           item.show_tooltip=false
         }
-
-        scope.online_popover = {}
-        scope.online_quiz_name = {}
-        scope.content = {}
-        var online_quiz_index = 0
-
-        scope.moduledata.module_completion.forEach(function(item) {
-          item.completion_style = {
-            "position": "relative",
-            "width": item['duration'] + "%",
-            "background": "linear-gradient(to right, #16A53F " + item['percent_finished'] + "%, #a4a9ad 0%)"
-          }
-          item.item_style = {}
-          item.quiz_bar_style = {}
-
-          if (item.type == 'lecture') {
-            item.item_style["width"] = scope.group_width * item['online_quizzes'].length + "%"
-            item.quiz_bar_style["width"] = 100 / item['online_quizzes'].length + "%"
-
-            item['online_quizzes'].forEach(function(online_quiz) {
-
-              scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']
-              if (scope.moduledata.module_done == -1) {
-                scope.online_quiz_color[online_quiz.id] = {
-                  "backgroundColor": scope.quiz_completion_data_series["not_done"].color
-                }
-                scope.online_quiz_group_color[online_quiz.id] = {
-                  "backgroundColor": scope.quiz_completion_data_series["not_done"].color
-                }
-                scope.content[online_quiz.id] = scope.quiz_completion_data_series["not_done"].name
-              } else if (online_quiz['data'].length == 2) {
-                scope.online_quiz_color[online_quiz.id] = {
-                  "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
-                }
-                scope.online_quiz_group_color[online_quiz.id] = {
-                  "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
-                }
-                scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name + scope.quiz_completion_data_series[online_quiz['data'][1]].name
-              } else {
-                scope.online_quiz_color[online_quiz.id] = {
-                  "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
-                }
-                scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
-              }
-              scope.online_popover[online_quiz['id']] = {
-                title: "<b ng-bind-html='online_quiz_name[online_quiz.id]'></b> ",
-                content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;'></div> " +
-                  "<div class='right' style='bottom: 10px;right: 10px;'>" +
-                  "<a ng-hide='moduledata.module_done == -1' class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
-                  "</div>",
-                html: true,
-                trigger: 'click',
-              }
-              if (online_quiz_index / scope.moduledata['online_quiz_count'] > 0.5) {
-                scope.online_popover[online_quiz['id']]['placement'] = 'left'
-              }
-              online_quiz_index += 1
-            })
-          }
-        })
 
         scope.goTo = function(course_id, group_id, lecture_id, time) {
           $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })

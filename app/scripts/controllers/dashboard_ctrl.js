@@ -223,7 +223,8 @@ angular.module('scalearAngularApp')
       module_summary_id_list.forEach(function(module_summary_id) {
         var module_id = module_summary_id[0]
         var course_id = module_summary_id[1]
-        $scope.module_summary[module_id] = {}
+        var role = module_summary_id[2]
+        $scope.module_summary[module_id] = {type: role}
         $scope.module_summary[module_id].loading = { summary: true, online_quiz: true, discussion: true }
 
         Module.getModuleSummary({

@@ -2783,7 +2783,7 @@ th[st-sort]{
   float: left;
   border: 1px solid #EFE7E7;
   height: 100%;
-  padding: 1% 0;
+  padding: 10px 0;
 }
 
 .dashboard .quiz-bar-container{
@@ -2818,5 +2818,13 @@ th[st-sort]{
   padding: 10px;
   padding-bottom: 0;
   padding-right: 0;
+}
+
+.dashboard .completion_container{
+  height: 50px
+}
+
+.dashboard .completion_tooltip{
+  top:50px;
 }
 /**************************/

@@ -499,6 +499,8 @@ angular.module('scalearAngularApp')
           $translate.instant('global.at') + " " +
           $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
 
+          console.log("scope.moduledata.last_viewed", scope.moduledata);
+
         if (scope.moduledata.first_lecture == -1) {
           scope.continue_button = null
         } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed > -1) {
@@ -532,9 +534,6 @@ angular.module('scalearAngularApp')
 
         scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
 
-        scope.item_style = {}
-        scope.completion_style = {}
-        scope.quiz_bar_style = {}
         scope.online_quiz_color = {}
         scope.online_quiz_group_color = {}
 
@@ -605,22 +604,16 @@ angular.module('scalearAngularApp')
         }
         scope.quiz_completion_bar["width"] += "%"
 
-        scope.lectureTooltip = function(event, item) {
-          scope.item_style[item.id]["border"] = "2px solid #000000"
-          scope.completion_style[item.id]["border"] = "2px solid #000000"
-          var item_el = $("#item_" + item.id)
-          var item_position = item_el.offset()
-          scope.item_tooltip_style = {
-            left: item_position.left,
-            top: item_position.top + item_el.height()
-          }
-          scope.item_tooltip_content = item.item_name
+        scope.lectureTooltip = function(item) {
+          item.item_style["border"] = "2px solid #000000"
+          item.completion_style["border"] = "2px solid #000000"
+          item.show_tooltip=true
         }
 
-        scope.lectureTooltipLeave = function(id) {
-          scope.completion_style[id]["border"] = "1px solid #EFE7E7"
-          scope.item_style[id]["border"] = 'none'
-          scope.item_tooltip_content = null
+        scope.lectureTooltipLeave = function(item) {
+          item.completion_style["border"] = "1px solid #EFE7E7"
+          item.item_style["border"] = 'none'
+          item.show_tooltip=false
         }
 
         scope.online_popover = {}
@@ -629,16 +622,17 @@ angular.module('scalearAngularApp')
         var online_quiz_index = 0
 
         scope.moduledata.module_completion.forEach(function(item) {
-          scope.completion_style[item.id] = {
+          item.completion_style = {
+            "position": "relative",
             "width": item['duration'] + "%",
             "background": "linear-gradient(to right, #16A53F " + item['percent_finished'] + "%, #a4a9ad 0%)"
           }
-          scope.item_style[item.id] = {}
-          scope.quiz_bar_style[item.id] = {}
+          item.item_style = {}
+          item.quiz_bar_style = {}
 
-          if (item['type'] == 'lecture') {
-            scope.item_style[item.id]["width"] = scope.group_width * item['online_quizzes'].length + "%"
-            scope.quiz_bar_style[item.id]["width"] = 100 / item['online_quizzes'].length + "%"
+          if (item.type == 'lecture') {
+            item.item_style["width"] = scope.group_width * item['online_quizzes'].length + "%"
+            item.quiz_bar_style["width"] = 100 / item['online_quizzes'].length + "%"
 
             item['online_quizzes'].forEach(function(online_quiz) {
 

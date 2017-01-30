@@ -609,10 +609,10 @@ angular.module('scalearAngularApp')
           scope.item_style[item.id]["border"] = "2px solid #000000"
           scope.completion_style[item.id]["border"] = "2px solid #000000"
           var item_el = $("#item_" + item.id)
-          var item_position = item_el.position()
+          var item_position = item_el.offset()
           scope.item_tooltip_style = {
             left: item_position.left,
-            top: item_position.top + item_el.height() + 30
+            top: item_position.top + item_el.height()
           }
           scope.item_tooltip_content = item.item_name
         }
@@ -645,6 +645,9 @@ angular.module('scalearAngularApp')
               scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']
               if (scope.moduledata.module_done == -1) {
                 scope.online_quiz_color[online_quiz.id] = {
+                  "backgroundColor": scope.quiz_completion_data_series["not_done"].color
+                }
+                scope.online_quiz_group_color[online_quiz.id] = {
                   "backgroundColor": scope.quiz_completion_data_series["not_done"].color
                 }
                 scope.content[online_quiz.id] = scope.quiz_completion_data_series["not_done"].name

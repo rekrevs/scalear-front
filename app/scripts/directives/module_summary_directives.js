@@ -601,10 +601,6 @@ angular.module('scalearAngularApp')
             name: "You got the answer <span style='color:#16A53F'>correct</span>.",
             group_name: "Your individual answer was <span style='color:#16A53F'>correct</span>,",
             color: "#16A53F" // Green
-          },
-          not_done: {
-            name: "Complete the module to see the results",
-            color: "#a4a9ad" // Green
           }
         }
 
@@ -643,15 +639,7 @@ angular.module('scalearAngularApp')
                 item['online_quizzes'].forEach(function(online_quiz) {
 
                   scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']
-                  if (scope.moduledata.module_done == -1) {
-                    scope.online_quiz_color[online_quiz.id] = {
-                      "backgroundColor": scope.quiz_completion_data_series["not_done"].color
-                    }
-                    scope.online_quiz_group_color[online_quiz.id] = {
-                      "backgroundColor": scope.quiz_completion_data_series["not_done"].color
-                    }
-                    scope.content[online_quiz.id] = scope.quiz_completion_data_series["not_done"].name
-                  } else if (online_quiz['data'].length == 2) {
+                  if (online_quiz['data'].length == 2) {
                     scope.online_quiz_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
                     }

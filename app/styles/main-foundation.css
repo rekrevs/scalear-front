@@ -2795,12 +2795,16 @@ th[st-sort]{
 .dashboard .quiz-bar-container .quiz-bar,
 .dashboard .quiz-bar-container .quiz-inner-bar{
   height: 100%;
-  padding:0 5px;
 }
 
 .dashboard .quiz-bar{
   float: left;
   cursor: pointer;
+  padding: 0 5px;
+}
+
+.dashboard .quiz-bar-container .quiz-outer-bar {
+  position: relative;
 }
 
 .dashboard svg, .dashboard .highcharts-container {

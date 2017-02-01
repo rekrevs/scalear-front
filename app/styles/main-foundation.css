@@ -2820,6 +2820,7 @@ th[st-sort]{
 
 .dashboard .popover{
   width:350px;
+  max-width: 350px;
   padding: 10px;
   padding-bottom: 0;
   padding-right: 0;

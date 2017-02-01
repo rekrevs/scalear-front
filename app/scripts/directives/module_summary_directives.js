@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
               },
               more_than_50: {
                 text: "More than 50%",
-                color: "#BADAA5" //Pale Green:
+                color: "#1bca4d" //Pale Green:
               },
               less_than_50: {
                 text: "Less than 50%",
@@ -53,7 +53,22 @@ angular.module('scalearAngularApp')
               not_watched: {
                 text: "Not Started",
                 color: "#a4a9ad" //silver
+              },
+              completed_late: {
+                text: "Late",
+                color: "#1bca4d" //Pale Green:
+              },
+              more_than_80: {
+                text: "More than 80%",
+                color: "#E66726" //Orange
+              },
+              between_50_80: {
+                text: "Between 50% & 80%",
+                color: "#800000" //dark Orange
               }
+
+
+
             }
 
             var student_completion_data_series = []
@@ -63,6 +78,7 @@ angular.module('scalearAngularApp')
                 data: [scope.moduledata.students_completion[student_key]],
                 color: student_completion_options[student_key].color
               }
+
               student_completion_data_series.push(bar)
             })
 
@@ -155,7 +171,7 @@ angular.module('scalearAngularApp')
       link: function(scope, elem) {
         var quiz_completion_data_series = {
           never_tried: {
-            name: "Never Tried",
+            name: "Never tried",
             data: [],
             color: "#a4a9ad" //silver
           },
@@ -165,27 +181,27 @@ angular.module('scalearAngularApp')
             color: "#355BB7" //blue
           },
           not_checked: {
-            name: "Not Checked",
+            name: "Not checked",
             data: [],
             color: "#551a8b" //purble
           },
           tried_not_correct: {
-            name: "Tried, Not Correct",
+            name: "Tried, not correct",
             data: [],
             color: "#E66726" //Orange:
           },
           tried_correct_finally: {
-            name: "Tried, Correct Finally",
+            name: "Correct, after first try",
             data: [],
-            color: "#BADAA5" //Pale Green:
+            color: "#1bca4d" //Pale Green:
           },
           correct_first_try: {
-            name: "Correct First Try",
+            name: "Correct first try",
             data: [],
             color: "#16A53F" // Green
           },
           review_vote: {
-            name: "Voted For Review",
+            name: "Voted for review",
             data: [],
             color: "#f5c343" //yellow:
           }
@@ -202,17 +218,21 @@ angular.module('scalearAngularApp')
                   if (quiz_bar == 'review_vote') {
                     scope.review_vote_exist = scope.review_vote_exist || (video_quiz[id]['data'][quiz_bar] > 0)
                     quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar] * -1)
-                  } else {
+                  } 
+                  else if ( video_quiz[id]['data'][quiz_bar] == 'null') {
+                    quiz_completion_data_series[quiz_bar].data.push(null)                    
+                  }
+                  else {
                     quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar])
                   }
                 })
                 if (video_quiz[id].type == 'quiz') {
-                  quiz_completion_data_series['survey_solved'].data.push(0)
+                  quiz_completion_data_series['survey_solved'].data.push(null)
                 } else {
-                  quiz_completion_data_series['tried_not_correct'].data.push(0)
-                  quiz_completion_data_series['tried_correct_finally'].data.push(0)
-                  quiz_completion_data_series['correct_first_try'].data.push(0)
-                  quiz_completion_data_series['not_checked'].data.push(0)
+                  quiz_completion_data_series['tried_not_correct'].data.push(null)
+                  quiz_completion_data_series['tried_correct_finally'].data.push(null)
+                  quiz_completion_data_series['correct_first_try'].data.push(null)
+                  quiz_completion_data_series['not_checked'].data.push(null)
                 }
               })
             })
@@ -232,14 +252,37 @@ angular.module('scalearAngularApp')
                     stacking: 'normal',
                   },
                   column: {
+                    states:{
+                      hover: {
+                        borderColor: "#ffffff"
+                      }
+                    },
                     pointWidth: 20,
+                    borderWidth: 0 ,
+                    // allowPointSelect: true,
                     events: {
                       click: function(evt) {
                         evt.stopPropagation()
                         this.chart.quiz_tooltip.refresh([evt.point], evt);
+                        // this.chart.series.forEach(function(serie) {
+                          // if(serie.data[evt.point.x] && 'graphic' in serie.data[evt.point.x]){    
+                            // serie.data[evt.point.x].graphic.attr({
+                            //   'stroke':'black',
+                            //   'stroke-width': 3
+                            // })
+                          // }
+                        // })
                         var that = this
                         $(document).click(function() {
                           that.chart.quiz_tooltip.hide(100)
+                          // that.chart.series.forEach(function(serie) {
+                          //   if(serie.data[evt.point.x] && 'graphic' in serie.data[evt.point.x]){                          
+                          //     serie.data[evt.point.x].graphic.attr({
+                          //       'stroke':'black',
+                          //       'stroke-width': 3
+                          //     })
+                          //   }
+                          // })
                           $(document).off('click');
                         })
                       },
@@ -353,7 +396,7 @@ angular.module('scalearAngularApp')
                 color: "#a4a9ad" //silver
               }, {
                 showInLegend: false,
-                name: "Not Checked",
+                name: "Not checked",
                 data: [quiz_data.data['not_checked']],
                 color: "#551a8b" //purble
               }, {
@@ -365,7 +408,7 @@ angular.module('scalearAngularApp')
                 showInLegend: false,
                 name: "Correct, finally",
                 data: [quiz_data.data['tried_correct_finally']],
-                color: "#BADAA5" //Pale Green:
+                color: "#1bca4d" //Pale Green:
               }, {
                 showInLegend: false,
                 name: "Correct, first time",
@@ -373,7 +416,7 @@ angular.module('scalearAngularApp')
                 color: "#16A53F" // Green
               }, {
                 showInLegend: false,
-                name: "Voted For Review",
+                name: "Voted for review",
                 data: [quiz_data.data['review_vote'] * -1],
                 color: "#f5c343" //yellow:
               }]
@@ -382,22 +425,45 @@ angular.module('scalearAngularApp')
             scope.left = '';
 
 
+            scope.left += "<div style='margin-bottom: 26px;'> "
             scope.quiz_only_one_bar_config.series.forEach(function(quiz) {
               var count = Math.abs(quiz.data[0])
-              scope.left += '<div>' + count + "  (" + ((count / scope.moduledata.students_count) * 100).toFixed(2) + '%)     ' + '<span style="color:' + quiz.color + '">' + quiz.name + '</span></div>'
+              if (quiz.data[0] != "null"){
+                if(quiz.name == 'Voted for review'){
+                  scope.left += '</div><div><b>' + count + "  (" + Math.round((count / scope.moduledata.students_count) * 100) + '%)     ' + '<span style="color:' + quiz.color + '">' + quiz.name + '</span></b></div>'
+                }
+                else{
+                  scope.left += '<div><b>' + count + "  (" + Math.round((count / scope.moduledata.students_count) * 100) + '%)     ' + '<span style="color:' + quiz.color + '">' + quiz.name + '</span></b></div>'
+                }
+
+              }
             });
+            var tooltip_template = "<div style='width:460px; height:100%'>" +
+              "<div ng-bind-html='title' class='row collapse'></div>" +
+              "<div class='row collapse'>"+
+                  "<div class='small-2 columns no-padding'>" +
+                    "<highchart class='chart' config='quiz_only_one_bar_config' ></highchart>" +
+                  "</div>" +
+                  "<div style='padding-top: 40px;' class='small-10 columns'>" +
+                    "<div ng-bind-html='left' style='font-size:12px'>" +
+                      // "<div  >" +
+                    "</div>" +
+                  "</div>" +
+                "</div>" +
+              "<div style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
+              "</div>"            
           } else { ///// SURVEY TOOLTIP
             scope.title = this.x;
             scope.left = '';
 
             var answer_data = []
             var xaxis_categories = []
-            scope.left += '<br/>' + this.points[0].y + "  (" + this.points[0].percentage.toFixed(2) + '%)     ' + '<span >' + this.points[0].series.name + '</span>'
+            scope.left += '<br/><b>' + this.points[0].y + "  (" + Math.round(this.points[0].percentage) + '%)     ' + '<span >' + this.points[0].series.name + '</span></b>'
 
             Object.keys(quiz_data.answer).forEach(function(answer) {
               answer_data.push(quiz_data.answer[answer]);
               xaxis_categories.push(answer)
-              scope.left += '<br/>' + quiz_data.answer[answer] + "  (" + ((quiz_data.answer[answer] / scope.moduledata.students_count) * 100).toFixed(2) + '%)     ' + '<span >' + answer + '</span>'
+              scope.left += '<br/><b>' + quiz_data.answer[answer] + "  (" + Math.round((quiz_data.answer[answer] / scope.moduledata.students_count) * 100)+ '%)     ' + '<span >' + answer + '</span></b>'
             });
 
             ////////////////////  Survey bar tooltip
@@ -441,18 +507,23 @@ angular.module('scalearAngularApp')
                 color: "#355BB7" //silver
               }]
             }
+            var tooltip_template = "<div style='width:460px; height:100%'>" +
+              "<div ng-bind-html='title' class='row collapse'></div>" +
+              "<div class='row collapse'>"+
+                  "<div class='small-6 columns no-padding'>" +
+                    "<highchart class='chart' config='quiz_only_one_bar_config'  style='width: 100%;'>></highchart>" +
+                  "</div>" +
+                  "<div style='padding-top: 40px;' class='small-6 columns'>" +
+                    "<div ng-bind-html='left' style='font-size:12px'>" +
+                      // "<div  >" +
+                    "</div>" +
+                  "</div>" +
+                "</div>" +
+              "<div style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
+              "</div>"            
           }
 
-          var tooltip_template = "<div style='width:460px; height:100%'>" +
-            "<div ng-bind-html='title'></div>" +
-            "<table><tr><td style='padding-top: 0px;padding-bottom: 0;'>" +
-            "<highchart class='chart' config='quiz_only_one_bar_config' ></highchart>" +
-            "</td><td>" +
-            "<div ng-bind-html='left' style='font-size:12px'></div>" +
-            "</td><td>" +
-            "</td></tr></table>" +
-            "<div style='bottom: 10px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
-            "</div>"
+
 
           $("#quiz_bar").html(tooltip_template)
           $compile($("#quiz_bar"))(scope)
@@ -546,60 +617,60 @@ angular.module('scalearAngularApp')
 
         scope.online_quiz_color = {}
         scope.online_quiz_group_color = {}
-
+        var complete_the_video = "(Please complete this video)"
         scope.quiz_completion_data_series = {
           group_never_tried: {
-            name: " and you did not answer this group question.",
+            name: "Your <b>group</b> answer is shown on top.",
             color: "#a4a9ad" //silver
           },
           group_survey_solved: {
-            name: " and you solved this group survey.",
+            name: "You solved group survey.",
             color: "#355BB7" //blue
           },
           group_not_checked: {
-            name: " and your answer is not checked.",
+            name: "Your <b>group</b> answer is not checked.",
             color: "#551a8b" //purble
           },
           group_tried_not_correct: {
-            name: " and your group answer was <span style='color:#E66726'>not correct</spna>.",
+            name: "Your <b>group</b> answer was <span style='color:#E66726'>not correct</spna>.",
             color: "#E66726" //Orange:
           },
           group_tried_correct_finally: {
-            name: " and your group answer was <span style='color:#BADAA5'>correct</span> after a retry",
-            color: "#BADAA5" //Pale Green:
+            name: " Your <b>group</b> answer was <span style='color:#1bca4d'>correct</span> after a retry",
+            color: "#1bca4d" //Pale Green:
           },
           group_correct_first_try: {
-            name: " and your group answer was <span style='color:#16A53F'>correct</span>.",
+            name: " Your <b>group</b> answer was <span style='color:#16A53F'>correct</span>.",
             color: "#16A53F" // Green
           },
           self_never_tried: {
             name: "You did not answer this quiz.",
-            group_name: "You did not answer this individual quiz,",
+            group_name: "Your <b>individual</b> answer is shown below.",
             color: "#a4a9ad" //silver
           },
           self_survey_solved: {
             name: "You <span style='color:#355BB7'>answered this survey</span>.",
-            group_name: "You answered this individual survey,",
+            group_name: "You answered <b>individual<b/> survey,",
             color: "#355BB7" //blue
           },
           self_not_checked: {
             name: "You have tried this quiz, but your answer did not been checked,",
-            group_name: "You have tried this quiz, but your answer did not been checked.",
+            group_name: "You have tried this quiz, but your <b>invdividual</b> answer did not been checked.",
             color: "#551a8b" //purble
           },
           self_tried_not_correct: {
             name: "You have tried this quiz, but have <span style='color:#E66726'>not gotten the answer correct</span>.",
-            group_name: "Your individual answer was <span style='color:#E66726'>incorrect</span>,",
+            group_name: "Your <b>individual</b> answer was <span style='color:#E66726'>incorrect</span>,",
             color: "#E66726" //Orange:
           },
           self_tried_correct_finally: {
-            name: "You got the answer correct, but <span style='color:#BADAA5'>not on the first try</span>.",
-            group_name: "Your individual answer was <span style='color:#BADAA5'>correct</span> after a retry,",
-            color: "#BADAA5" //Pale Green:
+            name: "You got the answer correct, but <span style='color:#1bca4d'>not on the first try</span>.",
+            group_name: "Your <b>individual</b> answer was <span style='color:#1bca4d'>correct</span> after a retry,",
+            color: "#1bca4d" //Pale Green:
           },
           self_correct_first_try: {
             name: "You got the answer <span style='color:#16A53F'>correct</span>.",
-            group_name: "Your individual answer was <span style='color:#16A53F'>correct</span>,",
+            group_name: "Your <b>individual</b> answer was <span style='color:#16A53F'>correct</span>,",
             color: "#16A53F" // Green
           }
         }
@@ -637,8 +708,17 @@ angular.module('scalearAngularApp')
                 item.quiz_bar_style["width"] = 100 / item['online_quizzes'].length + "%"
 
                 item['online_quizzes'].forEach(function(online_quiz) {
+                  scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']                  
+                  if( online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried' ) ){
+                    scope.online_quiz_name[online_quiz.id] = complete_the_video
+                  }
+                  if(online_quiz['inclass']){
+                    scope.online_quiz_name[online_quiz.id] = "<b>In-Class Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                  }
+                  if(online_quiz['distance_peer']){
+                    scope.online_quiz_name[online_quiz.id] = "<b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                  }
 
-                  scope.online_quiz_name[online_quiz.id] = online_quiz['quiz_name']
                   if (online_quiz['data'].length == 2) {
                     scope.online_quiz_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
@@ -646,7 +726,11 @@ angular.module('scalearAngularApp')
                     scope.online_quiz_group_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
                     }
-                    scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name + scope.quiz_completion_data_series[online_quiz['data'][1]].name
+                    scope.content[online_quiz.id] ={}
+                    scope.content[online_quiz.id] ={}
+                    scope.content[online_quiz.id][0] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name 
+                    scope.content[online_quiz.id][1] = scope.quiz_completion_data_series[online_quiz['data'][1]].name
+
                   } else {
                     scope.online_quiz_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
@@ -654,16 +738,34 @@ angular.module('scalearAngularApp')
                     scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
                   }
                   scope.online_popover[online_quiz['id']] = {
-                    title: "<b ng-bind-html='online_quiz_name[online_quiz.id]'></b> ",
-                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;'></div> " +
-                      "<div class='right' style='bottom: 10px;right: 10px;'>" +
-                      "<a ng-hide='moduledata.module_done == -1' class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
-                      "</div>",
+                    title: "<span style='font-size:12px;' ng-bind-html='online_quiz_name[online_quiz.id]' ></span> ",
+                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div> " ,
+                      // "<div class='right' style='bottom: 10px;right: 10px;'>" +
+                      // "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
+                      // "</div>",
                     html: true,
-                    trigger: 'click',
+                    trigger: 'hover',
+                    placement: 'bottom'
                   }
-                  if (online_quiz_index / scope.moduledata['online_quiz_count'] > 0.5) {
-                    scope.online_popover[online_quiz['id']]['placement'] = 'left'
+                  if( online_quiz['data'].length == 2 ){
+                    scope.online_popover[online_quiz['id']].content = 
+                    "<div class='row collapse' style='height: 90px;width: 100%;'>" + 
+                      "<div style='height: 50%;width: 100%;' >"+
+                        "<div style='width: 10%;margin-right: 10px;float: left;' ng-style='online_quiz_group_color[online_quiz.id]'  class='quiz-inner-bar'></div>"+
+                        "<div  ng-bind-html='content[online_quiz.id][1]' style='font-size:12px;'></div>"+
+                      "</div>"+
+                      "<div style='height: 50%;width: 100%;margin-top: 2px'>"+
+                        "<div style='width: 10%;margin-right: 10px;float: left;' ng-style='online_quiz_color[online_quiz.id]'  class='quiz-inner-bar'></div>"+
+                        "<div  ng-bind-html='content[online_quiz.id][0]' style='font-size:12px;'></div>"+
+                      "</div>"+
+                      // "<div class='right' style='bottom: 10px;right: 10px;'>" +
+                      //   "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
+                      // "</div>"+
+                    "</div>"
+                  }
+                  // console.log(( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  )
+                  if ( ( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  < 0.4) {
+                    scope.online_popover[online_quiz['id']]['placement'] = 'right'
                   }
                   online_quiz_index += 1
                 })
@@ -685,10 +787,20 @@ angular.module('scalearAngularApp')
           item.show_tooltip=false
         }
 
-        scope.goTo = function(course_id, group_id, lecture_id, time) {
-          $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
+        scope.goTo = function(state , course_id, group_id, lecture_id, time , online_quiz) {
+          if ( !(online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried')) ) {
+            $state.go(state , { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
+          }
         }
 
+        scope.goToLectureQuiz = function(course_id, group_id, id, type) {
+          if(type == 'lecture'){
+            $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
+          }
+          else{
+            $state.go("course.module.courseware.quiz", { course_id: course_id, module_id: group_id, quiz_id: id})
+          }
+        }
       }
     };
   }])

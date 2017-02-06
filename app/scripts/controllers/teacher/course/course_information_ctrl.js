@@ -75,6 +75,21 @@ angular.module('scalearAngularApp')
       TeacherModel.getTeachers().then(function(value) {
         $scope.teachers = value.data;
         $scope.new_teacher = {};
+        if($state.params.new_course) {
+          $modal.open({
+            templateUrl: '/views/teacher/course_list/email_student_answers_modal.html',
+            scope: $scope,
+            controller:['$modalInstance', function($modalInstance ) {
+              var index = $scope.teachers.findIndex(function(teacher) { return $scope.current_user.id==teacher.id })
+              $scope.updateEmailDiscussion = function (email_discussion) {
+                $scope.teachers[index].email_discussion = email_discussion 
+                $scope.updateTeacher($scope.teachers[index])
+                $modalInstance.dismiss('cancel');
+              }
+            }]
+          })
+        } 
+
       })
     }
     

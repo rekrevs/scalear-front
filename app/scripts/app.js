@@ -288,12 +288,12 @@ angular.module('scalearAngularApp')
             controller: 'announcementsCtrl'
         })
         .state('course.course_information', {
-            url: '/course_information',
+            url: '/course_information?new_enroll',
             templateUrl: '/views/student/course/course_information.html',
             controller: 'studentCourseInformationCtrl'
         })
         .state('course.edit_course_information', {
-            url: '/information',
+            url: '/information?new_course',
             templateUrl: '/views/teacher/course/course_information.html',
             controller: 'teacherCourseInformationCtrl'
         })

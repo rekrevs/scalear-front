@@ -127,6 +127,7 @@ var translation_sv={
     refresh:"Uppdatera skärmen",
     vote:"Rösta",
     continue:"Fortsätt",
+    no_thanks: "No thanks(t)",
   },
   support:{
     ipad:"Stöd för iPad är för närvarande i beta.",
@@ -836,13 +837,18 @@ var translation_sv={
         enrollment_url: "URL för registrering",
         course_link: "Kurslänk",
         taught_by: "Undervisas av",
-        receive_email:"Få notifiering via email när student ställer fråga",
+        taught_by_small_cap: "undervisas av",
+        receive_due_dates_email: 'Would you like to receive email reminders about your course deadlines?(t)',
+        receive_student_ask_email_question: 'Would you like to receive an email whenever a student asks a question with a link to reply?(t)',
+        change_email_question: '(You can change this at any time on the Course Information page.)(t)',
+        receive_student_ask_email:"Få notifiering via email när student ställer fråga",
         receive_due_date_email: "Få påminnelse om kommande senaste färdigdatum.",
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",
             export_as: "Exportera anonymiserade kursdata",
             invite: "Bjud in",
+            send_email_reminder: "Send email reminders(t)",
         },
         tooltip:{
             click_to_copy: "Klicka för att kopiera",

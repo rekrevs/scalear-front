@@ -127,6 +127,7 @@ var translation_en={
     refresh:"Refresh",
     vote:"Vote",
     continue:"Continue",
+    no_thanks: "No thanks",
   },
   support:{
     ipad:"iPad support is currently in beta.",
@@ -822,13 +823,18 @@ var translation_en={
         enrollment_url: "Enrollment URL",
         course_link: "Course Link",
         taught_by: "Taught by",
-        receive_email:"Receive email when a student asks a question",
+        taught_by_small_cap: "taught by",
+        receive_due_dates_email: 'Would you like to receive email reminders about your course deadlines?',
+        receive_student_ask_email_question: 'Would you like to receive an email whenever a student asks a question with a link to reply?',
+        change_email_question: '(You can change this at any time on the Course Information page.)',
+        receive_student_ask_email:"Receive email when a student asks a question",
         receive_due_date_email: "Receive email reminders of upcoming due dates.",
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
             export_as: "Export anonymized course data",
             invite: "Invite to Join",
+            send_email_reminder: "Send email reminders",
         },
         tooltip:{
             click_to_copy: "Click to Copy",

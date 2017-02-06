@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
     $scope.submitting = false;
     $scope.course = {}
     $scope.course.selected_subdomain = {'All':true}
+    $scope.course.email_discussion = false
     CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -171,6 +172,7 @@ angular.module('scalearAngularApp')
         // console.log($scope.course.start_date)
         // console.log($scope.course.end_date)
         var selected_subdomain = $scope.course.selected_subdomain
+        var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {
 
@@ -188,6 +190,7 @@ angular.module('scalearAngularApp')
             $scope.server_errors = response.data.errors
             console.log($scope.server_errors)
             $scope.course.selected_subdomain = selected_subdomain
+            $scope.course.email_discussion = email_discussion
           })
       }) 
       // else {

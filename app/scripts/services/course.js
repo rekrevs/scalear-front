@@ -156,12 +156,14 @@ angular.module('scalearAngularApp')
 
     function create(course, import_from_id) {
       var subdomains = course.selected_subdomain
+      var email_discussion = course.email_discussion
       delete course.selected_subdomain
+      delete course.email_discussion
       var modified_course = angular.copy(course)
       var d = new Date()
       modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
       modified_course.time_zone = course.time_zone.name;
-      return Course.create({ course: modified_course, "import": import_from_id , "subdomains":subdomains})
+      return Course.create({ course: modified_course, "import": import_from_id , "subdomains":subdomains , "email_discussion":email_discussion })
         .$promise
         .then(function(data) {
           $rootScope.$broadcast('Course:get_current_courses')

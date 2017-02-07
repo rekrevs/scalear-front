@@ -521,6 +521,7 @@ var translation_sv={
     preview_inclass: "Förhandsvisa lektion",
     incorrect_format_time: "Felaktigt format på tiden",
     time_outside_range: "Tid utanför videons speltid",
+    start_time_bigger_than_end_time: "End time must be after start time(t)",
     cannot_delete_alteast_one_answer: "Kan inte ta bort; det måste finnas minst ett svar",
     header: "Rubrik",
     answer:"@:global.answer",

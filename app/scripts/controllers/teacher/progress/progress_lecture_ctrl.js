@@ -116,12 +116,9 @@ angular.module('scalearAngularApp')
             }
           }
           $log.debug($scope.timeline)
-
           if ($stateParams.item_id != null) {
-            console.log("$stateParams.item_id", $stateParams.item_id);
             scrollToSubItem($stateParams.item_id)
           }
-
         },
         function() {}
       )
@@ -235,7 +232,7 @@ angular.module('scalearAngularApp')
 
     var scrollToSubItem = function(item_key) {
       if (item_key.indexOf("disc") != -1) {
-        var ids = item_key.split("+")
+        var ids = item_key.split("a")
         var content_id = ids[0]
         var item_id = parseInt(content_id.split("_")[1])
         var lid = parseInt(ids[1])

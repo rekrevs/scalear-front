@@ -9,7 +9,7 @@
     <div class="center" style="margin-left: 25px">
       <div ng-repeat="lecture in moduledata.unanswered_questions">
         <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
-        <div ng-repeat="question in lecture.question" ng-click="goTo('course.module.progress' , moduledata.course_id,moduledata.id, 'disc_'+question.id+'+'+question.lecture_id)" class="dashboard_question">
+        <div ng-repeat="question in lecture.question" ng-click="goTo('course.module.progress' , moduledata.course_id,moduledata.id, 'disc_'+question.id+'a'+question.lecture_id)" class="dashboard_question">
           <span ng-show="question.privacy">[Public]</span>
           <span ng-hide="question.privacy">[Privacy]</span>
           <span ng-bind-html="question.content"></span>

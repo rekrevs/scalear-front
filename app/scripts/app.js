@@ -238,10 +238,10 @@ angular.module('scalearAngularApp')
             controller: 'progressOverviewCtrl'
         })
         .state('course.module.progress', {
-            url: "/progress",
+            url: "/progress?item_id",
             templateUrl: '/views/teacher/progress/progress_lecture.html',
-            controller: 'progressLectureCtrl',
-            params : { item_id: null }
+            controller: 'progressLectureCtrl'
+            // params : { item_id: null }
         })
         .state('course.module.progress_statistics', {
             url: "/progress/statistics",

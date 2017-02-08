@@ -47,12 +47,18 @@
                       <span ng-if="selected_timeline_item.data.question_type == 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span>
                   </div>
                 </div>
-                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && inclass_session >= 4) && chart" ng-class="chart_class">
+                <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && ( inclass_answer == true || inclass_session > 4) ) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
                     <div google-chart chart="chart" on-ready="chartReady()"></div>
                 </div>
+                <div ng-show="" ng-class="chart_class" style="font-size: 20px;margin-top:0.45em;">
+                    
+                </div>
                 <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="stage_timer">
                     <center>{{stage_counter | format}}</center>
+                </div>
+                <div ng-show="selected_timeline_item.type == 'inclass' && inclass_session == 4 && inclass_answer == false" style="font-size: 50px;margin-top:0.45em;" class="stage_timer">
+                    <center  translate>  inclass.click_forward_result </center>
                 </div>
             </div>
             <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'" class="question_block">

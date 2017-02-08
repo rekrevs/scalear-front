@@ -475,6 +475,7 @@ var translation_sv={
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
     multiple_choice:"multipla val",
+    click_forward_result: 'Click forward for results(t)',
   },
   distance_peer:{
     invited: 'Bjud in en elev för en Distance Peer session' ,

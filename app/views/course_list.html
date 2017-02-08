@@ -53,7 +53,7 @@
   </div>
   <div ng-if="teacher_courses.length > 0">
     <h5 class="muted" style="border-bottom: 1px solid lightgray;"><strong>Teacher</strong></h5>
-    <teacher-course-item ng-repeat="course in teacher_courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher"></teacher-course-item>
+    <teacher-course-item ng-repeat="course in teacher_courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" currentuser="current_user"></teacher-course-item>
     <hr />
   </div>
   <div ng-hide="!teacher_courses || !student_courses">

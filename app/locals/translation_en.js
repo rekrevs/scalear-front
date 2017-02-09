@@ -509,6 +509,7 @@ var translation_en={
     incorrect_format_time: "Incorrect Format for Time",
     cannot_delete_alteast_one_answer: "Cannot delete, there must be alteast one answer",
     time_outside_range: "Time Outside Video Range",
+    start_time_bigger_than_end_time: "End time must be after start time",
     header: "Header",
     answer:"@:global.answer",
     type: "Type",

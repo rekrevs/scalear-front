@@ -238,9 +238,10 @@ angular.module('scalearAngularApp')
             controller: 'progressOverviewCtrl'
         })
         .state('course.module.progress', {
-            url: "/progress",
+            url: "/progress?item_id",
             templateUrl: '/views/teacher/progress/progress_lecture.html',
             controller: 'progressLectureCtrl'
+            // params : { item_id: null }
         })
         .state('course.module.progress_statistics', {
             url: "/progress/statistics",
@@ -256,6 +257,11 @@ angular.module('scalearAngularApp')
             url: '/courseware',
             templateUrl: '/views/student/lectures/courseware.html',
             controller: 'coursewareCtrl'
+        })
+        .state('course.module.courseware.overview', {
+            url: '/overview',
+            templateUrl: '/views/student/course/module_overview.html',
+            controller: 'studentModuleOverviewCtrl'
         })
         .state('course.module.courseware.lecture', {
             url: '/lectures/:lecture_id?time',
@@ -285,7 +291,8 @@ angular.module('scalearAngularApp')
         .state('course.announcements', {
             url: '/announcements',
             templateUrl: '/views/teacher/announcements/announcements.html',
-            controller: 'announcementsCtrl'
+            controller: 'announcementsCtrl',
+            params : { show: null }
         })
         .state('course.course_information', {
             url: '/course_information?new_enroll',

@@ -61,6 +61,7 @@ var translation_en={
     visible: "Visible",
     leave: "Leave",
     stay: "Stay",
+    votes: "Votes",
   },
   mailer:{
     send_email: "Send An Email",
@@ -92,6 +93,7 @@ var translation_en={
     },
   },
   time:{
+    hours: "hours",
     minutes: "minutes",
     seconds: "Seconds",
     weeks: "Weeks",
@@ -419,6 +421,14 @@ var translation_en={
     whats_new: "What's New",
     as_ical_file: "As File",
     as_url: "As Link",
+    student_completion: "Student Completion",
+    completion: "Completion",
+    unanswered_questions: "Unanswered Questions",
+    start_inclass: "@:inclass.start_inclass",
+    review_select_inclass_material: "Review & Select In-Class Material",
+    review_quiz: "Review Quiz",
+    my_questions: "My Questions",
+    try_again: "Try again" 
   },
   inclass:{
     more: "more",
@@ -935,7 +945,7 @@ var translation_en={
     speed: "Speed",
   },
   announcements:{
-    create_announcement: "Create New Announcement",
+    create_announcement: "New Announcement",
     empty: 'No announcements yet.',
     post: "Post announcements to the class here"
   },

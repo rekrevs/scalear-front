@@ -1,7 +1,7 @@
-.row{
+/*.row{*/
   /*max-width: 118rem !important;*/
   /*max-width: 100% !important;*/
-}
+/*}*/
 
 /* --- Page Structure  --- */
 
@@ -53,10 +53,6 @@ img{border:0 none}*/
 	display:inline;
 }
 
-.orange{
-   color:orange;
-   float:right;
-}
 
 .gray{
    color:gray;
@@ -88,10 +84,10 @@ img{border:0 none}*/
 .highlight{
 	background-color:#FBEED5;
 }
-.green{
+/*.green{
 	color:#008000;
 	float:right;
-}
+}*/
 
 .red{
 	color:#DD1144;

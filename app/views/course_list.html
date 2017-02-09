@@ -3,7 +3,7 @@
 <!-- endbuild -->
 <div id="main_course_list">
   <center>
-    <loading size="big" show="!teacher_courses || !student_courses"></loading>
+    <loading size="big" show="!((teacher_courses && teacher_courses.length) || (student_courses && student_courses.length))"></loading>
   </center>
   <div ng-show="(teacher_courses && teacher_courses.length) || (student_courses && student_courses.length)" class="row">
     <div class="small-12 columns course_list">
@@ -39,13 +39,6 @@
       </div>
     </div>
   </div>
-  <!-- <div ng-show="(teacher_courses && !teacher_courses.length) && (student_courses && !student_courses.length)">
-    <center style="height:70px">
-      <h5 class="muted" translate>courses.list.messages.no_courses</h5>
-      <br>
-      <a class="button tiny green" ui-sref="new_course" translate>courses.list.button.new_course</a>
-    </center>
-  </div> -->
   <div ng-if="student_courses.length > 0">
     <h5 class="muted" style="border-bottom: 1px solid lightgray;"><strong>Student</strong></h5>
     <course-item ng-repeat="course in student_courses|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
@@ -56,7 +49,7 @@
     <teacher-course-item ng-repeat="course in teacher_courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher"></teacher-course-item>
     <hr />
   </div>
-  <div ng-hide="!teacher_courses || !student_courses">
+  <div ng-hide="!(teacher_courses && teacher_courses.length) || (student_courses && student_courses.length)">
     <center style="height:120px">
       <h5 class="muted" translate>courses.list.messages.create_enroll_instruction</h5>
     </center>

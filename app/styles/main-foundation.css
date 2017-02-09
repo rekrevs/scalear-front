@@ -2744,4 +2744,93 @@ th[st-sort]{
 .adminRow .row {
   font-size: 1.2rem;
 }
+
+/**********Dashboard*****/
+
+.dashboard table {
+  border: none !important;
+}
+
+.dashboard td, th {
+    border: 0px ;
+}
+
+.dashboard div.highcharts-label.highcharts-tooltip{
+  pointer-events: visible;
+}
+
+.dashboard div.highcharts-label.highcharts-tooltip span{
+  white-space: normal !important;
+}
+.dashboard h5{
+  margin: 0
+}
+
+.dashboard p.medium-editor-p{
+  display: inline-block;
+}
+
+.dashboard .dashboard_question{
+  cursor: pointer;
+  padding: 5px;
+}
+.dashboard .dashboard_question:hover{
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+.dashboard .item{
+  float: left;
+  border: 1px solid #EFE7E7;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.dashboard .quiz-bar-container{
+  height: 60px;
+  margin: auto;
+}
+
+.dashboard .quiz-bar-container .quiz-outer-bar,
+.dashboard .quiz-bar-container .quiz-bar,
+.dashboard .quiz-bar-container .quiz-inner-bar{
+  height: 100%;
+}
+
+.dashboard .quiz-bar{
+  float: left;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.dashboard .quiz-bar-container .quiz-outer-bar {
+  position: relative;
+}
+
+.dashboard svg, .dashboard .highcharts-container {
+   overflow: visible !important;
+   z-index:1 !important;
+}
+
+.dashboard .separator{
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+}
+
+.dashboard .popover{
+  width:350px;
+  max-width: 350px;
+  padding: 10px;
+  padding-bottom: 0;
+  padding-right: 0;
+}
+
+.dashboard .completion_container{
+  height: 50px
+}
+
+.dashboard .completion_tooltip{
+  top:50px;
+}
 /**************************/

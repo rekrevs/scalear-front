@@ -4,7 +4,7 @@
 <!-- endbuild -->
 <h4 class="small-12 columns with-small-padding-top">
 	<b><span translate>progress.home.module_review</span>: </b>
-	<span>{{course.selected_module.name}}</span>
+	<span>{{selected_module.name}}</span>
 </h4>
 <div class="small-12 medium-4 large-3 columns">
 	<center>
@@ -38,7 +38,7 @@
 	</center>
 </div>
 <div class="small-12 medium-8 large-9 columns no-padding-right" style="max-height: 76vh; overflow-y: auto;">
-	<div bindonce class="main_content" id="printarea"> 
+	<div bindonce class="main_content" id="printarea">
 	<!-- <div  class="main_content" id="printarea"> -->
 		<div >
 			<div ng-if="::timeline['module']" ng-init="::(module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData'))" >
@@ -106,8 +106,6 @@
 						</ul>
 					</li>
 				</ul>
-
-
 			</div>
 			<div id="lecture_{{::module_item.id}}" ng-if="::module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]'>
 				<p class="title" >
@@ -130,7 +128,7 @@
 						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.discussion' | translate" />
 						<ul style="color:black;font-weight:normal;font-size: 14px;margin-left:48px">
 							<li ng-repeat="discussion in item.data" class="li_item"  style="border-bottom: 1px solid lightgrey;">
-								<div class="with-padding-bottom" ng-class="{'light-yellow':discussion.post.hide}" style="padding: 5px;">
+								<div id="disc_{{::discussion.post.id}}" class="with-padding-bottom" ng-class="{'light-yellow':discussion.post.hide}" style="padding: 5px;">
 									<span class="controls" >
 										<show_box value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
 										<span style="float:right">
@@ -192,7 +190,7 @@
 							</li>
 						</ul>
 					</li>
-					<li ng-if="item.type=='free_question'"  ng-init="percentage = calculateReviewPercent(item.data.review,students_count); color=getReviewColor(percentage)" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
+					<li id="vq_{{::item.data.id}}" ng-if="item.type=='free_question'" ng-init="percentage = calculateReviewPercent(item.data.review,students_count); color=getReviewColor(percentage)" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
 						<inner_title class="small-10 columns left" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.free_text_question' | translate" itemtitle="item.data.title+' - '+item.data.review+' students ('+percentage+'%) '+('progress.of_student_review' | translate)" color="color"/>
 						<show_box  value="item.data.show" action="updateHideQuiz(item, item.data.show)"/>
 						<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
@@ -203,11 +201,14 @@
 										<a ng-click="lec.filtered_user = answer.user_id;lec.filter_strict=true" tooltip="{{'progress.tooltip.see_related'|translate}}" class="button really-tiny secondary" style="margin:0 5px" translate>progress.related</a>
 									</span>
 								</span>
+									<div ng-if="::item.type == 'free_question'" style="float:right">
+							        	<details-select value="answer.grade" options="grade_options" save="updateOnlineQuizGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
+							        </div>
 								<div style="width:70%" ng-bind-html="::answer.online_answer"></div>
 							</li>
 						</ul>
 					</li>
-					<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type, ( module_item.inclass || module_item.distance_peer) );percentage = calculateReviewPercent(item.data.review,students_count); color=getReviewColor(percentage)" class="li_inner color-green" ng-class="{'light-yellow':item.data.hide}">
+					<li id="vq_{{::item.data.id}}" ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type, ( module_item.inclass || module_item.distance_peer) );percentage = calculateReviewPercent(item.data.review,students_count); color=getReviewColor(percentage)" class="li_inner color-green" ng-class="{'light-yellow':item.data.hide}">
 						<div class="row">
 							<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+')'" class="left small-10 columns"/>
 							<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'progress.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+') - '+item.data.review+' students ('+percentage+'%) '+('progress.of_student_review' | translate)" color="color" class="small-10 columns left"/>

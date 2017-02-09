@@ -5,8 +5,9 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate.instant("dashboard.whats_new") 
+    $rootScope.subheader_message = $translate.instant("dashboard.whats_new")
     $scope.eventSources = [];
+    $scope.module_summary_data = []
     var calendar_year_cache = []
     var current_user = null
 
@@ -35,7 +36,7 @@ angular.module('scalearAngularApp')
     }
 
     function getDateString(date, val) {
-      var d = date? new Date(date) :  new Date()
+      var d = date ? new Date(date) : new Date()
       d.setMonth((d.getMonth() % 12) + (val || 0))
       return d.toLocaleString("en-us", { month: "long", year: "numeric" })
     }
@@ -64,27 +65,27 @@ angular.module('scalearAngularApp')
     }
 
     function viewRender(view, element) {
-       getMonthData(view.title)
+      getMonthData(view.title)
     }
 
     function getMonthData(month_title) {
       var to_retrive = []
       var month_length = 3
-      for(var i = -1; i < month_length - 1; i++) {
+      for (var i = -1; i < month_length - 1; i++) {
         var month = getDateString(month_title, i)
-        if(calendar_year_cache.indexOf(month) == -1) {
+        if (calendar_year_cache.indexOf(month) == -1) {
           to_retrive.push(month)
           calendar_year_cache.push(month)
         }
       }
-      if(to_retrive.length) {
+      if (to_retrive.length) {
         getCalendar(to_retrive)
       }
     }
 
-    function eventDrop( event, delta, revertFunc, jsEvent, ui, view ) {
+    function eventDrop(event, delta, revertFunc, jsEvent, ui, view) {
       var group = { "due_date": event.start }
-      if(event.lecture_id) {
+      if (event.lecture_id) {
         Lecture.update({
             course_id: event.course_id,
             lecture_id: event.lecture_id
@@ -95,10 +96,10 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event,"Lecture")
+            responseFail(response, revertFunc, event, "Lecture")
           }
         );
-      } else if(event.quiz_id) {
+      } else if (event.quiz_id) {
         Quiz.update({
             course_id: event.course_id,
             quiz_id: event.quiz_id
@@ -109,7 +110,7 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event,"Quiz")
+            responseFail(response, revertFunc, event, "Quiz")
           }
         );
 
@@ -124,24 +125,24 @@ angular.module('scalearAngularApp')
             responseSucces(response)
           },
           function(response) {
-            responseFail(response, revertFunc, event,"Module")
+            responseFail(response, revertFunc, event, "Module")
           }
         );
       }
     }
 
     function responseSucces(response) {
-      if(response.notice) {
+      if (response.notice) {
         ErrorHandler.showMessage($translate.instant("error_message.due_date_changed"), 'errorMessage', 4000, "success");
       }
     }
 
-    function responseFail(response, revertFunc, item,type) {
+    function responseFail(response, revertFunc, item, type) {
       revertFunc()
-      if(response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
+      if (response.data.errors[Object.keys(response.data.errors)[0]][0] == "must be before due time") {
         // var message = ScalearUtils.capitalize(Object.keys(response.data.errors)[0].replace("_", " ")) + "(" + response.data.appearance_time + ") " + response.data.errors[Object.keys(response.data.errors)[0]][0]
-        // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit." 
-        var message = $translate.instant("events.drag_due_date_error_part_1")+type+$translate.instant("events.drag_due_date_error_part_2")+type+$translate.instant("events.drag_due_date_error_part_3")
+        // var message = "You cannot move the "+type+"'s due date before it's appearance date. To change the appearance date click on the module and choose edit."
+        var message = $translate.instant("events.drag_due_date_error_part_1") + type + $translate.instant("events.drag_due_date_error_part_2") + type + $translate.instant("events.drag_due_date_error_part_3")
       } else {
         var message = Object.keys(response.data.errors)[0].replace("_", " ") + " " + response.data.errors[Object.keys(response.data.errors)[0]][0]
       }
@@ -160,28 +161,31 @@ angular.module('scalearAngularApp')
     function getCalendar() {
       Dashboard.getDashboard({}, function(data) {
         calendarSetup()
+
+        getSummaryModule(data.module_summary_id_list);
         setupPopover(data.key)
         $scope.calendar = data;
-        for(var element in $scope.calendar.events) {
+
+        for (var element in $scope.calendar.events) {
           var event = $scope.calendar.events[element]
           event.start = new Date(event.start)
           event.item_title = event.title.replace(" due", "");
           event.title = event.course_short_name + ": " + event.item_title
           event.tooltip_string = event.title + "<br />" + $translate.instant('events.due') + " " + $translate.instant('global.at') + " " + $filter('date')(event.start, 'HH:mm')
 
-          if(event.status == 1) {
+          if (event.status == 1) {
             event.tooltip_string += "<br />" + $translate.instant("events.completed_on_time")
-          } else if(event.status == 2) {
+          } else if (event.status == 2) {
             event.tooltip_string += "<br />" + $translate.instant("events.completed") + " " + event.days + " " + $translate.instant("time.days") + " " + $translate.instant("events.late")
           }
           var params = { course_id: event.course_id, module_id: event.group_id }
           var url = "course.module"
-          if(event.role == 2) {
+          if (event.role == 2) {
             url += ".courseware"
-            if(event.quiz_id) {
+            if (event.quiz_id) {
               url += ".quiz"
               params.quiz_id = event.quiz_id
-            } else if(event.lecture_id) {
+            } else if (event.lecture_id) {
               url += ".lecture"
               params.lecture_id = event.lecture_id
             }
@@ -192,7 +196,7 @@ angular.module('scalearAngularApp')
           event.url = $state.href(url, params, { absolute: true })
         }
         $scope.calendar.className = ["truncate"]
-        $scope.eventSources.push({events:$scope.calendar.events});
+        $scope.eventSources.push({ events: $scope.calendar.events });
         $timeout(function() {
           resizeCalendar()
         }, 300)
@@ -213,13 +217,56 @@ angular.module('scalearAngularApp')
       })
     }
 
+    function getSummaryModule(module_summary_id_list) {
+      $scope.module_summary_id_list = module_summary_id_list
+      $scope.module_summary = {}
+      module_summary_id_list.forEach(function(module_summary_id) {
+        var module_id = module_summary_id[0]
+        var course_id = module_summary_id[1]
+        var role = module_summary_id[2]
+        $scope.module_summary[module_id] = {type: role}
+        $scope.module_summary[module_id].loading = { summary: true, online_quiz: true, discussion: true }
+
+        Module.getModuleSummary({
+          module_id: module_id,
+          course_id: course_id
+        }, function(data) {
+          if (data.module.type == "teacher") {
+            $scope.course_id = course_id
+          }
+          $scope.module_summary[module_id].loading.summary = false
+          angular.extend($scope.module_summary[module_id], data.module)
+        })
+
+        Module.getOnlineQuizSummary({
+          module_id: module_id,
+          course_id: course_id
+        }, function(data) {
+          $scope.module_summary[module_id].loading.online_quiz = false
+          angular.extend($scope.module_summary[module_id], data.module)
+        })
+
+        Module.getDiscussionSummary({
+          module_id: module_id,
+          course_id: course_id
+        }, function(data) {
+          $scope.module_summary[module_id].loading.discussion = false
+          angular.extend($scope.module_summary[module_id], data.module)
+        })
+      })
+    }
+
     $scope.exportCalendar = function() {
       var cal = ics();
-      for(var element in $scope.calendar.events) {
+      for (var element in $scope.calendar.events) {
         var description = $scope.calendar.events[element].tooltip_string.replace("<br />", " ") + " " + $scope.calendar.events[element].url;
         cal.addEvent($scope.calendar.events[element].title, description, 'Scalable-Learning', $scope.calendar.events[element].start, $scope.calendar.events[element].start);
       }
       cal.download("calendar");
+    }
+
+    $scope.createAnnouncement = function() {
+      $state.go("course.announcements", { course_id: $scope.course_id, show: true })
     }
 
   }]);

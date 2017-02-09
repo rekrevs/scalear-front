@@ -472,6 +472,7 @@ var translation_en={
     question_not_started:"The in-class question has not started",
     click_next_question: "Click on 'Next' when the question shows up",
     multiple_choice:"multiple choice",
+    click_forward_result: 'Click forward for results',
   },
   distance_peer:{
     invited: 'Invite a student to Join a Distance Peer Session' ,

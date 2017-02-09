@@ -3,6 +3,8 @@
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="video_settings" class="show-inline" translate>content.types.video</div>
+        <div class="show-inline right" ng-show="lecture_details_groups.video"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+        <div class="show-inline right" ng-hide="lecture_details_groups.video"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
       </div>
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
@@ -60,6 +62,8 @@
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div id="lec_settings" class="show-inline" translate>global.settings</div>
+        <div class="show-inline right" ng-show="lecture_details_groups.settings"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+        <div class="show-inline right" ng-hide="lecture_details_groups.settings"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
       </div>
     </accordion-heading>
     <table class="table small-12 no-margin">
@@ -178,6 +182,8 @@
       <accordion-heading class="accordion-heading">
         <div style="padding: 5px;border-bottom: 1px solid white;">
           <div class="show-inline" translate>editor.details.quizzes</div>
+          <div class="show-inline right" ng-show="lecture_details_groups.quizzes"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+          <div class="show-inline right" ng-hide="lecture_details_groups.quizzes"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
         </div>
       </accordion-heading>
       <quiz_list />
@@ -186,6 +192,8 @@
       <accordion-heading class="accordion-heading">
         <div style="padding: 5px;border-bottom: 1px solid white;">
           <div class="show-inline" translate>editor.details.note</div>
+          <div class="show-inline right" ng-show="lecture_details_groups.markers"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+          <div class="show-inline right" ng-hide="lecture_details_groups.markers"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
         </div>
       </accordion-heading>
       <marker_list />

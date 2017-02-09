@@ -1319,7 +1319,7 @@ td.right-border{
 .details_accordian .content {
   padding:0!important;
   background: white !important;
-  max-height: 66vh;
+  /*max-height: 66vh;*/
 
 }
 .details_accordian .overflow-auto .content{

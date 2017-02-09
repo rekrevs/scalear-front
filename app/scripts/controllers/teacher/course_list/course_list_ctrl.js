@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout','UserSession', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout,UserSession) {
 
     Page.setTitle('navigation.courses')
     Page.startTour();
@@ -12,6 +12,11 @@ angular.module('scalearAngularApp')
     $scope.teacher_courses = []
     $scope.student_courses = []
 
+    UserSession.getCurrentUser()
+    .then(function(user) {
+      $scope.current_user = user
+      console.log($scope.current_user)
+    })
 
     var getCoursesFirstTime = function(){  
       var limit_course = 200 

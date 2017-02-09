@@ -96,7 +96,8 @@ angular.module('scalearAngularApp')
         course: '=',
         teachers: '=',
         deletecourse: '=',
-        filterteacher: '='
+        filterteacher: '=',
+        currentuser: "="
       },
       templateUrl: '/views/teacher/course_list/teacher_course_item.html',
       link: function(scope) {}

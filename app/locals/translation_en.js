@@ -887,6 +887,7 @@ var translation_en={
     disable_registration: "Disable Registration After",
     limit_registration_domain: "Registrable Schools",
     limit_registration_domain_description: "Allow only students from specific school domains to register",
+    limit_registration_all_students: "Allow any student to register",
     duration: "Course Duration (weeks)",
     prerequisites: "Prerequisites",
     course_image_url: "Course Image URL",

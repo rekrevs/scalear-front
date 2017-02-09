@@ -156,21 +156,8 @@ angular.module('scalearAngularApp')
 
     $scope.toggleDomain = function(event) {
       event.stopPropagation()      
-      $modal.open({ 
-        template: '<form name="myForm" >\
-                    <div id="selected_subdomain_modal" class="ngdialog-message">\
-                    <h3><b><span translate>courses.limit_registration_domain_description</span></b></h3>\
-                    <ul>\
-                      <li><input type="radio" ng-model="subdomain.boolean" id="all" value="all" ng-change="setBooleanDomain();" translate>all</li>\
-                      <li><input type="radio" ng-model="subdomain.boolean" id="custom" value="custom" ng-change="setBooleanDomain();" translate>custom</li>\
-                      </form>\
-                      <div ng-show=subdomain.boolean=="custom">\
-                        <ul style="margin-bottom: 5px;" ng-repeat="domain in subdomains">\
-                          <input class="valign-middle" ng-change="updateDomainList()" type="checkbox" name="mcq" ng-model="course_domain.selected_subdomain[domain]" style="margin: auto;margin-right: 10px;"/>{{domain}}\
-                        </ul>\
-                      </div>\
-                    </ul>\
-                    </div>',
+      $modal.open({
+        templateUrl: '/views/teacher/course_list/school_registration_modal.html', 
         plain: true,
         scope: $scope,
         controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 

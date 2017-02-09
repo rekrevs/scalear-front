@@ -901,6 +901,7 @@ var translation_sv={
     disable_registration: "Stäng registrering efter",
     limit_registration_domain: "Registrering Skolor",
     limit_registration_domain_description:"Tillåt endast studenter från specifika skol domäner för att registrera",
+    limit_registration_all_students: "Allow any student to register(t)",
     duration: "Kurslängd i veckor",
     prerequisites: "Förkunskaper",
     course_image_url: "Länk till bild",

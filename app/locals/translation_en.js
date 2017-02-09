@@ -527,6 +527,7 @@ var translation_en={
     annotation:"Annotation",
     tooltip:{
       invisible: "Not currently visible to students.",
+      invisible_quiz:"Unpublished: not visible to students.",
       invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
         students_must_complete_required:"Students must complete this item to complete the module",

@@ -541,6 +541,7 @@ var translation_sv={
     annotation:"Annotering",
     tooltip:{
       invisible: "Inte synlig för eleverna.",
+      invisible_quiz:"Unpublished: not visible to students.(t)",      
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Studenter måste avsluta detta moment för att slutföra modulen",

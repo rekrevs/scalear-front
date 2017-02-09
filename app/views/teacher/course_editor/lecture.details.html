@@ -123,7 +123,7 @@
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
           <span class="size-12" translate>editor.details.use_module</span>
           <span ng-hide="!lecture.appearance_time_module">
-            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+            <span tooltip-placement="left" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (lecture.appearance_time| fromNow) }}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
           <div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
             {{lecture.appearance_time | amDateFormat:'DD MMM YYYY, HH:mm'}}
           </div>
@@ -133,7 +133,7 @@
             <span translate>editor.details.set_date</span>:
           <br>
           <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-          <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+          <span tooltip-placement="left" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (lecture.appearance_time| fromNow) }}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
           <br>
           <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
           </span>

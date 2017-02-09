@@ -155,7 +155,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession) {
     return {
       restrict: 'E',
       replace: true,
@@ -167,6 +167,10 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
+        UserSession.getCurrentUser()
+          .then(function(user) {
+            scope.current_user = user
+          })
         scope.$on('Module:ready',function(ev, modules){
           scope.modules = modules
         })

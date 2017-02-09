@@ -12,13 +12,13 @@
 					</accordion-group>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="($state.params.module_id == module.id)">
 						<accordion-heading class="accordion-heading">
-							<div id='module_{{::module.id}}' class="valign-middle" ng-click="showModuleCourseware(module, $event)" ng-title="::(module.name)" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;display:inline-block;width: 100%;">
+							<div id='module_{{module.id}}' class="valign-middle" ng-click="showModuleCourseware(module, $event)" title="{{::(module.name)}}" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;display:inline-block;width: 100%;">
 								<div class="row" style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
 									<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
 										<module-progress-check class="left" module="module" />
 									</div>
 									<div class="small-9 columns no-padding">
-										<i ng-if="::(!(module.appearance_time | visible))" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
+										<i ng-if="::(!(module.appearance_time | visible))" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
 										<div class=" module_name" >{{::module.name}} </div>
 									</div>
 									<div class="small-2 no-padding text-right columns">
@@ -33,10 +33,11 @@
 									<div class="show-inline valign-middle left text-left" style="padding-left:15px;line-height: 2.5">Start In-class Session</div>
 								</div>
 							</li>
-							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass)}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" >
+							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}"  ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass && !(current_user.roles.includes(6)) )}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" >
 								<div ng-if="::(item.class_name != 'customlink')" class="position-relative" style="height: 20px;">
 									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.done}" ></i>
-									<i ng-if="::(!(item.appearance_time | visible) && !item.inclass)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{::( ('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) ) }}"></i>
+									<i ng-if="::(item.class_name == 'lecture' && !(item.appearance_time | visible) && ( (current_user.roles.includes(6)) ) )" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
+									<i ng-if="::(item.class_name == 'quiz' && !(item.appearance_time | visible) && !item.inclass)" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{ ('editor.tooltip.invisible_quiz'|translate)}}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
 									<i ng-if="::(item.class_name == 'lecture' && !item.inclass && !item.distance_peer)" class="fi-video with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'lecture' && item.inclass)" class="fi-comment-video with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'lecture' && item.distance_peer)" class="fi-torsos-all with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>

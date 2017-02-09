@@ -676,7 +676,7 @@ angular.module('scalearAngularApp')
         }
 
         var unwatch = scope.$watch("moduledata.remaining_duration", function(val){
-          if(val){
+          if(val != null){
             scope.remaining = 'Remaining: ' + ScalearUtils.toHourMin(scope.moduledata.remaining_duration) + " " +
               $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
               scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "

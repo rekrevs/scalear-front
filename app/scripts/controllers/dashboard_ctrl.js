@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 
     function eventRender(event, element) {
       $(".tooltip.tip-top").remove()
-      element.attr({ 'tooltip-html-unsafe': event.tooltip_string, 'tooltip-append-to-body': true });
+      element.attr({ 'tooltip-html-unsafe': event.tooltip_string, 'tooltip-append-to-body': true,'tooltip-placement':"bottom" });
       $compile(element)($scope);
     };
 

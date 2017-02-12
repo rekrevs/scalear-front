@@ -1,7 +1,7 @@
 <li class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;display:inline-block;width: 100%;" context-menu data-target="item-menu" >
 	<div class="position-relative" style="height: 20px;" >
 		<delete_button class="with-tiny-margin-left right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true" style="padding-right: 2px;"/>
-		<img class="left handle" src="images/move2.png" title='::("editor.messages.drag_to_reorder"|translate)' />
+		<img class="left handle" src="images/move2.png" title='{{::("editor.messages.drag_to_reorder"|translate)}}' />
 		<i ng-if="item.class_name == 'lecture' && !item.inclass && !item.distance_peer" class="fi-video with-tiny-margin-right left color-gray" title="{{::('content_navigator.lecture' | translate)}}"></i>
 		<i ng-if="item.class_name == 'lecture' && item.inclass" class="fi-comment-video with-tiny-margin-right left color-gray" title="{{::('content_navigator.inclass_lecture' | translate)}}"></i>
 		<i ng-if="item.class_name == 'lecture' && item.distance_peer" class="fi-torsos-all with-tiny-margin-right left color-gray" title="{{::('content_navigator.inclass_lecture' | translate)}}"></i>

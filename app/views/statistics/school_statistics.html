@@ -159,25 +159,25 @@
     </div>
   </div>
   <div class='row adminRow' style="padding-bottom: 0px;padding-top: 0px;">
-   <h3>Student activity between {{report.start_date}} and {{report.end_date}}</h3>
-   <h4><i>Totals course activity</i></h4>
   </div>
   <div class='row adminRow'>
+   <b>Student activity between {{report.start_date}} and {{report.end_date}}</b>
+   <div ><i>Total activity for the complete course shown in the Totals columns to the right.</i></div>  
     <table st-table='displayed_course_data' class='table table striped cloumn small-12 adminTable' st-safe-src="course_data_array">
       <thead>
         <tr>
           <th st-sort='short_name'>Course Name</th>
           <th st-sort='full_name'>Teacher Name</th>
-          <th st-sort='email'>Teacher Email</th>
           <th st-sort='students'>Total Students</th>
-          <th st-sort='teachers'>Total Teachers</th>
           <th st-sort='active_questions'>Questions</th>
-          <th st-sort='total_questions'>Total Questions</th>
           <th st-sort='active_solved_online_quiz'>Solved Quizzes</th>
-          <th st-sort='total_solved_online_quiz'>Total Solved Quizzes</th>
+          <th st-sort='sortting.active_view_string' >Time Watched</th>
           <th st-sort='start_date'>Start Date</th>
           <th st-sort='end_date'>End Date</th>
-          <th st-sort='sortting.active_view_string' >Time Watched</th>
+          <th st-sort='email'>Teacher Email</th>
+          <th st-sort='teachers'>Total Teachers</th>
+          <th st-sort='total_questions'>Total Questions</th>
+          <th st-sort='total_solved_online_quiz'>Total Solved Quizzes</th>
           <th st-sort='sortting.total_view_string' >Total Time Watched</th>
         </tr>
         <tr>
@@ -190,16 +190,16 @@
         <tr ng-repeat='course in displayed_course_data'>
           <td><a ui-sref="course.edit_course_information({ course_id: course.id })">{{course.short_name}}</a></td>
           <td>{{course.full_name}}</td>
-          <td>{{course.email}}</td>
           <td>{{course.students}}</td>
-          <td>{{course.teachers}}</td>
           <td>{{course.active_questions}}</td>
-          <td>{{course.total_questions}}</td>
           <td>{{course.active_solved_online_quiz}}</td>
-          <td>{{course.total_solved_online_quiz}}</td>
+          <td>{{course.active_view_string}}</td>
           <td>{{course.start_date}}</td>
           <td>{{course.end_date}}</td>
-          <td>{{course.active_view_string}}</td>
+          <td>{{course.email}}</td>
+          <td>{{course.teachers}}</td>
+          <td>{{course.total_questions}}</td>
+          <td>{{course.total_solved_online_quiz}}</td>
           <td>{{course.total_view_string}}</td>
         </tr>
       </tbody>

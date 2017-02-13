@@ -486,7 +486,7 @@ var translation_sv={
     question_not_started:"Frågan har inte givits på lektionen än",
     click_next_question: "Klicka på 'Nästa' när frågan visas",
     multiple_choice:"multipla val",
-    click_forward_result: 'Click forward for results(t)',
+    click_forward_result: 'Press forward to view in-class voting results.(t)',
   },
   distance_peer:{
     invited: 'Bjud in en elev för en Distance Peer session' ,
@@ -557,7 +557,7 @@ var translation_sv={
       invisible_quiz:"Unpublished: not visible to students.(t)",      
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
-        students_must_complete_required:"Studenter måste avsluta detta moment för att slutföra modulen",
+        students_must_complete_required:"All required items must be completed on-time for the student to receive credit for the module(t)",
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",

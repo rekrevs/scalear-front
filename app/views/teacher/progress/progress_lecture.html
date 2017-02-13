@@ -46,7 +46,13 @@
 					<span translate>progress.chart.module_progress</span>
 					<span class="size-12">(<span translate>progress.based_on_invideo</span>)</span>
 				</p>
-				<div google-chart chart="::module_chart" class="progress_chart" ></div>
+				<!-- <div google-chart chart="::module_chart" class="progress_chart" ></div> -->
+				<div>
+		          <teacher-module-summary moduledata="module_summary[module_id]" />
+		        </div>
+		        <div  class="dashboard" >
+		          <teacher-online-quiz-summary moduledata="module_summary[module_id]" />
+		        </div>
 			</div>
 		</div>
 		<div ng-repeat="module_item in ::module.items|filter:filterItems" >
@@ -222,3 +228,4 @@
 		</div>
 	</div>
 </div>
+<div id="quiz_bar" ng-hide='true'> </div>

@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
     $scope.course_filter = '!!'
     $scope.teacher_courses = []
     $scope.student_courses = []
-
+    $scope.course_loading = false
     UserSession.getCurrentUser()
     .then(function(user) {
       $scope.current_user = user
@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
           limit: limit_course   
         },   
         function(data){  
+          $scope.course_loading =  true
         $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
         $scope.student_courses = $scope.student_courses.concat(data.student_courses)
 

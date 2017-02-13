@@ -472,7 +472,7 @@ var translation_en={
     question_not_started:"The in-class question has not started",
     click_next_question: "Click on 'Next' when the question shows up",
     multiple_choice:"multiple choice",
-    click_forward_result: 'Click forward for results',
+    click_forward_result: 'Press forward to view in-class voting results.',
   },
   distance_peer:{
     invited: 'Invite a student to Join a Distance Peer Session' ,
@@ -543,7 +543,7 @@ var translation_en={
       invisible_quiz:"Unpublished: not visible to students.",
       invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
-        students_must_complete_required:"Students must complete this item to complete the module",
+        students_must_complete_required:"All required items must be completed on-time for the student to receive credit for the module",
         click_to_delete: "Click here to delete, click outside to close",
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",

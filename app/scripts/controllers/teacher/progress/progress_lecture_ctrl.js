@@ -17,6 +17,28 @@ angular.module('scalearAngularApp')
     }
 
     $scope.selected_module = ModuleModel.getSelectedModule()
+    $scope.module_id = $stateParams.module_id
+    $scope.course_id = $stateParams.course_id
+    $scope.module_summary = {}
+    $scope.module_summary[$scope.module_id] = {}
+    $scope.module_summary[$scope.module_id].type = "teacher"
+    $scope.module_summary[$scope.module_id].review_page_trigger = true
+    $scope.module_summary[$scope.module_id].loading = { summary: true, online_quiz: true, discussion: true }
+    Module.getModuleSummary({
+      module_id: $scope.module_id,
+      course_id: $scope.course_id
+    }, function(data) {
+      $scope.module_summary[$scope.module_id].loading.summary = false
+      angular.extend($scope.module_summary[$scope.module_id], data.module)
+    })
+
+    Module.getOnlineQuizSummary({
+      module_id: $scope.module_id,
+      course_id: $scope.course_id
+    }, function(data) {
+      $scope.module_summary[$scope.module_id].loading.online_quiz = false
+      angular.extend($scope.module_summary[$scope.module_id], data.module)
+    })
 
     $scope.$on('$destroy', function() {
       removeShortcuts()

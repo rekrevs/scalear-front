@@ -450,7 +450,7 @@ angular.module('scalearAngularApp')
                     "</div>" +
                   "</div>" +
                 "</div>" +
-              "<div style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
+              "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
               "</div>"            
           } else { ///// SURVEY TOOLTIP
             scope.title = this.x;
@@ -519,7 +519,7 @@ angular.module('scalearAngularApp')
                     "</div>" +
                   "</div>" +
                 "</div>" +
-              "<div style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
+              "<div ng-hide='moduledata.review_page_trigger' style='bottomm: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
               "</div>"            
           }
 

@@ -6,9 +6,10 @@ angular.module('scalearAngularApp')
     $scope.user = {}
     Page.setTitle('navigation.login')
     $('#user_email').select()
-
-    $scope.swamid_list = SWAMID.list()
-      // $cookieStore.remove("saml_provider")
+    SWAMID.list()
+      $rootScope.$on("smal_list_ready", function(evt, swamid_list) {
+        $scope.swamid_list = swamid_list
+      })
     $scope.previous_provider = $cookieStore.get("login_provider")
 
     // $scope.saml = $location.$$search

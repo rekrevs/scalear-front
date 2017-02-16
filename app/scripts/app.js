@@ -48,7 +48,8 @@ angular.module('scalearAngularApp')
         .state('login', {
             url: '/users/login',
             templateUrl: '/views/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            params : { email: null}
         })
         .state('teacher_signup', {
             url: '/users/teacher',

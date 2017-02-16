@@ -1059,6 +1059,9 @@ angular.module('scalearAngularApp')
               middle_msg = 'lectures.multiple_correct'
           }
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          if(!data.correct && $scope.selected_quiz.question_type.toUpperCase() == "DRAG"){
+            sub_message = ""
+          }
           showNotification(verdict, sub_message, middle_msg)
 
           $scope.selected_quiz.solved_quiz = true;

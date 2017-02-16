@@ -4,6 +4,8 @@ angular.module('scalearAngularApp')
   .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession',"$http", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http) {
 
     $scope.user = {}
+    $scope.user.email = $state.params.email || ""
+
     Page.setTitle('navigation.login')
     $('#user_email').select()
     SWAMID.list()

@@ -3,7 +3,7 @@
     <h3>
       <b><span ng-hide='moduledata.review_page_trigger'>{{::moduledata.title}} - </span></b>
       <strong style="font-size: 22px;">
-        <span ng-show="moduledata.due_date > 0" style="color:red" >
+        <span ng-show="moduledata.due_date > 0 && moduledata.due_date_enabled" style="color:red" >
           <span translate>events.due</span>
           <span>in</span>
           <span>{{::moduledata.time_left_string}}</span>

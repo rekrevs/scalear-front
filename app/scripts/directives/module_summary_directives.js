@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive('teacherModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', function(ScalearUtils, $filter, $translate, $state) {
+  .directive('teacherModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state','CourseEditor', function(ScalearUtils, $filter, $translate, $state,CourseEditor) {
     return {
       scope: {
         moduledata: '='
@@ -13,17 +13,24 @@ angular.module('scalearAngularApp')
           if(val){
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
             scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
-
+            scope.moduledata.due_date_enabled = !CourseEditor.isDueDateDisabled(scope.moduledata.due_date_string)
+            console.log(scope.moduledata.due_date_enabled)
             scope.subtitle = scope.moduledata.hour_min + " " +
               $translate.instant('time.hours') + ", " +
               scope.moduledata.quiz_count + " " +
               $translate.instant('global.quizzes') + ", " +
               scope.moduledata.survey_count + " " +
-              $translate.instant('global.surveys') + ". " +
-              $translate.instant('events.due') + " " +
+              $translate.instant('global.surveys') + ". " 
+
+            if(scope.moduledata.due_date_enabled){
+              scope.subtitle +=  $translate.instant('events.due') + " " +
               $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
               $translate.instant('global.at') + " " +
               $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
+            }
+            else{
+              scope.subtitle += $translate.instant('global.no') + " " + $translate.instant('editor.details.due_date')
+            }
 
             var student_completion_options = {
               on_time: {

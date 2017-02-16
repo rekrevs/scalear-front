@@ -63,6 +63,7 @@ var translation_en={
     leave: "Leave",
     stay: "Stay",
     votes: "Votes",
+    no: "No",
   },
   mailer:{
     send_email: "Send An Email",

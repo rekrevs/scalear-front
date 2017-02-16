@@ -63,7 +63,8 @@ var translation_sv={
     leave: "Lämna",
     stay: "Stanna",
     votes: "Röster",
-  },
+    no: "Nej",
+   },
   mailer:{
     send_email: "Skicka ett mail",
     to: "Till",

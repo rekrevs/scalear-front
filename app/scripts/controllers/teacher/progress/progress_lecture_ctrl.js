@@ -81,9 +81,11 @@ angular.module('scalearAngularApp')
             $scope.video_start = $scope.first_lecture.start_time
             $scope.video_end = $scope.first_lecture.end_time
             $scope.url = $scope.first_lecture.url+"&controls=1&fs=1&theme=light"
+            $scope.url_lecture_id = $scope.first_lecture.id 
           }
           else{
             $scope.url = $scope.first_lecture.url
+            $scope.url_lecture_id = $scope.first_lecture.id 
           }
 
           $scope.timeline['lecture'] = {}
@@ -615,20 +617,37 @@ angular.module('scalearAngularApp')
       if($scope.progress_player.controls.isYoutube(video.url)){
         $scope.video_start= video.start_time
         $scope.video_end  = video.end_time
-        $scope.progress_player.controls.setStartTime(time)
+        $scope.progress_player.controls.setStartTime($scope.video_start)
         $scope.url = video.url+"&controls=1&fs=1&theme=light"
+        $scope.url_lecture_id = video.id           
+        $timeout(function() { 
+          $scope.progress_player.controls.seek_and_pause(time) 
+        },250) 
       }
       if($scope.progress_player.controls.isMP4(video.url)){
         $scope.url= video.url
+        $scope.url_lecture_id = video.id           
         $timeout(function(){
           $scope.progress_player.controls.seek_and_pause(time)
         })
       }
     }
     else{
-      $timeout(function(){
-        $scope.progress_player.controls.seek_and_pause(time)
-      })
+      if( $scope.selected_item.lec_id != $scope.url_lecture_id){ 
+        $scope.video_start = video.start_time 
+        $scope.video_end = video.end_time 
+        $scope.progress_player.controls.setStartTime(video.start_time) 
+        $timeout(function() { 
+          $scope.progress_player.controls.seek_and_pause(time) 
+        },250) 
+        // $scope.url = video.url + "&controls=1&fs=1&theme=light" 
+        $scope.url_lecture_id = video.id           
+      } 
+      else{ 
+        $timeout(function() { 
+          $scope.progress_player.controls.seek_and_pause(time) 
+        }) 
+      } 
     }
 	}
 

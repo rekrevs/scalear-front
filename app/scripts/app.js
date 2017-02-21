@@ -214,7 +214,7 @@ angular.module('scalearAngularApp')
             }
         })
         .state('course.course_editor', {
-            url: '/course_editor',
+            url: '/course_editor?new_course',
             templateUrl: '/views/teacher/course_editor/course_editor.html',
             controller: 'courseEditorCtrl'
         })

@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
       'saveTeacher': { method: 'POST', params: { action: 'save_teachers' }, headers: headers },
       'updateTeacher': { method: 'POST', params: { action: 'update_teacher' }, headers: headers },
       'updateStudentDueDateEmail': { method: 'POST', params: { action: 'update_student_duedate_email' }, headers: headers },
+      'updateTeacherDiscussionEmail': { method: 'POST', params: { action: 'update_teacher_discussion_email' }, headers: headers },
       'getStudentDueDateEmail': { method: 'GET', params: { action: 'get_student_duedate_email' }, headers: headers },
       'deleteTeacher': { method: 'DELETE', params: { action: 'delete_teacher' }, headers: headers },
       'getCalendarEvents': { method: 'GET', params: { action: 'events' }, headers: headers },
@@ -229,6 +230,10 @@ angular.module('scalearAngularApp')
         Course.updateStudentDueDateEmail({ course_id: course.id }, { email_due_date: val });
       }
 
+      function updateTeacherDiscussionEmail(val) {
+        Course.updateTeacherDiscussionEmail({ course_id: course.id }, { email_discussion: val });
+      }
+
       return angular.extend(course, {
         instanceType: instanceType,
         update: update,
@@ -236,7 +241,8 @@ angular.module('scalearAngularApp')
         exportCourse: exportCourse,
         getAnnouncements: getAnnouncements,
         getStudentDueDateEmail: getStudentDueDateEmail,
-        updateStudentDueDateEmail: updateStudentDueDateEmail
+        updateStudentDueDateEmail: updateStudentDueDateEmail,
+        updateTeacherDiscussionEmail: updateTeacherDiscussionEmail
       })
     }
 

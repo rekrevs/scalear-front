@@ -146,9 +146,8 @@ angular.module('scalearAngularApp')
 
 
     $scope.createCourse = function() {
-              console.log($scope.course.start_date)
-        console.log($scope.course.end_date)
-
+      // console.log($scope.course.start_date)
+      // console.log($scope.course.end_date)
       $scope.submitting = true;
       // if($scope.form.$valid) {
       validateDate()
@@ -167,7 +166,7 @@ angular.module('scalearAngularApp')
             if(data.importing) {
               $state.go("course_list")
             } else {
-              $state.go("course.course_editor", { "course_id": data.course.id })
+              $state.go("course.course_editor", { "course_id": data.course.id, new_course:true  })
             }
           })
           .catch(function(response) {

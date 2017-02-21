@@ -38,7 +38,7 @@
 	</center>
 </div>
 <div class="small-12 medium-8 large-9 columns no-padding-right" style="max-height: 76vh; overflow-y: auto;">
-	<div bindonce class="main_content" id="printarea">
+	<div bindonce class="main_content" id="printarea" style="    width: 99%;">
 	<!-- <div  class="main_content" id="printarea"> -->
 		<div >
 			<div ng-if="::timeline['module']" ng-init="::(module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData'))" >
@@ -55,7 +55,7 @@
 		        </div>
 			</div>
 		</div>
-		<div ng-repeat="module_item in ::module.items|filter:filterItems" >
+		<div ng-repeat="module_item in module.items|filter:filterItems" >
 			<div id="{{::module_item.quiz_type}}_{{::module_item.id}}" ng-if="module_item.class_name=='quiz' &&(!!timeline[module_item.quiz_type]) " ng-init="quiz=quizzes[module_item.id];">
 				<p class="title" >
 					<span >{{::quiz.meta.name}}</span>

@@ -2,6 +2,7 @@
 
 angular.module('scalearAngularApp')
     .controller('UsersTeacherCtrl', ['$scope', 'User', '$state','Page','$log', function($scope, User, $state, Page, $log) {
+            $state.go('signup')
             // Page.setTitle('account.sign_up')
             // $scope.user = {
             //     "role_ids": "1"

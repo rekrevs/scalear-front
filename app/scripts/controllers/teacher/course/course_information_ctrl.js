@@ -188,7 +188,7 @@ angular.module('scalearAngularApp')
             $scope.course_domain.selected_subdomain = {'All':true}
           }
           TeacherModel.setSelectedSubdomains($scope.course_domain.selected_subdomain).then(function(value) {
-            // ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+            // ErrorHandler.showMessage($translate.instant(("error_message.export_course"), 'errorMessage', 4000, 'success');
           })
         }); 
     }

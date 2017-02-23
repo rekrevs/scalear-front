@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
     });
 
   }])
-  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils) {
+  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', '$translate', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils, $translate) {
 
     var selected_video_quiz = null
 

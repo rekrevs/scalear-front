@@ -20,7 +20,7 @@
                 </div>
 
                 <div ng-if="element.type=='quiz' && !element.data.selected">
-                    <div ng-click="showQuiz(element.data)" class="progress-events repeating_blue_pattern" ng-style="{'left':((element.data.start_time/duration)*100)+'%', 'width': (((element.data.end_time - element.data.start_time)/duration)*100)+'%'}" tooltip-html-unsafe="{{element.data.question}}" tooltip-append-to-body="true" ></div>
+                    <div ng-click="showQuiz(element.data)" class="progress-events repeating_blue_pattern" ng-style="{'left':((element.data.start_time/duration)*100)+'%', 'width': (((element.data.end_time - element.data.start_time)/duration)*100)+'%'}" tooltip-html-unsafe="{{element.data.question}}" tooltip-append-to-body="true" tooltip-placement="top"></div>
                 </div>
 
                 <div ng-if="element.type=='quiz' && editing=='quiz' && element.data.selected" >
@@ -71,7 +71,7 @@
             </ul>
         </div>
         <div ng-transclude></div>
-        <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}"  translate></div>
+        <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate></div>
         <span class="hide-for-small-down">
             <div id="volume" class="volumeDiv show-inline left" ng-class="volume_class" ng-click="muteToggle()"></div>
             <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;cursor: pointer;"/>

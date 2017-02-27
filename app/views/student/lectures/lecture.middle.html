@@ -183,10 +183,10 @@ ul.connected_blocks {
 					    </div>
 					</center>
 					<center class="small-block-grid-3">
-						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.button.new_note</button>
-						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.button.ask_question</button>
-						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.button.im_confused</button>
-						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.button.fullscreen</button>
+						<button id="add_note_button" class="button small with-tiny-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.new_note</button>
+						<button id="ask_question_button" class="button small with-tiny-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.ask_question</button>
+						<button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.im_confused</button>
+						<button ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.fullscreen</button>
 						<div ng-hide='distance_peer_session_id'>
 							<button class='button small no-margin-bottom' ng-if='lecture.distance_peer' style="background: green" ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
 						</div>

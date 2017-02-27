@@ -30,8 +30,9 @@ angular.module('scalearAngularApp')
             $modal.open({
               template: '<style>.reveal-modal{height:auto;overflow: hidden;}</style>'+
               "<center><span translate>account.invalid_confirmation</span><br>"+
-              "<span translate>account.new_confirmation</span> <a ui-sref='new_confirmation' translate>account.click_here</a>."+
-              "<span translate>account.already_confirmation</span> <a class='tiny' ng-click='goTo()' translate>account.click_here</a> <span translate>global.to</span> <span translate>navigation.login</span>.</center>",
+              "<span translate>account.already_confirmation</span> <a class='tiny' ng-click='goTo()' translate>account.click_here</a> <span translate>global.to</span> <span translate>navigation.login</span>.<br>"+
+              "<span translate>account.new_confirmation</span> <a ui-sref='new_confirmation' translate>account.click_here</a>.<br>"+
+              "<Small translate>account.go_to_support</small></center>",
               scope: $scope,
               controller:['$modalInstance', function($modalInstance) {                
                 $scope.goTo = function() {

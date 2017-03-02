@@ -2834,3 +2834,39 @@ th[st-sort]{
   top:50px;
 }
 /**************************/
+.dashboard .fc-week table{
+  margin-bottom: 0px;
+}
+
+.dashboard .fc-widget-header table{
+  margin-bottom: 0px;
+ }
+
+.dashboard .fc-row .fc-content-skeleton td,
+.dashboard .fc-row .fc-helper-skeleton td {
+  /* see-through to the background below */
+  background: none; /* in case <td>s are globally styled */
+  /*border-color: transparent;*/
+  border-color: #ddd;
+  /* don't put a border between events and/or the day number */
+  border-bottom: 0;
+}
+
+.dashboard .fc-state-hover {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -32px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+
+.dashboard .fc-today-button{
+  opacity: 1;
+  background-color: #008CBA;
+}
+
+#studentCalendar .fc-toolbar .fc-left h2{
+  font-size: 27px;
+}

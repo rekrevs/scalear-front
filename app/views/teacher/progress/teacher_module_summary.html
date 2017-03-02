@@ -1,23 +1,21 @@
 <div>
   <div ng-show="moduledata.title">
     <h3>
-      <b><span ng-hide='moduledata.review_page_trigger'>{{::moduledata.title}} - </span></b>
+      <b><span ng-hide='moduledata.review_page_trigger'><span translate>button.next</span> <span translate>global.module</span></span> {{::moduledata.title}} - </span></b>
       <strong style="font-size: 22px;">
-        <span ng-show="moduledata.due_date > 0 && moduledata.due_date_enabled" style="color:red" >
+        <span ng-show="moduledata.due_date > 0 && moduledata.due_date_enabled" >
           <span translate>events.due</span>
           <span>in</span>
           <span>{{::moduledata.time_left_string}}</span>
           <span translate>time.hours</span>
         </span>
-        <span ng-hide="moduledata.due_date > 0 || moduledata.review_page_trigger" style="color:red" translate>events.due_date_passed</span>
+        <span ng-hide="moduledata.due_date > 0 || moduledata.review_page_trigger"  translate>events.due_date_passed</span>
       </strong>
     </h3>
     <p>{{subtitle}}</p>
-    <a class="button small orange module-review" ng-click='goTo("course.module.progress" , moduledata.course_id,moduledata.id)' ng-hide='moduledata.review_page_trigger' translate>dashboard.review_select_inclass_material</a>
-    <a class="button small green module-review right" ng-click='goTo("course.module.inclass" , moduledata.course_id,moduledata.id)' ng-hide='moduledata.review_page_trigger' translate>dashboard.start_inclass</a>
   </div>
   <div>
     <h5><b translate>dashboard.student_completion</b></h5>
-    <highchart ng-if="moduledata.students_completion" class="chart" config="student_completion_chart_config" style="width: 100%;"></highchart>
+    <highchart id="teacher_completion" ng-if="moduledata.students_completion" class="" config="student_completion_chart_config" style="width: 100%;"></highchart>
   </div>
 </div>

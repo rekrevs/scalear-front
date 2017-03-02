@@ -698,35 +698,72 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate.instant('lectures.correct'),
+        "label": $translate.instant('lectures.first_correct'),
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.incorrect'),
+        "label": $translate.instant('lectures.last_correct'),
+        "type": "number"
+      }, {
+        "label": $translate.instant('lectures.first_not_correct'),
+        "type": "number"
+      }, {
+        "label": $translate.instant('lectures.last_not_correct'),
+        "type": "number"
+      }, {
+        "label": $translate.instant('lectures.did_not_try'),
+        "type": "number"
+      }, {
+        "label": $translate.instant('lectures.survey_tried'),
         "type": "number"
       }]
       formated_data.rows = []
       for (var ind in data) {
         var text, correct, incorrect
-        if (data[ind][1] == "gray") {
-          text = data[ind][2]
+        var first_correct = 0
+        var last_correct = 0 
+        var first_not_correct = 0
+        var last_not_correct = 0 
+        var did_not_try = 0
+        var survey_tried = 0
+
+        text = data[ind][2]
+        if (data[ind][1] == "orange") {
           if (type != 'Survey')
             text += " (" + $translate.instant('lectures.incorrect') + ")";
-          correct = 0
-          incorrect = data[ind][0]
-        } else {
-          text = data[ind][2]
+          first_not_correct = data[ind][0]
+          last_not_correct = data[ind][3]
+        } 
+        else if((data[ind][1] == "gray")){
+          if (type != 'Survey')
+            text += " (" + $translate.instant('lectures.incorrect') + ")";
+          // correct = 
+          did_not_try = data[ind][0]
+        } 
+        else if((data[ind][1] == "blue")){
+          survey_tried = data[ind][0]
+        } 
+        else {
           if (type != 'Survey')
             text += " (" + $translate.instant('lectures.correct') + ")";
-          correct = data[ind][0]
-          incorrect = 0
+          first_correct = data[ind][0]
+          last_correct = data[ind][3]
         }
+      // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try
         var row = {
           "c": [{
             "v": ScalearUtils.getHtmlText(text)
           }, {
-            "v": correct
+            "v": first_correct
           }, {
-            "v": incorrect
+            "v": last_correct
+          }, {
+            "v": first_not_correct
+          }, {
+            "v": last_not_correct
+          }, {
+            "v": did_not_try
+          }, {
+            "v": survey_tried
           }]
         }
         formated_data.rows.push(row)
@@ -833,7 +870,8 @@ angular.module('scalearAngularApp')
       } else {
         chart.type = "ColumnChart"
         chart.options = {
-          "colors": ['green', 'gray'],
+          // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try , survey_tries
+          "colors": ['#16A53F', '#1bca4d' , '#E66726','#ED9467','#a4a9ad','#355BB7'],
           "isStacked": "true",
           "fill": 20,
           "height": 135,

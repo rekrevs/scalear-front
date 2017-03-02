@@ -66,13 +66,17 @@
     <br />
     <div style="min-height: 200px;">
       <h3>Announcements</h3>
-      <div class="small-6 columns" ng-show="course_id">
-        <a id="new_announcement" class="button green small" ng-click="createAnnouncement()" translate>announcements.create_announcement</a>
+      <div class="row">
+        <div class="small-6 columns" ng-show="course_id">
+          <a id="new_announcement" class="button green small" ng-click="createAnnouncement()" translate>announcements.create_announcement</a>
+        </div>
       </div>
-      <div ng-show="events.length">
-        <span step-text="Here you will find the list of all announcements from the courses you're in." step-index="2" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
-          <event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event" role="current_user.roles[0].id"></event-item>
-        </span>
+      <div class="row">
+        <div ng-show="events.length">
+          <span step-text="Here you will find the list of all announcements from the courses you're in." step-index="2" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
+            <event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event" role="current_user.roles[0].id"></event-item>
+          </span>
+        </div>
       </div>
     </div>
   </div>

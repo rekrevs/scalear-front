@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
             scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
             scope.moduledata.due_date_enabled = !CourseEditor.isDueDateDisabled(scope.moduledata.due_date_string)
-            console.log(scope.moduledata.due_date_enabled)
+            // console.log(scope.moduledata.due_date_enabled)
             scope.subtitle = scope.moduledata.hour_min + " " +
               $translate.instant('time.hours') + ", " +
               scope.moduledata.quiz_count + " " +
@@ -93,7 +93,7 @@ angular.module('scalearAngularApp')
               options: {
                 chart: {
                   type: 'bar',
-                  margin: [0, 0, 10, 0],
+                  margin: [0, 0, 0, 0],
                   spacing: [0, 0, 0, 0]
                 },
                 plotOptions: {
@@ -115,7 +115,7 @@ angular.module('scalearAngularApp')
                     var offset = labelWidth / 2
 
                     var tooltipX = mid_point - offset
-                    var tooltipY = point.plotY + 20;
+                    var tooltipY = point.plotY + 10;
 
                     if (tooltipX < 0) {
                       tooltipX = 0
@@ -128,7 +128,7 @@ angular.module('scalearAngularApp')
                 }
               },
               size: {
-                height: 100
+                height: 50
                 // width: elem.width()
               },
               title: { text: null },
@@ -176,6 +176,9 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/teacher/progress/teacher_online_quiz_summary.html",
       link: function(scope, elem) {
+        scope.width_online_quiz = 100
+
+
         var quiz_completion_data_series = {
           never_tried: {
             name: "Never tried",
@@ -192,18 +195,23 @@ angular.module('scalearAngularApp')
             data: [],
             color: "#551a8b" //purble
           },
-          tried_not_correct: {
-            name: "Tried, not correct",
+          not_correct_many_tries: {
+            name: "Incorrect(final try)",
+            data: [],
+            color: "#ED9467" //Orange:
+          },
+          not_correct_first_try: {
+            name: "Incorrect(first try)",
             data: [],
             color: "#E66726" //Orange:
           },
           tried_correct_finally: {
-            name: "Correct, after first try",
+            name: "Correct(final try)",
             data: [],
             color: "#1bca4d" //Pale Green:
           },
           correct_first_try: {
-            name: "Correct first try",
+            name: "Correct(only try)",
             data: [],
             color: "#16A53F" // Green
           },
@@ -218,6 +226,11 @@ angular.module('scalearAngularApp')
 
         var unwatch = scope.$watch("moduledata.online_quiz",function(val){
           if(val){
+            console.log(scope.moduledata.online_quiz.length)
+            if (scope.moduledata.online_quiz.length < 20){
+              scope.width_online_quiz = scope.moduledata.online_quiz.length * 5
+            }
+
             scope.moduledata.online_quiz.forEach(function(video_quiz) {
               Object.keys(video_quiz).forEach(function(id) {
                 quiz_xaxis_categories.push('<b>' + video_quiz[id]['lecture_name'] + ": </b>" + video_quiz[id]['quiz_name'])
@@ -236,7 +249,8 @@ angular.module('scalearAngularApp')
                 if (video_quiz[id].type == 'quiz') {
                   quiz_completion_data_series['survey_solved'].data.push(null)
                 } else {
-                  quiz_completion_data_series['tried_not_correct'].data.push(null)
+                  quiz_completion_data_series['not_correct_many_tries'].data.push(null)
+                  quiz_completion_data_series['not_correct_first_try'].data.push(null)
                   quiz_completion_data_series['tried_correct_finally'].data.push(null)
                   quiz_completion_data_series['correct_first_try'].data.push(null)
                   quiz_completion_data_series['not_checked'].data.push(null)
@@ -268,6 +282,10 @@ angular.module('scalearAngularApp')
                     borderWidth: 0 ,
                     // allowPointSelect: true,
                     events: {
+                      // mouserover: function(){
+                      //   console.log("in in ")
+                      //   this.chart.quiz_tooltip.refresh([evt.point], evt);
+                      // },
                       click: function(evt) {
                         evt.stopPropagation()
                         this.chart.quiz_tooltip.refresh([evt.point], evt);
@@ -308,6 +326,9 @@ angular.module('scalearAngularApp')
                     var tooltipY =  100
                     if (tooltipX < 0) {
                       tooltipX = 0
+                    }
+                    if($('#teacher_completion').width() < point.plotX+(labelWidth)){
+                      tooltipX = $('#teacher_completion').width() - (labelWidth *1.025)
                     }
                     return {
                       x: tooltipX,
@@ -384,7 +405,13 @@ angular.module('scalearAngularApp')
                   useHTML: true,
                   enabled: false
                 },
-                lineColor: 'transparent'
+                lineColor: 'transparent',
+                // labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                // lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0
               },
               yAxis: {
                 title: { text: null },
@@ -408,17 +435,22 @@ angular.module('scalearAngularApp')
                 color: "#551a8b" //purble
               }, {
                 showInLegend: false,
-                name: "Tried, not correct",
-                data: [quiz_data.data['tried_not_correct']],
+                name: "Incorrect(final try)",
+                data: [quiz_data.data['not_correct_many_tries']],
+                color: "#ED9467" //Orange:
+              }, {
+                showInLegend: false,
+                name: "Incorrect(first try)",
+                data: [quiz_data.data['not_correct_first_try']],
                 color: "#E66726" //Orange:
               }, {
                 showInLegend: false,
-                name: "Correct, finally",
+                name: "Correct(final try)",
                 data: [quiz_data.data['tried_correct_finally']],
                 color: "#1bca4d" //Pale Green:
               }, {
                 showInLegend: false,
-                name: "Correct, first time",
+                name: "Correct(only try)",
                 data: [quiz_data.data['correct_first_try']],
                 color: "#16A53F" // Green
               }, {
@@ -496,7 +528,16 @@ angular.module('scalearAngularApp')
                   useHTML: true,
                   enabled: false
                 },
-                lineColor: 'transparent'
+                lineColor: 'transparent',
+            // categories: null,
+                // gridLineWidth: 0,
+                // labels: { enabled: false },
+                lineWidth: 0,
+                minorGridLineWidth: 0,
+                // lineColor: 'transparent',
+                minorTickLength: 0,
+                tickLength: 0
+
               },
               yAxis: {
                 title: { text: null },
@@ -526,7 +567,7 @@ angular.module('scalearAngularApp')
                     "</div>" +
                   "</div>" +
                 "</div>" +
-              "<div ng-hide='moduledata.review_page_trigger' style='bottomm: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
+              "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
               "</div>"            
           }
 
@@ -665,7 +706,7 @@ angular.module('scalearAngularApp')
             group_name: "You have tried this quiz, but your <b>invdividual</b> answer did not been checked.",
             color: "#551a8b" //purble
           },
-          self_tried_not_correct: {
+          self_tried_not_correct: { 
             name: "You have tried this quiz, but have <span style='color:#E66726'>not gotten the answer correct</span>.",
             group_name: "Your <b>individual</b> answer was <span style='color:#E66726'>incorrect</span>,",
             color: "#E66726" //Orange:
@@ -739,6 +780,8 @@ angular.module('scalearAngularApp')
                     scope.content[online_quiz.id][1] = scope.quiz_completion_data_series[online_quiz['data'][1]].name
 
                   } else {
+                    console.log(scope.quiz_completion_data_series[online_quiz['data'][0]])
+                    console.log(online_quiz['data'][0])
                     scope.online_quiz_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
                     }

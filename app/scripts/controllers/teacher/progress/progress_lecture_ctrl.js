@@ -24,21 +24,6 @@ angular.module('scalearAngularApp')
     $scope.module_summary[$scope.module_id].type = "teacher"
     $scope.module_summary[$scope.module_id].review_page_trigger = true
     $scope.module_summary[$scope.module_id].loading = { summary: true, online_quiz: true, discussion: true }
-    Module.getModuleSummary({
-      module_id: $scope.module_id,
-      course_id: $scope.course_id
-    }, function(data) {
-      $scope.module_summary[$scope.module_id].loading.summary = false
-      angular.extend($scope.module_summary[$scope.module_id], data.module)
-    })
-
-    Module.getOnlineQuizSummary({
-      module_id: $scope.module_id,
-      course_id: $scope.course_id
-    }, function(data) {
-      $scope.module_summary[$scope.module_id].loading.online_quiz = false
-      angular.extend($scope.module_summary[$scope.module_id], data.module)
-    })
 
     $scope.$on('$destroy', function() {
       removeShortcuts()
@@ -63,6 +48,12 @@ angular.module('scalearAngularApp')
         removeHightlight()
         var ul = angular.element("#" + type + "_" + item.id).find('.ul_item')[0]
         $scope.highlight_index = angular.element('.ul_item').index(ul) - 1
+      }
+    })
+
+    $scope.$on('scroll_to_item_summary', function(ev, item_id) {
+      if (item_id != null) {
+        scrollToSubItem(item_id)
       }
     })
 
@@ -150,16 +141,33 @@ angular.module('scalearAngularApp')
 
 
     var getModuleCharts = function() {
-      Module.getModuleCharts({
-          course_id: $stateParams.course_id,
-          module_id: $stateParams.module_id
-        },
-        function(data) {
+
+      Module.getModuleSummary({
+        module_id: $scope.module_id,
+        course_id: $scope.course_id
+      }, function(data) {
           $scope.timeline["module"] = new Timeline()
-          $scope.timeline["module"].add(0, 'module', data.module_data)
-        },
-        function() {}
-      )
+          // $scope.timeline["module"].add(0, 'module', data.module_data)
+        $scope.module_summary[$scope.module_id].loading.summary = false
+        angular.extend($scope.module_summary[$scope.module_id], data.module)
+      })
+
+      Module.getOnlineQuizSummary({
+        module_id: $scope.module_id,
+        course_id: $scope.course_id
+      }, function(data) {
+        $scope.module_summary[$scope.module_id].loading.online_quiz = false
+        angular.extend($scope.module_summary[$scope.module_id], data.module)
+      })
+
+      // Module.getModuleCharts({
+      //     course_id: $stateParams.course_id,
+      //     module_id: $stateParams.module_id
+      //   },
+      //   function(data) {
+      //   },
+      //   function() {}
+      // )
     }
 
     var getQuizCharts = function() {

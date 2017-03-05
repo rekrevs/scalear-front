@@ -19,7 +19,7 @@
 									</div>
 									<div class="small-9 columns no-padding">
 										<i ng-if="::(!(module.appearance_time | visible))" style="margin-right:5px;float:left;color:#c41c24" class="fi-alert" tooltip="{{'editor.tooltip.invisible'|translate}} {{module.appearance_time| fromNow}}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
-										<div class=" module_name" >{{::module.name}} </div>
+										<div class=" module_name" style="word-wrap: break-word;" >{{::module.name}} </div>
 									</div>
 									<div class="small-2 no-padding text-right columns">
 										<small class="color-grey" >{{::module.total_time | formattime:'h:mm:ss'}}</small>

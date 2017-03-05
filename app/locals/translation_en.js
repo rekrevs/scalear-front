@@ -36,6 +36,7 @@ var translation_en={
     lecture: "@:global.video",
     lectures: "@:global.videos",
     module: 'module',
+    overview: 'Module Summary',
     quiz: "Quiz",
     quizzes: "Quizzes",
     video_quizzes: "Video Quizzes",

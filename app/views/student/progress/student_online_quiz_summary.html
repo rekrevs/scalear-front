@@ -30,15 +30,16 @@
       </div>
     </div>
     <div class="row collapse quiz-bar-container" ng-style="quiz_completion_bar" ng-show="moduledata.module_completion.length>0">
-      <div ng-repeat="item in moduledata.module_completion" ng-style="item.item_style" ng-if="item.type == 'lecture' && item.online_quizzes.length>0" class="left quiz-outer-bar">
-        <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="item.quiz_bar_style" >
-          <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time, online_quiz)' ></div>
-          <span ng-if="online_quiz['data'].length==2">
-            <div style="height: 50%;" ng-style="online_quiz_color[online_quiz.id]" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time , online_quiz)'></div>
-            <div style="height: 48%;margin-top: 3%" ng-style="online_quiz_group_color[online_quiz.id]" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)" pop-over='online_popover[online_quiz.id]' class="quiz-inner-bar" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time, online_quiz)'></div>
+      <div ng-repeat="item in moduledata.module_completion" ng-style="item.item_style" ng-if="item.type == 'lecture' && item.online_quizzes.length>0" class="left quiz-outer-bar" ng-mouseover="lectureTooltip(item)" ng-mouseleave="lectureTooltipLeave(item)" >
+        <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="item.quiz_bar_style"  pop-over='online_popover[online_quiz.id]' >
+          <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" class="quiz-inner-bar" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time, online_quiz)' ></div>
+          <span ng-if="online_quiz['data'].length==2" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time , online_quiz)'>
+            <div style="height: 50%;" ng-style="online_quiz_color[online_quiz.id]" class="quiz-inner-bar" ></div>
+            <div style="height: 48%;margin-top: 3%" ng-style="online_quiz_group_color[online_quiz.id]" class="quiz-inner-bar" ></div>
           </span>
         </div>
       </div>
     </div>
   </div>
+  <div id="student_popover"></div>
 </div>

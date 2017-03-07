@@ -2805,6 +2805,7 @@ th[st-sort]{
 
 .dashboard .quiz-bar-container .quiz-outer-bar {
   position: relative;
+  padding: 1px
 }
 
 .dashboard svg, .dashboard .highcharts-container {
@@ -2875,4 +2876,8 @@ th[st-sort]{
 
 #studentCalendar .fc-toolbar .fc-left h2{
   font-size: 27px;
+}
+
+#student_popover .popover .arrow{
+  display: none;
 }

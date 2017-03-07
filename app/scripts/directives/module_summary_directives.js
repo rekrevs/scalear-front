@@ -196,22 +196,22 @@ angular.module('scalearAngularApp')
             color: "#551a8b" //purble
           },
           not_correct_many_tries: {
-            name: "Incorrect(final try)",
-            data: [],
-            color: "#ED9467" //Orange:
-          },
-          not_correct_first_try: {
-            name: "Incorrect(first try)",
+            name: "Incorrect (final try)",
             data: [],
             color: "#E66726" //Orange:
           },
+          not_correct_first_try: {
+            name: "Incorrect (first try)",
+            data: [],
+            color: "#ED9467" //Orange:
+          },
           tried_correct_finally: {
-            name: "Correct(final try)",
+            name: "Correct (final try)",
             data: [],
             color: "#1bca4d" //Pale Green:
           },
           correct_first_try: {
-            name: "Correct(only try)",
+            name: "Correct (first try)",
             data: [],
             color: "#16A53F" // Green
           },
@@ -226,7 +226,6 @@ angular.module('scalearAngularApp')
 
         var unwatch = scope.$watch("moduledata.online_quiz",function(val){
           if(val){
-            console.log(scope.moduledata.online_quiz.length)
             if (scope.moduledata.online_quiz.length < 20){
               scope.width_online_quiz = scope.moduledata.online_quiz.length * 5
             }
@@ -243,7 +242,12 @@ angular.module('scalearAngularApp')
                     quiz_completion_data_series[quiz_bar].data.push(null)
                   }
                   else {
-                    quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar])
+                    if (video_quiz[id]['inclass']) {
+                     quiz_completion_data_series[quiz_bar].data.push( { y: video_quiz[id]['data'][quiz_bar] , borderColor:'black' , borderWidth:1 } )
+                    }
+                    else{
+                      quiz_completion_data_series[quiz_bar].data.push( {y:video_quiz[id]['data'][quiz_bar]} )
+                    }
                   }
                 })
                 if (video_quiz[id].type == 'quiz') {
@@ -271,13 +275,18 @@ angular.module('scalearAngularApp')
                 plotOptions: {
                   series: {
                     stacking: 'normal',
+                    // states: {
+                    //     hover: {
+                    //         enabled: false
+                    //     }
+                    // }                    
                   },
                   column: {
-                    states:{
-                      hover: {
-                        borderColor: "#ffffff"
-                      }
-                    },
+                    // states:{
+                      // hover: {
+                        // borderColor: "#ffffff"
+                      // }
+                    // },
                     pointWidth: 20,
                     borderWidth: 0 ,
                     // allowPointSelect: true,
@@ -302,6 +311,7 @@ angular.module('scalearAngularApp')
                 },
                 legend: { enabled: false },
                 tooltip: {
+                  borderColor: '#000000',
                   shared: true,
                   useHTML: true,
                   enabled: true,
@@ -363,19 +373,34 @@ angular.module('scalearAngularApp')
         })
 
         function quizTooltipFormatter() {
-          if(scope.title && scope.title == this.x){
-            return $("#quiz_bar").html()
-          }
-          scope.$emit("hide_tooltip")
           var quiz_only_one_bar_config = {}
           var quiz = scope.moduledata.online_quiz[this.points[0].point.index]
           var quiz_id = Object.keys(quiz)[0]
           var quiz_data = quiz[quiz_id]
           var quiz_type = quiz_data.type
           var xaxis_categories = []
+
+          if(scope.title && scope.title.indexOf(this.x) !== -1){
+            $timeout(function (argument) {
+              $(".gotToQuizButton").click(function() {
+              scope.goTo('course.module.progress', scope.moduledata.course_id, scope.moduledata.id, "vq_" + quiz_id)
+            })
+            $(".gotToQuizButtonReview").click(function() {
+              $rootScope.$broadcast("scroll_to_item_summary", "vq_" + quiz_id)
+            })
+            })
+            return $("#quiz_bar").html()
+          }
+          scope.$emit("hide_tooltip")
+          scope.title = this.x;
+          if(quiz_data['inclass']){
+            scope.title = "<b>In-Class Question: </b>" + this.x;
+          }
+          if(quiz_data['distance_peer']){
+            scope.title = "<b>Distance-Peer Question: </b>" +this.x;
+          }
+          scope.left = '';
           if (quiz_type == 'quiz') { ////////////////////  Quiz bar tooltip
-            scope.title = this.x;
-            scope.left = '';
 
             quiz_only_one_bar_config = {
               chart: {
@@ -386,9 +411,13 @@ angular.module('scalearAngularApp')
                 width: 70,
                 height: (quiz_data.data['review_vote'] > 0) ? 150 : 130
               },
-              plotOptions: { series: { stacking: 'normal', animation: false } },
+              plotOptions: {
+                series: { stacking: 'normal', animation: false }, 
+                column: {borderWidth: 0 ,},
+             },
               legend: { reversed: true },
               title: { text: null },
+              credits: {enabled: false},
               xAxis: {
                 categories: null,
                 gridLineWidth: 0,
@@ -426,22 +455,22 @@ angular.module('scalearAngularApp')
                 color: "#551a8b" //purble
               }, {
                 showInLegend: false,
-                name: "Incorrect(final try)",
+                name: "Incorrect (final try)",
                 data: [quiz_data.data['not_correct_many_tries']],
-                color: "#ED9467" //Orange:
-              }, {
-                showInLegend: false,
-                name: "Incorrect(first try)",
-                data: [quiz_data.data['not_correct_first_try']],
                 color: "#E66726" //Orange:
               }, {
                 showInLegend: false,
-                name: "Correct(final try)",
+                name: "Incorrect (first try)",
+                data: [quiz_data.data['not_correct_first_try']],
+                color: "#ED9467" //Orange:
+              }, {
+                showInLegend: false,
+                name: "Correct (final try)",
                 data: [quiz_data.data['tried_correct_finally']],
                 color: "#1bca4d" //Pale Green:
               }, {
                 showInLegend: false,
-                name: "Correct(only try)",
+                name: "Correct (first try)",
                 data: [quiz_data.data['correct_first_try']],
                 color: "#16A53F" // Green
               }, {
@@ -468,7 +497,7 @@ angular.module('scalearAngularApp')
 
             var tooltip_template = "<div class='dashboard' style='width:460px; height:100%'>" +
               "<div ng-bind-html='title' class='row collapse'></div>" +
-              "<div class='row collapse'>"+
+              "<div class='row collapse' style='width:420px; height:100%'>"+
                   "<div class='small-2 columns no-padding'>" +
                     "<div id='custom_chart' ></div>" +
                   "</div>" +
@@ -483,8 +512,8 @@ angular.module('scalearAngularApp')
               "</div>"
 
           } else { ///// SURVEY TOOLTIP
-            scope.title = this.x;
-            scope.left = '';
+            // scope.title = this.x;
+            // scope.left = '';
 
             var answer_data = []
             var xaxis_categories = []
@@ -508,6 +537,7 @@ angular.module('scalearAngularApp')
               plotOptions: { series: { stacking: 'normal', animation: false } },
               legend: { reversed: true },
               title: { text: null },
+              credits: {enabled: false},
               xAxis: {
                 categories: xaxis_categories,
                 gridLineWidth: 0,
@@ -538,21 +568,24 @@ angular.module('scalearAngularApp')
               }]
             }
 
-            var tooltip_template = "<div class='dashboard' style='width:460px; height:100%'>" +
+            var tooltip_template = "<div class='dashboard' style='width:500px; height:100%; min-height:164px'>" +
               "<div ng-bind-html='title' class='row collapse'></div>" +
-              "<div class='row collapse'>"+
-                  "<div class='small-6 columns no-padding'>" +
+              "<div class='row collapse' style='width:400px; height:100%'>"+
+                  "<div class='small-5 columns no-padding'>" +
                     "<div id='custom_chart' ></div>" +
                   "</div>" +
-                  "<div style='padding-top: 40px;' class='small-6 columns'>" +
+                  "<div style='padding-top: 40px;' class='small-7 columns'>" +
                     "<div ng-bind-html='left' style='font-size:12px'>" +
                       // "<div  >" +
                     "</div>" +
                   "</div>" +
                 "</div>" +
+              "</div>" +
+              // "<div class='row collapse'>"+
               "<div ng-show='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButtonReview' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px; color:white' translate>dashboard.review_quiz</a></div>" +
-              "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
-              "</div>"
+              "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a>"+
+              // "</div>" +
+              "</div>"            
           }
 
           $("#quiz_bar").html(tooltip_template)
@@ -668,12 +701,12 @@ angular.module('scalearAngularApp')
             color: "#551a8b" //purble
           },
           group_tried_not_correct_first: {
-            name: "Your <b>group</b> answer was <span style='color:#E66726'>incorrect</span>, you tried once.",
-            color: "#E66726" //Orange:
+            name: "Your <b>group</b> answer was <span style='color:#ED9467'>incorrect</span>, you tried once.",
+            color: "#ED9467" //Orange:
           },
           group_tried_not_correct_finally: {
-            name: "Your <b>group</b> answer was <span style='color:#ED9467'>incorrect</span>, you tried more than once.",
-            color: "#ED9467" //Orange:
+            name: "Your <b>group</b> answer was <span style='color:#E66726'>incorrect</span>, you tried more than once.",
+            color: "#E66726" //Orange:
           },
           group_tried_correct_finally: {
             name: " Your <b>group</b> answer was <span style='color:#1bca4d'>correct</span> but not on the first try.",
@@ -694,22 +727,22 @@ angular.module('scalearAngularApp')
             color: "#355BB7" //blue
           },
           self_not_checked: {
-            name: "You have tried this quiz, but your answer has not been checked by the teacher,",
+            name: "You have tried this quiz, but your answer has not been checked by the teacher.",
             group_name: "You have tried this quiz, but your <b>invdividual</b> answer has not been checked by the teacher.",
             color: "#551a8b" //purble
           },
           self_tried_not_correct_first: {
-            name: "You have tried this quiz once, but have <span style='color:#E66726'>not gotten the answer correct</span>.",
-            group_name: "Your <b>individual</b> answer was <span style='color:#E66726'>incorrect</span>, you tried once.",
-            color: "#E66726" //Orange:
-          },
-          self_tried_not_correct_finally: {
-            name: "You have tried this quiz more than once, but have <span style='color:#ED9467'>not gotten the answer correct</span>.",
-            group_name: "Your <b>individual</b> answer was <span style='color:#ED9467'>incorrect</span>, you tried only once.",
+            name: "You have tried this quiz once, but have <span style='color:#ED9467'>not gotten the answer correct</span>.",
+            group_name: "Your <b>individual</b> answer was <span style='color:#ED9467'>incorrect</span>, you tried once.",
             color: "#ED9467" //Orange:
           },
+          self_tried_not_correct_finally: {
+            name: "You have tried this quiz more than once, but have <span style='color:#E66726'>not gotten the answer correct</span>.",
+            group_name: "Your <b>individual</b> answer was <span style='color:#E66726'>incorrect</span>, you tried only once.",
+            color: "#E66726" //Orange:
+          },
           self_tried_correct_finally: {
-            name: "You got the answer correct, but <span style='color:#1bca4d'>, but not on the first try.</span>.",
+            name: "You got the answer correct, but <span style='color:#1bca4d'> not on the first try.</span>.",
             group_name: "Your <b>individual</b> answer was <span style='color:#1bca4d'>correct</span> but not on the first try,",
             color: "#1bca4d" //Pale Green:
           },
@@ -761,7 +794,7 @@ angular.module('scalearAngularApp')
                     scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: <b>In-Class Question: </b>" + scope.online_quiz_name[online_quiz.id]
                   }
                   if(online_quiz['distance_peer']){
-                    scope.online_quiz_name[online_quiz.id] = "<b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                    scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: <b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
                   }
 
                   if (online_quiz['data'].length == 2) {
@@ -784,36 +817,38 @@ angular.module('scalearAngularApp')
                     }
                     scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
                   }
+                  scope.retry_quiz = 'Click to re-try this quiz.'
                   scope.online_popover[online_quiz['id']] = {
                     title: "<span style='font-size:12px;' ng-bind-html='online_quiz_name[online_quiz.id]' ></span> ",
-                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div> " ,
+                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \">Click to re-try this quiz.</div> " ,
                       // "<div class='right' style='bottom: 10px;right: 10px;'>" +
                       // "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
                       // "</div>",
                     html: true,
                     trigger: 'hover',
-                    placement: 'bottom'
+                    placement: 'bottom',
+                    container: '#student_popover'
                   }
                   if( online_quiz['data'].length == 2 ){
                     scope.online_popover[online_quiz['id']].content =
-                    "<div class='row collapse' style='height: 90px;width: 100%;'>" +
-                      "<div style='height: 50%;width: 100%;' >"+
+                    "<div class='row collapse' style='height: 135px;width: 100%;'>" +
+                      "<div style='height: 45px;width: 100%;' >"+
                         "<div style='width: 10%;margin-right: 10px;float: left;' ng-style='online_quiz_group_color[online_quiz.id]'  class='quiz-inner-bar'></div>"+
                         "<div  ng-bind-html='content[online_quiz.id][1]' style='font-size:12px;'></div>"+
                       "</div>"+
-                      "<div style='height: 50%;width: 100%;margin-top: 2px'>"+
+                      "<div style='height: 45px;width: 100%;margin-top: 2px'>"+
                         "<div style='width: 10%;margin-right: 10px;float: left;' ng-style='online_quiz_color[online_quiz.id]'  class='quiz-inner-bar'></div>"+
                         "<div  ng-bind-html='content[online_quiz.id][0]' style='font-size:12px;'></div>"+
-                      "</div>"+
+                      "</div><div>Click to re-try this quiz.</div>"+
                       // "<div class='right' style='bottom: 10px;right: 10px;'>" +
                       //   "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
                       // "</div>"+
                     "</div>"
                   }
                   // console.log(( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  )
-                  if ( ( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  < 0.4) {
-                    scope.online_popover[online_quiz['id']]['placement'] = 'right'
-                  }
+                  // if ( ( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  < 0.4) {
+                  //   scope.online_popover[online_quiz['id']]['placement'] = 'right'
+                  // }
                   online_quiz_index += 1
                 })
               }
@@ -833,6 +868,8 @@ angular.module('scalearAngularApp')
           item.item_style["border"] = 'none'
           item.show_tooltip=false
         }
+
+
 
         scope.goTo = function(state , course_id, group_id, lecture_id, time , online_quiz) {
           if ( !(online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried')) ) {

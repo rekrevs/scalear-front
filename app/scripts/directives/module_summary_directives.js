@@ -119,6 +119,8 @@ angular.module('scalearAngularApp')
 
                     if (tooltipX < 0) {
                       tooltipX = 0
+                    }else if(tooltipX+labelWidth > bar_end){
+                      tooltipX = bar_end - labelWidth - 5
                     }
                     return {
                       x: tooltipX,
@@ -568,7 +570,7 @@ angular.module('scalearAngularApp')
               }]
             }
 
-            var tooltip_template = "<div class='dashboard' style='width:500px; height:100%; min-height:164px'>" +
+            var tooltip_template = "<div class='dashboard' style='width:520px; height:100%; min-height:164px'>" +
               "<div ng-bind-html='title' class='row collapse'></div>" +
               "<div class='row collapse' style='width:400px; height:100%'>"+
                   "<div class='small-5 columns no-padding'>" +

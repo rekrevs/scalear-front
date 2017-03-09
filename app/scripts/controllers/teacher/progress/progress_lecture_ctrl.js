@@ -879,7 +879,7 @@ angular.module('scalearAngularApp')
         chart.type = "ColumnChart"
         chart.options = {
           // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try , survey_tries
-          "colors": ['#16A53F', '#1bca4d' , '#E66726','#ED9467','#a4a9ad','#355BB7'],
+          "colors": ['#16A53F', '#1bca4d' , '#ED9467','#E66726','#a4a9ad','#355BB7'],
           "isStacked": "true",
           "fill": 20,
           "height": 135,

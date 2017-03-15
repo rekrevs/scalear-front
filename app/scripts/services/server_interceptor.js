@@ -125,7 +125,8 @@ angular.module('scalearAngularApp')
             $rootScope.stop = undefined;
           }
 
-          ErrorHandler.showMessage('Error ' + ': ' + 'Unknown Error.', 'errorMessage', 4000, "error");
+          // ErrorHandler.showMessage('Error ' + ': ' + 'Unknown Error.', 'errorMessage', 4000, "error");
+          ErrorHandler.showMessage('A server error occurred. If this continues, please use the Support link in the Help menu to contact technical support.', 'errorMessage', 4000, "error");
         }
 
         if(rejection.status == 401 && rejection.config.url.search(re) != -1) {

@@ -706,22 +706,22 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate.instant('lectures.first_correct'),
+        "label":$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.last_correct'),
+        "label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.first_not_correct'),
+        "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.last_not_correct'),
+        "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
         "label": '', // Never Tried 
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.survey_tried'),
+        "label": $translate.instant("dashboard.solved"),
         "type": "number"
       }]
       formated_data.rows = []
@@ -737,14 +737,11 @@ angular.module('scalearAngularApp')
         text = data[ind][2]
         if (data[ind][1] == "orange") {
           if (type != 'Survey')
-            text += " (" + $translate.instant('lectures.incorrect') + ")";
+            text += " (" + $translate.instant('editor.incorrect') + ")";
           first_not_correct = data[ind][0]
           last_not_correct = data[ind][3]
         } 
         else if((data[ind][1] == "gray")){
-          // if (type != 'Survey')
-          //   text += " (" + $translate.instant('lectures.incorrect') + ")";
-          // correct = 
           did_not_try = data[ind][0]
         } 
         else if((data[ind][1] == "blue")){
@@ -752,7 +749,7 @@ angular.module('scalearAngularApp')
         } 
         else {
           if (type != 'Survey')
-            text += " (" + $translate.instant('lectures.correct') + ")";
+            text += " (" + $translate.instant('editor.correct') + ")";
           first_correct = data[ind][0]
           last_correct = data[ind][3]
         }
@@ -779,21 +776,21 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('global.students'),
         "type": "string"
       }, {
-        "label": $translate.instant('lectures.correct'),
+        "label": $translate.instant('editor.correct'),
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.incorrect'),
+        "label": $translate.instant('editor.incorrect'),
         "type": "number"
       }]
       formated_data.rows = []
       var text, correct, incorrect
       for (var ind in data) {
         if (!data[ind][1]) {
-          text = data[ind][2] + " " + "(" + $translate.instant('lectures.incorrect') + ")";
+          text = data[ind][2] + " " + "(" + $translate.instant('editor.incorrect') + ")";
           correct = 0
           incorrect = data[ind][0]
         } else {
-          text = data[ind][2] + " " + "(" + $translate.instant('lectures.correct') + ")";
+          text = data[ind][2] + " " + "(" + $translate.instant('editor.correct') + ")";
           correct = data[ind][0]
           incorrect = 0
         }
@@ -937,12 +934,12 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         {"label": $translate.instant('global.students'),"type": "string"},
-        {"label": $translate.instant('lectures.first_correct') ,"type": "number"}, {"type": "string","p": {"role": "style"}}, 
-        {"label": $translate.instant('lectures.last_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},
-        {"label": $translate.instant('lectures.first_not_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},         
-        {"label": $translate.instant('lectures.last_not_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},
+        {"label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')' ,"type": "number"}, {"type": "string","p": {"role": "style"}}, 
+        {"label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},
+        {"label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},         
+        {"label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},
         {"label": '',"type": "number"}, {"type": "string","p": {"role": "style"}}, 
-        {"label": $translate.instant('lectures.survey_tried'),"type": "number"}, {"type": "string","p": {"role": "style"}}
+        {"label": $translate.instant("dashboard.solved"),"type": "number"}, {"type": "string","p": {"role": "style"}}
         ]
 
 
@@ -966,8 +963,8 @@ angular.module('scalearAngularApp')
           // group = group_count,
           // tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>" + $translate.instant('inclass.self_stage') + ": " + self_count + ", " + $translate.instant('inclass.group_stage') + ": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : '',
-          self_text = text + '('+$translate.instant('inclass.self_stage')+')',
-          group_text = text + '('+$translate.instant('inclass.group_stage')+')'
+          self_text = text + ' ('+$translate.instant('inclass.self_stage')+')',
+          group_text = text + ' ('+$translate.instant('inclass.group_stage')+')'
       
           if(data[ind][1] == 'green'){
             self_first_correct = data[ind][0] || 0
@@ -977,7 +974,7 @@ angular.module('scalearAngularApp')
           }
           else if(data[ind][1] == 'orange'){
             if (type != 'Survey')
-              text += " (" + $translate.instant('lectures.incorrect') + ")";
+              text += " (" + $translate.instant('editor.incorrect') + ")";
             self_first_not_correct = data[ind][0] || 0
             self_last_not_correct = data[ind][3] || 0 
             group_first_not_correct = data[ind][4] || 0

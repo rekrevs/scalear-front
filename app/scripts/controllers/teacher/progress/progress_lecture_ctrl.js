@@ -718,7 +718,7 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('lectures.last_not_correct'),
         "type": "number"
       }, {
-        "label": '',
+        "label": '', // Never Tried 
         "type": "number"
       }, {
         "label": $translate.instant('lectures.survey_tried'),
@@ -726,13 +726,13 @@ angular.module('scalearAngularApp')
       }]
       formated_data.rows = []
       for (var ind in data) {
-        var text, correct, incorrect
-        var first_correct = 0
-        var last_correct = 0 
-        var first_not_correct = 0
-        var last_not_correct = 0 
-        var did_not_try = 0
-        var survey_tried = 0
+        var text, correct, incorrect,
+          first_correct = 0,
+          last_correct = 0 ,
+          first_not_correct = 0,
+          last_not_correct = 0 ,
+          did_not_try = 0,
+          survey_tried = 0
 
         text = data[ind][2]
         if (data[ind][1] == "orange") {
@@ -758,21 +758,15 @@ angular.module('scalearAngularApp')
         }
       // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try
         var row = {
-          "c": [{
-            "v": ScalearUtils.getHtmlText(text)
-          }, {
-            "v": first_correct
-          }, {
-            "v": last_correct
-          }, {
-            "v": first_not_correct
-          }, {
-            "v": last_not_correct
-          }, {
-            "v": did_not_try
-          }, {
-            "v": survey_tried
-          }]
+          "c": [
+            {"v": ScalearUtils.getHtmlText(text)}, 
+            {"v": first_correct}, 
+            {"v": last_correct}, 
+            {"v": first_not_correct}, 
+            {"v": last_not_correct}, 
+            {"v": did_not_try}, 
+            {"v": survey_tried}
+          ]
         }
         formated_data.rows.push(row)
       }
@@ -874,7 +868,8 @@ angular.module('scalearAngularApp')
     $scope.createChart = function(data, student_count, options, formatter, type, self_group_boolean) {
       var chart = {};
       if (self_group_boolean) {
-        chart = $scope.createChartSelfGroup(data, student_count, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatSelfGroupChartData')
+        chart = $scope.createChartSelfGroup(data, student_count, {}, 'formatSelfGroupChartData', type)
+        // chart = $scope.createChartSelfGroup(data, student_count, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatSelfGroupChartData')
       } else {
         chart.type = "ColumnChart"
         chart.options = {
@@ -894,6 +889,10 @@ angular.module('scalearAngularApp')
             "viewWindow": { "max": student_count }
           }
         };
+        if( formatter == 'formatQuizChartData' ||formatter == 'formatSurveyChartData'){
+          // first_correct , last_not_correct 
+          chart.options['colors'] = ['#16A53F','#E66726']
+        }
         angular.extend(chart.options, options)
 
         chart.data = $scope[formatter](data, type)
@@ -903,12 +902,12 @@ angular.module('scalearAngularApp')
 
 
 
-    $scope.createChartSelfGroup = function(data, student_count, options, formatter) {
+    $scope.createChartSelfGroup = function(data, student_count, options, formatter, type) {
       var chart = {
         type: "ColumnChart",
         options: {
-          "colors": ['green', 'gray'],
-          "isStacked": "false",
+          "colors": ['#16A53F', '#1bca4d' , '#ED9467','#E66726','#a4a9ad','#355BB7','#16A53F', '#1bca4d' , '#ED9467','#E66726','#a4a9ad','#355BB7'],
+          "isStacked": "true",
           "fill": 20,
           "height": 135,
           "displayExactValues": true,
@@ -926,65 +925,88 @@ angular.module('scalearAngularApp')
             "viewWindow": { "max": student_count },
             // "viewWindowMode": 'maximized',
             // "textPosition": 'none'
-          }
+          }          
         },
-        data: $scope[formatter](data)
+        data: $scope[formatter](data, type)
       };
       angular.extend(chart.options, options)
+      console.log(chart)
       return chart
     }
-    $scope.formatSelfGroupChartData = function(data) {
+    $scope.formatSelfGroupChartData = function(data, type) {
       var formated_data = {}
-      formated_data.cols = [{
-        "label": $translate.instant('global.students'),
-        "type": "string"
-      }, {
-        "label": $translate.instant('inclass.self_stage'),
-        "type": "number"
-      }, {
-        "type": "string",
-        "p": {
-          "role": "tooltip",
-          "html": true
-        }
-      }, {
-        "type": "string",
-        "p": {
-          "role": "style",
-        }
-      }, {
-        "label": $translate.instant('inclass.group_stage'),
-        "type": "number"
-      }, {
-        "type": "string",
-        "p": {
-          "role": "tooltip",
-          "html": true
-        }
-      }, {
-        "type": "string",
-        "p": {
-          "role": "style",
-        }
-      }]
+      formated_data.cols = [
+        {"label": $translate.instant('global.students'),"type": "string"},
+        {"label": $translate.instant('lectures.first_correct') ,"type": "number"}, {"type": "string","p": {"role": "style"}}, 
+        {"label": $translate.instant('lectures.last_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},
+        {"label": $translate.instant('lectures.first_not_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},         
+        {"label": $translate.instant('lectures.last_not_correct'),"type": "number"}, {"type": "string","p": {"role": "style"}},
+        {"label": '',"type": "number"}, {"type": "string","p": {"role": "style"}}, 
+        {"label": $translate.instant('lectures.survey_tried'),"type": "number"}, {"type": "string","p": {"role": "style"}}
+        ]
+
+
       formated_data.rows = []
       for (var ind in data) {
+        var text, correct, incorrect,
+          self_first_correct = 0,self_last_correct = 0 ,
+          self_first_not_correct = 0,self_last_not_correct = 0 ,
+          self_did_not_try = 0,self_survey_tried = 0,
+          group_first_correct = 0,group_last_correct = 0 ,
+          group_first_not_correct = 0,group_last_not_correct = 0 ,
+          group_did_not_try = 0,group_survey_tried = 0
+
+
+// [self_first_try_grades_count, first_try_color, answer.answer , not_self_first_try_grades_count, group_first_try_grades_count, not_group_first_try_grades_count]
+
         var text = data[ind][2],
-          self_count = data[ind][0] || 0,
-          group_count = data[ind][3] || 0,
-          self = self_count,
-          group = group_count,
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>" + $translate.instant('inclass.self_stage') + ": " + self_count + ", " + $translate.instant('inclass.group_stage') + ": " + group_count + "</div>",
-          style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
+          // self_count = data[ind][0] || 0,
+          // group_count = data[ind][3] || 0,
+          // self = self_count,
+          // group = group_count,
+          // tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>" + $translate.instant('inclass.self_stage') + ": " + self_count + ", " + $translate.instant('inclass.group_stage') + ": " + group_count + "</div>",
+          style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : '',
+          self_text = text + '('+$translate.instant('inclass.self_stage')+')',
+          group_text = text + '('+$translate.instant('inclass.group_stage')+')'
+      
+          if(data[ind][1] == 'green'){
+            self_first_correct = data[ind][0] || 0
+            self_last_correct = data[ind][3] || 0 
+            group_first_correct = data[ind][4] || 0
+            group_last_correct = data[ind][5] || 0         
+          }
+          else if(data[ind][1] == 'orange'){
+            if (type != 'Survey')
+              text += " (" + $translate.instant('lectures.incorrect') + ")";
+            self_first_not_correct = data[ind][0] || 0
+            self_last_not_correct = data[ind][3] || 0 
+            group_first_not_correct = data[ind][4] || 0
+            group_last_not_correct = data[ind][5] || 0
+          }
+          else if((data[ind][1] == "gray")){
+            self_did_not_try = data[ind][0]
+            group_did_not_try = data[ind][3]
+          }
+          else if((data[ind][1] == "blue")){
+            self_survey_tried = data[ind][0]
+            group_survey_tried = data[ind][3]
+          } 
+
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text) },
-            { "v": self },
-            { "v": tooltip_text },
-            { "v": style },
-            { "v": group },
-            { "v": tooltip_text },
-            { "v": style }
+            { "v": ScalearUtils.getHtmlText(self_text) },
+            { "v": self_first_correct },{ "v": style },{ "v": self_last_correct },{ "v": style },
+            { "v": self_first_not_correct },{ "v": style },{ "v": self_last_not_correct },{ "v": style },
+            { "v": self_did_not_try },{ "v": style },{ "v": self_survey_tried },{ "v": style },
+          ]
+        }
+        formated_data.rows.push(row)
+        var row = {
+          "c": [
+            { "v": ScalearUtils.getHtmlText(group_text) },
+            { "v": group_first_correct },{ "v": style },{ "v": group_last_correct },{ "v": style },
+            { "v": group_first_not_correct },{ "v": style },{ "v": group_last_not_correct },{ "v": style },
+            { "v": group_did_not_try },{ "v": style },{ "v": group_survey_tried },{ "v": style }
           ]
         }
         formated_data.rows.push(row)

@@ -45,7 +45,8 @@
 </div>
 <div class="small-12 columns email-forum">
   <span>Body:</span>
-  <div class="panel" text-angular ng-model="announcement.message"></div>
+  <rich-textarea rows=3 class="panel" ng-model="announcement.message"  style="height: 200px;margin-bottom: 20px;"/>
+
 </div>
 <br />
 <button type="button" class="button right" id="send_emails" ng-click="confirmDialog()" ng-disabled="!announcement.subject || !announcement.message || !announcement.list_type"><span>Send</span></button>

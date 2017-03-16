@@ -718,7 +718,7 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('lectures.last_not_correct'),
         "type": "number"
       }, {
-        "label": $translate.instant('lectures.did_not_try'),
+        "label": '',
         "type": "number"
       }, {
         "label": $translate.instant('lectures.survey_tried'),
@@ -742,8 +742,8 @@ angular.module('scalearAngularApp')
           last_not_correct = data[ind][3]
         } 
         else if((data[ind][1] == "gray")){
-          if (type != 'Survey')
-            text += " (" + $translate.instant('lectures.incorrect') + ")";
+          // if (type != 'Survey')
+          //   text += " (" + $translate.instant('lectures.incorrect') + ")";
           // correct = 
           did_not_try = data[ind][0]
         } 
@@ -1181,7 +1181,7 @@ angular.module('scalearAngularApp')
       if (percent < 10)
         return 'gray'
       else if (percent > 20)
-        return 'orange'
+        return '#f5c343' // dark yellow 
       else
         return 'black'
 

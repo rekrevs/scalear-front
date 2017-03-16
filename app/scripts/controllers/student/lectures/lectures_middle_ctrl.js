@@ -521,7 +521,7 @@ angular.module('scalearAngularApp')
         $scope.show_progressbar = true
       var time = $state.params.time
       if(time) {
-        $scope.seek(parseInt(time));
+        $scope.seek(time);
         $timeout(function() {
           $scope.scrollIntoView()
         }, 500)

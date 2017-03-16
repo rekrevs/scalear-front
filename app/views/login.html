@@ -87,7 +87,7 @@
                         <i class="fi-magnifying-glass size-18 left" style="margin: 4px;margin-right: 8px;"></i>
                         <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText" style="margin-bottom:0;width:86%;border-radius:4px" autofocus/>
                     </li>
-                    <li ng-repeat="login_item in swamid=(swamid_list|filter:{ 'displayName.id': searchText}|orderBy:'displayName.id')" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.displayName.en || login_item.displayName.sv }}</li>
+                    <li ng-repeat="login_item in swamid=(swamid_list|filter:{ 'title': searchText , 'hidden':false}|orderBy:'title_order')" class="button small-12 columns left no-margin" ng-click="samlLogin(login_item)">{{login_item.title }}</li>
                     <li ng-show="!swamid.length" class="small-12 columns left no-margin muted" style="color:#999999;padding: 10px 30px;" translate>account.school_not_listed</li>
                 </ul>
             </div>
@@ -232,7 +232,7 @@
             </span>
             <span ng-show="previous_provider!='scalablelearning'">
                 <div class="row">
-                    <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)"><span translate>account.login_with</span> {{previous_provider.displayName.en || previous_provider.displayName.sv }}</div>
+                    <div class="button small-10 small-centered columns primary" ng-click="samlLogin(previous_provider)"><span translate>account.login_with</span> {{previous_provider.title }}</div>
                 </div>
             </span>
             <div class="line-through" translate>global.or</div>

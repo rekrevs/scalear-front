@@ -1,15 +1,16 @@
 <div>
   <div ng-show="moduledata.title">
     <h3>
-      <b><span ng-hide='moduledata.review_page_trigger'><span translate>button.next</span> <span translate>global.module</span>: </span> {{::moduledata.title}} - </span></b>
+      <b><span ng-hide='moduledata.review_page_trigger'><span translate>button.next</span> <span translate>global.module</span>: </span> {{::moduledata.title}} </span></b>
       <span style="font-size: 22px;">
-        <span ng-show="moduledata.due_date > 0 && moduledata.due_date_enabled" >
+        <span ng-show=" ( moduledata.due_date > 0 && moduledata.due_date_enabled ) && (moduledata.time_left_string != 00)" >
           <span translate>events.due</span>
           <span> - in</span>
           <span>{{::moduledata.time_left_string}}</span>
           <span translate>time.hours</span>
         </span>
         <span ng-hide="moduledata.due_date > 0 || moduledata.review_page_trigger"  translate>events.due_date_passed</span>
+        <span ng-show="moduledata.time_left_string == 0 "  translate>dashboard.less_one_hour</span>
       </span>
     </h3>
     <p>{{subtitle}}</p>

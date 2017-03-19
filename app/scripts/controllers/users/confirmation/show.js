@@ -31,14 +31,18 @@ angular.module('scalearAngularApp')
               template: '<style>.reveal-modal{height:auto;overflow: hidden;}</style>'+
               "<center><span translate>account.invalid_confirmation</span><br>"+
               "<span translate>account.already_confirmation</span> <a class='tiny' ng-click='goTo()' translate>account.click_here</a> <span translate>global.to</span> <span translate>navigation.login</span>.<br>"+
-              "<span translate>account.new_confirmation</span> <a ui-sref='new_confirmation' translate>account.click_here</a>.<br>"+
+              "<span translate>account.new_confirmation</span> <a ui-sref='new_confirmation' ng-click='closeModal()' translate>account.click_here</a>.<br>"+
               "<Small translate>account.go_to_support</small></center>",
               scope: $scope,
               controller:['$modalInstance', function($modalInstance) {                
                 $scope.goTo = function() {
                   $state.go('login',{email: $scope.user_email})
                   $modalInstance.dismiss('cancel');
-                }              
+                }
+                $scope.closeModal = function() {
+                  // $state.go('login',{email: $scope.user_email})
+                  $modalInstance.dismiss('can1cel');
+                }
               }]
             })
           }

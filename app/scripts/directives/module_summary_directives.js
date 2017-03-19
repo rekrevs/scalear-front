@@ -14,7 +14,6 @@ angular.module('scalearAngularApp')
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
             scope.moduledata.time_left_string = ScalearUtils.toHourMin(scope.moduledata.due_date).split(":")[0]
             scope.moduledata.due_date_enabled = !CourseEditor.isDueDateDisabled(scope.moduledata.due_date_string)
-            // console.log(scope.moduledata.due_date_enabled)
             scope.subtitle = scope.moduledata.hour_min + " " +
               $translate.instant('time.hours') + ", " +
               scope.moduledata.quiz_count + " " +
@@ -85,7 +84,6 @@ angular.module('scalearAngularApp')
 
               student_completion_data_series.push(bar)
             })
-
             scope.student_completion_chart_config = {
               options: {
                 chart: {
@@ -350,6 +348,9 @@ angular.module('scalearAngularApp')
                     }
                   }
                 },
+                tooltip: { 
+                  enabled: false,
+                },        
                 legend: { enabled: false }
               },
               size: {
@@ -648,7 +649,7 @@ angular.module('scalearAngularApp')
       }
     }
   }])
-  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', function(ScalearUtils, $filter, $translate, $state) {
+  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', 'CourseEditor', function(ScalearUtils, $filter, $translate, $state, CourseEditor) {
     return {
       scope: {
         moduledata: '='
@@ -667,23 +668,21 @@ angular.module('scalearAngularApp')
               scope.moduledata.quiz_count + " " +
               $translate.instant('global.quizzes') + ", " +
               scope.moduledata.survey_count + " " +
-              $translate.instant('global.surveys') + ". " +
-              $translate.instant('events.due') + " " +
+              $translate.instant('global.surveys') + ". " 
+              // $translate.instant('events.due') + " " +
+              // $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
+              // $translate.instant('global.at') + " " +
+              // $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
+
+            scope.moduledata.due_date_enabled = !CourseEditor.isDueDateDisabled(scope.moduledata.due_date_string)
+            if(scope.moduledata.due_date_enabled){
+              scope.subtitle +=  $translate.instant('events.due') + " " +
               $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
               $translate.instant('global.at') + " " +
               $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
-
-            if (scope.moduledata.first_lecture == -1) {
-              scope.continue_button = null
-            } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed > -1) {
-              scope.continue_button = "Continue watching"
-              scope.next_lecture = scope.moduledata.last_viewed
-            } else if (scope.moduledata.module_done >= 0 && scope.moduledata.first_lecture != -1) {
-              scope.continue_button = "Watch again"
-              scope.next_lecture = scope.moduledata.first_lecture
-            } else if (scope.moduledata.module_done == -1 && scope.moduledata.last_viewed == -1) {
-              scope.continue_button = "Start watching"
-              scope.next_lecture = scope.moduledata.first_lecture
+            }
+            else{
+              scope.subtitle += $translate.instant('global.no') + " " + $translate.instant('editor.details.due_date')
             }
 
             unwatch()
@@ -710,7 +709,7 @@ angular.module('scalearAngularApp')
         var complete_the_video = "("+ $translate.instant('dashboard.complete_video')+")"
         scope.quiz_completion_data_series = {
           group_never_tried: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.shown_top"),
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.shown_top"),
             color: "#a4a9ad" //silver
           },
           group_survey_solved: {
@@ -718,65 +717,65 @@ angular.module('scalearAngularApp')
             color: "#355BB7" //blue
           },
           group_not_checked: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.is_not_checked"),
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.is_not_checked"),
             color: "#551a8b" //purble
           },
           group_tried_not_correct_first: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+ $translate.instant("dashboard.was")+
-            "<span style='color:#ED9467'>"+$translate.instant("editor.incorrect")+"</span>"+ $translate.instant("dashboard.tried_once") ,
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+ $translate.instant("dashboard.was")+
+            "<span style='color:#ED9467'>"+$translate.instant("dashboard.incorrect")+"</span>"+ $translate.instant("dashboard.tried_once") ,
             color: "#ED9467" //Orange:
           },
           group_tried_not_correct_finally: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#E66726'>"+$translate.instant("editor.incorrect")+"</span>"+ $translate.instant("dashboard.tried_more_once") ,
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#E66726'>"+$translate.instant("dashboard.incorrect")+"</span>"+ $translate.instant("dashboard.tried_more_once") ,
             color: "#E66726" //Orange:
           },
           group_tried_correct_finally: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#1bca4d'>"+$translate.instant("editor.correct")+"</span>"+ $translate.instant("dashboard.not_first_try") ,
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#1bca4d'>"+$translate.instant("dashboard.correct")+"</span>"+ $translate.instant("dashboard.not_first_try") ,
             color: "#1bca4d" //Pale Green:
           },
           group_correct_first_try: {
-            name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#16A53F'>"+$translate.instant("editor.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
+            name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#16A53F'>"+$translate.instant("dashboard.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
             color: "#16A53F" // Green
           },
           self_never_tried: {
             name: $translate.instant("dashboard.you_not_answered_quiz") ,
-            group_name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("editor.answer")+ $translate.instant("dashboard.shown_below") ,
+            group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+ $translate.instant("dashboard.shown_below") ,
             color: "#a4a9ad" //silver
           },
           self_survey_solved: {
             name: $translate.instant("dashboard.you")+" <span style='color:#355BB7'>"+$translate.instant("dashboard.answered_survey")+"</span>.",
-            group_name: $translate.instant("dashboard.you")+ $translate.instant("dashboard.answered")+" <b>"+ $translate.instant("dashboard.individual")+"<b/> "+ $translate.instant("editor.survey")+" ",
+            group_name: $translate.instant("dashboard.you")+ $translate.instant("dashboard.answered")+" <b>"+ $translate.instant("dashboard.individual")+"<b/> "+ $translate.instant("dashboard.survey")+" ",
             color: "#355BB7" //blue
           },
           self_not_checked: {
             name: $translate.instant("dashboard.answered_but_not_checked") ,
-            group_name: $translate.instant("dashboard.answered_but_group") +"<b>"+ $translate.instant("dashboard.invdividual")+"</b> "+ $translate.instant("editor.answer")+ $translate.instant("dashboard.not_checked_group") ,
+            group_name: $translate.instant("dashboard.answered_but_group") +"<b>"+ $translate.instant("dashboard.invdividual")+"</b> "+ $translate.instant("dashboard.answer")+ $translate.instant("dashboard.not_checked_group") ,
             color: "#551a8b" //purble
           },
           self_tried_not_correct_first: {
             name: $translate.instant("dashboard.tried_not_correct_first") +"<span style='color:#ED9467'>"+$translate.instant("dashboard.tried_not_correct_first_answer")+"</span>.",
-            group_name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#ED9467'>"+$translate.instant("editor.incorrect")+"</span>"+ $translate.instant("dashboard.tried_once") ,
+            group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#ED9467'>"+$translate.instant("dashboard.incorrect")+"</span>"+ $translate.instant("dashboard.tried_once") ,
             color: "#ED9467" //Orange:
           },
           self_tried_not_correct_finally: {
             name: $translate.instant("dashboard.tried_not_correct_last") +"<span style='color:#E66726'>"+$translate.instant("dashboard.tried_not_correct_first_answer")+"</span>.",
-            group_name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#E66726'>"+$translate.instant("editor.incorrect")+"</span>"+ $translate.instant("dashboard.tried_more_once") ,
+            group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#E66726'>"+$translate.instant("dashboard.incorrect")+"</span>"+ $translate.instant("dashboard.tried_more_once") ,
             color: "#E66726" //Orange:
           },
           self_tried_correct_finally: {
-            name: $translate.instant("dashboard.answered_correct_but") +"<span style='color:#1bca4d'>"+$translate.instant("dashboard.not_first_try")+"</span>.",
-            group_name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
-            "<span style='color:#1bca4d'>"+$translate.instant("editor.correct")+"</span>"+ $translate.instant("dashboard.not_first_try") ,
+            name: $translate.instant("dashboard.answered_correct_but") +"<span style='color:#1bca4d'>"+$translate.instant("dashboard.not_first_try")+"</span>",
+            group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
+            "<span style='color:#1bca4d'>"+$translate.instant("dashboard.correct")+"</span>"+ $translate.instant("dashboard.not_first_try") ,
             color: "#1bca4d" //Pale Green:
           },
           self_correct_first_try: {
-            name: $translate.instant("dashboard.you_answered") +"<span style='color:#16A53F'>"+$translate.instant("editor.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
-            group_name: $translate.instant('dashboard.complete_video')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("editor.answer")+$translate.instant("dashboard.was")+
+            name: $translate.instant("dashboard.you_answered") +"<span style='color:#16A53F'>"+$translate.instant("dashboard.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
+            group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
             "<span style='color:#16A53F'>"+$translate.instant("editor.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
             color: "#16A53F" // Green
           }
@@ -788,6 +787,18 @@ angular.module('scalearAngularApp')
               $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
               scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "
 
+            if (scope.moduledata.duration == 0) {
+              scope.continue_button = null
+            } else if (scope.moduledata.duration == scope.moduledata.remaining_duration) {
+              scope.continue_button = "Start watching"
+              scope.next_lecture = scope.moduledata.last_viewed
+            } else if (scope.moduledata.remaining_duration == 0) {
+              scope.continue_button = "Watch again"
+              scope.next_lecture = scope.moduledata.first_lecture
+            } else if (scope.moduledata.duration > scope.moduledata.remaining_duration) {
+              scope.continue_button = "Continue watching"
+              scope.next_lecture = scope.moduledata.first_lecture
+            }
             scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
 
             scope.quiz_completion_bar = { "width": scope.moduledata['online_quiz_count'] * 5 }
@@ -816,49 +827,51 @@ angular.module('scalearAngularApp')
 
                 item['online_quizzes'].forEach(function(online_quiz) {
                   scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: "+ online_quiz['quiz_name']
-                  if( online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried' ) ){
-                    scope.online_quiz_name[online_quiz.id] = complete_the_video
-                  }
                   if(online_quiz['inclass']){
-                    scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: <b>In-Class Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                    scope.online_quiz_name[online_quiz.id] = "<b>In-Class Question: </b>" + scope.online_quiz_name[online_quiz.id]
                   }
                   if(online_quiz['distance_peer']){
-                    scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: <b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                    scope.online_quiz_name[online_quiz.id] = "<b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
+                  }
+                  if( online_quiz['required']  &&  ( (online_quiz['data'][0] ==  'self_never_tried' && !online_quiz['data'][1]) || (online_quiz['data'][0] ==  'self_never_tried' && online_quiz['data'][1] == 'group_never_tried' )   ) ){
+                    scope.online_quiz_name[online_quiz.id] = complete_the_video
                   }
 
-                  if (online_quiz['data'].length == 2) {
-                    scope.online_quiz_color[online_quiz.id] = {
-                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
-                    }
-                    scope.online_quiz_group_color[online_quiz.id] = {
-                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
-                    }
-                    scope.content[online_quiz.id] ={}
-                    scope.content[online_quiz.id] ={}
-                    scope.content[online_quiz.id][0] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name
-                    scope.content[online_quiz.id][1] = scope.quiz_completion_data_series[online_quiz['data'][1]].name
-
-                  } else {
-                    // console.log(scope.quiz_completion_data_series[online_quiz['data'][0]])
-                    // console.log(online_quiz['data'][0])
-                    scope.online_quiz_color[online_quiz.id] = {
-                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
-                    }
-                    scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
+                  //  For invideo lecture QUIZZ  NOT for inclass video
+                  scope.online_quiz_color[online_quiz.id] = {
+                    "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
                   }
-                  scope.retry_quiz = $translate.instant('dashboard.click_retry_quiz')
+                  scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
                   scope.online_popover[online_quiz['id']] = {
                     title: "<span style='font-size:12px;' ng-bind-html='online_quiz_name[online_quiz.id]' ></span> ",
-                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \">Click to re-try this quiz.</div> " ,
+                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \" style='font-size:12px;' translate>dashboard.click_retry_quiz</div> " ,
                       // "<div class='right' style='bottom: 10px;right: 10px;'>" +
                       // "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
                       // "</div>",
                     html: true,
                     trigger: 'hover',
                     placement: 'bottom',
-                    container: '#student_popover'
+                    container: '#student_popover',
+                    // adjustRight: function(pop, container, body ){
+                    //   console.log(pop)
+                    //   console.log(container[0])
+                    //   console.log(body[0])
+                    //   return pop
+                    // }
                   }
                   if( online_quiz['data'].length == 2 ){
+                    scope.online_quiz_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
+                    }
+                    scope.online_quiz_group_color[online_quiz.id] = {
+                      "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
+                    }
+                    // scope.content[online_quiz.id] ={}
+                    scope.content[online_quiz.id] ={}
+                    scope.content[online_quiz.id][0] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name
+                    scope.content[online_quiz.id][1] = scope.quiz_completion_data_series[online_quiz['data'][1]].name
+
+
                     scope.online_popover[online_quiz['id']].content =
                     "<div class='row collapse' style='height: 135px;width: 100%;'>" +
                       "<div style='height: 45px;width: 100%;' >"+
@@ -868,16 +881,9 @@ angular.module('scalearAngularApp')
                       "<div style='height: 45px;width: 100%;margin-top: 2px'>"+
                         "<div style='width: 10%;margin-right: 10px;float: left;' ng-style='online_quiz_color[online_quiz.id]'  class='quiz-inner-bar'></div>"+
                         "<div  ng-bind-html='content[online_quiz.id][0]' style='font-size:12px;'></div>"+
-                      "</div><div translate>dashboard.click_retry_quiz</div>"+
-                      // "<div class='right' style='bottom: 10px;right: 10px;'>" +
-                      //   "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
-                      // "</div>"+
+                      "<div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' || quiz_completion_data_series[online_quiz['data'][1]].color != '#a4a9ad'\" style='font-size:12px;' translate>dashboard.click_retry_quiz</div> "
                     "</div>"
                   }
-                  // console.log(( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  )
-                  // if ( ( online_quiz_index  * (1.0 / scope.moduledata['online_quiz_count']) )  < 0.4) {
-                  //   scope.online_popover[online_quiz['id']]['placement'] = 'right'
-                  // }
                   online_quiz_index += 1
                 })
               }

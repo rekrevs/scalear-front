@@ -1,4 +1,6 @@
 <div>
+  <a ng-show="continue_button" class="button small orange" ng-click='goTo(moduledata.course_id, moduledata.id, next_lecture)' translate >{{continue_button}}</a>
+
   <div class="row collapse with-margin-bottom" style="height: 100px;">
     <div class="row collapse with-small-margin-bottom">
       <div class="small-4 columns">
@@ -34,12 +36,12 @@
         <div ng-repeat="online_quiz in item.online_quizzes" class="quiz-bar" ng-style="item.quiz_bar_style"  pop-over='online_popover[online_quiz.id]' >
           <div ng-if="online_quiz['data'].length==1" ng-style="online_quiz_color[online_quiz.id]" class="quiz-inner-bar" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time, online_quiz)' ></div>
           <span ng-if="online_quiz['data'].length==2" ng-click='goTo ( "course.module.courseware.lecture" , moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time , online_quiz)'>
-            <div style="height: 50%;" ng-style="online_quiz_color[online_quiz.id]" class="quiz-inner-bar" ></div>
-            <div style="height: 48%;margin-top: 3%" ng-style="online_quiz_group_color[online_quiz.id]" class="quiz-inner-bar" ></div>
+            <div style="height: 50%;" ng-style="online_quiz_group_color[online_quiz.id]" class="quiz-inner-bar" ></div>
+            <div style="height: 48%;margin-top: 3%" ng-style="online_quiz_color[online_quiz.id]" class="quiz-inner-bar" ></div>
           </span>
         </div>
       </div>
     </div>
   </div>
-  <div id="student_popover"></div>
+  <div id="student_popover" style="width: 100%"></div>
 </div>

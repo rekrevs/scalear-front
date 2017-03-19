@@ -266,6 +266,7 @@ angular.module('scalearAngularApp')
         })
         .state('course.module.courseware.lecture', {
             url: '/lectures/:lecture_id?time',
+            reloadOnSearch : false,
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger','$modal','Course','$q','ErrorHandler', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger,$modal,Course,$q,ErrorHandler) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger','$modal','Course','$q','ErrorHandler', '$location', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger,$modal,Course,$q,ErrorHandler, $location) {
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.video_layer = {}
@@ -517,14 +517,16 @@ angular.module('scalearAngularApp')
       })
 
       $scope.video_ready = true
-      if(!($scope.lecture_player.controls.youtube && $rootScope.is_mobile))
+      if(!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)){
         $scope.show_progressbar = true
+      }
       var time = $state.params.time
       if(time) {
         $scope.seek(time);
         $timeout(function() {
           $scope.scrollIntoView()
         }, 500)
+        $location.search('time', 0); 
       } else if(!($rootScope.is_mobile)) {
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.pause()
@@ -553,7 +555,6 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView = function() {
       if($scope.lecture){
-        console.log($scope.lecture.id)
         $('.student_timeline').scrollToThis('#outline_' + $scope.lecture.id, { offsetTop: $('.student_timeline').offset().top, duration: 400 });
       }
 

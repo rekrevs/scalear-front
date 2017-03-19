@@ -48,7 +48,8 @@ angular.module('scalearAngularApp')
         .state('login', {
             url: '/users/login',
             templateUrl: '/views/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            params : { email: null}
         })
         .state('teacher_signup', {
             url: '/users/teacher',
@@ -213,7 +214,7 @@ angular.module('scalearAngularApp')
             }
         })
         .state('course.course_editor', {
-            url: '/course_editor',
+            url: '/course_editor?new_course',
             templateUrl: '/views/teacher/course_editor/course_editor.html',
             controller: 'courseEditorCtrl'
         })
@@ -238,9 +239,10 @@ angular.module('scalearAngularApp')
             controller: 'progressOverviewCtrl'
         })
         .state('course.module.progress', {
-            url: "/progress",
+            url: "/progress?item_id",
             templateUrl: '/views/teacher/progress/progress_lecture.html',
             controller: 'progressLectureCtrl'
+            // params : { item_id: null }
         })
         .state('course.module.progress_statistics', {
             url: "/progress/statistics",
@@ -257,8 +259,14 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/student/lectures/courseware.html',
             controller: 'coursewareCtrl'
         })
+        .state('course.module.courseware.overview', {
+            url: '/overview',
+            templateUrl: '/views/student/course/module_overview.html',
+            controller: 'studentModuleOverviewCtrl'
+        })
         .state('course.module.courseware.lecture', {
             url: '/lectures/:lecture_id?time',
+            reloadOnSearch : false,
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })
@@ -285,15 +293,16 @@ angular.module('scalearAngularApp')
         .state('course.announcements', {
             url: '/announcements',
             templateUrl: '/views/teacher/announcements/announcements.html',
-            controller: 'announcementsCtrl'
+            controller: 'announcementsCtrl',
+            params : { show: null }
         })
         .state('course.course_information', {
-            url: '/course_information',
+            url: '/course_information?new_enroll',
             templateUrl: '/views/student/course/course_information.html',
             controller: 'studentCourseInformationCtrl'
         })
         .state('course.edit_course_information', {
-            url: '/information',
+            url: '/information?new_course',
             templateUrl: '/views/teacher/course/course_information.html',
             controller: 'teacherCourseInformationCtrl'
         })

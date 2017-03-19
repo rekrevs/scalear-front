@@ -14,11 +14,12 @@ angular.module('scalearAngularApp')
       'hideResponses': { method: 'POST', params: { action: 'hide_responses' }, headers: headers },
       'updateInclassSession': { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_inclass_session' }, headers: headers },
       'getChartData': { method: 'GET', ignoreLoadingBar: true, params: { action: 'get_chart_data' }, headers: headers },
-      'getInclassSessionVotes': { method: 'GET', ignoreLoadingBar: true, params: { action: 'get_inclass_session_votes' }, headers: headers }
+      'getInclassSessionVotes': { method: 'GET', ignoreLoadingBar: true, params: { action: 'get_inclass_session_votes' }, headers: headers },
+      'updateGrade': { method: 'POST', params: { action: 'update_grade' }, headers: headers }
     });
 
   }])
-  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils) {
+  .factory('VideoQuizModel', ['OnlineQuiz', '$rootScope', 'ItemsModel', '$q', 'VideoInformation', 'Lecture', 'CourseEditor', 'ErrorHandler', '$filter', 'ScalearUtils', '$translate', function(OnlineQuiz, $rootScope, ItemsModel, $q, VideoInformation, Lecture, CourseEditor, ErrorHandler, $filter, ScalearUtils, $translate) {
 
     var selected_video_quiz = null
 

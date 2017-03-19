@@ -55,6 +55,12 @@
           <small class="error with-tiny-padding" ng-show="server_errors['limit_registration_domain'] && limit_registration_domain_checked">{{server_errors['limit_registration_domain'].join()}}</small>
         </div>
       </div>
+      <div class="large-10 column with-small-margin-bottom no-padding left">
+
+        <i class="fi-mail size-18"></i> <small class="with-tiny-margin-left" translate>courses.information.receive_student_ask_email</small>
+        <input type="checkbox" style="margin-left: 10px;" ng-model="course.email_discussion" >
+      </div>
+
     </div>
   <!-- </div> -->
   </div>

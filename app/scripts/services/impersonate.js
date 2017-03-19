@@ -41,8 +41,11 @@ angular.module('scalearAngularApp')
               if ($state.params.lecture_id){
                 $state.current.name = "course.module.course_editor.lecture"
               }
-              else{
+              else if ($state.params.quiz_id){
                 $state.current.name = "course.module.course_editor.quiz"
+              }
+              else{
+                $state.current.name = "course.module.course_editor.overview"                
               }
               $cookieStore.put('state', $state.current.name)
               $state.go($state.current.name.replace("course_editor", "courseware"), $state.params, { reload: true })

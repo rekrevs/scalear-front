@@ -26,10 +26,10 @@
                           <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>enrolled_students.email</span></button>
                           <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>enrolled_students.remove_student</span></button>
                           <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>enrolled_students.done</span></button>
-                          <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'tooltip.list_view'|translate}}">
+                          <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'tooltip.list_view'|translate}}" tooltip-append-to-body="true" tooltip-placement="top">
                               <span class="fi-list-thumbnails size-21" style="position: relative;top: 3px;" ></span>
                           </button>
-                          <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'tooltip.grid_view'|translate}}" tooltip-append-to-body="true">
+                          <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'tooltip.grid_view'|translate}}" tooltip-append-to-body="true" tooltip-placement="top">
                               <span class="fi-braille size-21" style="position: relative;top: 3px;" ></span>
                           </button>
                       </div>

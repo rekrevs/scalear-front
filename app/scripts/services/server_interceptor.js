@@ -113,6 +113,22 @@ angular.module('scalearAngularApp')
           ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 4000, "error");
         }
 
+        if(rejection.status == 500 && rejection.config.url.search(re) != -1) {
+          var $state = $injector.get('$state');
+          if($rootScope.current_user)
+            $state.go("course_list") //check
+          else
+            $state.go("login") //check
+
+          if(angular.isDefined($rootScope.stop)) {
+            $interval.cancel($rootScope.stop);
+            $rootScope.stop = undefined;
+          }
+
+          // ErrorHandler.showMessage('Error ' + ': ' + 'Unknown Error.', 'errorMessage', 4000, "error");
+          ErrorHandler.showMessage('A server error occurred. If this continues, please use the Support link in the Help menu to contact technical support.', 'errorMessage', 4000, "error");
+        }
+
         if(rejection.status == 401 && rejection.config.url.search(re) != -1) {
           // URLInformation.redirect = URLInformation.history
           var $state = $injector.get('$state');

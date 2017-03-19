@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window','Page','ContentNavigator',  function ($scope, Announcement, $stateParams, $translate ,$log, $window,Page, ContentNavigator) {
-  	
+
     ContentNavigator.close()
     Page.setTitle('navigation.announcements')
   	$scope.disable_new = false;
@@ -13,6 +13,9 @@ angular.module('scalearAngularApp')
   			function(data){
   				$scope.announcements=data;
           $scope.show_button = true
+          if($stateParams.show = true){
+            $scope.createAnnouncement()
+          }
   			}
   		)
   	}
@@ -21,16 +24,16 @@ angular.module('scalearAngularApp')
   		if(this_announcement.id){
 	  		Announcement.destroy(
           {
-            course_id: $stateParams.course_id, 
+            course_id: $stateParams.course_id,
             announcement_id: this_announcement.id
           },
           {}
         )
 	  	}
-		    $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
-        $scope.disable_new = false;
+	    $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
+      $scope.disable_new = false;
   	}
-  	
+
   	$scope.createAnnouncement= function(){
       $scope.disable_new = true;
       for(var element in $scope.announcements){
@@ -41,7 +44,7 @@ angular.module('scalearAngularApp')
       if(!($scope.announcements instanceof Array)){
           $scope.announcements = []
       }
-          
+
 		  $scope.announcements.push($scope.newAnnouncement);
   	}
 
@@ -53,7 +56,7 @@ angular.module('scalearAngularApp')
 		    Announcement.show(
           {
             course_id: $stateParams.course_id,
-            announcement_id:this_announcement.id 
+            announcement_id:this_announcement.id
           },
   			  function(data){
     				this_announcement=data;

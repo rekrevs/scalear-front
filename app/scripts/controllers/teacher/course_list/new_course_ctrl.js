@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
     $scope.submitting = false;
     $scope.course = {}
     $scope.course.selected_subdomain = {'All':true}
+    $scope.course.email_discussion = false
     CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -73,20 +74,7 @@ angular.module('scalearAngularApp')
     $scope.toggleDomain = function(event) {
       event.stopPropagation()      
       $modal.open({ 
-        template: '<form name="myForm" >\
-                    <div class="ngdialog-message">\
-                    <h2><b><span translate>courses.limit_registration_domain_description</span></b></h2>\
-                    </div>\
-                    <ul>\
-                      <li><input type="radio" ng-model="subdomain.boolean" value="all" ng-change="setBooleanDomain();" translate>all</li>\
-                      <li><input type="radio" ng-model="subdomain.boolean" value="custom" ng-change="setBooleanDomain();" translate>custom</li>\
-                      </form>\
-                      <div ng-show=subdomain.boolean=="custom">\
-                        <ul style="margin-bottom: 5px;" ng-repeat="domain in subdomains">\
-                          <input class="valign-middle" ng-change="updateDomainList()" type="checkbox" name="mcq" ng-model="course.selected_subdomain[domain]" style="margin: auto;margin-right: 10px;"/>{{domain}}\
-                        </ul>\
-                      </div>\
-                    </ul>',
+        templateUrl: '/views/teacher/course_list/school_registration_modal.html', 
         plain: true,
         scope: $scope,
         controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
@@ -158,9 +146,8 @@ angular.module('scalearAngularApp')
 
 
     $scope.createCourse = function() {
-              console.log($scope.course.start_date)
-        console.log($scope.course.end_date)
-
+      // console.log($scope.course.start_date)
+      // console.log($scope.course.end_date)
       $scope.submitting = true;
       // if($scope.form.$valid) {
       validateDate()
@@ -171,6 +158,7 @@ angular.module('scalearAngularApp')
         // console.log($scope.course.start_date)
         // console.log($scope.course.end_date)
         var selected_subdomain = $scope.course.selected_subdomain
+        var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {
 
@@ -178,7 +166,7 @@ angular.module('scalearAngularApp')
             if(data.importing) {
               $state.go("course_list")
             } else {
-              $state.go("course.course_editor", { "course_id": data.course.id })
+              $state.go("course.course_editor", { "course_id": data.course.id, new_course:true  })
             }
           })
           .catch(function(response) {
@@ -188,6 +176,7 @@ angular.module('scalearAngularApp')
             $scope.server_errors = response.data.errors
             console.log($scope.server_errors)
             $scope.course.selected_subdomain = selected_subdomain
+            $scope.course.email_discussion = email_discussion
           })
       }) 
       // else {

@@ -33,7 +33,7 @@
                         <div style="color: dimgrey; height: 18px;">{{teacher.status | capitalize}}</div>
                     </li>
                     <li ng-if="current_user.id==teacher.id">
-                        <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_email</span></label>
+                        <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_student_ask_email</span></label>
                     </li>
                     <li>
                         <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher(teacher)" style="cursor: pointer;"></delete-button>
@@ -89,15 +89,15 @@
             <div class="with-small-margin-bottom">
                 <i class="fi-key size-18"></i>
                 <small translate>courses.information.enrollment_key</small>
-                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}">
+                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
                     <div id="enrollment_key" ngclipboard data-clipboard-target="#enrollment_key" ngclipboard-success="copySuccess(e);" ngclipboard-error="copyError(e);">{{course.unique_identifier}}</div>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
                 <i class="fi-link size-18"></i>
                 <small translate>courses.information.course_link</small>
-                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}">
-                    <div id="enrollment_url" ngclipboard data-clipboard-target="#enrollment_url" ngclipboard-success="copySuccess(e);" ngclipboard-error="copyError(e);" >{{course_info_url}}</div>
+                <div tooltip="{{'courses.information.tooltip.click_to_copy' | translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
+                    <div id="enrollment_url" ngclipboard data-clipboard-target="#enrollment_url" ngclipboard-success="copySuccess(e);" ngclipboard-error="copyError(e);" style="word-wrap: break-word;" >{{course_info_url}}</div>
                 </div>
             </div>
             <div class="with-small-margin-bottom">
@@ -130,7 +130,7 @@
                 </div>
             </div>
             <div class="with-small-margin-bottom">
-                <i class="fi-x-circle size-18"></i> <small class="with-tiny-margin-left" tooltip="{{'courses.limit_registration_domain_description' | translate}}" translate>courses.limit_registration_domain</small>
+                <i class="fi-x-circle size-18"></i> <small class="with-tiny-margin-left" tooltip="{{'courses.limit_registration_domain_description' | translate}}" tooltip-placement="left" tooltip-append-to-body="true" translate>courses.limit_registration_domain</small>
                 <div>
                   <a class="" ng-click="toggleDomain($event)">
                       <div ng-repeat="(key , domain) in course_domain.selected_subdomain">

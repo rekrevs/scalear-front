@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
       'saveTeacher': { method: 'POST', params: { action: 'save_teachers' }, headers: headers },
       'updateTeacher': { method: 'POST', params: { action: 'update_teacher' }, headers: headers },
       'updateStudentDueDateEmail': { method: 'POST', params: { action: 'update_student_duedate_email' }, headers: headers },
+      'updateTeacherDiscussionEmail': { method: 'POST', params: { action: 'update_teacher_discussion_email' }, headers: headers },
       'getStudentDueDateEmail': { method: 'GET', params: { action: 'get_student_duedate_email' }, headers: headers },
       'deleteTeacher': { method: 'DELETE', params: { action: 'delete_teacher' }, headers: headers },
       'getCalendarEvents': { method: 'GET', params: { action: 'events' }, headers: headers },
@@ -156,12 +157,14 @@ angular.module('scalearAngularApp')
 
     function create(course, import_from_id) {
       var subdomains = course.selected_subdomain
+      var email_discussion = course.email_discussion
       delete course.selected_subdomain
+      delete course.email_discussion
       var modified_course = angular.copy(course)
       var d = new Date()
       modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
       modified_course.time_zone = course.time_zone.name;
-      return Course.create({ course: modified_course, "import": import_from_id , "subdomains":subdomains})
+      return Course.create({ course: modified_course, "import": import_from_id , "subdomains":subdomains , "email_discussion":email_discussion })
         .$promise
         .then(function(data) {
           $rootScope.$broadcast('Course:get_current_courses')
@@ -227,6 +230,10 @@ angular.module('scalearAngularApp')
         Course.updateStudentDueDateEmail({ course_id: course.id }, { email_due_date: val });
       }
 
+      function updateTeacherDiscussionEmail(val) {
+        Course.updateTeacherDiscussionEmail({ course_id: course.id }, { email_discussion: val });
+      }
+
       return angular.extend(course, {
         instanceType: instanceType,
         update: update,
@@ -234,7 +241,8 @@ angular.module('scalearAngularApp')
         exportCourse: exportCourse,
         getAnnouncements: getAnnouncements,
         getStudentDueDateEmail: getStudentDueDateEmail,
-        updateStudentDueDateEmail: updateStudentDueDateEmail
+        updateStudentDueDateEmail: updateStudentDueDateEmail,
+        updateTeacherDiscussionEmail: updateTeacherDiscussionEmail
       })
     }
 

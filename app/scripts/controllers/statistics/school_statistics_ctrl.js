@@ -35,8 +35,6 @@ angular.module('scalearAngularApp')
 
       $scope.report.start_date = new Date($scope.report.start_date)
       $scope.report.end_date = new Date($scope.report.end_date)
-      console.log($scope.report.start_date)
-      console.log($scope.report.end_date)
 
       if (($scope.report.start_date == "Invalid Date")) {
         errors.start_date = "not a Date"
@@ -60,9 +58,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.showStatistics = function() {
-      console.log(typeof($scope.report.start_date))
-      console.log(typeof($scope.report.end_date))
-
       validateDate()
         .then(function(errors) {
           $scope.loading = true
@@ -74,7 +69,6 @@ angular.module('scalearAngularApp')
               domain: $scope.report.selected_domain
             },
             function(data) {
-              // console.log(data)
               $scope.show_statistics = true
               $scope.loading = false
               data["total_hours_string"] = ScalearUtils.toHourMin(data["total_hours"])
@@ -87,7 +81,9 @@ angular.module('scalearAngularApp')
               angular.forEach($scope.course_data, function(value, key) {
                 value["id"] = key
                 value["total_view_string"] = ScalearUtils.toHourMin(value["total_view"])
+                value["active_view_string"] = ScalearUtils.toHourMin(value["active_view"])
                 value["total_view"] = value["total_view"] 
+                value["active_view"] = value["active_view"] 
                 $scope.course_data_array.push(value)
               })
 
@@ -119,7 +115,10 @@ angular.module('scalearAngularApp')
         total_view_string: function (value) {
             //this will sort by the length of the first name string
             return value.total_view;
-        }
-    }
+        },
+        active_view_string: function (value) {
+            //this will sort by the length of the first name string
+            return value.active_view;
+        }    }
 
   }]);

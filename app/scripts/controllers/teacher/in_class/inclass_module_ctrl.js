@@ -76,6 +76,7 @@ angular.module('scalearAngularApp')
       $scope.quality_set = 'color-blue'
       $scope.counting = true;
       $scope.counting_finished = false
+      $scope.inclass_answer = false
       $scope.quiz_layer = {}
     }
 
@@ -454,6 +455,9 @@ angular.module('scalearAngularApp')
           discussion.data.color = "white"
           discussion.data.timer = timers.discussion
           sub_items.splice(++item_index, 0, discussion);
+          var answer = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 'answer' } }
+          sub_items.splice(++item_index, 0, answer);
+
 
           if(current_item.time < current_item.data.end_time) {
             var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }
@@ -532,11 +536,13 @@ angular.module('scalearAngularApp')
           getSessionVotes($scope.selected_timeline_item.data.id, $scope.selected_item.id, item.data.status == 3)
           startSessionVotesTimer()
         } else {
-          if(item.data.status == 4) {
+          if(item.data.status > 4 || item.data.status == 'answer') {
             $scope.loading_chart = true
             OnlineQuiz.getChartData({ online_quizzes_id: $scope.selected_timeline_item.data.id }, function(resp) {
               $scope.selected_timeline_item.data.answers = resp.chart
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatInclassQuizChartData')
+              $scope.loading_chart = false
+              $(window).resize()
             })
           }
           adjustQuizLayer()
@@ -552,8 +558,14 @@ angular.module('scalearAngularApp')
             }
           })
         }
-        if(item.data.status && typeof item.data.status === "number")
+        if(item.data.status && typeof item.data.status === "number"){
           updateInclassSession($scope.selected_timeline_item.data.id, item.data.status)
+          $scope.inclass_answer = false
+        }
+        else if( item.data.status == 'answer'){
+          $scope.inclass_answer = true
+        }
+
       }
     }
 
@@ -1095,7 +1107,6 @@ angular.module('scalearAngularApp')
     }
 
     var updateInclassSession = function(quiz_id, status) {
-
       $scope.inclass_session = status
       if(status >= 0 && status <= 5) {
         OnlineQuiz.updateInclassSession({ online_quizzes_id: quiz_id }, { status: status })

@@ -42,6 +42,9 @@ angular.module('scalearAngularApp')
 				            }
 				            if(options.topcut)
 				            	adjustTop(pop)
+				            if(options.adjustRight){
+				            	pop = options.adjustRight(pop, element, angular.element('.popover'))
+				            }
 			
 				            return pop;
 			          	};

@@ -5,7 +5,7 @@
 			<img ng-src="{{course.image_url || '../images/course_image.png'}}" />
 		</div>
 	</div>
-	<div ng-show="!course.importing" class="right inline with-small-margin">
+	<div ng-show="(!course.importing)  && (currentuser.id == course.user_id || currentuser.roles.includes(5) || currentuser.roles.includes(9))" class="right inline with-small-margin">
 		<delete_button size="big" mode="content_navigator" color='dark' action="deletecourse(course)" />
 	</div>
   	<div class="small-12 medium-8 large-9 columns" style="padding-top: 10px;">  		

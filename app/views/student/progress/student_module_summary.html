@@ -1,0 +1,18 @@
+<div class="row collapse with-margin-bottom" ng-show="moduledata.title">
+  <h3>
+      <b><span>{{::moduledata.title}} </span></b>
+      <span class="size-21 text-bold">
+        <span ng-show=" ( moduledata.due_date > 0 && moduledata.due_date_enabled ) && (moduledata.time_left_string != 00)" style="color:red">
+        <!-- <span ng-show="moduledata.due_date > 0" style="color:red" > -->
+          <span translate>events.due</span>
+          <span> - in</span>
+          <span>{{::moduledata.time_left_string}}</span>
+          <span translate>time.hours</span>
+
+        </span>
+        <span ng-hide="moduledata.due_date > 0" style="color:red" >- <span translate>events.due_date_passed</span></span>
+        <span ng-show="moduledata.time_left_string == 0 "  translate>dashboard.less_one_hour</span>
+      </span>
+    </h3>
+  <div class="color-gray with-small-margin-bottom">{{::subtitle}}</div>
+</div>

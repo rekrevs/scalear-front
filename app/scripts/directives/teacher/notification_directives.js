@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
             function(data) {
               scope.current_user.invitations = data.invitations
               delete scope.current_user.invitation_items[scope.id]
-              $state.go('course.edit_course_information', { course_id: scope.notification.course_id });
+              $state.go('course.edit_course_information', { course_id: scope.notification.course_id, new_course:true });
               $rootScope.$broadcast('Course:get_current_courses')
             }
           )

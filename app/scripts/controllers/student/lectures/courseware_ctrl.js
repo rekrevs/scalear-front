@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('coursewareCtrl', ['$scope', '$stateParams', '$log', 'Module', 'Timeline', 'Page', '$state', 'ModuleModel', 'ItemsModel', function($scope, $stateParams, $log, Module, Timeline, Page, $state, ModuleModel, ItemsModel) {
+  .controller('coursewareCtrl', ['$scope', '$stateParams', '$log', 'Module', 'Timeline', 'Page', '$state', 'ModuleModel', 'ItemsModel','ErrorHandler', function($scope, $stateParams, $log, Module, Timeline, Page, $state, ModuleModel, ItemsModel, ErrorHandler) {
 
     Page.setTitle('navigation.lectures');
     Page.startTour();
@@ -47,9 +47,14 @@ angular.module('scalearAngularApp')
             }
           }
           $log.debug("timeline", $scope.timeline)
-          if(!$stateParams.lecture_id && !$stateParams.quiz_id){
-            showModuleCourseware(module)
-          }
+          // if(!$stateParams.lecture_id && !$stateParams.quiz_id){
+          //   showModuleCourseware(module)
+          // }
+        },
+        function(error){
+          console.log(error.data.errors[0])
+          ErrorHandler.showMessage(error.data.errors[0], 'errorMessage', 4000, "error");
+          $state.go("course_list"); 
         }
       );
     }

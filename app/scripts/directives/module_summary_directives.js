@@ -73,9 +73,6 @@ angular.module('scalearAngularApp')
                 text: $translate.instant("dashboard.between")+" 50% & 80%",
                 color: "#800000" //dark Orange
               }
-
-
-
             }
 
             var student_completion_data_series = []
@@ -93,7 +90,7 @@ angular.module('scalearAngularApp')
               options: {
                 chart: {
                   type: 'bar',
-                  margin: [0, 0, 0, 0],
+                  margin: [0, 0, 10, 0],
                   spacing: [0, 0, 0, 0]
                 },
                 plotOptions: {
@@ -115,7 +112,7 @@ angular.module('scalearAngularApp')
                     var offset = labelWidth / 2
 
                     var tooltipX = mid_point - offset
-                    var tooltipY = point.plotY + 10;
+                    var tooltipY = point.plotY + 20;
 
                     if (tooltipX < 0) {
                       tooltipX = 0
@@ -243,12 +240,12 @@ angular.module('scalearAngularApp')
                     quiz_completion_data_series[quiz_bar].data.push(null)
                   }
                   else {
-                    if (video_quiz[id]['inclass']) { 
-                     quiz_completion_data_series[quiz_bar].data.push( { y: video_quiz[id]['data'][quiz_bar] , borderColor:'black' , borderWidth:1 } ) 
-                    } 
-                    else{ 
-                      quiz_completion_data_series[quiz_bar].data.push( {y:video_quiz[id]['data'][quiz_bar]} ) 
-                    } 
+                    if (video_quiz[id]['inclass']) {
+                     quiz_completion_data_series[quiz_bar].data.push( { y: video_quiz[id]['data'][quiz_bar] , borderColor:'black' , borderWidth:1 } )
+                    }
+                    else{
+                      quiz_completion_data_series[quiz_bar].data.push( {y:video_quiz[id]['data'][quiz_bar]} )
+                    }
                   }
                 })
                 if (video_quiz[id].type == 'quiz') {
@@ -277,7 +274,7 @@ angular.module('scalearAngularApp')
                   "pointFormat":"<span style=\"color:{point.color}\">●</span> {series.name}: <b>{point.y}</b><br/>",
                   "shadow":true,
                   "style":{"color":"#333333","cursor":"default","fontSize":"12px","pointerEvents":"none","whiteSpace":"nowrap"},
-                 
+
                   positioner: function(labelWidth, labelHeight, point) {
                     var tooltipX = point.plotX - (labelWidth / 2)
                     var tooltipY =  100
@@ -330,7 +327,7 @@ angular.module('scalearAngularApp')
                           if(scope.quiz_completion_chart_config.getHighcharts().quiz_tooltip.isHidden){
                             scope.previous_tooltoip = null
                           }
-                          
+
                         }
                       }
                     }
@@ -353,30 +350,7 @@ angular.module('scalearAngularApp')
                     }
                   }
                 },
-                legend: { enabled: false },
-                tooltip: {
-                  borderColor: '#000000',
-                  shared: true,
-                  useHTML: true,
-                  enabled: false,
-                  // hideDelay: 2000,
-                  backgroundColor: "white",
-                  formatter: hoverQuizTooltipFormatter,
-                  positioner: function(labelWidth, labelHeight, point) {
-                    var tooltipX = point.plotX - (labelWidth / 2)
-                    var tooltipY =  100
-                    if (tooltipX < 0) {
-                      tooltipX = 0
-                    }
-                    if($('#teacher_completion').width() < point.plotX+(labelWidth)){
-                      tooltipX = $('#teacher_completion').width() - (labelWidth *1.025)
-                    }
-                    return {
-                      x: tooltipX,
-                      y: tooltipY
-                    }
-                  }
-                }
+                legend: { enabled: false }
               },
               size: {
                 height:  125
@@ -418,8 +392,8 @@ angular.module('scalearAngularApp')
         })
 
         function hoverQuizTooltipFormatter(){
-          // return "<div translate>dashboard.click_for_information</div>" 
-          return "<div >"+$translate.instant("dashboard.click_for_information")+"</div>" 
+          // return "<div translate>dashboard.click_for_information</div>"
+          return "<div >"+$translate.instant("dashboard.click_for_information")+"</div>"
         }
 
 
@@ -432,12 +406,12 @@ angular.module('scalearAngularApp')
           scope.quiz_completion_chart_config.getHighcharts().hover_tooltip.hide(0)
           scope.title = this.x;
           if(quiz_data['inclass']){
-            scope.title = "<b>"+$translate.instant("dashboard.inclass_question")+": </b>" + this.x; 
-          } 
-          if(quiz_data['distance_peer']){ 
-            scope.title = "<b>"+$translate.instant("dashboard.distance_peer_question")+": </b>" + this.x; 
-            // scope.title = "<b>Distance-Peer Question: </b>" +this.x; 
-          } 
+            scope.title = "<b>"+$translate.instant("dashboard.inclass_question")+": </b>" + this.x;
+          }
+          if(quiz_data['distance_peer']){
+            scope.title = "<b>"+$translate.instant("dashboard.distance_peer_question")+": </b>" + this.x;
+            // scope.title = "<b>Distance-Peer Question: </b>" +this.x;
+          }
           scope.left = '';
 
           if (quiz_type == 'quiz') { ////////////////////  Quiz bar tooltip
@@ -547,7 +521,7 @@ angular.module('scalearAngularApp')
                 "</div>" +
               "<div ng-show='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButtonReview' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px; color:white;' translate>dashboard.review_quiz</a></div>" +
               "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
-              "</div>"             
+              "</div>"
           } else { ///// SURVEY TOOLTIP
             // scope.title = this.x;
             // scope.left = '';
@@ -570,10 +544,10 @@ angular.module('scalearAngularApp')
                   spacing: [0, 0, 0, 0],
                   margin: [0, 0, 1, 0]
                 },
-                plotOptions: { 
-                  series: { stacking: 'normal', animation: false },  
-                  column: {borderWidth: 0 ,}, 
-               }, 
+                plotOptions: {
+                  series: { stacking: 'normal', animation: false },
+                  column: {borderWidth: 0 ,},
+               },
                 legend: { reversed: true },
               },
               size: {
@@ -581,7 +555,7 @@ angular.module('scalearAngularApp')
                 height: 130
               },
               title: { text: null },
-              credits: {enabled: false}, 
+              credits: {enabled: false},
               xAxis: {
                 categories: xaxis_categories,
                 gridLineWidth: 0,
@@ -617,11 +591,11 @@ angular.module('scalearAngularApp')
               }]
             }
 
-            var tooltip_template = "<div class='dashboard' style='width:520px; height:100%; min-height:164px'>" + 
+            var tooltip_template = "<div class='dashboard' style='width:520px; height:100%; min-height:164px'>" +
               "<div ng-bind-html='title' class='row collapse'></div>" +
-              "<div class='row collapse' style='width:400px; height:100%'>"+ 
-                  "<div class='small-5 columns no-padding'>" + 
-                    "<div id='custom_chart' ></div>" + 
+              "<div class='row collapse' style='width:400px; height:100%'>"+
+                  "<div class='small-5 columns no-padding'>" +
+                    "<div id='custom_chart' ></div>" +
                     "<highchart class='chart' config='quiz_only_one_bar_config'  style='width: 100%;'>></highchart>" +
                   "</div>" +
                   "<div style='padding-top: 40px;' class='small-7 columns'>" +
@@ -632,7 +606,7 @@ angular.module('scalearAngularApp')
                 "</div>" +
               "<div ng-show='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButtonReview' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px; color:white' translate>dashboard.review_quiz</a></div>" +
               "<div ng-hide='moduledata.review_page_trigger' style='bottom: 0px;position: absolute;right: 10px;'><a class='button left tiny green module-review gotToQuizButton' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;' translate>dashboard.review_quiz</a></div>" +
-              "</div>"            
+              "</div>"
           }
 
           $("#quiz_bar").html(tooltip_template)
@@ -653,7 +627,7 @@ angular.module('scalearAngularApp')
 
           return $("#quiz_bar").html()
         }
-        
+
         scope.goTo = function(state, course_id, group_id, item_id) {
           $state.go(state, { course_id: course_id, module_id: group_id, item_id: item_id })
         }

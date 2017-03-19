@@ -787,17 +787,21 @@ angular.module('scalearAngularApp')
               $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
               scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "
 
+            scope.next_lecture = {}
             if (scope.moduledata.duration == 0) {
               scope.continue_button = null
             } else if (scope.moduledata.duration == scope.moduledata.remaining_duration) {
               scope.continue_button = "Start watching"
-              scope.next_lecture = scope.moduledata.last_viewed
+              scope.next_lecture.id = scope.moduledata.last_viewed
+              scope.next_lecture.type = scope.moduledata.module_completion.filter(function(item) {return item.id == scope.next_lecture.id})[0].type
             } else if (scope.moduledata.remaining_duration == 0) {
               scope.continue_button = "Watch again"
-              scope.next_lecture = scope.moduledata.first_lecture
+              scope.next_lecture.id = scope.moduledata.first_lecture
+              scope.next_lecture.type = scope.moduledata.module_completion.filter(function(item) {return item.id == scope.next_lecture.id})[0].type
             } else if (scope.moduledata.duration > scope.moduledata.remaining_duration) {
               scope.continue_button = "Continue watching"
-              scope.next_lecture = scope.moduledata.first_lecture
+              scope.next_lecture.id = scope.moduledata.first_lecture
+              scope.next_lecture.type = scope.moduledata.module_completion.filter(function(item) {return item.id == scope.next_lecture.id})[0].type
             }
             scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
 

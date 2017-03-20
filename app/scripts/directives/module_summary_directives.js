@@ -792,7 +792,7 @@ angular.module('scalearAngularApp')
               scope.continue_button = null
             } else if (scope.moduledata.duration == scope.moduledata.remaining_duration) {
               scope.continue_button = "Start watching"
-              scope.next_lecture.id = scope.moduledata.last_viewed
+              scope.next_lecture.id = scope.moduledata.first_lecture              
               scope.next_lecture.type = scope.moduledata.module_completion.filter(function(item) {return item.id == scope.next_lecture.id})[0].type
             } else if (scope.moduledata.remaining_duration == 0) {
               scope.continue_button = "Watch again"

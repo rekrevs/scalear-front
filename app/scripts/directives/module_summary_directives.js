@@ -673,6 +673,21 @@ angular.module('scalearAngularApp')
               // $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
               // $translate.instant('global.at') + " " +
               // $filter('date')(new Date(scope.moduledata.due_date_string), 'HH:mm') + "."
+            scope.next_lecture = {}
+            scope.next_lecture.type = 'lecture'
+            if (scope.moduledata.first_lecture == -1) {
+              scope.continue_button = null
+            } else if (scope.moduledata.module_done_perc >0 &&  scope.moduledata.module_done_perc < 100 && scope.moduledata.last_viewed > -1) {
+              scope.continue_button = $translate.instant('dashboard.continue_watching') 
+              scope.next_lecture.id = scope.moduledata.last_viewed
+            } else if (scope.moduledata.module_done_perc == 100 && scope.moduledata.first_lecture != -1) {
+              scope.continue_button = $translate.instant('dashboard.watch_again') 
+
+              scope.next_lecture.id = scope.moduledata.first_lecture
+            } else if (scope.moduledata.module_done_perc == 0 ) {
+              scope.continue_button = $translate.instant('dashboard.start_watching')
+              scope.next_lecture.id = scope.moduledata.first_lecture
+            }
 
             scope.moduledata.due_date_enabled = !CourseEditor.isDueDateDisabled(scope.moduledata.due_date_string)
             if(scope.moduledata.due_date_enabled){
@@ -787,20 +802,6 @@ angular.module('scalearAngularApp')
               $translate.instant('time.hours') + ", " + scope.moduledata.remaining_quiz + " " + $translate.instant('global.quizzes') + ", " +
               scope.moduledata.remaining_survey + " " + $translate.instant('global.surveys') + ". "
 
-            scope.next_lecture = {}
-            scope.next_lecture.type = 'lecture'
-            if (scope.moduledata.first_lecture == -1) {
-              scope.continue_button = null
-            } else if (scope.moduledata.module_done_perc >0 &&  scope.moduledata.module_done_perc < 100 && scope.moduledata.last_viewed > -1) {
-              scope.continue_button = "Continue watching"
-              scope.next_lecture.id = scope.moduledata.last_viewed
-            } else if (scope.moduledata.module_done_perc == 100 && scope.moduledata.first_lecture != -1) {
-              scope.continue_button = "Watch again"
-              scope.next_lecture.id = scope.moduledata.first_lecture
-            } else if (scope.moduledata.module_done_perc == 0 ) {
-              scope.continue_button = "Start watching"
-              scope.next_lecture.id = scope.moduledata.first_lecture
-            }
             scope.group_width = (1 / scope.moduledata['online_quiz_count']) * 100
 
             scope.quiz_completion_bar = { "width": scope.moduledata['online_quiz_count'] * 5 }

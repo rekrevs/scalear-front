@@ -501,6 +501,9 @@ var translation_sv={
     incorrect: "felaktig",
     answer: "svar",
     survey: "enkät",
+    continue_watching: "Fortsätt att titta på",
+    watch_again: "Titta igen",
+    start_watching: "Börja titta",
   },
   inclass:{
     more: "mer",

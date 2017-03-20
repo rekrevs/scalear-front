@@ -95,11 +95,12 @@ angular.module('scalearAngularApp')
           if ($scope.progress_player.controls.isYoutube($scope.first_lecture.url)) {
             $scope.video_start = $scope.first_lecture.start_time
             $scope.video_end = $scope.first_lecture.end_time
-            $scope.url = $scope.first_lecture.url + "&controls=1&fs=1&theme=light"
-            $scope.url_lecture_id = $scope.first_lecture.id  
-          } else {
+            $scope.url = $scope.first_lecture.url+"&controls=1&fs=1&theme=light"
+            $scope.url_lecture_id = $scope.first_lecture.id 
+          }
+          else{
             $scope.url = $scope.first_lecture.url
-            $scope.url_lecture_id = $scope.first_lecture.id  
+            $scope.url_lecture_id = $scope.first_lecture.id 
           }
 
           $scope.timeline['lecture'] = {}
@@ -626,15 +627,12 @@ angular.module('scalearAngularApp')
         function() {}
       )
     }
-
     $scope.updateGrade = function(answer) {
       Quiz.updateGrade({ course_id: $stateParams.course_id, quiz_id: answer.quiz_id }, { answer_id: answer.id, grade: answer.grade })
     }
     $scope.updateOnlineQuizGrade = function(answer) {
       OnlineQuiz.updateGrade({ course_id: $stateParams.course_id, online_quizzes_id: answer.online_quiz_id }, { answer_id: answer.id, grade: answer.grade })
     }
-
-
 
     $scope.seek = function(time, video) {
       $log.debug(video.url)
@@ -697,6 +695,7 @@ angular.module('scalearAngularApp')
         formated_data.rows.push(row)
       }
       return formated_data
+
     }
 
 

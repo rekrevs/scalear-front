@@ -488,6 +488,9 @@ var translation_en={
     incorrect: "incorrect",    
     answer: "answer",
     survey: "survey",
+    continue_watching: "Continue watching",
+    watch_again: "Watch again",
+    start_watching: "Start watching",
   },
   inclass:{
     more: "more",

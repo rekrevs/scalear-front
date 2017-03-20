@@ -926,7 +926,6 @@ angular.module('scalearAngularApp')
         data: $scope[formatter](data, type)
       };
       angular.extend(chart.options, options)
-      console.log(chart)
       return chart
     }
     $scope.formatSelfGroupChartData = function(data, type) {

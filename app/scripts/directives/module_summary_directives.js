@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
                     var offset = labelWidth / 2
 
                     var tooltipX = mid_point - offset
-                    var tooltipY = point.plotY + 20;
+                    var tooltipY = point.plotY + 10;
 
                     if (tooltipX < 0) {
                       tooltipX = 0

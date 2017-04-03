@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
             url: '/users/signup',
             templateUrl: '/views/users/unified_signup.html',
             controller: 'UsersSignUpCtrl',
-            params : { input1: null, input2: null }
+            params : { input1: null, input2: null}
         })
         .state('thanks_for_registering', {
             url: '/users/thanks',
@@ -330,6 +330,11 @@ angular.module('scalearAngularApp')
           url: '/statistics',
           templateUrl: '/views/statistics/statistics.html',
           controller: 'statisticsCtrl'
+        })
+        .state('lti_course_list', {
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name',
+            templateUrl: '/views/teacher/course_list/lti_course_list.html',
+            controller: 'ltiCourseListCtrl'
         })
         .state('school_statistics', {
           url: '/school_statistics',

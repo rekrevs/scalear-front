@@ -1,0 +1,45 @@
+<accordion ng-hide="create_new_account">
+	<div ng-show="courses">
+	    <accordion-group ng-repeat="(course_key , course) in courses" class="accordion-group overflow-auto" open="" is-open="courses_sign">
+	      <accordion-heading class="accordion-heading">
+	        <div style="padding: 10px;border-bottom: 1px solid white;">
+	          <div class="show-inline" ng-show="courses_sign"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+	          <div class="show-inline" ng-hide="courses_sign"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
+	          <div class="show-inline" >{{course.name}}</div>
+	          <a href class="right"  style="padding-right: 5%" ng-click="embed('course',course.id,$event,course.name)" >EMBED </a> 
+	        </div>
+	      </accordion-heading>
+	          <accordion>
+	          <accordion-group ng-repeat="(group_key , group) in course.groups" class="accordion-group overflow-auto" open="" is-open="quizzes_sign" >
+			      <accordion-heading class="accordion-heading" >
+			        <div style="padding: 10px;border-bottom: 1px solid white;">
+			          <div class="show-inline" ng-show="quizzes_sign"><i class='fi-minus size-10 color-grey' style="margin-right: 20px;"></i></div>
+			          <div class="show-inline" ng-hide="quizzes_sign"><i class='fi-plus size-10 color-grey'  style="margin-right: 20px;"></i></div>
+			          <div class="show-inline" style="padding-left: 5%" >{{group.name}}</div>
+			          <a href class="right"  style="padding-right: 5%" ng-click="embed('group',group.id,$event,group.name)" >EMBED </a> 
+			        </div>
+			      </accordion-heading>
+			      <div ng-repeat="(item_key , item) in group.items">
+			        <div style="padding: 10px;border-bottom: 1px solid black; background-color: white;">
+					<div class="show-inline" style="padding-left: 10%">
+						<i ng-if="item.type == 'lecture'" class="fi-video with-tiny-margin-right left color-gray ng-scope" title="Video"></i>
+						<i ng-if="item.type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray ng-scope" title="Quiz"></i>
+						<i ng-if="item.type == 'customlink'" class="fi-link with-tiny-margin-right left color-gray ng-scope" title="Link"></i>
+				        <div class="show-inline"  >{{item.name}}</div>					
+					</div>
+			        <a href class="right"  style="padding-right: 5%" ng-click="embed(item.type,item.id,$event,item.name)" >EMBED </a> 
+			        </div>
+			      </div>
+		      	  <div ng-show="!(group.items)">No Items</div>
+			</accordion-group> 
+			</accordion>
+			<div ng-show="!(course.groups)">No module</div>
+	    </accordion-group>
+	</div>
+	<div ng-show="!courses" class="center">
+		NO COURSES 
+	</div>
+</accordion>
+<div ng-show="create_new_account"  align="center" style="width: 85%; margin:0 auto;">
+	You do not have an accout on scalable Learning Website, To Create new accout , click on this <a href class=""  ng-click="join()" >Sign in</a> 
+</div>

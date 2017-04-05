@@ -2885,3 +2885,6 @@ th[st-sort]{
 dd#second_accordion > a{
       background: #E1E1E1; 
 }
+dd#second_accordion > a:hover{
+      background: #cacaca; 
+}

@@ -44,3 +44,9 @@
 <div ng-show="create_new_account"  align="center" style="width: 85%; margin:0 auto;">
 	You do not have an accout on scalable Learning Website, To Create new accout , click on this <a href class=""  ng-click="join()" >Sign in</a> 
 </div>
+
+<div ng-if="loading_lti" style="height: 150px">
+  <center style="position: relative;top:25%">
+    <loading size="big" show="true"></loading>
+  </center>
+</div>

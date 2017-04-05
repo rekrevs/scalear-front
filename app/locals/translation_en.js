@@ -66,6 +66,7 @@ var translation_en={
     stay: "Stay",
     votes: "Votes",
     no: "No",
+    courses_list: "Courses List",
   },
   mailer:{
     send_email: "Send An Email",

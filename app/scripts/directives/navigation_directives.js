@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/main_navigation.html",
       link: function(scope, element) {
         scope.scalear_api = scalear_api
-
+        scope.lti_embed  = location.hash.indexOf('lti_course_list') != -1;
         $rootScope.$watch('preview_as_student', function() {
           scope.preview_as_student = $rootScope.preview_as_student
         })

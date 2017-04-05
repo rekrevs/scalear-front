@@ -66,6 +66,7 @@ var translation_sv={
     stay: "Stanna",
     votes: "Röster",
     no: "Nej",
+    courses_list: "kurser List",
    },
   mailer:{
     send_email: "Skicka ett mail",

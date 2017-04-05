@@ -5,6 +5,9 @@ angular.module('scalearAngularApp')
     return $resource(scalear_api.host + '/:lang/lti/:action', { lang: $translate.use() }, {
       'embedCourseList': { method: 'GET', params: { action: 'embed_course_list' }, headers: headers },
       'sendURLtoToolConsumer':{ method: 'GET', params: { action: 'send_url_to_tool_consumer' }, headers: headers },
+      'getLtiCustomSharedKey' :{ method: 'GET', params: { action: 'get_lti_custom_shared_key' }, headers: headers },
+      'generateNewCustomKey' :{ method: 'GET', params: { action: 'generate_new_custom_key' }, headers: headers },
+
     });
 
   }])

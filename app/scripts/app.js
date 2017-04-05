@@ -351,6 +351,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
         })
+        .state('lti_help', {
+          url: '/help/lti_help',
+          templateUrl: '/views/teacher/help/lti_help.html',
+          controller: 'LtiKeyGenerateCtrl'
+        })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',
           templateUrl: '/views/teacher/help/teacher_getting_started.html',

@@ -2881,3 +2881,7 @@ th[st-sort]{
 #student_popover .popover .arrow{
   display: none;
 }
+
+dd#second_accordion > a{
+      background: #E1E1E1; 
+}

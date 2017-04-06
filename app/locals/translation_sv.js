@@ -972,7 +972,7 @@ var translation_sv={
         copy_from_existing: "Kopiera data från befintlig kurs",
     },
     start_date: "Startdatum",
-    end_date: "Slutdatum för kurs",
+    end_date: "Slutdatum",
     disable_registration: "Stäng registrering efter",
     limit_registration_domain: "Registrering Skolor",
     limit_registration_domain_description:"Tillåt endast studenter från specifika skol domäner för att registrera",

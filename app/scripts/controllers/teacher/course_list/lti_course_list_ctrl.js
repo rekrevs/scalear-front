@@ -10,11 +10,11 @@ angular.module('scalearAngularApp')
     $scope.last_name = $stateParams.last_name
     $rootScope.subheader_message = $translate.instant("global.courses_list")
     $scope.loading_lti = true
+    $scope.create_new_account = false
 
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.lti_course_list')
     var  a = $location.absUrl()
-    $scope.create_new_account = false
 
     // if(a.indexOf('3000')){
     //   $window.location.href =  a.replace("3000", "9000");
@@ -23,10 +23,10 @@ angular.module('scalearAngularApp')
     User.getCurrentUser()
       .$promise
       .then(function(data) {
-        $scope.loading_lti = false
         if (data.user == 'null') {
           // SHOW NEW 
           $scope.create_new_account = true
+          $scope.loading_lti = false
           console.log("CREATE NEW ACCOUNT")
         }
         else{
@@ -34,6 +34,7 @@ angular.module('scalearAngularApp')
             .$promise
             .then(function(data) {
               console.log(data.courses)
+              $scope.loading_lti = false
               $scope.courses = data.courses
             })
         }

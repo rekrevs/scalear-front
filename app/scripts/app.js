@@ -332,7 +332,7 @@ angular.module('scalearAngularApp')
           controller: 'statisticsCtrl'
         })
         .state('lti_course_list', {
-            url: '/lti_course_list?return_url&email&full_name&first_name&last_name',
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key',
             templateUrl: '/views/teacher/course_list/lti_course_list.html',
             controller: 'ltiCourseListCtrl'
         })

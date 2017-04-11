@@ -8,9 +8,12 @@ angular.module('scalearAngularApp')
     $scope.email = $stateParams.email
     $scope.first_name = $stateParams.first_name
     $scope.last_name = $stateParams.last_name
+    // $scope.consumer_key = $stateParams.consumer_key
     $rootScope.subheader_message = $translate.instant("global.courses_list")
     $scope.loading_lti = true
     $scope.create_new_account = false
+    $scope.not_course_common = false
+            
 
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.lti_course_list')
@@ -30,13 +33,18 @@ angular.module('scalearAngularApp')
           console.log("CREATE NEW ACCOUNT")
         }
         else{
-          Lti.embedCourseList({ })
-            .$promise
-            .then(function(data) {
-              console.log(data.courses)
-              $scope.loading_lti = false
-              $scope.courses = data.courses
-            })
+          Lti.embedCourseList({
+            consumer_key: $stateParams.consumer_key
+          })
+          .$promise
+          .then(function(data) {
+            console.log(data.courses)
+            $scope.not_course_common = ( data.courses_common == 0 )
+            console.log($scope.create_new_account)
+            console.log(data)
+            $scope.loading_lti = false
+            $scope.courses = data.courses
+          })
         }
       })
 

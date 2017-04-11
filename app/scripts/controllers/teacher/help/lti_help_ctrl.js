@@ -13,18 +13,19 @@ angular.module('scalearAngularApp')
         })
       .$promise
       .then(function(data) {
-      	console.log(data)
-	    $scope.shared_key = data.shared_key
-	    $scope.custom_key = data.custom_key
+	    $scope.shared_sceret = data.shared_sceret
+	    $scope.consumer_key = data.consumer_key
 	    $scope.lti_url_xml = data.lti_url_xml
       })
 
-    $scope.generateNewCustomKey = function() {
-      Lti.generateNewCustomKey(
-    	{type: 'user'})
+    $scope.generateNewLtiKeys = function() {
+      Lti.generateNewLtiKeys({
+      	type: 'user'
+      })
       .$promise
       .then(function(data) {
-	    $scope.custom_key = data.custom_key
+	    $scope.consumer_key = data.consumer_key
+	    $scope.shared_sceret = data.shared_sceret
       })
     }
 

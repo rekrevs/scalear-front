@@ -109,8 +109,8 @@ angular.module('scalearAngularApp')
             $interval.cancel($rootScope.stop);
             $rootScope.stop = undefined;
           }
-
-          ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 4000, "error");
+          console.log(rejection.data.errors[0])
+          ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
         }
 
         if(rejection.status == 500 && rejection.config.url.search(re) != -1) {

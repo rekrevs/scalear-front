@@ -177,7 +177,6 @@ angular.module('scalearAngularApp')
     }
 
     function createInstance(course) {
-
       if(isInstance(course)) {
         return course
       }

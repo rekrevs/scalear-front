@@ -35,6 +35,7 @@ var translation_sv={
     please_wait: "Var god vänta",
     lecture: "@:global.video",
     lectures: "@:global.videos",
+    courses: "kurser",
     module: 'modul',
     overview: 'Modul Sammanfattning',
     quiz: "Quiz",
@@ -364,6 +365,15 @@ var translation_sv={
     click_here: "Klicka här",
     new_confirmation: "För att få en ny bekräftelse länk vänligen",
     already_confirmation: "Om du redan har bekräftat ditt konto,"
+  },
+  lti:{
+    embed: "Bädda in",
+    lti: "Lti",
+    courses: "@:global.courses",
+    modules:"moduler",
+    items: "@:sharing.items",
+    no_account: "Du behöver inte ha en konto på Scalable Learning hemsida. För att skapa ett konto, klicka på" ,
+    contact_teacher: "Kontakta lärare ägare att lägga till dig som en lärare i Scalable learning kurs." ,
   },
   events:{
     due: "Förfaller",

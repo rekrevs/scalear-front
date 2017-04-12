@@ -35,6 +35,7 @@ var translation_en={
     please_wait: "Please Wait",
     lecture: "@:global.video",
     lectures: "@:global.videos",
+    courses: "courses",
     module: 'module',
     overview: 'Module Summary',
     quiz: "Quiz",
@@ -350,6 +351,15 @@ var translation_en={
     click_here: "click here",
     new_confirmation: "To get a new confirmation link please",
     already_confirmation: "If you have already confirmed your account,"
+  },
+  lti:{
+    embed: "Embed",
+    lti: "Lti",
+    courses: "@:global.courses",
+    modules:"modules",
+    items: "@:sharing.items",
+    no_account: "You do not have an accout on scalable Learning Website. To Create an accout, click on the" ,
+    contact_teacher: "Contact teacher owner to add you to as a teacher in Scalable Learning course." ,
   },
   events:{
     due:"Due",

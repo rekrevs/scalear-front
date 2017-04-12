@@ -30,7 +30,6 @@ angular.module('scalearAngularApp')
           // SHOW NEW 
           $scope.create_new_account = true
           $scope.loading_lti = false
-          console.log("CREATE NEW ACCOUNT")
         }
         else{
           Lti.embedCourseList({
@@ -38,10 +37,7 @@ angular.module('scalearAngularApp')
           })
           .$promise
           .then(function(data) {
-            console.log(data.courses)
             $scope.not_course_common = ( data.courses_common == 0 )
-            console.log($scope.create_new_account)
-            console.log(data)
             $scope.loading_lti = false
             $scope.courses = data.courses
           })

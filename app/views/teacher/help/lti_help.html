@@ -1,99 +1,122 @@
-<div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
-	<ul class="side-nav">
-	  <h3 ng-if="!current_user">
-	  	<i class="fi-page-multiple size-18"></i>
-	  	<span translate>help.getting_started</span>
-	  </h3>
-	  <li><a ng-click="scroll('consumer_key')">Consumer Key</a></li>
-	  <li><a ng-click="scroll('shared_secret')">Shared Secret</a></li>
-	  <li><a ng-click="scroll('lti_url_xml')">LTI URL </a></li>
-<!-- 	  <li><a ng-click="scroll('instructions')">ScalableLearning Instructions Manual</a></li>
-	  <li><a ng-click="scroll('flipped')">How to Flip your Classroom</a></li>
-	  <li><a ng-click="scroll('support')">Getting Help</a></li> -->
-	</ul>
-</div>
-<div class="with-margin-top small-12 medium-9 large-9 columns">
-	<div id="consumer_key" class="small-10 with-margin-bottom">
-		<!-- <h2 class="color-green text-left">Introduction to <span class"dark-text">Scalable</span>Learning</h2> -->
-		<h2 class="color-green text-left">Generate LTI Custom key </h2>
-		<!-- <youtube id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='0' controls='1' style="z-index: 1;"> -->
-		<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;float: left;" class="small-8 medium-8 large-8">
-			 <div ng-show="consumer_key">{{consumer_key}}</div>
-			 <div ng-hide="consumer_key">click on ccreate custom key to create new custom key</div>
-		</div>
-		<div class="small-3 medium-3 large-3" style="float: right;margin-left: 5px;text-align: center;" ng-click="generateNewLtiKeys()">
-			<button> create new key</button>
-		</div>
+<div ng-if="!loading">	
+	<div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
+		<ul class="side-nav">
+		  <h3 ng-if="!current_user">
+		  	<i class="fi-page-multiple size-18"></i>
+		  	<span translate>help.getting_started</span>
+		  </h3>
+		  <div ng-if="consumer_key == 'organization'">
+			  <li><a ng-click="scroll('organization_lti')">organization lti</a></li>
+		  </div>
+		  <div ng-if="!(consumer_key == 'organization')">
+			  <li><a ng-click="scroll('consumer_key')">Consumer Key</a></li>
+			  <li><a ng-click="scroll('shared_secret')">Shared Secret</a></li>
+			  <li><a ng-click="scroll('lti_url_xml')">LTI URL </a></li>	  	
+		  </div>
+		  <!-- 	  <li><a ng-click="scroll('instructions')">ScalableLearning Instructions Manual</a></li>
+		  <li><a ng-click="scroll('flipped')">How to Flip your Classroom</a></li>
+		  <li><a ng-click="scroll('support')">Getting Help</a></li> -->
+		</ul>
 	</div>
-	<br><br>
-	<div id="shared_secret" class="small-10 with-margin-bottom">
-		<h2 class="color-green text-left">Shared Secret</h2>
-		<!-- <youtube id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='0' controls='1' style="z-index: 1;"> -->
-		<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
-			{{shared_sceret}}
-		</div>
-	</div>
-	<div id="lti_url_xml" class="small-10 with-margin-bottom">
-		<h2 class="color-green text-left">LTI URL</h2>
-		<!-- <youtube id="intro_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_welcome_video" autoplay='0' controls='1' style="z-index: 1;"> -->
-		<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
-			{{lti_url_xml}}
-		</div>
-	</div>
-	<!-- 
-	<div id="review" class="small-10 with-margin-bottom">
-		<h2 class="color-green text-left">Getting Started: Review student progress and prepare for in-class review</h2>
-		<div>
-			<youtube id="review_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_review_course_video" autoplay='0' controls='1' style="z-index: 1;">
-		</div>
-	</div> -->
+	<div class="with-margin-top small-12 medium-9 large-9 columns">
+		<div ng-show="consumer_key == 'organization'">
+			<div id="organization_lti" class="small-10 with-margin-bottom">
+				<!-- <h2 class="color-green text-left">Introduction to <span class"dark-text">Scalable</span>Learning</h2> -->
+				<h2 class="color-green text-left">organization Lti  </h2>
+				<div>
+					contanct your admin to add scalable learning as external tool in tool provider  
+				</div>
 
-<!-- 	<div id="instructions">
-		<h2 class="color-green">ScalableLearning Instructions Manual</h2>
-		<ul>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=3">Creating a new Course</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=6">Adding a Video to a Course</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=10">Adding Interactive Quizzes to a Video</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=17">Previewing as a Student</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=18">Adding Students</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=22">Reviewing Student Online Progress</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=29">Using ScalableLearning In-Class</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=31">Viewing your Courses</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=32">Organizing Courses with Modules</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=36">Adding Links to a Course</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=37">Adding Teachers and TAs</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=38">Sharing Courses with Other Teachers</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=39">Recording Videos</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=43">Uploading Videos to YouTube</a></li>
-		</ul>
-	</div> -->
-	<!-- <div id="flipped">
-		<h2 class="color-green">How to Flip your Classroom</h2>
-		<ul>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=3">Moving to Flipped Classroom Teaching</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=5">Step 1. Develop in-class problems for active learning</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=7">Step 2. Split your online material into 6 minute or shorter segments</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=8">Step 3. Develop self-assessment questions for each segment</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=9">Step 4. Record your lectures and add online interactivity</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=10">Step 5. Teaching with ScalableLearning and Flipped</a></li>
-			<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=11">Tips and Tricks</a></li>
-		</ul>
+			</div>
+			<br><br>
+		</div>	
+		<div ng-hide="consumer_key == 'organization'">
+			<div id="consumer_key" class="small-10 with-margin-bottom">
+				<h2 class="color-green text-left">Generate LTI consumer key   </h2>
+				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;float: left;" class="small-8 medium-8 large-8">
+					 <div ng-show="consumer_key">{{consumer_key}}</div>
+					 <div ng-hide="consumer_key">To generate new consumer key and shared scert , click on create generate new keys</div>
+				</div>
+				<div class="small-3 medium-3 large-3" style="float: right;margin-left: 5px;text-align: center;" ng-click="generateNewLtiKeys()">
+					<button>Generate new keys</button>
+				</div>
+			</div>
+			<br><br>
+			<div id="shared_secret" class="small-10 with-margin-bottom">
+				<h2 class="color-green text-left">Shared Secret</h2>
+				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
+					<!-- {{shared_sceret}} -->
+					 <div ng-show="shared_sceret">{{shared_sceret}}</div>
+					 <div ng-hide="shared_sceret">To generate new consumer key and shared scert , click on create generate new keys</div>
+				</div>
+			</div>
+			<div id="lti_url_xml" class="small-10 with-margin-bottom">
+				<h2 class="color-green text-left">LTI URL</h2>
+				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
+					{{lti_url_xml}}
+				</div>
+			</div>
+		</div>
+		<!-- 
+		<div id="review" class="small-10 with-margin-bottom">
+			<h2 class="color-green text-left">Getting Started: Review student progress and prepare for in-class review</h2>
+			<div>
+				<youtube id="review_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_review_course_video" autoplay='0' controls='1' style="z-index: 1;">
+			</div>
+		</div> -->
+
+	<!-- 	<div id="instructions">
+			<h2 class="color-green">ScalableLearning Instructions Manual</h2>
+			<ul>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=3">Creating a new Course</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=6">Adding a Video to a Course</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=10">Adding Interactive Quizzes to a Video</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=17">Previewing as a Student</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=18">Adding Students</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=22">Reviewing Student Online Progress</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=29">Using ScalableLearning In-Class</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=31">Viewing your Courses</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=32">Organizing Courses with Modules</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=36">Adding Links to a Course</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=37">Adding Teachers and TAs</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=38">Sharing Courses with Other Teachers</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=39">Recording Videos</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.instruction_manual}}#page=43">Uploading Videos to YouTube</a></li>
+			</ul>
+		</div> -->
+		<!-- <div id="flipped">
+			<h2 class="color-green">How to Flip your Classroom</h2>
+			<ul>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=3">Moving to Flipped Classroom Teaching</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=5">Step 1. Develop in-class problems for active learning</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=7">Step 2. Split your online material into 6 minute or shorter segments</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=8">Step 3. Develop self-assessment questions for each segment</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=9">Step 4. Record your lectures and add online interactivity</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=10">Step 5. Teaching with ScalableLearning and Flipped</a></li>
+				<li><a target="_blank" ng-href="{{scalear_api.flipped_manual}}#page=11">Tips and Tricks</a></li>
+			</ul>
+		</div>
+		<div id="support">
+			<h2 class="color-green">Getting Help</h2>
+			<ul>
+				<p>
+					<a target="_blank" ng-href="{{scalear_api.teacher_forum_link}}">Ask other teachers in the ScalableLearning Teacher’s Forum</a>
+				</p>
+				<p>
+					<a report-technical ng-click="toggleTechnicalDisplay()">Send us Feedback on how we can improve ScalableLearning</a>
+				</p>
+			</ul>
+		</div>
+	 -->
+	    <div id="whitespace" class="hide-for-small-only">
+	        <p>
+	            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	        </p>
+		</div>
 	</div>
-	<div id="support">
-		<h2 class="color-green">Getting Help</h2>
-		<ul>
-			<p>
-				<a target="_blank" ng-href="{{scalear_api.teacher_forum_link}}">Ask other teachers in the ScalableLearning Teacher’s Forum</a>
-			</p>
-			<p>
-				<a report-technical ng-click="toggleTechnicalDisplay()">Send us Feedback on how we can improve ScalableLearning</a>
-			</p>
-		</ul>
-	</div>
- -->
-    <div id="whitespace" class="hide-for-small-only">
-        <p>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        </p>
-	</div>
+</div>
+<div ng-if="loading" style="height: 150px">
+  <center style="position: relative;top:25%">
+    <loading size="big" show="true"></loading>
+  </center>
 </div>

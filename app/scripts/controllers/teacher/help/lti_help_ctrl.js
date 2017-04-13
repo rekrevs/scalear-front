@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('LtiKeyGenerateCtrl', ['$scope', '$location', '$anchorScroll','$rootScope','Page', 'scalear_api','$translate','Lti', function ($scope, $location, $anchorScroll, $rootScope,Page, scalear_api, $translate, Lti) {
-   	Page.setTitle('help.getting_started')
+   	Page.setTitle('lti.lti')
     $rootScope.subheader_message = $translate.instant('lti.lti') 
     $scope.scalear_api = scalear_api
     $scope.loading_lti = true

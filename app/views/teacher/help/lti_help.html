@@ -8,24 +8,15 @@
 		  <div ng-if="consumer_key == 'organization'">
 			  <li><a ng-click="scroll('organization_lti')">organization lti</a></li>
 		  </div>
-		  <!-- <div ng-if="!(consumer_key == 'organization')"> -->
-<!-- 			  <li><a ng-click="scroll('consumer_key')">Consumer Key</a></li>
-			  <li><a ng-click="scroll('shared_secret')">Shared Secret</a></li>
-			  <li><a ng-click="scroll('lti_url_xml')">LTI URL </a></li>	  	 -->
 			  <li><a ng-click="scroll('integrating_sl_lms')">Integrating ScalableLearning with your LMS</a></li>	  	
 			  <li><a ng-click="scroll('add_sL_tool_to_course')">Add the ScalableLearning tool to your Course</a></li>	  	
 			  <li><a ng-click="scroll('link_sL_content')">Linking ScalableLearning content to your course</a></li>	  	
 			  <li ng-if="consumer_key != 'organization'"  ><a ng-click="scroll('add_sL_tool_to_course_to_lms')">Add ScalableLearning to your LMS (if it is not already added)</a></li>	  	
-
-		  <!-- </div> -->
 		</ul>
 	</div>
 	<div class="with-margin-top small-12 medium-9 large-9 columns">
 		<div id="integrating_sl_lms">
 			<h4 class="color-green">Integrating ScalableLearning with your LMS</h4>
-			<!-- <ul> -->
-				<!-- <h5 class="subheader">Asking a Question</h5> -->
-				<!-- <img class="with-margin" src="images/student_question_screen_shot.png" /> -->
 				<p>
 					ScalableLearning supports the <a ng-href="http://www.imsglobal.org/activity/learning-tools-interoperability"  target="_blank" >Learning Tools Interoperability </a> (LTI) standard for connecting to a wide variety of Learning Management Systems (LMS). If your school or university uses an LTI-compatible LMS (such as Canvas, Moodle, Blackboard, etc.), you can easily embed links to ScalableLearning material. 
 				</p>
@@ -35,7 +26,6 @@
 				<p>			
 					Here is an example of how to use ScalableLearning with Canvas through LTI. If you are using a different LMS, you will need to consult its documentation for where to find the external tools button, but otherwise it should be similar.
 				</p>	
-			<!-- </ul> -->
 		</div>
 		<div id="add_sL_tool_to_course">
 			<h4 class="color-green">Add the ScalableLearning tool to your Course</h4>
@@ -78,8 +68,8 @@
 						<ul class="small-8 columns" style="%">
 							<li style="list-style-type: initial;"><b>Configuration Type</b>: By URL</li>
 							<li style="list-style-type: initial;"><b>Name</b>: ScalableLearning</li>
-							<li style="list-style-type: initial;"><b>Consumer Key</b>: {{consumer_key}}</li>
-							<li style="list-style-type: initial;"><b>Secret Key</b>: {{shared_sceret}}</li>
+							<li style="list-style-type: initial;"><b>Consumer Key</b>: <span ng-if="!consumer_key">Click the Generate Keys button to generate a new key</span>{{consumer_key}}</li>
+							<li style="list-style-type: initial;"><b>Secret Key</b>: <span ng-if="!shared_sceret">Click the Generate Keys button to generate a new key</span>{{shared_sceret}}</li>
 							<li style="list-style-type: initial;"><b>Config URL</b>: {{lti_url_xml}}</li>
 						</ul>
 						<div class="small-3 columns" style="" ng-click="generateNewLtiKeys()">
@@ -96,41 +86,6 @@
 				<br>
 
 		</div>
-
-<!-- 		<div ng-show="consumer_key == 'organization'">
-			<div id="organization_lti" class="small-10 with-margin-bottom">
-				<h2 class="color-green text-left">organization Lti  </h2>
-				<div>
-					contanct your admin to add scalable learning as external tool in tool provider  
-				</div>
-
-			</div>
-			<br><br>
-		</div>	 -->
-<!-- 		<div ng-hide="consumer_key == 'organization'">
-			<div id="consumer_key" class="small-10 with-margin-bottom">
-				<h2 class="color-green text-left">Generate LTI consumer key   </h2>
-				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;float: left;" class="small-8 medium-8 large-8">
-					 <div ng-show="consumer_key">{{consumer_key}}</div>
-					 <div ng-hide="consumer_key">To generate new consumer key and shared scert , click on create generate new keys</div>
-				</div>
-			</div>
-			<br><br>
-			<div id="shared_secret" class="small-10 with-margin-bottom">
-				<h2 class="color-green text-left">Shared Secret</h2>
-				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
-					 <div ng-show="shared_sceret">{{shared_sceret}}</div>
-					 <div ng-hide="shared_sceret">To generate new consumer key and shared scert , click on create generate new keys</div>
-				</div>
-			</div>
-			<div id="lti_url_xml" class="small-10 with-margin-bottom">
-				<h2 class="color-green text-left">LTI URL</h2>
-				<div style="border-radius: 15px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 16px; color: #555; text-align: center;" class="small-8 medium-8 large-8">
-					{{lti_url_xml}}
-				</div>
-			</div>
-		</div> -->
-
 	    <div id="whitespace" class="hide-for-small-only">
 	        <p>
 	            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

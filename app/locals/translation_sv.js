@@ -372,8 +372,8 @@ var translation_sv={
     courses: "@:global.courses",
     modules:"moduler",
     items: "@:sharing.items",
-    no_account: "Du behöver inte ha en konto på Scalable Learning hemsida. För att skapa ett konto, klicka på" ,
-    contact_teacher: "Kontakta lärare ägare att lägga till dig som en lärare i Scalable learning kurs." ,
+    no_account: "Du behöver inte ha ett konto på Scalable Learning. För att skapa ett konto, klicka på" ,
+    contact_teacher: "Du är inte en instruktör i denna kurs om Scalable Learning. Vänligen kontakta kurs ägare att lägga till dig som Professor/TA till kursen" ,
   },
   events:{
     due: "Förfaller",

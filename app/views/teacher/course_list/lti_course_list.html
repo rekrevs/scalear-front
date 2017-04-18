@@ -1,5 +1,5 @@
 <div ng-if="!loading_lti" >
-	<accordion ng-hide="create_new_account || not_course_common" class="accordion no-margin navigation">
+	<accordion ng-hide="create_new_account || no_common_courses" class="accordion no-margin navigation">
 		<div ng-show="courses">
 		    <accordion-group ng-repeat="(course_key , course) in courses" id="first_accordion" class="accordion-group overflow-auto" open="" is-open="courses_sign">
 			<accordion-heading class="accordion-heading">
@@ -13,7 +13,7 @@
 						{{course.short_name}} | {{course.name}}
 						<div class="bottom-bar">
 							<div class="small-12 medium-4 columns with-small-margin-bottom">
-								<i class="fi-calendar size-18"></i><small class="with-small-margin-left" translate>courses.start_date</small>: 
+								<i class="fi-calendar size-18"></i><small class="with-small-margin-left" translate>courses.start_date</small>:
 								<small class="truncate">{{course.start_date | amDateFormat:'DD MMMM YYYY'}}</small>
 							</div>
 							<div class="small-12 medium-4 columns with-small-margin-bottom">
@@ -22,15 +22,16 @@
 							</div>
 							<div class="small-12 medium-4 columns with-small-margin-bottom">
 								<i class="fi-torsos-all size-18"></i>
-								<small class="with-small-margin-left" translate>courses.list.number_of_students</small>: 
-								<small class="truncate" >{{course.enrollments}}</small>					
+								<small class="with-small-margin-left" translate>courses.list.number_of_students</small>:
+								<small class="truncate" >{{course.enrollments}}</small>
 							</div>
 						</div>
 					</div>
 					<div class="small-2 columns" style="margin-top: 35px;">
 						<a href="" class="right button tiny success" style="padding: 3px 10px;border-radius: 4px;margin-bottom: 0;font-size: 12px;" ng-click="embed('course',course.id,$event,course.name)">
-							<i class="fi-link size-12"/>  <span translate>lti.embed</span>
-						</a>	
+							<i class="fi-link size-12"/>
+							<span translate>lti.embed</span>
+						</a>
 					</div>
 				</div>
 			</accordion-heading>
@@ -40,13 +41,13 @@
 				        <div class="row collapse"  style="padding: 4px 26px;">
 				          <div class="small-1 columns" style="margin-top: 5px;">
 					          <i ng-show="quizzes_sign" class='fi-minus size-10 color-black' style="margin-right: 20px;float: left;"></i>
-					          <i ng-hide="quizzes_sign" class='fi-plus size-10 color-black'  style="margin-right: 20px;float: left;"></i>			          	
+					          <i ng-hide="quizzes_sign" class='fi-plus size-10 color-black'  style="margin-right: 20px;float: left;"></i>
 				          </div>
 				          <div class="small-9 columns" style="word-wrap: break-word;" >{{group.name}}</div>
 				          <div class="small-2 columns" >
 							<a href="" class="right button tiny success" style="padding: 3px 10px;border-radius: 4px;margin-bottom: 0;font-size: 12px;" ng-click="embed('group',group.id,$event,group.name)">
 								<i class="fi-link size-12"/>  <span translate>lti.embed</span>
-							</a>	
+							</a>
 				          </div>
 				        </div>
 				      </accordion-heading>
@@ -57,16 +58,16 @@
 									<i ng-if="item.type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray ng-scope" title="Quiz" style="float: left;" ></i>
 									<i ng-if="item.type == 'customlink'" class="fi-link with-tiny-margin-right left color-gray ng-scope" title="Link" style="float: left;" ></i>
 								</div>
-						        <div class="show-inline small-9 columns"  style="word-wrap: break-word;">{{item.name}}</div>					
+						        <div class="show-inline small-9 columns"  style="word-wrap: break-word;">{{item.name}}</div>
 						        <div class="small-2 columns" >
 									<a href="" class="right button tiny success" style="padding: 3px 10px;border-radius: 4px;margin-bottom: 0;font-size: 12px;" ng-click="embed(item.type,item.id,$event,item.name)">
 										<i class="fi-link size-12"/>  <span translate>lti.embed</span>
-									</a>	
+									</a>
 						        </div>
 					        </div>
 				      </div>
 			      	  <div ng-show="!(group.items)" style="padding-left: 10%;background: #d3d3d3;border-bottom: 1px solid white;"><span translate>button.no</span> <span translate>lti.items</span></div>
-				</accordion-group> 
+				</accordion-group>
 				</accordion>
 				<div ng-show="!(course.groups)" style="padding-left: 10%;background: #E1E1E1;border-bottom: 1px solid white;"><span translate>button.no</span> <span translate>lti.modules</span></div>
 		    </accordion-group>
@@ -77,9 +78,9 @@
 		</div>
 	</accordion>
 	<div ng-show="create_new_account"  align="center" style="width: 85%; margin:0 auto;">
-		<span translate>lti.no_account</span> <a href class=""  ng-click="join()" translate>account.sign_in</a> 
+		<span translate>lti.no_account</span> <a href class=""  ng-click="join()" translate>account.sign_in</a>
 	</div>
-	<div ng-show="not_course_common"  align="center" style="width: 85%; margin:0 auto;" translate>lti.contact_teacher</div>
+	<div ng-show="no_common_courses"  align="center" style="width: 85%; margin:0 auto;" translate>lti.contact_teacher</div>
 </div>
 <div ng-if="loading_lti" style="height: 150px">
   <center style="position: relative;top:25%">

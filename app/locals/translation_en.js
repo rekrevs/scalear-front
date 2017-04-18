@@ -358,8 +358,8 @@ var translation_en={
     courses: "@:global.courses",
     modules:"modules",
     items: "@:sharing.items",
-    no_account: "You do not have an accout on scalable Learning Website. To Create an accout, click on the" ,
-    contact_teacher: "Contact teacher owner to add you to as a teacher in Scalable Learning course." ,
+    no_account: "You do not have an account on Scalable Learning. To Create an account, click on" ,
+    contact_teacher: "You are not an instructor in this course on Scalable Learning. Please contact the course owner to add you as a Professor/TA to the course" ,
   },
   events:{
     due:"Due",

@@ -323,7 +323,7 @@ var translation_sv={
         password: "Lösenord",
         current_password: "Nuvarande lösenord",
     },
-    confirm_account: "Bekräfta Konto",    
+    confirm_account: "Bekräfta Konto",
     confirmation_token:"Bekräftelsekod",
     resend_confirmation: "Skicka om bekräftelse än",
     didnt_receive_confirmation: "Skicka e-postbekräftelsen igen",
@@ -368,7 +368,7 @@ var translation_sv={
   },
   lti:{
     embed: "Bädda in",
-    lti: "Lti",
+    lti: "Länka till din skola LMS",
     courses: "@:global.courses",
     modules:"moduler",
     items: "@:sharing.items",
@@ -626,7 +626,7 @@ var translation_sv={
     annotation:"Annotering",
     tooltip:{
       invisible: "Inte synlig för eleverna.",
-      invisible_quiz:"Opublicera: Inte synlig för eleverna.",      
+      invisible_quiz:"Opublicera: Inte synlig för eleverna.",
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Alla nödvändiga objekt måste fyllas i tid för att studenten få kredit för modulen",

@@ -97,15 +97,16 @@
           <ul class="lighter-grey-no-hover" top-bar-dropdown ng-click="closeMenu($event)">
             <!-- <li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li> -->
             <li><a class="lighter-grey dark-text" ui-sref="teacher_getting_started" ><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.teacher</span></a></li>
-            <li class="divider border-grey medium-opacity"></li>
             <li><a class="lighter-grey dark-text" ui-sref="student_getting_started"><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.student</span></a></li>
-            <li><a class="lighter-grey dark-text" ui-sref="lti_help"><span translate> lti.lti</span></a></li>
+            <li class="divider border-grey medium-opacity"></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.flipped_manual}}" target="_blank" translate>help.how_to_flip</a></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.instruction_manual}}" target="_blank" translate>help.instruction_manual</a></li>
+            <li><a class="lighter-grey dark-text" ui-sref="lti_help"><span translate> lti.lti</span></a></li>
+            <li class="divider border-grey medium-opacity"></li>
             <li><a class="lighter-grey dark-text" ng-href="{{scalear_api.teacher_forum_link}}" target="_blank" translate>help.teacher_forum</a></li>
+            <li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.support</a></li>
             <li class="divider border-grey medium-opacity"></li>
             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>help.privacy_faq</a></li>
-            <li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.support</a></li>
           </ul>
         </li>
       </ul>

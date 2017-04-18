@@ -354,7 +354,7 @@ var translation_en={
   },
   lti:{
     embed: "Embed",
-    lti: "Lti",
+    lti: "Linking to your School LMS",
     courses: "@:global.courses",
     modules:"modules",
     items: "@:sharing.items",
@@ -455,8 +455,8 @@ var translation_en={
     ontime: "On-time",
     incomplete: "Incomplete",
     complete: "Complete",
-    more_than: "More than", 
-    less_than: "Less than", 
+    more_than: "More than",
+    less_than: "Less than",
     not_started: 'Not Started',
     between: 'Between',
     never_tried: 'Never tried',
@@ -496,7 +496,7 @@ var translation_en={
     click_retry_quiz: "Click to re-try this quiz.",
     less_one_hour: "due in less than an hour.",
     correct: "correct",
-    incorrect: "incorrect",    
+    incorrect: "incorrect",
     answer: "answer",
     survey: "survey",
     continue_watching: "Continue watching",
@@ -1034,7 +1034,7 @@ var translation_en={
     teacher_forum: "Teacher Forum",
     instruction_manual: "Instruction Manual",
     tips: "Tips",
-    how_to_flip:"How to Flip",
+    how_to_flip:"How to Flip your Class",
     privacy_faq:"Privacy & FAQ"
   },
   course_settings:{

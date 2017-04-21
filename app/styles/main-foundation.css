@@ -2881,3 +2881,20 @@ th[st-sort]{
 #student_popover .popover .arrow{
   display: none;
 }
+
+dd#first_accordion {
+    margin-top: 25px;
+    box-shadow: 1px 2px 7px -2px grey;
+}
+dd#first_accordion > a{
+      background: whitesmoke ; 
+}
+dd#first_accordion > a:hover{
+      background: #E1E1E1 ; 
+}
+dd#second_accordion > a{
+      background: #E1E1E1; 
+}
+dd#second_accordion > a:hover{
+      background: #cacaca; 
+}

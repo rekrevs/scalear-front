@@ -35,6 +35,7 @@ var translation_sv={
     please_wait: "Var god vänta",
     lecture: "@:global.video",
     lectures: "@:global.videos",
+    courses: "kurser",
     module: 'modul',
     overview: 'Modul Sammanfattning',
     quiz: "Quiz",
@@ -66,6 +67,7 @@ var translation_sv={
     stay: "Stanna",
     votes: "Röster",
     no: "Nej",
+    courses_list: "kurser List",
    },
   mailer:{
     send_email: "Skicka ett mail",
@@ -321,7 +323,7 @@ var translation_sv={
         password: "Lösenord",
         current_password: "Nuvarande lösenord",
     },
-    confirm_account: "Bekräfta Konto",    
+    confirm_account: "Bekräfta Konto",
     confirmation_token:"Bekräftelsekod",
     resend_confirmation: "Skicka om bekräftelse än",
     didnt_receive_confirmation: "Skicka e-postbekräftelsen igen",
@@ -363,6 +365,15 @@ var translation_sv={
     click_here: "Klicka här",
     new_confirmation: "För att få en ny bekräftelse länk vänligen",
     already_confirmation: "Om du redan har bekräftat ditt konto,"
+  },
+  lti:{
+    embed: "Bädda in",
+    lti: "Länka till din skola LMS",
+    courses: "@:global.courses",
+    modules:"moduler",
+    items: "@:sharing.items",
+    no_account: "Du behöver inte ha ett konto på Scalable Learning. För att skapa ett konto, klicka på" ,
+    contact_teacher: "Du är inte en instruktör i denna kurs om Scalable Learning. Vänligen kontakta kurs ägare att lägga till dig som Professor/TA till kursen" ,
   },
   events:{
     due: "Förfaller",
@@ -615,7 +626,7 @@ var translation_sv={
     annotation:"Annotering",
     tooltip:{
       invisible: "Inte synlig för eleverna.",
-      invisible_quiz:"Opublicera: Inte synlig för eleverna.",      
+      invisible_quiz:"Opublicera: Inte synlig för eleverna.",
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Alla nödvändiga objekt måste fyllas i tid för att studenten få kredit för modulen",
@@ -971,7 +982,7 @@ var translation_sv={
         copy_from_existing: "Kopiera data från befintlig kurs",
     },
     start_date: "Startdatum",
-    end_date: "Slutdatum för kurs",
+    end_date: "Slutdatum",
     disable_registration: "Stäng registrering efter",
     limit_registration_domain: "Registrering Skolor",
     limit_registration_domain_description:"Tillåt endast studenter från specifika skol domäner för att registrera",

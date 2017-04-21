@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
     .then(function(user) {
       $scope.current_user = user
-      console.log($scope.current_user)
+      // console.log($scope.current_user)
     })
 
     var getCoursesFirstTime = function(){  

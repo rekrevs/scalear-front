@@ -1,18 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel) {
+  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler) {
     $controller('surveysCtrl', { $scope: $scope });
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
-    ItemsModel.setSelectedItem($scope.quiz)
-
-    $scope.course.warning_message = null
-    $scope.studentAnswers = {};
-    $scope.passed_requirments = true
-
-    Page.setTitle($scope.quiz.name)
 
     var init = function() {
       ContentNavigator.open()
@@ -48,7 +41,14 @@ angular.module('scalearAngularApp')
         $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
     }
 
-    init();
+    if($scope.quiz){
+      ItemsModel.setSelectedItem($scope.quiz)
+      $scope.course.warning_message = null
+      $scope.studentAnswers = {};
+      $scope.passed_requirments = true
+      Page.setTitle($scope.quiz.name)
+      init();
+    }
 
     $scope.nextItem = function() {
       var next_state = "course.module.courseware." + $scope.next_item.class_name

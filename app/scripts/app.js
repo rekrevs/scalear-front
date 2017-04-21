@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
             url: '/users/signup',
             templateUrl: '/views/users/unified_signup.html',
             controller: 'UsersSignUpCtrl',
-            params : { input1: null, input2: null }
+            params : { input1: null, input2: null}
         })
         .state('thanks_for_registering', {
             url: '/users/thanks',
@@ -331,6 +331,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/statistics/statistics.html',
           controller: 'statisticsCtrl'
         })
+        .state('lti_course_list', {
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key',
+            templateUrl: '/views/teacher/course_list/lti_course_list.html',
+            controller: 'ltiCourseListCtrl'
+        })
         .state('school_statistics', {
           url: '/school_statistics',
           templateUrl: '/views/statistics/school_statistics.html',
@@ -345,6 +350,11 @@ angular.module('scalearAngularApp')
           url: '/help/student/getting_started',
           templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
+        })
+        .state('lti_help', {
+          url: '/help/lti_help',
+          templateUrl: '/views/teacher/help/lti_help.html',
+          controller: 'LtiKeyGenerateCtrl'
         })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',

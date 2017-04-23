@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
           query += "&end=" + end
         if(vq)
           query += "&vq=" + vq
-        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
+        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
       }
 
       scope.kill_popcorn = function() {

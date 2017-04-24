@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
             if(type == 'quiz') {
               $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            } 
+            }
             else
               $scope.showOnlineMarkerAnnotationOnly(item_data)
           })
@@ -313,16 +313,17 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.addOnlineMarker = function(silent) {
+    $scope.addOnlineMarker = function(display_editor) {
       var insert_time = $scope.lecture_player.controls.getTime()
       MarkerModel.addMarker(insert_time)
         .then(function(marker) {
-          $scope.lecture_player.controls.seek_and_pause(insert_time)
-          if((!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz')) && !silent)
-            $scope.showOnlineMarker(marker)
           addItemToVideoQueue(marker, "marker")
-
-          silent? ($scope.lecture_player.controls.play(insert_time)):(DetailsNavigator.open())
+          if(display_editor){
+            $scope.lecture_player.controls.seek_and_pause(insert_time)
+            DetailsNavigator.open()
+            if(!$scope.editing_mode || ($scope.editing_mode && $scope.editing_type != 'quiz'))
+              $scope.showOnlineMarker(marker)
+          }
         })
     }
 
@@ -508,17 +509,18 @@ angular.module('scalearAngularApp')
       }, { "disable_in_input": true, 'propagate': false });
 
       shortcut.add("n", function() {
-        $scope.addOnlineMarker()
+        $scope.addOnlineMarker(true)
       }, { "disable_in_input": true, 'propagate': false });
 
-      shortcut.add("Shift+n", function() { 
-        $scope.addOnlineMarker(true) 
-      }, { "disable_in_input": true, 'propagate': false }); 
+      shortcut.add("Shift+n", function() {
+        $scope.addOnlineMarker(false)
+      }, { "disable_in_input": true, 'propagate': false });
     }
-    
+
     function removeShortcuts() {
       shortcut.remove("i");
       shortcut.remove("n");
+      shortcut.remove("Shift+n");
     }
 
     function setUpEventsListeners() {

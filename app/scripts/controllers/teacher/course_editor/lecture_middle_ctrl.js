@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
               $scope.showOnlineQuiz(item_data)
             }
             else
-              $scope.showOnlineMarkerAnnotationOnly(item_data)
+              $scope.showAnnotation(item_data)
           })
         }
       })
@@ -359,15 +359,14 @@ angular.module('scalearAngularApp')
           })
       }
     }
-    $scope.showOnlineMarkerAnnotationOnly = function(marker) {
-      var promise = $q.when(false)
-      $scope.selected_marker = MarkerModel.createInstance(marker).setAsSelected()
+
+    $scope.showAnnotation = function(marker) {
+      $scope.selected_marker = marker
       $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
         $scope.selected_marker = null
       })
     }
-    $scope.dismissAnnotation = function() {
-    }
+
     $scope.deleteMarkerButton = function(marker) {
       if($scope.selected_marker == marker) {
         closeMarkerMode()

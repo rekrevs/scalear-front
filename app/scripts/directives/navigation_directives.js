@@ -47,11 +47,10 @@ angular.module('scalearAngularApp')
           scope.$emit('start_tour', { state: $state.current.name })
         }
 
-        scope.closeMenu = function(event) {
-          if(!angular.element(event.target).closest('li').hasClass("back"))
-            $timeout(function() {
-              angular.element('.toggle-topbar').click();
-            })
+        scope.closeMenu =function(event) {
+          $timeout(function() {
+            angular.element('.toggle-topbar').click();
+          })
         }
 
         scope.disablePreview = function() {
@@ -245,7 +244,8 @@ angular.module('scalearAngularApp')
             $timeout(function() {
               ContentNavigator.close()
             })
-            $state.go('course.module.student_inclass', { 'module_id': module.id })
+            // $state.go('course.module.student_inclass', { 'module_id': module.id })
+            $state.go("course.module.courseware.overview", {'module_id': module.id})
           } else {
             $state.go("course.module.courseware.overview", {'module_id': module.id})
           }
@@ -265,9 +265,9 @@ angular.module('scalearAngularApp')
               // 	$timeout(function(){
               // 		ContentNavigator.close()
               // 	})
-            if(!MobileDetector.isPhone()) {
+            // if(!MobileDetector.isPhone()) {
               $state.go('course.module.' + mode + '.' + item_type, params)
-            }
+            // }
             if(!(mode == 'courseware' && item_type == 'customlink')) {
               scope.currentitem = { id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id }
             }

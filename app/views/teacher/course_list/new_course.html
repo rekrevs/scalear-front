@@ -50,7 +50,7 @@
           <a class="" ng-click="toggleDomain($event)">
               <div ng-repeat="(key , domain) in course.selected_subdomain">
                 <div ng-show="domain"> {{key}}</div>
-              </div>  
+              </div>
           </a>
           <small class="error with-tiny-padding" ng-show="server_errors['limit_registration_domain'] && limit_registration_domain_checked">{{server_errors['limit_registration_domain'].join()}}</small>
         </div>
@@ -65,7 +65,7 @@
   <!-- </div> -->
   </div>
   <div class="small-12 medium-8 large-9 columns right">
-    <h3 class="show-for-small ng-binding"><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
+    <h3 class="show-for-small ng-binding"><i class="fi-book"></i> <span translate>navigation.new_course</span></h3>
     <div class="title color-green with-margin-bottom small-12 columns no-padding">
       <span class="small-4 columns no-padding">
         <h5 translate class="subheader">courses.short_name</h5>

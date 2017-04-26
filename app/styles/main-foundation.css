@@ -732,7 +732,7 @@ input.answer_input{
 
 .ipad input.answer_input{
   width: 100%;
-  max-width: none;
+  /*max-width: none;*/
 }
 
 input[type="checkbox"]{
@@ -2887,14 +2887,14 @@ dd#first_accordion {
     box-shadow: 1px 2px 7px -2px grey;
 }
 dd#first_accordion > a{
-      background: whitesmoke ; 
+      background: whitesmoke ;
 }
 dd#first_accordion > a:hover{
-      background: #E1E1E1 ; 
+      background: #E1E1E1 ;
 }
 dd#second_accordion > a{
-      background: #E1E1E1; 
+      background: #E1E1E1;
 }
 dd#second_accordion > a:hover{
-      background: #cacaca; 
+      background: #cacaca;
 }

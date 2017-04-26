@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger', '$modal', 'Course', '$q', 'ErrorHandler', '$location', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger, $modal, Course, $q, ErrorHandler, $location) {
+  .controller('studentLectureMiddleCtrl', ['$scope', '$stateParams', 'Lecture', '$interval', '$translate', '$state', '$log', '$timeout', 'Page', '$filter', 'OnlineQuiz', 'ScalearUtils', 'ContentNavigator', 'TimelineNavigator', '$rootScope', 'TimelineFilter', '$window', 'VideoInformation', 'CourseModel', 'ModuleModel', 'ItemsModel', 'VideoEventLogger', '$modal', 'Course', '$q', 'ErrorHandler', '$location','MobileDetector', function($scope, $stateParams, Lecture, $interval, $translate, $state, $log, $timeout, Page, $filter, OnlineQuiz, ScalearUtils, ContentNavigator, TimelineNavigator, $rootScope, TimelineFilter, $window, VideoInformation, CourseModel, ModuleModel, ItemsModel, VideoEventLogger, $modal, Course, $q, ErrorHandler, $location, MobileDetector) {
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.video_layer = {}
@@ -86,6 +86,8 @@ angular.module('scalearAngularApp')
       $scope.distance_peer_status = null
       $scope.quiz_cue_distance_peer_list = {}
 
+
+
     }
 
     var clearDistancePeerVariables = function() {
@@ -94,6 +96,12 @@ angular.module('scalearAngularApp')
       $scope.distance_peer_session_id = null
       $scope.quiz_cue_distance_peer_list = {}
       $scope.lecture_player.events.onReady(true)
+    }
+
+    var adjustButtonsOnScreen = function(){
+      $timeout(function(){
+        $(".button").removeClass("small").addClass("really-tiny")
+      })
     }
 
 
@@ -109,6 +117,9 @@ angular.module('scalearAngularApp')
       } else {
         $('#lecture_container').addClass('ipad')
         $('.container').addClass('ipad')
+        if(MobileDetector.isPhone()){
+          adjustButtonsOnScreen()
+        }
       }
 
       $scope.$watch('timeline', function() {
@@ -704,6 +715,10 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         $scope.container_class = 'mobile_video_full'
         $scope.video_layer = { 'width': '100%', 'height': angular.element($window).height() - 70, 'position': 'relative' }
+        if(MobileDetector.isPhone()){
+          adjustButtonsOnScreen()
+          $scope.video_layer['paddingBottom'] = '43.7%'
+        }
         $(window).bind('orientationchange', function(event) {
           $scope.video_layer['height'] = angular.element($window).height() - 70
           $scope.resize.big()
@@ -728,6 +743,9 @@ angular.module('scalearAngularApp')
         $scope.resize.small()
         $scope.container_class = ""
         $(window).off('orientationchange');
+        if(MobileDetector.isPhone()){
+          adjustButtonsOnScreen()
+        }
       }
     }
 

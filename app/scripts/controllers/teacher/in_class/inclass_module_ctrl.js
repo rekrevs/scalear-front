@@ -455,9 +455,9 @@ angular.module('scalearAngularApp')
           discussion.data.color = "white"
           discussion.data.timer = timers.discussion
           sub_items.splice(++item_index, 0, discussion);
-          var answer = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 'answer' } }
-          sub_items.splice(++item_index, 0, answer);
 
+          var chart_marker = { time: current_item.data.time, type: 'marker', data: { time: current_item.data.time, status: 'answer' } }
+          sub_items.splice(++item_index, 0, chart_marker);
 
           if(current_item.time < current_item.data.end_time) {
             var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }

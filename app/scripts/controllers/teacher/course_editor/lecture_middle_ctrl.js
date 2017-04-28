@@ -278,6 +278,9 @@ angular.module('scalearAngularApp')
       if($scope.selected_quiz == quiz)
         closeQuizMode()
       quiz.deleteQuiz()
+        .then(function(){
+          removeItemFromVideoQueue(quiz)
+        })
     }
 
     function closeQuizMode() {
@@ -372,6 +375,9 @@ angular.module('scalearAngularApp')
         closeMarkerMode()
       }
       marker.deleteMarker()
+        .then(function(){
+          removeItemFromVideoQueue(marker)
+        })
     }
 
     $scope.saveMarkerBtn = function(marker, options) {
@@ -500,7 +506,6 @@ angular.module('scalearAngularApp')
       closeEditor()
       $scope.refreshVideo()
     }
-
 
     function setUpShortcuts() {
       shortcut.add("i", function() {

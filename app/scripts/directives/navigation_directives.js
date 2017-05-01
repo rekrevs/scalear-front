@@ -240,15 +240,15 @@ angular.module('scalearAngularApp')
 
         scope.showModuleCourseware = function(module, event) {
           scope.currentmodule = module
-          if(MobileDetector.isPhone()) {
-            $timeout(function() {
-              ContentNavigator.close()
-            })
-            // $state.go('course.module.student_inclass', { 'module_id': module.id })
-            $state.go("course.module.courseware.overview", {'module_id': module.id})
-          } else {
-            $state.go("course.module.courseware.overview", {'module_id': module.id})
-          }
+          // if(MobileDetector.isPhone()) {
+          //   $timeout(function() {
+          //     ContentNavigator.close()
+          //   })
+          //   // $state.go('course.module.student_inclass', { 'module_id': module.id })
+          //   $state.go("course.module.courseware.overview", {'module_id': module.id})
+          // } else {
+          $state.go("course.module.courseware.overview", {'module_id': module.id})
+          //}
           event.stopPropagation()
         }
 
@@ -261,10 +261,11 @@ angular.module('scalearAngularApp')
             $log.debug(item)
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
-              // if(MobileDetector.isPhone()){
-              // 	$timeout(function(){
-              // 		ContentNavigator.close()
-              // 	})
+            if(MobileDetector.isPhone()){
+            	$timeout(function(){
+            		ContentNavigator.close()
+            	})
+            }
             // if(!MobileDetector.isPhone()) {
               $state.go('course.module.' + mode + '.' + item_type, params)
             // }

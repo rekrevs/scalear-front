@@ -43,7 +43,6 @@ angular.module('scalearAngularApp')
       }
     })
 
-
     $scope.$watch('distance_peer_session_id', function(newval, oldval) {
       if ($scope.distance_peer_session_id && $scope.lecture != null) {
         if (!$scope.distance_peer_status) {
@@ -62,7 +61,6 @@ angular.module('scalearAngularApp')
         }
       }
     });
-
 
     var initVariables = function() {
       $scope.studentAnswers = {}
@@ -85,9 +83,6 @@ angular.module('scalearAngularApp')
       $scope.distance_peer_session_id = null
       $scope.distance_peer_status = null
       $scope.quiz_cue_distance_peer_list = {}
-
-
-
     }
 
     var clearDistancePeerVariables = function() {
@@ -104,7 +99,6 @@ angular.module('scalearAngularApp')
       })
     }
 
-
     var init = function() {
       initVariables()
       if (!$rootScope.is_mobile) {
@@ -115,11 +109,7 @@ angular.module('scalearAngularApp')
           }
         });
       } else {
-        $('#lecture_container').addClass('ipad')
-        $('.container').addClass('ipad')
-        if(MobileDetector.isPhone()){
-          adjustButtonsOnScreen()
-        }
+        setupMobileView()
       }
 
       $scope.$watch('timeline', function() {
@@ -135,6 +125,25 @@ angular.module('scalearAngularApp')
           $scope.timeline['lecture'][lec_id].items.splice(index, 1)
         }
       })
+    }
+
+    var setupMobileView=function(){
+      $('#lecture_container').addClass('ipad')
+      $('.container').addClass('ipad')
+      if(MobileDetector.isPhone()){
+        toggleTimelineMobileView()
+        adjustButtonsOnScreen()
+        $(window).bind('orientationchange', toggleTimelineMobileView);
+      }
+    }
+
+    var toggleTimelineMobileView=function(){
+      if(window.orientation == 90 || window.orientation == -90) {
+        $scope.TimelineNavigator.close()
+      }
+      else{
+        openTimeline()
+      }
     }
 
     var setShortcuts = function() {
@@ -225,7 +234,6 @@ angular.module('scalearAngularApp')
       )
     }
 
-
     var showQuizOnline = function(quiz) {
       var index = $scope.lecture.video_quizzes.map(function(x) {
         return x.time; }).indexOf(quiz.time);
@@ -266,7 +274,6 @@ angular.module('scalearAngularApp')
       $scope.last_quiz = quiz
       $scope.backup_quiz = angular.copy(quiz)
     }
-
 
     var clearStudentAnswer = function() {
       $scope.selected_quiz.online_answers.forEach(function(answer) {
@@ -313,11 +320,13 @@ angular.module('scalearAngularApp')
           }
         })
     }
+
     var startcheckIfDistancePeerStatusIsSyncTimer = function(distance_peer_id, status, new_quiz_time, quiz) {
       $scope.check_if_distance_peer_is_sync = $interval(function() {
         checkIfDistancePeerStatusIsSync(distance_peer_id, status, new_quiz_time, quiz);
       }, 5000)
     }
+
     var cancelcheckIfDistancePeerStatusIsSyncTimer = function() {
       if ($scope.check_if_distance_peer_is_sync)
         $interval.cancel($scope.check_if_distance_peer_is_sync)
@@ -612,8 +621,6 @@ angular.module('scalearAngularApp')
           }
         }
       }
-
-
     }
 
     var clearQuiz = function() {
@@ -681,6 +688,9 @@ angular.module('scalearAngularApp')
       if ($rootScope.is_mobile) {
         $scope.video_ready = true
         $scope.show_progressbar = true
+        if(MobileDetector.isPhone()){
+          goFullscreen()
+        }
       }
     }
 
@@ -717,13 +727,14 @@ angular.module('scalearAngularApp')
         $scope.video_layer = { 'width': '100%', 'height': angular.element($window).height() - 70, 'position': 'relative' }
         if(MobileDetector.isPhone()){
           adjustButtonsOnScreen()
-          $scope.video_layer['paddingBottom'] = '43.7%'
+          $scope.video_layer['paddingBottom'] = '0'
         }
         $(window).bind('orientationchange', function(event) {
           $scope.video_layer['height'] = angular.element($window).height() - 70
           $scope.resize.big()
           $scope.$apply()
         });
+
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }
       } else if (ScalearUtils.calculateScreenRatio() == "16:9") {
@@ -744,9 +755,14 @@ angular.module('scalearAngularApp')
         $scope.container_class = ""
         $(window).off('orientationchange');
         if(MobileDetector.isPhone()){
+          $(window).bind('orientationchange', toggleTimelineMobileView);
           adjustButtonsOnScreen()
         }
       }
+    }
+
+    $scope.playOnPhone=function(){
+      $scope.toggleVideoPlayback()
     }
 
     var openTimeline = function() {
@@ -882,7 +898,6 @@ angular.module('scalearAngularApp')
       )
     }
 
-
     var changeQuizStatus = function(data) {
       if ($scope.distance_peer_session_id && $scope.distance_peer_status == 3) {
         cancelStatusTimer()
@@ -942,7 +957,6 @@ angular.module('scalearAngularApp')
           $scope.$apply()
         }
       }, 1500, 1);
-
     }
 
     var reviewInclass = function() {
@@ -1012,7 +1026,6 @@ angular.module('scalearAngularApp')
       $scope.seek_and_pause($scope.backup_quiz.time)
       $scope.closeReviewNotify()
     }
-
 
     $scope.exportNotes = function() {
       Lecture.exportNotes({ course_id: $state.params.course_id, lecture_id: $state.params.lecture_id }, function(n) {
@@ -1099,7 +1112,6 @@ angular.module('scalearAngularApp')
       changeStatusAndWaitTobeSync(6, null)
     }
 
-
     var checkIfDistancePeerIsAlive = function() {
       Lecture.checkIfDistancePeerIsAlive({
           course_id: $scope.lecture.course_id,
@@ -1124,12 +1136,11 @@ angular.module('scalearAngularApp')
         checkIfDistancePeerIsAlive();
       }, 20000)
     }
+
     var cancelcheckIfDistancePeerIsAliveTimer = function() {
       if ($scope.check_if_distance_peer_is_alive_timer)
         $interval.cancel($scope.check_if_distance_peer_is_alive_timer)
     }
-
-
 
     var showAnnotation = function(annotation) {
       $scope.annotation = annotation
@@ -1223,6 +1234,7 @@ angular.module('scalearAngularApp')
       }
       return deferred.promise
     }
+
     $scope.openStudentList = function(lecture_id, course_id) {
       $modal.open({
         templateUrl: '/views/student/inclass/distance_peer_modal.html',

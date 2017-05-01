@@ -646,8 +646,8 @@ angular.module('scalearAngularApp')
 
         if(scope.is_mobile){
           $timeout(function(){
-            document.getElementsByClassName("playhead")[0].addEventListener("touchstart", scope.playHeadMouseDown, false)
-            document.getElementsByClassName("progressBar")[0].addEventListener("touchend", scope.playHeadMouseUp, false)
+            document.getElementsByClassName("progressBar")[0].addEventListener("touchstart", scope.playHeadMouseDown, true)
+
           })
         }
       })
@@ -718,8 +718,9 @@ angular.module('scalearAngularApp')
         onplayhead = true;
 
         if(scope.is_mobile){
+          scope.showPlayhead()
           window.addEventListener('touchmove', scope.moveplayhead, true);
-          // window.addEventListener('touchend', scope.playHeadMouseUp, true);
+          window.addEventListener("touchend", scope.playHeadMouseUp, true)
         } else{
           window.addEventListener('mousemove', scope.moveplayhead, true);
           window.addEventListener('mouseup', scope.playHeadMouseUp, true);
@@ -732,26 +733,20 @@ angular.module('scalearAngularApp')
           onplayhead = false;
           if(scope.is_mobile){
             console.log("removing");
-            window.removeEventListener('touchmove', scope.moveplayhead, false);
-            // window.removeEventListener('touchend', scope.playHeadMouseUp, false);
+            scope.hidePlayhead()
+            window.removeEventListener('touchmove', scope.moveplayhead, true);
+            window.removeEventListener("touchend", scope.playHeadMouseUp, true)
           }
           else{
-            window.removeEventListener('mousemove', scope.moveplayhead, false);
-            window.removeEventListener('mouseup', scope.playHeadMouseUp, false);
+            window.removeEventListener('mousemove', scope.moveplayhead, true);
+            window.removeEventListener('mouseup', scope.playHeadMouseUp, true);
           }
 
-          scope.progressSeek(event)
-        }
-
-        //for mobile seeking by clicking on bar
-        if(scope.is_mobile){
           scope.progressSeek(event)
         }
 
         scope.$apply()
       }
-
-
 
       scope.moveplayhead = function(event) {
         console.log("moving");

@@ -846,7 +846,7 @@ angular.module('scalearAngularApp')
       for(var ind in data) {
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
-          group_count = data[ind][3] || 0,
+          group_count = data[ind][4] || 0,
           self = Math.floor((self_count / 10) * 100),
           group = Math.floor((group_count / 10) * 100),
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",

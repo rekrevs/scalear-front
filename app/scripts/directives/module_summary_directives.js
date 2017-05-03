@@ -707,6 +707,16 @@ angular.module('scalearAngularApp')
         scope.goTo = function(course_id, group_id, lecture_id, time) {
           $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
         }
+        
+        scope.goToLectureQuiz = function(course_id, group_id, id, type) {
+          console.log("in function")
+          if(type == 'lecture'){
+            $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
+          }
+          else{
+            $state.go("course.module.courseware.quiz", { course_id: course_id, module_id: group_id, quiz_id: id})
+          }
+        }
       }
     }
   }])
@@ -915,14 +925,6 @@ angular.module('scalearAngularApp')
           }
         }
 
-        scope.goToLectureQuiz = function(course_id, group_id, id, type) {
-          if(type == 'lecture'){
-            $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
-          }
-          else{
-            $state.go("course.module.courseware.quiz", { course_id: course_id, module_id: group_id, quiz_id: id})
-          }
-        }
       }
     };
   }])

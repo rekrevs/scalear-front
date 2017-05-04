@@ -641,13 +641,20 @@ angular.module('scalearAngularApp')
       $log.debug("playing ")
       checkIfQuizSolved()
       $scope.dismissAnnotation()
-
       if (!$scope.quiz_mode && $scope.distance_peer_session_id) {
         checkIfCanLeaveStatus()
       }
-
       $scope.video_end = false
       logVideoEvent("play", $scope.lecture_player.controls.getTime())
+
+      if(MobileDetector.isPhone()){
+        if($scope.temp_timeline_item){
+          if($scope.temp_timeline_item.type = "discussion"){
+            $scope.$emit('remove_from_timeline', $scope.temp_timeline_item)
+          }
+          cleanState()
+        }
+      }
     }
 
     $scope.lecture_player.events.onPause = function() {
@@ -757,6 +764,7 @@ angular.module('scalearAngularApp')
         if(MobileDetector.isPhone()){
           $(window).bind('orientationchange', toggleTimelineMobileView);
           adjustButtonsOnScreen()
+          cleanState()
         }
       }
     }
@@ -774,19 +782,25 @@ angular.module('scalearAngularApp')
 
     $scope.addQuestionBlock = function() {
       var time = $scope.lecture_player.controls.getTime()
+      $scope.last_fullscreen_state = $scope.fullscreen;
+      $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
+      $scope.lecture_player.controls.pause()
+      TimelineFilter.set('discussion', true)
+      $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
       if ($scope.last_discussion) {
         var discussion = $scope.timeline['lecture'][$state.params.lecture_id].items[$scope.last_discussion]
         $scope.last_discussion = null
         $scope.$broadcast("post_question", discussion)
       }
       $scope.last_discussion = $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion", null);
-      $scope.last_fullscreen_state = $scope.fullscreen;
-      $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
-      $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
-      TimelineFilter.set('discussion', true)
-      $scope.lecture_player.controls.pause()
-      goSmallScreen()
-      openTimeline()
+
+      if(MobileDetector.isPhone() && $scope.fullscreen){
+        $scope.temp_timeline_item = $scope.timeline['lecture'][$state.params.lecture_id].items[$scope.last_discussion]
+      }
+      else{
+        goSmallScreen()
+        openTimeline()
+      }
     };
 
     $scope.addConfused = function() {
@@ -812,16 +826,45 @@ angular.module('scalearAngularApp')
 
     $scope.addNote = function() {
       var time = $scope.lecture_player.controls.getTime()
-      $log.debug($scope.timeline['lecture'][$state.params.lecture_id])
-      $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note", null);
       $scope.last_fullscreen_state = $scope.fullscreen
-
       $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
-      $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
       TimelineFilter.set('note', true)
       $scope.lecture_player.controls.pause()
-      goSmallScreen()
-      openTimeline()
+      // $scope.last_note = $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note", null);
+      if(MobileDetector.isPhone() && $scope.fullscreen){
+        $scope.temp_timeline_item = {time:time, type:"note", data:null}
+        $timeout(function(){
+          $(".note-textarea").focus()
+          $(".note-textarea").on("blur",function(){
+            if($scope.temp_timeline_item.data){
+              saveNote($scope.temp_timeline_item)
+            }
+            else{
+              returnToState()
+            }
+          })
+        })
+      }
+      else{
+        $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
+        goSmallScreen()
+        openTimeline()
+      }
+
+    }
+
+    var saveNote=function(note){
+      Lecture.saveNote({
+        course_id: $state.params.course_id,
+        lecture_id: $state.params.lecture_id,
+        note_id: null
+      },{
+        data: note.data,
+        time: note.time
+      },function(response){
+        $scope.timeline['lecture'][$state.params.lecture_id].add(note.time, "note", response.note);
+        returnToState()
+      });
     }
 
     $scope.checkAnswer = function() {
@@ -1094,6 +1137,11 @@ angular.module('scalearAngularApp')
           $scope.TimelineNavigator.close()
         }, 400)
       }
+      cleanState()
+    }
+
+    var cleanState =function(){
+      $scope.temp_timeline_item = null
       $scope.last_fullscreen_state = null
       $scope.last_video_state = null
       $scope.last_timeline_state = null

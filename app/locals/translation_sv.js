@@ -889,6 +889,7 @@ var translation_sv={
             unselect:"Avmarkera"
         },
         copy_from_existing: "Kopiera data från befintlig kurs",
+        course_item_shift: "Kurs objekt kommer att skiftad i enlighet med startdatum.",
     },
     start_date: "Startdatum",
     end_date: "Slutdatum för kurs",

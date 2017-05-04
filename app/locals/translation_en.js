@@ -875,6 +875,7 @@ var translation_en={
             unselect:"Unselect"
         },
         copy_from_existing: "Copy Data from Existing Course",
+        course_item_shift: "Course items will be shifted according to the course start date.",
     },
     start_date: "Course Start Date",
     end_date: "Course End Date",

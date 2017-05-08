@@ -455,9 +455,9 @@ angular.module('scalearAngularApp')
           discussion.data.color = "white"
           discussion.data.timer = timers.discussion
           sub_items.splice(++item_index, 0, discussion);
-          var answer = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 'answer' } }
-          sub_items.splice(++item_index, 0, answer);
-
+          console.log("current_item", current_item);
+          var chart_marker = { time: current_item.time, type: 'marker', data: { time: current_item.data.time, status: 'answer' } }
+          sub_items.splice(++item_index, 0, chart_marker);
 
           if(current_item.time < current_item.data.end_time) {
             var end_item = { time: current_item.data.end_time, type: 'marker', data: { time: current_item.data.end_time, status: 5 } }
@@ -846,7 +846,7 @@ angular.module('scalearAngularApp')
       for(var ind in data) {
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
-          group_count = data[ind][3] || 0,
+          group_count = data[ind][4] || 0,
           self = Math.floor((self_count / 10) * 100),
           group = Math.floor((group_count / 10) * 100),
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",

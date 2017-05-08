@@ -15,7 +15,10 @@ angular.module('scalearAngularApp')
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
-    $scope.ContentNavigator.open()
+
+    if(!MobileDetector.isPhone()){
+      $scope.ContentNavigator.open()
+    }
 
     if ($scope.preview_as_student) {
       $scope.TimelineNavigator.open()

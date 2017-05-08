@@ -94,9 +94,12 @@ angular.module('scalearAngularApp')
     }
 
     var adjustButtonsOnScreen = function(){
-      $timeout(function(){
-        $(".button").removeClass("small").addClass("really-tiny")
-      })
+      if($rootScope.is_mobile){
+        var class_name =  (MobileDetector.isTablet())? "tiny" : "really-tiny"
+        $timeout(function(){
+          $(".button").removeClass("small").addClass(class_name)
+        })
+      }
     }
 
     var init = function() {
@@ -132,9 +135,9 @@ angular.module('scalearAngularApp')
       $('.container').addClass('ipad')
       if(MobileDetector.isPhone()){
         toggleTimelineMobileView()
-        adjustButtonsOnScreen()
         $(window).bind('orientationchange', toggleTimelineMobileView);
       }
+      adjustButtonsOnScreen()
     }
 
     var toggleTimelineMobileView=function(){
@@ -732,10 +735,13 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         $scope.container_class = 'mobile_video_full'
         $scope.video_layer = { 'width': '100%', 'height': angular.element($window).height() - 70, 'position': 'relative' }
+
+        adjustButtonsOnScreen()
+
         if(MobileDetector.isPhone()){
-          adjustButtonsOnScreen()
           $scope.video_layer['paddingBottom'] = '0'
         }
+
         $(window).bind('orientationchange', function(event) {
           $scope.video_layer['height'] = angular.element($window).height() - 70
           $scope.resize.big()
@@ -763,9 +769,9 @@ angular.module('scalearAngularApp')
         $(window).off('orientationchange');
         if(MobileDetector.isPhone()){
           $(window).bind('orientationchange', toggleTimelineMobileView);
-          adjustButtonsOnScreen()
           cleanState()
         }
+        adjustButtonsOnScreen()
       }
     }
 

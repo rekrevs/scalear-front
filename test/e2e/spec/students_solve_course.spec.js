@@ -96,7 +96,7 @@ describe("Solve Course",function(){
 		describe("First Module",function(){
 			it("should open first module",function(){
 				navigator.module(1).open()
-				// navigator.module(1).item(1).open()
+				navigator.module(1).item(1).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
@@ -505,6 +505,7 @@ describe("Solve Course",function(){
 			it("should navigate to second module",function(){
 				navigator.open()
 				navigator.module(2).open()
+				navigator.module(2).item(1).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){

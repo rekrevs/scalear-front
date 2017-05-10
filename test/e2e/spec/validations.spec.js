@@ -60,6 +60,7 @@ describe("Lecture validation", function(){
 	it('should create course', function(){
 		new_course.open()
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.disable_email_reminders_modal_button_click()
 	})
 	it("should open course",function(){
 		course_list.open()
@@ -224,6 +225,7 @@ describe("Video validation", function(){
 	it('should create course', function(){
 		new_course.open()
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.disable_email_reminders_modal_button_click()
 	})
 	it("should open course",function(){
 		course_list.open()
@@ -476,19 +478,19 @@ describe("Quiz validation", function(){
 	it('should be publish quiz', function(){
 		browser.refresh()
 		element(by.name("save_publish")).click()
-		expect(element(by.css('[tooltip="Not currently visible to students."]')).isPresent() ).toEqual(false)
+		expect(element(by.css('[tooltip="Unpublished: not visible to students."]')).isPresent() ).toEqual(false)
 		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 
 	})
 	it('should be unpublish quiz', function(){
 		element(by.name("save_publish")).click()
-		expect(element(by.css('[tooltip="Not currently visible to students."]')).isDisplayed() ).toEqual(true)
+		expect(element(by.css('[tooltip="Unpublished: not visible to students."]')).isDisplayed() ).toEqual(true)
 		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(true)
 	})
 	it('should be publish quiz', function(){
 		browser.refresh()
 		element(by.name("save_publish")).click()
-		expect(element(by.css('[tooltip="Not currently visible to students."]')).isPresent() ).toEqual(false)
+		expect(element(by.css('[tooltip="Unpublished: not visible to students."]')).isPresent() ).toEqual(false)
 		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 	})
 

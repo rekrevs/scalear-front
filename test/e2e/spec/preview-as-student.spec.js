@@ -18,7 +18,7 @@ var	new_course = new NewCourse();
 
 var sub_header = new SubHeader()
 
-describe("go to preview as student mode", function(){
+describe("go to preview as student mode", function(){QH
     it('should sign in as teacher', function(){
         login_page.sign_in(params.teacher1.email, params.password)
     })
@@ -33,6 +33,7 @@ describe("go to preview as student mode", function(){
     it('should create_course', function(){
       new_course.open()
       new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+      new_course.disable_email_reminders_modal_button_click()
     })
 
 

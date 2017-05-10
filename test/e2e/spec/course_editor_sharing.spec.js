@@ -59,6 +59,7 @@ describe("Sharing a module",function(){
         it('should create course', function(){
             new_course.open()
             new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+            new_course.disable_email_reminders_modal_button_click()
         })
         it('should reject shared data', function(){
             header.show_notification()
@@ -187,7 +188,7 @@ describe("Sharing a non existing module",function(){
             share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
-        it('should open forth module', function(){
+        it('should open fourth module', function(){
             navigator.module(4).open()
         })
         it("should share module with teacher2",function(){
@@ -200,7 +201,7 @@ describe("Sharing a non existing module",function(){
             share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
-        it("should delete forth module",function(){
+        it("should delete fourth module",function(){
             var module = navigator.module(4)
             module.item(2).delete()
             module.item(1).delete()
@@ -253,6 +254,7 @@ describe("Sharing a non existing module",function(){
         })
         it("should check that shared item doesn't exist",function(){
             header.show_courses_menu()
+            sleep(10000)
             expect(header.shared_button.isDisplayed()).toEqual(false)
         })
         it("should logout",function(){
@@ -304,7 +306,7 @@ describe("Sharing single items",function(){
             share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
-        it('should open forth module', function(){
+        it('should open fourth module', function(){
             navigator.module(4).open()
             navigator.module(4).item(2).open()
         })

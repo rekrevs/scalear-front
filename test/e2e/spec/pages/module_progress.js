@@ -160,7 +160,7 @@ var ModuleProgress = function () {};
 ModuleProgress.prototype = Object.create({}, {
 	module_chart:{get:function(){return element(by.className('progress_chart'))}},
 	module_chart_columns:{get:function(){return this.module_chart.element(by.tagName('svg')).all(by.tagName('g'))}},
-	module_items:{get:function(){return element.all(by.repeater('module_item in ::module.items'))}},
+	module_items:{get:function(){return element.all(by.repeater('module_item in module.items'))}},
 	module_item:{value:function(value){return new ModuleItem(this.module_items.get(value-1))}},
 	module_item_inclass:{value:function(value){return this.module_item(value).all(by.className("show_inclass")) }},
 	time_estimate:{get:function(){return element(by.className('time_estimate'))}},
@@ -176,6 +176,11 @@ ModuleProgress.prototype = Object.create({}, {
 		this.module_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
 		return this.module_chart_columns.last().all(by.tagName('text')).last().getText()
 	}},
+	getStudentCompletionChartValueAt:{value:function(column){
+		element(By.id("teacher_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(4).all(by.tagName('rect')).get(column-1).click()
+		return element(By.id("teacher_completion")).all(by.tagName('text')).last().getText()
+	}},
+
 	// getGraphChartValueAt:{value:function(column){
 	// 	element(by.tagName('svg')).all(by.tagName('g')).first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
 	// 	return element(by.tagName('svg')).all(by.tagName('g')).last().all(by.tagName('text')).last().getText()

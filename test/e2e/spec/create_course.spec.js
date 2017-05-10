@@ -25,7 +25,7 @@ describe("Email domain .uu.nl is prevented from sign up",function(){
 			expect(browser.driver.getCurrentUrl()).toContain('users/signup')
 			signup_page.go_to_sign_up_with_domain_page()
 		})
-		it("should check url does not contant thanks pages",function(){
+		it("should check you still in login page",function(){
 			sleep(2000)
 			expect(browser.driver.getCurrentUrl()).toContain('login')
 		})
@@ -42,6 +42,11 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			new_course.open()
 			new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		})
+		
+		it('should disable email reminders', function(){
+			new_course.disable_email_reminders_modal_button_click()
+		})
+
 		it('should open course information', function(){
 			course_info.open()
 			course_info.disable_registration_button_click()
@@ -63,7 +68,6 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			login_page.sign_in(params.student1.email, params.password)
 			header.join_course(enrollment_key)
 			header.reject_join_course.getText().then(function (text) { expect(text).toEqual("Registration is disabled for this course, contact your teacher to enable registration.") });
-			sleep(5000)
 			header.close_join_course()
 			header.logout()
 		})
@@ -89,10 +93,12 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			var enrollment_key = course_info.enrollmentkey
 			header.logout()
 		    login_page.sign_in(params.student1.email, params.password) 
-		    header.join_course(enrollment_key) 
-		    header.logout() 		 
+		    header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
+		    header.logout()
 			login_page.sign_in(params.student1_domain_test.email, params.password)
 			header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
 		})
@@ -125,6 +131,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.logout()
 			login_page.sign_in(params.student2.email, params.password)
 			header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
 			header.logout()
 			login_page.sign_in(params.student1_domain_test.email, params.password)
 			header.join_course(enrollment_key)
@@ -153,9 +160,11 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.logout()
 			login_page.sign_in(params.student3.email, params.password)
 			header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
 			header.logout()
 			login_page.sign_in(params.student1_domain_test.email, params.password)
 			header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
 		})

@@ -4,6 +4,7 @@ var Video = require('./pages/video');
 var Header = require('./pages/header');
 var Login = require('./pages/login');
 var StudentLecture = require('./pages/student/lecture');
+var sleep = require('./lib/utils').sleep;
 
 var params = browser.params;
 
@@ -41,6 +42,7 @@ describe("Discussions",function(){
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
+			browser.refresh()
 			course_list.open()
 			course_list.open_student_course(1)
 		})
@@ -52,6 +54,7 @@ describe("Discussions",function(){
 			// browser.refresh()
 		})
 		it('should add a public question', function(){
+			sleep(3000)	
 			student_lec.add_discussion()
             expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
             student_lec.lecture(1).type_discussion("Public Question")

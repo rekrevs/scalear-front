@@ -88,7 +88,8 @@ student2_browser = utils.new_session()
       it('should open first lecture in first module', function(){
         navigator.open()
         navigator.modules.count().then(function(count) { 
-          navigator.module(count).open() 
+          navigator.module(count).open()
+          navigator.module(count).item(1).open()
         }) 
       })
     })
@@ -103,6 +104,7 @@ student2_browser = utils.new_session()
         navigator.open()
         navigator.modules.count().then(function(count) { 
           navigator.module(count).open() 
+          navigator.module(count).item(1).open()
         }) 
       })
     })

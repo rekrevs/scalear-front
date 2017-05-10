@@ -32,6 +32,12 @@ NewCourse.prototype = Object.create({}, {
 	prerequisites: { get: function () { return this.prerequisites_field.getAttribute('value')}},
 	type_prerequisites: { value: function (keys) { return this.prerequisites_field.clear().sendKeys(keys)}},
 
+	disable_email_reminders_modal_button:{get:function(){return element(by.css('[ng-click="updateEmailDiscussion(false)"]'))}},
+	disable_email_reminders_modal_button_click:{value:function(){this.disable_email_reminders_modal_button.click();}},
+
+	disable_student_email_reminders_button:{get:function(){return element(by.css('[ng-click="updateDueDateEmail(false)"]'))}},
+	disable_student_email_reminders_button_click:{value:function(){this.disable_student_email_reminders_button.click();}},
+
 	create_button:{get:function(){return element(by.buttonText("Create Course"))}},
 
 	open:{value:function(){

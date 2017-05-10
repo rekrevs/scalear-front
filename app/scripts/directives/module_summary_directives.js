@@ -362,10 +362,8 @@ angular.module('scalearAngularApp')
                 gridLineWidth: 0,
                 labels: { enabled: false },
                 lineColor: 'transparent',
-                labels: { enabled: false },
                 lineWidth: 0,
                 minorGridLineWidth: 0,
-                lineColor: 'transparent',
                 minorTickLength: 0,
                 tickLength: 0
 

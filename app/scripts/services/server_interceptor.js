@@ -146,10 +146,10 @@ angular.module('scalearAngularApp')
             $rootScope.stop = undefined;
           }
 
-          ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["error"] === 'undefined') ? rejection.data : rejection.data["error"]), 'errorMessage', 4000, "error");
+          ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["errors"] === 'undefined') ? rejection.data : rejection.data["errors"]), 'errorMessage', 4000, "error");
           $state.go("login")
-
         }
+
         var re = new RegExp("^" + scalear_api.host)
         if(rejection.status == 0 && rejection.config.url.search(re) != -1 && $rootScope.unload != true) { //host not reachable
           if($rootScope.server_error != true) {

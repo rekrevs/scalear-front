@@ -1798,6 +1798,11 @@ textarea.editable-input{
   padding-top:0.5625rem !important;
   padding-bottom: 0.4rem !important;
 }
+
+.ipad .check_answer_button{
+  padding-top: 0.4625rem !important;
+  padding-bottom: 0.3rem !important;
+}
 /*borders*/
 .soft-border{
 	border: 1px solid #ddd;

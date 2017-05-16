@@ -745,12 +745,19 @@ angular.module('scalearAngularApp')
           $scope.video_layer['paddingBottom'] = '0'
         }
 
+        function orientationchange(){
+          $scope.video_layer['height'] = angular.element($window).height() - 70
+          $scope.resize.big()
+          $scope.$apply()
+        }
+
         $(window).bind('orientationchange', function(event) {
-          $timeout(function(){
-            $scope.video_layer['height'] = angular.element($window).height() - 70
-            $scope.resize.big()
-            $scope.$apply()
-          },200)
+          if(MobileDetector.isAndroid()){
+            $timeout(orientationchange, 200)
+          }
+          else{
+            orientationchange()
+          }
         })
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }

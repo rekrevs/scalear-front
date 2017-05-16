@@ -698,7 +698,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.waiting = function() {
-      if ($rootScope.is_mobile) {
+      if ($rootScope.is_mobile && !$scope.show_progressbar) {
         $scope.video_ready = true
         $scope.show_progressbar = true
         if(MobileDetector.isPhone()){
@@ -741,16 +741,17 @@ angular.module('scalearAngularApp')
 
         adjustButtonsOnScreen()
 
-        if(MobileDetector.isPhone()){
+         if(MobileDetector.isPhone()){
           $scope.video_layer['paddingBottom'] = '0'
         }
 
         $(window).bind('orientationchange', function(event) {
-          $scope.video_layer['height'] = angular.element($window).height() - 70
-          $scope.resize.big()
-          $scope.$apply()
-        });
-
+          $timeout(function(){
+            $scope.video_layer['height'] = angular.element($window).height() - 70
+            $scope.resize.big()
+            $scope.$apply()
+          },200)
+        })
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }
       } else if (ScalearUtils.calculateScreenRatio() == "16:9") {

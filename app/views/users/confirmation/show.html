@@ -6,7 +6,7 @@
         <overlay ng-show="sending">
             <loading size="big" show="true" style="position:relative; top:40%;" />
         </overlay>
-        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
+        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;margin-top: 250px;">
             <table>
                 <tr>
                     <td translate>languages</td>
@@ -28,7 +28,7 @@
                 <span>{{user.errors.confirmation_token.join()}}</span>
             </span>
 		    <br>
-		    <a ui-sref="new_confirmation" class="btn btn-warning" style="background-color: initial;" translate>account.resend_confirmation</a>
+		    <!-- <a ui-sref="new_confirmation" class="btn btn-warning" style="background-color: initial;" translate>account.resend_confirmation</a> -->
 		</div>
     </center>
 </div>

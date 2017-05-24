@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     $scope.course = CourseModel.getSelectedCourse()
     $scope.formData.disable_registration_checked = !!$scope.course.disable_registration
     $scope.roles = [{ value: 3, text: 'courses.information.professor' }, { value: 4, text: 'courses.information.ta' }];
-    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.information') + ': ' + $scope.course.name);
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.enrollment_url = $location.absUrl().split('courses')[0] + "courses/enroll?id=" + $scope.course.unique_identifier
     $scope.course_info_url = $state.href('course.course_information', { course_id: $scope.course.id }, { absolute: true })
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
       $scope.course.exportCourse()
         .then(function(response) {
           if(response.notice) {
-            ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+            ErrorHandler.showMessage($translate.instant("error_message.export_course"), 'errorMessage', 4000, 'success');
           }
         })
     }
@@ -75,6 +75,21 @@ angular.module('scalearAngularApp')
       TeacherModel.getTeachers().then(function(value) {
         $scope.teachers = value.data;
         $scope.new_teacher = {};
+        if($state.params.new_course) {
+          $modal.open({
+            templateUrl: '/views/teacher/course_list/email_student_answers_modal.html',
+            scope: $scope,
+            controller:['$modalInstance', function($modalInstance ) {
+              var index = $scope.teachers.findIndex(function(teacher) { return $scope.current_user.id==teacher.id })
+              $scope.updateEmailDiscussion = function (email_discussion) {
+                $scope.teachers[index].email_discussion = email_discussion 
+                $scope.updateTeacher($scope.teachers[index])
+                $modalInstance.dismiss('cancel');
+              }
+            }]
+          })
+        } 
+
       })
     }
     
@@ -141,21 +156,8 @@ angular.module('scalearAngularApp')
 
     $scope.toggleDomain = function(event) {
       event.stopPropagation()      
-      $modal.open({ 
-        template: '<form name="myForm" >\
-                    <div id="selected_subdomain_modal" class="ngdialog-message">\
-                    <h3><b><span translate>courses.limit_registration_domain_description</span></b></h3>\
-                    <ul>\
-                      <li><input type="radio" ng-model="subdomain.boolean" id="all" value="all" ng-change="setBooleanDomain();" translate>all</li>\
-                      <li><input type="radio" ng-model="subdomain.boolean" id="custom" value="custom" ng-change="setBooleanDomain();" translate>custom</li>\
-                      </form>\
-                      <div ng-show=subdomain.boolean=="custom">\
-                        <ul style="margin-bottom: 5px;" ng-repeat="domain in subdomains">\
-                          <input class="valign-middle" ng-change="updateDomainList()" type="checkbox" name="mcq" ng-model="course_domain.selected_subdomain[domain]" style="margin: auto;margin-right: 10px;"/>{{domain}}\
-                        </ul>\
-                      </div>\
-                    </ul>\
-                    </div>',
+      $modal.open({
+        templateUrl: '/views/teacher/course_list/school_registration_modal.html', 
         plain: true,
         scope: $scope,
         controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
@@ -186,7 +188,7 @@ angular.module('scalearAngularApp')
             $scope.course_domain.selected_subdomain = {'All':true}
           }
           TeacherModel.setSelectedSubdomains($scope.course_domain.selected_subdomain).then(function(value) {
-            // ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+            // ErrorHandler.showMessage($translate.instant(("error_message.export_course"), 'errorMessage', 4000, 'success');
           })
         }); 
     }

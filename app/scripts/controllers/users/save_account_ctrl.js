@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
         // $scope.sending = false;
         // $scope.user.current_password = null;
         // if(response.password_confirmation) {
-        //   ErrorHandler.showMessage($translate("error_message.change_password_confirmation"), 'errorMessage', 4000, "success");
+        //   ErrorHandler.showMessage($translate.instant("error_message.change_password_confirmation"), 'errorMessage', 4000, "success");
         // }
       }, function(response) {
         $scope.sending = false;

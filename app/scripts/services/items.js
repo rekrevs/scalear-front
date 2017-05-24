@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('ItemsModel', ['LectureModel', 'QuizModel', 'LinkModel', '$rootScope', function(LectureModel, QuizModel, LinkModel, $rootScope) {
+  .factory('ItemsModel', ['LectureModel', 'QuizModel', 'LinkModel', '$rootScope','$state', 'ErrorHandler', function(LectureModel, QuizModel, LinkModel, $rootScope, $state, ErrorHandler) {
 
     var items_obj = { lecture: {}, quiz: {}, customlink: {} };
 
@@ -46,19 +46,25 @@ angular.module('scalearAngularApp')
     }
 
     function getLecture(id) {
-      return items_obj['lecture'][id]
+      return getById(id, 'lecture')
     }
 
     function getQuiz(id) {
-      return items_obj['quiz'][id]
+      return getById(id, 'quiz')
     }
 
     function getLink(id) {
-      return items_obj['customlink'][id]
+      return getById(id, 'customlink')
     }
 
     function getById(id, type) {
-      return items_obj[type][id]
+      if(!items_obj[type][id]){
+        $state.go("course_list")
+        ErrorHandler.showMessage("Error: "+type+' not found.', 'errorMessage', 4000, "error");
+      }
+      else{
+        return items_obj[type][id]
+      }
     }
 
     function getSelectedItem() {

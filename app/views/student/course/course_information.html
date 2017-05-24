@@ -36,7 +36,8 @@
     </div>
     <h4 class="subheader" page-name="{{current}}" step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false" translate>navigation.announcements</h4>
     <div>
-      <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
+      <!-- <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item> -->
+      <event-item ng-repeat="announcement in announcements " event="announcement" role="2"></event-item>
     </div>
   </div>
   <div class="small-3 columns no-padding-right">

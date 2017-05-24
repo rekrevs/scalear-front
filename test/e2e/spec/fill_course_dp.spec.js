@@ -214,10 +214,9 @@ describe("Filling Course", function() {
       course_editor.inclass_prev()
       expect(video.current_time).toEqual(start_time_string)
     })
-    it("should save quiz", function() { 
-      invideo_quiz.save_quiz() 
-    }) 
-    
+    it("should save quiz", function() {
+      invideo_quiz.save_quiz()
+    })
     it("should logout", function() {
       header.logout()
     })

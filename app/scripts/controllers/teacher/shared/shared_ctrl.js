@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('sharedCtrl',['$scope','Page','SharedItem','Module','Lecture','Quiz','$rootScope','$translate','$log', function ($scope,Page,SharedItem,Module,Lecture,Quiz, $rootScope, $translate, $log) {
   	Page.setTitle('sharing.view')
-    $rootScope.subheader_message = $translate("sharing.manage")
+    $rootScope.subheader_message = $translate.instant("sharing.manage")
   	var init=function(){
   		SharedItem.showShared(
   			{},

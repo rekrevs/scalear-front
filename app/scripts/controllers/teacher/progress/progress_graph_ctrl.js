@@ -25,9 +25,9 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": $translate('global.students'),"type": "string"},
-                {"label": $translate('progress.quiz'),"type": "number"},
-                {"label": $translate('progress.lecture'),"type": "number"}
+                {"label": $translate.instant('global.students'),"type": "string"},
+                {"label": $translate.instant('progress.quiz'),"type": "number"},
+                {"label": $translate.instant('progress.lecture'),"type": "number"}
             ]
         formated_data.rows= []
         for(var ind in data)

@@ -29,9 +29,9 @@
     <link rel="stylesheet" href="styles/landing.css"/>
     <link rel="stylesheet" href="styles/jquery-ui.css" />
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
-    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
-    <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
+    <!-- <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css"> -->
     <link rel="stylesheet" href="bower_components/angular-wizard/dist/angular-wizard.min.css">
 
 
@@ -101,14 +101,15 @@
     <!-- build:js({.tmp,app}) scripts/externals.js -->
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
 
     <script src="bower_components/angular/angular.min.js"></script>
+
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.min.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
     <script src="bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
@@ -127,19 +128,25 @@
     <script src="bower_components/angular-moment/angular-moment.min.js"></script>
 
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
-    <script src="bower_components/fullcalendar/fullcalendar.min.js"></script>
+    <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
     <script src="bower_components/textAngular/textAngular.min.js"></script>
     <script src="bower_components/screenfull/dist/screenfull.js"></script>
 
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
     <script src="bower_components/highcharts/highcharts.js"></script>
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
-    <script src="bower_components/angular-bindonce/bindonce.js"></script>
-    <script src="bower_components/angular-macgyver/lib/macgyver.js"></script>
 
     <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
+    <!-- // <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script> -->
+    <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
+
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
+    <!-- // <script src="bower_components/angular-ui-bootstrap/src/dateparser/dateparser.js"></script> -->
+    <!-- //<script src="bower_components/angular-ui-bootstrap/src/isClass/isClass.js"></script> -->
+
+      <script src="bower_components/angular-animate/angular-animate.js"></script>
+
 
     <script src="bower_components/sass-bootstrap/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/sass-bootstrap/js/bootstrap-tooltip.js"></script>
@@ -148,7 +155,10 @@
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
     <script src="bower_components/angular-img-fallback/angular.dcb-img-fallback.min.js"></script>
+
     <script src="scripts/externals/mm-foundation.js"></script>
+    <!-- // <script src="bower_components/angular-foundation/mm-foundation.js"></script> -->
+
     <script src="bower_components/clipboard/dist/clipboard.min.js"></script>
     <script src="bower_components/ngclipboard/dist/ngclipboard.min.js"></script>
     <script src="bower_components/angular-truncate/ng-text-truncate.js"></script>
@@ -178,6 +188,7 @@
 
     <script src="scripts/directives/generic_directives.js"></script>
     <script src="scripts/directives/richTextarea_directive.js"></script>
+    <script src="scripts/directives/module_summary_directives.js"></script>
     <script src="scripts/directives/error_directives.js"></script>
     <script src="scripts/directives/youtube_directives.js"></script>
     <script src="scripts/directives/popover_directives.js"></script>
@@ -218,6 +229,7 @@
     <script src="scripts/services/batch_email_service.js"></script>
     <script src="scripts/services/home.js"></script>
     <script src="scripts/services/saml.js"></script>
+    <script src="scripts/services/lti.js"></script>
     <script src="scripts/services/forum.js"></script>
     <script src="scripts/services/timeline.js"></script>
     <script src="scripts/services/video_information.js"></script>
@@ -248,6 +260,7 @@
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_list/lti_course_list_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script>
@@ -278,12 +291,14 @@
     <script src="scripts/controllers/teacher/in_class/inclass_display_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/help/teacher_getting_started_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/help/lti_help_ctrl.js"></script>
 
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/student/course_list/course_enroll_ctrl.js"></script>
     <script src="scripts/controllers/student/course/course_information_ctrl.js"></script>
     <script src="scripts/controllers/student/course/content_selector_ctrl.js"></script>
 
+    <script src="scripts/controllers/student/course/module_overview_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/courseware_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
     <script src="scripts/controllers/student/inclass/student_inclass_ctrl.js"></script>

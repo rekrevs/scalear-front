@@ -1,18 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel) {
+  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler) {
     $controller('surveysCtrl', { $scope: $scope });
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
-    ItemsModel.setSelectedItem($scope.quiz)
-
-    $scope.course.warning_message = null
-    $scope.studentAnswers = {};
-    $scope.passed_requirments = true
-
-    Page.setTitle($scope.quiz.name)
 
     var init = function() {
       ContentNavigator.open()
@@ -48,7 +41,14 @@ angular.module('scalearAngularApp')
         $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
     }
 
-    init();
+    if($scope.quiz){
+      ItemsModel.setSelectedItem($scope.quiz)
+      $scope.course.warning_message = null
+      $scope.studentAnswers = {};
+      $scope.passed_requirments = true
+      Page.setTitle($scope.quiz.name)
+      init();
+    }
 
     $scope.nextItem = function() {
       var next_state = "course.module.courseware." + $scope.next_item.class_name
@@ -87,11 +87,11 @@ angular.module('scalearAngularApp')
     var setupWarningMsg = function(alert_messages) {
       for(var key in alert_messages) {
         if(key == "submit")
-          return $translate('quizzes.already_submitted') + ' ' + $scope.quiz.quiz_type + ' ' + $translate("quizzes.no_more_attempts")
+          return $translate.instant('quizzes.already_submitted') + ' ' + $scope.quiz.quiz_type + ' ' + $translate.instant("quizzes.no_more_attempts")
         else if(key == "due")
-          return $translate("events.due_date_passed") + " - " + $scope.alert_messages[key][0] + " (" + $scope.alert_messages[key][1] + " " + $scope.alert_messages[key][2] + ") " + $translate("time.ago")
+          return $translate.instant("events.due_date_passed") + " - " + $scope.alert_messages[key][0] + " (" + $scope.alert_messages[key][1] + " " + $scope.alert_messages[key][2] + ") " + $translate.instant("time.ago")
         else if(key == "today")
-          return $translate("events.due") + " " + $translate("time.today") + " " + $translate("at") + " " + $scope.alert_messages[key]
+          return $translate.instant("events.due") + " " + $translate.instant("time.today") + " " + $translate.instant("at") + " " + $scope.alert_messages[key]
       }
     }
 

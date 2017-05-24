@@ -22,13 +22,13 @@ describe("go to preview as student mode", function(){
     it('should sign in as teacher', function(){
         login_page.sign_in(params.teacher1.email, params.password)
     })
-    it("should open course", function() {
-      course_list.open()
-      course_list.open_teacher_course(2)
-    })
-    it("should go to edit mode", function() {
-      sub_header.open_edit_mode()
-    })
+    // it("should open course", function() {
+    //   course_list.open()
+    //   course_list.open_teacher_course(2)
+    // })
+    // it("should go to edit mode", function() {
+    //   sub_header.open_edit_mode()
+    // })
 
     it('should create_course', function(){
       new_course.open()

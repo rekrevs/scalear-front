@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
           query += "&end=" + end
         if(vq)
           query += "&vq=" + vq
-        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
+        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
       }
 
       scope.kill_popcorn = function() {
@@ -168,12 +168,17 @@ angular.module('scalearAngularApp')
 
       player_controls.seek = function(time) {
         $log.debug("entering sekking", time)
-        if (time < 0)
+        time=  parseFloat(time)
+        if (time < 0){
           time = 0
-        if (time > player_controls.getDuration())
+        }
+        if (time > player_controls.getDuration()){
           time = player_controls.getDuration()
+        }
+        if (player_controls.getDuration() - time < 2 ){
+          time = player_controls.getDuration() - 2
+        }
         time += scope.start || 0
-
         if (player_controls.readyState() == 0 && !(scope.start || scope.start == 0)) {
           player.on("loadeddata",
             function() {

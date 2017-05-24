@@ -1319,7 +1319,7 @@ td.right-border{
 .details_accordian .content {
   padding:0!important;
   background: white !important;
-  max-height: 66vh;
+  /*max-height: 66vh;*/
 
 }
 .details_accordian .overflow-auto .content{
@@ -2744,4 +2744,157 @@ th[st-sort]{
 .adminRow .row {
   font-size: 1.2rem;
 }
+
+/**********Dashboard*****/
+
+.dashboard table {
+  border: none !important;
+}
+
+.dashboard td, th {
+    border: 0px ;
+}
+
+.dashboard div.highcharts-label.highcharts-tooltip{
+  pointer-events: visible;
+}
+
+.dashboard div.highcharts-label.highcharts-tooltip span{
+  white-space: normal !important;
+}
+.dashboard h5{
+  margin: 0
+}
+
+.dashboard p.medium-editor-p{
+  display: inline-block;
+}
+
+.dashboard .dashboard_question{
+  cursor: pointer;
+  padding: 5px;
+}
+.dashboard .dashboard_question:hover{
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+.dashboard .item{
+  float: left;
+  border: 1px solid #EFE7E7;
+  height: 100%;
+  padding: 10px 0;
+}
+
+.dashboard .quiz-bar-container{
+  height: 60px;
+  margin: auto;
+}
+
+.dashboard .quiz-bar-container .quiz-outer-bar,
+.dashboard .quiz-bar-container .quiz-bar,
+.dashboard .quiz-bar-container .quiz-inner-bar{
+  height: 100%;
+}
+
+.dashboard .quiz-bar{
+  float: left;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.dashboard .quiz-bar-container .quiz-outer-bar {
+  position: relative;
+  padding: 1px
+}
+
+.dashboard svg, .dashboard .highcharts-container {
+   overflow: visible !important;
+   z-index:1 !important;
+}
+
+.dashboard .separator{
+  border-bottom: 2px solid #ddd;
+  margin-bottom: 25px;
+  padding-bottom: 50px;
+}
+
+.dashboard .popover{
+  width:350px;
+  max-width: 350px;
+  padding: 10px;
+  padding-bottom: 0;
+  padding-right: 0;
+}
+
+.dashboard .completion_container{
+  height: 50px
+}
+
+.dashboard .completion_tooltip{
+  top:50px;
+  background-color:white;
+  min-width:150px;
+  z-index: 1! important;
+  border: 1px solid grey;
+  padding: 5px;
+  text-align: center;
+}
 /**************************/
+.dashboard .fc-week table{
+  margin-bottom: 0px;
+}
+
+.dashboard .fc-widget-header table{
+  margin-bottom: 0px;
+ }
+
+.dashboard .fc-row .fc-content-skeleton td,
+.dashboard .fc-row .fc-helper-skeleton td {
+  /* see-through to the background below */
+  background: none; /* in case <td>s are globally styled */
+  /*border-color: transparent;*/
+  border-color: #ddd;
+  /* don't put a border between events and/or the day number */
+  border-bottom: 0;
+}
+
+.dashboard .fc-state-hover {
+  color: #333333;
+  text-decoration: none;
+  background-position: 0 -32px;
+  -webkit-transition: background-position 0.1s linear;
+     -moz-transition: background-position 0.1s linear;
+       -o-transition: background-position 0.1s linear;
+          transition: background-position 0.1s linear;
+}
+
+.dashboard .fc-today-button{
+  opacity: 1;
+  background-color: #008CBA;
+}
+
+#studentCalendar .fc-toolbar .fc-left h2{
+  font-size: 27px;
+}
+
+#student_popover .popover .arrow{
+  display: none;
+}
+
+dd#first_accordion {
+    margin-top: 25px;
+    box-shadow: 1px 2px 7px -2px grey;
+}
+dd#first_accordion > a{
+      background: whitesmoke ; 
+}
+dd#first_accordion > a:hover{
+      background: #E1E1E1 ; 
+}
+dd#second_accordion > a{
+      background: #E1E1E1; 
+}
+dd#second_accordion > a:hover{
+      background: #cacaca; 
+}

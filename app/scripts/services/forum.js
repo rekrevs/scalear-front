@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .factory('Forum', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope', '$translate',function($resource, $http, $stateParams, scalear_api, headers, $rootScope ,$translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/:lang/discussions/:action', {lang:$translate.uses()},
+    return $resource(scalear_api.host+'/:lang/discussions/:action', {lang:$translate.use()},
       {
         'createPost':{method: 'POST', params: {action: 'create_post'}, headers: headers},
         'getPosts':{method: 'GET', isArray: true, params: {action: 'get_posts'}, headers: headers},

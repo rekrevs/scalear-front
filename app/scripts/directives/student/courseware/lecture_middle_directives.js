@@ -11,8 +11,8 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/notification.html',
     link: function(scope, element, attrs) {
-      scope.correct_notify=$translate("lectures.correct")
-      scope.incorrect_notify=$translate("lectures.incorrect")
+      scope.correct_notify=$translate.instant("lectures.correct")
+      scope.incorrect_notify=$translate.instant("lectures.incorrect")
     }
   };
 }]).directive("reviewInclass", ['$translate', '$log', function($translate, $log) {
@@ -491,7 +491,7 @@ angular.module('scalearAngularApp')
       scope.item = scope.data()
       scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
-      scope.unsolved_msg = $translate("lectures.tooltip.unsolved_quiz")
+      scope.unsolved_msg = $translate.instant("lectures.tooltip.unsolved_quiz")
       scope.voteForReview=function(){
         $log.debug("vote review")
         OnlineQuiz.voteForReview(

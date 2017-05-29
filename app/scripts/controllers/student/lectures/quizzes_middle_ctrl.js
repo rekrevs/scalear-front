@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler) {
+  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', 'MobileDetector', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler, MobileDetector) {
     $controller('surveysCtrl', { $scope: $scope });
 
     $scope.course = CourseModel.getSelectedCourse()

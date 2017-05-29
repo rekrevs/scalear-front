@@ -466,17 +466,10 @@ var translation_sv={
     first_try: "första försöket",
     voted_for_review: "Röstade för granskning",
     click_for_information: "Klicka för mer information",
-<<<<<<< HEAD
-    inclass_question: "I klassrummet Fråga",
-    distance_peer_question: "Distance-peer Fråga",
-    complete_video: "Snälla du, Komplett denna video",
-    complete_quiz: "Snälla du, Komplett denna quiz",
-=======
     inclass_question: "In-class fråga",
     distance_peer_question: "Distance-peer fråga",
     complete_video: "Var god se denna video klart",
     your: "Din",
->>>>>>> swe_transl_rev
     group: "grupp",
     individual: "enskild",
     shown_top: " visas på högst upp.",
@@ -492,21 +485,13 @@ var translation_sv={
     you_not_answered_quiz: "Du har inte besvarat detta quiz",
     answered_survey: " besvarade denna enkät",
     answered: ' svarade',
-<<<<<<< HEAD
-    answered_but_not_checked: "Du har provat detta test, men responsen har inte varit föremål för granskning av läraren.",
-    answered_but_not_checked_question: "Du har provat detta fråga, men responsen har inte varit föremål för granskning av läraren.",
-=======
     answered_but_not_checked: "Du har provsvarat på detta test, men svaret har inte granskats av läraren än.",
->>>>>>> swe_transl_rev
+    answered_but_not_checked_question: "Du har provsvarat på detta fråga, men svaret har inte granskats av läraren än.",
     answered_but_group: 'Du har provat det här testet, men din ',
     not_checked_group: " har inte kontrollerats av läraren.",
     tried_not_correct_first: "Du har provat detta test en gång, men har ",
-<<<<<<< HEAD
     self_not_correct_question: "Du har provat detta fråga , men har ",    
-    tried_not_correct_first_answer: "inte fått svar korrekt.",
-=======
     tried_not_correct_first_answer: "inte fått korrekt svar.",
->>>>>>> swe_transl_rev
     tried_not_correct_last: "Du har provat det här testet mer än en gång, men har",
     answered_correct_but: "Du har svaret korrekt, men ",
     you_answered: "Du har svaret ",

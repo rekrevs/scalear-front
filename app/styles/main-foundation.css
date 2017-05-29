@@ -34,6 +34,7 @@ width: 78%;
 .content-containeropen.large-2, .content-containeropen.medium-4{
   min-width: 100%;
   max-width: 100%;
+  z-index: 6 !important;
   /*width: 100% ;*/
 }
 .max-width-me{
@@ -732,7 +733,7 @@ input.answer_input{
 
 .ipad input.answer_input{
   width: 100%;
-  max-width: none;
+  /*max-width: none;*/
 }
 
 input[type="checkbox"]{
@@ -1796,6 +1797,11 @@ textarea.editable-input{
 .check_answer_button{
   padding-top:0.5625rem !important;
   padding-bottom: 0.4rem !important;
+}
+
+.ipad .check_answer_button{
+  padding-top: 0.4625rem !important;
+  padding-bottom: 0.3rem !important;
 }
 /*borders*/
 .soft-border{
@@ -2887,14 +2893,14 @@ dd#first_accordion {
     box-shadow: 1px 2px 7px -2px grey;
 }
 dd#first_accordion > a{
-      background: whitesmoke ; 
+      background: whitesmoke ;
 }
 dd#first_accordion > a:hover{
-      background: #E1E1E1 ; 
+      background: #E1E1E1 ;
 }
 dd#second_accordion > a{
-      background: #E1E1E1; 
+      background: #E1E1E1;
 }
 dd#second_accordion > a:hover{
-      background: #cacaca; 
+      background: #cacaca;
 }

@@ -53,7 +53,7 @@
         </span>
     </div>
     <div style="height: 27px;">
-        <div class="right" >
+        <div class="right hide-for-semi-medium" >
             <button  class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" title="::('player.click_video_quality'|translate)"></button>
             <ul id="quality_list" class="f-dropdown top-dropdown">
                 <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174)">
@@ -72,14 +72,14 @@
         </div>
         <div ng-transclude></div>
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate></div>
-        <span class="hide-for-small-down">
+        <span class="hide-for-semi-medium">
             <div id="volume" class="volumeDiv show-inline left" ng-class="volume_class" ng-click="muteToggle()"></div>
             <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;cursor: pointer;"/>
         </span>
         <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
-            <span class="hide-for-small-only">
+            <span>
                 <span style="float:left;color: rgb(100, 100, 100);">{{current_time|format:'h:mm:ss'}}</span>
-                <span class="hide-for-semi-medium"> / {{ (duration || 0) |format:'h:mm:ss'}}</span>
+                <span> / {{ (duration || 0) |format:'h:mm:ss'}}</span>
             </span>
         </div>
     </div>

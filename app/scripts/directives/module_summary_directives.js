@@ -360,9 +360,9 @@ angular.module('scalearAngularApp')
                     }
                   }
                 },
-                tooltip: { 
+                tooltip: {
                   enabled: false,
-                },        
+                },
                 legend: { enabled: false }
               },
               size: {
@@ -669,7 +669,7 @@ angular.module('scalearAngularApp')
       }
     }
   }])
-  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', 'CourseEditor', function(ScalearUtils, $filter, $translate, $state, CourseEditor) {
+  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', 'CourseEditor','ModuleModel', function(ScalearUtils, $filter, $translate, $state, CourseEditor, ModuleModel) {
     return {
       scope: {
         moduledata: '='
@@ -677,7 +677,7 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/student/progress/student_module_summary.html",
       link: function(scope) {
-
+        scope.moduledata.has_inclass = ModuleModel.getSelectedModule().has_inclass
         var unwatch = scope.$watch("moduledata.due_date_string",function(val){
           if(val){
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
@@ -688,7 +688,7 @@ angular.module('scalearAngularApp')
               scope.moduledata.quiz_count + " " +
               $translate.instant('global.quizzes') + ", " +
               scope.moduledata.survey_count + " " +
-              $translate.instant('global.surveys') + ". " 
+              $translate.instant('global.surveys') + ". "
               // $translate.instant('events.due') + " " +
               // $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
               // $translate.instant('global.at') + " " +
@@ -698,10 +698,10 @@ angular.module('scalearAngularApp')
             if (scope.moduledata.first_lecture == -1) {
               scope.continue_button = null
             } else if (scope.moduledata.module_done_perc >0 &&  scope.moduledata.module_done_perc < 100 && scope.moduledata.last_viewed > -1) {
-              scope.continue_button = $translate.instant('dashboard.continue_watching') 
+              scope.continue_button = $translate.instant('dashboard.continue_watching')
               scope.next_lecture.id = scope.moduledata.last_viewed
             } else if (scope.moduledata.module_done_perc == 100 && scope.moduledata.first_lecture != -1) {
-              scope.continue_button = $translate.instant('dashboard.watch_again') 
+              scope.continue_button = $translate.instant('dashboard.watch_again')
 
               scope.next_lecture.id = scope.moduledata.first_lecture
             } else if (scope.moduledata.module_done_perc == 0 ) {
@@ -727,7 +727,7 @@ angular.module('scalearAngularApp')
         scope.goTo = function(course_id, group_id, lecture_id, time) {
           $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
         }
-        
+
         scope.goToLectureQuiz = function(course_id, group_id, id, type) {
           console.log("in function")
           if(type == 'lecture'){

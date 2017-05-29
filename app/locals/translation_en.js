@@ -400,12 +400,12 @@ var translation_en={
     deleting_profile: "Data Retention and Deleting your profile",
     deleting_profile_details: "Your data is retained in the system while you have a valid account to enable you to enroll in future classes. If you delete your account, then all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research",
     legal_entity: "Legal Entity",
-    legal_entity_details: "ScalableLearning is provided by SICS Swedish ICT AB, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
+    legal_entity_details: "ScalableLearning is provided by RISE SICS, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
     code_conduct: "GÉNAT Data Protection Code of Conduct",
     code_conduct_details: "This privacy policy complies with the GÉNAT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
-    last_update: "Last update: 07-October-2016",
+    last_update: "Last update: 24-May-2017",
     understand: "I understand",
     cancel: "Cancel",
   },
@@ -414,7 +414,7 @@ var translation_en={
     question1:"Who is the owner of the data?",
     answer1:"Course data is owned by the teacher who created the course. Student data is owned by the student. If a student deletes his or her account the activity data from that student becomes anonymous.",
     question2:"Where is the data stored, and under what legal jurisdiction?",
-    answer2:"The data is stored in a datacenter in Ireland and ScalableLearning operates under the legal jurisdiction of Sweden, with the Swedish Institute for Computer Science as the legal entity.",
+    answer2:"The data is stored in a datacenter in Ireland and ScalableLearning operates under the legal jurisdiction of Sweden, with the RISE SICS as the legal entity.",
     question3:"Is it possible to retrieve or export the data?",
     answer3:"Teachers can export complete course data.",
     question4:"Are backups made of the system?",
@@ -803,7 +803,7 @@ var translation_en={
     tooltip:{
         see_related: "See related answers to student",
         quizzes_solved: "quizzes required solved",
-        quizzes_optional_solved: "quizzes optional solved",
+        quizzes_optional_solved: "optional quizzes solved",
         watched_video: "Watched"
     },
     popover:{

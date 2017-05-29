@@ -35,9 +35,11 @@ angular.module('scalearAngularApp')
       // console.log(value)
       $scope.student_or_teacher = true
       if(value == "S"){
+        $scope.student = true
         $scope.intro_url = scalear_api.student_welcom_video
       }
       else{
+        $scope.student = false
         $scope.intro_url = scalear_api.teacher_welcome_video
       }
     }

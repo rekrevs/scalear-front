@@ -71,7 +71,7 @@
 				</p>
 
 				<ul class="ul_item inner_content" ng-click="highlight($event,item)" ng-attr ng-attr-index="::{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}" ng-repeat="item in ::timeline[module_item.quiz_type][quiz.meta.id].items" ng-if="::item.data">
-					<li ng-if="::item.type=='charts'" ng-init="quiz_chart=createChart( item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData') " class="li_inner color-blue" ng-class="{'light-yellow':item.data.show}">
+					<li id="vq_{{::item.data.id}}" ng-if="::item.type=='charts'" ng-init="quiz_chart=createChart( item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData') " class="li_inner color-blue" ng-class="{'light-yellow':item.data.show}">
 						<div class="row">
 							<inner_title type="'progress.title' | translate" class="small-10 columns left" itemtitle="item.data.title+' ('+item.data.type+')'"/>
 							<show_box value="item.data.show" action="updateHideQuizQuestion(quiz.meta.id,item.data.id,!item.data.show, item.type, module_item.quiz_type)" class="left"/>
@@ -79,7 +79,7 @@
 						</div>
 						<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 					</li>
-					<li ng-if="item.type=='free_question'" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
+					<li id="vq_{{::item.data.id}}" ng-if="item.type=='free_question'" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
 						<div class="row">
 							<inner_title type="'progress.free_text_question' | translate" itemtitle="item.data.title" class="small-10 columns left"/>
 							<show_box value="item.data.show" action="updateHideQuizQuestion(quiz.meta.id,item.data.id,!item.data.show, item.type, module_item.quiz_type)"/>

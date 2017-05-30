@@ -193,7 +193,7 @@ angular.module('scalearAngularApp')
         scope.$on('item_done', function(ev, item) {
           var time = 0
           if(!ContentNavigator.getStatus()) {
-            ContentNavigator.open()
+            // ContentNavigator.open()
             time = 700
           }
           $timeout(function() {

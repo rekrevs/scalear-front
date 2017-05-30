@@ -201,7 +201,7 @@ angular.module('scalearAngularApp')
                 "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>"+
               "</div>"
   }
-}]).directive('studentAnswer', ['$rootScope', '$translate','$log', function($rootScope, $translate, $log){
+}]).directive('studentAnswer', ['$rootScope', '$translate','$log','$timeout', function($rootScope, $translate, $log,$timeout){
   return {
     replace:true,
     restrict: 'E',
@@ -241,6 +241,11 @@ angular.module('scalearAngularApp')
             placement:(scope.data.xcoor > 0.5)? "left":"right",
             instant_show: "mouseover"
           }
+          $timeout(function(){
+            if(scope.explanation[scope.data.id][0]){
+              element.siblings().css('z-index',10000)
+            }
+          },300)
         }
       })
       scope.$on("$destroy", function() {

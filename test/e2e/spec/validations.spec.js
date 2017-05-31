@@ -20,6 +20,9 @@ var Header = require('./pages/header');
 var SubHeader = require('./pages/sub_header');
 var ContentItems = require('./pages/content_items');
 var NewCourse = require('./pages/new_course');
+var StudentLecture = require('./pages/student/lecture');
+var ModuleProgress = require('./pages/module_progress');
+
 
 var params = browser.params;
 var header = new Header()
@@ -33,6 +36,8 @@ var quiz = new NormalQuiz();
 var content_items= new ContentItems()
 var navigator = new ContentNavigator(1)
 var	new_course = new NewCourse();
+var student_lec = new StudentLecture()
+var module_progress = new ModuleProgress()
 
 var q1_x = 169;
 var q1_y = 127;
@@ -505,7 +510,233 @@ describe("Quiz validation", function(){
 })
 
 
+// Case where a lecture due date passed 
+// Case where a lecture is due today
+describe("Case where a lecture due date passed // Case where a lecture is due today",function(){
+	describe("Teacher",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher1.email, params.password)
+		})
+		it("should open course", function() {
+			course_list.open()
+			course_list.open_teacher_course(1)
+		})
+		it("should go to edit mode", function() {
+			sub_header.open_edit_mode()
+		})
+		describe("add module, lectures and quizzes",function(){
+			it("should create modules", function() {
+				expect(navigator.modules.count()).toEqual(2)
+				course_editor.add_module();
+				course_editor.rename_module("module 3")
+				expect(navigator.modules.count()).toEqual(3)
+				navigator.add_module();
+				course_editor.rename_module("module 4")
+				expect(navigator.modules.count()).toEqual(4)
+				navigator.add_module();
+				course_editor.rename_module("module 5")
+				expect(navigator.modules.count()).toEqual(5)
+			})
+			it("should add items to the 3rd module", function() {
+				var module = navigator.module(3)
+				module.open()
+				module.open_content_items()
+				content_items.add_video()
+				course_editor.rename_item("lecture1 video quizzes")
+				course_editor.change_item_url(params.url1)
+				module.open_content_items()
+				content_items.add_quiz()
+				course_editor.rename_item("quiz1")
+				module.open_content_items()
+				content_items.add_survey()
+				course_editor.rename_item("survey1")
+			})
+			it("should add items to the 4th module", function() {
+				var module = navigator.module(4)
+				module.open()
+				module.open_content_items()
+				content_items.add_video()
+				course_editor.rename_item("lecture1 video quizzes")
+				course_editor.change_item_url(params.url1)
+				module.open_content_items()
+				content_items.add_quiz()
+				course_editor.rename_item("quiz1")
+				module.open_content_items()
+				content_items.add_survey()
+				course_editor.rename_item("survey1")
+			})
+			it("should add items to the 5th module", function() {
+				var module = navigator.module(5)
+				module.open()
+				module.open_content_items()
+				content_items.add_video()
+				course_editor.rename_item("lecture1 video quizzes")
+				course_editor.change_item_url(params.url1)
+				module.open_content_items()
+				content_items.add_quiz()
+				course_editor.rename_item("quiz1")
+				module.open_content_items()
+				content_items.add_survey()
+				course_editor.rename_item("survey1")
+			})	
+		})
+		describe("change due date for module 3 & 4 , required for module 5",function(){
+			// MODULE 3
+			it('should change lecture appearance date to last week  ',function(){
+				navigator.module(3).open()
+				course_editor.open_lecture_settings()
+				change_appearance_date(getLastWeek("dd-mmmm-yyyy"));
+			})		
+			it('should change lecture due date to yesterday  ',function(){
+				change_due_date(getYesterday("dd-mmmm-yyyy"));
+			})
+			// MODULE 4
+			it('should change lecture appearance date to last week  ',function(){
+				navigator.module(4).open()
+				// course_editor.open_lecture_settings()
+				change_appearance_date(getLastWeek("dd-mmmm-yyyy"));
+			})		
+			it('should change lecture due date to yesterday  ',function(){
+				change_due_date(getToday("dd-mmmm-yyyy"));
+				// change_due_time( (new Date().getHours() + 3) , 00)
+			})
+			it('should change lecture due date to yesterday  ',function(){
+				// change_due_date(getToday("dd-mmmm-yyyy"));
+				change_due_time( (new Date().getHours() + 3) , 00)
+			})
+			// MODULE 5
+			it('should change lecture appearance date to last week  ',function(){
+				navigator.module(5).open()
+				// course_editor.open_lecture_settings()
+				course_editor.change_module_required()
+			})		
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+	describe("Student 1",function(){
+		it("should login as student",function(){
+			login_page.sign_in(params.student1.email, params.password)
+		})
+		var navigator = new ContentNavigator(1)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_student_course(1)
+		})
+		it("should open first module",function(){
+			navigator.module(3).open()
+			navigator.module(3).item(1).open()
+			// navigator.close()
+			video.wait_till_ready()
+		})
+		it("should checked warning box of due date",function(){
+			// student_lec.due_date_warning
+			expect(student_lec.due_date_warning.isDisplayed()).toEqual(true)
+			expect(student_lec.due_date_warning.getText()).toContain("Due date has passed")
+			expect(student_lec.due_date_warning.getText()).toContain("(1 day) ago")
+		})
+		it("should open first module",function(){
+			navigator.module(4).open()
+			navigator.module(4).item(1).open()
+			// navigator.close()
+			video.wait_till_ready()
+		})
+		it("should checked warning box of due date",function(){
+			// student_lec.due_date_warning
+			expect(student_lec.due_date_warning.isDisplayed()).toEqual(true)
+			expect(student_lec.due_date_warning.getText()).toContain("Due today at")
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+})
+// Case where all items in a module are optional 
+describe("Case where all items in a module are optional ",function(){
+	describe("Teacher",function(){
 
+		it("should login",function(){
+			login_page.sign_in(params.teacher1.email, params.password)
+		})
+		it("should open course",function(){
+			course_list.open()
+			course_list.open_teacher_course(1)
+		})
+		it("should go to review mode",function(){
+			sub_header.open_review_mode()
+		})
+		it("should open first moduel",function(){
+			navigator.module(1).open()
+			element(by.className('course-completion')).click()
+			expect(browser.driver.getCurrentUrl()).toContain('progress')
+		})
+		it ("should check number of students", function(){
+			module_progress.module_completion().students_count().then(function(coun){expect(coun).toEqual(3)})
+		})
+		it ("should check number of columns of table", function(){
+			module_progress.module_completion().student(1).columns_count().then(function(coun){expect(coun).toEqual(5)})
+		})
+		it ("should check student 1 data ", function(){
+			expect(module_progress.module_completion().student(1).name).toEqual(params.student1.f_name +' '+ params.student1.l_name)
+			expect(module_progress.module_completion().student(1).email).toEqual(params.student1.email)
+			expect(module_progress.module_completion().student(1).column_item(5)).toContain('Finished_on_Time.png')
+		})
+		it ("should check student 2 data ", function(){
+			expect(module_progress.module_completion().student(2).name).toEqual(params.student2.f_name +' '+ params.student2.l_name)
+			expect(module_progress.module_completion().student(2).email).toEqual(params.student2.email)
+			expect(module_progress.module_completion().student(2).column_item(5)).toContain('Finished_on_Time.png')
+		})
+		it ("should check student 3 data ", function(){
+			expect(module_progress.module_completion().student(3).name).toEqual(params.student3.f_name +' '+ params.student3.l_name)
+			expect(module_progress.module_completion().student(3).email).toEqual(params.student3.email)
+			expect(module_progress.module_completion().student(3).column_item(5)).toContain('Finished_on_Time.png')
+		})
+		// it("should open course",function(){
+		// 	course_list.open()
+		// 	course_list.open_teacher_course(1)
+		// })
+		it("should go to edit mode",function(){
+			sub_header.open_edit_mode()
+		})
+		it("should delete modules",function(){
+			expect(navigator.modules.count()).toEqual(5)
+			var module = navigator.module(5)
+			module.open()
+			module.item(3).delete()
+			expect(module.items.count()).toEqual(2)
+			module.item(2).delete()
+			expect(module.items.count()).toEqual(1)
+			module.item(1).delete()
+			expect(module.items.count()).toEqual(0)
+			module.delete()
+			expect(navigator.modules.count()).toEqual(4)
+			var module = navigator.module(4)
+			module.open()
+			module.item(3).delete()
+			expect(module.items.count()).toEqual(2)
+			module.item(2).delete()
+			expect(module.items.count()).toEqual(1)
+			module.item(1).delete()
+			expect(module.items.count()).toEqual(0)
+			module.delete()
+			expect(navigator.modules.count()).toEqual(3)
+			var module = navigator.module(3)
+			module.open()
+			module.item(3).delete()
+			expect(module.items.count()).toEqual(2)
+			module.item(2).delete()
+			expect(module.items.count()).toEqual(1)
+			module.item(1).delete()
+			expect(module.items.count()).toEqual(0)
+			module.delete()
+			expect(navigator.modules.count()).toEqual(2)
+		})	
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+})
 var months = ["January",
 							"February",
 							"March",
@@ -519,11 +750,20 @@ var months = ["January",
 							"November",
 							"December"
       			];
+function getLastWeek(format){
+	var date = new Date();
+	date.setDate(date.getDate() - 7);
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
+}
 function getYesterday(format){
 	var date = new Date();
 	date.setDate(date.getDate() - 1);
 	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
-
+}
+function getToday(format){
+	var date = new Date();
+	date.setDate(date.getDate());
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
 }
 function getTomorrow(format){
 	var date = new Date();
@@ -573,14 +813,20 @@ function change_due_date(date, indx){
 function change_due_time(hours, minutes){
 	element.all(by.tagName('details-time')).then(function(times){
 		times[1].click().then(function(){
-			element(by.className('editable-controls')).then(function(controls){
-				controls.findElements(protractor.By.tagName('input')).then(function(inputs){
-					inputs[0].clear().sendKeys(hours);
-					inputs[1].clear().sendKeys(minutes);
-				}).then(function(){
-					element(by.className('fi-check')).click();
-				})
-			})
+			times[1].element(by.model('hours')).clear().sendKeys(hours)
+			times[1].element(by.model('minutes')).clear().sendKeys(minutes)
+			times[1].element(by.className('fi-check')).click();
+			// times[1]
+			// element(by.className('editable-controls')).then(function(controls){
+				// controls.findElements(protractor.By.tagName('input')).then(function(inputs){
+				// times[1].element.all(by.tagName('input')).then(function(inputs){
+				// // controls.findElements(protractor.By.tagName('input')).then(function(inputs){
+				// 	inputs[0].clear().sendKeys(hours);
+				// 	inputs[1].clear().sendKeys(minutes);
+				// }).then(function(){
+				// 	element(by.className('fi-check')).click();
+				// })
+			// })
 		})
 	})
 }

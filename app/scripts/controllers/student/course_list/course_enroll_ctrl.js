@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
       })
 
     $scope.go_to_course = function(obj, error){
-      error? ($state.go("course.course_information", { course_id: obj.data.course.id })):($state.go("course.course_information", { course_id: obj.course.id }))
+      error? ($state.go("course.course_information", { course_id: obj.data.course.id })):($state.go("course.course_information", { course_id: obj.course.id ,new_enroll:true}))
       $rootScope.$broadcast('Course:get_current_courses')
     }
   }]);

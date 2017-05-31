@@ -6,7 +6,6 @@ angular.module('scalearAngularApp')
     $scope.course = CourseModel.getSelectedCourse()
     Page.setTitle($translate.instant('navigation.information') + ': ' + $scope.course.name);
     ContentNavigator.open()
-
     $scope.urlWithProtocol = ScalearUtils.urlWithProtocol
     if($state.params.new_enroll) {
       $modal.open({
@@ -46,15 +45,14 @@ angular.module('scalearAngularApp')
     init()
 
     $scope.goToContent = function() {
-      if($scope.next_item.module != -1) {
-        var params = { 'module_id': $scope.next_item.module }
-        params[$scope.next_item.item.class_name + '_id'] = $scope.next_item.item.id
-        $state.go('course.module.courseware.' + $scope.next_item.item.class_name, params)
+      if($scope.course.next_item.module != -1) {
+        var params = { 'module_id': $scope.course.next_item.module }
+        params[$scope.course.next_item.item.class_name + '_id'] = $scope.course.next_item.item.id
+        $state.go('course.module.courseware.' + $scope.course.next_item.item.class_name, params)
       }
     }
 
     $scope.updateStudentDueDateEmail = function(email_due_date) {
       $scope.course.updateStudentDueDateEmail(email_due_date)
     }
-
   }]);

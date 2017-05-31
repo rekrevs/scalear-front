@@ -1046,6 +1046,7 @@ var translation_en={
     show_quizzes: "Show Quizzes",
     show_surveys: "Show Surveys",
     show_confused: "Show Confused",
+    show_markers: "Show Markers",
     show_charts: "Show Charts",
     show_discussion: "Show Discussion",
     show_lecture_quizzes: "Show Lecture Quizzes",

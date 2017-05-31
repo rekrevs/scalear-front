@@ -65,6 +65,17 @@ describe("Notes",function(){
 			expect(student_lec.lecture(1).notes.count()).toEqual(0)
 
 		})
+		// Clicking on Esc button while typing a note 
+		it("should add a note => press exit and the note is saved ",function(){
+			student_lec.add_note()
+			student_lec.lecture(1).type_note_and_press_exit("Some note text for testing.")
+			expect(student_lec.lecture(1).notes.count()).toEqual(1)
+			expect(student_lec.lecture(1).note(1).getText()).toEqual("Some note text for testing.")
+		})
+		// it("should delete note",function(){
+		// 	student_lec.lecture(1).delete_note(1)
+		// 	expect(student_lec.lecture(1).notes.count()).toEqual(0)
+		// })
 		it("should logout",function(){
 			student_lec.close_timeline()
 			header.logout()

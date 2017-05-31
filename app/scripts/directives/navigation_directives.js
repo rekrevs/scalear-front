@@ -365,6 +365,12 @@ angular.module('scalearAngularApp')
           '</div>' +
           '</li>' +
           '<li>' +
+          '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'marker\')">' +
+          '<input id="showMarkersCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'marker\')" />' +
+          '<span style="font-size:12px" translate>course_settings.show_markers</span>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
           '<a class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="exportNotes()">' +
           '<span style="font-size:12px" translate>course_settings.download_notes</span>' +
           '</a>' +

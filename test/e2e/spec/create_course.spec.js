@@ -5,6 +5,8 @@ var Login = require('./pages/login');
 var CourseList = require('./pages/course_list');
 var sleep = require('./lib/utils').sleep;
 var Signup = require('./pages/sign_up');
+var SubHeader = require('./pages/sub_header')
+
 
 var params = browser.params;
 var header = new Header()
@@ -13,6 +15,7 @@ var	new_course = new NewCourse();
 var course_info = new CourseInformation()
 var course_list = new CourseList()
 var signup_page = new Signup()
+var sub_header = new SubHeader()
 
 describe("Email domain .uu.nl is prevented from sign up",function(){
 		it("should sign up ",function(){
@@ -152,22 +155,25 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			header.logout()
 		})
-		it('should get the enrollment key and enroll students', function(){
-		    login_page.sign_in(params.teacher1.email, params.password) 
+		var enrollment_url
+		it('should get the enrollment URL ', function(){
+			login_page.sign_in(params.teacher1.email, params.password) 
 			course_list.open()
 			course_list.open_teacher_course(1)
-			var enrollment_key = course_info.enrollmentkey
+			sub_header.open_add_students()
+			sub_header.enrollment_url.getText().then(function (text) {enrollment_url = text; console.log(enrollment_url) } )
+	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			header.logout()
+		})
+		it('should enroll student 3 through URL LINK ', function(){
+			console.log(enrollment_url)
 			login_page.sign_in(params.student3.email, params.password)
-			header.join_course(enrollment_key)
-			new_course.disable_student_email_reminders_button_click()
-			header.logout()
-			login_page.sign_in(params.student1_domain_test.email, params.password)
-			header.join_course(enrollment_key)
+			browser.get(enrollment_url);
 			new_course.disable_student_email_reminders_button_click()
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
-		})
+			header.logout()
+		})		
 		// teacher remover s1domain student
 		it("student1_domain_test should delete course",function(){
 			course_list.delete_student_course(1)

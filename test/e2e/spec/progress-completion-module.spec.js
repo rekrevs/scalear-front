@@ -150,7 +150,7 @@ describe("Module Completion", function(){
 	})
 })
 
-xdescribe("Course Completion", function(){
+describe("Course Completion", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
@@ -266,7 +266,7 @@ xdescribe("Course Completion", function(){
 })
 
 
-xdescribe("Course Graph", function(){
+describe("Course Graph", function(){
 	describe("Teacher", function(){
 		it("should login",function(){
 			login_page.sign_in(params.teacher1.email, params.password)

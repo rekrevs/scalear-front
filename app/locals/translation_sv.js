@@ -1056,6 +1056,7 @@ var translation_sv={
     show_quizzes: "Visa quizzar",
     show_surveys: "Visa enkäter",
     show_confused: "Visa förvirrade",
+    show_markers: "Visa markeringar",
     show_charts: "Visa diagram",
     show_discussion: "Visa diskussion",
     show_lecture_quizzes: "Visa video-quizzar",

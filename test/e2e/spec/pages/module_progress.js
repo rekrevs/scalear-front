@@ -180,6 +180,15 @@ ModuleProgress.prototype = Object.create({}, {
 		element(By.id("teacher_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(4).all(by.tagName('rect')).get(column-1).click()
 		return element(By.id("teacher_completion")).all(by.tagName('text')).last().getText()
 	}},
+	getQuizCompletionChartValueAt:{value:function(x1 , column){
+		return element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+	}},
+	QuizCompletionChartTooltip:{value:function(x1 , column){
+		element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).click()
+		return element.all(by.className('dashboard')).get(2).element(by.tagName('a'))
+	}},	
+
+
 
 	// getGraphChartValueAt:{value:function(column){
 	// 	element(by.tagName('svg')).all(by.tagName('g')).first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()

@@ -601,9 +601,8 @@ describe("Solve Course",function(){
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
-		        navigator.set_status(1)
+		        navigator.set_status(0)
 			})
-
 			it("should navigate to second lectue in second module",function(){
 				navigator.open()
 				navigator.module(2).item(2).open()
@@ -704,7 +703,7 @@ describe("Solve Course",function(){
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
-		        navigator.set_status(1)
+		        navigator.set_status(0)
 			})
 
 			it("should navigate to third lectue in second module",function(){
@@ -995,7 +994,7 @@ describe("Solve Course",function(){
 			})
 			it('should submit quiz',function(){
 				student_quiz.submit();
-				navigator.set_status(1)
+				navigator.set_status(0)
 			})
 
 			// it("should open first lecture again",function(){

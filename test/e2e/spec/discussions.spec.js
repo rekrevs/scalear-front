@@ -109,6 +109,7 @@ describe("Discussions",function(){
 			video.seek(15)
 		})
 		it("should add a private discussion",function(){
+            expect(student_lec.lecture(1).items.count()).toEqual(6)
             student_lec.add_discussion()
             expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
             student_lec.lecture(1).type_discussion("Private Question")
@@ -116,7 +117,7 @@ describe("Discussions",function(){
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-            expect(student_lec.lecture(1).items.count()).toEqual(4)
+            expect(student_lec.lecture(1).items.count()).toEqual(7)
         })
         it('should seek to 35%', function(){
 			video.seek(35)
@@ -129,7 +130,7 @@ describe("Discussions",function(){
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(2)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-            expect(student_lec.lecture(1).items.count()).toEqual(5)
+            expect(student_lec.lecture(1).items.count()).toEqual(8)
 		})
 		it("should logout",function(){
 			expect(student_lec.check_timeline_is_open).toContain('land-medium-4 land-height')
@@ -319,12 +320,13 @@ describe("Discussions",function(){
 			video.seek(40)
 		})
 		it("should add a private discussion",function(){
+            expect(student_lec.lecture(1).items.count()).toEqual(6)
             student_lec.add_discussion()
             student_lec.lecture(1).type_discussion("private question by second student")
             student_lec.lecture(1).change_discussion_private()
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(2)
-            expect(student_lec.lecture(1).items.count()).toEqual(5)
+            expect(student_lec.lecture(1).items.count()).toEqual(7)
         })
         it('should move to the second lecture', function(){
 			navigator.open()

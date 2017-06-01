@@ -3,7 +3,8 @@
         <tr>
             <td colspan="2" style="padding:5px">
                 <div><i ng-show="error_message" class="size-12 color-red"><br>{{error_message}}<br></i></div>
-                <rich-textarea ng-disabled="preview_as_student" class="hide-for-medium-down" placeholder="{{'lectures.button.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></rich-textarea>
+                <rich-textarea ng-disabled="preview_as_student" class="text_block" placeholder="{{'lectures.button.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></rich-textarea>                
+                <!-- <rich-textarea ng-disabled="preview_as_student" class="hide-for-medium-down" placeholder="{{'lectures.button.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></rich-textarea> -->
                 <textarea ng-disabled="preview_as_student" class="show-for-medium-down text_block" placeholder="{{'lectures.button.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;" />
             </td>
         </tr>

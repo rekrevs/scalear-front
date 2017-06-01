@@ -36,7 +36,7 @@ var student_lec = new StudentLecture()
 // var student_module_summary = new StudentModuleSummary()
 // var dashboard = new Dashboard()
 
-xdescribe("Student 1",function(){
+describe("Student 1",function(){
 	it("should login as student",function(){
 		login_page.sign_in(params.student1.email, params.password)
 	})

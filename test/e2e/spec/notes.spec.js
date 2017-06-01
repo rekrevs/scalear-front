@@ -33,9 +33,9 @@ describe("Notes",function(){
 		})
 		it("should open timeline",function(){
 			student_lec.open_timeline()
+			student_lec.add_note()
 		})
 		it("should add a note",function(){
-			student_lec.add_note()
 			student_lec.lecture(1).type_note("Some note text for testing.")
 			expect(student_lec.lecture(1).notes.count()).toEqual(1)
 			expect(student_lec.lecture(1).note(1).getText()).toEqual("Some note text for testing.")

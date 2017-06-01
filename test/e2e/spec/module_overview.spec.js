@@ -70,13 +70,13 @@ describe("Student 1",function(){
 			dashboard.open()	
 		})
 		it('should check first online quizzes information', function(){
-			expect(student_module_summary.module(1).online_quizzes.count()).toEqual(8)
+			expect(student_module_summary.module(1).online_quizzes.count()).toEqual(21)
 			expect(student_module_summary.module(1).online_quiz(1).color).toEqual('rgba(22, 165, 63, 1)')
 			// student_module_summary.module(1).online_quiz(1).hover_tooltip()
 			// expect(student_module_summary.module(1).online_quiz(1).tooltip_title).toEqual('lecture1 video quizzes')
 			// expect(student_module_summary.module(1).online_quiz(1).tooltip_title).toEqual('correct')
 			// expect(student_module_summary.module(1).online_quiz(1).tooltip_content).toEqual('MCQ QUIZ')
-			expect(student_module_summary.module(1).online_quiz(2).color).toEqual('rgba(237, 148, 103, 1)')
+			expect(student_module_summary.module(1).online_quiz(2).color).toEqual('rgba(230, 103, 38, 1)')
 			expect(student_module_summary.module(1).online_quiz(8).color).toEqual('rgba(53, 91, 183, 1)')
 		})
 		// Case where there’s a time parameter in URL
@@ -135,7 +135,7 @@ describe("Student 1",function(){
 			expect(student_module_summary.module(2).items_completion(5).type.get(1).isDisplayed()).toEqual(true)	// quiz(list) icon
 		})
 		it('should check first online quizzes information', function(){
-			expect(student_module_summary.module(2).online_quizzes.count()).toEqual(8)
+			expect(student_module_summary.module(2).online_quizzes.count()).toEqual(21)
 
 			expect(student_module_summary.module(2).online_quiz(1).color).toEqual('rgba(237, 148, 103, 1)')
 			expect(student_module_summary.module(2).online_quiz(3).color).toEqual('rgba(230, 103, 38, 1)')

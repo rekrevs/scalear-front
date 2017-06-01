@@ -56,11 +56,6 @@ describe("Course Validation",function(){
 			browser.refresh()
 			expect(course_info.student.receive_email_button.isSelected()).toEqual(false)
 		})
-		it('should check go to course button and check it when to a quiz url', function(){
-			course_info.student.go_to_course_content_button_click()
-			sleep(2000)
-			expect(browser.driver.getCurrentUrl()).toContain('courseware/quizzes/')
-		})
 		it("should logout",function(){
 			header.logout()
 		})

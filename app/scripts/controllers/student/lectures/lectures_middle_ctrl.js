@@ -863,6 +863,7 @@ angular.module('scalearAngularApp')
         })
       }
       else{
+        $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note", null);
         $scope.last_timeline_state = !$scope.TimelineNavigator.getStatus()
         goSmallScreen()
         openTimeline()

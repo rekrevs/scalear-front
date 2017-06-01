@@ -221,7 +221,7 @@ exports.config = {
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)
+        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)  ////////////////////////////////////
         // 'test/e2e/spec/course_information_validation.spec.js', // 
         // 'test/e2e/spec/account_information_validation.spec.js', // 
         // 'test/e2e/spec/enrollment_help.spec.js', // 
@@ -235,9 +235,9 @@ exports.config = {
         // 'test/e2e/spec/notes.spec.js', // 
         // 'test/e2e/spec/discussions.spec.js', //
         // 'test/e2e/spec/student_timeline_features.spec.js',
-        'test/e2e/spec/fill_course_part2.spec.js', // 
+        // 'test/e2e/spec/fill_course_part2.spec.js', // 
 
-        // 'test/e2e/spec/module_overview.spec.js', // 
+        'test/e2e/spec/module_overview.spec.js', // 
         // 'test/e2e/spec/progress-module.spec.js', //
         // 'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
         // 'test/e2e/spec/validations.spec.js', //

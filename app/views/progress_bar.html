@@ -16,7 +16,7 @@
             <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.389 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
             <span ng-repeat="element in timeline.items" ng-hide="editing=='video'">
                 <div ng-if="element.type=='marker'" class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-0.25+'%'}" style="z-index: 1;">
-                    <span class="progress-events" style="background-color: lightgray;" tooltip-html-unsafe="{{element.data.title}}"  tooltip-append-to-body="true"></span>
+                    <span class="progress-events" style="background-color: lightgray;" tooltip-html-unsafe="{{element.data.title}}"  tooltip-placement="top" tooltip-append-to-body="true"></span>
                 </div>
 
                 <div ng-if="element.type=='quiz' && !element.data.selected">
@@ -30,13 +30,13 @@
                         <div class="progress-events repeating_orange_pattern" ng-style="{'left':((element.data.time/duration)*100)+'%', 'width': (((element.data.end_time - element.data.time)/duration)*100)+'%'}"></div>
                     </span>
 
-                    <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px;" tooltip="{{'editor.start_time'| translate }}: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', onStop: 'cleanUpDrag(element)', containment:'position'}" ></div>
+                    <div ng-hide="element.data.start_time == element.data.time" class="progress-events squarebrackets_left" ng-style="{'left':((element.data.start_time/duration)*100)+'%'}" style="top:-4px;" tooltip-placement="top" tooltip-append-to-body="true" tooltip="{{'editor.start_time'| translate }}: {{element.data.start_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateStartQuizTime(element.data)', onStop: 'cleanUpDrag(element)', containment:'position'}" ></div>
 
-                    <div class="progress-events quiz_circle" ng-style="{'left':((element.data.time/duration)*100)-1.15+'%'}" style="top:-4px;z-index:2;opacity:1" tooltip="{{'editor.quiz_time'| translate }}: {{element.data.time|format}}" ng-click="seekToQuiz(element.data)" data-drag='element.data.inclass' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
+                    <div class="progress-events quiz_circle" ng-style="{'left':((element.data.time/duration)*100)-1.15+'%'}" style="top:-4px;z-index:2;opacity:1" tooltip="{{'editor.quiz_time'| translate }}: {{element.data.time|format}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="seekToQuiz(element.data)" data-drag='element.data.inclass' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateQuizTime(element)',onStop: 'cleanUpDrag(element)', containment:'position'}" >
                         <i class="size-16 fi-record dot_circle" ></i>
                     </div>
 
-                    <div ng-hide="element.data.end_time == element.data.time" class="progress-events squarebrackets_right" ng-style="{'left':((element.data.end_time/duration)*100)+'%'}" style="top:-4px" tooltip="{{'editor.end_time'| translate }}: {{element.data.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateEndQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}"></div>
+                    <div ng-hide="element.data.end_time == element.data.time" class="progress-events squarebrackets_right" ng-style="{'left':((element.data.end_time/duration)*100)+'%'}" style="top:-4px" tooltip-placement="top" tooltip-append-to-body="true" tooltip="{{'editor.end_time'| translate }}: {{element.data.end_time|format}}" data-drag='true' data-jqyoui-options="{containment:'.progressBar'}" jqyoui-draggable="{onStart: 'calculateQuizBoundaries(element)',onDrag: 'calculateEndQuizTime(element.data)',onStop: 'cleanUpDrag(element)', containment:'position'}"></div>
                 </div>
             </span>
 

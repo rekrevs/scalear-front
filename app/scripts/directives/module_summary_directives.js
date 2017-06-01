@@ -677,7 +677,6 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/student/progress/student_module_summary.html",
       link: function(scope) {
-        scope.moduledata.has_inclass = ModuleModel.getSelectedModule().has_inclass
         var unwatch = scope.$watch("moduledata.due_date_string",function(val){
           if(val){
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)

@@ -163,8 +163,13 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			sub_header.open_add_students()
 			sub_header.enrollment_url.getText().then(function (text) {enrollment_url = text; console.log(enrollment_url) } )
 	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-			header.logout()
+			// header.logout()
 		})
+		it('should get the enrollment URL ', function(){
+			// browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
+			// sleep(4000)
+			header.logout()
+		})		
 		it('should enroll student 3 through URL LINK ', function(){
 			console.log(enrollment_url)
 			login_page.sign_in(params.student3.email, params.password)
@@ -174,12 +179,14 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			expect(course_list.student_courses.count()).toEqual(1)
 			header.logout()
 		})		
-		// teacher remover s1domain student
-		it("student1_domain_test should delete course",function(){
-			course_list.delete_student_course(1)
-			expect(course_list.student_courses.count()).toEqual(0)
-			header.logout()
-		})
+		// // teacher remover s1domain student
+		// it("student1_domain_test should delete course",function(){
+		// 	// login_page.sign_in(params.student1_domain_test.email, params.password)			
+		// 	// course_list.open()
+		// 	course_list.delete_student_course(1)
+		// 	expect(course_list.student_courses.count()).toEqual(0)
+		// 	header.logout()
+		// })
 		// should enable registration for only sharklasers and S1Domain should try to regisiter and s1domain can not regisiter
 	    it('teacher should enable registration for only his email domain', function(){  
 		    login_page.sign_in(params.teacher1.email, params.password)

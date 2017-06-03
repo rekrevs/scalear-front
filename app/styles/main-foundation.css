@@ -2414,6 +2414,18 @@ a.editable-click{
     display: none !important;
   }
 
+  .show-for-semi-medium{
+    display: block !important;
+  }
+
+}
+
+@media only screen and (min-width:46.063em){
+
+  .show-for-semi-medium{
+    display: none !important;
+  }
+
 }
 
 @media only screen and (max-width:15.063em){

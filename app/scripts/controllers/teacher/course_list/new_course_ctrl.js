@@ -79,6 +79,8 @@ angular.module('scalearAngularApp')
         scope: $scope,
         controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
           $scope.subdomain = {}
+          $scope.course_domain = {}
+          $scope.course_domain.selected_subdomain = {};
           $scope.subdomain.boolean = 'all'
           if (!$scope.course.selected_subdomain['All']){
             $scope.subdomain.boolean = 'custom'
@@ -88,6 +90,7 @@ angular.module('scalearAngularApp')
          };
 
           $scope.updateDomainList = function(){
+            $scope.course.selected_subdomain = $scope.course_domain.selected_subdomain
           };
     
           $scope.setBooleanDomain= function(){
@@ -100,7 +103,7 @@ angular.module('scalearAngularApp')
           };
        }],
       }).result.finally(function() {
-          if (Object.keys($scope.course.selected_subdomain).map(function(key) {return $scope.course_domain.selected_subdomain[key];}).indexOf(true) == -1) {
+          if (Object.keys($scope.course.selected_subdomain).map(function(key) {return $scope.course.selected_subdomain[key];}).indexOf(true) == -1) {
             $scope.course.selected_subdomain = {'All':true}
           }
         }); 
@@ -109,23 +112,19 @@ angular.module('scalearAngularApp')
     function validateDate() {
       var deferred = $q.defer()
       var errors = {}
-
       // $scope.course.start_date = new Date($scope.course.start_date)
       // $scope.course.end_date = new Date($scope.course.end_date)
-      // console.log($scope.course.start_date)
-      // console.log($scope.course.end_date)
       var a = true
-      if (($scope.course.start_date == "Invalid Date")) {
+      if (($scope.course.start_date == "Invalid Date" || $scope.course.start_date == null )) {
         errors["start_date"] = ["not a Date"]
         deferred.reject(errors)
         a = false
       } 
-      if (($scope.course.end_date == "Invalid Date")) {
+      if (($scope.course.end_date == "Invalid Date" || $scope.course.end_date == null )) {
         errors["end_date"] = ["not a Date"]
         deferred.reject(errors)
         a = false
       }
-      console.log(a)
       if(a){        
         if (!($scope.course.start_date < $scope.course.end_date)) {
           errors["start_date"] = ["must be before end date"]
@@ -139,15 +138,11 @@ angular.module('scalearAngularApp')
       }
       // $scope.course.start_date = moment($scope.course.start_date).format('DD-MMMM-YYYY')
       // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
-      //   console.log($scope.course.start_date)
-      //   console.log($scope.course.end_date)
       return deferred.promise
     }
 
 
     $scope.createCourse = function() {
-      // console.log($scope.course.start_date)
-      // console.log($scope.course.end_date)
       $scope.submitting = true;
       // if($scope.form.$valid) {
       validateDate()
@@ -155,8 +150,6 @@ angular.module('scalearAngularApp')
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
         // $scope.course.start_date = new Date($scope.course.start_date)
         // $scope.course.end_date = new Date($scope.course.end_date)
-        // console.log($scope.course.start_date)
-        // console.log($scope.course.end_date)
         var selected_subdomain = $scope.course.selected_subdomain
         var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
@@ -174,16 +167,14 @@ angular.module('scalearAngularApp')
             // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
             $scope.submitting = false;
             $scope.server_errors = response.data.errors
-            console.log($scope.server_errors)
+            // console.log($scope.server_errors)
             $scope.course.selected_subdomain = selected_subdomain
             $scope.course.email_discussion = email_discussion
           })
       }) 
       // else {
       .catch(function(errors) {
-        console.log(errors)
           $scope.server_errors = errors
-          console.log($scope.server_errors)
           $scope.submitting = false;
       })
     }

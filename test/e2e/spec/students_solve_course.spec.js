@@ -923,6 +923,15 @@ describe("Solve Course",function(){
 				student_lec.answer_text_drag_correct()
 				student_lec.check_answer()
 			})
+			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})			
 			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)

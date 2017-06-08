@@ -52,7 +52,7 @@ describe("Student 1",function(){
 		video.wait_till_ready()
 	})
 	// Adding/Deleting confused in timeline
-	xdescribe("Adding/Deleting confused in timeline",function(){  
+	describe("Adding/Deleting confused in timeline",function(){  
 		it("should open timeline",function(){
 			// video.wait_till_ready()
 			student_lec.open_timeline()
@@ -96,7 +96,7 @@ describe("Student 1",function(){
 		})
 	})
 	// Filtering the timeline
-	xdescribe("Filtering the timeline",function(){  
+	describe("Filtering the timeline",function(){  
 		it("should open timeline",function(){
 			student_lec.open_timeline()
 		})
@@ -134,7 +134,7 @@ describe("Student 1",function(){
 		})
 	})
 	// Vote/Un-vote quiz for review from timeline 
-	xdescribe("Vote/Un-vote quiz for review from timeline",function(){  
+	describe("Vote/Un-vote quiz for review from timeline",function(){  
 		it("should open timeline",function(){
 			student_lec.open_timeline()
 		})
@@ -156,7 +156,7 @@ describe("Student 1",function(){
 		})
 	})
 	// All student shortcuts functionality
-	xdescribe("All student shortcuts functionality",function(){  	
+	describe("All student shortcuts functionality",function(){  	
 		// q for question
 		it('should add a public question', function(){
 			//// Cancel discussion question
@@ -216,7 +216,17 @@ describe("Student 1",function(){
 	})
 
 	// Replay button at the end of a student video
-	xdescribe("Replay button at the end of a student video",function(){  
+	describe("Replay button at the end of a student video",function(){  
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_student_course(1)
+		})
+		it("should open first module",function(){
+			navigator.module(1).open()
+			navigator.module(1).item(1).open()
+			navigator.close()
+			video.wait_till_ready()
+		})
 		it('should replay the lecture again', function(){	
 			video.play()
 			expect(student_lec.next_button.isDisplayed()).toEqual(false)
@@ -257,7 +267,7 @@ describe("Student 1",function(){
 
 	})
 	// Case where a student retry a quiz through the button 
-	xdescribe("Case where a student retry a quiz through the button",function(){  
+	describe("Case where a student retry a quiz through the button",function(){  
 			it("should seek video to 19%",function(){
 				video.play()
 				video.seek(19)
@@ -287,18 +297,18 @@ describe("Student 1",function(){
 			it('should request that the question not be reviewed in class', function(){
 				student_lec.retry_previous_question()
 			})
-			it('should expect OCQ quiz', function(){
-				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
-			})
-			it("should answer OCQ quiz",function(){
-				student_lec.mark_answer(3)
-				student_lec.check_answer()
-			})
+			// it('should expect OCQ quiz', function(){
+			// 	expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			// })
+			// it("should answer OCQ quiz",function(){
+			// 	student_lec.mark_answer(3)
+			// 	student_lec.check_answer()
+			// })
 	})
 
 	// Markers in timeline
 	// Student annotations display
-	xdescribe("Markers in timeline && Student annotations display",function(){  
+	describe("Markers in timeline && Student annotations display",function(){  
 		it("should open timeline",function(){
 			student_lec.open_timeline()
 		})

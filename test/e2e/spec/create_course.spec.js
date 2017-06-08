@@ -34,10 +34,8 @@ describe("Email domain .uu.nl is prevented from sign up",function(){
 		})
 })
 
-
-
 describe("Need an 'add course URL' and  Enable/disable registration",function(){
-	describe("teacher ",function(){		
+	describe("teacher ",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
@@ -165,7 +163,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			// header.logout()
 		})
-		it('should get the enrollment URL ', function(){
+		it('should logout ', function(){
 			// browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			// sleep(4000)
 			header.logout()
@@ -174,6 +172,8 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			console.log(enrollment_url)
 			login_page.sign_in(params.student3.email, params.password)
 			browser.get(enrollment_url);
+		})		
+		it('should enroll student 3 through URL LINK ', function(){
 			new_course.disable_student_email_reminders_button_click()
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
@@ -216,5 +216,65 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 
 
 	})
+})
 
+// EnrolledStudents: select student 
+// EnrolledStudents: select all 
+// EnrolledStudents: remove student 
+// Import course: changing between course selection 
+// Import course: canceling selected course 
+describe("New Course test rest of functions",function(){
+	describe("teacher ",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher1.email, params.password)
+			new_course.open()
+		})
+		// New course: validate date 
+		it('should check New course: validate date', function(){
+			var newdate = new Date();
+			newdate.setDate(newdate.getDate() + 200);
+			new_course.type_course_start_date(newdate)
+			new_course.create_button.click()
+			expect(new_course.error_start_date.getText()).toEqual('must be before end date')
+		})
+		// New course: toggle registration 
+		it('should check New course: toggle registration ', function(){
+			expect(new_course.course_disable_registration).toEqual('')
+			new_course.disable_registration_checked_button_click()
+			expect(new_course.course_disable_registration).toEqual(new_course.course_end_date)
+		})		
+		it('should check New course: toggle registration ', function(){
+			new_course.disable_registration_checked_button_click()
+			expect(new_course.course_disable_registration).toEqual('')
+			expect(new_course.course_disable_registration_field.isDisplayed()).toBe(false)
+		})
+		// New course: toggle domain 
+		it('should check New course: toggle registration ', function(){
+			expect(new_course.registration_domain_button.getText()).toContain('All')
+			new_course.registration_domain_button_click()
+			new_course.domain_custom_button_click()
+			new_course.registration_domain_modal_close_button_click()
+			expect(new_course.registration_domain_button.getText()).toContain('All')
+			new_course.registration_domain_button_click()
+			new_course.domain_custom_button_click()
+			expect(new_course.domains.count()).toEqual(1)
+			new_course.domain(1).click()
+			new_course.registration_domain_modal_close_button_click()
+			expect(new_course.registration_domain_button.getText()).not.toContain('All')
+			expect(new_course.registration_domain_button.getText()).toContain('sharklasers.com')			
+			// expect(new_course.course_disable_registration).toEqual(new_course.course_end_date)
+		})		
+
+		// New course: case with invalid course date
+		it('should check New course: case with invalid course date', function(){
+			new_course.type_course_start_date("2017-a-23")
+			new_course.type_course_end_date("2017-a-23")
+			new_course.create_button.click()
+			expect(new_course.error_start_date.getText()).toEqual('not a Date')
+			expect(new_course.error_end_date.getText()).toEqual('not a Date')
+		})
+		it('should logout ', function(){
+			header.logout()
+		})
+    })
 })

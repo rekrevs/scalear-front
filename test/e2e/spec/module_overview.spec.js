@@ -47,7 +47,7 @@ describe("Student 1",function(){
 			expect(student_module_summary.module(1).course_module_title.getText()).toContain("csc-test: module 1 ")
 			expect(student_module_summary.module(1).course_module_subtitle.getText()).toContain("00:14 hours, 8 Quizzes, 3 Surveys. Due") 
 			expect(student_module_summary.module(1).remaning.getText()).toContain("Remaining: 00:00 hours, 0 Quizzes, 0 Surveys.") 
-			expect(student_module_summary.module(1).button.getText()).toEqual("Watch again")	// quiz(list) icon
+			expect(student_module_summary.module(1).watch_continue_button.getText()).toEqual("Watch again")	// quiz(list) icon
 			expect(student_module_summary.module(1).items_completions.count()).toEqual(6) 
 			expect(student_module_summary.module(1).items_completion(1).tooltip.getInnerHtml()).toContain("lecture1 video quizzes")
 			expect(student_module_summary.module(1).items_completion(1).color).toContain("rgb(22, 165, 63) 100%")	
@@ -56,6 +56,9 @@ describe("Student 1",function(){
 			expect(student_module_summary.module(1).items_completion(1).type.get(1).isDisplayed()).toEqual(false)	// quiz(list) icon
 			expect(student_module_summary.module(1).items_completion(4).type.get(0).isDisplayed()).toEqual(false)	// video icon
 			expect(student_module_summary.module(1).items_completion(4).type.get(1).isDisplayed()).toEqual(true)	// quiz(list) icon
+			expect(student_module_summary.module(1).items_completion(4).tooltip.getInnerHtml()).toContain("quiz1")
+
+
 		})
 		it('should click on first video item in completion and check url contain lectures', function(){
 			student_module_summary.module(1).items_completion(1).click()
@@ -71,14 +74,37 @@ describe("Student 1",function(){
 		})
 		it('should check first online quizzes information', function(){
 			expect(student_module_summary.module(1).online_quizzes.count()).toEqual(21)
+			student_module_summary.module(1).online_quiz(1).hover_tooltip()
 			expect(student_module_summary.module(1).online_quiz(1).color).toEqual('rgba(22, 165, 63, 1)')
-			// student_module_summary.module(1).online_quiz(1).hover_tooltip()
-			// expect(student_module_summary.module(1).online_quiz(1).tooltip_title).toEqual('lecture1 video quizzes')
-			// expect(student_module_summary.module(1).online_quiz(1).tooltip_title).toEqual('correct')
-			// expect(student_module_summary.module(1).online_quiz(1).tooltip_content).toEqual('MCQ QUIZ')
-			expect(student_module_summary.module(1).online_quiz(2).color).toEqual('rgba(230, 103, 38, 1)')
-			expect(student_module_summary.module(1).online_quiz(8).color).toEqual('rgba(53, 91, 183, 1)')
+			expect(student_module_summary.module(1).online_quiz(1).tooltip_title.getText()).toContain('lecture1 video quizzes')
+			expect(student_module_summary.module(1).online_quiz(1).tooltip_title.getText()).toContain('MCQ QUIZ')
+			expect(student_module_summary.module(1).online_quiz(1).tooltip_content.getText()).toContain('correct')
+
 		})
+		it('should check first online quizzes information', function(){
+			student_module_summary.module(1).online_quiz(2).hover_tooltip()
+			expect(student_module_summary.module(1).online_quiz(2).color).toEqual('rgba(230, 103, 38, 1)')
+			expect(student_module_summary.module(1).online_quiz(2).tooltip_title.getText()).toContain('lecture1 video quizzes')
+			expect(student_module_summary.module(1).online_quiz(2).tooltip_title.getText()).toContain('OCQ QUIZ')
+			expect(student_module_summary.module(1).online_quiz(2).tooltip_content.getText()).toContain('not gotten the answer correct')
+		})
+		it('should check first online quizzes information', function(){
+			student_module_summary.module(1).online_quiz(8).hover_tooltip()
+			expect(student_module_summary.module(1).online_quiz(8).color).toEqual('rgba(53, 91, 183, 1)')
+			expect(student_module_summary.module(1).online_quiz(8).tooltip_title.getText()).toContain('lecture3 video surveys')
+			expect(student_module_summary.module(1).online_quiz(8).tooltip_title.getText()).toContain('OCQ SURVEY')
+			expect(student_module_summary.module(1).online_quiz(8).tooltip_content.getText()).toContain('answered this survey')
+		})
+		it('should check first online quizzes information', function(){
+			student_module_summary.module(1).online_quiz(11).hover_tooltip()
+			expect(student_module_summary.module(1).online_quiz(10).color).toEqual('rgba(22, 165, 63, 1)')
+			expect(student_module_summary.module(1).online_quiz(11).color).toEqual('rgba(85, 26, 139, 1)')			
+			expect(student_module_summary.module(1).online_quiz(11).tooltip_title.getText()).toContain('quiz1')
+			expect(student_module_summary.module(1).online_quiz(11).tooltip_title.getText()).toContain('free question')
+			expect(student_module_summary.module(1).online_quiz(11).tooltip_content.getText()).toContain('not been checked')
+			expect(student_module_summary.module(1).online_quiz(15).color).toEqual('rgba(230, 103, 38, 1)')			
+			expect(student_module_summary.module(1).online_quiz(21).color).toEqual('rgba(53, 91, 183, 1)')			
+		})						
 		// Case where there’s a time parameter in URL
 		it('should click on first online quiz check url contain lectures and check time of video', function(){
 			student_module_summary.module(1).online_quiz(1).click()
@@ -94,6 +120,24 @@ describe("Student 1",function(){
 			video.current_time.then(function(result){expect(result).toEqual("0:00:57")} )
 			dashboard.open()
 		})
+		it('should click on normal question quiz check url contain quizzes ', function(){
+			student_module_summary.module(1).online_quiz(11).click()
+			sleep(5000)
+			expect(browser.driver.getCurrentUrl()).toContain('courseware/quizzes/')
+			dashboard.open()
+		})		
+		it('should click on normal question quiz check url contain quizzes ', function(){
+			student_module_summary.module(1).online_quiz(21).click()
+			sleep(5000)
+			expect(browser.driver.getCurrentUrl()).toContain('courseware/quizzes/')
+			dashboard.open()
+		})		
+		it('should click watch again button', function(){
+			student_module_summary.module(1).watch_continue_button.click()
+			sleep(5000)
+			expect(browser.driver.getCurrentUrl()).toContain('courseware/lectures/')
+			dashboard.open()
+		})				
 		it('should check first online quizzes information', function(){
 			expect(student_module_summary.module(1).question_title.getText()).toContain('(1 of 2 answered)')
 			
@@ -141,6 +185,11 @@ describe("Student 1",function(){
 			expect(student_module_summary.module(2).online_quiz(3).color).toEqual('rgba(230, 103, 38, 1)')
 			expect(student_module_summary.module(2).online_quiz(5).color).toEqual('rgba(22, 165, 63, 1)')
 			expect(student_module_summary.module(2).online_quiz(8).color).toEqual('rgba(53, 91, 183, 1)')
+			student_module_summary.module(2).online_quiz(12).hover_tooltip()
+			expect(student_module_summary.module(2).online_quiz(12).color).toEqual('rgba(164, 169, 173, 1)')			
+			expect(student_module_summary.module(2).online_quiz(12).tooltip_title.getText()).toContain('quiz3')
+			expect(student_module_summary.module(2).online_quiz(12).tooltip_title.getText()).toContain('match question')
+			expect(student_module_summary.module(2).online_quiz(12).tooltip_content.getText()).toContain('did not answer this quiz')
 		})
 	})
 	it('should logout',function(){
@@ -158,11 +207,47 @@ describe("Student 2",function(){
 	})
 	it('should check main information', function(){
 		expect(student_module_summary.module(1).remaning.getText()).toContain("Remaining: 00:00 hours, 1 Quizzes, 1 Surveys.") 
-		expect(student_module_summary.module(1).button.getText()).toEqual("Watch again")	// quiz(list) icon
+		expect(student_module_summary.module(1).watch_continue_button.getText()).toEqual("Watch again")	// quiz(list) icon
 		expect(student_module_summary.module(2).remaning.getText()).toContain("Remaining: 00:14 hours, 8 Quizzes, 3 Surveys.") 
-		expect(student_module_summary.module(2).button.getText()).toEqual("Start watching")	// quiz(list) icon
-
+		expect(student_module_summary.module(2).watch_continue_button.getText()).toEqual("Start watching")	// quiz(list) icon
 	})
+	it('should check first online quizzes information', function(){
+		expect(student_module_summary.module(1).online_quizzes.count()).toEqual(21)
+
+		expect(student_module_summary.module(1).online_quiz(1).color).toEqual('rgba(22, 165, 63, 1)')
+		expect(student_module_summary.module(1).online_quiz(5).color).toEqual('rgba(237, 148, 103, 1)')
+		expect(student_module_summary.module(1).online_quiz(7).color).toEqual('rgba(53, 91, 183, 1)')
+		expect(student_module_summary.module(1).online_quiz(14).color).toEqual('rgba(230, 103, 38, 1)')
+		student_module_summary.module(1).online_quiz(12).hover_tooltip()
+		expect(student_module_summary.module(1).online_quiz(12).color).toEqual('rgba(164, 169, 173, 1)')			
+		expect(student_module_summary.module(1).online_quiz(12).tooltip_title.getText()).toContain('quiz1')
+		expect(student_module_summary.module(1).online_quiz(12).tooltip_title.getText()).toContain('match question')
+		expect(student_module_summary.module(1).online_quiz(12).tooltip_content.getText()).toContain('did not answer this quiz')
+	})	
+	it('should check first online quizzes information', function(){
+		student_module_summary.module(2).online_quiz(1).hover_tooltip()
+		expect(student_module_summary.module(2).online_quiz(1).color).toEqual('rgba(164, 169, 173, 1)')			
+		expect(student_module_summary.module(2).online_quiz(1).tooltip_title.getText()).toContain('Please, complete this video')
+		expect(student_module_summary.module(2).online_quiz(1).tooltip_content.getText()).toContain('did not answer this quiz')
+		student_module_summary.module(2).online_quiz(1).click()
+		sleep(1000)
+		expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+	})
+	it('should check first online quizzes information', function(){
+		student_module_summary.module(2).online_quiz(15).hover_tooltip()
+		expect(student_module_summary.module(2).online_quiz(15).color).toEqual('rgba(164, 169, 173, 1)')			
+		expect(student_module_summary.module(2).online_quiz(15).tooltip_title.getText()).toContain('Please, complete this quiz')
+		expect(student_module_summary.module(2).online_quiz(15).tooltip_content.getText()).toContain('did not answer this quiz')
+		student_module_summary.module(2).online_quiz(15).click()
+		sleep(1000)
+		expect(browser.driver.getCurrentUrl()).toContain('dashboard')
+	})	
+	it('should click on first online quiz check url contain lectures and check time of video', function(){
+		student_module_summary.module(2).online_quiz(12).click()
+		sleep(5000)
+		expect(browser.driver.getCurrentUrl()).toContain('courseware/quizzes/')
+		dashboard.open()
+	})	
 	it('should logout',function(){
 		header.logout()
 	})

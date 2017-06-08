@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
       .then(function(user) {
         $scope.current_user = user
-        // $scope.privacyPopover();
+        $scope.privacyPopover();
       })
 
     $scope.player.events.onEnd = function() {

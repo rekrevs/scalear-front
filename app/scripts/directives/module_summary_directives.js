@@ -883,7 +883,7 @@ angular.module('scalearAngularApp')
                   if( item.type == 'lecture' && online_quiz['required']  &&  ( (online_quiz['data'][0] ==  'self_never_tried' && !online_quiz['data'][1]) || (online_quiz['data'][0] ==  'self_never_tried' && online_quiz['data'][1] == 'group_never_tried' )   ) ){
                     scope.online_quiz_name[online_quiz.id] = complete_the_video
                   }
-                  if( item.type == 'quiz' && online_quiz['required']  && (online_quiz['data'][0] ==  'self_never_tried' && !online_quiz['data'][1]) ){
+                  if( item.type == 'quiz' && online_quiz['required']  && ((online_quiz['data'][0] ==  'self_never_tried') && !online_quiz['data'][1]) ){
                     scope.online_quiz_name[online_quiz.id] = complete_the_quiz
                   }
                   //  For invideo lecture QUIZZ  NOT for inclass video

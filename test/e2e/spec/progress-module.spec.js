@@ -51,7 +51,10 @@ var modules_items = {
 						{title: 'Public Question', type:'public', time:roundTimeToPercentage(35, total_duration), likes:'2', flags:'1', screen_name:params.student1.online_name},
 						{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:'0', flags:'0', screen_name:params.student2.online_name}
 					],
-					'confused':[],
+					'confused':[
+						{title:'Confused'},
+						{title:'Really Confused'}
+					],
 					},
 					{
 					'name':'lecture2 text quizzes',
@@ -218,10 +221,10 @@ describe("check course review", function(){
 				navigator.module(1).open()
 				element(by.className('module-review')).click()
 			})
-			xit('should have a video container', function(){
+			it('should have a video container', function(){
 				expect(element(by.id('progress_lec_video')).isPresent()).toEqual(true)
 			})
-			xit('should display the module progress chart showing that the two students finished on time', function(){
+			it('should display the module progress chart showing that the two students finished on time', function(){
 				refresh()
 				sleep(10000)
 				expect(module_progress.getStudentCompletionChartValueAt(1)).toContain('1')
@@ -240,20 +243,37 @@ describe("check course review", function(){
 				// did not try grey
 				module_progress.getQuizCompletionChartValueAt(1,1).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
 				module_progress.getQuizCompletionChartValueAt(1,8).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
+				module_progress.getQuizCompletionChartValueAt(1,21).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
 				// survey blue 
-				module_progress.getQuizCompletionChartValueAt(3,1).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
-				module_progress.getQuizCompletionChartValueAt(3,2).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
+				module_progress.getQuizCompletionChartValueAt(3,1).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 7
+				module_progress.getQuizCompletionChartValueAt(3,2).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 8
+				module_progress.getQuizCompletionChartValueAt(3,3).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 19
+				module_progress.getQuizCompletionChartValueAt(3,5).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 21
+				// purble 
+				module_progress.getQuizCompletionChartValueAt(5,1).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 11
+				module_progress.getQuizCompletionChartValueAt(5,3).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 16
+				// incorrect final  dark orange
+				module_progress.getQuizCompletionChartValueAt(7,2).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 2
 				// incorrect first  lite_orange  
-				module_progress.getQuizCompletionChartValueAt(9,2).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
-				module_progress.getQuizCompletionChartValueAt(9,4).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})				
+				module_progress.getQuizCompletionChartValueAt(9,4).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 4
+				module_progress.getQuizCompletionChartValueAt(9,5).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})	// 5			
+				module_progress.getQuizCompletionChartValueAt(9,6).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 6
+				// incorrect quiz dark orange  
+				module_progress.getQuizCompletionChartValueAt(11,6).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 14
+				module_progress.getQuizCompletionChartValueAt(11,7).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})	// 15			
+				module_progress.getQuizCompletionChartValueAt(11,9).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 17
 				// correct first dark green
-				module_progress.getQuizCompletionChartValueAt(13,1).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
-				module_progress.getQuizCompletionChartValueAt(13,2).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
-				module_progress.getQuizCompletionChartValueAt(13,3).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
+				module_progress.getQuizCompletionChartValueAt(15,1).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 1 
+				module_progress.getQuizCompletionChartValueAt(15,2).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 2
+				module_progress.getQuizCompletionChartValueAt(15,3).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 3
+				// correct quiz dark green
+				module_progress.getQuizCompletionChartValueAt(17,1).then(function(count){expect( Math.floor(count/16) ).toEqual(1)}) // 9
+				module_progress.getQuizCompletionChartValueAt(17,3).then(function(count){expect( Math.floor(count/16) ).toEqual(0)}) // 11
+				module_progress.getQuizCompletionChartValueAt(17,10).then(function(count){expect( Math.floor(count/16) ).toEqual(2)}) // 18
 				// Review yellow
-				module_progress.getQuizCompletionChartValueAt(15,1).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
-				module_progress.getQuizCompletionChartValueAt(15,3).then(function(count){expect( Math.floor(count/16) ).toEqual(0)})
-				module_progress.getQuizCompletionChartValueAt(15,4).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
+				module_progress.getQuizCompletionChartValueAt(19,1).then(function(count){expect( Math.floor(count/16) ).toEqual(1)})
+				module_progress.getQuizCompletionChartValueAt(19,3).then(function(count){expect( Math.floor(count/16) ).toEqual(0)})
+				module_progress.getQuizCompletionChartValueAt(19,4).then(function(count){expect( Math.floor(count/16) ).toEqual(2)})
 				// QuizCompletionChartTooltip
 				expect(module_progress.QuizCompletionChartTooltip(1,1).getText()).toEqual('Review Quiz')
 				expect(module_progress.QuizCompletionChartTooltip(1,1).isDisplayed()).toBe(true)
@@ -261,22 +281,24 @@ describe("check course review", function(){
 				// expect(module_progress.getStudentCompletionChartValueAt(6)).toContain('Complete')
 			})
 
-			xit('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
+			it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
 				refresh()
 				expect(module_progress.module_items.count()).toBe(modules_items['New Module'].length)
 				modules_items['New Module'].forEach(function(item, i){
 					var total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
 					expect(module_progress.module_item(i+1).items.count()).toBe(total)
-
 					var summary = "("
 					if(item.duration)
 						summary+=item.duration+', '
 					summary+=(item.questions.length+item.free_text.length) +' Questions)'
 					var main_title = item.name+" "+ summary
 					expect(module_progress.module_item(i+1).title).toContain(main_title)
+					console.log(main_title)
+					console.log(total)
+					// console.log(module_progress.module_item(i+1).items.count())
 				})
 			})
-			xdescribe('First lecture',function(){
+			describe('First lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][0].questions[0]
 					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
@@ -310,7 +332,7 @@ describe("check course review", function(){
 					//  Quiz 2
 					refresh()
 					sleep(5000)
-					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(9)).toBe('1')// incorrect first time Answer 1
+					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(13)).toBe('1')// incorrect first time Answer 1
 					refresh()
 					sleep(5000)
 					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(2)).toBe('1')// correct first time answer 2 
@@ -379,7 +401,7 @@ describe("check course review", function(){
 				})
 
 			})
-			xdescribe('Second Lecture',function(){
+			describe('Second Lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][1].questions[0]
 					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
@@ -435,7 +457,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1') // correct first time answer 3		
 					refresh()
 					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(6)).toBe('1') // correct final time answer 3		
+					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(6)).toBe('1') // correct final time answer 2		
 					refresh()
 					sleep(5000)
 					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(7)).toBe('1') // correct final time answer 3												
@@ -450,7 +472,7 @@ describe("check course review", function(){
 					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')
 				})
 			})
-			xdescribe('Third Lecture',function(){
+			describe('Third Lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][2].questions[0]
 					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
@@ -490,7 +512,7 @@ describe("check course review", function(){
 					expect(module_progress.time_estimate_total_time).toEqual('Total In-Class Time:\n0 minutes')
 				})
 			})
-			xdescribe('Quiz 1',function(){
+			describe('Quiz 1',function(){
 				it('should display correct quiz titles',function(){
 					sleep(5000)
 					var question = modules_items['New Module'][3].questions[0]
@@ -548,7 +570,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(4).freetextquestion(2).grade(1)).toEqual(discussion.answers[0].grade)
 				})
 			})
-			xdescribe('Quiz 2',function(){
+			describe('Quiz 2',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][4].questions[0]
 					expect(module_progress.module_item(5).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
@@ -698,7 +720,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(5).freetextquestion(2).grade(2)).toEqual(discussion.answers[1].grade)
 				})
 			})
-			xdescribe('Survey',function(){
+			describe('Survey',function(){
 				it('should display correct Survey titles',function(){
 					var question = modules_items['New Module'][5].questions[0]
 					expect(module_progress.module_item(6).question_quiz(1).quiz_title).toEqual('Title: '+question.title+' ('+question.type+')')
@@ -837,7 +859,7 @@ describe("check course review", function(){
 						it("should delete discussion post",function(){
 							student_lec.lecture(1).discussion(1).delete()
 							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-							expect(student_lec.lecture(1).items.count()).toEqual(3)
+							expect(student_lec.lecture(1).items.count()).toEqual(8)
 						})
 						it("should logout",function(){
 							student_lec.open_timeline()
@@ -860,7 +882,7 @@ describe("check course review", function(){
 						it("should delete discussion post",function(){
 							student_lec.lecture(1).discussion(1).delete()
 							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-							expect(student_lec.lecture(1).items.count()).toEqual(3)
+							expect(student_lec.lecture(1).items.count()).toEqual(5)
 						})
 						it("should logout",function(){
 							student_lec.open_timeline()

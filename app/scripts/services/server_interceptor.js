@@ -145,8 +145,7 @@ angular.module('scalearAngularApp')
             $interval.cancel($rootScope.stop);
             $rootScope.stop = undefined;
           }
-
-          ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["errors"] === 'undefined') ? rejection.data : rejection.data["errors"]), 'errorMessage', 4000, "error");
+          ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["errors"] === 'undefined') ? rejection.data['error'] : rejection.data["errors"]), 'errorMessage', 4000, "error");
           $state.go("login")
         }
 

@@ -14,7 +14,7 @@ var OnlineQuiz = function(elem){
 OnlineQuiz.prototype= Object.create({},{
 	color:{get:function(){return this.field.element(by.tagName('div')).getCssValue('background-color') }},
 	hover_tooltip:{value:function(){browser.actions().mouseMove(this.field).perform();return 0 }},
-	tooltip_title:{get:function(){return element(by.css('.popover-title')); }},
+	tooltip_title:{get:function(){return element(by.id('student_popover')).element(by.css('.popover-title')); }},
 	tooltip_content:{get:function(){return element(by.id('student_popover')).element(by.css('.popover-content')); }},
 	click:{value:function(){this.field.click()}},
 })
@@ -35,7 +35,7 @@ Module.prototype= Object.create({},{
 	// question:{value:function(num){return new Question(this.questions.get(num-1))}},
 	question:{value:function(num){return this.questions.get(num-1)}},
 	question_title:{get:function(){return this.field.all(by.css('[ng-show="moduledata.posts_total"]'))}},
-	button:{get:function(){return this.field.element(by.css('[ng-show="continue_button"]'))}},
+	watch_continue_button:{get:function(){return this.field.element(by.css('[ng-show="continue_button"]'))}},
 	
 })
 var StudentModuleSummary = function () {};

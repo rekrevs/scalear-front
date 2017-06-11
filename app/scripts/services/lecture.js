@@ -153,6 +153,7 @@ angular.module('scalearAngularApp')
         delete modified_lecture.class_name;
         delete modified_lecture.className;
         delete modified_lecture.timeline;
+        delete modified_lecture.selected;
 
         return Lecture.update({
             course_id: lecture.course_id,

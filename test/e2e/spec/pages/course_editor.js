@@ -18,6 +18,8 @@ CourseEditor.prototype = Object.create({}, {
 	// survey_item:{get: function(){return element(by.id('survey_item'))}},
 	// link_item:{get: function(){return element(by.id('link_item'))}},
 	module:{get:function(){return element(by.id("module")) }},
+	module_required:{get:function(){return element(by.model('module.graded'))}},
+	change_module_required:{value:function(){ this.module_required.click()}},
 	// module_links:{get:function(){return element.all(by.repeater('doc in module.custom_links'))}},
 	// module_link:{value:function(num){return new Link(this.module_links.get(num-1))}},
 	// copy_button:{get:function(){return element(by.id('copy')) }},

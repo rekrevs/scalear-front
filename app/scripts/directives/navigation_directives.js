@@ -193,7 +193,7 @@ angular.module('scalearAngularApp')
         scope.$on('item_done', function(ev, item) {
           var time = 0
           if(!ContentNavigator.getStatus()) {
-            ContentNavigator.open()
+            // ContentNavigator.open()
             time = 700
           }
           $timeout(function() {
@@ -240,15 +240,15 @@ angular.module('scalearAngularApp')
 
         scope.showModuleCourseware = function(module, event) {
           scope.currentmodule = module
-          if(MobileDetector.isPhone()) {
-            $timeout(function() {
-              ContentNavigator.close()
-            })
-            // $state.go('course.module.student_inclass', { 'module_id': module.id })
-            $state.go("course.module.courseware.overview", {'module_id': module.id})
-          } else {
-            $state.go("course.module.courseware.overview", {'module_id': module.id})
-          }
+          // if(MobileDetector.isPhone()) {
+          //   $timeout(function() {
+          //     ContentNavigator.close()
+          //   })
+          //   // $state.go('course.module.student_inclass', { 'module_id': module.id })
+          //   $state.go("course.module.courseware.overview", {'module_id': module.id})
+          // } else {
+          $state.go("course.module.courseware.overview", {'module_id': module.id})
+          //}
           event.stopPropagation()
         }
 
@@ -261,10 +261,11 @@ angular.module('scalearAngularApp')
             $log.debug(item)
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
-              // if(MobileDetector.isPhone()){
-              // 	$timeout(function(){
-              // 		ContentNavigator.close()
-              // 	})
+            if(MobileDetector.isPhone()){
+            	$timeout(function(){
+            		ContentNavigator.close()
+            	})
+            }
             // if(!MobileDetector.isPhone()) {
               $state.go('course.module.' + mode + '.' + item_type, params)
             // }
@@ -361,6 +362,12 @@ angular.module('scalearAngularApp')
           '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'confused\')">' +
           '<input id="showConfusedCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'confused\')" />' +
           '<span style="font-size:12px" translate>course_settings.show_confused</span>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'marker\')">' +
+          '<input id="showMarkersCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'marker\')" />' +
+          '<span style="font-size:12px" translate>course_settings.show_markers</span>' +
           '</div>' +
           '</li>' +
           '<li>' +

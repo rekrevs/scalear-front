@@ -201,6 +201,11 @@ angular.module('scalearAngularApp')
             data: [],
             color: "#ED9467" //Orange:
           },
+          not_correct_quiz: {
+            name: $translate.instant("editor.incorrect") ,
+            data: [],
+            color: "#E66726" //E66726 Orange:
+          },          
           tried_correct_finally: {
             name: $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')' ,
             data: [],
@@ -211,6 +216,11 @@ angular.module('scalearAngularApp')
             data: [],
             color: "#16A53F" // Green
           },
+          correct_quiz: {
+            name: $translate.instant("editor.correct") ,
+            data: [],
+            color: "#16A53F" // 16A53F Green
+          },          
           review_vote: {
             name: $translate.instant("dashboard.voted_for_review"),
             data: [],
@@ -230,12 +240,12 @@ angular.module('scalearAngularApp')
               Object.keys(video_quiz).forEach(function(id) {
                 quiz_xaxis_categories.push('<b>' + video_quiz[id]['lecture_name'] + ": </b>" + video_quiz[id]['quiz_name'])
                 Object.keys(video_quiz[id]['data']).forEach(function(quiz_bar) {
-                  if (quiz_bar == 'review_vote') {
+                   if ( video_quiz[id]['data'][quiz_bar] == 'null') {
+                    quiz_completion_data_series[quiz_bar].data.push(null)
+                  }
+                  else if (quiz_bar == 'review_vote') {
                     scope.review_vote_exist = scope.review_vote_exist || (video_quiz[id]['data'][quiz_bar] > 0)
                     quiz_completion_data_series[quiz_bar].data.push(video_quiz[id]['data'][quiz_bar] * -1)
-                  }
-                  else if ( video_quiz[id]['data'][quiz_bar] == 'null') {
-                    quiz_completion_data_series[quiz_bar].data.push(null)
                   }
                   else {
                     if (video_quiz[id]['inclass']) {
@@ -251,8 +261,10 @@ angular.module('scalearAngularApp')
                 } else {
                   quiz_completion_data_series['not_correct_many_tries'].data.push(null)
                   quiz_completion_data_series['not_correct_first_try'].data.push(null)
+                  quiz_completion_data_series['not_correct_quiz'].data.push(null)
                   quiz_completion_data_series['tried_correct_finally'].data.push(null)
                   quiz_completion_data_series['correct_first_try'].data.push(null)
+                  quiz_completion_data_series['correct_quiz'].data.push(null)
                   quiz_completion_data_series['not_checked'].data.push(null)
                 }
               })
@@ -348,9 +360,9 @@ angular.module('scalearAngularApp')
                     }
                   }
                 },
-                tooltip: { 
+                tooltip: {
                   enabled: false,
-                },        
+                },
                 legend: { enabled: false }
               },
               size: {
@@ -362,10 +374,8 @@ angular.module('scalearAngularApp')
                 gridLineWidth: 0,
                 labels: { enabled: false },
                 lineColor: 'transparent',
-                labels: { enabled: false },
                 lineWidth: 0,
                 minorGridLineWidth: 0,
-                lineColor: 'transparent',
                 minorTickLength: 0,
                 tickLength: 0
 
@@ -479,6 +489,11 @@ angular.module('scalearAngularApp')
                 color: "#ED9467" //Orange:
               }, {
                 showInLegend: false,
+                name: $translate.instant("editor.incorrect") ,
+                data: [quiz_data.data['not_correct_quiz']],
+                color: "#E66726" //Orange:
+              }, {
+                showInLegend: false,
                 name: $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')' ,
                 data: [quiz_data.data['tried_correct_finally']],
                 color: "#1bca4d" //Pale Green:
@@ -486,6 +501,11 @@ angular.module('scalearAngularApp')
                 showInLegend: false,
                 name: $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')' ,
                 data: [quiz_data.data['correct_first_try']],
+                color: "#16A53F" // Green
+              }, {
+                showInLegend: false,
+                name: $translate.instant("editor.correct") ,
+                data: [quiz_data.data['correct_quiz']],
                 color: "#16A53F" // Green
               }, {
                 showInLegend: false,
@@ -497,8 +517,8 @@ angular.module('scalearAngularApp')
             scope.left += "<div style='margin-bottom: 26px;'> "
             scope.quiz_only_one_bar_config.series.forEach(function(quiz) {
               var count = Math.abs(quiz.data[0])
-              if (quiz.data[0] != "null"){
-                if(quiz.name == 'Voted for review'){
+              if (quiz.data[0] != "null" && !isNaN(quiz.data[0])){
+                if(quiz.name == 'Voted for review' ){
                   scope.left += '</div><div><b>' + count + "  (" + Math.round((count / scope.moduledata.students_count) * 100) + '%)     ' + '<span style="color:' + quiz.color + '">' + quiz.name + '</span></b></div>'
                 }
                 else{
@@ -649,7 +669,7 @@ angular.module('scalearAngularApp')
       }
     }
   }])
-  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', 'CourseEditor', function(ScalearUtils, $filter, $translate, $state, CourseEditor) {
+  .directive('studentModuleSummary', ['ScalearUtils', '$filter', '$translate', '$state', 'CourseEditor','ModuleModel', function(ScalearUtils, $filter, $translate, $state, CourseEditor, ModuleModel) {
     return {
       scope: {
         moduledata: '='
@@ -657,7 +677,6 @@ angular.module('scalearAngularApp')
       replace: true,
       templateUrl: "/views/student/progress/student_module_summary.html",
       link: function(scope) {
-
         var unwatch = scope.$watch("moduledata.due_date_string",function(val){
           if(val){
             scope.moduledata.hour_min = ScalearUtils.toHourMin(scope.moduledata.duration)
@@ -668,7 +687,7 @@ angular.module('scalearAngularApp')
               scope.moduledata.quiz_count + " " +
               $translate.instant('global.quizzes') + ", " +
               scope.moduledata.survey_count + " " +
-              $translate.instant('global.surveys') + ". " 
+              $translate.instant('global.surveys') + ". "
               // $translate.instant('events.due') + " " +
               // $filter('date')(new Date(scope.moduledata.due_date_string), 'dd-MMMM-yyyy') + " " +
               // $translate.instant('global.at') + " " +
@@ -678,10 +697,10 @@ angular.module('scalearAngularApp')
             if (scope.moduledata.first_lecture == -1) {
               scope.continue_button = null
             } else if (scope.moduledata.module_done_perc >0 &&  scope.moduledata.module_done_perc < 100 && scope.moduledata.last_viewed > -1) {
-              scope.continue_button = $translate.instant('dashboard.continue_watching') 
+              scope.continue_button = $translate.instant('dashboard.continue_watching')
               scope.next_lecture.id = scope.moduledata.last_viewed
             } else if (scope.moduledata.module_done_perc == 100 && scope.moduledata.first_lecture != -1) {
-              scope.continue_button = $translate.instant('dashboard.watch_again') 
+              scope.continue_button = $translate.instant('dashboard.watch_again')
 
               scope.next_lecture.id = scope.moduledata.first_lecture
             } else if (scope.moduledata.module_done_perc == 0 ) {
@@ -707,7 +726,7 @@ angular.module('scalearAngularApp')
         scope.goTo = function(course_id, group_id, lecture_id, time) {
           $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
         }
-        
+
         scope.goToLectureQuiz = function(course_id, group_id, id, type) {
           console.log("in function")
           if(type == 'lecture'){
@@ -732,6 +751,8 @@ angular.module('scalearAngularApp')
         scope.online_quiz_color = {}
         scope.online_quiz_group_color = {}
         var complete_the_video = "("+ $translate.instant('dashboard.complete_video')+")"
+        var complete_the_quiz = "("+ $translate.instant('dashboard.complete_quiz')+")"
+
         scope.quiz_completion_data_series = {
           group_never_tried: {
             name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.group")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.shown_top"),
@@ -780,12 +801,20 @@ angular.module('scalearAngularApp')
             group_name: $translate.instant("dashboard.answered_but_group") +"<b>"+ $translate.instant("dashboard.invdividual")+"</b> "+ $translate.instant("dashboard.answer")+ $translate.instant("dashboard.not_checked_group") ,
             color: "#551a8b" //purble
           },
+          self_not_checked_question: {
+            name: $translate.instant("dashboard.answered_but_not_checked_question") ,
+            color: "#551a8b" //purble
+          },          
           self_tried_not_correct_first: {
             name: $translate.instant("dashboard.tried_not_correct_first") +"<span style='color:#ED9467'>"+$translate.instant("dashboard.tried_not_correct_first_answer")+"</span>.",
             group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
             "<span style='color:#ED9467'>"+$translate.instant("dashboard.incorrect")+"</span>"+ $translate.instant("dashboard.tried_once") ,
             color: "#ED9467" //Orange:
           },
+          self_not_correct_question: {
+            name: $translate.instant("dashboard.self_not_correct_question") +"<span style='color:#ED9467'>"+$translate.instant("dashboard.tried_not_correct_first_answer")+"</span>.",
+            color: "#E66726" //Orange:
+          },          
           self_tried_not_correct_finally: {
             name: $translate.instant("dashboard.tried_not_correct_last") +"<span style='color:#E66726'>"+$translate.instant("dashboard.tried_not_correct_first_answer")+"</span>.",
             group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
@@ -803,7 +832,11 @@ angular.module('scalearAngularApp')
             group_name: $translate.instant('dashboard.your')+" <b>"+ $translate.instant("dashboard.individual")+"</b> "+ $translate.instant("dashboard.answer")+$translate.instant("dashboard.was")+
             "<span style='color:#16A53F'>"+$translate.instant("editor.correct")+"</span>" + $translate.instant("dashboard.on_first_try"),
             color: "#16A53F" // Green
-          }
+          },
+          self_correct_question: { // Quiz
+            name: $translate.instant("dashboard.you_answered") +"<span style='color:#16A53F'>"+$translate.instant("dashboard.correct")+"</span>." ,
+            color: "#16A53F" // Green
+          }          
         }
 
         var unwatch = scope.$watch("moduledata.remaining_duration", function(val){
@@ -823,6 +856,7 @@ angular.module('scalearAngularApp')
             scope.online_popover = {}
             scope.online_quiz_name = {}
             scope.content = {}
+            scope.lecture_quiz_boolean = {}
             var online_quiz_index = 0
 
             scope.moduledata.module_completion.forEach(function(item) {
@@ -834,10 +868,10 @@ angular.module('scalearAngularApp')
               item.item_style = {}
               item.quiz_bar_style = {}
 
-              if (item.type == 'lecture') {
+              // if (item.type == 'lecture') {
+              if (item['online_quizzes']){
                 item.item_style["width"] = scope.group_width * item['online_quizzes'].length + "%"
                 item.quiz_bar_style["width"] = 100 / item['online_quizzes'].length + "%"
-
                 item['online_quizzes'].forEach(function(online_quiz) {
                   scope.online_quiz_name[online_quiz.id] = "<b>"+item.item_name+ "</b>: "+ online_quiz['quiz_name']
                   if(online_quiz['inclass']){
@@ -846,18 +880,22 @@ angular.module('scalearAngularApp')
                   if(online_quiz['distance_peer']){
                     scope.online_quiz_name[online_quiz.id] = "<b>Distance-Peer Question: </b>" + scope.online_quiz_name[online_quiz.id]
                   }
-                  if( online_quiz['required']  &&  ( (online_quiz['data'][0] ==  'self_never_tried' && !online_quiz['data'][1]) || (online_quiz['data'][0] ==  'self_never_tried' && online_quiz['data'][1] == 'group_never_tried' )   ) ){
+                  if( item.type == 'lecture' && online_quiz['required']  &&  ( (online_quiz['data'][0] ==  'self_never_tried' && !online_quiz['data'][1]) || (online_quiz['data'][0] ==  'self_never_tried' && online_quiz['data'][1] == 'group_never_tried' )   ) ){
                     scope.online_quiz_name[online_quiz.id] = complete_the_video
                   }
-
+                  if( item.type == 'quiz' && online_quiz['required']  && ((online_quiz['data'][0] ==  'self_never_tried') && !online_quiz['data'][1]) ){
+                    scope.online_quiz_name[online_quiz.id] = complete_the_quiz
+                  }
                   //  For invideo lecture QUIZZ  NOT for inclass video
                   scope.online_quiz_color[online_quiz.id] = {
                     "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][0]].color
                   }
                   scope.content[online_quiz.id] = scope.quiz_completion_data_series[online_quiz['data'][0]].name
+                  scope.lecture_quiz_boolean[online_quiz.id] = item.type == "lecture"
                   scope.online_popover[online_quiz['id']] = {
                     title: "<span style='font-size:12px;' ng-bind-html='online_quiz_name[online_quiz.id]' ></span> ",
-                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \" style='font-size:12px;' translate>dashboard.click_retry_quiz</div> " ,
+                    content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div>"+
+                      "<div ng-if='lecture_quiz_boolean[online_quiz.id]'><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \" style='font-size:12px;' translate>dashboard.click_retry_quiz</div></div>" ,
                       // "<div class='right' style='bottom: 10px;right: 10px;'>" +
                       // "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
                       // "</div>",
@@ -919,11 +957,30 @@ angular.module('scalearAngularApp')
 
 
 
-        scope.goTo = function(state , course_id, group_id, lecture_id, time , online_quiz) {
-          if ( !(online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried')) ) {
-            $state.go(state , { course_id: course_id, module_id: group_id, lecture_id: lecture_id, time: time }, { time: time })
+        scope.goTo = function(type , course_id, group_id, id, time , online_quiz) {
+          var state 
+          if(type == "lecture"){
+            state = 'course.module.courseware.lecture'
+            if ( !(online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried')) ) {
+              $state.go(state , { course_id: course_id, module_id: group_id, lecture_id: id, time: time }, { time: time })
+            }
+          }
+          else{
+            state = 'course.module.courseware.quiz'
+            if ( !(online_quiz['required']  &&  ( online_quiz['data'][0] ==  'self_never_tried')) ) {
+              $state.go(state , { course_id: course_id, module_id: group_id, quiz_id: id, time: time }, { time: time })
+            }
           }
         }
+        scope.goToLectureQuiz = function(course_id, group_id, id, type) {
+          console.log("in function")
+          if(type == 'lecture'){
+            $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
+          }
+          else{
+            $state.go("course.module.courseware.quiz", { course_id: course_id, module_id: group_id, quiz_id: id})
+          }
+        }        
 
       }
     };

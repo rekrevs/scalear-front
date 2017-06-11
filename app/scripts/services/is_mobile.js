@@ -94,6 +94,7 @@ angular.module('scalearAngularApp')
         isiPad: function() { return devices.apple.tablet; },
         isAndroidPhone: function() { return devices.android.phone; },
         isAndroidTablet: function() { return devices.android.tablet; },
+        isAndroid:function(){return devices.android.phone || devices.android.tablet}
     };
 
 });

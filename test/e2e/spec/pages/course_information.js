@@ -8,6 +8,14 @@ StudentCourseInformation.prototype = Object.create({},{
 	description:{get:function(){return element(by.binding('course.description')).getText()}},
 	prerequisites:{get:function(){return element(by.binding('course.prerequisites')).getText()}},
 	end_date:{get:function(){return element(by.binding('course.end_date')).getText()}},
+	receive_email_button:{get:function(){return element(by.css('[ng-change="course.updateStudentDueDateEmail(email_due_date)"]'))}},
+	receive_email_button_click:{value:function(){
+		this.receive_email_button.click();
+	}},
+	go_to_course_content_button:{get:function(){return element(by.id('course_content'))}},
+	go_to_course_content_button_click:{value:function(){
+		this.go_to_course_content_button.click();
+	}},	
 	open:{value:function(){
 		element(by.id('course_info')).click();
 		browser.driver.wait(function() {
@@ -25,6 +33,7 @@ CourseInformation.prototype = Object.create({}, {
 	enrollmentkey: {get:function(){return this.enrollmentkey_field.getText() }},
 	enrollment_url_field:{get: function(){return element(by.id('enrollment_url'))}},
 	enrollment_url: {get:function(){return this.enrollment_url_field.getText() }},
+	enrollment_url_click:{value:function(){this.enrollment_url_field.click()}},
 	teachers:{get:function(){return element.all(by.repeater('teacher in teachers'))}},
 	student:{get:function(){return new StudentCourseInformation()}},
 	add_teacher_button:{get:function(){return element(by.className('add-teacher-button'))}},
@@ -35,9 +44,8 @@ CourseInformation.prototype = Object.create({}, {
 	invite_button:{get:function(){return element(by.id('invite'))}},
 	invite:{value:function(){this.invite_button.click()}},
 	delete_teacher_button:{get:function(){return element(by.id("delete_teacher"))}},
-	receive_email_button_click:{value:function(){
-		this.receive_email_button.click();
-	}},
+	receive_email_button:{get:function(){return element(by.css('[ng-change="updateTeacher(teacher)"]'))}},
+	receive_email_button_click:{value:function(){this.receive_email_button.click();}},
 	disable_registration_button:{get:function(){return element(by.css('[ng-change="toggleRegistrationCheck()"]'))}},
 	disable_registration_button_click:{value:function(){this.disable_registration_button.click();}},
 	display_registration_field:{get: function(){return element(by.css('[ng-show="formData.disable_registration_checked"]'))}},

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('scalearAngularApp')
-  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ScalearUtils', 'VideoInformation', 'UserSession', function($log, $translate, Forum, $state, $rootScope, User, $filter, ScalearUtils, VideoInformation, UserSession) {
+  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ScalearUtils', 'VideoInformation', 'UserSession', '$timeout', 'MobileDetector', function($log, $translate, Forum, $state, $rootScope, User, $filter, ScalearUtils, VideoInformation, UserSession, $timeout, MobileDetector) {
     return {
       restrict: "E",
       templateUrl: "/views/forum/question_block.html",
@@ -19,8 +19,12 @@ angular.module('scalearAngularApp')
           scope.ask_button_clicked = false
           scope.choices = [{ text: $translate.instant('discussion.private_discussion'), value: 0 }, { text: $translate.instant('discussion.public_discussion'), value: 1 }];
           scope.privacy = scope.choices[scope.current_user.discussion_pref];
-          scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
-          $('.text_block').focus();
+          if(typeof scope.item.time == "number"){
+            scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
+          }
+          if(!MobileDetector.isPhone()) {
+            $timeout(function(){$('.text_block').focus()});
+          }
 
           if(scope.item.data && scope.item.data.isEdit) {
             scope.privacy = (scope.item.data.privacy == 0) ? scope.choices[0] : scope.choices[1]

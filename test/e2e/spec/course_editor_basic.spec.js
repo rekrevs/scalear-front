@@ -106,7 +106,7 @@ describe("Student", function(){
 		expect(module1.item(4).text).toContain("quiz3")
 		expect(module1.item(5).text).toContain("quiz4")
 		expect(module1.item(6).text).toContain("survey2")
-
+		module1.item(1).open()
 		expect(student_lec.timeline_items.count()).toEqual(6)
 
 		var module2 = navigator.module(2)
@@ -121,6 +121,7 @@ describe("Student", function(){
 		expect(module2.item(6).text).toContain("quiz2")
 		expect(module2.item(7).text).toContain("survey1")
 		expect(module2.item(8).text).toContain("link2")
+		module2.item(2).open()
 		expect(student_lec.timeline_items.count()).toEqual(8)
 	})
 

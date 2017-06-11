@@ -15,5 +15,8 @@
       </span>
     </h3>
   <div class="color-gray with-small-margin-bottom">{{::subtitle}}</div>
-  <a ng-show="continue_button" class="button small orange" ng-click='goToLectureQuiz(moduledata.course_id, moduledata.id, next_lecture.id , next_lecture.type)' translate >{{continue_button}}</a>
+  <div>
+    <a class="button small orange" ng-if="moduledata.has_inclass" ui-sref="course.module.student_inclass({ module_id: moduledata.id })" translate >Start In-class Session</a>
+    <a ng-show="continue_button" class="button small orange" ng-click='goToLectureQuiz(moduledata.course_id, moduledata.id, next_lecture.id , next_lecture.type)' translate >{{continue_button}}</a>
+  </div>
 </div>

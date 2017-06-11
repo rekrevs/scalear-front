@@ -19,7 +19,7 @@
         <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
         <div>
           <input name="date" type="text" datepicker-popup="" ng-model="course.start_date" ng-required="true" ng-class="{error: server_errors['start_date']}" />
-          <small class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
+          <small id="error_start_date" class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
         </div>
       </div>
       <div class="large-10 column with-small-margin-bottom no-padding left">
@@ -33,7 +33,7 @@
         <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.end_date</small>
         <div>
           <input name="date" type="text" datepicker-popup="" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}" />
-          <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
+          <small id="error_end_date" class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
         </div>
       </div>
       <div class="large-10 column with-small-margin-bottom no-padding left">
@@ -47,7 +47,7 @@
       <div class="large-10 column with-small-margin-bottom no-padding left">
         <i class="fi-x-circle size-18"></i> <small class="with-tiny-margin-left" tooltip="{{'courses.limit_registration_domain_description' | translate}}" translate>courses.limit_registration_domain</small>
         <div>
-          <a class="" ng-click="toggleDomain($event)">
+          <a id="registration_domain" class="" ng-click="toggleDomain($event)">
               <div ng-repeat="(key , domain) in course.selected_subdomain">
                 <div ng-show="domain"> {{key}}</div>
               </div>

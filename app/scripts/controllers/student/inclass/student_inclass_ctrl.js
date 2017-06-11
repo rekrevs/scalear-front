@@ -1,7 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore','CourseModel', 'ModuleModel', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore, CourseModel, ModuleModel) {
+  .controller('studentInclassCtrl', ['$scope', 'ContentNavigator', 'MobileDetector', 'Module', '$state', '$log', '$interval', 'Lecture', 'Page', 'WizardHandler', '$cookieStore', 'CourseModel', 'ModuleModel', '$timeout', function($scope, ContentNavigator, MobileDetector, Module, $state, $log, $interval, Lecture, Page, WizardHandler, $cookieStore, CourseModel, ModuleModel, $timeout) {
+
+    if (MobileDetector.isPhone()) {
+      $timeout(function() {
+        ContentNavigator.close()
+      })
+    }
 
     var self_answers = $cookieStore.get('self_answers') || []
     var group_answers = $cookieStore.get('group_answers') || []
@@ -27,44 +33,44 @@ angular.module('scalearAngularApp')
       $scope.loading = true
       getLatestStatus(function(data) {
         $scope.loading = false
-        if(data.updated) {
+        if (data.updated) {
           $scope.quiz = data.quiz
           $scope.quiz.in_group = false
           $scope.group_quiz = angular.copy($scope.quiz)
           $scope.group_quiz.in_group = true
           $scope.lecture = data.lecture
           $('.answer_choices input').attr('type', $scope.quiz.question_type == "MCQ" ? "checkbox" : "radio")
-          if(self_answers.length > 0) {
+          if (self_answers.length > 0) {
             self_answers.forEach(function(answer) {
-                var filtered_answers = $scope.quiz.answers.filter(function(a) {
-                  return a.id == answer.id
-                })
-                if(filtered_answers.length)
-                  filtered_answers[0].selected = true
+              var filtered_answers = $scope.quiz.answers.filter(function(a) {
+                return a.id == answer.id
               })
+              if (filtered_answers.length)
+                filtered_answers[0].selected = true
+            })
           }
-          if(group_answers.length > 0) {
+          if (group_answers.length > 0) {
             group_answers.forEach(function(answer) {
-                var filtered_answers = $scope.group_quiz.answers.filter(function(a) {
-                  return a.id == answer.id
-                })
-                if(filtered_answers.length)
-                  filtered_answers[0].selected = true
+              var filtered_answers = $scope.group_quiz.answers.filter(function(a) {
+                return a.id == answer.id
               })
+              if (filtered_answers.length)
+                filtered_answers[0].selected = true
+            })
           }
           $scope.note = { self: '', group: '' }
           $scope.last_note = { self: '', group: '' }
         }
 
-        if($scope.inclass_status != data.status) {
+        if ($scope.inclass_status != data.status) {
           $scope.inclass_status = data.status
           WizardHandler.wizard().goTo(states[$scope.inclass_status]) //force_state_to ||
-          if($scope.inclass_status < 2) {
+          if ($scope.inclass_status < 2) {
             emptyPreservedAnswers()
             $scope.note = { self: '', group: '' }
             $scope.last_note = { self: '', group: '' }
           }
-        } else if($scope.inclass_status == 2 || $scope.inclass_status == 3) {
+        } else if ($scope.inclass_status == 2 || $scope.inclass_status == 3) {
           $scope.showWaitNotification("Please wait for the teacher to continue.")
           $interval(function() {
             $scope.removeWaitNotification()
@@ -79,15 +85,15 @@ angular.module('scalearAngularApp')
       quiz.answers.forEach(function(ans) {
         ans.selected = false
       })
-      if($scope.inclass_status == 2) {
+      if ($scope.inclass_status == 2) {
         self_answers = []
-      } else if($scope.inclass_status == 3) {
+      } else if ($scope.inclass_status == 3) {
         group_answers = []
       }
     }
 
     var saveQuizAnswer = function(quiz, selected_answers) {
-      if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
+      if (quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
         Lecture.saveOnline({
           course_id: $state.params.course_id,
           lecture_id: $scope.lecture.id
@@ -103,17 +109,17 @@ angular.module('scalearAngularApp')
     var sendAnswers = function(quiz, note_text) {
 
       var selected_answers
-      if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
+      if (quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
         selected_answers = []
         quiz.answers.forEach(function(answer) {
-          if(answer.selected)
+          if (answer.selected)
             selected_answers.push(answer.id)
         })
-        if(selected_answers.length == 0) {
+        if (selected_answers.length == 0) {
           $scope.showNotification("lectures.messages.please_choose_an_answer")
           return false
         }
-        if(quiz.question_type == "OCQ" && selected_answers.length == 1)
+        if (quiz.question_type == "OCQ" && selected_answers.length == 1)
           selected_answers = selected_answers[0]
       }
       quiz.done = true
@@ -138,19 +144,19 @@ angular.module('scalearAngularApp')
       var selected_answers = {}
       var selected_count = 0
       var first_selected = null
-      if(quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
+      if (quiz.question_type == "OCQ" || quiz.question_type == "MCQ") {
         quiz.answers.forEach(function(answer) {
           selected_answers[answer.id] = answer.selected
-          if(answer.selected) {
+          if (answer.selected) {
             selected_count++
             first_selected = answer.id
           }
         })
-        if(selected_count == 0) {
+        if (selected_count == 0) {
           $scope.showNotification("lectures.messages.please_choose_an_answer")
           return false
         }
-        if(quiz.question_type == "OCQ" && first_selected)
+        if (quiz.question_type == "OCQ" && first_selected)
           selected_answers = first_selected
       }
       quiz.done = true
@@ -175,8 +181,8 @@ angular.module('scalearAngularApp')
     $scope.checkAnswer = function(quiz, note_text) {
       $scope.removeNotification()
       var success = quiz.quiz_type == "html" ? sendHtmlAnswers(quiz) : sendAnswers(quiz)
-      if(success){
-        if(note_text && $scope.last_note[quiz.in_group ? "group: " : "self"] !== note_text)
+      if (success) {
+        if (note_text && $scope.last_note[quiz.in_group ? "group: " : "self"] !== note_text)
           saveNote(note_text, Math.ceil(quiz.time), quiz.in_group)
         WizardHandler.wizard().next()
       }
@@ -218,24 +224,25 @@ angular.module('scalearAngularApp')
     }
 
     $scope.selectAnswer = function(answer, quiz) {
-      if(!answer.selected) {
-        if($scope.quiz.question_type == "OCQ") {
+      if (!answer.selected) {
+        if ($scope.quiz.question_type == "OCQ") {
           clearSelectedAnswer(quiz)
         }
         answer.selected = true
-        if($scope.inclass_status == 2) {
+        if ($scope.inclass_status == 2) {
           self_answers.push(answer)
-        } else if($scope.inclass_status == 3) {
+        } else if ($scope.inclass_status == 3) {
           group_answers.push(answer)
         }
-      } 
-      else {
-        if($scope.inclass_status == 2) {
+      } else {
+        if ($scope.inclass_status == 2) {
           // self_answers.splice(self_answers.indexOf(answer), 1)
-          self_answers = self_answers.filter(function(a) {return a.id != answer.id})          
-        } else if($scope.inclass_status == 3) {
+          self_answers = self_answers.filter(function(a) {
+            return a.id != answer.id })
+        } else if ($scope.inclass_status == 3) {
           // group_answers.splice(group_answers.indexOf(answer), 1)
-          group_answers = group_answers.filter(function(a) {return a.id != answer.id})
+          group_answers = group_answers.filter(function(a) {
+            return a.id != answer.id })
         }
         answer.selected = false
       }
@@ -245,7 +252,7 @@ angular.module('scalearAngularApp')
 
     $scope.retry = function(type) {
       getLatestStatus(function(data) {
-        if((type == 'self' && data.status == 3) || (type == 'group' && data.status == 4)) {
+        if ((type == 'self' && data.status == 3) || (type == 'group' && data.status == 4)) {
           $scope.showWaitNotification("Please click on 'Next' to continue.")
           $interval(function() {
             $scope.removeWaitNotification()

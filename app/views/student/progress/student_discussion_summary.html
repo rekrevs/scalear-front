@@ -11,8 +11,8 @@
     <div ng-repeat="lecture in moduledata.unanswered_questions">
       <div style="background-color:#BADAA5;padding: 5px 10px;"><b>{{lecture.name}}</b></div>
       <div ng-repeat="question in lecture.questions" ng-click='goTo(moduledata.course_id, question.group_id, question.lecture_id, question.time)' class="dashboard_question">
-        <span ng-show="question.privacy">[Public]</span>
-        <span ng-hide="question.privacy">[Privacy]</span>
+        <span ng-if="question.privacy==1">[Public]</span>
+        <span ng-if="question.privacy==0">[Private]</span>
         <span ng-bind-html="question.content"></span>
         <div class="center" style="margin-left: 50px">
           <div ng-repeat="comment in question.comments">

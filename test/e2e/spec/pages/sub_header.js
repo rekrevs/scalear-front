@@ -20,7 +20,13 @@ SubHeader.prototype= Object.create({}, {
 	open_student_list:{value:function(){
 		this.show_administrator_menu()
 		this.student_list.click();
-	}}
+	}},
+	add_students:{get:function(){return element(by.id('add_students'))}},
+	open_add_students:{value:function(){
+		this.show_administrator_menu()
+		this.add_students.click();
+	}},
+	enrollment_url:{get:function(){ return element(by.id("enrollment_message")).element(by.tagName('a'))}},
 
 })
 

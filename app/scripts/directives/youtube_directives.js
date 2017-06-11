@@ -577,10 +577,10 @@ angular.module('scalearAngularApp')
           $log.debug(video_width)
           $log.debug(((window_width - $scope.max_width) - video_width) / 2.0)
           var margin_left = ((window_width - $scope.max_width) - video_width) / 2.0;
-          if ($rootScope.is_mobile) {
-            margin_left = 0
-            video_width = "100%"
-          }
+          // if ($rootScope.is_mobile) {
+          //   margin_left = 0
+          //   video_width = "100%"
+          // }
           layer = {
             "position": "fixed",
             "top": 0,
@@ -643,6 +643,13 @@ angular.module('scalearAngularApp')
           else
             scope.duration = scope.player.controls.getDuration();
         })
+
+        if(scope.is_mobile){
+          $timeout(function(){
+            document.getElementsByClassName("progressBar")[0].addEventListener("touchstart", scope.playHeadMouseDown, true)
+
+          })
+        }
       })
 
       var repositionQuizHandles = function() {
@@ -707,28 +714,42 @@ angular.module('scalearAngularApp')
       }
 
       scope.playHeadMouseDown = function(event) {
+        console.log("down");
         onplayhead = true;
-        window.addEventListener('mousemove', scope.moveplayhead, true);
-        window.addEventListener('mouseup', scope.playHeadMouseUp, false);
 
-        window.addEventListener('touchmove', scope.moveplayhead, true);
-        window.addEventListener('touchend', scope.playHeadMouseUp, false);
+        if(scope.is_mobile){
+          scope.showPlayhead()
+          window.addEventListener('touchmove', scope.moveplayhead, true);
+          window.addEventListener("touchend", scope.playHeadMouseUp, true)
+        } else{
+          window.addEventListener('mousemove', scope.moveplayhead, true);
+          window.addEventListener('mouseup', scope.playHeadMouseUp, true);
+        }
       }
 
       scope.playHeadMouseUp = function(event) {
+        console.log("up");
         if (onplayhead == true) {
           onplayhead = false;
-          window.removeEventListener('mousemove', scope.moveplayhead, true);
-          window.removeEventListener('touchmove', scope.moveplayhead, true);
+          if(scope.is_mobile){
+            console.log("removing");
+            scope.hidePlayhead()
+            window.removeEventListener('touchmove', scope.moveplayhead, true);
+            window.removeEventListener("touchend", scope.playHeadMouseUp, true)
+          }
+          else{
+            window.removeEventListener('mousemove', scope.moveplayhead, true);
+            window.removeEventListener('mouseup', scope.playHeadMouseUp, true);
+          }
 
-          window.removeEventListener('mouseup', scope.moveplayhead, true);
-          window.removeEventListener('touchend', scope.moveplayhead, true);
           scope.progressSeek(event)
         }
+
         scope.$apply()
       }
 
       scope.moveplayhead = function(event) {
+        console.log("moving");
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
@@ -999,8 +1020,13 @@ angular.module('scalearAngularApp')
         }
       });
 
-      progress_bar.on('mouseenter', scope.showPlayhead);
-      progress_bar.on('mouseleave', scope.hidePlayhead);
+      // if(scope.is_mobile){
+      //   progress_bar.on('touchstart', scope.showPlayhead);
+      //   progress_bar.on('touchend', scope.hidePlayhead);
+      // }else{
+      //   progress_bar.on('mouseenter', scope.showPlayhead);
+      //   progress_bar.on('mouseleave', scope.hidePlayhead);
+      // }
 
 
       player.on('timeupdate', function() {
@@ -1100,8 +1126,10 @@ angular.module('scalearAngularApp')
         shortcut.remove("j");
         shortcut.remove("k");
         shortcut.remove("l");
-        progress_bar.off('mouseenter', scope.showPlayhead);
-        progress_bar.off('mouseleave', scope.hidePlayhead);
+        // progress_bar.off('mouseenter', scope.showPlayhead);
+        // progress_bar.off('mouseleave', scope.hidePlayhead);
+        // progress_bar.off('touchstart', scope.showPlayhead);
+        // progress_bar.off('touchleave', scope.hidePlayhead);
         unwatchMute()
         $(window).off('resize', repositionQuizHandles)
       });

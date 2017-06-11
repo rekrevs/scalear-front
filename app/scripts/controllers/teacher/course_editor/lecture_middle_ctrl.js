@@ -583,7 +583,7 @@ angular.module('scalearAngularApp')
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
-        if(!$scope.leave_state) {
+        if(!$scope.leave_state && ( toState.url != "/preview") ) {
           event.preventDefault();
           saveOpenEditor()
             .then(function(error) {

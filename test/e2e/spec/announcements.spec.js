@@ -7,6 +7,8 @@ var NewCourse = require('./pages/new_course');
 var Dashboard = require('./pages/dashboard');
 var ContentNavigator = require('./pages/content_navigator');
 var params = browser.params;
+var sleep = require('./lib/utils').sleep;
+var refresh = require('./lib/utils').refresh;
 
 var header = new Header()
 var login_page = new Login()
@@ -34,6 +36,7 @@ describe("Teacher",function(){
 	it('should another create course', function(){
 		new_course.open()
 		new_course.create("short_name", "course_name", params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		new_course.disable_email_reminders_modal_button_click()
 	})
 	it('should go make announcements', function(){
 		announcement.open()
@@ -48,6 +51,7 @@ describe("Teacher",function(){
 		header.logout()
 		login_page.sign_in(params.student1.email, params.password)
 		header.join_course(enrollment_key)
+		new_course.disable_student_email_reminders_button_click()
 	})
 })
 describe("Student",function(){
@@ -105,8 +109,9 @@ describe("Teacher",function(){
 	})
 	it('should delete announcement', function(){
 		announcement.open()
-		announcement.delete(3)
-		expect(announcement.posts.count()).toEqual(2)
+		expect(announcement.posts.count()).toEqual(4)
+		announcement.delete(4)
+		expect(announcement.posts.count()).toEqual(3)
 	})
 	it('should logout',function(){
 		header.logout()
@@ -165,10 +170,10 @@ describe("Revert Changes - Teacher",function(){
 	})
 	it('should delete announcement', function(){
 		announcement.open()
+		announcement.delete(3)
+		expect(announcement.posts.count()).toEqual(2)
 		announcement.delete(2)
 		expect(announcement.posts.count()).toEqual(1)
-		announcement.delete(1)
-		expect(announcement.posts.count()).toEqual(0)
 	})
 	it('should go to course list',function(){
 		course_list.open()

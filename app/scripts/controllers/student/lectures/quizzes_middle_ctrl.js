@@ -1,14 +1,16 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler) {
+  .controller('studentQuizMiddleCtrl', ['$scope', 'Course', '$stateParams', '$controller', 'Quiz', '$log', 'CourseEditor', '$state', 'Page', 'ScalearUtils', '$translate', 'ContentNavigator', 'CourseModel', 'ItemsModel', 'QuestionModel','ErrorHandler', 'MobileDetector', function($scope, Course, $stateParams, $controller, Quiz, $log, CourseEditor, $state, Page, ScalearUtils, $translate, ContentNavigator, CourseModel, ItemsModel, QuestionModel,ErrorHandler, MobileDetector) {
     $controller('surveysCtrl', { $scope: $scope });
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
 
     var init = function() {
-      ContentNavigator.open()
+      if(!MobileDetector.isPhone()){
+        ContentNavigator.open()
+      }
       QuestionModel.getSolvableQuestions()
         .then(function(data) {
           var quiz = data.quiz
@@ -39,15 +41,6 @@ angular.module('scalearAngularApp')
 
       if($scope.quiz.quiz_type == 'survey')
         $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
-    }
-
-    if($scope.quiz){
-      ItemsModel.setSelectedItem($scope.quiz)
-      $scope.course.warning_message = null
-      $scope.studentAnswers = {};
-      $scope.passed_requirments = true
-      Page.setTitle($scope.quiz.name)
-      init();
     }
 
     $scope.nextItem = function() {
@@ -93,6 +86,16 @@ angular.module('scalearAngularApp')
         else if(key == "today")
           return $translate.instant("events.due") + " " + $translate.instant("time.today") + " " + $translate.instant("at") + " " + $scope.alert_messages[key]
       }
+    }
+
+
+    if($scope.quiz){
+      ItemsModel.setSelectedItem($scope.quiz)
+      $scope.course.warning_message = null
+      $scope.studentAnswers = {};
+      $scope.passed_requirments = true
+      Page.setTitle($scope.quiz.name)
+      init();
     }
 
   }]);

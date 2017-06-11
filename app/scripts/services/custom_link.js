@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .factory('CustomLink', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host + '/:lang/custom_links/:link_id/:action', { lang: $translate.uses() }, {
+    return $resource(scalear_api.host + '/:lang/custom_links/:link_id/:action', { lang: $translate.use() }, {
       'create': { method: 'POST', headers: headers },
       'index': { method: 'GET', isArray: true, headers: headers },
       'update': { method: 'PUT', headers: headers },

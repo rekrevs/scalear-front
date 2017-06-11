@@ -1,13 +1,25 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', 'Page', '$state', '$translate', 'ContentNavigator', '$log', 'CourseModel', 'ScalearUtils', function($scope, $stateParams, Course, Page, $state, $translate, ContentNavigator, $log, CourseModel, ScalearUtils) {
+  .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', 'Page', '$state', '$translate', 'ContentNavigator', '$log', 'CourseModel', 'ScalearUtils','$modal', function($scope, $stateParams, Course, Page, $state, $translate, ContentNavigator, $log, CourseModel, ScalearUtils,$modal) {
 
     $scope.course = CourseModel.getSelectedCourse()
-    Page.setTitle($translate('navigation.information') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.information') + ': ' + $scope.course.name);
     ContentNavigator.open()
-
     $scope.urlWithProtocol = ScalearUtils.urlWithProtocol
+    if($state.params.new_enroll) {
+      $modal.open({
+        templateUrl: '/views/student/course_list/email_due_dates_modal.html',
+        scope: $scope,
+        controller:['$modalInstance', function($modalInstance ) {
+          $scope.updateDueDateEmail = function (email_due_date) {
+            $scope.email_due_date = email_due_date
+            $scope.course.updateStudentDueDateEmail(email_due_date)
+            $modalInstance.dismiss('cancel');
+          }
+        }]
+      })
+    } 
 
     function init() {
       if($scope.course.discussion_link) {
@@ -33,15 +45,14 @@ angular.module('scalearAngularApp')
     init()
 
     $scope.goToContent = function() {
-      if($scope.next_item.module != -1) {
-        var params = { 'module_id': $scope.next_item.module }
-        params[$scope.next_item.item.class_name + '_id'] = $scope.next_item.item.id
-        $state.go('course.module.courseware.' + $scope.next_item.item.class_name, params)
+      if($scope.course.next_item.module != -1) {
+        var params = { 'module_id': $scope.course.next_item.module }
+        params[$scope.course.next_item.item.class_name + '_id'] = $scope.course.next_item.item.id
+        $state.go('course.module.courseware.' + $scope.course.next_item.item.class_name, params)
       }
     }
 
     $scope.updateStudentDueDateEmail = function(email_due_date) {
       $scope.course.updateStudentDueDateEmail(email_due_date)
     }
-
   }]);

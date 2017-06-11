@@ -191,7 +191,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -275,7 +275,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -598,7 +598,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -966,10 +966,11 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
       expect(review_model.exit_button.isDisplayed()).toEqual(true)
+      review_model.next()
       expect(review_model.chart.isDisplayed()).toEqual(true)
     })
 
@@ -1092,56 +1093,26 @@ student2_browser = utils.new_session()
 
     it('Should go to the Last Stage', function(){
       utils.switch_browser(teacher_browser)
+      expect(review_model.get_block(5).getAttribute('class')).toContain("active")
       review_model.next()
       expect(review_model.review_model.isDisplayed()).toEqual(true)
       expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
       expect(review_model.question_block.isDisplayed()).toEqual(true)
       expect(review_model.quiz_title.getText()).toBe("PI MCQ QUIZ ( multiple choice )")
-
-      expect(review_model.get_block(5).getAttribute('class')).toContain("active")
-
+      expect(review_model.get_block(6).getAttribute('class')).toContain("active")
+      
       expect(review_model.get_block_text(1)).toEqual("Intro")
       expect(review_model.get_block_text(2)).toEqual("Self")
       expect(review_model.get_block_text(3)).toEqual("Group")
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
       expect(review_model.exit_button.isDisplayed()).toEqual(true)
       expect(review_model.chart.isDisplayed()).toEqual(true)
     })
-
-    xit('Should go to the blackscreen', function(){
-      review_model.next()
-      expect(element(by.className('blackscreen')).getText()).toEqual('Review finished. Press ESC to end')
-
-    })
-
-    xit('Should be back to inClass Review', function(){
-      browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-
-      expect(inclass_page.title).toEqual("In-class Review:PI module 1")
-      expect(inclass_page.display_button.isDisplayed()).toEqual(true);
-      expect(inclass_page.display_button.isEnabled()).toEqual(true);
-      var module = inclass_page.module_item(1)
-      expect(module.title).toEqual("PI lecture1 video quizzes")
-      expect(module.inclass_quizzes.count()).toEqual(1)
-      var inclass_quiz = module.inclass_quiz(1)
-      expect(inclass_quiz.title).toEqual("Quiz: PI MCQ QUIZ")
-      expect(inclass_quiz.visibility_box.isSelected()).toEqual(true)
-
-      expect(inclass_page.total_inclass_time).toEqual("8");
-      expect(inclass_page.total_pi_time).toEqual("8")
-      expect(inclass_page.total_pi_quizzes).toEqual("1")
-      expect(inclass_page.total_review_time).toEqual("0")
-      expect(inclass_page.total_review_quizzes).toEqual("0")
-      expect(inclass_page.total_review_discussions).toEqual("0")
-      expect(inclass_page.total_review_surveys).toEqual("0")
-
-    })
-
   })
 
   describe('Student 1 should try to continue', function(){
@@ -1197,6 +1168,8 @@ student2_browser = utils.new_session()
     it('Should be back to discussions', function(){
       utils.switch_browser(teacher_browser)
       review_model.previous()
+      expect(review_model.chart.isDisplayed()).toEqual(true)
+      review_model.previous()
 
       expect(review_model.review_model.isDisplayed()).toEqual(true)
       expect(review_model.lecture_title.getText()).toEqual("PI lecture1 video quizzes")
@@ -1211,11 +1184,11 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
       expect(review_model.exit_button.isDisplayed()).toEqual(true)
-      expect(review_model.chart.isDisplayed()).toEqual(true)
+      expect(review_model.chart.isDisplayed()).toEqual(false)
 
     })
     it('Should be back to Group', function(){
@@ -1233,7 +1206,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -1255,7 +1228,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -1274,7 +1247,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -1294,7 +1267,7 @@ student2_browser = utils.new_session()
       expect(review_model.get_block_text(4)).toEqual("Discussion")
       expect(review_model.get_block_text(5)).toEqual("")
       expect(review_model.get_block(5).getAttribute('class')).toContain("small_circles")
-      expect(review_model.connected_blocks.count()).toEqual(5)
+      expect(review_model.connected_blocks.count()).toEqual(6) // it was 5 and we added 1 block for showing the result 
       expect(review_model.chart.isDisplayed()).toEqual(false)
       expect(review_model.next_button.isDisplayed()).toEqual(true)
       expect(review_model.prev_button.isDisplayed()).toEqual(true)
@@ -1312,6 +1285,7 @@ student2_browser = utils.new_session()
       review_model.next()
       review_model.next()
       review_model.next()
+      review_model.next()      
       expect(element(by.className('blackscreen')).getText()).toEqual('Review finished. Press ESC to end')
 
     })
@@ -1341,20 +1315,20 @@ student2_browser = utils.new_session()
           // it("should go to edit mode", function() {
       sub_header.open_edit_mode()
     // })
-      navigator.modules.count().then(function(count) { 
-        module_count = count 
-        var module = navigator.module(module_count) 
-        module.open() 
-        expect(module.items.count()).toEqual(3) 
-        module.item(3).delete() 
-        expect(module.items.count()).toEqual(2) 
-        module.item(2).delete() 
-        expect(module.items.count()).toEqual(1) 
-        module.item(1).delete() 
-        expect(module.items.count()).toEqual(0) 
-        module.delete() 
-        expect(navigator.modules.count()).toEqual(0) 
-      }) 
+      navigator.modules.count().then(function(count) {
+        module_count = count
+        var module = navigator.module(module_count)
+        module.open()
+        expect(module.items.count()).toEqual(3)
+        module.item(3).delete()
+        expect(module.items.count()).toEqual(2)
+        module.item(2).delete()
+        expect(module.items.count()).toEqual(1)
+        module.item(1).delete()
+        expect(module.items.count()).toEqual(0)
+        module.delete()
+        expect(navigator.modules.count()).toEqual(2)
+      })
     })
     it("should logout", function() {
       header.logout()

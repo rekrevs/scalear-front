@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('courseEditorCtrl', ['$rootScope', '$scope', '$state', '$translate', '$log', 'Page', '$modal', '$timeout', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'CourseModel', 'ModuleModel', 'ItemsModel', 'LectureModel', 'QuizModel', 'LinkModel', function($rootScope, $scope, $state, $translate, $log, Page, $modal, $timeout, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, CourseModel, ModuleModel, ItemsModel ,LectureModel, QuizModel, LinkModel) {
 
     $scope.course = CourseModel.getSelectedCourse()
-    Page.setTitle($translate('navigation.content') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
     DetailsNavigator.open()
@@ -68,6 +68,19 @@ angular.module('scalearAngularApp')
     $scope.$on('paste_item', function(event, module_id) {
       $scope.paste(module_id)
     })
+
+    if($state.params.new_course) { 
+      $modal.open({ 
+        templateUrl: '/views/teacher/course_list/email_student_answers_modal.html', 
+        scope: $scope, 
+        controller:['$modalInstance', function($modalInstance ) { 
+          $scope.updateEmailDiscussion = function (email_discussion) {
+            $scope.course.updateTeacherDiscussionEmail(email_discussion) 
+            $modalInstance.dismiss('cancel'); 
+          } 
+        }] 
+      }) 
+    }  
 
     $scope.capitalize = function(s) {
       return ScalearUtils.capitalize(s)

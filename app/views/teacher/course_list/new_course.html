@@ -18,8 +18,8 @@
       <div class="large-10 column with-small-margin-bottom no-padding">
         <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
         <div>
-          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" ng-required="true" ng-class="{error: server_errors['start_date']}" />
-          <small class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
+          <input name="date" type="text" datepicker-popup="" ng-model="course.start_date" ng-required="true" ng-class="{error: server_errors['start_date']}" />
+          <small id="error_start_date" class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
         </div>
       </div>
       <div class="large-10 column with-small-margin-bottom no-padding left">
@@ -32,34 +32,40 @@
       <div class="large-10 column with-small-margin-bottom no-padding left">
         <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.end_date</small>
         <div>
-          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}" />
-          <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
+          <input name="date" type="text" datepicker-popup="" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}" />
+          <small id="error_end_date" class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
         </div>
       </div>
       <div class="large-10 column with-small-margin-bottom no-padding left">
         <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.disable_registration</small>
         <input type="checkbox" ng-change="toggleRegistration()" style="margin-left: 10px;" ng-model="disable_registration_checked">
         <div>
-          <input name="date" type="text" ng-hide="!disable_registration_checked" datepicker-popup="dd-MMMM-yyyy" ng-model="course.disable_registration" ng-class="{error: server_errors['disable_registration']}" />
+          <input name="date" type="text" ng-hide="!disable_registration_checked" datepicker-popup="" ng-model="course.disable_registration" ng-class="{error: server_errors['disable_registration']}" />
           <small class="error with-tiny-padding" ng-show="server_errors['disable_registration'] && disable_registration_checked">{{server_errors['disable_registration'].join()}}</small>
         </div>
       </div>
       <div class="large-10 column with-small-margin-bottom no-padding left">
         <i class="fi-x-circle size-18"></i> <small class="with-tiny-margin-left" tooltip="{{'courses.limit_registration_domain_description' | translate}}" translate>courses.limit_registration_domain</small>
         <div>
-          <a class="" ng-click="toggleDomain($event)">
+          <a id="registration_domain" class="" ng-click="toggleDomain($event)">
               <div ng-repeat="(key , domain) in course.selected_subdomain">
                 <div ng-show="domain"> {{key}}</div>
-              </div>  
+              </div>
           </a>
           <small class="error with-tiny-padding" ng-show="server_errors['limit_registration_domain'] && limit_registration_domain_checked">{{server_errors['limit_registration_domain'].join()}}</small>
         </div>
       </div>
+      <div class="large-10 column with-small-margin-bottom no-padding left">
+
+        <i class="fi-mail size-18"></i> <small class="with-tiny-margin-left" translate>courses.information.receive_student_ask_email</small>
+        <input type="checkbox" style="margin-left: 10px;" ng-model="course.email_discussion" >
+      </div>
+
     </div>
   <!-- </div> -->
   </div>
   <div class="small-12 medium-8 large-9 columns right">
-    <h3 class="show-for-small ng-binding"><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
+    <h3 class="show-for-small ng-binding"><i class="fi-book"></i> <span translate>navigation.new_course</span></h3>
     <div class="title color-green with-margin-bottom small-12 columns no-padding">
       <span class="small-4 columns no-padding">
         <h5 translate class="subheader">courses.short_name</h5>
@@ -89,7 +95,7 @@
             <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
           </span>
           <div>
-            <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" ng-required="true" ng-class="{error: server_errors['start_date']}" />
+            <input name="date" type="text" datepicker-popup="" ng-model="course.start_date" ng-required="true" ng-class="{error: server_errors['start_date']}" />
             <small class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
           </div>
         </div>
@@ -107,7 +113,7 @@
             <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.end_date</small>
           </span>
           <div>
-            <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}" />
+            <input name="date" type="text" datepicker-popup="" ng-model="course.end_date" ng-required="true" ng-class="{error: server_errors['end_date']}" />
             <small class="error with-tiny-padding" ng-show="server_errors['end_date']">{{server_errors['end_date'].join()}}</small>
           </div>
         </div>
@@ -125,6 +131,7 @@
       <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
     </p>
     <h5 translate class="subheader">courses.new.copy_from_existing</h5>
+    <h5 style="line-height:1"><small translate>courses.new.course_item_shift</small></h5>            
     <div class="row with-margin-bottom">
       <div class="small-10 columns">
         <select ng-model="import_from" ng-change="addImportInformation()" ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>

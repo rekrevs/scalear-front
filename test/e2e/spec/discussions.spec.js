@@ -4,6 +4,7 @@ var Video = require('./pages/video');
 var Header = require('./pages/header');
 var Login = require('./pages/login');
 var StudentLecture = require('./pages/student/lecture');
+var sleep = require('./lib/utils').sleep;
 
 var params = browser.params;
 
@@ -12,7 +13,6 @@ var video = new Video();
 var header = new Header()
 var login_page = new Login()
 var student_lec = new StudentLecture()
-
 describe("Discussions",function(){
 	describe("First Student",function(){
 		it("should login", function(){
@@ -41,6 +41,7 @@ describe("Discussions",function(){
 		})
 		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
+			browser.refresh()
 			course_list.open()
 			course_list.open_student_course(1)
 		})
@@ -52,7 +53,13 @@ describe("Discussions",function(){
 			// browser.refresh()
 		})
 		it('should add a public question', function(){
-			student_lec.add_discussion()
+			sleep(3000)	
+			//// Cancel discussion question
+			student_lec.add_discussion_shortcut()
+			expect(student_lec.discussion_directive.isDisplayed()).toEqual(true);
+			student_lec.lecture(1).cancel_discussion()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+			student_lec.add_discussion_shortcut()
             expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
             student_lec.lecture(1).type_discussion("Public Question")
             student_lec.lecture(1).type_time("00:00:00")
@@ -69,13 +76,32 @@ describe("Discussions",function(){
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-			browser.refresh()
+			expect(student_lec.lecture(1).discussion(1).edit_key.isPresent()).toEqual(true)
+			expect(student_lec.lecture(1).discussion(1).edit_key.isDisplayed()).toEqual(false)
+			student_lec.open_timeline()
+            student_lec.lecture(1).discussion(1).edit()
+			expect(student_lec.discussion_directive.isDisplayed()).toEqual(true);
+			student_lec.lecture(1).cancel_edited_discussion()
+			// Edit discussion question
+			student_lec.lecture(1).discussion(1).edit()
+			student_lec.lecture(1).type_discussion("Question")
+			student_lec.lecture(1).type_time("00:04:00")
+ 
+			student_lec.lecture(1).save_edited_discussion()
+			student_lec.lecture(1).discussion(1).edit()
+			student_lec.lecture(1).type_discussion("Public Question")
+			student_lec.lecture(1).type_time("00:04:00")
+ 			student_lec.lecture(1).save_edited_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+			// browser.refresh()
 		})
 		it("should open timeline",function(){
+			student_lec.close_timeline()
+			// sleep(5000)
 			student_lec.open_timeline()
 		})
 		it("should delete discussion post",function(){
+			// sleep(10000)
 			student_lec.lecture(1).discussion(1).delete()
             expect(student_lec.lecture(1).discussions.count()).toEqual(0)
 		})
@@ -83,6 +109,7 @@ describe("Discussions",function(){
 			video.seek(15)
 		})
 		it("should add a private discussion",function(){
+            expect(student_lec.lecture(1).items.count()).toEqual(6)
             student_lec.add_discussion()
             expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
             student_lec.lecture(1).type_discussion("Private Question")
@@ -90,7 +117,7 @@ describe("Discussions",function(){
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(1)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-            expect(student_lec.lecture(1).items.count()).toEqual(4)
+            expect(student_lec.lecture(1).items.count()).toEqual(7)
         })
         it('should seek to 35%', function(){
 			video.seek(35)
@@ -103,10 +130,13 @@ describe("Discussions",function(){
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(2)
             expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
-            expect(student_lec.lecture(1).items.count()).toEqual(5)
+            expect(student_lec.lecture(1).items.count()).toEqual(8)
 		})
 		it("should logout",function(){
+			expect(student_lec.check_timeline_is_open).toContain('land-medium-4 land-height')
 			student_lec.close_timeline()
+			sleep(5000)
+			expect(student_lec.check_timeline_is_open).not.toContain('land-medium-4 land-height')
 			header.logout()
 		})
 	})
@@ -133,14 +163,37 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
 			expect(student_lec.lecture(1).discussion(1).title).toContain("Public Question")
 		})
+		it("should flag/Unflag discussion post",function(){
+			// Flag/Unflag discussion question
+			expect(student_lec.lecture(1).discussion(1).text).not.toContain("Flagged post")
+			student_lec.lecture(1).discussion(1).flag()
+			expect(student_lec.lecture(1).discussion(1).text).toContain("Flagged post")
+			student_lec.lecture(1).discussion(1).unflag()
+		})
 		it("should flag post",function(){
+			expect(student_lec.lecture(1).discussion(1).text).not.toContain("Flagged post")
 			student_lec.lecture(1).discussion(1).flag()
 			expect(student_lec.lecture(1).discussion(1).text).toContain("Flagged post")
 		})
-		it("should vote post",function(){
+		it("should upvote/downvote discussion post",function(){
+			//  Upvote/Downvote discussion question
 			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("0")
 			student_lec.lecture(1).discussion(1).vote()
 			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("1")
+			student_lec.lecture(1).discussion(1).unvote()
+		})
+		it("should vote discussion post",function(){
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("0")			
+			student_lec.lecture(1).discussion(1).vote()
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("1")
+			
+		})
+		it("should add empty comment",function(){
+			// Replying to a discussion questions with empty comment
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(0)
+			student_lec.lecture(1).discussion(1).add_comment()
+			student_lec.lecture(1).discussion(1).type_comment("")
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(0)
 		})
 		it("should add comment",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(0)
@@ -171,6 +224,15 @@ describe("Discussions",function(){
 		it("should open timeline",function(){
 			student_lec.open_timeline()
 		})
+		it('should add empty discussion',function(){
+			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+			student_lec.add_discussion_shortcut()
+            expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(1).type_discussion("")
+            student_lec.lecture(1).type_time("00:04:00")
+            student_lec.lecture(1).save_discussion()
+			expect(student_lec.lecture(1).discussions.count()).toEqual(1)            
+		})		
 		it("should check discussion posts",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
 			expect(student_lec.lecture(1).discussion(1).title).toContain("Public Question")
@@ -185,6 +247,32 @@ describe("Discussions",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
 			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
 		})
+		it("should flag/unflag comment",function(){
+			// Flag/unflag comment
+			expect(student_lec.lecture(1).discussion(1).comment(1).text).not.toContain("Flagged comment")
+			student_lec.lecture(1).discussion(1).comment(1).flag()
+			expect(student_lec.lecture(1).discussion(1).comment(1).text).toContain("Flagged comment")
+			student_lec.lecture(1).discussion(1).comment(1).unflag()
+		})
+		it("should flag comment",function(){
+			expect(student_lec.lecture(1).discussion(1).comment(1).text).not.toContain("Flagged comment")
+			student_lec.lecture(1).discussion(1).comment(1).flag()
+			expect(student_lec.lecture(1).discussion(1).comment(1).text).toContain("Flagged comment")
+		})
+		it("should upvote/downvote comment",function(){
+			// upvote/downvote comment
+			expect(student_lec.lecture(1).discussion(1).comment(1).vote_count).toEqual("0")
+			student_lec.lecture(1).discussion(1).comment(1).vote()
+			expect(student_lec.lecture(1).discussion(1).comment(1).vote_count).toEqual("1")
+			student_lec.lecture(1).discussion(1).comment(1).unvote()
+		})
+		it("should vote comment",function(){
+			expect(student_lec.lecture(1).discussion(1).comment(1).vote_count).toEqual("0")			
+			student_lec.lecture(1).discussion(1).comment(1).vote()
+			expect(student_lec.lecture(1).discussion(1).comment(1).vote_count).toEqual("1")
+			
+		})
+
 		it("should add comment",function(){
 			student_lec.lecture(1).discussion(1).add_comment()
 			student_lec.lecture(1).discussion(1).type_comment("second comment")
@@ -232,12 +320,13 @@ describe("Discussions",function(){
 			video.seek(40)
 		})
 		it("should add a private discussion",function(){
+            expect(student_lec.lecture(1).items.count()).toEqual(6)
             student_lec.add_discussion()
             student_lec.lecture(1).type_discussion("private question by second student")
             student_lec.lecture(1).change_discussion_private()
             student_lec.lecture(1).save_discussion()
             expect(student_lec.lecture(1).discussions.count()).toEqual(2)
-            expect(student_lec.lecture(1).items.count()).toEqual(5)
+            expect(student_lec.lecture(1).items.count()).toEqual(7)
         })
         it('should move to the second lecture', function(){
 			navigator.open()

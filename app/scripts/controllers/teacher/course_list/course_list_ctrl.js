@@ -1,17 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope','ngDialog','$timeout','UserSession', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope,ngDialog,$timeout,UserSession) {
 
     Page.setTitle('navigation.courses')
     Page.startTour();
-    $rootScope.subheader_message = $translate("navigation.courses")
+    $rootScope.subheader_message = $translate.instant("navigation.courses")
 
     $scope.column='name'
     $scope.course_filter = '!!'
     $scope.teacher_courses = []
     $scope.student_courses = []
-
+    $scope.course_loading = false
+    UserSession.getCurrentUser()
+    .then(function(user) {
+      $scope.current_user = user
+      // console.log($scope.current_user)
+    })
 
     var getCoursesFirstTime = function(){  
       var limit_course = 200 
@@ -20,6 +25,7 @@ angular.module('scalearAngularApp')
           limit: limit_course   
         },   
         function(data){  
+          $scope.course_loading =  true
         $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
         $scope.student_courses = $scope.student_courses.concat(data.student_courses)
 

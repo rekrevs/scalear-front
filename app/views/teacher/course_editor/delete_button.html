@@ -1,46 +1,47 @@
-<span bindonce>
-	<span bindonce="overlay" bo-if="mode != 'content_navigator'" bo-class="{'delete-overlay': overlay}">
-		<span bo-if="!overlay" bindonce="text_mode">
-	 		<div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
+<span >
+	<span  ng-if="::(mode != 'content_navigator')" ng-class="::{'delete-overlay': overlay}">
+		<span ng-if="::(!overlay)" >
+	 		<div class="fade in" ng-show="displayDeletePopup" ng-class="::{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
 		        <span class="form-controls-alert" style="margin:auto" >
-	           		<button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
-	            	<button bo-class="{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span bo-text="'button.cancel' | translate"></span></button>
+	           		<button ng-class="::{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span>{{::'button.delete'| translate}}</span></button>
+	            	<button ng-class="::{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span >{{::'button.cancel' | translate}}</span></button>
 		        </span>
 			</div>
-			<span  bo-if="!text_mode">
+			<span  ng-if="::(!text_mode)">
 				<a class="delete delete_tip" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" ng-click="showDeletePopup(true, $event)">
-					<i bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
-					<i bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
+					<i ng-if="::(size == 'big')" class="fi-trash color-gray size-18"></i>
+					<i ng-if="::(size != 'big')" class="fi-trash color-gray size-14"></i>
 				</a>
 			</span>
-			<span bo-if="text_mode">
+			<span ng-if="::(text_mode)">
 				<a href="#" class="button tiny alert delete no-margin" ng-hide="displayDeletePopup" ng-click="showDeletePopup(true, $event)" style="margin-left: 2px !important">
-					<span bo-text="'button.delete'| translate"></span>
+					<span >{{::'button.delete'| translate}}</span>
 				</a>
 			</span>
 		</span>
-		<div bo-if="overlay" bindonce>
+		<div ng-if="::(overlay)" >
 			<span class="align-center">
-				<button class="text_delete button tiny alert valign-middle with-small-padding" ng-hide="displayDeletePopup" title="remove" ng-click="showDeletePopup(true, $event)"><span bo-text="'button.remove'| translate"></span></button>
-				<div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
+				<button class="text_delete button tiny alert valign-middle with-small-padding" ng-hide="displayDeletePopup" title="remove" ng-click="showDeletePopup(true, $event)"><span >{{::'button.remove'| translate}}</span></button>
+				<div class="fade in" ng-show="displayDeletePopup" ng-class="::{varticaldeletecontainer: display_vertical}" style="padding: 3px;text-align:center;min-width: 65px;">
 			        <span class="form-controls-alert" style="margin:auto" >
-		           		<button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
-		            	<button bo-class="{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span bo-text="'button.cancel' | translate"></span></button>
+		           		<button ng-class="::{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span ></span>{{::'button.delete'| translate}}</button>
+		            	<button ng-class="::{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span >{{::'button.cancel' | translate}}</span></button>
 			        </span>
 				</div>
 			</span>
 		</div>
 	</span>
-	<span bo-if="mode == 'content_navigator'" bindonce>
+	<span ng-if="::(mode == 'content_navigator')" >
 		<a class="delete delete_tip" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" ng-click="showDeletePopup(true, $event)">
-			<i bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
-			<i bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
+			<i ng-if="::(size == 'big')" class="fi-trash color-gray size-18"></i>
+			<i ng-if="::(size != 'big')" class="fi-trash color-gray size-14"></i>
 		</a>
-		<span ng-if="displayDeletePopup" bo-class="{'count-padding':padded,'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay ease_in_out">
+		<span ng-if="displayDeletePopup" ng-class="::{'count-padding':padded,'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay ease_in_out">
 	        <span class="form-controls-alert align-center" style="height: 85%;">
-	            <button bo-class="{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span bo-text="'button.delete'| translate"></span></button>
-	            <button bo-class="{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span bo-text="'button.cancel' | translate"></span></button>
+	            <button ng-class="::{varticaldeletebutton: display_vertical}" class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><span>{{::'button.delete'| translate}}</span></button>
+	            <button ng-class="::{varticaldeletebutton: display_vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span >{{::'button.cancel' | translate}}</span></button>
 	        </span>
 		</span>
 	</span>
 </span>
+

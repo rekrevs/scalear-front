@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
       .$promise
       .then(function(response) {
         if(response.notice) {
-          ErrorHandler.showMessage($translate("error_message.export_course"), 'errorMessage', 4000, 'success');
+          ErrorHandler.showMessage($translate.instant("error_message.export_course"), 'errorMessage', 4000, 'success');
         }
       })
     }

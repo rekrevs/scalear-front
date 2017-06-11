@@ -17,9 +17,10 @@ var fname_new = "Test teacher"
 var lname_new = "teacher_1"
 var mail_new = "teacher1_1@email.com"
 var univer_new = "uni_uni1"
+
 // var biog_new = "text w text_1"
 // var webs_new = ".com_1"
-var password_new = "password_1"
+var password_new = "password1234"
 
 describe("Check Teacher account information", function(){
 	it("should login as teacher",function(){
@@ -44,7 +45,7 @@ describe("Check Teacher account information", function(){
 		info.type_screenname(screen_name_new)
 		// info.type_link(webs_new)
 		// info.type_bio(biog_new)
-		info.save('password')
+		info.save(params.password)
 		sleep(2000)
 		refresh()
 	})
@@ -68,7 +69,7 @@ describe("Check Teacher account information", function(){
 		info.type_screenname(params.teacher1.online_name)
 		// info.type_link(webs)
 		// info.type_bio(biog)
-		info.save('password')
+		info.save(params.password)
 		sleep(2000)
 		refresh()
 	})

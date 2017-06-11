@@ -152,3 +152,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	/*margin-left:20px;*/
 	background:white
 }
+
+pre{
+    white-space: pre-wrap;
+}

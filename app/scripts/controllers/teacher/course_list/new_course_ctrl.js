@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$modal', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$modal) {
+  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.new_course')
-    $rootScope.subheader_message = $translate("navigation.new_course")
+    $rootScope.subheader_message = $translate.instant("navigation.new_course")
     $scope.submitting = false;
     $scope.course = {}
     $scope.course.selected_subdomain = {'All':true}
+    $scope.course.email_discussion = false
     CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -20,10 +21,15 @@ angular.module('scalearAngularApp')
     var days_in_week = 7;
     var default_course_duration =  10 //weeks
     $scope.course.end_date.setDate($scope.course.start_date.getDate() + (days_in_week * default_course_duration));
+
+    // $scope.course.start_date = moment().format('DD-MMMM-YYYY')
+    // $scope.course.end_date = moment().add(210,'days').format('DD-MMMM-YYYY')
+
+
     $scope.import_from = null
 
     $scope.addImportInformation = function() {
-      var splitter_text = "[" + $translate("navigation.copied_from")
+      var splitter_text = "[" + $translate.instant("navigation.copied_from")
       var desc_temp = "",
         pre_temp = "",
         desc_temp_empty = "",
@@ -68,24 +74,13 @@ angular.module('scalearAngularApp')
     $scope.toggleDomain = function(event) {
       event.stopPropagation()      
       $modal.open({ 
-        template: '<form name="myForm" >\
-                    <div class="ngdialog-message">\
-                    <h2><b><span translate>courses.limit_registration_domain_description</span></b></h2>\
-                    </div>\
-                    <ul>\
-                      <li><input type="radio" ng-model="subdomain.boolean" value="all" ng-change="setBooleanDomain();" translate>all</li>\
-                      <li><input type="radio" ng-model="subdomain.boolean" value="custom" ng-change="setBooleanDomain();" translate>custom</li>\
-                      </form>\
-                      <div ng-show=subdomain.boolean=="custom">\
-                        <ul style="margin-bottom: 5px;" ng-repeat="domain in subdomains">\
-                          <input class="valign-middle" ng-change="updateDomainList()" type="checkbox" name="mcq" ng-model="course.selected_subdomain[domain]" style="margin: auto;margin-right: 10px;"/>{{domain}}\
-                        </ul>\
-                      </div>\
-                    </ul>',
+        templateUrl: '/views/teacher/course_list/school_registration_modal.html', 
         plain: true,
         scope: $scope,
         controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
           $scope.subdomain = {}
+          $scope.course_domain = {}
+          $scope.course_domain.selected_subdomain = {};
           $scope.subdomain.boolean = 'all'
           if (!$scope.course.selected_subdomain['All']){
             $scope.subdomain.boolean = 'custom'
@@ -95,6 +90,7 @@ angular.module('scalearAngularApp')
          };
 
           $scope.updateDomainList = function(){
+            $scope.course.selected_subdomain = $scope.course_domain.selected_subdomain
           };
     
           $scope.setBooleanDomain= function(){
@@ -107,33 +103,79 @@ angular.module('scalearAngularApp')
           };
        }],
       }).result.finally(function() {
-          if (Object.keys($scope.course.selected_subdomain).map(function(key) {return $scope.course_domain.selected_subdomain[key];}).indexOf(true) == -1) {
+          if (Object.keys($scope.course.selected_subdomain).map(function(key) {return $scope.course.selected_subdomain[key];}).indexOf(true) == -1) {
             $scope.course.selected_subdomain = {'All':true}
           }
         }); 
     }
 
+    function validateDate() {
+      var deferred = $q.defer()
+      var errors = {}
+      // $scope.course.start_date = new Date($scope.course.start_date)
+      // $scope.course.end_date = new Date($scope.course.end_date)
+      var a = true
+      if (($scope.course.start_date == "Invalid Date" || $scope.course.start_date == null )) {
+        errors["start_date"] = ["not a Date"]
+        deferred.reject(errors)
+        a = false
+      } 
+      if (($scope.course.end_date == "Invalid Date" || $scope.course.end_date == null )) {
+        errors["end_date"] = ["not a Date"]
+        deferred.reject(errors)
+        a = false
+      }
+      if(a){        
+        if (!($scope.course.start_date < $scope.course.end_date)) {
+          errors["start_date"] = ["must be before end date"]
+          deferred.reject(errors)
+        } 
+        else {
+          errors["start_date"] = []
+          errors["end_date"] = []
+          deferred.resolve(errors)
+        }
+      }
+      // $scope.course.start_date = moment($scope.course.start_date).format('DD-MMMM-YYYY')
+      // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
+      return deferred.promise
+    }
+
+
     $scope.createCourse = function() {
       $scope.submitting = true;
-      if($scope.form.$valid) {
+      // if($scope.form.$valid) {
+      validateDate()
+      .then(function(errors) {
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
+        // $scope.course.start_date = new Date($scope.course.start_date)
+        // $scope.course.end_date = new Date($scope.course.end_date)
         var selected_subdomain = $scope.course.selected_subdomain
+        var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {
+
             $scope.submitting = false;
             if(data.importing) {
               $state.go("course_list")
             } else {
-              $state.go("course.course_editor", { "course_id": data.course.id })
+              $state.go("course.course_editor", { "course_id": data.course.id, new_course:true  })
             }
           })
           .catch(function(response) {
+            // $scope.course.start_date = moment($scope.course.start_date).format('DD-MMMM-YYYY')
+            // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
             $scope.submitting = false;
             $scope.server_errors = response.data.errors
+            // console.log($scope.server_errors)
             $scope.course.selected_subdomain = selected_subdomain
+            $scope.course.email_discussion = email_discussion
           })
-      } else {
-        $scope.submitting = false;
-      }
+      }) 
+      // else {
+      .catch(function(errors) {
+          $scope.server_errors = errors
+          $scope.submitting = false;
+      })
     }
   }]);

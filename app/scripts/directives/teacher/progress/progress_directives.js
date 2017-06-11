@@ -59,9 +59,9 @@ angular.module('scalearAngularApp')
         itemtitle: '=',
         color: "="
       },
-      template: '<span class="inner_title" bindonce>' +
-        '<span style="cursor:pointer"><span bo-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: ' +
-        '<span bo-style=\'{"color":color, "fontWeight":"normal"}\' bo-html="itemtitle"></span>' +
+      template: '<span class="inner_title" >' +
+        '<span style="cursor:pointer"><span ng-show="::(time!=null)">{{::"["+(time|format:"mm:ss")+"]"}}</span> <span >{{::type}}</span>: ' +
+        '<span ng-style=\'::{"color":color, "fontWeight":"normal"}\' ng-bind-html="::(itemtitle)"></span>' +
         '</span>' +
         '</span>'
     };
@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
         '<div class="left no-padding" style="margin-right:3px;margin-left:2px">' +
         '<input class="show_inclass no-margin" type="checkbox" ng-model="value" ng-change="change()" />' +
         '</div>' +
-        '<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" bindonce="label" bo-text="label | translate"></div>' +
+        '<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" > {{::label | translate}} </div>' +
         '</div>',
       link: function(scope, element) {
         scope.label = scope.text || 'progress.button.show_in_class'

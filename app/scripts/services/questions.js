@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
       if(question.answers.length > 1) {
         question.answers.splice(index, 1);
       } else {
-        ErrorHandler.showMessage('Error ' + ': ' + $translate("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
+        ErrorHandler.showMessage('Error ' + ': ' + $translate.instant("editor.cannot_delete_alteast_one_answer"), 'errorMessage', 4000, "error");
       }
     }
 

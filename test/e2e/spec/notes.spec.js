@@ -25,7 +25,7 @@ describe("Notes",function(){
 		})
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			// navigator.module(1).item(3).open()
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should seek to 67%",function(){
@@ -33,9 +33,9 @@ describe("Notes",function(){
 		})
 		it("should open timeline",function(){
 			student_lec.open_timeline()
+			student_lec.add_note()
 		})
 		it("should add a note",function(){
-			student_lec.add_note()
 			student_lec.lecture(1).type_note("Some note text for testing.")
 			expect(student_lec.lecture(1).notes.count()).toEqual(1)
 			expect(student_lec.lecture(1).note(1).getText()).toEqual("Some note text for testing.")
@@ -65,6 +65,17 @@ describe("Notes",function(){
 			expect(student_lec.lecture(1).notes.count()).toEqual(0)
 
 		})
+		// Clicking on Esc button while typing a note 
+		it("should add a note => press exit and the note is saved ",function(){
+			student_lec.add_note()
+			student_lec.lecture(1).type_note_and_press_exit("Some note text for testing.")
+			expect(student_lec.lecture(1).notes.count()).toEqual(1)
+			expect(student_lec.lecture(1).note(1).getText()).toEqual("Some note text for testing.")
+		})
+		// it("should delete note",function(){
+		// 	student_lec.lecture(1).delete_note(1)
+		// 	expect(student_lec.lecture(1).notes.count()).toEqual(0)
+		// })
 		it("should logout",function(){
 			student_lec.close_timeline()
 			header.logout()

@@ -23,7 +23,7 @@
   </h3>
     <h5 class="subheader" ng-bind-html="quiz.instructions"></h5>
     <div class="small-12 columns">
-    	<p ng-if="status.attempts<quiz.retries+1">
+    	<p ng-if="status==null || status.attempts<quiz.retries+1">
     		<span translate="quizzes.attempt_number"></span>:
             {{status.attempts || 0}}/{{quiz.retries+1}}
     	</p>
@@ -62,11 +62,10 @@
             <span translate>button.next</span>
         </button>
     </div>
-
     <div ng-if="current_survey.visible" ng-repeat="element in ordered_survey">
         <div ng-show="survey_chart_data && survey_chart_data[element[0]].student_show" style="padding:10px 40px" >
             <center><h4>Survey Results:</h4></center>
-            <div ng-if="element[1]!='Free Text Question'" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index)">
+            <div ng-if="element[1]!='Free Text Question'" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index,student_count)">
                 <center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
                 <div google-chart on-ready="loading=false" chart="chart" ></div>
             </div>

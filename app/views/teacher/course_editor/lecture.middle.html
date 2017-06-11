@@ -40,7 +40,7 @@
 </div>
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-hide="lecture.url=='none' || (editing_mode && editing_type=='video')">
-		<button class="button small" ng-click="addOnlineMarker()" tooltip="{{'editor.tooltip.click_add_note' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
+		<button id="note_button" class="button small" ng-click="addOnlineMarker(true)" tooltip="{{'editor.tooltip.click_add_note' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" >
 			<span translate>editor.button.add_note</span>
 		</button>
 		<span ng-show="!editing_mode || (editing_mode && editing_type=='marker')" lecture-questions-modal open-modal="openQuestionsModal" data="lecture">

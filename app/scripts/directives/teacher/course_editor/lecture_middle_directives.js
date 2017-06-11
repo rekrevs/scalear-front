@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
       }
     };
   }])
-  .directive('videoEditPanel', ['$rootScope', function($rootScope) {
+  .directive('videoEditPanel', ['$rootScope','$filter', 'ScalearUtils','VideoInformation',function($rootScope,$filter,ScalearUtils,VideoInformation) {
     return {
       restrict: 'E',
       template: '<div>' +
@@ -141,19 +141,42 @@ angular.module('scalearAngularApp')
         '<div>' +
         '<div class="small-12 columns" style="margin-bottom:10px;">' +
         '<div class="small-3 columns">Start Time</div>' +
-        '<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.start_time | format}}</div>' +
+        '<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid;">' +
+        '<input type="text" ng-model="selected_lecture.start_time_formated_time" style="height: 30px;margin-bottom:0;">'+
+        '<small class="error position-absolute z-one" ng-show="lecture_errors.start_time" ng-bind="lecture_errors.start_time"></small>'+
+        '</div>' +
         '</div>' +
         '<div class="small-12 columns">' +
         '<div class="small-3 columns">End Time</div>' +
-        '<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey;color: #555;">{{lecture.end_time | format}}</div>' +
+        '<div class="small-5 columns left size-14 text-center no-padding" style="border-radius: 3px; border: 1px darkgrey solid;">' +
+        '<input type="text" ng-model="selected_lecture.end_time_formated_time" style="height: 30px;margin-bottom:0;">'+
+        '<small class="error position-absolute z-one" ng-show="lecture_errors.end_time" ng-bind="lecture_errors.end_time"></small>'+
         '</div>' +
         '</div>' +
         '<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="closeTrimVideo()" translate>events.done</button>' +
         '</h6>' +
         '</div>',
       link: function(scope, element, attrs) {
+        scope.selected_lecture = {}
+        scope.lecture_errors = {}
+        var duration = scope.lecture.end_time
+        scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)
+        scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)
+        scope.$watch('lecture.start_time', function(newval,oldval){
+          scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)        
+        })
+        scope.$watch('lecture.end_time', function(newval,oldval){
+          scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)        
+        })
+
         scope.closeTrimVideo = function() {
-          $rootScope.$broadcast("close_trim_video")
+          scope.lecture_errors.start_time = ScalearUtils.validateTimeWithDurationForTrim(scope.selected_lecture.start_time_formated_time, duration)
+          scope.lecture_errors.end_time = ScalearUtils.validateTimeWithDurationForTrim(scope.selected_lecture.end_time_formated_time, duration , scope.selected_lecture.start_time_formated_time)
+          if ( !scope.lecture_errors.start_time && !scope.lecture_errors.end_time ){
+            scope.lecture.start_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.start_time_formated_time.split(':'))
+            scope.lecture.end_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.end_time_formated_time.split(':'))
+            $rootScope.$broadcast("close_trim_video")
+          }
         }
       }
     };
@@ -556,13 +579,13 @@ angular.module('scalearAngularApp')
         }
 
         scope.quiz_types = [
-          { value: "MCQ", text: $translate('content.questions.quiz_types.mcq') },
-          { value: "OCQ", text: $translate('content.questions.quiz_types.ocq') },
-          { value: "Free Text Question", text: $translate('content.questions.quiz_types.text') }
+          { value: "MCQ", text: $translate.instant('content.questions.quiz_types.mcq') },
+          { value: "OCQ", text: $translate.instant('content.questions.quiz_types.ocq') },
+          { value: "Free Text Question", text: $translate.instant('content.questions.quiz_types.text') }
         ]
         scope.match_types = [
-          { value: 'Free Text', text: $translate('content.questions.quiz_types.free_text') },
-          { value: 'Match Text', text: $translate('content.questions.quiz_types.match_text') }
+          { value: 'Free Text', text: $translate.instant('content.questions.quiz_types.free_text') },
+          { value: 'Match Text', text: $translate.instant('content.questions.quiz_types.match_text') }
         ]
         $log.debug(scope.quiz)
         if (!scope.quiz.match_type && !scope.isSurvey()) {
@@ -573,7 +596,7 @@ angular.module('scalearAngularApp')
         }
 
         if (!scope.isSurvey()) {
-          scope.quiz_types.push({ value: "drag", text: $translate('content.questions.quiz_types.drag') })
+          scope.quiz_types.push({ value: "drag", text: $translate.instant('content.questions.quiz_types.drag') })
         }
 
         scope.addAnswer = scope.add()

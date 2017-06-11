@@ -106,8 +106,10 @@ var Student = function(elem){
 }
 
 Student.prototype = Object.create({}, {
-	name:{get:function(){return this.field.element(by.css('[bo-text="student.full_name"]')).getText()}},
-	email:{get:function(){return this.field.element(by.css('[bo-text="student.full_name"]')).getAttribute('tooltip')}},
+	// name:{get:function(){return this.field.element(by.css('[tooltip="{{::student.email}}"]')).getText()}},
+	// email:{get:function(){return this.field.element(by.css('[tooltip="{{::student.email}}"]')).getAttribute('tooltip')}},
+	name:{get:function(){return this.field.element(by.tagName('td')).element(by.tagName('span')).getText()}},
+	email:{get:function(){return this.field.element(by.tagName('td')).element(by.tagName('span')).getAttribute('tooltip')}},
 	columns_count:{value:function(){return this.field.all(by.className("state")).count() }},
 	column_item:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('src') }},
 	column_item_tooltip:{value:function(val){return this.field.all(by.className("state")).get(val-1).element(by.tagName('img')).getAttribute('tooltip') }},
@@ -174,6 +176,20 @@ ModuleProgress.prototype = Object.create({}, {
 		this.module_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
 		return this.module_chart_columns.last().all(by.tagName('text')).last().getText()
 	}},
+	getStudentCompletionChartValueAt:{value:function(column){
+		element(By.id("teacher_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(4).all(by.tagName('rect')).get(column-1).click()
+		return element(By.id("teacher_completion")).all(by.tagName('text')).last().getText()
+	}},
+	getQuizCompletionChartValueAt:{value:function(x1 , column){
+		return element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+	}},
+	QuizCompletionChartTooltip:{value:function(x1 , column){
+		element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).click()
+		return element.all(by.className('dashboard')).get(2).element(by.tagName('a'))
+	}},	
+
+
+
 	// getGraphChartValueAt:{value:function(column){
 	// 	element(by.tagName('svg')).all(by.tagName('g')).first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
 	// 	return element(by.tagName('svg')).all(by.tagName('g')).last().all(by.tagName('text')).last().getText()

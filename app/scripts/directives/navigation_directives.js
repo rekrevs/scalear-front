@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/main_navigation.html",
       link: function(scope, element) {
         scope.scalear_api = scalear_api
-
+        scope.lti_embed  = location.hash.indexOf('lti_course_list') != -1;
         $rootScope.$watch('preview_as_student', function() {
           scope.preview_as_student = $rootScope.preview_as_student
         })
@@ -47,11 +47,10 @@ angular.module('scalearAngularApp')
           scope.$emit('start_tour', { state: $state.current.name })
         }
 
-        scope.closeMenu = function(event) {
-          if(!angular.element(event.target).closest('li').hasClass("back"))
-            $timeout(function() {
-              angular.element('.toggle-topbar').click();
-            })
+        scope.closeMenu =function(event) {
+          $timeout(function() {
+            angular.element('.toggle-topbar').click();
+          })
         }
 
         scope.disablePreview = function() {
@@ -155,7 +154,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession) {
     return {
       restrict: 'E',
       replace: true,
@@ -167,6 +166,10 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
+        UserSession.getCurrentUser()
+          .then(function(user) {
+            scope.current_user = user
+          })
         scope.$on('Module:ready',function(ev, modules){
           scope.modules = modules
         })
@@ -190,7 +193,7 @@ angular.module('scalearAngularApp')
         scope.$on('item_done', function(ev, item) {
           var time = 0
           if(!ContentNavigator.getStatus()) {
-            ContentNavigator.open()
+            // ContentNavigator.open()
             time = 700
           }
           $timeout(function() {
@@ -236,32 +239,17 @@ angular.module('scalearAngularApp')
         }
 
         scope.showModuleCourseware = function(module, event) {
-          if(!scope.currentmodule || scope.currentmodule.id != module.id) {
-            scope.currentmodule = module
-            if(MobileDetector.isPhone()) {
-              event.stopPropagation()
-              $timeout(function() {
-                ContentNavigator.close()
-              })
-              $state.go('course.module.student_inclass', { 'module_id': module.id })
-            } else if(module.sub_items_size > 0) {
-              Module.getLastWatched({
-                  course_id: $stateParams.course_id,
-                  module_id: module.id
-                },
-                function(data) {
-                  if(data.last_watched != -1) {
-                    $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
-                    scope.currentitem = { id: data.last_watched }
-                  } else {
-                    $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': data.first_quiz_id })
-                    scope.currentitem = { id: data.first_quiz_id }
-                  }
-                })
-            } else
-              scope.currentmodule = null
-          } else
-            event.stopPropagation()
+          scope.currentmodule = module
+          // if(MobileDetector.isPhone()) {
+          //   $timeout(function() {
+          //     ContentNavigator.close()
+          //   })
+          //   // $state.go('course.module.student_inclass', { 'module_id': module.id })
+          //   $state.go("course.module.courseware.overview", {'module_id': module.id})
+          // } else {
+          $state.go("course.module.courseware.overview", {'module_id': module.id})
+          //}
+          event.stopPropagation()
         }
 
         scope.showItem = function(item, mode) {
@@ -273,13 +261,14 @@ angular.module('scalearAngularApp')
             $log.debug(item)
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
-              // if(MobileDetector.isPhone()){
-              // 	$timeout(function(){
-              // 		ContentNavigator.close()
-              // 	})
-            if(!MobileDetector.isPhone()) {
-              $state.go('course.module.' + mode + '.' + item_type, params)
+            if(MobileDetector.isPhone()){
+            	$timeout(function(){
+            		ContentNavigator.close()
+            	})
             }
+            // if(!MobileDetector.isPhone()) {
+              $state.go('course.module.' + mode + '.' + item_type, params)
+            // }
             if(!(mode == 'courseware' && item_type == 'customlink')) {
               scope.currentitem = { id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id }
             }
@@ -373,6 +362,12 @@ angular.module('scalearAngularApp')
           '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'confused\')">' +
           '<input id="showConfusedCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'confused\')" />' +
           '<span style="font-size:12px" translate>course_settings.show_confused</span>' +
+          '</div>' +
+          '</li>' +
+          '<li>' +
+          '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'marker\')">' +
+          '<input id="showMarkersCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="timeline_filter.get(\'marker\')" />' +
+          '<span style="font-size:12px" translate>course_settings.show_markers</span>' +
           '</div>' +
           '</li>' +
           '<li>' +

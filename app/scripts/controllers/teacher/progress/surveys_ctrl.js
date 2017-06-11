@@ -57,8 +57,8 @@ angular.module('scalearAngularApp')
       var formated_data ={}
       formated_data.cols=
           [
-              {"label": $translate('global.students'),"type": "string"},
-              {"label": $translate('progress.chart.answered'),"type": "number"}
+              {"label": $translate.instant('global.students'),"type": "string"},
+              {"label": $translate.instant('progress.chart.answered'),"type": "number"}
           ]
       formated_data.rows= []
       for(var ind in data)
@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
           "displayExactValues": true,
           "fontSize" : 12,
           "vAxis": {
-              "title": $translate("progress.number_of_students")+ " ("+$translate("progress.out_of")+" "+student_count+")",
+              "title": $translate.instant("progress.number_of_students")+ " ("+$translate.instant("progress.out_of")+" "+student_count+")",
               "gridlines": {
                   "count":9
               },

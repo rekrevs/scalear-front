@@ -105,6 +105,7 @@ describe("Teacher Management",function(){
             expect(header.invitation_notifications.count()).toEqual(1)
             header.accept_invitation_notification(1)
             expect(header.notification_menu.isPresent()).toBe(false)
+            new_course.disable_email_reminders_modal_button_click() 
         })
         it('should check that it redirected to the course information page', function(){
             expect(browser.driver.getCurrentUrl()).toContain('information')

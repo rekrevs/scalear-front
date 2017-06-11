@@ -1,22 +1,22 @@
-<div bindonce="current_user">
+<div >
     <table style="width: 100%;" class="no-border transparent with-tiny-margin">
         <tr>
             <td style="padding-bottom: 0px; padding-top: 0px; border-top: 1px solid white;">
                 <div>
                     <div class="screen-name">
-                        <b bo-text="item.comment.screen_name" ></b>
+                        <b >{{::item.comment.screen_name}} </b>
                         <div class="timestamp with-small-margin-left">
-                            <span bo-text="item.comment.created_at | fromNow"></span>
+                            <span >{{::item.comment.created_at | fromNow}} </span>
                             <span ng-if="item.comment.flags_count > 0" style="color: red;">
                                 <span style="color: #a1a1a1">  </span>
                                 <span translate>discussion.flagged_comment</span>
                             </span>
                         </div>
                     </div>
-                    <div bo-show="item.comment.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
+                    <div ng-show="::(item.comment.user_id == current_user.id)" style="font-size: 10px; float: right; display: inline-block;">
                         <delete_button size="small" action="delete()(item)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;" ></delete_button>
                     </div>
-                    <span bo-if="item.comment.user_id != current_user.id && !preview_as_student">
+                    <span ng-if="::(item.comment.user_id != current_user.id && !preview_as_student)">
                         <div style="display: inline-block; float: right;" >
                             <flag-button name="flag_comment" flagged="item.comment.user_flag" flag="flagComment()" unflag="unflagComment()"></flag-button>
                         </div>

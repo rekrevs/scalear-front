@@ -1,6 +1,6 @@
 'use strict';
 angular.module('scalearAngularApp')
-  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ScalearUtils', 'VideoInformation', 'UserSession', function($log, $translate, Forum, $state, $rootScope, User, $filter, ScalearUtils, VideoInformation, UserSession) {
+  .directive('questionBlock', ['$log', '$translate', 'Forum', '$state', '$rootScope', 'User', '$filter', 'ScalearUtils', 'VideoInformation', 'UserSession', '$timeout', 'MobileDetector', function($log, $translate, Forum, $state, $rootScope, User, $filter, ScalearUtils, VideoInformation, UserSession, $timeout, MobileDetector) {
     return {
       restrict: "E",
       templateUrl: "/views/forum/question_block.html",
@@ -17,10 +17,14 @@ angular.module('scalearAngularApp')
         function init() {
           scope.preview_as_student = $rootScope.preview_as_student
           scope.ask_button_clicked = false
-          scope.choices = [{ text: $translate('discussion.private_discussion'), value: 0 }, { text: $translate('discussion.public_discussion'), value: 1 }];
+          scope.choices = [{ text: $translate.instant('discussion.private_discussion'), value: 0 }, { text: $translate.instant('discussion.public_discussion'), value: 1 }];
           scope.privacy = scope.choices[scope.current_user.discussion_pref];
-          scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
-          $('.text_block').focus();
+          if(typeof scope.item.time == "number"){
+            scope.item.time = $filter('format', 'hh:mm:ss')(scope.item.time)
+          }
+          if(!MobileDetector.isPhone()) {
+            $timeout(function(){$('.text_block').focus()});
+          }
 
           if(scope.item.data && scope.item.data.isEdit) {
             scope.privacy = (scope.item.data.privacy == 0) ? scope.choices[0] : scope.choices[1]
@@ -136,8 +140,8 @@ angular.module('scalearAngularApp')
         scope.item = scope.data()
         scope.preview_as_student = $rootScope.preview_as_student
         scope.formattedTime = $filter('format', 'hh:mm:ss')(scope.item.time)
-        scope.private_text = $translate("discussion.private_post")
-        scope.public_text = $translate("discussion.public_post")
+        scope.private_text = $translate.instant("discussion.private_post")
+        scope.public_text = $translate.instant("discussion.public_post")
         scope.deleteDiscussion = function(discussion) {
           Forum.deletePost({ post_id: discussion.data.id },
             function(response) {
@@ -209,7 +213,7 @@ angular.module('scalearAngularApp')
               current_reply = ""
             }, function() {})
           } else {
-            scope.error_message = $translate("discussion.cannot_be_empty")
+            scope.error_message = $translate.instant("discussion.cannot_be_empty")
           }
           angular.element('.btn').blur()
         }
@@ -279,8 +283,8 @@ angular.module('scalearAngularApp')
       },
       templateUrl: '/views/forum/like_button.html',
       link: function(scope, element) {
-        scope.like_text = $translate('discussion.like')
-        scope.unlike_text = $translate('discussion.unlike')
+        scope.like_text = $translate.instant('discussion.like')
+        scope.unlike_text = $translate.instant('discussion.unlike')
         angular.element(element.find('.looks-like-a-link')).css('display', scope.direction == 'horizontal' ? 'inline-block' : 'block')
       }
     }
@@ -294,8 +298,8 @@ angular.module('scalearAngularApp')
       },
       templateUrl: '/views/forum/flag_button.html',
       link: function(scope, element) {
-        scope.flag_text = $translate("discussion.flag_post")
-        scope.unflag_text = $translate("discussion.unflag_post")
+        scope.flag_text = $translate.instant("discussion.flag_post")
+        scope.unflag_text = $translate.instant("discussion.unflag_post")
       }
     }
   }]).directive('commentBox', ['$log', function($log) {

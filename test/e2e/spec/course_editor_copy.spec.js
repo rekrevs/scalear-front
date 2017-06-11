@@ -1,6 +1,7 @@
 var Header = require('./pages/header');
 var CourseEditor = require('./pages/course_editor');
 var ContentNavigator = require('./pages/content_navigator');
+var CourseInformation = require('./pages/course_information');
 var CourseList = require('./pages/course_list');
 var SubHeader = require('./pages/sub_header')
 var NewCourse = require('./pages/new_course');
@@ -12,6 +13,7 @@ var params = browser.params;
 var header = new Header()
 var sub_header = new SubHeader()
 var course_editor = new CourseEditor()
+var course_info = new CourseInformation()
 var course_list = new CourseList()
 var new_course = new NewCourse();
 describe("Course Editor Copy", function(){
@@ -22,6 +24,7 @@ describe("Course Editor Copy", function(){
         it('should create another course', function(){
             new_course.open()
             new_course.create("short_name", "course_name",params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+            new_course.disable_email_reminders_modal_button_click()
         })
         it('should open first course', function(){
             course_list.open()

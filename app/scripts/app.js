@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
         .translations('sv', translation_sv)
         .preferredLanguage('en')
         .useCookieStorage()
+        .useSanitizeValueStrategy('escape');
 
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
@@ -47,7 +48,8 @@ angular.module('scalearAngularApp')
         .state('login', {
             url: '/users/login',
             templateUrl: '/views/login.html',
-            controller: 'LoginCtrl'
+            controller: 'LoginCtrl',
+            params : { email: null}
         })
         .state('teacher_signup', {
             url: '/users/teacher',
@@ -63,7 +65,7 @@ angular.module('scalearAngularApp')
             url: '/users/signup',
             templateUrl: '/views/users/unified_signup.html',
             controller: 'UsersSignUpCtrl',
-            params : { input1: null, input2: null }
+            params : { input1: null, input2: null}
         })
         .state('thanks_for_registering', {
             url: '/users/thanks',
@@ -212,7 +214,7 @@ angular.module('scalearAngularApp')
             }
         })
         .state('course.course_editor', {
-            url: '/course_editor',
+            url: '/course_editor?new_course',
             templateUrl: '/views/teacher/course_editor/course_editor.html',
             controller: 'courseEditorCtrl'
         })
@@ -237,9 +239,10 @@ angular.module('scalearAngularApp')
             controller: 'progressOverviewCtrl'
         })
         .state('course.module.progress', {
-            url: "/progress",
+            url: "/progress?item_id",
             templateUrl: '/views/teacher/progress/progress_lecture.html',
             controller: 'progressLectureCtrl'
+            // params : { item_id: null }
         })
         .state('course.module.progress_statistics', {
             url: "/progress/statistics",
@@ -256,8 +259,14 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/student/lectures/courseware.html',
             controller: 'coursewareCtrl'
         })
+        .state('course.module.courseware.overview', {
+            url: '/overview',
+            templateUrl: '/views/student/course/module_overview.html',
+            controller: 'studentModuleOverviewCtrl'
+        })
         .state('course.module.courseware.lecture', {
             url: '/lectures/:lecture_id?time',
+            reloadOnSearch : false,
             templateUrl: '/views/student/lectures/lecture.middle.html',
             controller: 'studentLectureMiddleCtrl'
         })
@@ -284,15 +293,16 @@ angular.module('scalearAngularApp')
         .state('course.announcements', {
             url: '/announcements',
             templateUrl: '/views/teacher/announcements/announcements.html',
-            controller: 'announcementsCtrl'
+            controller: 'announcementsCtrl',
+            params : { show: null }
         })
         .state('course.course_information', {
-            url: '/course_information',
+            url: '/course_information?new_enroll',
             templateUrl: '/views/student/course/course_information.html',
             controller: 'studentCourseInformationCtrl'
         })
         .state('course.edit_course_information', {
-            url: '/information',
+            url: '/information?new_course',
             templateUrl: '/views/teacher/course/course_information.html',
             controller: 'teacherCourseInformationCtrl'
         })
@@ -321,6 +331,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/statistics/statistics.html',
           controller: 'statisticsCtrl'
         })
+        .state('lti_course_list', {
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key',
+            templateUrl: '/views/teacher/course_list/lti_course_list.html',
+            controller: 'ltiCourseListCtrl'
+        })
         .state('school_statistics', {
           url: '/school_statistics',
           templateUrl: '/views/statistics/school_statistics.html',
@@ -335,6 +350,11 @@ angular.module('scalearAngularApp')
           url: '/help/student/getting_started',
           templateUrl: '/views/student/help/student_getting_started.html',
           controller: 'StudentGettingStartedCtrl'
+        })
+        .state('lti_help', {
+          url: '/help/lti_help',
+          templateUrl: '/views/teacher/help/lti_help.html',
+          controller: 'LtiKeyGenerateCtrl'
         })
         .state('teacher_getting_started', {
           url: '/help/teacher/getting_started',

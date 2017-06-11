@@ -96,7 +96,7 @@ describe("Solve Course",function(){
 		describe("First Module",function(){
 			it("should open first module",function(){
 				navigator.module(1).open()
-				// navigator.module(1).item(1).open()
+				navigator.module(1).item(1).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
@@ -505,6 +505,7 @@ describe("Solve Course",function(){
 			it("should navigate to second module",function(){
 				navigator.open()
 				navigator.module(2).open()
+				navigator.module(2).item(1).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
@@ -600,9 +601,8 @@ describe("Solve Course",function(){
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
-		        navigator.set_status(1)
+		        navigator.set_status(0)
 			})
-
 			it("should navigate to second lectue in second module",function(){
 				navigator.open()
 				navigator.module(2).item(2).open()
@@ -703,7 +703,7 @@ describe("Solve Course",function(){
 		        video.seek(99);
 		        student_lec.wait_for_video_end()
 		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
-		        navigator.set_status(1)
+		        navigator.set_status(0)
 			})
 
 			it("should navigate to third lectue in second module",function(){
@@ -923,6 +923,15 @@ describe("Solve Course",function(){
 				student_lec.answer_text_drag_correct()
 				student_lec.check_answer()
 			})
+			it('wait for the voting question', function(){
+				video.play()
+				sleep(1000)
+				video.pause()
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})			
 			it('should watch video and pass by all milestones', function(){
 				video.play()
 				expect(student_lec.next_button.isDisplayed()).toEqual(false)
@@ -994,7 +1003,7 @@ describe("Solve Course",function(){
 			})
 			it('should submit quiz',function(){
 				student_quiz.submit();
-				navigator.set_status(1)
+				navigator.set_status(0)
 			})
 
 			// it("should open first lecture again",function(){

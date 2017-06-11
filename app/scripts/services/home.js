@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .factory('Home', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope', '$translate',function($resource, $http, $stateParams, scalear_api, headers, $rootScope ,$translate) {
 
     $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/:lang/home/:action', {lang:$translate.uses()},
+    return $resource(scalear_api.host+'/:lang/home/:action', {lang:$translate.use()},
       { 
       	'contactUs': { method: 'GET', params: {action: 'contact_us'}, headers: headers },
       	'technicalProblem': { method: 'GET', params: {action: 'technical_problem'}, headers: headers },

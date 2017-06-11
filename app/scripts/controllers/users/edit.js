@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
       id: 6,
       name: full_calendar_en["dayNames"][6]
     }]
-    $rootScope.subheader_message = $translate('navigation.account_information')
+    $rootScope.subheader_message = $translate.instant('navigation.account_information')
 
     UserSession.getCurrentUser()
       .then(function(user) {

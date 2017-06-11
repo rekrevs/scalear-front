@@ -4,8 +4,7 @@ Date.prototype.addDays_test = function(days)
 "July", "August", "September", "October", "November", "December"];
 var weekdays = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     // var dat = new Date(this.valueOf());
-    var dat = new Date().addDays(days ); 
-    
+    var dat = new Date().addDays(days );     
     // dat.setDate(dat.getDate() + days);
     var  op = weekdays[dat.getDay()]+', '+ ((dat.getDate()<10)? "0":"") + dat.getDate() +' '+ month[dat.getMonth()]+' '+dat.getFullYear()
     return op;
@@ -78,7 +77,7 @@ var params= {
         l_name: "student",
         online_name: "studenttest1",
         university: "uni",
-        email: "student1@email.com",
+        email: "student1@emaills.com",
     },
     admin:{
         f_name: "Administrator",
@@ -107,10 +106,8 @@ var params= {
     short_name: "csc-test",
     course_name: "aesting course 100",
     course_start_date: new Date().getDate() - 7,
-
     course_end_date: new Date().addDays(28), 
-    // course_end_date: new Date().addDays(30),
-    
+    // course_end_date: new Date().addDays(30),    
     // course_end_date_test: new Date().addDays_test(30),
     course_end_date_test: new Date().addDays_test(28),     
 
@@ -218,29 +215,35 @@ exports.config = {
       },
     specs: [
 
-        'test/e2e/spec/create_course.spec.js', // done(11/16)
-        // 'test/e2e/spec/fill_course.spec.js', // done(11/16)
-        // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
-        // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)
-        // 'test/e2e/spec/enrollment_help.spec.js', // done(11/16)
-        // 'test/e2e/spec/course_editor_basic.spec.js', // done(11/16)
-        // 'test/e2e/spec/course_editor_copy.spec.js', // done(11/16)
-        // 'test/e2e/spec/course_editor_sharing.spec.js', // done(11/16)        
-        // 'test/e2e/spec/module_statistics.spec.js', // done(11/16)
-        // 'test/e2e/spec/announcements.spec.js', // done(11/16)
-        // 'test/e2e/spec/teacher-managment.spec.js', // done(11/16)
-        // 'test/e2e/spec/students_solve_course.spec.js', // done(11/16) (inOrder Functionality )
-        // 'test/e2e/spec/notes.spec.js', // done(11/16)
-        // 'test/e2e/spec/discussions.spec.js', //done(11/16)
-        // 'test/e2e/spec/progress-module.spec.js', //done(11/16)
-        // 'test/e2e/spec/progress-completion-module.spec.js', //done(11/16)  //missing to change grade of quiz or lecture and check it       
-        // 'test/e2e/spec/validations.spec.js', //
-        // 'test/e2e/spec/preview-as-student.spec.js',         
+        // 'test/e2e/spec/create_course.spec.js', // 
+        'test/e2e/spec/fill_course.spec.js', // 
+        'test/e2e/spec/markers.spec.js', // 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)
+        // 'test/e2e/spec/inclass_dp.spec.js', //(demo)  ////////////////////////////////////
+        // 'test/e2e/spec/course_information_validation.spec.js', // 
+        // 'test/e2e/spec/account_information_validation.spec.js', // 
+        // 'test/e2e/spec/enrollment_help.spec.js', // 
+        // 'test/e2e/spec/course_editor_basic.spec.js', // 
+        // 'test/e2e/spec/course_editor_copy.spec.js', // 
+        // 'test/e2e/spec/course_editor_sharing.spec.js', //         
+        // 'test/e2e/spec/module_statistics.spec.js', // 
+        // 'test/e2e/spec/announcements.spec.js', // 
+        // 'test/e2e/spec/teacher-managment.spec.js', // 
+        // 'test/e2e/spec/students_solve_course.spec.js', //  (inOrder Functionality )
+        // 'test/e2e/spec/notes.spec.js', // 
+        // 'test/e2e/spec/discussions.spec.js', //
+        // 'test/e2e/spec/student_timeline_features.spec.js',
 
+        // 'test/e2e/spec/module_overview.spec.js', // 
+        // 'test/e2e/spec/progress-module.spec.js', //
+        // 'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
+        // 'test/e2e/spec/validations.spec.js', //
+        
+        // 'test/e2e/spec/fill_course_part2.spec.js', // 
+        // 'test/e2e/spec/preview-as-student.spec.js',         
+        
         // 'test/e2e/spec/delete_course.spec.js', //
 
        
@@ -253,7 +256,7 @@ exports.config = {
 
         // to test email features locall
 
-        'test/e2e/spec/add_user.spec.js',
+        // 'test/e2e/spec/add_user.spec.js',
         // 'test/e2e/spec/create_course.spec.js',
         // 'test/e2e/spec/fill_course.spec.js',
         // 'test/e2e/spec/email_notification.spec.js',

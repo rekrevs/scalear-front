@@ -11,8 +11,8 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/notification.html',
     link: function(scope, element, attrs) {
-      scope.correct_notify=$translate("lectures.correct")
-      scope.incorrect_notify=$translate("lectures.incorrect")
+      scope.correct_notify=$translate.instant("lectures.correct")
+      scope.incorrect_notify=$translate.instant("lectures.incorrect")
     }
   };
 }]).directive("reviewInclass", ['$translate', '$log', function($translate, $log) {
@@ -201,7 +201,7 @@ angular.module('scalearAngularApp')
                 "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>"+
               "</div>"
   }
-}]).directive('studentAnswer', ['$rootScope', '$translate','$log', function($rootScope, $translate, $log){
+}]).directive('studentAnswer', ['$rootScope', '$translate','$log','$timeout', function($rootScope, $translate, $log,$timeout){
   return {
     replace:true,
     restrict: 'E',
@@ -241,6 +241,11 @@ angular.module('scalearAngularApp')
             placement:(scope.data.xcoor > 0.5)? "left":"right",
             instant_show: "mouseover"
           }
+          $timeout(function(){
+            if(scope.explanation[scope.data.id][0]){
+              element.siblings().css('z-index',10000)
+            }
+          },300)
         }
       })
       scope.$on("$destroy", function() {
@@ -491,7 +496,7 @@ angular.module('scalearAngularApp')
       scope.item = scope.data()
       scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
-      scope.unsolved_msg = $translate("lectures.tooltip.unsolved_quiz")
+      scope.unsolved_msg = $translate.instant("lectures.tooltip.unsolved_quiz")
       scope.voteForReview=function(){
         $log.debug("vote review")
         OnlineQuiz.voteForReview(

@@ -1783,6 +1783,8 @@ angular.module( 'mm.foundation.tooltip', [ 'mm.foundation.position', 'mm.foundat
 
             var unregisterTriggerFunction = function () {};
 
+            attrs[prefix+'Trigger'] = attrs[prefix+'Trigger'] || null
+
             attrs.$observe( prefix+'Trigger', function ( val ) {
               unregisterTriggers();
               unregisterTriggerFunction();

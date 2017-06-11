@@ -9,8 +9,10 @@
 	  <tr id="bg_fix" style="height:60px" >
 	    <td class="right-border small-4"><span translate>editor.details.in_order</span>:</td>
 	    <td class="small-8">
-	      <input type="checkbox" ng-model="quiz.required_module" ng-change="updateQuiz()" class="no-margin">
-	      <span class="size-12" translate>editor.details.use_module_in_order</span>
+          <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
+		      <input type="checkbox" ng-model="quiz.required_module" ng-change="updateQuiz()" class="no-margin">
+		      <span class="size-12" translate>editor.details.use_module_in_order</span>
+	      </span>
 	      <br>
 	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.required_module" type="checkbox" ng-model="quiz.required"  ng-change='updateQuiz()'>
@@ -21,10 +23,12 @@
 	  <tr id="bg_fix" style="height:60px" >
 	    <td class="right-border small-4"><span translate>editor.details.required</span>:</td>
 	    <td class="small-8">
-	      <input type="checkbox" ng-model="quiz.graded_module" ng-change="updateQuiz()" class="no-margin">
-	      <span class="size-12" translate>editor.details.use_module_required</span>
+          <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
+		      <input type="checkbox" ng-model="quiz.graded_module" ng-change="updateQuiz()" class="no-margin">
+		      <span class="size-12" translate>editor.details.use_module_required</span>
+	      </span>
 	      <br>
-	        <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+	        <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
 	          <input ng-disabled="quiz.graded_module" type="checkbox" ng-model="quiz.graded"  ng-change='updateQuiz()'>
 	          <span class="size-12" translate>editor.details.required</span>
 	        </span>
@@ -42,8 +46,8 @@
 				<details-number min="0" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />
 				</td>
 		</tr>
-		<!-- <tr>
-			<td class="right-border"><span translate>editor.details.appearance_date</span>:</td>
+		<tr>
+		<!-- 	<td class="right-border"><span translate>editor.details.appearance_date</span>:</td>
 			<td>
 				<input type="checkbox" ng-model="quiz.appearance_time_module" ng-change="updateQuiz()" class="no-margin">
 				<span class="size-12" translate>editor.details.use_module</span>
@@ -61,8 +65,15 @@
 					<br>
 					<details-time class="timepicker" time="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-time>
 				</span>
+			</td> -->
+			<td class="right-border"><span translate>editor.details.appearance_date</span>:</td>
+			<td>
+				<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
+					<span ng-show="(quiz.appearance_time | visible)" >{{quiz.appearance_time | amDateFormat:'DD MMM YYYY, HH:mm'}}</span>
+					<span ng-show="!(quiz.appearance_time | visible)" translate >editor.tooltip.invisible_quiz</span>
+				</div>
 			</td>
-		</tr> -->
+		</tr>
 		<tr>
 			<td class="right-border"><span translate>editor.details.due_date</span>:</td>
 			<td>

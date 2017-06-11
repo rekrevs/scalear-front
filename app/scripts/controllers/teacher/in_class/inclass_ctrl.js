@@ -5,6 +5,6 @@ angular.module('scalearAngularApp')
 
     $scope.course = CourseModel.getSelectedCourse()
 
-    Page.setTitle($translate('navigation.in_class') + ': ' + $scope.course.name);
+    Page.setTitle($translate.instant('navigation.in_class') + ': ' + $scope.course.name);
   		ContentNavigator.open()
   }]);

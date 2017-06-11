@@ -51,6 +51,7 @@ describe("should check calendar functionality", function(){
   it('should create_course', function(){
     new_course.open()
     new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+    new_course.disable_email_reminders_modal_button_click()
   })
 
   xdescribe('should add a couple of module and lectures', function(){

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LtiKeyGenerateCtrl', ['$scope', '$location', '$anchorScroll','$rootScope','Page', 'scalear_api','$translate','Lti', function ($scope, $location, $anchorScroll, $rootScope,Page, scalear_api, $translate, Lti) {
+  .controller('LtiKeyGenerateCtrl', ['$scope', '$location', '$anchorScroll','$rootScope','Page', 'scalear_api','$translate','Lti', '$modal',function ($scope, $location, $anchorScroll, $rootScope,Page, scalear_api, $translate, Lti, $modal) {
    	Page.setTitle('lti.lti')
     $rootScope.subheader_message = $translate.instant('lti.lti') 
     $scope.scalear_api = scalear_api
@@ -27,6 +27,14 @@ angular.module('scalearAngularApp')
       .then(function(data) {
   	    $scope.consumer_key = data.consumer_key
   	    $scope.shared_sceret = data.shared_sceret
+      })
+    }
+
+    $scope.generateLaunchUrl = function(){
+        $modal.open({
+        templateUrl: '/views/teacher/course_list/lti_course_list.html',
+        scope: $scope,
+        controller: 'ltiCourseListCtrl'
       })
     }
 

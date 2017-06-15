@@ -11,14 +11,21 @@ angular.module('scalearAngularApp')
     // $scope.consumer_key = $stateParams.consumer_key
     $rootScope.subheader_message = $translate.instant("global.courses_list")
     $scope.loading_lti = true
+    $scope.selected_lauch_url = false
     $scope.create_new_account = false
     $scope.no_common_courses = false
+    $scope.selected_resource = false
 
 
     $window.scrollTo(0, 0);
-    Page.setTitle('navigation.lti_course_list')
-    var  a = $location.absUrl()
+    // Page.setTitle('navigation.lti_course_list')
+    Page.setTitle('lti.lti')
 
+    var  a = $location.absUrl()
+    $scope.location_state = $location.path().split('/').pop()
+    if ($scope.location_state == 'lti_course_list' && $stateParams.return_url == 'lti_tool_redirect'){
+      $scope.location_state = 'lti_tool_redirect'
+    } 
     // if(a.indexOf('3000')){
     //   $window.location.href =  a.replace("3000", "9000");
     // }
@@ -60,6 +67,36 @@ angular.module('scalearAngularApp')
       var url = $location.absUrl().split('lti')[0] + 'users/login'
       // var url = $location.absUrl().split('lti')[0] + 'users/signup?mail='+$scope.email+'&givenName='+$scope.first_name+'&sn='+$scope.last_name
       window.open(url,'_blank');
+    }
+
+    $scope.choose_item = function(type, type_id , event, type_name){
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      $scope.selected_lauch_url = true
+      $scope.sl_url = location.protocol+"//"+location.host+"/en/lti/lti_launch_use?sl_type_id="+type_id+"%26sl_type="+type
+    }
+
+    $scope.lti_tool_redirect = function(type, type_id , event, type_name){
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }      
+      console.log("lti_tool_redirect")
+      console.log($stateParams.resource_context_id)
+          Lti.ltiToolRedirectSaveData({
+            consumer_key: $stateParams.consumer_key,
+            resource_context_id: $stateParams.resource_context_id,
+            type: type,
+            type_id: type_id
+          })
+          .$promise
+          .then(function(data) {
+            console.log(true)
+            $scope.selected_resource = true
+          })
+      
     }
 
   }]);

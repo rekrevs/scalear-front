@@ -355,7 +355,7 @@ var translation_sv={
   lti:{
     embed: "Bädda in",
     lti: "Länkas till din skolas LMS",
-    choose: "Välja ",
+    select: "Välj",
     courses: "@:global.courses",
     modules:"moduler",
     items: "@:sharing.items",

@@ -16,6 +16,7 @@ angular.module('scalearAngularApp')
 	    $scope.shared_sceret = data.shared_sceret
 	    $scope.consumer_key = data.consumer_key
 	    $scope.lti_url_xml = data.lti_url_xml
+      $scope.lti_url_embed = data.lti_url_embed
 	    $scope.loading_lti = false
       })
 

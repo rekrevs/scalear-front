@@ -355,7 +355,7 @@ var translation_en={
   lti:{
     embed: "Embed",
     lti: "Linking to your School LMS",
-    choose: "Choose",
+    select: "Select",
     courses: "@:global.courses",
     modules:"modules",
     items: "@:sharing.items",

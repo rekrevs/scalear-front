@@ -140,7 +140,7 @@ var translation_en={
   support:{
     ipad:"iPad support is currently in beta.",
     mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Videos will not autoplay and you may run into other issues. We recommend using this site on a desktop/laptop",
+    issue_and_recommendation:"Student video support is available for Android and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{

@@ -43,6 +43,7 @@ angular.module('scalearAngularApp')
           $scope.sending_technical = true;
           $log.debug($scope.selected_type.value)
           $log.debug($scope.technical_data)
+          var userAgent = navigator.userAgent.replace(';', ','); 
           Home.technicalProblem({
               name: user.name,
               email: user.email,
@@ -55,7 +56,7 @@ angular.module('scalearAngularApp')
               url: $location.url(),
               problem: data,
               lang: $rootScope.current_lang,
-              agent: navigator.userAgent,
+              agent: userAgent,
               version: scalear_api.version
             },
             function() {

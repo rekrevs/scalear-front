@@ -140,7 +140,7 @@ var translation_sv={
   support:{
     ipad:"Stöd för iPad är för närvarande i beta.",
     mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
-    issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra problem. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop",
+    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
   navigation:{

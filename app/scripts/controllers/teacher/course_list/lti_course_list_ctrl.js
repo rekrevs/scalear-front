@@ -83,8 +83,8 @@ angular.module('scalearAngularApp')
         event.preventDefault();
         event.stopPropagation();
       }      
-      console.log("lti_tool_redirect")
-      console.log($stateParams.resource_context_id)
+      // console.log("lti_tool_redirect")
+      // console.log($stateParams.resource_context_id)
           Lti.ltiToolRedirectSaveData({
             consumer_key: $stateParams.consumer_key,
             resource_context_id: $stateParams.resource_context_id,
@@ -93,7 +93,7 @@ angular.module('scalearAngularApp')
           })
           .$promise
           .then(function(data) {
-            console.log(true)
+            // console.log(true)
             $scope.selected_resource = true
           })
       

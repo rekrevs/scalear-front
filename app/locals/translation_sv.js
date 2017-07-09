@@ -355,6 +355,7 @@ var translation_sv={
   lti:{
     embed: "Bädda in",
     lti: "Länkas till din skolas LMS",
+    select: "Välj",
     courses: "@:global.courses",
     modules:"moduler",
     items: "@:sharing.items",
@@ -431,8 +432,8 @@ var translation_sv={
     teacher_introduction: "Denna 10-minuters video ger dig en snabb introduktion till hur du lägger till videos och quizzar och följer dina studenters framsteg på nätet. Du kan",
     teacher_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
     student_introduction: "Denna 3-minuters video beskriver hur du använder",
-    student_introduction_cont: "och hur man studerar effektivt i en flippad kurs",
-    student_skip_intro: "introduktionen om du vill.",
+    student_introduction_cont: "och hur man studerar effektivt i en flippad kurs. Du kan",
+    student_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
     by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
     redirect_courselist: "Går till din kurslista om ",
     skip: "hoppa över",
@@ -947,7 +948,9 @@ var translation_sv={
         messages:{
             no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
             enroll_instruction: "För att anmäla dig till en kurs, välj 'Delta i en ny kurs' under menyn 'Mina kurser' och ange kursnyckeln du fått från din lärare. ",
-            create_enroll_instruction: "För att skapa eller följa en kurs välj 'Skapa ny kurs' eller 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare. "
+            create_enroll_instruction: "För att skapa eller följa en kurs välj 'Skapa ny kurs' eller 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare. ",
+            create_instruction: "För att skapa ny kurs, välj 'Skapa ny kurs'  under menyn 'Mina kurser' och.",
+            enroll_instruction: "För följa en kurs välj 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare.",
         },
         tooltip:{
             unenroll: "Avregistrera",

@@ -7,6 +7,7 @@ angular.module('scalearAngularApp')
     // else{$scope.intro_url = scalear_api.student_welcom_video}
 
     $scope.remaining = 5;
+    $scope.show_ending = false
     $scope.privacy_approved
     $scope.player = {}
     $scope.player.controls = {}
@@ -21,10 +22,12 @@ angular.module('scalearAngularApp')
       })
 
     $scope.player.events.onEnd = function() {
+        $scope.show_ending = true
       // if($scope.privacy_approved) {
         $interval(function() {
           $scope.remaining--;
           if($scope.remaining == 0) {
+
             $scope.watchedIntro();
           }
         }, 1000, 5)
@@ -46,6 +49,7 @@ angular.module('scalearAngularApp')
     $scope.watchedIntro = function() {
       var completion = {}
       completion['intro_watched'] = true;
+
       User.updateCompletionWizard({ id: $scope.current_user.id }, { completion_wizard: completion },
         function() {
           UserSession.allowRefetchOfUser()

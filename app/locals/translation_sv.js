@@ -436,6 +436,7 @@ var translation_sv={
     by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
     redirect_courselist: "Går till din kurslista om ",
     skip: "hoppa över",
+    go_to:"Om du inte förstår instruktionerna ovan, gå till",
   },
   dashboard:{
     large_calendar:"Stor kalender",

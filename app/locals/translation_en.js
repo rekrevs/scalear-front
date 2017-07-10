@@ -436,6 +436,7 @@ var translation_en={
     by_using_service: "By using this service you agree to our",
     redirect_courselist: "Redirecting to your course list in ",
     skip: "skip",
+    go_to:"Note: If you have trouble with the above instructions, go to",
   },
   dashboard:{
     large_calendar:"Large Calendar",

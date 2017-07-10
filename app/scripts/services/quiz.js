@@ -93,6 +93,9 @@ angular.module('scalearAngularApp')
         if(quiz.graded_module) {
           quiz.graded = module.graded;
         }
+        if(quiz.due_date_module) {
+          quiz.due_date = module.due_date;
+        }        
       })
 
       function instanceType() {

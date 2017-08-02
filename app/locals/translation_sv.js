@@ -92,6 +92,7 @@ var translation_sv={
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
     export_school_administration: "Statistiken kommer strax att skickas dig via email",
     another_marker: "Det finns en annan markör vid samma tid",
+    remove_your_self: "Du har framgångsrikt tagits bort från kursen",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",

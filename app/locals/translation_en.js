@@ -92,6 +92,7 @@ var translation_en={
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
     another_marker: "There is another marker at the same time",
+    remove_your_self: "You were successfully removed from the course",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",

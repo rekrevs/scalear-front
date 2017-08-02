@@ -119,7 +119,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeTeacher = function(teacher) {
-      TeacherModel.deleteTeacher(teacher).then(function() {
+      TeacherModel.deleteTeacher(teacher).then(function(params) {
+        if(params.remove_your_self){
+          $state.go("course_list") 
+          ErrorHandler.showMessage('error_message.remove_your_self', 'errorMessage', 4000, "success");
+        }
         var index = $scope.teachers.indexOf(teacher)
         if(index != -1)
           $scope.teachers.splice(index, 1);

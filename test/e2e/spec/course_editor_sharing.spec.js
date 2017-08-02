@@ -262,6 +262,8 @@ describe("Sharing a non existing module",function(){
         })
     })
 })
+// Sharing links  
+// Sharing multiple items at the same time 
 describe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
@@ -290,6 +292,8 @@ describe("Sharing single items",function(){
             content_items.add_video()
             module.open_content_items()
             content_items.add_quiz()
+            module.open_content_items()
+            content_items.add_link()            
         })
 
         it('should open firt item in third module', function(){
@@ -312,11 +316,14 @@ describe("Sharing single items",function(){
         })
         it('should share item with teacher2', function(){
             navigator.module(4).item(2).open_share_window()
-            expect(share_window.items.count()).toEqual(3)
-            expect(share_window.checkboxes.count()).toEqual(3)
+            expect(share_window.items.count()).toEqual(4)
+            expect(share_window.checkboxes.count()).toEqual(4)
             expect(share_window.checked(3)).toEqual('true')
             expect(share_window.checked(1)).toBe(null)
             expect(share_window.checked(2)).toBe(null)
+            expect(share_window.checked(4)).toEqual(null)
+            share_window.checkbox(4).click()
+            expect(share_window.checked(4)).toEqual('true')
             share_window.type_teacher_email(params.teacher2.email)
             share_window.share()
         })
@@ -343,6 +350,7 @@ describe("Sharing single items",function(){
         it('should check if the shared data is right', function(){
             expect(shared.lectures.count()).toEqual(1)
             expect(shared.quizzes.count()).toEqual(1)
+            expect(shared.links.count()).toEqual(1)
         })
         it("should open course",function(){
             course_list.open()
@@ -400,6 +408,29 @@ describe("Sharing single items",function(){
             navigator.module(2).open()
             expect(navigator.module(2).items.count()).toEqual(2)
         })
+        it('should open view shared', function(){
+            header.open_shared()
+        })
+        it("should add data to course",function(){
+            var shared_item = shared.link(1)
+            expect(shared_item.add_button.isEnabled()).toBe(false)
+            shared_item.select_course(1)
+            shared_item.select_module(2)
+            expect(shared_item.add_button.isEnabled()).toBe(true)
+            shared_item.add()
+        })
+        it("should open course",function(){
+            course_list.open()
+            course_list.open_teacher_course(1)
+        })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
+        })
+        it('should open second module', function(){
+            navigator.module(2).open()
+            expect(navigator.module(2).items.count()).toEqual(3)
+        })
+
         it("should logout",function(){
             header.logout()
         })
@@ -420,6 +451,7 @@ describe("Rollback changes",function(){
         it("should delete items and module",function(){
             var module = navigator.module(2)
             module.open()
+            module.item(3).delete()
             module.item(2).delete()
             module.item(1).delete()
             module.delete()
@@ -457,6 +489,7 @@ describe("Rollback changes",function(){
         it("should delete items and module",function(){
             var module = navigator.module(4)
             module.open()
+            module.item(3).delete()
             module.item(2).delete()
             module.item(1).delete()
             module.delete()

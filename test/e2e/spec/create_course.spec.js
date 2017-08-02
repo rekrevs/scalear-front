@@ -6,7 +6,7 @@ var CourseList = require('./pages/course_list');
 var sleep = require('./lib/utils').sleep;
 var Signup = require('./pages/sign_up');
 var SubHeader = require('./pages/sub_header')
-
+var StudentList = require('./pages/teacher/student_list');
 
 var params = browser.params;
 var header = new Header()
@@ -16,6 +16,7 @@ var course_info = new CourseInformation()
 var course_list = new CourseList()
 var signup_page = new Signup()
 var sub_header = new SubHeader()
+var student_list = new StudentList();
 
 describe("Email domain .uu.nl is prevented from sign up",function(){
 		it("should sign up ",function(){
@@ -39,12 +40,11 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
-		it('should create course', function(){
+		xit('should create course', function(){
 			new_course.open()
 			new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		})
-		
-		it('should disable email reminders', function(){
+		xit('should disable email reminders', function(){
 			new_course.disable_email_reminders_modal_button_click()
 		})
 
@@ -218,17 +218,64 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 	})
 })
 
-// EnrolledStudents: select student 
-// EnrolledStudents: select all 
-// EnrolledStudents: remove student 
-// Import course: changing between course selection 
-// Import course: canceling selected course 
 describe("New Course test rest of functions",function(){
 	describe("teacher ",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
-			new_course.open()
 		})
+        it('should create another course', function(){
+            new_course.open()
+            new_course.create("short_name", "course_name",params.course_end_date, params.discussion_link, params.image_link, "course_description", "prerequisites");
+            new_course.disable_email_reminders_modal_button_click()
+        })
+		// Import course: canceling selected course 
+		it('should Import course: canceling selected course ', function(){			
+			new_course.open()			
+			new_course.choose_import_first_course()
+			expect(new_course.description_field.getText()).toEqual('too many words ')
+			expect(new_course.prerequisites_field.getText()).toEqual('1- course 1 2- course 2 3- course 3 ')
+			new_course.unselect_button.click()
+			new_course.choose_import_first_course()
+			expect(new_course.description_field.getText()).toContain('[Copied From aesting course 100 :]')
+			expect(new_course.prerequisites_field.getText()).toContain('[Copied From aesting course 100 :]')
+			new_course.unselect_button.click()
+			expect(new_course.description_field.getText()).not.toContain('[Copied From aesting course 100 :]')
+			expect(new_course.prerequisites_field.getText()).not.toContain('[Copied From aesting course 100 :]')
+			new_course.type_description('test')
+			new_course.type_prerequisites('  ')
+			new_course.choose_import_first_course()
+			expect(new_course.prerequisites_field.getText()).not.toContain('[Copied From aesting course 100 :]')
+			expect(new_course.description_field.getText()).toContain('[Copied From aesting course 100 :]')
+			new_course.type_description(' ')		
+			new_course.type_prerequisites(' ')				
+			$('body').sendKeys(protractor.Key.ESCAPE)			
+		})
+		// Import course: changing between course selection 
+		it('should Import course: changing between course selection', function(){	
+			course_list.open()		
+			new_course.open()			
+			new_course.choose_import_first_course()
+			expect(new_course.description_field.getText()).toEqual('too many words ')
+			expect(new_course.prerequisites_field.getText()).toEqual('1- course 1 2- course 2 3- course 3 ')
+			new_course.choose_import_second_course()
+			expect(new_course.description_field.getText()).toContain('[Copied From course_name :]')
+			expect(new_course.prerequisites_field.getText()).toContain('[Copied From course_name :]')
+			expect(new_course.description_field.getText()).not.toContain('[Copied From aesting course 100 :]')
+			expect(new_course.prerequisites_field.getText()).not.toContain('[Copied From aesting course 100 :]')
+			expect(new_course.description_field.getText()).toContain('course_description')
+			expect(new_course.prerequisites_field.getText()).toContain('prerequisites ')
+			new_course.choose_import_first_course()
+			expect(new_course.description_field.getText()).not.toContain('[Copied From course_name :]')
+			expect(new_course.prerequisites_field.getText()).not.toContain('[Copied From course_name :]')
+			expect(new_course.description_field.getText()).toContain('[Copied From aesting course 100 :]')
+			expect(new_course.prerequisites_field.getText()).toContain('[Copied From aesting course 100 :]')
+			expect(new_course.description_field.getText()).not.toContain('course_description')
+			expect(new_course.prerequisites_field.getText()).not.toContain('prerequisites ')
+			new_course.type_description(' ')
+			new_course.type_prerequisites(' ')
+			$('body').sendKeys(protractor.Key.ESCAPE)
+		})
+
 		// New course: validate date 
 		it('should check New course: validate date', function(){
 			var newdate = new Date();
@@ -273,6 +320,53 @@ describe("New Course test rest of functions",function(){
 			expect(new_course.error_start_date.getText()).toEqual('not a Date')
 			expect(new_course.error_end_date.getText()).toEqual('not a Date')
 		})
+		it('should open student list', function(){
+			course_list.open()
+			course_list.open_teacher_course(1)
+			student_list.open()
+			student_list.click_list_view()
+		})
+		// EnrolledStudents: select all 
+		it('should check EnrolledStudents: select all  ', function(){
+			expect(student_list.de_select_all_button.getAttribute('disabled')).toBe('true');
+			student_list.click_select_all()
+			expect(student_list.select_all_button.getAttribute('disabled')).toBe('true');
+			expect(student_list.student(1).getAttribute('class')).toContain('border-grey');
+			student_list.click_de_select_all()
+			expect(student_list.student(1).getAttribute('class')).not.toContain('border-grey');
+			expect(student_list.de_select_all_button.getAttribute('disabled')).toBe('true');
+		})
+		// EnrolledStudents: select student 
+		it('should check  EnrolledStudents: select student  ', function(){
+			expect(student_list.email_button.getAttribute('disabled')).toBe('true');
+			expect(student_list.student(1).getAttribute('class')).not.toContain('border-grey');
+			student_list.student(1).click()
+			expect(student_list.student(1).getAttribute('class')).toContain('border-grey');
+			expect(student_list.student(2).getAttribute('class')).not.toContain('border-grey');
+			student_list.click_email()
+			expect(student_list.email_student(1).getText()).toEqual(params.student1.email);
+			$('body').sendKeys(protractor.Key.ESCAPE)
+		})
+		// EnrolledStudents: remove student 
+		it('should check  EnrolledStudents: remove student', function(){
+			expect(student_list.students.count()).toEqual(3)
+			student_list.click_remove_student()
+			student_list.delete_student(1)
+			expect(student_list.students.count()).toEqual(2)
+			course_info.open()	
+			var enrollment_key = course_info.enrollmentkey
+			header.logout()
+		    login_page.sign_in(params.student1.email, params.password) 
+		    header.join_course(enrollment_key)
+			new_course.disable_student_email_reminders_button_click()
+		    header.logout()
+			login_page.sign_in(params.teacher1.email, params.password)		    
+		})
+		it('should delete course', function(){
+			course_list.open()
+			course_list.delete_teacher_course(2)
+			expect(course_list.teacher_courses.count()).toEqual(1)
+		})		
 		it('should logout ', function(){
 			header.logout()
 		})

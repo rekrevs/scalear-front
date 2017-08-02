@@ -28,7 +28,7 @@
 				<rich-textarea  ng-model="announcement.announcement" style="width: 98%;height: 200px;margin: 10px 0;" />
 			</div>
 			<button id="save_button" class="button tiny" ng-click="saveannouncement(announcement)" ng-disabled="saving" translate>button.save</button>
-			<button id="close_button" class="button alert tiny" ng-click="hideannouncement(announcement)" ng-disabled="saving" translate>button.close</button>
+			<button id="close_button" class="button alert tiny" ng-click="hideannouncement('announcement')" ng-disabled="saving" translate>button.close</button>
 		</div>
 	</div>
 </div>

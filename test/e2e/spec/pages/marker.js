@@ -52,10 +52,8 @@ MarkerPanel.prototype = Object.create({}, {
 	add_marker_button:{get:function(){return element(by.id('note_button'))}},
 	create:{value:function(){this.add_marker_button.click();}},
 	create_shortcut:{value:function(){$('body').sendKeys('n');}},
-	create_empty_shortcut:{value:function(){
-		browser.actions().keyDown(protractor.Key.SHIFT).sendKeys('n').perform();
-		// $('body').sendKeys('n').sendKeys('protractor.key.');
-	}}  ,
+	create_empty_shortcut:{value:function(){browser.actions().keyDown(protractor.Key.SHIFT).sendKeys('n').perform();}}  ,
+	tab_click:{value:function(){browser.actions().sendKeys(protractor.Key.chord(protractor.Key.TAB)).perform(); }},
 	title:{get:function(){return element(by.css('[ng-model="selected_marker.title"]'))}},
 	type_title:{value:function(val){this.title.clear().sendKeys(val);}},
 	type_empty_title:{value:function(){this.title.clear().sendKeys(" ");}},
@@ -63,11 +61,26 @@ MarkerPanel.prototype = Object.create({}, {
 	annotation:{get:function(){return element(by.css('[ng-model="selected_marker.annotation"]'))}},
 	type_annotation:{value:function(val){this.annotation.clear().sendKeys(val);}},
 	type_empty_annotation:{value:function(){this.annotation.clear().sendKeys(" ");}},
+
+	time:{get:function(){return element(by.css('[ng-model="selected_marker.formatedTime"]'))}},
+	type_time:{value:function(val){this.time.clear().sendKeys(val);}},
+	type_empty_time:{value:function(){this.time.clear().sendKeys(" ");}},	
 	// get_annotation:{}
 	save_marker:{value:function(){this.done_button.click()}},
 	annotation_video:{get:function(){return element(by.css('[text="selected_marker.annotation"]'))}},
 	markers:{get:function(){return element.all(by.repeater('marker in lecture.timeline.items'))}},
 	marker:{value:function(num){return new Marker(this.markers.get(num-1))}},
+	marker_list:{value:function(num){return this.markers.get(num-1) }},
+	wait_for_marker:{value:function(){
+		var annotation_video = this.annotation_video
+		browser.driver.wait(function() {
+			return annotation_video.isPresent().then(function(disp) {
+				return disp;
+			}, 100000);
+		});
+		// browser.driver.wait(protractor.until.elementIsNotVisible(annotation_video));
+	}},	
+
 })
 
 module.exports = MarkerPanel;

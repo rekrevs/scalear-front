@@ -8,7 +8,38 @@ Quiz.prototype = Object.create({}, {
   title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
   visibility_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
   visibility_box_click:{value:function(){return this.visibility_box.click()}},
+  show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+  show_inclass_click:{value:function(){return this.show_inclass_box.click()}},  
 })
+
+var Discussion = function(elem){
+  this.field = elem
+}
+
+var Comment = function(elem){
+  this.field = elem
+}
+
+Comment.prototype = Object.create({}, {
+  show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+  show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+})
+
+Discussion.prototype = Object.create({}, {
+  show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+  show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+  comments:{get:function(){return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')) }},
+  comment:{value:function(val){return new Comment(this.comments.get(val-1)) }}, 
+})
+
+var ShowInclassBlock = function(elem){
+  this.field = elem
+}
+ShowInclassBlock.prototype = Object.create({}, {
+  show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+  show_inclass_click:{value:function(){return this.show_inclass_box.click()}}, 
+})
+
 
 var ModuleItem = function(elem){
   this.field = elem
@@ -18,15 +49,22 @@ ModuleItem.prototype = Object.create({}, {
   items:{get:function(){ return this.field.all(by.className('ul_item'))}},
   title:{get:function(){return this.field.element(by.className("title")).getText()}},
   // lecture
-  inclass_quizzes:{get:function(){return this.field.all(by.className('color-orange'))}},
+  inclass_quizzes:{get:function(){return this.field.all(by.className('color-green'))}},
   inclass_quiz:{value:function(val){return new Quiz(this.inclass_quizzes.get(val-1)) }},
   discussions:{get:function(){return this.field.all(by.className('color-coral'))}},
-  // discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
+  discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
   // quiz  and survey
   question_quizzes:{get:function(){return this.field.all(by.className('color-blue'))}},
-  // question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},
+  question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},
   freetextquestions:{get:function(){return this.field.all(by.className('color-coral'))}},
-  // freetextquestion:{value:function(val){return new Freetextquestion(this.freetextquestions.get(val-1)) }},
+  freetextquestion:{value:function(val){return new ShowInclassBlock(this.freetextquestions.get(val-1)) }},
+
+  really_confuseds:{get:function(){return this.field.all(by.className('color-red'))}},
+  really_confused:{value:function(val){return new ShowInclassBlock(this.really_confuseds.get(val-1)) }},
+
+  markers:{get:function(){return this.field.all(by.className('color-gray'))}},
+  marker:{value:function(val){return new ShowInclassBlock(this.markers.get(val-1)) }},
+
 })
 
 var Inclass = function(){}

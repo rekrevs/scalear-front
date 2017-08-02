@@ -1,3 +1,4 @@
+/* istanbul ignore next */ 
 'use strict';
 
 angular.module('scalearAngularApp')

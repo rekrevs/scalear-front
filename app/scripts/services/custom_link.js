@@ -77,7 +77,10 @@ angular.module('scalearAngularApp')
       }
 
       function remove() {
-        return CustomLink.destroy({ link_id: link.id }, {})
+        return CustomLink.destroy({ 
+            course_id: link.course_id,
+            link_id: link.id 
+          }, {})
           .$promise
           .then(function() {
             $rootScope.$broadcast("Item:removed", link)

@@ -208,7 +208,7 @@ div.centered_image {
       <p>
         If you're facing problems adding content to your course, you can directly select your content from here and generate a launch URL.      
       </p>
-        <button class="button small success" ng-click="generateLaunchUrl()" >Generate Launch URL </button>
+        <button class="button small success" ng-disabled="!consumer_key" ng-click="generateLaunchUrl()" >Generate Launch URL </button>
       </div>
 
     </div> 

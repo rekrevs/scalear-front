@@ -109,9 +109,9 @@
             </div>
         </div>
         <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow: auto;">
-            <div style="background:white;">
+            <div style="background:white;" id="white_background">
                 <div style="padding-top: 1%;padding-left: 1%;font-size: 50px;line-height: 40px;opacity: 1;" ng-bind-html="selected_timeline_item.data.title"></div>
-                <div ng-if="selected_timeline_item.type == 'charts'">
+                <div ng-if="selected_timeline_item.type == 'charts'" id='chart'>
                     <div google-chart chart="chart"></div>
                 </div>
                 <div ng-if="selected_timeline_item.type == 'Free Text Question'" style="padding-left:30px">
@@ -139,7 +139,7 @@
             <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <span>{{button_names[5]}} </span><i class="fi-rewind" />
             </button>
-            <button ng-class="button_class+' '+dark_buttons" class="button reall-tiny secondary drop-top" style="padding: 3px 10px;" dropdown-toggle="#content_list">
+            <button ng-class="button_class+' '+dark_buttons" class="button reall-tiny secondary drop-top" style="padding: 3px 10px;" dropdown-toggle="#content_list" id="content_list_btn">
                 <i class="fi-list-bullet" />
             </button>
             <ul id="content_list" class="f-dropdown text-left" style="overflow:auto;margin-top: -275px;height: 250px;max-width: 300px;padding: 12px;">

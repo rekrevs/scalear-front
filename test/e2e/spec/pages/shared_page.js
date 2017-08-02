@@ -18,8 +18,10 @@ SharePage.prototype = Object.create({}, {
 	items:{get:function(){return element.all(by.repeater('child in module.items'))}},
 	lectures:{get:function(){return element.all(by.repeater('lecture in item.lectures'))}},
 	quizzes:{get:function(){return element.all(by.repeater('quiz in item.quizzes'))}},
+	links:{get:function(){return element.all(by.repeater('ink in item.customlinks'))}},
 	module:{value:function(num){return new SharedItem(this.modules.get(num-1))}},
 	lecture:{value:function(num){return new SharedItem(this.lectures.get(num-1))}},
 	quiz:{value:function(num){return new SharedItem(this.quizzes.get(num-1))}},
+	link:{value:function(num){return new SharedItem(this.links.get(num-1))}},
 })
 module.exports = SharePage;

@@ -95,10 +95,10 @@ angular.module('scalearAngularApp')
         });
 
         var maker_enter_tab_click = function(tab_enter) {
-          if($("input.marker_name").is(':focus')){
-            $("input.marker_annotation").focus()
+          if($("div.marker_name").is(':focus')){
+            $("div.marker_annotation").focus()
           }
-          else if($("input.marker_annotation").is(':focus')){
+          else if($("div.marker_annotation").is(':focus')){
            $("input.marker_time").focus()
           }
           else if($("input.marker_time").is(':focus')){
@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
             }
           }
           else if($("#delete_marker_button").find('a').is(':focus')){
-              $("input.marker_name").focus()
+              $("div.marker_name").focus()
           }
         }
         var removeShortcuts=function(){

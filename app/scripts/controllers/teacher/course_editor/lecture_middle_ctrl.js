@@ -233,10 +233,9 @@ angular.module('scalearAngularApp')
 
     function saveQuizAnswers(options) {
       if((
-          ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz()) ||
+          ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz() && isFormValid() ) ||
           ((!$scope.selected_quiz.isTextVideoQuiz() || $scope.selected_quiz.isTextSurvey()) && isFormValid())
         ) && $scope.selected_quiz.answers.length) {
-
         $scope.submitted = false;
         $scope.hide_alerts = true;
         $scope.quiz_deletable = false
@@ -253,9 +252,10 @@ angular.module('scalearAngularApp')
         }
         return false
       } else {
-        if($scope.selected_quiz.isTextVideoQuiz()) {
-          $scope.alert.msg = $scope.answer_form.$error.atleastone ? "editor.messages.quiz_no_answer" : "editor.messages.provide_answer"
-        }
+        // if($scope.selected_quiz.isTextVideoQuiz()) {
+        //   $scope.alert.msg = $scope.answer_form.$error.atleastone ? "editor.messages.quiz_no_answer" : "editor.messages.provide_answer"
+        // }
+        
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)

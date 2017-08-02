@@ -97,6 +97,7 @@ var params= {
         url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
         duration:{ min:6, sec:5},
     },
+    link_url:"https://www.scalable-learning.com/#/home",
 
     q_x:169,
     q1_y:127,
@@ -216,8 +217,8 @@ exports.config = {
     specs: [
 
         // 'test/e2e/spec/create_course.spec.js', // 
-        'test/e2e/spec/fill_course.spec.js', // 
-        'test/e2e/spec/markers.spec.js', // 
+        // 'test/e2e/spec/fill_course.spec.js', // 
+        // 'test/e2e/spec/markers.spec.js', // 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
@@ -235,6 +236,7 @@ exports.config = {
         // 'test/e2e/spec/notes.spec.js', // 
         // 'test/e2e/spec/discussions.spec.js', //
         // 'test/e2e/spec/student_timeline_features.spec.js',
+        'test/e2e/spec/inclass_teacher_side.spec.js', //
 
         // 'test/e2e/spec/module_overview.spec.js', // 
         // 'test/e2e/spec/progress-module.spec.js', //

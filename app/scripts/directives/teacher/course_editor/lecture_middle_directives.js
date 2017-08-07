@@ -428,8 +428,8 @@ angular.module('scalearAngularApp')
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
           '<rich-textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
-          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>" +
-          '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>' +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-5 columns'><span translate>button.close</span></button>" +
+          '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;" class="small-7 columns no-padding"></delete_button>' +
           '</ul>'
 
         scope.popover_options = {

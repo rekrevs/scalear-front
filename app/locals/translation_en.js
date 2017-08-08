@@ -589,6 +589,7 @@ var translation_en={
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
+    note_time: "Note Time",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",

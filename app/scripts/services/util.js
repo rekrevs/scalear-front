@@ -184,7 +184,6 @@ angular.module('scalearAngularApp')
       },
       getShortAnswerText: function(text, len_answer){
         var ratio = window.innerWidth / window.innerHeight 
-        console.log(window.innerWidth , window.innerHeight , text , len_answer , ratio)
         if( 1.7 < ratio && window.innerWidth > 1280){ // 16/9  , 1280 width
           if (len_answer >= 5 && text.length>20) {
             return text.substring(0,20)+".."

@@ -7,7 +7,8 @@ angular.module('scalearAngularApp')
     Page.startTour();
     $rootScope.subheader_message = $translate.instant("navigation.courses")
 
-    $scope.column='name'
+    $scope.column='start_date'
+    $scope.is_reverse = true
     $scope.course_filter = '!!'
     $scope.teacher_courses = []
     $scope.student_courses = []

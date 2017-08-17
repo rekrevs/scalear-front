@@ -701,69 +701,118 @@ angular.module('scalearAngularApp')
 
     $scope.formatLectureChartData = function(data, type) {
       var formated_data = {}
-      formated_data.cols = [{
+      formated_data.cols = [
+      {
         "label": $translate.instant('global.students'),
         "type": "string"
-      }, {
-        "label":$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')',
+      },
+      {
+        "label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }, {
         "label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }, {
         "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": '', // Never Tried 
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant("dashboard.solved"),
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }]
+      
       formated_data.rows = []
       for (var ind in data) {
+        
         var text, correct, incorrect,
           first_correct = 0,
           last_correct = 0 ,
           first_not_correct = 0,
           last_not_correct = 0 ,
           did_not_try = 0,
-          survey_tried = 0
+          survey_tried = 0,
 
-        text = data[ind][2]
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        var tooltip_text = data[ind][2]
+
+        var  first_correct_tooltip_text = '',
+          last_correct_tooltip_text = '',
+          first_not_correct_tooltip_text = '',
+          last_not_correct_tooltip_text = '',
+          did_not_try_tooltip_text = '',
+          survey_tried_tooltip_text = ''
+
         if (data[ind][1] == "orange") {
           if (type != 'Survey')
-            text += " (" + $translate.instant('editor.incorrect') + ")";
+            short_text += " (" + $translate.instant('editor.incorrect') + ")";
           first_not_correct = data[ind][0]
           last_not_correct = data[ind][3]
+          
+          first_not_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
+          last_not_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
         } 
         else if((data[ind][1] == "gray")){
-          did_not_try = data[ind][0]
+          did_not_try = data[ind][0] 
+          did_not_try_tooltip_text =   "<div style='color:black;padding:8px'>"+$translate.instant("dashboard.never_tried")+'  : '+data[ind][0]+"</div>"
         } 
         else if((data[ind][1] == "blue")){
           survey_tried = data[ind][0]
+          survey_tried_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("dashboard.solved")+' : '+data[ind][0]+"</div>"
         } 
         else {
           if (type != 'Survey')
-            text += " (" + $translate.instant('editor.correct') + ")";
+            short_text += " (" + $translate.instant('editor.correct') + ")";
           first_correct = data[ind][0]
           last_correct = data[ind][3]
+          
+          first_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
+          last_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
+
         }
-      // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try
+      // first_correct, _tooltip , last_correct, _tooltip , first_not_correct, _tooltip , last_not_correct, _tooltip , did_not_try, _tooltip
         var row = {
           "c": [
-            {"v": ScalearUtils.getHtmlText(text)}, 
+            {"v": short_text}, 
             {"v": first_correct}, 
+            {"v": first_correct_tooltip_text },
             {"v": last_correct}, 
+            {"v": last_correct_tooltip_text },
             {"v": first_not_correct}, 
+            {"v": first_not_correct_tooltip_text },
             {"v": last_not_correct}, 
+            {"v": last_not_correct_tooltip_text },
             {"v": did_not_try}, 
-            {"v": survey_tried}
+            {"v": did_not_try_tooltip_text },
+            {"v": survey_tried},
+            {"v": survey_tried_tooltip_text },
+
           ]
         }
+        // console.log(row)
         formated_data.rows.push(row)
       }
       return formated_data
@@ -778,29 +827,45 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('editor.correct'),
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant('editor.incorrect'),
         "type": "number"
+      } , {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }]
       formated_data.rows = []
-      var text, correct, incorrect
+
       for (var ind in data) {
+        var text, correct, incorrect, tooltip_text, correct_tooltip_text, incorrect_tooltip_text
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        var tooltip_text = data[ind][2]
+
         if (!data[ind][1]) {
-          text = data[ind][2] + " " + "(" + $translate.instant('editor.incorrect') + ")";
+          short_text += " " + "(" + $translate.instant('editor.incorrect') + ")";
           correct = 0
           incorrect = data[ind][0]
+          incorrect_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' : '+data[ind][0]+"</div>"
         } else {
-          text = data[ind][2] + " " + "(" + $translate.instant('editor.correct') + ")";
+          short_text += " " + "(" + $translate.instant('editor.correct') + ")";
           correct = data[ind][0]
           incorrect = 0
+          correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.correct")+' : '+data[ind][0]+"</div>"
         }
+
+        // "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
         var row = {
-          "c": [{
-            "v": ScalearUtils.getHtmlText(text)
-          }, {
-            "v": correct
-          }, {
-            "v": incorrect
-          }]
+          "c": [
+            {"v": short_text}, 
+            {"v": correct},
+            { "v": correct_tooltip_text },
+            // { "v": tooltip_text },
+            {"v": incorrect},
+            { "v": incorrect_tooltip_text },
+            ]
         }
         formated_data.rows.push(row)
       }
@@ -812,14 +877,24 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         { "label": $translate.instant('global.students'), "type": "string" },
-        { "label": $translate.instant('progress.chart.answered'), "type": "number" }
-      ]
+        { "label": $translate.instant('progress.chart.answered'), "type": "number" },
+        {
+          "type": "string",
+          "p": {"role": "tooltip","html": true}
+        }]
       formated_data.rows = []
+      var text, short_text, tooltip_text
       for (var ind in data) {
+        text = ScalearUtils.getHtmlText(data[ind][1])
+        short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        tooltip_text = data[ind][1]
+        tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +' : '+data[ind][0]+"</div>"
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(data[ind][1]) },
-            { "v": data[ind][0] }
+            { "v": short_text },
+            { "v": data[ind][0] },
+            { "v": tooltip_text }
+
           ]
         }
         formated_data.rows.push(row)
@@ -882,8 +957,12 @@ angular.module('scalearAngularApp')
             "gridlines": {
               "count": 7
             },
-            "viewWindow": { "max": student_count }
-          }
+            "viewWindow": { "max": student_count },
+            "textPosition": 'none'
+
+          },
+          "tooltip": { "isHtml": true },
+
         };
         if( formatter == 'formatQuizChartData' ||formatter == 'formatSurveyChartData'){
           // first_correct , last_not_correct 

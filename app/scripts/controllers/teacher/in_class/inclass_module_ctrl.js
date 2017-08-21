@@ -153,8 +153,7 @@ angular.module('scalearAngularApp')
     }
 
     var checkDisplayInclass = function() {
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count)
-
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count || $scope.markers_count)
     }
 
     var adjustModuleItems = function(obj, from, to) {

@@ -92,6 +92,7 @@ var translation_en={
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
     another_marker: "There is another marker at the same time",
+    remove_your_self: "You were successfully removed from the course",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -140,7 +141,7 @@ var translation_en={
   support:{
     ipad:"iPad support is currently in beta.",
     mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Videos will not autoplay and you may run into other issues. We recommend using this site on a desktop/laptop",
+    issue_and_recommendation:"Student video support is available for Android and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -402,8 +403,8 @@ var translation_en={
     deleting_profile_details: "Your data is retained in the system while you have a valid account to enable you to enroll in future classes. If you delete your account, then all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research",
     legal_entity: "Legal Entity",
     legal_entity_details: "ScalableLearning is provided by RISE SICS, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
-    code_conduct: "GÉNAT Data Protection Code of Conduct",
-    code_conduct_details: "This privacy policy complies with the GÉNAT Data Protection Code of conduct version 1.0, 14 June 2013.",
+    code_conduct: "GÉANT Data Protection Code of Conduct",
+    code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
     last_update: "Last update: 24-May-2017",
@@ -437,6 +438,7 @@ var translation_en={
     by_using_service: "By using this service you agree to our",
     redirect_courselist: "Redirecting to your course list in ",
     skip: "skip",
+    go_to:"Note: If you have trouble with the above instructions, go to",
   },
   dashboard:{
     large_calendar:"Large Calendar",
@@ -587,6 +589,7 @@ var translation_en={
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
+    note_time: "Note Time",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",

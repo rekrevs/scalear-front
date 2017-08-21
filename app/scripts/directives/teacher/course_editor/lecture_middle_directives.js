@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
         '</div>' +
         '</div>' +
         '<div class="row" style="text-align:left;margin-left:0;">' +
-        '<div class="small-3 columns"><span translate>editor.marker_time</span>:</div>' +
+        '<div class="small-3 columns"><span translate>editor.note_time</span>:</div>' +
         '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
         '<input class="marker_time" type="text" ng-model="selected_marker.formatedTime" style="height: 30px;margin-bottom:0;">' +
         '<small class="error position-absolute z-one" ng-show="marker_errors.time_error" ng-bind="marker_errors.time_error"></small>' +
@@ -428,8 +428,8 @@ angular.module('scalearAngularApp')
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
           '<rich-textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
-          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>" +
-          '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>' +
+          "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-5 columns'><span translate>button.close</span></button>" +
+          '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;" class="small-7 columns no-padding"></delete_button>' +
           '</ul>'
 
         scope.popover_options = {

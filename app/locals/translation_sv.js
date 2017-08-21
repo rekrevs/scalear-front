@@ -92,6 +92,7 @@ var translation_sv={
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
     export_school_administration: "Statistiken kommer strax att skickas dig via email",
     another_marker: "Det finns en annan markör vid samma tid",
+    remove_your_self: "Du har framgångsrikt tagits bort från kursen",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -140,7 +141,7 @@ var translation_sv={
   support:{
     ipad:"Stöd för iPad är för närvarande i beta.",
     mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
-    issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra problem. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop",
+    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
   navigation:{
@@ -402,8 +403,8 @@ var translation_sv={
     deleting_profile_details: "Dina data sparas i systemet så länge du har ett gällande konto för du ska ha möjlighet att registrera dig för nya kurser. Om du raderar ditt konto, kommer alla din personligt identifierbara information att tas bort från systemet. Notera att det kan dröja en tid innan denna information har raderats från befintliga backupsystem. Ditt anonymiserade användarbeteende kan komma att sparas i forskningssyfte.",
     legal_entity: "Juridisk person",
     legal_entity_details: "ScalableLearning tillhandahålls av RISE SICS, Isafjordsgatan 22/Kistagången 16 SE-164 40 Kista, Sweden.",
-    code_conduct: "GÉNAT Data Protection Code of Conduct",
-    code_conduct_details: "Denna sekretesspolicy följer GÉNAT Data Protection Code of conduct, version 1.0, 14 juni 2013.",
+    code_conduct: "GÉANT Data Protection Code of Conduct",
+    code_conduct_details: "Denna sekretesspolicy följer GÉANT Data Protection Code of conduct, version 1.0, 14 juni 2013.",
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
     last_update: "Senast uppdaterad: 2017-05-24",
@@ -437,6 +438,7 @@ var translation_sv={
     by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
     redirect_courselist: "Går till din kurslista om ",
     skip: "hoppa över",
+    go_to:"Om du inte förstår instruktionerna ovan, gå till",
   },
   dashboard:{
     large_calendar:"Stor kalender",
@@ -491,7 +493,7 @@ var translation_sv={
     answered_but_group: 'Du har provat det här testet, men din ',
     not_checked_group: " har inte kontrollerats av läraren.",
     tried_not_correct_first: "Du har provat detta test en gång, men har ",
-    self_not_correct_question: "Du har provat detta fråga , men har ",    
+    self_not_correct_question: "Du har provat detta fråga , men har ",
     tried_not_correct_first_answer: "inte fått korrekt svar.",
     tried_not_correct_last: "Du har provat det här testet mer än en gång, men har",
     answered_correct_but: "Du har svaret korrekt, men ",
@@ -586,6 +588,7 @@ var translation_sv={
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
     marker_time: "Markörens tid",
+    note_time: "Anteckning tid",
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",

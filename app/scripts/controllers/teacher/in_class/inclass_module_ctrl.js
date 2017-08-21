@@ -153,8 +153,7 @@ angular.module('scalearAngularApp')
     }
 
     var checkDisplayInclass = function() {
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count)
-
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count || $scope.markers_count)
     }
 
     var adjustModuleItems = function(obj, from, to) {
@@ -777,29 +776,37 @@ angular.module('scalearAngularApp')
       }]
       formated_data.rows = []
       for(var ind in data) {
-        var text, correct, incorrect, tooltip_text
-        tooltip_text = "<div style='padding:8px'><b>" + data[ind][2] + "</b><br>"
+        var text, correct, incorrect, tooltip_text, incorrect_tooltip_text, correct_tooltip_text
+
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        console.log(short_text)
+        var tooltip_text = data[ind][2]
+
         if(data[ind][1] == "gray") {
           correct = 0
           incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
-          if(!isSurvey())
-            tooltip_text += "Incorrect: "
+          if(!isSurvey()){
+            incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
+          }
+          incorrect_tooltip_text += tooltip_text + "</div>"
         } else {
           correct = Math.floor((data[ind][0] / $scope.students_count) * 100)
           incorrect = 0
-          if(!isSurvey())
-            tooltip_text += "Correct: "
+          if(!isSurvey()){
+            correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "
+          }
+          correct_tooltip_text += tooltip_text + "</div>"
         }
-        text = data[ind][2]
-        $log.debug(text)
-        tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
+        // text = data[ind][2]
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text) },
+            // { "v": ScalearUtils.getHtmlText(text) },
+            {"v": short_text}, 
             { "v": correct },
-            { "v": tooltip_text },
+            { "v": correct_tooltip_text },
             { "v": incorrect },
-            { "v": tooltip_text }
+            { "v": incorrect_tooltip_text }
           ]
         }
         formated_data.rows.push(row)
@@ -853,7 +860,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text)},
+            { "v": ScalearUtils.getShortAnswerText( ScalearUtils.getHtmlText(text) , Object.keys(data).length )},
             { "v": self },
             { "v": tooltip_text },
             { "v": style },
@@ -871,15 +878,23 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         { "label": $translate.instant('global.students'), "type": "string" },
-        { "label": $translate.instant('progress.chart.answered'), "type": "number" }
+        { "label": $translate.instant('progress.chart.answered'), "type": "number" },
+        {
+        "type": "string",
+        "p": {
+          "role": "tooltip",
+          "html": true
+        }
+      }
       ]
       formated_data.rows = []
       for(var ind in data) {
 
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(data[ind][2]) },
-            { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) }
+            { "v": ScalearUtils.getShortAnswerText(ScalearUtils.getHtmlText(data[ind][2]) , Object.keys(data).length )},
+            { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) },
+            { "v": ScalearUtils.getHtmlText(data[ind][2]) }
           ]
         }
         formated_data.rows.push(row)

@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation) {
     return {
       restrict: 'E',
       replace: true,
@@ -295,6 +295,9 @@ angular.module('scalearAngularApp')
         }
 
         scope.preview = function() {
+          if (VideoInformation.current_time!=0){
+            $state.params['time'] = Math.floor(VideoInformation.current_time)
+          }
           $state.go("preview",$state.params, { reload: true })
         }
 

@@ -35,7 +35,12 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onReady = function() {
       $scope.video_ready = true
-      $scope.lecture_player.controls.seek_and_pause(0)
+      var time = $state.params.time
+      if (time) {
+        $scope.seek(time-0.2);
+      } else if (!($rootScope.is_mobile)) {
+        $scope.lecture_player.controls.seek_and_pause(0)
+      }
 
       $scope.lecture.timeline.items.forEach(function(item) {
         item.data && addItemToVideoQueue(item.data, item.type);
@@ -583,7 +588,8 @@ angular.module('scalearAngularApp')
 
     $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
-        if(!$scope.leave_state && ( toState.url != "/preview") ) {
+        // if(!$scope.leave_state && ( toState.url != "/preview") ) {
+        if(!$scope.leave_state ) {
           event.preventDefault();
           saveOpenEditor()
             .then(function(error) {

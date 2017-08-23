@@ -111,7 +111,9 @@ angular.module('scalearAngularApp')
         function(resp) {
           $scope.is_mobile = MobileDetector.isMobile()
           if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
+            $rootScope.busy_loading = false;
             showMobileWarning(function(){
+              $rootScope.busy_loading = true;
               handleSamlResponse(resp)
             })
           } else {

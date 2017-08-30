@@ -904,6 +904,9 @@ angular.module('scalearAngularApp')
           },
           function(data) {
             changeQuizStatus(data)
+            if($scope.selected_quiz.question_type=="Free Text Question"){
+              addFreeTextAnswerNote($scope.studentAnswers[$scope.selected_quiz.id])
+            }            
           });
       } else {
         $log.debug("invalid form")
@@ -955,8 +958,29 @@ angular.module('scalearAngularApp')
         },
         function(data) {
           changeQuizStatus(data)
+          if($scope.selected_quiz.question_type=="Free Text Question"){
+            addFreeTextAnswerNote(selected_answers)
+          }
         }
       )
+    }
+
+    var addFreeTextAnswerNote = function(note_text){
+        note_text = "Quiz: "+$scope.selected_quiz.question+"\nAnswer: " + note_text
+        Lecture.saveNote(
+          {
+            course_id: $state.params.course_id,
+            lecture_id: $state.params.lecture_id ,
+            note_id: null
+          },
+          {
+            data: note_text,
+            time: $scope.selected_quiz.time
+          },
+          function(response){
+            $scope.timeline['lecture'][$state.params.lecture_id].add($scope.selected_quiz.time, "note", response.note);
+          }
+        );
     }
 
     var changeQuizStatus = function(data) {

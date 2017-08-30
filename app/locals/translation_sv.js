@@ -807,7 +807,10 @@ var translation_sv={
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
         quizzes_optional_solved: "extra quiz lösta",
-        watched_video: "Sedd"
+        watched_video: "Sedd",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Ändra status",

@@ -808,7 +808,10 @@ var translation_en={
         see_related: "See related answers to student",
         quizzes_solved: "quizzes required solved",
         quizzes_optional_solved: "optional quizzes solved",
-        watched_video: "Watched"
+        watched_video: "Watched",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Change Status",

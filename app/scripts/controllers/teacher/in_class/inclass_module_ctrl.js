@@ -783,15 +783,19 @@ angular.module('scalearAngularApp')
         console.log(short_text)
         var tooltip_text = data[ind][2]
 
-        if(data[ind][1] == "gray") {
+        if(data[ind][1] == "orange") {
           correct = 0
-          incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          incorrect = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           if(!isSurvey()){
             incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
           }
           incorrect_tooltip_text += tooltip_text + "</div>"
+        } else if(data[ind][1] == "gray") {
+          correct = 0
+          incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
         } else {
-          correct = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           incorrect = 0
           if(!isSurvey()){
             correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "

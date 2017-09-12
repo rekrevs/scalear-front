@@ -40,11 +40,11 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
 		})
-		xit('should create course', function(){
+		it('should create course', function(){
 			new_course.open()
 			new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		})
-		xit('should disable email reminders', function(){
+		it('should disable email reminders', function(){
 			new_course.disable_email_reminders_modal_button_click()
 		})
 
@@ -70,6 +70,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			header.join_course(enrollment_key)
 			header.reject_join_course.getText().then(function (text) { expect(text).toEqual("Registration is disabled for this course, contact your teacher to enable registration.") });
 			header.close_join_course()
+			sleep(5000)
 			header.logout()
 		})
 	    it('teacher should enable registration', function(){  
@@ -165,7 +166,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 		})
 		it('should logout ', function(){
 			// browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-			// sleep(4000)
+			sleep(2000)
 			header.logout()
 		})		
 		it('should enroll student 3 through URL LINK ', function(){
@@ -174,6 +175,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			browser.get(enrollment_url);
 		})		
 		it('should enroll student 3 through URL LINK ', function(){
+			sleep(5000)
 			new_course.disable_student_email_reminders_button_click()
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
@@ -322,7 +324,7 @@ describe("New Course test rest of functions",function(){
 		})
 		it('should open student list', function(){
 			course_list.open()
-			course_list.open_teacher_course(1)
+			course_list.open_teacher_course(2)
 			student_list.open()
 			student_list.click_list_view()
 		})
@@ -364,7 +366,7 @@ describe("New Course test rest of functions",function(){
 		})
 		it('should delete course', function(){
 			course_list.open()
-			course_list.delete_teacher_course(2)
+			course_list.delete_teacher_course(1)
 			expect(course_list.teacher_courses.count()).toEqual(1)
 		})		
 		it('should logout ', function(){

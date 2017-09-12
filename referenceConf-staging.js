@@ -372,14 +372,16 @@ exports.config = {
     // before the specs are executed
     // You can specify a file containing code to run by setting onPrepare to
     // the filename string.
-    onPrepare: function() {
-        browser.driver.manage().window().maximize();
-        browser.driver.get(params.frontend);
-        browser.driver.wait(function() {
-            return element(by.id('login')).isPresent()
-        }, 30000)
-        element(by.id('login')).click();
-    },
+    onPrepare: params.prepare,
+    // onPrepare: function(custom_browser) {
+    //     var this_browser = custom_browser || browser        
+    //     browser.driver.manage().window().maximize();
+    //     browser.driver.get(params.frontend);
+    //     browser.driver.wait(function() {
+    //         return element(by.id('login')).isPresent()
+    //     }, 30000)
+    //     element(by.id('login')).click();
+    // },
 
     // The params object will be passed directly to the protractor instance,
     // and can be accessed from your test. It is an arbitrary object and can

@@ -150,7 +150,8 @@ angular.module('scalearAngularApp')
     }
 
     function setupPopover(key) {
-      $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?key=" + key
+      var time_zone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      $scope.calendar_url = $location.absUrl().replace("/#", "") + "/dynamic_url?tz="+time_zone+"&key=" + key
       $scope.calendar_pop = {
         content: "<div ng-click='preventDropDownHide($event)'><div><b>Subscribe to Calendar:</b></div><div style='padding: 5px;word-wrap: break-word;'>{{calendar_url}}</div></div>",
         html: true,
@@ -258,6 +259,9 @@ angular.module('scalearAngularApp')
 
     $scope.exportCalendar = function() {
       var cal = ics();
+      if($scope.calendar.events.__id){
+        delete $scope.calendar.events.__id;
+      }
       for (var element in $scope.calendar.events) {
         var description = $scope.calendar.events[element].tooltip_string.replace("<br />", " ") + " " + $scope.calendar.events[element].url;
         cal.addEvent($scope.calendar.events[element].title, description, 'Scalable-Learning', $scope.calendar.events[element].start, $scope.calendar.events[element].start);

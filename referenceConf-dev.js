@@ -127,7 +127,8 @@ var params= {
 
     prepare: function(custom_browser) {
         var this_browser = custom_browser || browser
-        this_browser.driver.manage().window().maximize();
+        console.log(this_browser)
+        // this_browser.driver.manage().window().maximize();
         this_browser.driver.get(params.frontend);
         this_browser.driver.wait(function() {
             return this_browser.element(by.id('login')).isPresent()

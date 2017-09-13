@@ -83,6 +83,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			var enrollment_url = course_info.enrollment_url
 			course_info.disable_registration_button_click()
 			expect(course_info.disable_registration_button.isSelected()).toBe(false);
+			sleep(1000)
 			header.logout()
 		})
 
@@ -99,10 +100,12 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 		    login_page.sign_in(params.student1.email, params.password) 
 		    header.join_course(enrollment_key)
 			new_course.disable_student_email_reminders_button_click()
+			sleep(1000)			
 		    header.logout()
 			login_page.sign_in(params.student1_domain_test.email, params.password)
 			header.join_course(enrollment_key)
 			new_course.disable_student_email_reminders_button_click()
+			sleep(1000)
 			course_list.open()
 			expect(course_list.student_courses.count()).toEqual(1)
 		})
@@ -121,6 +124,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			course_list.open_teacher_course(1)
 			course_info.open()
 			course_info.disable_registration_domain_button_click()
+			sleep(1000)
 			course_info.disable_registration_domain_choose_custom()
 			expect(course_info.disable_registration_domain_subdomains.count()).toBe(1);
 			course_info.disable_registration_domain_choose_subdomain(1)
@@ -136,6 +140,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			login_page.sign_in(params.student2.email, params.password)
 			header.join_course(enrollment_key)
 			new_course.disable_student_email_reminders_button_click()
+			sleep(1000)
 			header.logout()
 			login_page.sign_in(params.student1_domain_test.email, params.password)
 			header.join_course(enrollment_key)
@@ -152,6 +157,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			course_list.open_teacher_course(1)
 			course_info.open()
 			course_info.disable_registration_domain_button_click()
+			sleep(1000)
 			course_info.disable_registration_domain_choose_all()
 	        browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
 			header.logout()
@@ -198,6 +204,7 @@ describe("Need an 'add course URL' and  Enable/disable registration",function(){
 			course_list.open_teacher_course(1)
 			course_info.open()
 			course_info.disable_registration_domain_button_click()
+			sleep(1000)
 			course_info.disable_registration_domain_choose_custom()
 			expect(course_info.disable_registration_domain_subdomains.count()).toBe(1);
 			course_info.disable_registration_domain_choose_subdomain(1)
@@ -239,9 +246,11 @@ describe("New Course test rest of functions",function(){
 			expect(new_course.description_field.getText()).toEqual('too many words ')
 			expect(new_course.prerequisites_field.getText()).toEqual('1- course 1 2- course 2 3- course 3 ')
 			new_course.unselect_button.click()
+			sleep(1000)
 			new_course.choose_import_first_course()
 			expect(new_course.description_field.getText()).toContain('[Copied From aesting course 100 :]')
 			expect(new_course.prerequisites_field.getText()).toContain('[Copied From aesting course 100 :]')
+			sleep(1000)
 			new_course.unselect_button.click()
 			expect(new_course.description_field.getText()).not.toContain('[Copied From aesting course 100 :]')
 			expect(new_course.prerequisites_field.getText()).not.toContain('[Copied From aesting course 100 :]')
@@ -286,16 +295,19 @@ describe("New Course test rest of functions",function(){
 			newdate.setDate(newdate.getDate() + 200);
 			new_course.type_course_start_date(newdate)
 			new_course.create_button.click()
+			sleep(1000)
 			expect(new_course.error_start_date.getText()).toEqual('must be before end date')
 		})
 		// New course: toggle registration 
 		it('should check New course: toggle registration ', function(){
 			expect(new_course.course_disable_registration).toEqual('')
 			new_course.disable_registration_checked_button_click()
+			sleep(1000)
 			expect(new_course.course_disable_registration).toEqual(new_course.course_end_date)
 		})		
 		it('should check New course: toggle registration ', function(){
 			new_course.disable_registration_checked_button_click()
+			sleep(1000)
 			expect(new_course.course_disable_registration).toEqual('')
 			expect(new_course.course_disable_registration_field.isDisplayed()).toBe(false)
 		})
@@ -303,14 +315,21 @@ describe("New Course test rest of functions",function(){
 		it('should check New course: toggle registration ', function(){
 			expect(new_course.registration_domain_button.getText()).toContain('All')
 			new_course.registration_domain_button_click()
+			sleep(1000)
 			new_course.domain_custom_button_click()
+			sleep(1000)
 			new_course.registration_domain_modal_close_button_click()
+			sleep(1000)
 			expect(new_course.registration_domain_button.getText()).toContain('All')
 			new_course.registration_domain_button_click()
+			sleep(1000)
 			new_course.domain_custom_button_click()
+			sleep(1000)
 			expect(new_course.domains.count()).toEqual(1)
 			new_course.domain(1).click()
+			sleep(1000)
 			new_course.registration_domain_modal_close_button_click()
+			sleep(1000)
 			expect(new_course.registration_domain_button.getText()).not.toContain('All')
 			expect(new_course.registration_domain_button.getText()).toContain('sharklasers.com')			
 			// expect(new_course.course_disable_registration).toEqual(new_course.course_end_date)
@@ -321,6 +340,7 @@ describe("New Course test rest of functions",function(){
 			new_course.type_course_start_date("2017-a-23")
 			new_course.type_course_end_date("2017-a-23")
 			new_course.create_button.click()
+			sleep(1000)
 			expect(new_course.error_start_date.getText()).toEqual('not a Date')
 			expect(new_course.error_end_date.getText()).toEqual('not a Date')
 		})
@@ -329,14 +349,17 @@ describe("New Course test rest of functions",function(){
 			course_list.open_teacher_course(2)
 			student_list.open()
 			student_list.click_list_view()
+			sleep(1000)
 		})
 		// EnrolledStudents: select all 
 		it('should check EnrolledStudents: select all  ', function(){
 			expect(student_list.de_select_all_button.getAttribute('disabled')).toBe('true');
 			student_list.click_select_all()
+			sleep(1000)
 			expect(student_list.select_all_button.getAttribute('disabled')).toBe('true');
 			expect(student_list.student(1).getAttribute('class')).toContain('border-grey');
 			student_list.click_de_select_all()
+			sleep(1000)
 			expect(student_list.student(1).getAttribute('class')).not.toContain('border-grey');
 			expect(student_list.de_select_all_button.getAttribute('disabled')).toBe('true');
 		})
@@ -345,9 +368,11 @@ describe("New Course test rest of functions",function(){
 			expect(student_list.email_button.getAttribute('disabled')).toBe('true');
 			expect(student_list.student(1).getAttribute('class')).not.toContain('border-grey');
 			student_list.student(1).click()
+			sleep(1000)
 			expect(student_list.student(1).getAttribute('class')).toContain('border-grey');
 			expect(student_list.student(2).getAttribute('class')).not.toContain('border-grey');
 			student_list.click_email()
+			sleep(1000)
 			expect(student_list.email_student(1).getText()).toEqual(params.student1.email);
 			$('body').sendKeys(protractor.Key.ESCAPE)
 		})
@@ -355,6 +380,7 @@ describe("New Course test rest of functions",function(){
 		it('should check  EnrolledStudents: remove student', function(){
 			expect(student_list.students.count()).toEqual(3)
 			student_list.click_remove_student()
+			sleep(1000)
 			student_list.delete_student(1)
 			expect(student_list.students.count()).toEqual(2)
 			course_info.open()	
@@ -363,6 +389,7 @@ describe("New Course test rest of functions",function(){
 		    login_page.sign_in(params.student1.email, params.password) 
 		    header.join_course(enrollment_key)
 			new_course.disable_student_email_reminders_button_click()
+			sleep(1000)
 		    header.logout()
 			login_page.sign_in(params.teacher1.email, params.password)		    
 		})

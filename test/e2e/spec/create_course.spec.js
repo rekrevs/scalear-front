@@ -21,7 +21,6 @@ console.log("in the test code ")
 browser.driver.getCurrentUrl().then(function(url) {console.log(url)})
 describe("Email domain .uu.nl is prevented from sign up",function(){
 	console.log('in Email domain .uu.nl is prevented from sign up')
-	browser.driver.getCurrentUrl().then(function(url) {console.log(enrollment_url)})
 	it("should sign up ",function(){
 		signup_page.sign_up('teacher')
 		signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)

@@ -19,21 +19,22 @@ var sub_header = new SubHeader()
 var student_list = new StudentList();
 console.log("in the test code ")
 describe("Email domain .uu.nl is prevented from sign up",function(){
-
-		it("should sign up ",function(){
-			signup_page.sign_up('teacher')
-			signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)
-		})
-		it("should check url does not contant thanks pages",function(){
-			sleep(6000)
-			expect(browser.driver.getCurrentUrl()).not.toContain('thanks')
-			expect(browser.driver.getCurrentUrl()).toContain('users/signup')
-			signup_page.go_to_sign_up_with_domain_page()
-		})
-		it("should check you still in login page",function(){
-			sleep(2000)
-			expect(browser.driver.getCurrentUrl()).toContain('login')
-		})
+	console.log('in Email domain .uu.nl is prevented from sign up')
+	browser.driver.getCurrentUrl().then(function(url) {console.log(enrollment_url)})
+	it("should sign up ",function(){
+		signup_page.sign_up('teacher')
+		signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)
+	})
+	it("should check url does not contant thanks pages",function(){
+		sleep(6000)
+		expect(browser.driver.getCurrentUrl()).not.toContain('thanks')
+		expect(browser.driver.getCurrentUrl()).toContain('users/signup')
+		signup_page.go_to_sign_up_with_domain_page()
+	})
+	it("should check you still in login page",function(){
+		sleep(2000)
+		expect(browser.driver.getCurrentUrl()).toContain('login')
+	})
 })
 
 describe("Need an 'add course URL' and  Enable/disable registration",function(){

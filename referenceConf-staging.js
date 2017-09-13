@@ -260,7 +260,7 @@ exports.config = {
       },
     specs: [
         'test/e2e/spec/create_course.spec.js', // done(11/16)
-        'test/e2e/spec/fill_course.spec.js', // done(11/16)
+        // 'test/e2e/spec/fill_course.spec.js', // done(11/16)
         // 'test/e2e/spec/course_information_validation.spec.js', // done(11/16)
         // 'test/e2e/spec/account_information_validation.spec.js', // done(11/16)
         // 'test/e2e/spec/enrollment_help.spec.js', // done(11/16)

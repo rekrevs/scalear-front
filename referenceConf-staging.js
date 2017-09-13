@@ -88,7 +88,7 @@ var params= {
         l_name: "student",
         online_name: "studenttest1",
         university: "uni",
-        email: "student1@email.com",
+        email: "student1@emaills.com",
     },
     // teacher1:{
     //     f_name: "teacher",
@@ -132,7 +132,7 @@ var params= {
         university: "uniAdmin",
         email: "admin@scalable-learning.com",
     },
-    password: 'password',
+    password: 'password1234',
     // admin_email:   'admin@scalable-learning.com',
     // admin_password:"admin_account_password",
     student_name_list: ['Student 1','Student 2','Student 3'],

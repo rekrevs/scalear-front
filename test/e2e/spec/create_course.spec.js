@@ -17,8 +17,9 @@ var course_list = new CourseList()
 var signup_page = new Signup()
 var sub_header = new SubHeader()
 var student_list = new StudentList();
-
+console.log("in the test code ")
 describe("Email domain .uu.nl is prevented from sign up",function(){
+
 		it("should sign up ",function(){
 			signup_page.sign_up('teacher')
 			signup_page.create("a.@eg.uu.nl", params.password , params.guerrillamail_sch_uni_name , '1' , params.teacher_first_name ,params.teacher1.email)

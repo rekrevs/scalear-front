@@ -218,7 +218,7 @@ exports.config = {
     specs: [
 
         'test/e2e/spec/create_course.spec.js', // 
-        // 'test/e2e/spec/fill_course.spec.js', // 
+        'test/e2e/spec/fill_course.spec.js', // 
 /// change delete course 2 to delete course 1
         // 'test/e2e/spec/markers.spec.js', // 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)

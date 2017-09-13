@@ -18,6 +18,7 @@ var signup_page = new Signup()
 var sub_header = new SubHeader()
 var student_list = new StudentList();
 console.log("in the test code ")
+browser.driver.getCurrentUrl().then(function(url) {console.log(enrollment_url)})
 describe("Email domain .uu.nl is prevented from sign up",function(){
 	console.log('in Email domain .uu.nl is prevented from sign up')
 	browser.driver.getCurrentUrl().then(function(url) {console.log(enrollment_url)})

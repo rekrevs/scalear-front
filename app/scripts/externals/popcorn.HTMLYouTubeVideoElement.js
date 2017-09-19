@@ -235,10 +235,12 @@
             if ( durationReady ) {
               onFirstPlay();
             }
-          } else if ( catchRoguePlayEvent ) {
-            catchRoguePlayEvent = false;
-            player.pauseVideo();
-          } else {
+          }
+          // else if ( catchRoguePlayEvent ) {
+            // catchRoguePlayEvent = false;
+            // player.pauseVideo();
+          // }
+          else {
             onPlay();
           }
           break;
@@ -281,10 +283,10 @@
       playerState = event.data;
     }
 
-    function destroyPlayer() { 
+    function destroyPlayer() {
       if( !( playerReady && player ) ) {
         return;
-      }     
+      }
       player.stopVideo();
       player.clearVideo();
     }
@@ -310,7 +312,7 @@
     parseDuration = function(DurationString) {
       var matches = DurationString.match(/^P([0-9]+Y|)?([0-9]+M|)?([0-9]+D|)?T?([0-9]+H|)?([0-9]+M|)?([0-9]+S|)?$/),
           result = {};
-   
+
       if (matches) {
           result.year = parseInt(matches[1]) || 0;
           result.month = parseInt(matches[2]) || 0;
@@ -318,20 +320,20 @@
           result.hour = parseInt(matches[4]) || 0;
           result.minute = parseInt(matches[5]) || 0;
           result.second = parseInt(matches[6]) || 0;
-   
+
           result.toString = function() {
               var string = '';
-   
+
               if (this.year) string += this.year + ' Year' + (this.year == 1 ? '': 's') + ' ';
               if (this.month) string += this.month + ' Month' + (this.month == 1 ? '': 's') + ' ';
               if (this.day) string += this.day + ' Day' + (this.day == 1 ? '': 's') + ' ';
               if (this.hour) string += this.hour + ' Hour' + (this.hour == 1 ? '': 's') + ' ';
               if (this.minute) string += this.minute + ' Minute' + (this.minute == 1 ? '': 's') + ' ';
               if (this.second) string += this.second + ' Second' + (this.second == 1 ? '': 's') + ' ';
-   
+
               return string;
           }
-   
+
           return result;
       } else {
           return false;
@@ -604,7 +606,7 @@
         self.play();
       } else {
         impl.ended = true;
-        
+
         player.pauseVideo()
         onPause();
         // YouTube will fire a Playing State change after the video has ended, causing it to loop.

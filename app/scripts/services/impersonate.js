@@ -36,26 +36,27 @@ angular.module('scalearAngularApp')
           $rootScope.preview_as_student = true
           current_user = null
           var params = { course_id: $state.params.course_id }
+          var new_state_name = $state.current.name
           if($state.params.module_id) {
             if($state.current.name.indexOf("customlink") == -1 && $state.current.name.indexOf("overview") == -1) {
               if ($state.params.lecture_id){
-                $state.current.name = "course.module.course_editor.lecture"
+                new_state_name = "course.module.course_editor.lecture"
               }
               else if ($state.params.quiz_id){
-                $state.current.name = "course.module.course_editor.quiz"
+                new_state_name = "course.module.course_editor.quiz"
               }
               else{
-                $state.current.name = "course.module.course_editor.overview"                
+                new_state_name = "course.module.course_editor.overview"
               }
-              $cookieStore.put('state', $state.current.name)
-              $state.go($state.current.name.replace("course_editor", "courseware"), $state.params, { reload: true })
+              $cookieStore.put('state', new_state_name)
+              $state.go(new_state_name.replace("course_editor", "courseware"), $state.params, { })
             } else {
-              $state.go('course.module.courseware', $state.params, { reload: true })
+              $state.go('course.module.courseware', $state.params, {  })
             }
           } else if($state.includes("course.edit_course_information")) {
-            $state.go('course.course_information', params, { reload: true })
+            $state.go('course.course_information', params, {})
           } else {
-            $state.go('course', params, { reload: true })
+            $state.go('course', params, {  })
           }
 
 

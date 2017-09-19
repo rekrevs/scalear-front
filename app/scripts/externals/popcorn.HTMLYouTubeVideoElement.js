@@ -235,12 +235,10 @@
             if ( durationReady ) {
               onFirstPlay();
             }
-          }
-          // else if ( catchRoguePlayEvent ) {
-            // catchRoguePlayEvent = false;
-            // player.pauseVideo();
-          // }
-          else {
+          } else if ( catchRoguePlayEvent ) {
+            catchRoguePlayEvent = false;
+            player.pauseVideo();
+          } else {
             onPlay();
           }
           break;
@@ -483,7 +481,7 @@
         addMediaReadyCallback( function() {
 
           onSeeking();
-          player.seekTo( aTime );
+        //   player.seekTo( aTime );
         });
         return;
       }

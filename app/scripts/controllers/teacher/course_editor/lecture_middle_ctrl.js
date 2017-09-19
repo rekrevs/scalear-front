@@ -577,7 +577,6 @@ angular.module('scalearAngularApp')
 
     function changeState(toState, toParams, options) {
       $scope.leave_state = true
-      console.log("tostate", toState);
       $state.go(toState, toParams, options)
       unregisterStateEvent()
     }
@@ -593,20 +592,14 @@ angular.module('scalearAngularApp')
 
     var unregisterStateEvent = $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
-        console.log("$scope.leave_state", $scope.leave_state);
-        console.log("toState.url", toState.url);
         event.preventDefault();
         saveOpenEditor()
           .then(function success() {
-            console.log("success");
             changeState(toState, toParams, {})
           }, function fail() {
-            console.log("fail");
             showUnsavedQuizDialog()
               .catch(function(value) { //leave
-                console.log("leaving");
                 cancelEditedChanges()
-                console.log("tostate original", toState);
                 changeState(toState, toParams, {})
               })
           })

@@ -42,13 +42,10 @@ angular.module('scalearAngularApp')
     }
 
     function previewStart() {
-      console.log($state);
       if(!$state.params || ($state.params && !$state.params.course_id)){
         $state.params = $cookieStore.get('params')
         $state.current.name = $cookieStore.get('state')
         current_user.id  = $cookieStore.get('old_user_id')
-        console.log("fixing state", $state, current_user);
-
       }
       var new_state = manageStudentState($state)
       var current_state = new_state.prev
@@ -66,8 +63,6 @@ angular.module('scalearAngularApp')
           $cookieStore.put('new_user_id', data.user.id)
           $rootScope.preview_as_student = true
           current_user = null
-          console.log("heere");
-          console.log(new_state);
           $state.go(new_state.name, new_state.params, { reload: true })
           $rootScope.$broadcast('Course:get_current_courses')
         },

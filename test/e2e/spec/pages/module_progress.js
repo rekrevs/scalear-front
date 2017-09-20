@@ -8,11 +8,32 @@ Quiz.prototype = Object.create({}, {
 	quiz_title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
 	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
 	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+	// getModuleChartValueAt:{value:function(column){
+	// 	this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
+	// 	return this.quiz_chart_columns.last().all(by.tagName('text')).last().getText()
+	// }},
 	getModuleChartValueAt:{value:function(column){
-		this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
-		return this.quiz_chart_columns.last().all(by.tagName('text')).last().getText()
-	}}
+		return this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+		// return element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+	}},
 })
+
+var Comment = function(elem){
+	this.field = elem
+}
+
+Comment.prototype = Object.create({}, {
+	// quiz_chart:{get:function(){return this.field.element(by.className('progress_chart'))}},
+	// quiz_chart_columns:{get:function(){return this.quiz_chart.element(by.tagName('svg')).all(by.tagName('g'))}},
+	// quiz_title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
+	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+	// getModuleChartValueAt:{value:function(column){
+	// 	this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
+	// 	return this.quiz_chart_columns.last().all(by.tagName('text')).last().getText()
+	// }}
+})
+
 
 var Discussion = function(elem){
 	this.field = elem
@@ -40,8 +61,23 @@ Discussion.prototype = Object.create({}, {
 	}},
 	comments_count:{value:function(){
 		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count()
-	 }}
+	 }},
+	comments:{get:function(){return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')) }},
+	comment:{value:function(val){return new Comment(this.comments.get(val-1)) }},
 })
+
+var Confused = function(elem){
+	this.field = elem
+}
+
+Confused.prototype = Object.create({}, {
+	// discussion_title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
+
+	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
+	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+
+})
+
 
 var Freetextquestion = function(elem){
 	this.field = elem
@@ -71,9 +107,11 @@ Freetextquestion.prototype = Object.create({}, {
 		this.reply_text_area.clear().sendKeys(keys)
 		this.reply_text_box.click()
 	}},
-	comments_count:{value:function(){
-		return this.field.all(by.css('[ng-repeat="comment in discussion.post.comments"]')).count()
-	 }}
+	// answers_count:{value:function(){
+	// 	return this.field.all(by.css('[ng-repeat="answer in item.data.answers"]')).count()
+	//  }},
+	// answers:{get:function(){return this.field.all(by.css('[ng-repeat="answer in item.data.answers"]')) }},
+	answer_inclass:{value:function(val){return new Comment(this.answers.get(val-1)) }},	 
 })
 
 var ModuleItem = function(elem){
@@ -88,6 +126,11 @@ ModuleItem.prototype = Object.create({}, {
 	quiz:{value:function(val){return new Quiz(this.quizzes.get(val-1)) }},
 	discussions:{get:function(){return this.field.all(by.className('color-coral'))}},
 	discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
+	confuseds:{get:function(){return this.field.all(by.className('color-blue'))}},
+	confused:{value:function(val){return new Confused(this.confuseds.get(val-1)) }},
+	super_confuseds:{get:function(){return this.field.all(by.className('color-red'))}},
+	super_confused:{value:function(val){return new Confused(this.super_confuseds.get(val-1)) }},
+
 	// quiz  and survey
 	question_quizzes:{get:function(){return this.field.all(by.className('color-blue'))}},
 	question_quiz:{value:function(val){return new Quiz(this.question_quizzes.get(val-1)) }},

@@ -237,7 +237,6 @@ angular.module('scalearAngularApp')
           ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz()) ||
           ((!$scope.selected_quiz.isTextVideoQuiz() || $scope.selected_quiz.isTextSurvey()) && isFormValid())
         ) && $scope.selected_quiz.answers.length) {
-
         $scope.submitted = false;
         $scope.hide_alerts = true;
         $scope.quiz_deletable = false

@@ -20,7 +20,7 @@ Video.prototype= Object.create({}, {
 		this.wait_till_ready()
 		var progress_bar = this.progress_bar
 		this.progress_bar.getSize().then(function(size){
-			browser.driver.actions().mouseMove(progress_bar,{x: (percent*size.width)/100, y: 4}).click().perform()
+			browser.driver.actions().mouseMove(progress_bar,{x: parseInt((percent*size.width)/100), y: 4}).click().perform()
 		})
 	}},
 	wait_till_ready:{value:function(){

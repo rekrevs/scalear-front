@@ -519,7 +519,7 @@ student2_browser = utils.new_session()
         module.item(1).delete()
         expect(module.items.count()).toEqual(0)
         module.delete()
-        expect(navigator.modules.count()).toEqual(2)
+        expect(navigator.modules.count()).toEqual(0)
       })
     })
     it("should logout", function() {

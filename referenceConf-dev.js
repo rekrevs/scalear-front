@@ -237,12 +237,12 @@ exports.config = {
         // 'test/e2e/spec/notes.spec.js', // 
         // 'test/e2e/spec/discussions.spec.js', //
         // 'test/e2e/spec/student_timeline_features.spec.js',
-        // 'test/e2e/spec/inclass_teacher_side.spec.js', //
+        'test/e2e/spec/inclass_teacher_side.spec.js', //
 
-        // 'test/e2e/spec/module_overview.spec.js', // 
+        'test/e2e/spec/module_overview.spec.js', // 
         // 'test/e2e/spec/progress-module.spec.js', //
         // 'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
-        'test/e2e/spec/validations.spec.js', //
+        // 'test/e2e/spec/validations.spec.js', //
 
         // 'test/e2e/spec/delete_course.spec.js', //
         

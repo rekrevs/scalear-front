@@ -127,6 +127,7 @@ var params= {
 
     prepare: function(custom_browser) {
         var this_browser = custom_browser || browser
+        // console.log(this_browser)
         this_browser.driver.manage().window().maximize();
         this_browser.driver.get(params.frontend);
         this_browser.driver.wait(function() {

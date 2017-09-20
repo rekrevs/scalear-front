@@ -85,12 +85,14 @@ student2_browser = utils.new_session()
         course_list.open()
         course_list.open_student_course(1)
       })
-      it('should open first lecture in first module', function(){
-        navigator.open()
-        navigator.modules.count().then(function(count) { 
-          navigator.module(count).open()
-          navigator.module(count).item(1).open()
-        }) 
+      xit('should open first lecture in first module', function(){
+        course_list.open()
+        course_list.open_student_course(1)
+          navigator.open()
+          navigator.modules.count().then(function(count) { 
+            navigator.module(count).open()
+            navigator.module(count).item(1).open()
+          }) 
       })
     })
     describe('Student 2 ', function(){
@@ -100,7 +102,7 @@ student2_browser = utils.new_session()
         course_list.open()
         course_list.open_student_course(1)
       })
-      it('should open first lecture in first module', function(){
+      xit('should open first lecture in first module', function(){
         navigator.open()
         navigator.modules.count().then(function(count) { 
           navigator.module(count).open() 

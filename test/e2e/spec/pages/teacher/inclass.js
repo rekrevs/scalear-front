@@ -48,9 +48,13 @@ var ModuleItem = function(elem){
 ModuleItem.prototype = Object.create({}, {
   items:{get:function(){ return this.field.all(by.className('ul_item'))}},
   title:{get:function(){return this.field.element(by.className("title")).getText()}},
+
   // lecture
-  inclass_quizzes:{get:function(){return this.field.all(by.className('color-green'))}},
+  inclass_quizzes:{get:function(){return this.field.all(by.className('color-orange'))}},
   inclass_quiz:{value:function(val){return new Quiz(this.inclass_quizzes.get(val-1)) }},
+  // lecture
+  invideo_quizzes:{get:function(){return this.field.all(by.className('color-green'))}},
+  invideo_quiz:{value:function(val){return new Quiz(this.invideo_quizzes.get(val-1)) }},
   discussions:{get:function(){return this.field.all(by.className('color-coral'))}},
   discussion:{value:function(val){return new Discussion(this.discussions.get(val-1)) }},
   // quiz  and survey

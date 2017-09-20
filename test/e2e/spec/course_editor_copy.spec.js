@@ -29,9 +29,9 @@ describe("Course Editor Copy", function(){
             new_course.create("short_name", "course_name",params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
             new_course.disable_email_reminders_modal_button_click()
         })
-        it('should open first course', function(){
+        it('should open old course', function(){
             course_list.open()
-            course_list.open_teacher_course(1)
+            course_list.open_teacher_course(2)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -42,9 +42,9 @@ describe("Course Editor Copy", function(){
             navigator.module(1).copy()
         })
 
-        it('should open second course', function(){
+        it('should open new course', function(){
             course_list.open()
-            course_list.open_teacher_course(2)
+            course_list.open_teacher_course(1)
         })
 
         it('should paste module', function(){
@@ -64,18 +64,18 @@ describe("Course Editor Copy", function(){
             expect(module.item(5).name).toContain("quiz2")
             expect(module.item(6).name).toContain("survey1")
         })
-        it('should open first course', function(){
+        it('should open old course', function(){
             course_list.open()
-            course_list.open_teacher_course(1)
+            course_list.open_teacher_course(2)
         })
         it("should copy first lecture in second module",function(){
             sub_header.open_edit_mode()
             navigator.module(2).open()
             navigator.module(2).item(1).copy()
         })
-        it('should open second course', function(){
+        it('should open new course', function(){
             course_list.open()
-            course_list.open_teacher_course(2)
+            course_list.open_teacher_course(1)
         })
         it('should paste lecture in new module', function(){
             sub_header.open_edit_mode()
@@ -96,9 +96,9 @@ describe("Course Editor Copy", function(){
             expect(module.items.count()).toEqual(7)
             expect(module.items.get(6).getText()).toContain("lecture4 video quizzes")
         })
-        it('should open first course', function(){
+        it('should open old course', function(){
             course_list.open()
-            course_list.open_teacher_course(1)
+            course_list.open_teacher_course(2)
         })
         it('should paste same lecture in first module', function(){
             sub_header.open_edit_mode()
@@ -126,9 +126,9 @@ describe("Course Editor Copy", function(){
             module.open()
             module.item(6).copy()
         })
-        it('should open second course', function(){
+        it('should open new course', function(){
             course_list.open()
-            course_list.open_teacher_course(2)
+            course_list.open_teacher_course(1)
         })
          it('should paste survey in second module', function(){
             sub_header.open_edit_mode()
@@ -144,9 +144,9 @@ describe("Course Editor Copy", function(){
     describe("Teacher",function(){
         var navigator = new ContentNavigator(1)
         var module = navigator.module(1)
-        it("should navigate to second course",function(){
+        it("should navigate to new course",function(){
             course_list.open()
-            course_list.open_teacher_course(2)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -193,9 +193,9 @@ describe("Course Editor Copy", function(){
         })            
     })
     describe("Teacher", function(){
-        it("should navigate to second course",function(){
+        it("should navigate to new course",function(){
             course_list.open()
-            course_list.open_teacher_course(2)
+            course_list.open_teacher_course(1)
         })
         it("should go to edit mode",function(){
             sub_header.open_edit_mode()
@@ -231,15 +231,15 @@ describe("Course Editor Copy", function(){
             expect(navigator.modules.count()).toEqual(0)
         })
 
-        it('should delete course', function(){
+        it('should delete new course', function(){
             course_list.open()
-            course_list.delete_teacher_course(2)
+            course_list.delete_teacher_course(1)
             expect(course_list.teacher_courses.count()).toEqual(1)
         })
     })
 
     describe("Revert Changes - Teacher", function(){
-        it("should navigate to first course",function(){
+        it("should navigate to old course",function(){
             course_list.open()
             course_list.open_teacher_course(1)
         })

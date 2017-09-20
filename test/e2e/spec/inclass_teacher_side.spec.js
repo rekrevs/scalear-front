@@ -50,7 +50,7 @@ describe("check course review", function(){
 			navigator.module(1).open()
 			element(by.className('module-review')).click()
 		})
-		xdescribe('First Module Progress Page', function(){
+		describe('First Module Progress Page', function(){
 			// Quiz Quizzes & votes 
 			describe('First lecture',function(){
 				it('should display correct total In-Class time',function(){
@@ -150,7 +150,7 @@ describe("check course review", function(){
 				expect(review_model.question_block.isDisplayed()).toEqual(true)
 				expect(review_model.chart.isDisplayed()).toEqual(true)
 				browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-				inclass_page.module_item(1).inclass_quiz(1).show_inclass_click()
+				inclass_page.module_item(1).invideo_quiz(1).show_inclass_click()
 				expect(inclass_page.total_inclass_time).toEqual("12");
 			})
 			it('Should start in class review Private Discussion', function(){
@@ -166,7 +166,7 @@ describe("check course review", function(){
 				expect(review_model.connected_blocks.count()).toEqual(1) // it was 5 and we added 1 block for showing the result 
 				expect(review_model.chart.isPresent()).toEqual(false)
 				browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-				// inclass_page.module_item(1).inclass_quiz(1).show_inclass_click()
+				// inclass_page.module_item(1).invideo_quiz(1).show_inclass_click()
 				inclass_page.module_item(1).discussion(1).show_inclass_click()
 				expect(inclass_page.total_inclass_time).toEqual("10");
 			})
@@ -185,7 +185,7 @@ describe("check course review", function(){
 				expect(review_model.connected_blocks.count()).toEqual(1) // it was 5 and we added 1 block for showing the result 
 				expect(review_model.chart.isPresent()).toEqual(false)
 				browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-				// inclass_page.module_item(1).inclass_quiz(1).show_inclass_click()
+				// inclass_page.module_item(1).invideo_quiz(1).show_inclass_click()
 				inclass_page.module_item(1).discussion(2).comment(1).show_inclass_click()
 				expect(inclass_page.total_inclass_time).toEqual("10");
 			})
@@ -203,7 +203,7 @@ describe("check course review", function(){
 				expect(review_model.connected_blocks.count()).toEqual(1) // it was 5 and we added 1 block for showing the result 
 				expect(review_model.chart.isPresent()).toEqual(false)
 				browser.actions().sendKeys(protractor.Key.ESCAPE).perform();
-				// inclass_page.module_item(1).inclass_quiz(1).show_inclass_click()
+				// inclass_page.module_item(1).invideo_quiz(1).show_inclass_click()
 				inclass_page.module_item(1).discussion(2).show_inclass_click()
 				expect(inclass_page.total_inclass_time).toEqual("8");
 			})
@@ -284,7 +284,7 @@ describe("check course review", function(){
 			})
 
 			it("should check correct inclass time estimate", function() {
-				inclass_page.module_item(1).inclass_quiz(1).show_inclass_click()
+				inclass_page.module_item(1).invideo_quiz(1).show_inclass_click()
 				inclass_page.module_item(1).discussion(1).show_inclass_click()
 				inclass_page.module_item(1).discussion(2).show_inclass_click()
 				inclass_page.module_item(1).discussion(2).comment(1).show_inclass_click()
@@ -308,12 +308,12 @@ describe("check course review", function(){
 		})
 		it("should revert",function(){
 			module_progress.module_item(1).quiz(1).show_inclass_click()
-			module_progress.module_item(1).discussion(2).comment(1).show_inclass_click()
+			module_progress.module_item(1).discussion(2).comment(2).show_inclass_click()
 			module_progress.module_item(1).discussion(2).show_inclass_click()
 			module_progress.module_item(1).discussion(1).show_inclass_click()
 			module_progress.module_item(1).super_confused(1).show_inclass_click()
 
-			module_progress.module_item(5).freetextquestion(1).answer_inclass(1).show_inclass_click()
+			module_progress.module_item(5).freetextquestion(1).answer_inclass(2).show_inclass_click()
 			module_progress.module_item(5).freetextquestion(1).show_inclass_click()
 			module_progress.module_item(6).question_quiz(1).show_inclass_click()
 

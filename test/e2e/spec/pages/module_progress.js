@@ -8,10 +8,14 @@ Quiz.prototype = Object.create({}, {
 	quiz_title:{get:function(){return this.field.element(by.className('inner_title')).getText()}},
 	show_inclass_box:{get:function(){return this.field.element(by.className('show_inclass'))}},
 	show_inclass_click:{value:function(){return this.show_inclass_box.click()}},
+	// getModuleChartValueAt:{value:function(column){
+	// 	this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
+	// 	return this.quiz_chart_columns.last().all(by.tagName('text')).last().getText()
+	// }},
 	getModuleChartValueAt:{value:function(column){
-		this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).click()
-		return this.quiz_chart_columns.last().all(by.tagName('text')).last().getText()
-	}}
+		return this.quiz_chart_columns.first().element(by.tagName('g')).all(by.tagName('g')).get(1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+		// return element(By.id("quiz_completion")).element(by.tagName('svg')).all(by.tagName('g')).get(5).all(by.tagName('g')).get(x1 -1).all(by.tagName('rect')).get(column-1).getAttribute('height')
+	}},
 })
 
 var Comment = function(elem){

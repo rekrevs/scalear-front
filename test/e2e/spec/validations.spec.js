@@ -60,7 +60,7 @@ var d_q3_y = 190;
 
     // All teacher shortcuts functionality
 
-xdescribe("Lecture validation", function(){
+describe("Lecture validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
@@ -69,9 +69,9 @@ xdescribe("Lecture validation", function(){
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		new_course.disable_email_reminders_modal_button_click()
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -217,7 +217,7 @@ xdescribe("Lecture validation", function(){
 	
 	it("should delete course",function(){
 			course_list.open()
-			course_list.delete_teacher_course(2)
+			course_list.delete_teacher_course(1)
 			expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
@@ -225,7 +225,7 @@ xdescribe("Lecture validation", function(){
 	})
 })
 
-xdescribe("Video validation", function(){
+describe("Video validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
@@ -234,9 +234,9 @@ xdescribe("Video validation", function(){
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		new_course.disable_email_reminders_modal_button_click()
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -298,13 +298,13 @@ xdescribe("Video validation", function(){
 		cancel_editing();
 	})
 
-	it('should try setting a .mp4 url', function(){
+	xit('should try setting a .mp4 url', function(){
 		course_editor.change_item_url("http://it.uu.se/katalog/davbl791/wide-test.mp4")
 		// course_editor.change_item_url("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
       	// course_editor.open_video_settings()
 	})
 
-	it('should now have the new mp4 video', function(){
+	xit('should now have the new mp4 video', function(){
       	expect(course_editor.get_item_url()).toBe('http://it.uu.se/katalog/davbl791/wide-test.mp4')
 	})
 
@@ -401,13 +401,13 @@ xdescribe("Video validation", function(){
 	})
 })
 
-xdescribe("Link validation", function(){
+describe("Link validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -462,13 +462,13 @@ xdescribe("Link validation", function(){
 	})
 })
 
-xdescribe("Quiz validation", function(){
+describe("Quiz validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -563,9 +563,9 @@ xdescribe("Quiz validation", function(){
 		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 	})
 
-	it("should delete course",function(){
+	it("should delete new course",function(){
 		course_list.open()
-		course_list.delete_teacher_course(2)
+		course_list.delete_teacher_course(1)
 		expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
@@ -577,7 +577,7 @@ xdescribe("Quiz validation", function(){
 // Updating lecture due date 
 // Case where a lecture due date passed 
 // Case where a lecture is due today
-xdescribe("Case where a lecture due date passed // Case where a lecture is due today",function(){
+describe("Case where a lecture due date passed // Case where a lecture is due today",function(){
 	describe("Teacher",function(){
 		it("should login as teacher",function(){
 			login_page.sign_in(params.teacher1.email, params.password)
@@ -718,7 +718,7 @@ xdescribe("Case where a lecture due date passed // Case where a lecture is due t
 	})
 })
 // Case where all items in a module are optional 
-xdescribe("Case where all items in a module are optional ",function(){
+describe("Case where all items in a module are optional ",function(){
 	describe("Teacher",function(){
 
 		it("should login",function(){

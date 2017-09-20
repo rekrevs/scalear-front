@@ -48,7 +48,9 @@ MarkerPanel = function () {};
 MarkerPanel.prototype = Object.create({}, {
 	editor_panel:{get:function(){return element(by.css('[ng-switch-when="marker"]'))}},
 	done_button:{get:function(){return element(by.id("save_marker_button"))}},
-	delete_button:{get:function(){return element(by.className('delete'))}},
+	
+	delete_button:{get:function(){return this.editor_panel.element(by.className('delete'))}},
+
 	add_marker_button:{get:function(){return element(by.id('note_button'))}},
 	create:{value:function(){this.add_marker_button.click();}},
 	create_shortcut:{value:function(){$('body').sendKeys('n');}},

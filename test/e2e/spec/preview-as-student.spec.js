@@ -18,7 +18,7 @@ var	new_course = new NewCourse();
 
 var sub_header = new SubHeader()
 
-describe("go to preview as student mode", function(){QH
+describe("go to preview as student mode", function(){
     it('should sign in as teacher', function(){
         login_page.sign_in(params.teacher1.email, params.password)
     })
@@ -205,9 +205,9 @@ describe("go to preview as student mode", function(){QH
 
     })
 
-    it('should delete course', function(){
+    it('should delete new course', function(){
       course_list.open()
-      course_list.delete_teacher_course(2)
+      course_list.delete_teacher_course(1)
       expect(course_list.teacher_courses.count()).toEqual(1)
     })
 })

@@ -96,7 +96,12 @@ angular.module('scalearAngularApp')
       }
 
       function validate() {
-        return CustomLink.validate({ link_id: link.id }, { link: link })
+        return CustomLink.validate({ 
+            link_id: link.id ,
+          }, { 
+            link: link ,
+            course_id: link.course_id,
+          })
           .$promise
           .catch(function(data) {
             if(data.status == 422)

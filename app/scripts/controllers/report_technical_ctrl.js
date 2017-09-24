@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
           $scope.sending_technical = true;
           $log.debug($scope.selected_type.value)
           $log.debug($scope.technical_data)
-          var userAgent = navigator.userAgent.replace(';', ','); 
+          var userAgent = navigator.userAgent.split(';').join(",");          
           Home.technicalProblem({
               name: user.name,
               email: user.email,

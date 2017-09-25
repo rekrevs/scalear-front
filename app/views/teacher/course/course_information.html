@@ -36,7 +36,7 @@
                         <label><input type="checkbox" ng-model="teacher.email_discussion" ng-change="updateTeacher(teacher)"> <span translate>courses.information.receive_student_ask_email</span></label>
                     </li>
                     <li>
-                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="false" action="removeTeacher(teacher)" style="cursor: pointer;"></delete-button>
+                        <delete-button ng-show="in_delete" ng-if="!teacher.owner" class="left" size="small" color='dark' text="true" action="removeTeacher(teacher)" style="cursor: pointer;"></delete-button>
                     </li>
                 </div>
             </div>

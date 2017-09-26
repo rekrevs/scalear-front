@@ -13,6 +13,10 @@ CourseEditor.prototype = Object.create({}, {
 	new_item_button:{get:function(){return element(by.id("new_item"))}},
 	new_item_sub_button:{get:function(){return element(by.id("sub_new_item"))}},
 	new_question_button:{get:function(){return element(by.id("new_question"))}},
+    // new_item_not_timeline_button:{get:function(){return element(by.css('[ng-click="openOnlineContentModal()"]'))}},
+    new_item_course_editor:{get:function(){return element(by.id('add_content'))}},
+
+
 	// video_item:{get: function(){return element(by.id('video_item'))}},
 	// quiz_item:{get: function(){return element(by.id('quiz_item'))}},
 	// survey_item:{get: function(){return element(by.id('survey_item'))}},
@@ -41,7 +45,14 @@ CourseEditor.prototype = Object.create({}, {
 	lecture_inorder_checkbox:{get:function(){return element(by.model('lecture.required'))}},
 	change_lecture_inorder:{value:function(){this.lecture_inorder_checkbox.click()}},
 	lecture_required_checkbox:{get:function(){return element(by.model('lecture.graded'))}},
-	change_lecture_required:{value:function(){this.lecture_inorder_checkbox.click()}},
+	change_lecture_required:{value:function(){this.lecture_required_checkbox.click()}},
+	lecture_video_checkbox:{get:function(){return element(by.id('video'))}},
+	change_lecture_video_to_normal:{value:function(){this.lecture_video_checkbox.click()}},
+	lecture_inclass_video_checkbox:{get:function(){return element(by.id('inclass_video'))}},
+	change_lecture_video_to_inclass:{value:function(){this.lecture_inclass_video_checkbox.click()}},
+	lecture_distance_peer_video_checkbox:{get:function(){return element(by.id('distance_peer_video'))}},
+	change_lecture_video_to_distance_peer:{value:function(){this.lecture_distance_peer_video_checkbox.click()}},
+
 	quiz_module_required_checkbox:{get:function(){return element(by.model('quiz.graded_module'))}},
 	quiz_required_checkbox:{get:function(){return element(by.model('quiz.graded'))}},
 	quiz_retries:{get:function(){return element(by.tagName('details-number'))}},
@@ -110,6 +121,15 @@ CourseEditor.prototype = Object.create({}, {
 		element(by.className('editable-input')).clear().sendKeys(url)
 		element(by.className('check')).click()
 	}},
+	change_link_url:{value: function(url){
+		element(by.id('url')).click()
+		element(by.id('url')).click()
+		element(by.className('editable-input')).clear().sendKeys(url)
+		element(by.className('check')).click()
+	}},	
+	confirm_delete_module:{value: function(){
+		element(by.css('button.delete_confirm')).click()
+	}},		
 	// sort_links:{value:function(){
 	// 	var handle_1 = this.module_link(1).field.element(by.className('handle'))
 	// 	var handle_2 = this.module_link(2).field.element(by.className('handle'))

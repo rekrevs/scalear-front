@@ -104,12 +104,11 @@ angular.module('scalearAngularApp')
 
 		  	scope.addLink =function(shared_item_index, link_index,course_id, module_id){
 		  		CustomLink.linkCopy(
+		  			{course_id:course_id},
 		  			{
 		  				link_id:scope.data[shared_item_index].customlinks[link_index].id, 
-		  				course_id:course_id,
 		  				module_id:module_id
 		  			},
-		  			{},
 		  			function(data){
 		  				$log.debug(data)
 						scope.data[shared_item_index].customlinks.splice(link_index,1)

@@ -77,7 +77,10 @@ angular.module('scalearAngularApp')
       }
 
       function remove() {
-        return CustomLink.destroy({ link_id: link.id }, {})
+        return CustomLink.destroy({ 
+            course_id: link.course_id,
+            link_id: link.id 
+          }, {})
           .$promise
           .then(function() {
             $rootScope.$broadcast("Item:removed", link)
@@ -93,7 +96,12 @@ angular.module('scalearAngularApp')
       }
 
       function validate() {
-        return CustomLink.validate({ link_id: link.id }, { link: link })
+        return CustomLink.validate({ 
+            link_id: link.id ,
+          }, { 
+            link: link ,
+            course_id: link.course_id,
+          })
           .$promise
           .catch(function(data) {
             if(data.status == 422)

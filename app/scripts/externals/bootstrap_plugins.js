@@ -7,7 +7,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
+/* istanbul ignore next */
 +function ($) {
   'use strict';
 
@@ -181,7 +181,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
+/* istanbul ignore next */
 +function ($) {
   'use strict';
 
@@ -241,7 +241,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
-
+/* istanbul ignore next */
 +function ($) {
   'use strict';
 

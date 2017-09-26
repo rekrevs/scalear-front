@@ -92,6 +92,7 @@ var translation_en={
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
     another_marker: "There is another marker at the same time",
+    remove_your_self: "You were successfully removed from the course",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -588,6 +589,7 @@ var translation_en={
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
+    note_time: "Note Time",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",
@@ -806,7 +808,10 @@ var translation_en={
         see_related: "See related answers to student",
         quizzes_solved: "quizzes required solved",
         quizzes_optional_solved: "optional quizzes solved",
-        watched_video: "Watched"
+        watched_video: "Watched",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Change Status",

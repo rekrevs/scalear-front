@@ -88,7 +88,7 @@ describe("Course Validation",function(){
 			new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 			new_course.disable_email_reminders_modal_button_click()
 			course_list.open()
-			course_list.open_teacher_course(2)
+			course_list.open_teacher_course(1)
 			var enrollment_key = course_info.enrollmentkey
 			header.logout()
 		    login_page.sign_in(params.student1.email, params.password) 
@@ -99,7 +99,7 @@ describe("Course Validation",function(){
 		// var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
-			course_list.open_student_course(2)
+			course_list.open_student_course(1)
 			course_info.student.open()
 		})	
 		it('should check go to course button and check it when to a lecture url', function(){
@@ -115,7 +115,7 @@ describe("Course Validation",function(){
 		})		
 		it("should delete course",function(){
 				course_list.open()
-				course_list.delete_teacher_course(2)
+				course_list.delete_teacher_course(1)
 				expect(course_list.teacher_courses.count()).toEqual(1)
 		})
 		it("should logout",function(){

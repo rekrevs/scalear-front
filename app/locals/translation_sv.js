@@ -92,6 +92,7 @@ var translation_sv={
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
     export_school_administration: "Statistiken kommer strax att skickas dig via email",
     another_marker: "Det finns en annan markör vid samma tid",
+    remove_your_self: "Du har framgångsrikt tagits bort från kursen",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -587,6 +588,7 @@ var translation_sv={
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
     marker_time: "Markörens tid",
+    note_time: "Anteckning tid",
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",
@@ -805,7 +807,10 @@ var translation_sv={
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
         quizzes_optional_solved: "extra quiz lösta",
-        watched_video: "Sedd"
+        watched_video: "Sedd",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Ändra status",

@@ -52,10 +52,12 @@ describe("Teacher",function(){
 		login_page.sign_in(params.student1.email, params.password)
 		header.join_course(enrollment_key)
 		new_course.disable_student_email_reminders_button_click()
+		header.logout()
 	})
 })
 describe("Student",function(){
 	it('should check announcements in dashboard', function(){
+		login_page.sign_in(params.student1.email, params.password)
 		course_list.open()
 		dashboard.open()
 		expect(dashboard.events.count()).toEqual(6)
@@ -69,7 +71,7 @@ describe("Student",function(){
 	var navigator = new ContentNavigator(0)
 	it('should check announcements in first course information', function(){
 		course_list.open()
-		course_list.open_student_course(1)
+		course_list.open_student_course(2)
 		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 1")
@@ -79,7 +81,7 @@ describe("Student",function(){
 
 	it('should check announcements in second course information', function(){
 		course_list.open()
-		course_list.open_student_course(2)
+		course_list.open_student_course(1)
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 4")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 5")
@@ -103,9 +105,9 @@ describe("Teacher",function(){
 		expect(dashboard.events.get(4).getText()).toContain("announcement 2")
 		expect(dashboard.events.get(5).getText()).toContain("announcement 1")
 	})
-	it("should go to first course",function(){
+	it("should go to old course",function(){
 		course_list.open()
-		course_list.open_teacher_course(1)
+		course_list.open_teacher_course(2)
 	})
 	it('should delete announcement', function(){
 		announcement.open()
@@ -131,17 +133,17 @@ describe("Student",function(){
 		expect(dashboard.events.get(4).getText()).toContain("announcement 2")
 	})
 	var navigator = new ContentNavigator(0)
-	it('should check announcements in first course information', function(){
+	it('should check announcements in old course information', function(){
 		course_list.open()
-		course_list.open_student_course(1)
+		course_list.open_student_course(2)
 		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(2)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 2")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 3")
 	})
-	it('should check announcements in second course information', function(){
+	it('should check announcements in new course information', function(){
 		course_list.open()
-		course_list.open_student_course(2)
+		course_list.open_student_course(1)
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 4")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 5")
@@ -152,7 +154,10 @@ describe("Student",function(){
 	})
 })
 
-describe("Revert Changes - Teacher",function(){
+///////////////////////////////////// IT IS NOT DONE 
+// Show/hide announcements 
+// Update announcements
+describe("Teacher",function(){
 	it('should sign in',function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
@@ -164,22 +169,84 @@ describe("Revert Changes - Teacher",function(){
 		expect(dashboard.events.get(3).getText()).toContain("announcement 3")
 		expect(dashboard.events.get(4).getText()).toContain("announcement 2")
 	})
-	it("should go to first course",function(){
+	it("should go to old course",function(){
 		course_list.open()
-		course_list.open_teacher_course(1)
+		course_list.open_teacher_course(2)
 	})
 	it('should delete announcement', function(){
 		announcement.open()
-		announcement.delete(3)
+		expect(announcement.posts.count()).toEqual(3)
+		announcement.delete(2)
 		expect(announcement.posts.count()).toEqual(2)
+	})
+	it('should logout',function(){
+		header.logout()
+	})
+})
+
+describe("Student",function(){
+	it("should sign in ",function(){
+		login_page.sign_in(params.student1.email, params.password)
+	})
+	it('should check announcements in dashboard', function(){
+		expect(dashboard.events.count()).toEqual(4)
+		expect(dashboard.events.get(0).getText()).toContain("announcement 6")
+		expect(dashboard.events.get(1).getText()).toContain("announcement 5")
+		expect(dashboard.events.get(2).getText()).toContain("announcement 4")
+		// expect(dashboard.events.get(3).getText()).toContain("announcement 3")
+		expect(dashboard.events.get(3).getText()).toContain("announcement 2")
+	})
+	var navigator = new ContentNavigator(0)
+	it('should check announcements in old course information', function(){
+		course_list.open()
+		course_list.open_student_course(2)
+		course_info.student.open()
+		expect(announcement.posts.count()).toEqual(1)
+		expect(announcement.posts.get(0).getText()).toContain("announcement 2")
+		// expect(announcement.posts.get(1).getText()).toContain("announcement 3")
+	})
+	it('should check announcements in new course information', function(){
+		course_list.open()
+		course_list.open_student_course(1)
+		expect(announcement.posts.count()).toEqual(3)
+		expect(announcement.posts.get(0).getText()).toContain("announcement 4")
+		expect(announcement.posts.get(1).getText()).toContain("announcement 5")
+		expect(announcement.posts.get(2).getText()).toContain("announcement 6")
+	})
+	it('should logout',function(){
+		header.logout()
+	})
+})
+
+
+describe("Revert Changes - Teacher",function(){
+	it('should sign in',function(){
+		login_page.sign_in(params.teacher1.email, params.password)
+	})
+	it('should check announcements in dashboard', function(){
+		expect(dashboard.events.count()).toEqual(4)
+		expect(dashboard.events.get(0).getText()).toContain("announcement 6")
+		expect(dashboard.events.get(1).getText()).toContain("announcement 5")
+		expect(dashboard.events.get(2).getText()).toContain("announcement 4")
+		expect(dashboard.events.get(3).getText()).toContain("announcement 2")
+		// expect(dashboard.events.get(4).getText()).toContain("announcement 2")
+	})
+	it("should go to old course",function(){
+		course_list.open()
+		course_list.open_teacher_course(2)
+	})
+	it('should delete announcement', function(){
+		announcement.open()
+		// announcement.delete(3)
+		// expect(announcement.posts.count()).toEqual(2)
 		announcement.delete(2)
 		expect(announcement.posts.count()).toEqual(1)
 	})
 	it('should go to course list',function(){
 		course_list.open()
 	})
-	it('should delete second course', function(){
-		course_list.delete_teacher_course(2)
+	it('should delete new course', function(){
+		course_list.delete_teacher_course(1)
 		expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){

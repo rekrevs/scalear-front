@@ -37,7 +37,9 @@ angular.module('scalearAngularApp')
       $scope.video_ready = true
       var time = $state.params.time
       if (time) {
-        $scope.seek(time-0.2);
+        $timeout(function (argument) {
+          $scope.seek(time-0.2)
+        })        
       } else if (!($rootScope.is_mobile)) {
         $scope.lecture_player.controls.seek_and_pause(0)
       }

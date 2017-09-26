@@ -466,7 +466,9 @@ angular.module('scalearAngularApp')
       }
       var time = $state.params.time
       if (time) {
-        $scope.seek(time);
+        $timeout(function (argument) {
+          $scope.seek(time);
+        })
         $timeout(function() {
           $scope.scrollIntoView()
         }, 500)

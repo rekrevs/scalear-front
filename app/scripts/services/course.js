@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host + '/:lang/courses/:course_id/:action', { course_id: $stateParams.course_id, lang: $translate.use() }, {
       'create': { method: 'POST', headers: headers, params: { course_id: null } },
-      'index': { method: 'GET', headers: headers, params: { course_id: null } },
+      'index': { method: 'GET', ignoreLoadingBar: true,  headers: headers, params: { course_id: null } },
       'update': { method: 'PUT', headers: headers },
       'validateCourse': { method: 'PUT', params: { action: 'validate_course_angular' }, headers: headers },
       'send_email_through': { method: 'POST', params: { action: 'send_email_through' }, headers: headers },

@@ -88,6 +88,7 @@ var translation_en={
     update_account_information: "Please update your account information to use the new version of ScalableLearning.",
     select_module_first:"Please Select A Module First",
     change_password_confirmation: "You have successfully changed your password.",
+    confirm_change_email: "You have successfully changed your email.",
     export_course: "Your anonymized course data will be emailed to you shortly." ,
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",

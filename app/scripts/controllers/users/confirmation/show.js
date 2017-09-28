@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationShowCtrl', ['$scope', 'User', '$state', '$stateParams', '$timeout', '$rootScope', 'UserSession', 'Page', '$log', '$modal', function($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession, Page, $log, $modal) {
+  .controller('UsersConfirmationShowCtrl', ['$scope', 'User', '$state', '$stateParams', '$timeout', '$rootScope', 'UserSession', 'Page', '$log', '$modal', 'ErrorHandler', '$translate', function($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession, Page, $log, $modal, ErrorHandler, $translate) {
     Page.setTitle('account.confirm_account')
     $scope.user = {}
     $scope.sending = true
     $log.debug('showing confirmation ')
     $log.debug($stateParams)
 
-    UserSession.getCurrentUser().catch(function() {
+    // UserSession.getCurrentUser().catch(function() { 
       User.show_confirmation({ confirmation_token: $stateParams.confirmation_token },
         function(resp) {
           $scope.sending = false;
@@ -41,12 +41,19 @@ angular.module('scalearAngularApp')
                 }
                 $scope.closeModal = function() {
                   // $state.go('login',{email: $scope.user_email})
-                  $modalInstance.dismiss('can1cel');
+                  $modalInstance.dismiss('cancel');
                 }
               }]
             })
           }
+          else if(resp.data == "confirm_change_email"){
+            ErrorHandler.showMessage('Error ' + ': ' + $translate.instant("error_message.confirm_change_email"), 'errorMessage', 4000, "success");
+            $timeout(function() {
+              $state.go("course_list")
+            }, 1000)            
+          }
           else{
+            UserSession.allowRefetchOfUser()
             $timeout(function() {
               $state.go("confirmed")
               // $state.go("privacy_confirm")
@@ -58,7 +65,7 @@ angular.module('scalearAngularApp')
           $scope.sending = false;
           $scope.user.errors = data.data;
         })
-    })
+    // })
 
     $scope.$watch('current_lang', function(newval, oldval) {
       if(newval != oldval)

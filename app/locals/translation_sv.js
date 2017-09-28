@@ -88,6 +88,7 @@ var translation_sv={
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
     select_module_first:"Välj först en modul i menyn.",
     change_password_confirmation: "Du har nu ändrat ditt lösenord.",
+    confirm_change_email: "Du har nu ändrat ditt E-post-adress.",
     export_course: "Dina anonymiserade kursdata kommer strax att skickas dig via email",
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
     export_school_administration: "Statistiken kommer strax att skickas dig via email",

@@ -93,6 +93,7 @@ var translation_sv={
     export_student: "Listan över dina studenter kommer strax att skickas dig via email",
     export_school_administration: "Statistiken kommer strax att skickas dig via email",
     another_marker: "Det finns en annan markör vid samma tid",
+    remove_your_self: "Du har framgångsrikt tagits bort från kursen",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -356,6 +357,7 @@ var translation_sv={
   lti:{
     embed: "Bädda in",
     lti: "Länkas till din skolas LMS",
+    select: "Välj",
     courses: "@:global.courses",
     modules:"moduler",
     items: "@:sharing.items",
@@ -432,8 +434,8 @@ var translation_sv={
     teacher_introduction: "Denna 10-minuters video ger dig en snabb introduktion till hur du lägger till videos och quizzar och följer dina studenters framsteg på nätet. Du kan",
     teacher_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
     student_introduction: "Denna 3-minuters video beskriver hur du använder",
-    student_introduction_cont: "och hur man studerar effektivt i en flippad kurs",
-    student_skip_intro: "introduktionen om du vill.",
+    student_introduction_cont: "och hur man studerar effektivt i en flippad kurs. Du kan",
+    student_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
     by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
     redirect_courselist: "Går till din kurslista om ",
     skip: "hoppa över",
@@ -587,6 +589,7 @@ var translation_sv={
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
     marker_time: "Markörens tid",
+    note_time: "Anteckning tid",
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",
@@ -805,7 +808,10 @@ var translation_sv={
         see_related: "Se relaterade svar för elev",
         quizzes_solved: "quizzar lösta",
         quizzes_optional_solved: "extra quiz lösta",
-        watched_video: "Sedd"
+        watched_video: "Sedd",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Ändra status",
@@ -949,7 +955,9 @@ var translation_sv={
         messages:{
             no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att skapa en ny.",
             enroll_instruction: "För att anmäla dig till en kurs, välj 'Delta i en ny kurs' under menyn 'Mina kurser' och ange kursnyckeln du fått från din lärare. ",
-            create_enroll_instruction: "För att skapa eller följa en kurs välj 'Skapa ny kurs' eller 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare. "
+            create_enroll_instruction: "För att skapa eller följa en kurs välj 'Skapa ny kurs' eller 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare. ",
+            create_instruction: "För att skapa ny kurs, välj 'Skapa ny kurs'  under menyn 'Mina kurser' och.",
+            enroll_instruction: "För följa en kurs välj 'Delta i en ny kurs' under menyn 'Mina kurser' och fyll i kursnyckeln som du fått av din lärare.",
         },
         tooltip:{
             unenroll: "Avregistrera",

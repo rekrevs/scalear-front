@@ -8,6 +8,7 @@ ShareModal.prototype = Object.create({}, {
 	share_button:{get:function(){return element(by.buttonText('Share'))}},
 	type_teacher_email:{value:function(email){this.email_field.sendKeys(email)}},
 	share:{value:function(){this.share_button.click()}},
-	checked:{value:function(num){return this.checkboxes.get(num-1).getAttribute('checked')}}
+	checked:{value:function(num){return this.checkboxes.get(num-1).getAttribute('checked')}},
+	checkbox:{value:function(num){return this.checkboxes.get(num-1)}},
 })
 module.exports = ShareModal;

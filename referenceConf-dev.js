@@ -97,6 +97,7 @@ var params= {
         url:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
         duration:{ min:6, sec:5},
     },
+    link_url:"https://www.scalable-learning.com/#/home",
 
     q_x:169,
     q1_y:127,
@@ -126,6 +127,7 @@ var params= {
 
     prepare: function(custom_browser) {
         var this_browser = custom_browser || browser
+        // console.log(this_browser)
         this_browser.driver.manage().window().maximize();
         this_browser.driver.get(params.frontend);
         this_browser.driver.wait(function() {
@@ -216,12 +218,12 @@ exports.config = {
     specs: [
 
         // 'test/e2e/spec/create_course.spec.js', // 
-        'test/e2e/spec/fill_course.spec.js', // 
-        'test/e2e/spec/markers.spec.js', // 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
         // 'test/e2e/spec/fill_course_dp.spec.js', //(demo)
         // 'test/e2e/spec/inclass_dp.spec.js', //(demo)  ////////////////////////////////////
+        // 'test/e2e/spec/fill_course.spec.js', // 
+        // 'test/e2e/spec/markers.spec.js', // 
         // 'test/e2e/spec/course_information_validation.spec.js', // 
         // 'test/e2e/spec/account_information_validation.spec.js', // 
         // 'test/e2e/spec/enrollment_help.spec.js', // 
@@ -235,16 +237,18 @@ exports.config = {
         // 'test/e2e/spec/notes.spec.js', // 
         // 'test/e2e/spec/discussions.spec.js', //
         // 'test/e2e/spec/student_timeline_features.spec.js',
+        'test/e2e/spec/inclass_teacher_side.spec.js', //
 
-        // 'test/e2e/spec/module_overview.spec.js', // 
+        'test/e2e/spec/module_overview.spec.js', // 
         // 'test/e2e/spec/progress-module.spec.js', //
         // 'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
         // 'test/e2e/spec/validations.spec.js', //
-        
-        // 'test/e2e/spec/fill_course_part2.spec.js', // 
-        // 'test/e2e/spec/preview-as-student.spec.js',         
-        
+
         // 'test/e2e/spec/delete_course.spec.js', //
+        
+/// change delete course 2 to delete course 1
+        // 'test/e2e/spec/preview-as-student.spec.js',         
+        // 'test/e2e/spec/fill_course_part2.spec.js', // Need To wtite the test code for it 
 
        
         //rewritten tests

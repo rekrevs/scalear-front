@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
       'sendURLtoToolConsumer':{ method: 'GET', params: { action: 'send_url_to_tool_consumer' }, headers: headers },
       'getLtiCustomSharedKey' :{ method: 'GET', params: { action: 'get_lti_custom_shared_key' }, headers: headers },
       'generateNewLtiKeys' :{ method: 'GET', params: { action: 'generate_new_lti_keys' }, headers: headers },
-
+      'ltiToolRedirectSaveData' :{ method: 'GET', params: { action: 'lti_tool_redirect_save_data' }, headers: headers },
     });
 
   }])

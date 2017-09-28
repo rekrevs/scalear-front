@@ -93,6 +93,7 @@ var translation_en={
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
     another_marker: "There is another marker at the same time",
+    remove_your_self: "You were successfully removed from the course",
     slow:{
         server:"The server",
         is_slow: "is taking a long time to load this video",
@@ -356,6 +357,7 @@ var translation_en={
   lti:{
     embed: "Embed",
     lti: "Linking to your School LMS",
+    select: "Select",
     courses: "@:global.courses",
     modules:"modules",
     items: "@:sharing.items",
@@ -432,8 +434,8 @@ var translation_en={
     teacher_introduction: "This 10-minute video will give you a rapid overview of how to create lectures, add quizzes, and review your students' online performance. You may",
     teacher_skip_intro: "the introduction if you really want to, and can always find more detailed help in the Help menu.",
     student_introduction: "This 3-minute video describes how to use",
-    student_introduction_cont: "and how to study effectively in a flipped class",
-    student_skip_intro: "the introduction if you really want to",
+    student_introduction_cont: "and how to study effectively in a flipped class. You may",
+    student_skip_intro: "the introduction if you really want to, and can always find more detailed help in the Help menu.",
     by_using_service: "By using this service you agree to our",
     redirect_courselist: "Redirecting to your course list in ",
     skip: "skip",
@@ -588,6 +590,7 @@ var translation_en={
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
+    note_time: "Note Time",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",
@@ -806,7 +809,10 @@ var translation_en={
         see_related: "See related answers to student",
         quizzes_solved: "quizzes required solved",
         quizzes_optional_solved: "optional quizzes solved",
-        watched_video: "Watched"
+        watched_video: "Watched",
+        correct:"@:global.correct",
+        question_not_checked:"@:dashboard.not_checked",
+        completed:"@:events.completed",
     },
     popover:{
         change_status: "Change Status",
@@ -951,6 +957,8 @@ var translation_en={
             no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
             enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
             create_enroll_instruction: "To create or enroll in a course choose 'New course' or 'Join a new course' from the My Courses menu and enter the Enrollment Key from your instructor.",
+            enroll_instruction: "To enroll in a new course, choose 'Join a new course' from the My Courses menu and enter the Enrollment Key from your instructor.",
+            create_instruction: "To create a new course, choose 'Create a new course' from the My Courses menu.",
         },
         tooltip:{
             unenroll: "Unenroll",

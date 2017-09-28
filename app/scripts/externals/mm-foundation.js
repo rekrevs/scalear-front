@@ -6,6 +6,8 @@
  * License: MIT
  */
 angular.module("mm.foundation", ["mm.foundation.accordion","mm.foundation.alert","mm.foundation.bindHtml","mm.foundation.buttons","mm.foundation.position","mm.foundation.dropdownToggle","mm.foundation.interchange","mm.foundation.transition","mm.foundation.modal","mm.foundation.offcanvas","mm.foundation.pagination","mm.foundation.tooltip","mm.foundation.popover","mm.foundation.progressbar","mm.foundation.rating","mm.foundation.tabs","mm.foundation.topbar","mm.foundation.tour","mm.foundation.typeahead"]);
+
+/* istanbul ignore next */
 angular.module('mm.foundation.accordion', [])
 
 .constant('accordionConfig', {
@@ -159,6 +161,7 @@ angular.module('mm.foundation.accordion', [])
   };
 });
 
+/* istanbul ignore next */
 angular.module("mm.foundation.alert", [])
 
 .controller('AlertController', ['$scope', '$attrs', function ($scope, $attrs) {
@@ -179,6 +182,7 @@ angular.module("mm.foundation.alert", [])
   };
 });
 
+/* istanbul ignore next */
 angular.module('mm.foundation.bindHtml', [])
 
   .directive('bindHtmlUnsafe', function () {
@@ -190,6 +194,7 @@ angular.module('mm.foundation.bindHtml', [])
     };
   });
 
+/* istanbul ignore next */
 angular.module('mm.foundation.buttons', [])
 
 .constant('buttonConfig', {
@@ -263,6 +268,7 @@ angular.module('mm.foundation.buttons', [])
   };
 });
 
+/* istanbul ignore next */
 angular.module('mm.foundation.position', [])
 
 /**
@@ -356,6 +362,8 @@ angular.module('mm.foundation.position', [])
      </li>
    </ul>
  */
+
+ /* istanbul ignore next */
 angular.module('mm.foundation.dropdownToggle', [ 'mm.foundation.position' ])
 
 .directive('dropdownToggle', ['$document', '$location', '$position', function ($document, $location, $position) {
@@ -418,6 +426,8 @@ angular.module('mm.foundation.dropdownToggle', [ 'mm.foundation.position' ])
  * Package containing all services and directives
  * about the `interchange` module
  */
+
+ /* istanbul ignore next */
 angular.module('mm.foundation.interchange', [])
 
   /**
@@ -691,6 +701,7 @@ angular.module('mm.foundation.interchange', [])
     };
   }]);
 
+/* istanbul ignore next */
 angular.module('mm.foundation.transition', [])
 
 /**
@@ -774,6 +785,7 @@ angular.module('mm.foundation.transition', [])
   return $transition;
 }]);
 
+/* istanbul ignore next */
 angular.module('mm.foundation.modal', ['mm.foundation.transition'])
 
 /**
@@ -1149,6 +1161,7 @@ angular.module('mm.foundation.modal', ['mm.foundation.transition'])
     return $modalProvider;
   });
 
+/* istanbul ignore next */
 angular.module("mm.foundation.offcanvas", [])
     .directive('offCanvasWrap', ['$window', function ($window) {
         return {
@@ -1231,6 +1244,7 @@ angular.module("mm.foundation.offcanvas", [])
         };
     }]);
 
+/* istanbul ignore next */
 angular.module('mm.foundation.pagination', [])
 
 .controller('PaginationController', ['$scope', '$attrs', '$parse', '$interpolate', function ($scope, $attrs, $parse, $interpolate) {
@@ -1478,6 +1492,8 @@ angular.module('mm.foundation.pagination', [])
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html tooltips, and selector delegation.
  */
+
+ /* istanbul ignore next */
 angular.module( 'mm.foundation.tooltip', [ 'mm.foundation.position', 'mm.foundation.bindHtml' ] )
 
 /**
@@ -1873,6 +1889,8 @@ angular.module( 'mm.foundation.tooltip', [ 'mm.foundation.position', 'mm.foundat
  * function, placement as a function, inside, support for more triggers than
  * just mouse enter/leave, html popovers, and selector delegatation.
  */
+
+ /* istanbul ignore next */
 angular.module( 'mm.foundation.popover', [ 'mm.foundation.tooltip' ] )
 
 .directive( 'popoverPopup', function () {
@@ -1888,6 +1906,7 @@ angular.module( 'mm.foundation.popover', [ 'mm.foundation.tooltip' ] )
   return $tooltip( 'popover', 'popover', 'click' );
 }]);
 
+/* istanbul ignore next */
 angular.module('mm.foundation.progressbar', ['mm.foundation.transition'])
 
 .constant('progressConfig', {
@@ -1989,6 +2008,7 @@ angular.module('mm.foundation.progressbar', ['mm.foundation.transition'])
     };
 });
 
+/* istanbul ignore next */
 angular.module('mm.foundation.rating', [])
 
 .constant('ratingConfig', {
@@ -2070,7 +2090,7 @@ angular.module('mm.foundation.rating', [])
  * @description
  * AngularJS version of the tabs directive.
  */
-
+/* istanbul ignore next */
 angular.module('mm.foundation.tabs', [])
 
 .controller('TabsetController', ['$scope', function TabsetCtrl($scope) {
@@ -2348,10 +2368,9 @@ angular.module('mm.foundation.tabs', [])
     );
   }
 })
-
 ;
 
-
+/* istanbul ignore next */
 angular.module("mm.foundation.topbar", [])
     .factory('closest', [function(){
         return function(el, selector) {
@@ -2838,6 +2857,8 @@ angular.module("mm.foundation.topbar", [])
             }
         };
     }]);
+
+/* istanbul ignore next */
 angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation.tooltip' ] )
 
 .service( '$tour', [ '$window', '$rootScope', function ( $window, $rootScope) {
@@ -2949,6 +2970,7 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
   return $tooltip( 'stepText', 'step', show );
 }]);
 
+/* istanbul ignore next */
 angular.module('mm.foundation.typeahead', ['mm.foundation.position', 'mm.foundation.bindHtml'])
 
 /**

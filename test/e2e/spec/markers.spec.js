@@ -70,13 +70,20 @@ describe("Markers", function() {
       marker.create()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.annotation_video.isPresent()).toEqual(false);      
-      marker.type_title("First Marker")
-      marker.type_annotation("First Annotation Marker")
-      expect(marker.annotation_video.isPresent()).toEqual(true);      
-      marker.save_marker()
-      expect(marker.markers.count()).toEqual(1)
-      expect(marker.editor_panel.isPresent()).toEqual(false);
-      expect(marker.annotation_video.isPresent()).toEqual(false);
+      browser.driver.switchTo().activeElement().getAttribute('class').then(function(result){console.log(result)} )
+      expect(marker.title.getAttribute('class')).toEqual(browser.driver.switchTo().activeElement().getAttribute('class'));
+      marker.tab_click()
+      expect(marker.annotation.getAttribute('class')).toEqual(browser.driver.switchTo().activeElement().getAttribute('class'));
+      marker.tab_click()
+      expect(marker.time.getAttribute('class')).toEqual(browser.driver.switchTo().activeElement().getAttribute('class'));
+      marker.tab_click()
+      expect(marker.done_button.getAttribute('class')).toEqual(browser.driver.switchTo().activeElement().getAttribute('class'));
+      marker.tab_click()
+      expect(browser.driver.switchTo().activeElement().getAttribute('class')).toContain("tiny alert delete");
+      marker.tab_click()
+      expect(marker.title.getAttribute('class')).toEqual(browser.driver.switchTo().activeElement().getAttribute('class'));
+      // marker.save_marker()
+      // expect(marker.markers.count()).toEqual(1)
     })
     it("should edit makers", function() {
       expect(marker.markers.count()).toEqual(1)
@@ -96,7 +103,7 @@ describe("Markers", function() {
     it("should add first maker by shortcut ", function() {
       expect(marker.markers.count()).toEqual(0)
       video.seek(55)
-      video.current_time.then(function(result){expect(result).toEqual("0:02:37")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:36")} )
       marker.create_shortcut()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.annotation_video.isPresent()).toEqual(false);      
@@ -111,7 +118,7 @@ describe("Markers", function() {
     it("should add second maker", function() {
       expect(marker.markers.count()).toEqual(1)
       video.seek(57)
-      video.current_time.then(function(result){expect(result).toEqual("0:02:43")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:41")} )
       marker.create_shortcut()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.annotation_video.isPresent()).toEqual(false);      
@@ -124,7 +131,7 @@ describe("Markers", function() {
     })    
     it("should add thrid marker", function() {
       video.seek(59)
-      video.current_time.then(function(result){expect(result).toEqual("0:02:49")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:47")} )
       marker.create_shortcut()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.annotation_video.isPresent()).toEqual(false);      
@@ -145,21 +152,21 @@ describe("Markers", function() {
       expect(marker.annotation_video.getText()).toContain("First Annotation Marker");
       marker.type_title("1st Edit Marker")
       marker.type_annotation("1st Edit Annotation Marker")
-      video.current_time.then(function(result){expect(result).toEqual("0:02:37")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:36")} )
       expect(marker.annotation_video.isPresent()).toEqual(true);      
       marker.marker(2).edit()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.title.getText()).toContain("2nd Marker");
       expect(marker.annotation.getText()).toContain("2nd Annotation Marker");
       expect(marker.annotation_video.getText()).toContain("2nd Annotation Marker");
-      video.current_time.then(function(result){expect(result).toEqual("0:02:43")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:41")} )
       expect(marker.annotation_video.isPresent()).toEqual(true);      
       marker.marker(3).edit()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
       expect(marker.title.getText()).toContain("3rd Marker");
       expect(marker.annotation.getText()).toContain("3rd Annotation Marker");
       expect(marker.annotation_video.getText()).toContain("3rd Annotation Marker");
-      video.current_time.then(function(result){expect(result).toEqual("0:02:49")} )
+      video.current_time.then(function(result){expect(result).toEqual("0:02:47")} )
       expect(marker.annotation_video.isPresent()).toEqual(true);      
       marker.marker(1).edit()
       expect(marker.editor_panel.isDisplayed()).toEqual(true);
@@ -205,9 +212,20 @@ describe("Markers", function() {
       expect(marker.annotation_video.isPresent()).toEqual(false);      
       marker.type_annotation("Empty Annotation")
       marker.save_marker()
+      sleep(5000)
       expect(marker.markers.count()).toEqual(4)
-
+      // marker.create()
+      // expect(marker.editor_panel.isDisplayed()).toEqual(true);
+      // expect(marker.annotation_video.isPresent()).toEqual(false);      
+      // sleep(5000)
+      // marker.type_title("First Marker")
+      // marker.type_annotation("First Annotation Marker")
     })
+
+    // Markers shortcuts (enter/tab) 
+    // xit("should add empty maker by shortcut ", function() {
+    //   video.seek(79)
+    // })    
 
     it("should logout", function() {
       header.logout()

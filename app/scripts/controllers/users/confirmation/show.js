@@ -48,7 +48,8 @@ angular.module('scalearAngularApp')
             })
           }
           else if(resp.data == "confirm_change_email"){
-            ErrorHandler.showMessage('Error ' + ': ' + $translate.instant("error_message.confirm_change_email"), 'errorMessage', 4000, "success");
+            ErrorHandler.showMessage($translate.instant("error_message.confirm_change_email"), 'errorMessage', 4000, "success");
+            UserSession.allowRefetchOfUser()
             $timeout(function() {
               $state.go("course_list")
             }, 1000)            

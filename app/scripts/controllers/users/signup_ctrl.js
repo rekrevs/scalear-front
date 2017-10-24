@@ -46,7 +46,9 @@ angular.module('scalearAngularApp')
         }
         delete $scope.user.errors
         User.signUp({}, {
-          user: $scope.user
+          email: $scope.user.email,
+          password: $scope.user.password,
+          password_confirmation: $scope.user.password_confirmation,
         }, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {

@@ -45,11 +45,25 @@ angular.module('scalearAngularApp')
     }
 
     $scope.login = function() {
+      console.log($scope.user)
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
-      User.signIn({}, { "user": $scope.user },
-        function(data) {
+      User.signIn({}, { "email": $scope.user.email, 
+        "password":$scope.user.password, 
+        "password_confirmation": $scope.user.password_confirmation },
+        function(data, header) {
+          console.log(data)
+          var header = header();
           $cookieStore.put('login_provider', 'scalablelearning')
+          $cookieStore.put('headers', {
+            'access-token': header['access-token'],
+            'client': header['client'],
+            'expiry': header['expiry'],
+            'uid': header['uid'],
+            'token-type': header['token-type'],
+            'cache-control': header['cache-control']
+          } )
+
           $log.debug("login success")
           $scope.sending = false;
           $rootScope.$broadcast("Course:get_current_courses")
@@ -82,16 +96,24 @@ angular.module('scalearAngularApp')
     }
 
     var next = function(user) {
+      console.log(user)
       if (!user.info_complete) {
+        console.log("1")
         $state.go("edit_account");
         ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', null, "error");
       } else if (URLInformation.hasEnroll()) {
+        console.log("2")
+        
         $window.location.href = URLInformation.getEnrollLink()
         URLInformation.clearEnrollLink()
       } else if (URLInformation.shouldRedirect()) {
+        console.log("3")
+        
         $window.location.href = URLInformation.getRedirectLink()
         URLInformation.clearRedirectLink()
       } else {
+        console.log("4")
+        
         $state.go("dashboard");
       }
     }

@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
     //   })
 
     $scope.update_account = function() {
+      console.log($scope.user)
       $scope.sending = true;
       delete $scope.user.errors
       $scope.user.first_day = $scope.user.first_day.id

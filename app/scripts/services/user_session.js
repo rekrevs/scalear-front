@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('UserSession', ['$rootScope', 'User', 'Home', '$q', '$log', '$translate', function($rootScope, User, Home, $q, $log, $translate) {
+  .factory('UserSession', ['$rootScope', 'User', 'Home', '$q', '$log', '$translate','Token', function($rootScope, User, Home, $q, $log, $translate, Token) {
 
     var current_user = null;
     var deferred_current_user = null;
+
+    var token;
 
     function getCurrentUser(argument) {
       if(!deferred_current_user) {
@@ -12,6 +14,7 @@ angular.module('scalearAngularApp')
         User.getCurrentUser()
           .$promise
           .then(function(data) {
+            console.log(data)
             if(data.signed_in) {
               var user = JSON.parse(data.user);
               if(!user.last_name) {
@@ -29,6 +32,8 @@ angular.module('scalearAngularApp')
               return getNotifications()
             } else {
               deferred_current_user.reject()
+            console.log("remove current_user, !data.signedIn")
+              
               removeCurrentUser()
             }
           })
@@ -38,18 +43,41 @@ angular.module('scalearAngularApp')
               current_user.shared_items = response.shared_items
             }
           })
-          .catch(function() {
+          .catch(function(response) {
+            console.log("remove current_user, catch block")
+            console.log(response)
             removeCurrentUser()
           })
       }
       return deferred_current_user.promise;
     }
 
+    function signIn(user) {
+      var userSignedIn = $q.defer()
+      User.signIn({}, user, function (data, headers) {
+        console.log(data)
+        console.log(headers())
+
+        Token.setToken(headers())
+        userSignedIn.resolve(data);
+        
+      })
+
+      return userSignedIn.promise;
+    } 
+
+
+
     function getNotifications() {
-      return Home.getNotifications().$promise
+      // fake response only for testing
+      return new Promise(function(resolve,reject){resolve(
+        {invitations:{}, shared_items:{}}
+      )})
+      // return Home.getNotifications().$promise
     }
 
     function setCurrentUser(user) {
+      console.log(user)
       current_user = user
       $rootScope.current_user = user
     }
@@ -82,7 +110,8 @@ angular.module('scalearAngularApp')
       getCurrentUser: getCurrentUser,
       logout: logout,
       allowRefetchOfUser: allowRefetchOfUser,
-      deleteUser:deleteUser
+      deleteUser:deleteUser,
+      signIn: signIn
     };
 
 

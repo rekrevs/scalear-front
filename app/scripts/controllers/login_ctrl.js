@@ -47,23 +47,23 @@ angular.module('scalearAngularApp')
     $scope.login = function() {
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
-      User.signIn({}, { "user": $scope.user },
-        function(data) {
-          $cookieStore.put('login_provider', 'scalablelearning')
-          $log.debug("login success")
-          $scope.sending = false;
-          $rootScope.$broadcast("Course:get_current_courses")
-          $scope.is_mobile = MobileDetector.isMobile()
-          if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
-            showMobileWarning(function() {
-              next(data)
-            })
-          } else
-            next(data)
-        },
-        function() {
-          $scope.sending = false;
-        });
+      UserSession.signIn($scope.user)
+        .then(
+           function(data) {
+              $cookieStore.put('login_provider', 'scalablelearning')
+              $log.debug("login success")
+              $scope.sending = false;
+              $rootScope.$broadcast("Course:get_current_courses")
+              $scope.is_mobile = MobileDetector.isMobile()
+              if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
+                showMobileWarning(function() {
+                  next(data)
+                })
+              } else
+                next(data)
+        }
+        )
+       
     }
 
     $scope.join = function() {

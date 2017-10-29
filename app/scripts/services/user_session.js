@@ -32,7 +32,6 @@ angular.module('scalearAngularApp')
               return getNotifications()
             } else {
               deferred_current_user.reject()
-            console.log("remove current_user, !data.signedIn")
               
               removeCurrentUser()
             }
@@ -44,8 +43,6 @@ angular.module('scalearAngularApp')
             }
           })
           .catch(function(response) {
-            console.log("remove current_user, catch block")
-            console.log(response)
             removeCurrentUser()
           })
       }

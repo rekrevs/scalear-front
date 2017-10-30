@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
         console.log(headers())
 
         Token.setToken(headers())
-        userSignedIn.resolve(data);
+        userSignedIn.resolve({user: data, token: headers()});
         
       })
 

@@ -96,7 +96,7 @@ angular.module('scalearAngularApp')
             params : {email: null}
         })
         .state('change_password', {
-            url: '/users/password/edit?reset_password_token',
+            url: '/users/password/edit?token&client_id&uid',
             templateUrl: '/views/users/password/edit.html',
             controller: 'UsersPasswordEditCtrl'
         })

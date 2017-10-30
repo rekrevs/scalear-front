@@ -50,6 +50,7 @@ angular.module('scalearAngularApp')
       UserSession.signIn($scope.user)
         .then(
            function(response) {
+             
               $cookieStore.put('login_provider', 'scalablelearning')
               $log.debug("login success")
               $scope.sending = false;
@@ -57,10 +58,10 @@ angular.module('scalearAngularApp')
               $scope.is_mobile = MobileDetector.isMobile()
               if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
                 showMobileWarning(function() {
-                  next(response.data)
+                  next(response.user.data)
                 })
               } else
-                next(response.data)
+                next(response.user.data)
         }
         )
        

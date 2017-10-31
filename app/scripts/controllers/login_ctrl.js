@@ -45,8 +45,10 @@ angular.module('scalearAngularApp')
     }
 
     $scope.login = function() {
+      console.log($scope.user)
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
+
       UserSession.signIn($scope.user)
         .then(
            function(response) {
@@ -85,15 +87,22 @@ angular.module('scalearAngularApp')
     var next = function(user) {
       console.log(user)
       if (!user.info_complete) {
+        console.log("1")
         $state.go("edit_account");
         ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', null, "error");
       } else if (URLInformation.hasEnroll()) {
+        console.log("2")
+        
         $window.location.href = URLInformation.getEnrollLink()
         URLInformation.clearEnrollLink()
       } else if (URLInformation.shouldRedirect()) {
+        console.log("3")
+        
         $window.location.href = URLInformation.getRedirectLink()
         URLInformation.clearRedirectLink()
       } else {
+        console.log("4")
+        
         $state.go("dashboard");
       }
     }

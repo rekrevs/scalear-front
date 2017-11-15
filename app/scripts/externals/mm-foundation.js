@@ -2785,20 +2785,20 @@ angular.module("mm.foundation.topbar", [])
                     $link.unbind('click');
                 });
 
-                element.bind('mouseenter', function() {
-                    if(topBar.settings.isHover && !topBar.breakpoint()){
-                        element.addClass('not-click');
-                    }
-                });
+                // element.bind('mouseenter', function() {
+                //     if(topBar.settings.isHover && !topBar.breakpoint()){
+                //         element.addClass('not-click');
+                //     }
+                // });
                 element.bind('click', function(event) {
                     if(!topBar.settings.isHover && !topBar.breakpoint()){
                         element.toggleClass('not-click');
                     }
                 });
                 
-                element.bind('mouseleave', function() {
-                    element.removeClass('not-click');
-                });
+                // element.bind('mouseleave', function() {
+                //     element.removeClass('not-click');
+                // });
 
                 $scope.$on('$destroy', function(){
                     element.unbind('click');

@@ -142,7 +142,7 @@ var translation_en={
   support:{
     ipad:"iPad support is currently in beta.",
     mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Student video support is available for Android and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
+    issue_and_recommendation:"Student video support is available for Android 4.4 and higher and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -604,6 +604,7 @@ var translation_en={
     start_time_bigger_than_end_time: "End time must be after start time",
     header: "Header",
     answer:"@:global.answer",
+    inclass_student_note: "Why did you choose that answer?(For your own notes.)",
     type: "Type",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
@@ -718,6 +719,7 @@ var translation_en={
   lectures:{
     messages:{
         thank_you_answer: "Thank you for your answer",
+        press_to_continue: "Press play to continue.",
         did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
         please_choose_one_answer: "Please choose at least one answer",
         please_choose_an_answer: "Please choose your answer(s).",

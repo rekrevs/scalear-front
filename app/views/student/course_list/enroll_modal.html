@@ -9,7 +9,7 @@
     <div class="modal-body">
     	<form ng-submit="enrollStudent()" name="form.key">
         	<div class="small-12 large-3 small-centered columns">
-                <input id="enrollkey_field" type="text" maxlength='11' ng-model="enrollment.key" name="key" required autofocus style="text-align: center;font-weight:bold;font-size: 18px;" class="no-margin with-tiny-margin-bottom"/>
+                <input id="enrollkey_field" ng-click="inputClick()" type="text" maxlength='11' ng-model="enrollment.key" name="key" required autofocus style="text-align: center;font-weight:bold;font-size: 18px;" class="no-margin with-tiny-margin-bottom"/>
             </div>
         	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="error_message.required"></span>
         	<small class='error' ng-if='form.server_error'>{{form.server_error}}</small>

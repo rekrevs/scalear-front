@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     $('#enrollkey_field').select()
   },1000)
 
-  $scope.enrollinputClick = function(){
+  $scope.enrollInputClick = function(){
     $timeout(function(){
       $('#enrollkey_field').select()
     },500)

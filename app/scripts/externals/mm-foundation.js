@@ -2797,7 +2797,9 @@ angular.module("mm.foundation.topbar", [])
                 });
                 
                 element.bind('mouseleave', function() {
+                  if(topBar.settings.isHover){
                     element.removeClass('not-click');
+                  }
                 });
 
                 $scope.$on('$destroy', function(){

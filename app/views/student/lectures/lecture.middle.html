@@ -129,8 +129,8 @@ ul.connected_blocks {
 						    		<question_block class="disc-textarea" item="temp_timeline_item" />
 						    	</div>
 						    </div>
+							<quiz ng-show="show_progressbar" ng-style="quiz_layer" resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;" ng-click="quizLayerClick()">
 
-						    <quiz ng-show="show_progressbar && selected_quiz" ng-style="quiz_layer" resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;" >
 						      <!-- ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready) || video_end" -->
 						      <loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
 						      </loading>

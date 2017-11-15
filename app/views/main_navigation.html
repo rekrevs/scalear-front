@@ -10,16 +10,15 @@
     <ul class="title-area">
       <li class="name">
         <h1>
-				<a ng-if="!lti_embed" id="home" ui-sref="home" class="dark-text must-show-inline" >
-					<img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
-					<span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
-				</a>
-        <div ng-if="lti_embed" class="dark-text must-show-inline" >
-          <img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
-          <span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
-        </div>
-
-			</h1>
+  				<a ng-if="!lti_embed" id="home" ui-sref="home" class="dark-text must-show-inline" >
+  					<img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
+  					<span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
+  				</a>
+          <div ng-if="lti_embed" class="dark-text must-show-inline" >
+            <img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
+            <span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
+          </div>
+  			</h1>
       </li>
       <li toggle-top-bar class="menu-icon" ng-hide="lti_embed" ><a class="dark-text" href="">menu</a></li>
     </ul>
@@ -123,8 +122,6 @@
         <li has-dropdown>
           <a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" translate>navigation.help</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown>
-<!--             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started" translate>help.getting_started.student</a></li>
-            <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" translate>help.getting_started.teacher</a></li> -->
             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" ><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.student</span></a></li>
             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started"><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.teacher</span></a></li>
 

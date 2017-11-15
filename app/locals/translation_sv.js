@@ -142,7 +142,7 @@ var translation_sv={
   support:{
     ipad:"Stöd för iPad är för närvarande i beta.",
     mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
-    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
+    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android 4.4 och senare och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
   navigation:{
@@ -603,6 +603,7 @@ var translation_sv={
     start_time_bigger_than_end_time: "Slut-tid måste vara efter start-tid",
     header: "Rubrik",
     answer:"@:global.answer",
+    inclass_student_note: "Varför valde du det svaret? (För dina egna anteckningar.)",    
     type: "Typ",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
@@ -717,6 +718,7 @@ var translation_sv={
   lectures:{
     messages:{
         thank_you_answer: "Tack för ditt svar",
+        press_to_continue: "Tryck spela till fortsätta.",        
         did_not_get_credit: "Videon ej markerad som sedd. För att markeras som sedd måste hela videon ses och frågorna besvaras (men inte nödvändigtvis rätt!).",
         please_choose_one_answer: "Välj minst ett svar",
         please_choose_an_answer: "Var god välj ditt (dina) svar",

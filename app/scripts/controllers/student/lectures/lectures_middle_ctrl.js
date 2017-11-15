@@ -1001,22 +1001,23 @@ angular.module('scalearAngularApp')
 
     var displayResult = function(data) {
       if (data.msg != "Empty") { // he chose sthg
+        var middle_msg = ''
         if ($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.solved_quiz = true;
           if ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey' && ($scope.selected_quiz.quiz_type != 'html' && $scope.selected_quiz.question_type.toUpperCase() !== 'FREE TEXT QUESTION'))
             var sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
-          showNotification('lectures.messages.thank_you_answer', sub_message || "")
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
             // $scope.explanation[] = data.explanation[]
+            middle_msg = "lectures.messages.press_to_continue"
             for (var el in data.explanation)
               $scope.explanation[el] = data.explanation[el];
           }
+          showNotification('lectures.messages.thank_you_answer', sub_message || "" , middle_msg || "")
         } else {
           for (var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
           var sub_message = ''
-          var middle_msg = ''
           if ($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')) {
             for (var el in data.explanation)
               $scope.explanation[el] = data.explanation[el];
@@ -1202,6 +1203,12 @@ angular.module('scalearAngularApp')
       $scope.dismissAnnotation()
       clearQuiz()
       changeStatusAndWaitTobeSync(6, null)
+    }
+
+    $scope.quizLayerClick =  function() {
+      if (!$scope.quiz_mode){
+        $scope.toggleVideoPlayback()
+      }
     }
 
     var checkIfDistancePeerIsAlive = function() {

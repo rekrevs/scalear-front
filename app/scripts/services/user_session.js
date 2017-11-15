@@ -70,11 +70,7 @@ angular.module('scalearAngularApp')
 
 
     function getNotifications() {
-      // fake response only for testing
-      return new Promise(function(resolve,reject){resolve(
-        {invitations:{}, shared_items:{}}
-      )})
-      // return Home.getNotifications().$promise
+      return Home.getNotifications().$promise
     }
 
     function setCurrentUser(user) {

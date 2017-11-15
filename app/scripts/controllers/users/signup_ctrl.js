@@ -45,11 +45,7 @@ angular.module('scalearAngularApp')
           $scope.user.password_confirmation = ' '
         }
         delete $scope.user.errors
-        User.signUp({}, {
-          email: $scope.user.email,
-          password: $scope.user.password,
-          password_confirmation: $scope.user.password_confirmation,
-        }, function() {
+        User.signUp({}, $scope.user, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {
           if(response.data.errors.school_provider){

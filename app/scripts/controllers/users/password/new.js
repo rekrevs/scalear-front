@@ -6,9 +6,10 @@ angular.module('scalearAngularApp')
     Page.setTitle('account.password.new_password')
     $scope.user = {}
     $scope.reset_password = function() {
+      
       $scope.sending = true
       delete $scope.user.errors;
-      User.reset_password({}, { user: $scope.user }, function() {
+      User.reset_password({}, {email: $scope.user.email, redirect_url: location.protocol + '//' +location.host +"/#/users/password/edit"}, function() {
         $scope.sending = false;
         $state.go('forgot_password_confirmation',{email : $scope.user.email});
       }, function(response) {

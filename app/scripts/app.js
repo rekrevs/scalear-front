@@ -18,7 +18,8 @@ angular.module('scalearAngularApp')
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
     $httpProvider.defaults.withCredentials = true;
-    $httpProvider.interceptors.push('ServerInterceptor');
+    // $httpProvider.interceptors.push('ServerInterceptor');
+    $httpProvider.interceptors.push('TokenServerInterceptor');
 
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -95,7 +96,7 @@ angular.module('scalearAngularApp')
             params : {email: null}
         })
         .state('change_password', {
-            url: '/users/password/edit?reset_password_token',
+            url: '/users/password/edit?token&client_id&uid',
             templateUrl: '/views/users/password/edit.html',
             controller: 'UsersPasswordEditCtrl'
         })

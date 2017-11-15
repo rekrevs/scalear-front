@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
         $scope.resend = function(){
             delete $scope.user.errors;
             $scope.sending=true
-            User.resend_confirmation({},{user:$scope.user}, function(){
+            User.resend_confirmation({},{email: $scope.user.email}, function(){
                 $scope.sending=false;
                 $state.go("login");
             }, function(data){

@@ -48,36 +48,25 @@ angular.module('scalearAngularApp')
       console.log($scope.user)
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
-      User.signIn({}, { "email": $scope.user.email, 
-        "password":$scope.user.password, 
-        "password_confirmation": $scope.user.password_confirmation },
-        function(data, header) {
-          console.log(data)
-          var header = header();
-          $cookieStore.put('login_provider', 'scalablelearning')
-          $cookieStore.put('headers', {
-            'access-token': header['access-token'],
-            'client': header['client'],
-            'expiry': header['expiry'],
-            'uid': header['uid'],
-            'token-type': header['token-type'],
-            'cache-control': header['cache-control']
-          } )
 
-          $log.debug("login success")
-          $scope.sending = false;
-          $rootScope.$broadcast("Course:get_current_courses")
-          $scope.is_mobile = MobileDetector.isMobile()
-          if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
-            showMobileWarning(function() {
-              next(data)
-            })
-          } else
-            next(data)
-        },
-        function() {
-          $scope.sending = false;
-        });
+      UserSession.signIn($scope.user)
+        .then(
+           function(response) {
+             
+              $cookieStore.put('login_provider', 'scalablelearning')
+              $log.debug("login success")
+              $scope.sending = false;
+              $rootScope.$broadcast("Course:get_current_courses")
+              $scope.is_mobile = MobileDetector.isMobile()
+              if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
+                showMobileWarning(function() {
+                  next(response.user.data)
+                })
+              } else
+                next(response.user.data)
+        }
+        )
+       
     }
 
     $scope.join = function() {

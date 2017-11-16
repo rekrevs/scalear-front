@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
   },1000)
 
   $scope.enrollInputClick = function(){
+    $window.alert("it is working");
     $timeout(function(){
       $('#enrollkey_field').select()
     },500)

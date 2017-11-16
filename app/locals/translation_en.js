@@ -604,7 +604,7 @@ var translation_en={
     start_time_bigger_than_end_time: "End time must be after start time",
     header: "Header",
     answer:"@:global.answer",
-    inclass_student_note: "Why did you choose that answer?(For your own notes.)",
+    inclass_student_note: "Why did you choose that answer? (For your own notes.)",
     type: "Type",
     quiz:"@:global.quiz",
     survey:"@:global.survey",

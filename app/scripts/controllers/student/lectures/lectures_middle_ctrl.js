@@ -429,7 +429,7 @@ angular.module('scalearAngularApp')
           if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
             $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function() {
               showQuizOnline(quiz)
-              $scope.$apply()
+              // $scope.$apply()
             })
           } else {
             if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
@@ -592,7 +592,7 @@ angular.module('scalearAngularApp')
             }
             clearQuiz()
             if ($scope.next_quiz) {
-              show_quiz_online($scope.next_quiz)
+              showQuizOnline($scope.next_quiz)
             }
           }
         }
@@ -1026,6 +1026,10 @@ angular.module('scalearAngularApp')
               middle_msg = 'lectures.multiple_correct'
           }
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
+            middle_msg = "lectures.messages.press_to_continue"            
+            sub_message = ''
+          }
           if (!data.correct && $scope.selected_quiz.question_type.toUpperCase() == "DRAG" && $scope.selected_quiz.quiz_type.toUpperCase() == "HTML") {
             sub_message = ""
           }
@@ -1206,6 +1210,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.quizLayerClick =  function() {
+      if (!$scope.quiz_mode){
+        $scope.toggleVideoPlayback()
+      }
+    }
+    $scope.lectureLayerClick =  function() {
       if (!$scope.quiz_mode){
         $scope.toggleVideoPlayback()
       }

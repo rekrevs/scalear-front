@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
         else if(!$scope.selected_teacher.email)
           $scope.errors = $translate.instant('sharing.please_enter_email')
         else{
-          SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher.email}, 
+          SharedItem.create({},{shared_item: {data: selected}, shared_with: $scope.selected_teacher.email}, 
           	function(){
                 $modalInstance.close();
             },

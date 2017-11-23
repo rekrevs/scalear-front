@@ -16,7 +16,6 @@ angular.module('scalearAngularApp')
   		}
 
   		$scope.shareItem= function(data){
-        console.log($scope.selected_teacher.email)
   			var selected = {modules:[], lectures:[], quizzes:[], customlinks:[]}
 				if($scope.selected_module.selected)
 					selected.modules.push($scope.selected_module.id)

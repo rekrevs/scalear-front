@@ -9,8 +9,6 @@ angular.module('scalearAngularApp')
     var token;
 
     function getCurrentUser(argument) {
-      console.log("get current user")
-      console.log(argument)
       if(!deferred_current_user) {
         deferred_current_user = $q.defer();
         User.getCurrentUser()

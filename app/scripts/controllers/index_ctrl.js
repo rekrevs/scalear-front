@@ -30,12 +30,12 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
     .then(function (user) {
       console.log(user)
-      //  getCurrentCourses()
+       getCurrentCourses()
     })
 
-    // $rootScope.$on("Course:get_current_courses", function() {
-    //   getCurrentCourses();
-    // })
+    $rootScope.$on("Course:get_current_courses", function() {
+      getCurrentCourses();
+    })
 
     function getCurrentCourses() {
       $scope.current_teacher_courses = null;

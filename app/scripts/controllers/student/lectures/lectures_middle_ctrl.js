@@ -241,13 +241,12 @@ angular.module('scalearAngularApp')
     }
 
     var showQuizOnline = function(quiz) {
-      var index = $scope.lecture.video_quizzes.map(function(x) {
-        return x.time; }).indexOf(quiz.time);
+      var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);      
+      $scope.next_quiz = null
       if ($scope.lecture.video_quizzes[index + 1]) {
-        $scope.next_quiz = null
         if (($scope.lecture.video_quizzes[index + 1].time - quiz.time) <= 1)
           $scope.next_quiz = $scope.lecture.video_quizzes[index + 1]
-      }
+      }      
       $scope.seek(quiz.time)
       $scope.lecture_player.controls.pause()
       $scope.closeReviewNotify()

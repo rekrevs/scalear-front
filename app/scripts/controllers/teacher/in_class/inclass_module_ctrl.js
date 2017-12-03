@@ -82,6 +82,7 @@ angular.module('scalearAngularApp')
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
+      $scope.markers_count = 0
       $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
       getLectureCharts()
@@ -102,8 +103,10 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for(var type in $scope.lectures[lec_id]) {
               for(var it in $scope.lectures[lec_id][type]) {
-                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title)
+                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title){
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
+                  $scope.markers_count += 1
+                }
                 else
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show) {

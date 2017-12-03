@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
         $scope.module_items = module.items
         Module.getStudentModule({ course_id: $stateParams.course_id, module_id: module.id },
           function(data) {
+            console.log(data)
             $scope.module_lectures = data.module_lectures;
 
             // arrange timeline
@@ -21,23 +22,24 @@ angular.module('scalearAngularApp')
             for(var l in $scope.module_lectures) {
               var lec = $scope.module_lectures[l]
               $scope.timeline['lecture'][lec.id] = new Timeline()
-              $scope.timeline['lecture'][lec.id].meta = angular.extend(lec, ItemsModel.getLecture(lec.id))
-
+              $scope.timeline['lecture'][lec.id].meta = angular.extend(ItemsModel.getLecture(lec.id), lec)
               // remove quizzes with no answers - else - add it to timeline.
-              for(var element = lec.video_quizzes.length - 1; element >= 0; element--) {
-                if(lec.video_quizzes[element].online_answers.length == 0 && lec.video_quizzes[element].question_type != "Free Text Question")
-                  lec.video_quizzes.splice(element, 1);
-                else
-                  $scope.timeline['lecture'][lec.id].add(lec.video_quizzes[element].time, "quiz", lec.video_quizzes[element])
-              }
-
+              // if(lec.video_quizzes){
+                for(var element = lec.video_quizzes.length - 1; element >= 0; element--) {
+                  if(lec.video_quizzes[element].online_answers.length == 0 && lec.video_quizzes[element].question_type != "Free Text Question")
+                    lec.video_quizzes.splice(element, 1);
+                  else
+                    $scope.timeline['lecture'][lec.id].add(lec.video_quizzes[element].time, "quiz", lec.video_quizzes[element])
+                }
+              // }
+              
               for(var type in lec.user_confused) {
                 $scope.timeline['lecture'][lec.id].add(lec.user_confused[type].time, "confused", lec.user_confused[type])
               }
-
               // will be the same timeline later to be able to put in one and filter. (so both will be lecture, no discussion)
+              
               for(var type in lec.posts) {
-                $scope.timeline['lecture'][lec.id].add(lec.posts[type].post.time, "discussion", lec.posts[type].post)
+                $scope.timeline['lecture'][lec.id].add(lec.posts[type].time, "discussion", lec.posts[type])
               }
 
               for(var i in lec.lecture_notes) {

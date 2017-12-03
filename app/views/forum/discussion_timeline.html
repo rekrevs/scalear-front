@@ -38,8 +38,8 @@
                             <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                                 <div style="margin-bottom: 5px;">
                                     <span ng-if="::(item.data.user_id == current_user.id)">
-                                        <img ng-show="::(item.data.privacy==0)" src="/images/private.png" tooltip="{{private_text}}"/>
-                                        <img ng-show="::(item.data.privacy==1)" src="/images/public.png" tooltip="{{public_text}}"/>
+                                        <img ng-show="::(item.data.privacy==0)" src="/images/private.png" tooltip="{{private_text}}"  tooltip-placement="top" tooltip-append-to-body="true"/>
+                                        <img ng-show="::(item.data.privacy==1)" src="/images/public.png" tooltip="{{public_text}}"  tooltip-placement="top" tooltip-append-to-body="true"/>
                                     </span>
                                     <span translate>discussion.q</span>
                                     <span ng-if="::(item.data.user_id != current_user.id)" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="{{turncatingcount}}" style="white-space: pre-line"></span>

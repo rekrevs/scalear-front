@@ -260,7 +260,7 @@ angular.module('scalearAngularApp')
       $scope.quiz_mode = true
       $scope.check_answer_title = "lectures.button.check_answer"
       $scope.selected_quiz.actual_display_text = $scope.selected_quiz.display_text
-      if ($scope.distance_peer_session_id && ($scope.distance_peer_status == 3) ) {
+      if ($scope.distance_peer_session_id ) {
         $scope.check_answer_title = "lectures.button.submit_my_vote"
       }
 
@@ -407,14 +407,10 @@ angular.module('scalearAngularApp')
             startcheckIfDistancePeerStatusIsSyncTimer($scope.distance_peer_session_id, status, new_quiz_time, quiz)
             // showAnnotation($translate.instant("distance_peer.waiting_the_another_student_to_finish", { name: $scope.name }))
             changeDistancePeerStatusAnnotationWaiting(status)
-
-
-
           } else {
             clearDistancePeerVariables()
             cancelcheckIfDistancePeerStatusIsSyncTimer()
             cancelcheckIfDistancePeerIsAliveTimer()
-            clearQuiz()
           }
         })
     }
@@ -1047,7 +1043,7 @@ angular.module('scalearAngularApp')
 
       } else if ($scope.distance_peer_session_id && $scope.distance_peer_status == 4) {
         cancelStatusTimer()
-        displayResult(data)
+        // displayResult(data)
         changeStatusAndWaitTobeSync(5, $scope.selected_quiz.end_time, $scope.selected_quiz)
       } else {
         displayResult(data)
@@ -1289,8 +1285,8 @@ angular.module('scalearAngularApp')
             clearDistancePeerVariables()
             cancelcheckIfDistancePeerStatusIsSyncTimer()
             cancelStatusTimer()
+            clearQuiz()
           }
-
         })
     }
 
@@ -1354,7 +1350,6 @@ angular.module('scalearAngularApp')
           }).$promise
           .then(function(response) {
             if (response.distance_peer != "no_peer_session") {
-              console.log(response.distance_peer)
               $scope.distance_peer_session_id = response.distance_peer.distance_peer_id
               startcheckIfDistancePeerIsAliveTimer()
 
@@ -1364,9 +1359,6 @@ angular.module('scalearAngularApp')
               changeDistancePeerStatusMessage()
               var index = $scope.lecture.video_quizzes.map(function(x) {
                 return x.id; }).indexOf(response.distance_peer.online_quiz_id);
-              console.log(response.distance_peer)
-              console.log($scope.distance_peer_status)
-              console.log(index)
               if ($scope.distance_peer_status == 1) { // = 1  stop = start_time_of_next_quiz
                 if ($scope.lecture.video_quizzes[index + 1]) {
                   $scope.next_stop_time = $scope.lecture.video_quizzes[index + 1].start_time

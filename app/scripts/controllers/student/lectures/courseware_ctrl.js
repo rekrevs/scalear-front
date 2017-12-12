@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
               var lec2 = ItemsModel.getLecture(lec.id);
               //in rails 5 virtual attributes is returned as null in lec2, so it overrides the ones in lec, so we delete any null values
               for (var key in lec2){
-                if(!lec2[key]){
+                if(lec2[key]===null || lec2[key]===undefined){
                   delete lec2[key];
                 }
               }

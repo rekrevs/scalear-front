@@ -1,4 +1,4 @@
-<div style="padding:20px, width:90%">
+<div style="padding:20px; width:90%; height: 95%;">
 	<h3 ng-if="!current_user"><i class="step fi-lock size-18"></i> ScalableLearning <span translate="privacy.policy"></span></h3>
 
 	<h4 translate="privacy.information_collect"></h4>
@@ -32,9 +32,9 @@
 
 	<p translate="privacy.last_update"></p>
 	
+	<center>
+		<button type="button" ng-click="confirm()" class="btn btn-default center" translate="privacy.understand"></button>
+		<button type="button" ng-click="closeThisDialog('button')" class="btn btn-default alert center" translate="privacy.cancel" ></button>	
+	</center>
  </div>
 
-<center>
-	<button type="button" ng-click="confirm()" class="btn btn-default" translate="privacy.understand"></button>
-	<button type="button" ng-click="closeThisDialog('button')" class="btn btn-default alert" translate="privacy.cancel" ></button>	
-</center>

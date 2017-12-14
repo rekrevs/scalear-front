@@ -82,6 +82,7 @@ angular.module('scalearAngularApp')
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
+      $scope.markers_count = 0
       $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
       getLectureCharts()
@@ -102,8 +103,10 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for(var type in $scope.lectures[lec_id]) {
               for(var it in $scope.lectures[lec_id][type]) {
-                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title)
+                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title){
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
+                  $scope.markers_count += 1
+                }
                 else
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show) {
@@ -854,26 +857,38 @@ angular.module('scalearAngularApp')
         }
       }]
       formated_data.rows = []
+      var totalSelf = 0;
+      var totalGroup = 0;
+      for (var question in data){
+        if(data[question][2]!= "Never tried"){
+          totalSelf+=data[question][0];
+          totalGroup+=data[question][4];
+        }
+      }
+      
       for(var ind in data) {
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
           group_count = data[ind][4] || 0,
-          self = Math.floor((self_count / 10) * 100),
-          group = Math.floor((group_count / 10) * 100),
+          selfPercent = self_count/totalSelf*100,
+          groupPercent = group_count/totalGroup*100,
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
             { "v": ScalearUtils.getShortAnswerText( ScalearUtils.getHtmlText(text) , Object.keys(data).length )},
-            { "v": self },
+            { "v": selfPercent },
             { "v": tooltip_text },
             { "v": style },
-            { "v": group },
+            { "v": groupPercent },
             { "v": tooltip_text },
             { "v": style }
           ]
         }
-        formated_data.rows.push(row)
+        //remove never tried column
+        if(text!="Never tried"){
+          formated_data.rows.push(row)
+        }
       }
       return formated_data
     }

@@ -16,61 +16,30 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
     .then(function(user) {
       $scope.current_user = user
-      // console.log($scope.current_user)
     })
 
-    var getCoursesFirstTime = function(){  
-      var limit_course = 200 
-        Course.index({   
-          offset:0,    
-          limit: limit_course   
-        },   
-        function(data){  
-          $scope.course_loading =  true
-        $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
-        $scope.student_courses = $scope.student_courses.concat(data.student_courses)
-
-          for(var i=limit_course;i<data.total;i+=limit_course){  
-            getAllCourses(i,limit_course)    
-          }  
-        })  
-    } 
-
-  var getAllCourses=function(offset, limit){ 
-      $scope.course_limit =  limit, 
-      $scope.course_offset = offset 
-      Course.index({ 
-        offset:$scope.course_offset,  
-        limit: $scope.course_limit 
-      }, 
+    var getCourses = function(offset, limit){  
+      var course_offset = offset 
+      var course_limit =  limit
+      Course.index({   
+        offset:course_offset,    
+        limit: course_limit   
+      },   
       function(data){
         $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
         $scope.student_courses = $scope.student_courses.concat(data.student_courses)
 
-        // $scope.total = data.total 
-        // $timeout(function(){ 
-        //     $scope.getRemainingCourse() 
-        // }) 
+        if(course_offset<data.total){
+          course_offset+=course_limit
+          getCourses(course_offset, course_limit)
+        }
+        else{
+          $scope.course_loading =  true
+        }
 
-    // Code for removing finshed courses when chosing "All Courses" from main menu
-    //     $scope.courses.forEach(function(course){
-    //        if(!course.ended){
-    //        $scope.course_filter = false;
-    //        return
-    //    }
-    //  })
-     })
-    }
-
-    $scope.getRemainingCourse = function(){ 
-      if($scope.course_offset+$scope.course_limit<=parseInt($scope.total)) 
-          getAllCourses($scope.course_offset+$scope.course_limit,$scope.course_limit)  
-      else{ 
-          // $scope.loading_lectures=false  
-          $log.debug("no more") 
-      //  disableInfinitScrolling() 
-      } 
+      })  
     } 
+
 
     var removeFromCourseList=function(course, user_type){
       var courses_var = user_type+"_courses"
@@ -146,7 +115,6 @@ angular.module('scalearAngularApp')
 			$scope.is_reverse = !$scope.is_reverse
 		}
 
-    // getAllCourses(0,10)
-    getCoursesFirstTime()  
+    getCourses(0,10)  
 
 }]);

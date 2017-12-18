@@ -111,11 +111,12 @@ angular.module('scalearAngularApp')
               if (type != "meta")
                 for (var it in $scope.lectures[lec_id][type]) {
                   if (type == 'discussion') {
-                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].post.time
+                    console.log( $scope.lectures[lec_id][type][it][1][0] )
+                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].time
                     for (var disc in $scope.lectures[lec_id][type][it][1]) {
-                      $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
-                      for (var com in $scope.lectures[lec_id][type][it][1][disc].post.comments) {
-                        $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
+                      $scope.lectures[lec_id][type][it][1][disc].hide = !$scope.lectures[lec_id][type][it][1][disc].hide
+                      for (var com in $scope.lectures[lec_id][type][it][1][disc].comments) {
+                        $scope.lectures[lec_id][type][it][1][disc].comments[com].hide = !$scope.lectures[lec_id][type][it][1][disc].comments[com].hide
                       }
                     }
                   } else if (type == 'charts') {

@@ -1,3 +1,4 @@
+/* istanbul ignore next */ 
 angular.module('scalearAngularApp')
   .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate','$modal', function ($scope, Kpi, Page, $rootScope, $translate, $modal) {
 

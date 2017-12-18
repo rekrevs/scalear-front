@@ -179,11 +179,12 @@ angular.module('scalearAngularApp')
           time = player_controls.getDuration() - 2
         }
         time += scope.start || 0
-        if (player_controls.readyState() == 0 && !(scope.start || scope.start == 0)) {
+        if (player_controls.readyState() == 0 ) {
           player.on("loadeddata",
             function() {
-              $log.debug("seek after load")
-              player.currentTime(time);
+              $timeout(function(){
+                player.currentTime(time);
+              })
             });
         } else {
           $log.debug("seeking now", time)
@@ -443,7 +444,6 @@ angular.module('scalearAngularApp')
       player_controls.isYoutube = isYoutube
       player_controls.isMP4 = isMP4
 
-
       scope.$watch('url', function() {
         if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url)))
           player_controls.refreshVideo()
@@ -600,7 +600,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', 'VideoInformation',function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter ,VideoInformation) {
   return {
     transclude: true,
     restrict: 'E',
@@ -1032,6 +1032,7 @@ angular.module('scalearAngularApp')
       player.on('timeupdate', function() {
         if (onplayhead == false && scope.editing != 'video') {
           scope.current_time = scope.player.controls.getTime()
+          VideoInformation.current_time = scope.current_time
           scope.elapsed_width = ((scope.current_time / scope.duration) * 100)
           scope.elapsed_head = scope.elapsed_width > 0.5 ? scope.elapsed_width - 0.45 : 0
           scope.elapsed_head = scope.elapsed_head > 99.4 ? 99.4 : scope.elapsed_head

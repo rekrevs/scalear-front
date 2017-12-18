@@ -39,7 +39,7 @@ var total_duration = duration.min*60+duration.sec
 var modules_items = {
 	'New Module': [{
 					'name':'lecture1 video quizzes',
-					'duration': '00:04:47',
+					'duration': '00:04:44',
 					'questions': [
 						{title:'MCQ QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration), vote_count:1, vote_percent:34},
 						{title:'OCQ QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34},
@@ -58,7 +58,7 @@ var modules_items = {
 					},
 					{
 					'name':'lecture2 text quizzes',
-					'duration': '00:04:47',
+					'duration': '00:04:44',
 					'questions': [
 						{title:'MCQ TEXT QUIZ', type:'MCQ', time:roundTimeToPercentage(10, total_duration), vote_count:2, vote_percent:67},
 						{title:'OCQ TEXT QUIZ', type:'OCQ', time:roundTimeToPercentage(20, total_duration), vote_count:1, vote_percent:34},
@@ -70,7 +70,7 @@ var modules_items = {
 					},
 					{
 					'name':'lecture3 video surveys',
-					'duration': '00:04:47',
+					'duration': '00:04:44',
 					'questions':  [
 						{title:'MCQ SURVEY', type:'MCQ', time:roundTimeToPercentage(10, total_duration)},
 						{title:'OCQ SURVEY', type:'OCQ', time:roundTimeToPercentage(20, total_duration)}
@@ -293,25 +293,25 @@ describe("check course review", function(){
 					summary+=(item.questions.length+item.free_text.length) +' Questions)'
 					var main_title = item.name+" "+ summary
 					expect(module_progress.module_item(i+1).title).toContain(main_title)
-					console.log(main_title)
-					console.log(total)
+					// console.log(main_title)
+					// console.log(total)
 					// console.log(module_progress.module_item(i+1).items.count())
 				})
 			})
 			describe('First lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][0].questions[0]
-					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(1).quiz(1).quiz_title).toEqual('[00:28] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(1).show_inclass_click()
 					expect(module_progress.module_item(1).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][0].questions[1]
-					expect(module_progress.module_item(1).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(1).quiz(2).quiz_title).toEqual('[00:56] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(2).show_inclass_click()
 					expect(module_progress.module_item(1).quiz(2).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][0].questions[2]
-					expect(module_progress.module_item(1).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(1).quiz(3).quiz_title).toEqual('[01:25] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(1).quiz(3).show_inclass_click()
 					expect(module_progress.module_item(1).quiz(3).show_inclass_box.isSelected()).toEqual(true)
 				})
@@ -320,43 +320,32 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(1)).toBe('2') //correct first time Answer 1 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(3)).toBe('2')// correct first time Answer 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(20)).toBe('1')//never tried
-					//  Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(13)).toBe('1')// incorrect first time Answer 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(2)).toBe('1')// correct first time answer 2 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(20)).toBe('1') // Never tried
-					// Quiz 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(1)).toBe('2')// correct first time answer 1 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(2)).toBe('2')// correct first time answer 2 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(3)).toBe('2')// correct first time answer 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(20)).toBe('1')// Never tried
+					// expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(1)).toBe('2') //correct first time Answer 1 
+					module_progress.module_item(1).quiz(1).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(3)).toBe('2')// correct first time Answer 2
+					module_progress.module_item(1).quiz(1).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 										
+					// expect(module_progress.module_item(1).quiz(1).getModuleChartValueAt(20)).toBe('1')//never tried
+					module_progress.module_item(1).quiz(1).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// //  Quiz 2					
+					// expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(13)).toBe('1')// incorrect first time Answer 1
+					module_progress.module_item(1).quiz(2).getModuleChartValueAt(13).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 										
+					// expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(2)).toBe('1')// correct first time answer 2 
+					module_progress.module_item(1).quiz(2).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 										
+					// expect(module_progress.module_item(1).quiz(2).getModuleChartValueAt(20)).toBe('1') // Never tried
+					// // Quiz 3					
+					// expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(1)).toBe('2')// correct first time answer 1 					
+					module_progress.module_item(1).quiz(3).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(2)).toBe('2')// correct first time answer 2 					
+					module_progress.module_item(1).quiz(3).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(3)).toBe('2')// correct first time answer 3					
+					module_progress.module_item(1).quiz(3).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(1).quiz(3).getModuleChartValueAt(20)).toBe('1')// Never tried
+					module_progress.module_item(1).quiz(3).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 				})
 				it('should have correct discussion titles and content',function(){
 					// Discussion 1
 					var discussion = modules_items['New Module'][0].discussion[0]
-					expect(module_progress.module_item(1).discussion(1).discussion_title).toEqual('['+discussion.time+'] Discussion:')
+					expect(module_progress.module_item(1).discussion(1).discussion_title).toEqual('[00:42] Discussion:')
 					expect(module_progress.module_item(1).discussion(1).discussion_student_name).toEqual(discussion.screen_name+':')
 					expect(module_progress.module_item(1).discussion(1).discussion_student_content).toEqual(discussion.title)
 					expect(module_progress.module_item(1).discussion(1).discussion_student_private.isDisplayed()).toEqual(true)
@@ -364,7 +353,7 @@ describe("check course review", function(){
 					expect(module_progress.module_item(1).discussion(1).show_inclass_box.isSelected()).toEqual(true)
 					// Discussion 2
 					var discussion = modules_items['New Module'][0].discussion[1]
-					expect(module_progress.module_item(1).discussion(2).discussion_title).toEqual('['+discussion.time+'] Discussion:')
+					expect(module_progress.module_item(1).discussion(2).discussion_title).toEqual('[01:39] Discussion:')
 					expect(module_progress.module_item(1).discussion(2).discussion_student_name).toEqual(discussion.screen_name+':')
 					expect(module_progress.module_item(1).discussion(2).discussion_student_content).toEqual(discussion.title)
 					expect(module_progress.module_item(1).discussion(2).discussion_student_flags).toEqual(discussion.flags)
@@ -376,7 +365,7 @@ describe("check course review", function(){
 
 					// Discussion 3
 					var discussion = modules_items['New Module'][0].discussion[2]
-					expect(module_progress.module_item(1).discussion(3).discussion_title).toEqual('['+discussion.time+'] Discussion:')
+					expect(module_progress.module_item(1).discussion(3).discussion_title).toEqual('[01:53] Discussion:')
 					expect(module_progress.module_item(1).discussion(3).discussion_student_name).toEqual(discussion.screen_name+':')
 					expect(module_progress.module_item(1).discussion(3).discussion_student_content).toEqual(discussion.title)
 					expect(module_progress.module_item(1).discussion(3).discussion_student_private.isDisplayed()).toEqual(true)
@@ -404,17 +393,17 @@ describe("check course review", function(){
 			describe('Second Lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][1].questions[0]
-					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(2).quiz(1).quiz_title).toEqual('[00:28] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(1).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][1].questions[1]
-					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(2).quiz(2).quiz_title).toEqual('[00:56] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(2).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(2).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][1].questions[2]
-					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
+					expect(module_progress.module_item(2).quiz(3).quiz_title).toEqual('[01:25] Quiz: '+question.title+' ('+question.type+') - '+question.vote_count+' students ('+question.vote_percent+'%) voted for review')
 					module_progress.module_item(2).quiz(3).show_inclass_click()
 					expect(module_progress.module_item(2).quiz(3).show_inclass_box.isSelected()).toEqual(true)
 				})
@@ -423,47 +412,34 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(1)).toBe('1') // correct first time answer 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(3)).toBe('1') // correct first time answer 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(10)).toBe('1') // incorrect first time answer2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(20)).toBe('1') // Never tried
+					// expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(1)).toBe('1') // correct first time answer 1
+					module_progress.module_item(2).quiz(1).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(3)).toBe('1') // correct first time answer 3
+					module_progress.module_item(2).quiz(1).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(10)).toBe('1') // incorrect first time answer2
+					module_progress.module_item(2).quiz(1).getModuleChartValueAt(10).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(1).getModuleChartValueAt(20)).toBe('1') // Never tried
+					module_progress.module_item(2).quiz(1).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1') // correct first time answer 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(9)).toBe('1') // incorrect first time answer 1 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(20)).toBe('1') // Never tried
+					// expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(2)).toBe('1') // correct first time answer 2
+					module_progress.module_item(2).quiz(2).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(9)).toBe('1') // incorrect first time answer 1 
+					module_progress.module_item(2).quiz(2).getModuleChartValueAt(9).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(2).getModuleChartValueAt(20)).toBe('1') // Never tried
+					module_progress.module_item(2).quiz(2).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(1)).toBe('2') // correct first time answer 1 
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(2)).toBe('1') // correct frist time answer 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1') // correct first time answer 3		
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(6)).toBe('1') // correct final time answer 2		
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(7)).toBe('1') // correct final time answer 3												
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(20)).toBe('1') // never tried 
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(1)).toBe('2') // correct first time answer 1 
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(2)).toBe('1') // correct frist time answer 2
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(3)).toBe('1') // correct first time answer 3		
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(6)).toBe('1') // correct final time answer 2		
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(6).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(7)).toBe('1') // correct final time answer 3												
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(7).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(2).quiz(3).getModuleChartValueAt(20)).toBe('1') // never tried 
+					module_progress.module_item(2).quiz(3).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 				})
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(2).quiz(1).show_inclass_click()
@@ -475,12 +451,12 @@ describe("check course review", function(){
 			describe('Third Lecture',function(){
 				it('should display correct quiz titles',function(){
 					var question = modules_items['New Module'][2].questions[0]
-					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
+					expect(module_progress.module_item(3).quiz(1).quiz_title).toEqual('[00:28] Survey: '+question.title+' ('+question.type+')')
 					module_progress.module_item(3).quiz(1).show_inclass_click()
 					expect(module_progress.module_item(3).quiz(1).show_inclass_box.isSelected()).toEqual(true)
 
 					var question = modules_items['New Module'][2].questions[1]
-					expect(module_progress.module_item(3).quiz(2).quiz_title).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
+					expect(module_progress.module_item(3).quiz(2).quiz_title).toEqual('[00:56] Survey: '+question.title+' ('+question.type+')')
 					module_progress.module_item(3).quiz(2).show_inclass_click()
 					expect(module_progress.module_item(3).quiz(2).show_inclass_box.isSelected()).toEqual(true)
 				})
@@ -489,22 +465,17 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(21)).toBe('2') // suvery answer 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(22)).toBe('1') // survey answer 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(20)).toBe('1')  //never tried 
+					// expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(21)).toBe('2') // suvery answer 1
+					module_progress.module_item(3).quiz(1).getModuleChartValueAt(21).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(22)).toBe('1') // survey answer 2
+					module_progress.module_item(3).quiz(1).getModuleChartValueAt(22).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(3).quiz(1).getModuleChartValueAt(20)).toBe('1')  //never tried 
+					module_progress.module_item(3).quiz(1).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(22)).toBe('2') // survey answer 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(20)).toBe('1')  //never tried 
+					// expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(22)).toBe('2') // survey answer 2
+					module_progress.module_item(3).quiz(2).getModuleChartValueAt(22).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(3).quiz(2).getModuleChartValueAt(20)).toBe('1')  //never tried 
+					module_progress.module_item(3).quiz(2).getModuleChartValueAt(20).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 				})
 				it('should display correct total In-Class time',function(){
 					module_progress.module_item(3).quiz(1).show_inclass_click()
@@ -527,26 +498,20 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
+					// expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
+					module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
+					module_progress.module_item(4).question_quiz(1).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
+					// expect(module_progress.module_item(4).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
+					module_progress.module_item(4).question_quiz(2).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					//  Quiz 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(1)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')
+					// expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(1)).toBe('1')
+					module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2)).toBe('1')
+					module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3)).toBe('1')
+					module_progress.module_item(4).question_quiz(3).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 				})
 				it('should have correct freetext answer',function(){
 					var discussion = modules_items['New Module'][3].free_text[0]
@@ -583,32 +548,24 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(1)).toBe('2')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(5)).toBe('1')
+					// expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(1)).toBe('2')
+					module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(3)).toBe('1')
+					module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(5)).toBe('1')
+					module_progress.module_item(5).question_quiz(1).getModuleChartValueAt(5).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(5)).toBe('1')
+					// expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(1)).toBe('1')
+					module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(5)).toBe('1')
+					module_progress.module_item(5).question_quiz(2).getModuleChartValueAt(5).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					//  Quiz 3
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(1)).toBe('2')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2)).toBe('2')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')
+					// expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(1)).toBe('2')
+					module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2)).toBe('2')
+					module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3)).toBe('2')
+					module_progress.module_item(5).question_quiz(3).getModuleChartValueAt(3).then(function(count){expect( Math.floor(count/26) ).toEqual(2)}) //correct first time Answer 1 					
 				})
 				it('should have correct freetext answer',function(){
 					var discussion = modules_items['New Module'][4].free_text[0]
@@ -730,16 +687,13 @@ describe("check course review", function(){
 				})
 				it('should display quiz statistics correct',function(){
 					//  Quiz 1
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(2)).toBe('1')
+					// expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(1)).toBe('1')
+					module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(1).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
+					// expect(module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(2)).toBe('1')
+					module_progress.module_item(6).question_quiz(1).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 					// Quiz 2
-					refresh()
-					sleep(5000)
-					expect(module_progress.module_item(6).question_quiz(2).getModuleChartValueAt(2)).toBe('1')
+					// expect(module_progress.module_item(6).question_quiz(2).getModuleChartValueAt(2)).toBe('1')
+					module_progress.module_item(6).question_quiz(2).getModuleChartValueAt(2).then(function(count){expect( Math.floor(count/26) ).toEqual(1)}) //correct first time Answer 1 					
 				})
 				it('should display freetext question statistics correct',function(){
 					var discussion = modules_items['New Module'][5].free_text[0]
@@ -828,11 +782,11 @@ describe("check course review", function(){
 						it("should open timeline",function(){
 							student_lec.open_timeline()
 						})
-						xit("should delete discussion post",function(){
-							student_lec.lecture(1).discussion(1).delete()
-							expect(student_lec.lecture(1).discussions.count()).toEqual(0)
-							expect(student_lec.lecture(1).items.count()).toEqual(3)
-						})
+						// it("should delete discussion post",function(){
+						// 	student_lec.lecture(1).discussion(1).delete()
+						// 	expect(student_lec.lecture(1).discussions.count()).toEqual(0)
+						// 	expect(student_lec.lecture(1).items.count()).toEqual(3)
+						// })
 						// it("should delete discussion post",function(){
 						// 	student_lec.lecture(1).discussion(2).delete()
 						// 	expect(student_lec.lecture(1).discussions.count()).toEqual(0)

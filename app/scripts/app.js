@@ -185,7 +185,8 @@ angular.module('scalearAngularApp')
                     templateUrl: '/views/teacher/course_editor/lecture.middle.html',
                     controller: 'lectureMiddleCtrl'
                 }
-            }
+            },
+            params : { time:null }
         })
         .state('course.module.course_editor.quiz', {
             url: '/quizzes/:quiz_id',
@@ -332,7 +333,7 @@ angular.module('scalearAngularApp')
           controller: 'statisticsCtrl'
         })
         .state('lti_course_list', {
-            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key',
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key&resource_context_id',
             templateUrl: '/views/teacher/course_list/lti_course_list.html',
             controller: 'ltiCourseListCtrl'
         })
@@ -363,7 +364,7 @@ angular.module('scalearAngularApp')
         })
         .state('preview', {
           url: '/preview',
-          params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null },
+          params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null,time:null },
           controller: ['Preview','$state',function(Preview,$state){
                 Preview.start()
             }

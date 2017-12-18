@@ -75,7 +75,7 @@
 				<div ng-switch-when='marker'><marker-edit-panel /></div>
 				<div ng-switch-when='video'><video-edit-panel /></div>
 			</div>
-			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
+			<alert id="alert" ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
 	</div>
 </div>

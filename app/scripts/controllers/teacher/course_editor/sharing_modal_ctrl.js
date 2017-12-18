@@ -67,10 +67,14 @@ angular.module('scalearAngularApp')
       }
 
       $scope.selectItem=function(module, item, event){
-        if(event)
-      	 event.stopPropagation()
-      	item.selected = !item.selected
-      	var count = 0
+        if(event){
+          event.stopPropagation()
+        }
+        else{
+          item.selected = !item.selected
+        }
+        // item.selected = !item.selected
+        var count = 0
       	module.items.forEach(function(item){
       		if(item.selected)
       			count+=1

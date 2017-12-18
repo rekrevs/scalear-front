@@ -190,11 +190,10 @@ LecturePage.prototype=Object.create({},{
 		// var quiz_layer = this.quiz_layer
 		var check_button = this.check_answer_button
 		browser.driver.wait(function() {
-	        return check_button.isDisplayed().then(function(disp) {
-
-	            return disp;
-	        }, 100000);
-	    });
+			return check_button.isDisplayed().then(function(disp) {
+				return disp;
+			}, 100000);
+		});
 	}},
 	wait_for_vote:{value:function(){
 		var review_panel = this.review_panel

@@ -39,6 +39,23 @@ NewCourse.prototype = Object.create({}, {
 	prerequisites: { get: function () { return this.prerequisites_field.getAttribute('value')}},
 	type_prerequisites: { value: function (keys) { return this.prerequisites_field.clear().sendKeys(keys)}},
 
+	// import_from: { get: function () { return this.import_from_field.getAttribute('value')}},
+	// type_import_from: { value: function (keys) { return this.import_from_field.clear().sendKeys(keys)}},
+
+	// courses_menu:{get:function(){return element(by.id("all_courses"))}},
+	import_from:{get: function(){return element(by.model('import_from'))}},
+	show_menu:{value:function(menu){return browser.driver.actions().mouseMove(menu).click().perform()}},
+	choose_import_first_course:{value:function(){
+		this.show_menu(this.import_from)
+		element(by.cssContainingText('option', 'csc-test | aesting course 100')).click();
+	}},
+	choose_import_second_course:{value:function(){
+		this.show_menu(this.import_from)
+		element(by.cssContainingText('option', 'short_name | course_name')).click();
+	}},
+
+	unselect_button:{get:function(){return element(by.css('[ng-click="unselectCourse()"]'))}},
+
 	disable_email_reminders_modal_button:{get:function(){return element(by.css('[ng-click="updateEmailDiscussion(false)"]'))}},
 	disable_email_reminders_modal_button_click:{value:function(){this.disable_email_reminders_modal_button.click();}},
 

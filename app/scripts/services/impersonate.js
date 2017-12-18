@@ -9,13 +9,12 @@ angular.module('scalearAngularApp')
       'destroy': { method: 'DELETE', headers: headers }
     });
 
-  }]).factory("Preview", ['Impersonate', '$state', '$cookieStore', 'ContentNavigator', '$rootScope', '$log', 'UserSession', function(Impersonate, $state, $cookieStore, ContentNavigator, $rootScope, $log, UserSession) {
-
+  }])
+  .factory("Preview", ['Impersonate', '$state', '$cookieStore', 'ContentNavigator', '$rootScope', '$log', 'UserSession', function(Impersonate, $state, $cookieStore, ContentNavigator, $rootScope, $log, UserSession) {
 
     var current_user = null
 
     var clean = function() {
-      $rootScope.preview_as_student = false
       $cookieStore.remove('preview_as_student')
       $cookieStore.remove('old_user_id')
       $cookieStore.remove('new_user_id')
@@ -23,68 +22,81 @@ angular.module('scalearAngularApp')
       $cookieStore.remove('state')
     }
 
+    function manageStudentState($state) {
+      var default_params = { course_id: $state.params.course_id }
+      if ($state.params.module_id) {
+        var state_name = "course.module.courseware"
+        if ($state.params.lecture_id) {
+          state_name += ".lecture"
+        } else if ($state.params.quiz_id) {
+          state_name += ".quiz"
+        } else {
+          state_name += ".overview"
+        }
+        return {name: state_name, params: $state.params, prev: state_name.replace("courseware", "course_editor")}
+      } else if ($state.includes("course.edit_course_information")) {
+        return {name: 'course.course_information', params: default_params}
+      } else {
+        return {name: 'course', params: default_params}
+      }
+    }
+
     function previewStart() {
+      if(!$state.params || ($state.params && !$state.params.course_id)){
+        $state.params = $cookieStore.get('params')
+        $state.current.name = $cookieStore.get('state')
+        current_user.id  = $cookieStore.get('old_user_id')
+      }
+      var new_state = manageStudentState($state)
+      var current_state = new_state.prev
+      var current_params = $state.params
       $cookieStore.put('old_user_id', current_user.id)
-      $cookieStore.put('state', $state.current.name)
-      $cookieStore.put('params', $state.params)
+      $cookieStore.put('state', current_state)
+      $cookieStore.put('params', current_params)
       ContentNavigator.close()
+
       Impersonate.create({}, { course_id: $state.params.course_id },
         function(data) {
+          $state.go(new_state.name, new_state.params,{notify:false,reload:false, location:'replace', inherit:false});
           UserSession.allowRefetchOfUser()
           $cookieStore.put('preview_as_student', true)
           $cookieStore.put('new_user_id', data.user.id)
           $rootScope.preview_as_student = true
           current_user = null
-          var params = { course_id: $state.params.course_id }
-          var new_state_name = $state.current.name
-          if($state.params.module_id) {
-            if($state.current.name.indexOf("customlink") == -1 && $state.current.name.indexOf("overview") == -1) {
-              if ($state.params.lecture_id){
-                new_state_name = "course.module.course_editor.lecture"
-              }
-              else if ($state.params.quiz_id){
-                new_state_name = "course.module.course_editor.quiz"
-              }
-              else{
-                new_state_name = "course.module.course_editor.overview"
-              }
-              $cookieStore.put('state', new_state_name)
-              $state.go(new_state_name.replace("course_editor", "courseware"), $state.params, { })
-            } else {
-              $state.go('course.module.courseware', $state.params, {  })
-            }
-          } else if($state.includes("course.edit_course_information")) {
-            $state.go('course.course_information', params, {})
-          } else {
-            $state.go('course', params, {  })
-          }
-
-
+          $state.go(new_state.name, new_state.params, { reload: true })
           $rootScope.$broadcast('Course:get_current_courses')
         },
         function() {
-          $log.debug("Failed to Preview")
+          // $state.go(current_state, current_params,{notify:false,reload:false, location:'replace', inherit:true});
+          $log.debug("Failed to Start Preview")
           clean()
         }
       )
     }
 
     function previewStop() {
-      if($cookieStore.get('preview_as_student')) {
+      var current_state = $state.current.name
+      var current_params = $state.params
+      if ($cookieStore.get('preview_as_student')) {
+        var params = $cookieStore.get('params')
+        var state = $cookieStore.get('state')
         ContentNavigator.close()
         $rootScope.$broadcast("exit_preview")
+        $state.go(state,params,{notify:false,reload:false, location:'replace', inherit:true});
+
         Impersonate.destroy({
           old_user_id: $cookieStore.get('old_user_id'),
           new_user_id: $cookieStore.get('new_user_id')
         }, function() {
           UserSession.allowRefetchOfUser()
-          var params = $cookieStore.get('params')
-          var state = $cookieStore.get('state')
           clean()
+          $rootScope.preview_as_student = false
           current_user = null
           $state.go(state, params, { reload: true })
           $rootScope.$broadcast('Course:get_current_courses')
         }, function() {
+          $rootScope.preview_as_student = true
+          $state.go(current_state,current_params,{notify:false,reload:false, location:'replace', inherit:true});
           $log.debug("Failed Closing Preview")
           clean()
         })

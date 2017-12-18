@@ -117,7 +117,7 @@ describe("Student 1",function(){
 			student_module_summary.module(1).online_quiz(8).click()
 			sleep(5000)
 			expect(browser.driver.getCurrentUrl()).toContain('courseware/lectures/')
-			video.current_time.then(function(result){expect(result).toEqual("0:00:57")} )
+			video.current_time.then(function(result){expect(result).toEqual("0:00:56")} )
 			dashboard.open()
 		})
 		it('should click on normal question quiz check url contain quizzes ', function(){
@@ -151,7 +151,7 @@ describe("Student 1",function(){
 			student_module_summary.module(1).question(1).click()
 			sleep(5000)
 			expect(browser.driver.getCurrentUrl()).toContain('courseware/lectures/')
-			video.current_time.then(function(result){expect(result).toEqual("0:01:40")} )
+			video.current_time.then(function(result){expect(result).toEqual("0:01:39")} )
 			dashboard.open()
 		})
 		it('should click on last question check url contain lectures and check time of video', function(){

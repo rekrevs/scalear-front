@@ -82,6 +82,7 @@ angular.module('scalearAngularApp')
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
+      $scope.markers_count = 0
       $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
       getLectureCharts()
@@ -102,8 +103,10 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for(var type in $scope.lectures[lec_id]) {
               for(var it in $scope.lectures[lec_id][type]) {
-                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title)
+                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title){
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
+                  $scope.markers_count += 1
+                }
                 else
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show) {
@@ -153,8 +156,7 @@ angular.module('scalearAngularApp')
     }
 
     var checkDisplayInclass = function() {
-      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count)
-
+      $scope.inclass_ready = ($scope.review_question_count || $scope.review_video_quiz_count || $scope.review_survey_count || $scope.inclass_quizzes_count || $scope.review_quiz_count || $scope.confused_count || $scope.markers_count)
     }
 
     var adjustModuleItems = function(obj, from, to) {
@@ -777,32 +779,41 @@ angular.module('scalearAngularApp')
       }]
       formated_data.rows = []
       for(var ind in data) {
-        var text, correct, incorrect, tooltip_text
-        tooltip_text = "<div style='padding:8px'><b>" + data[ind][2] + "</b><br>"
+        var text, correct, incorrect, tooltip_text, incorrect_tooltip_text, correct_tooltip_text
+
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        console.log(short_text)
+        var tooltip_text = data[ind][2]
+
         if(data[ind][1] == "orange") {
           correct = 0
           incorrect = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
-          if(!isSurvey())
-            tooltip_text += "Incorrect: "
-        } else if(data[ind][1] == "gray"){
+          if(!isSurvey()){
+            incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
+          }
+          incorrect_tooltip_text += tooltip_text + "</div>"
+        } else if(data[ind][1] == "gray") {
           correct = 0
           incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
         } else {
           correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           incorrect = 0
-          if(!isSurvey())
-            tooltip_text += "Correct: "
+          if(!isSurvey()){
+            correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "
+          }
+          correct_tooltip_text += tooltip_text + "</div>"
         }
-        text = data[ind][2]
-        $log.debug(text)
-        tooltip_text += data[ind][0] + "</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
+        // text = data[ind][2]
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text) },
+            // { "v": ScalearUtils.getHtmlText(text) },
+            {"v": short_text}, 
             { "v": correct },
-            { "v": tooltip_text },
+            { "v": correct_tooltip_text },
             { "v": incorrect },
-            { "v": tooltip_text }
+            { "v": incorrect_tooltip_text }
           ]
         }
         formated_data.rows.push(row)
@@ -846,26 +857,38 @@ angular.module('scalearAngularApp')
         }
       }]
       formated_data.rows = []
+      var totalSelf = 0;
+      var totalGroup = 0;
+      for (var question in data){
+        if(data[question][2]!= "Never tried"){
+          totalSelf+=data[question][0];
+          totalGroup+=data[question][4];
+        }
+      }
+      
       for(var ind in data) {
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
           group_count = data[ind][4] || 0,
-          self = Math.floor((self_count / 10) * 100),
-          group = Math.floor((group_count / 10) * 100),
+          selfPercent = self_count/totalSelf*100,
+          groupPercent = group_count/totalGroup*100,
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text)},
-            { "v": self },
+            { "v": ScalearUtils.getShortAnswerText( ScalearUtils.getHtmlText(text) , Object.keys(data).length )},
+            { "v": selfPercent },
             { "v": tooltip_text },
             { "v": style },
-            { "v": group },
+            { "v": groupPercent },
             { "v": tooltip_text },
             { "v": style }
           ]
         }
-        formated_data.rows.push(row)
+        //remove never tried column
+        if(text!="Never tried"){
+          formated_data.rows.push(row)
+        }
       }
       return formated_data
     }
@@ -874,15 +897,23 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         { "label": $translate.instant('global.students'), "type": "string" },
-        { "label": $translate.instant('progress.chart.answered'), "type": "number" }
+        { "label": $translate.instant('progress.chart.answered'), "type": "number" },
+        {
+        "type": "string",
+        "p": {
+          "role": "tooltip",
+          "html": true
+        }
+      }
       ]
       formated_data.rows = []
       for(var ind in data) {
 
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(data[ind][2]) },
-            { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) }
+            { "v": ScalearUtils.getShortAnswerText(ScalearUtils.getHtmlText(data[ind][2]) , Object.keys(data).length )},
+            { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) },
+            { "v": ScalearUtils.getHtmlText(data[ind][2]) }
           ]
         }
         formated_data.rows.push(row)

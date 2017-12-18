@@ -131,7 +131,7 @@ angular.module('scalearAngularApp')
                 }
             }
           }
-          $log.debug($scope.timeline)
+          // $log.debug($scope.timeline)
           if ($stateParams.item_id != null) {
             scrollToSubItem($stateParams.item_id)
           }
@@ -178,7 +178,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
         },
         function(resp) {
-          $log.debug(resp)
+          // $log.debug(resp)
           var quizzes = resp.quizzes
           $scope.review_quiz_count = resp.review_quiz_count
           $scope.review_quiz_reply_count = {}
@@ -222,7 +222,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
         },
         function(resp) {
-          $log.debug(resp)
+          // $log.debug(resp)
           var surveys = resp.surveys
           $scope.review_survey_count = resp.review_survey_count
           $scope.review_survey_reply_count = {}
@@ -365,7 +365,7 @@ angular.module('scalearAngularApp')
     }
 
     var setupRemoveHightlightEvent = function() {
-      $log.debug("adding")
+      // $log.debug("adding")
       $(document).click(function(e) {
         if (angular.element(e.target).find('.inner_content').length) {
           removeHightlight()
@@ -381,7 +381,7 @@ angular.module('scalearAngularApp')
       // angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       angular.element('.ul_item').addClass('full-opacity')
       $scope.highlight_level = 0
-      $log.debug("removing")
+      // $log.debug("removing")
     }
 
     $scope.resetHighlightVariables = function() {
@@ -445,7 +445,7 @@ angular.module('scalearAngularApp')
           hide: comment.hide
         },
         function() {
-          $log.debug(comment.hide)
+          // $log.debug(comment.hide)
           if (comment.hide && !discussion.hide) {
             discussion.hide = true
             $scope.updateHideDiscussion(discussion.id, !discussion.hide)
@@ -456,9 +456,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideResponse = function(quiz_id, item, answer, item_type) {
-      $log.debug(quiz_id)
-      $log.debug(item)
-      $log.debug(answer)
+      // $log.debug(quiz_id)
+      // $log.debug(item)
+      // $log.debug(answer)
       if (item_type == "survey") {
         if (!answer.hide) {
           $scope.review_survey_reply_count[quiz_id][item.data.id]++
@@ -490,7 +490,7 @@ angular.module('scalearAngularApp')
           }
         },
         function() {
-          $log.debug(answer.hide)
+          // $log.debug(answer.hide)
           if (answer.hide && !item.data.show) {
             item.data.show = true
             $scope.updateHideQuizQuestion(quiz_id, item.data.id, item.data.show, item.type, item_type)
@@ -512,8 +512,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideQuizQuestion = function(quiz_id, question_id, value, question_type, item_type) {
-      $log.debug(item_type, "this is it")
-      $log.debug(question_type)
+      // $log.debug(item_type, "this is it")
+      // $log.debug(question_type)
       var num_reply = (question_type == "charts") ? 1 : $scope["review_" + item_type + "_reply_count"][quiz_id][question_id] + 1
       if (value) //item_type can be either 'survey' or 'quiz'
         $scope["review_" + item_type + "_count"] += num_reply
@@ -551,7 +551,7 @@ angular.module('scalearAngularApp')
         discussion.temp_response = null
         Forum.createComment({ comment: { content: text, post_id: discussion.id, lecture_id: discussion.lecture_id } },
           function(response) {
-            $log.debug(response)
+            // $log.debug(response)
             response.comment.hide = false
             discussion.comments.push(response)
             angular.element('ul.highlight .feedback textarea').blur()
@@ -635,15 +635,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek = function(time, video) {
-      $log.debug(video.url)
-      $log.debug($scope.url)
+      // $log.debug(video.url)
+      // $log.debug($scope.url)
       if ($scope.url.indexOf(video.url) == -1) {
         if ($scope.progress_player.controls.isYoutube(video.url)) {
           $scope.video_start = video.start_time
           $scope.video_end = video.end_time
           $scope.progress_player.controls.setStartTime(video.start_time) 
           $scope.url = video.url + "&controls=1&fs=1&theme=light"
-          $scope.url_lecture_id = video.id            
+          $scope.url_lecture_id = video.id     
           $timeout(function() {  
             $scope.progress_player.controls.seek_and_pause(time)  
           },250)  
@@ -701,69 +701,118 @@ angular.module('scalearAngularApp')
 
     $scope.formatLectureChartData = function(data, type) {
       var formated_data = {}
-      formated_data.cols = [{
+      formated_data.cols = [
+      {
         "label": $translate.instant('global.students'),
         "type": "string"
-      }, {
-        "label":$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')',
+      },
+      {
+        "label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }, {
         "label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }, {
         "label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')',
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": '', // Never Tried 
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant("dashboard.solved"),
         "type": "number"
+      }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }]
+      
       formated_data.rows = []
       for (var ind in data) {
+        
         var text, correct, incorrect,
           first_correct = 0,
           last_correct = 0 ,
           first_not_correct = 0,
           last_not_correct = 0 ,
           did_not_try = 0,
-          survey_tried = 0
+          survey_tried = 0,
 
-        text = data[ind][2]
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        var tooltip_text = data[ind][2]
+
+        var  first_correct_tooltip_text = '',
+          last_correct_tooltip_text = '',
+          first_not_correct_tooltip_text = '',
+          last_not_correct_tooltip_text = '',
+          did_not_try_tooltip_text = '',
+          survey_tried_tooltip_text = ''
+
         if (data[ind][1] == "orange") {
           if (type != 'Survey')
-            text += " (" + $translate.instant('editor.incorrect') + ")";
+            short_text += " (" + $translate.instant('editor.incorrect') + ")";
           first_not_correct = data[ind][0]
           last_not_correct = data[ind][3]
+          
+          first_not_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
+          last_not_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
         } 
         else if((data[ind][1] == "gray")){
-          did_not_try = data[ind][0]
+          did_not_try = data[ind][0] 
+          did_not_try_tooltip_text =   "<div style='color:black;padding:8px'>"+$translate.instant("dashboard.never_tried")+'  : '+data[ind][0]+"</div>"
         } 
         else if((data[ind][1] == "blue")){
           survey_tried = data[ind][0]
+          survey_tried_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("dashboard.solved")+' : '+data[ind][0]+"</div>"
         } 
         else {
           if (type != 'Survey')
-            text += " (" + $translate.instant('editor.correct') + ")";
+            short_text += " (" + $translate.instant('editor.correct') + ")";
           first_correct = data[ind][0]
           last_correct = data[ind][3]
+          
+          first_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
+          last_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
+
         }
-      // first_correct , last_correct , first_not_correct, last_not_correct , did_not_try
+      // first_correct, _tooltip , last_correct, _tooltip , first_not_correct, _tooltip , last_not_correct, _tooltip , did_not_try, _tooltip
         var row = {
           "c": [
-            {"v": ScalearUtils.getHtmlText(text)}, 
+            {"v": short_text}, 
             {"v": first_correct}, 
+            {"v": first_correct_tooltip_text },
             {"v": last_correct}, 
+            {"v": last_correct_tooltip_text },
             {"v": first_not_correct}, 
+            {"v": first_not_correct_tooltip_text },
             {"v": last_not_correct}, 
+            {"v": last_not_correct_tooltip_text },
             {"v": did_not_try}, 
-            {"v": survey_tried}
+            {"v": did_not_try_tooltip_text },
+            {"v": survey_tried},
+            {"v": survey_tried_tooltip_text },
+
           ]
         }
+        // console.log(row)
         formated_data.rows.push(row)
       }
       return formated_data
@@ -778,29 +827,45 @@ angular.module('scalearAngularApp')
         "label": $translate.instant('editor.correct'),
         "type": "number"
       }, {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
+      }, {
         "label": $translate.instant('editor.incorrect'),
         "type": "number"
+      } , {
+        "type": "string",
+        "p": {"role": "tooltip","html": true}
       }]
       formated_data.rows = []
-      var text, correct, incorrect
+
       for (var ind in data) {
+        var text, correct, incorrect, tooltip_text, correct_tooltip_text, incorrect_tooltip_text
+        text = ScalearUtils.getHtmlText(data[ind][2])
+        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        var tooltip_text = data[ind][2]
+
         if (!data[ind][1]) {
-          text = data[ind][2] + " " + "(" + $translate.instant('editor.incorrect') + ")";
+          short_text += " " + "(" + $translate.instant('editor.incorrect') + ")";
           correct = 0
           incorrect = data[ind][0]
+          incorrect_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' : '+data[ind][0]+"</div>"
         } else {
-          text = data[ind][2] + " " + "(" + $translate.instant('editor.correct') + ")";
+          short_text += " " + "(" + $translate.instant('editor.correct') + ")";
           correct = data[ind][0]
           incorrect = 0
+          correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.correct")+' : '+data[ind][0]+"</div>"
         }
+
+        // "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
         var row = {
-          "c": [{
-            "v": ScalearUtils.getHtmlText(text)
-          }, {
-            "v": correct
-          }, {
-            "v": incorrect
-          }]
+          "c": [
+            {"v": short_text}, 
+            {"v": correct},
+            { "v": correct_tooltip_text },
+            // { "v": tooltip_text },
+            {"v": incorrect},
+            { "v": incorrect_tooltip_text },
+            ]
         }
         formated_data.rows.push(row)
       }
@@ -812,14 +877,24 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         { "label": $translate.instant('global.students'), "type": "string" },
-        { "label": $translate.instant('progress.chart.answered'), "type": "number" }
-      ]
+        { "label": $translate.instant('progress.chart.answered'), "type": "number" },
+        {
+          "type": "string",
+          "p": {"role": "tooltip","html": true}
+        }]
       formated_data.rows = []
+      var text, short_text, tooltip_text
       for (var ind in data) {
+        text = ScalearUtils.getHtmlText(data[ind][1])
+        short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
+        tooltip_text = data[ind][1]
+        tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +' : '+data[ind][0]+"</div>"
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(data[ind][1]) },
-            { "v": data[ind][0] }
+            { "v": short_text },
+            { "v": data[ind][0] },
+            { "v": tooltip_text }
+
           ]
         }
         formated_data.rows.push(row)
@@ -849,13 +924,13 @@ angular.module('scalearAngularApp')
     // }
 
     var seekToItem = function() {
-      $log.debug("seeking to item", $scope.selected_item)
+      // $log.debug("seeking to item", $scope.selected_item)
       if ($scope.selected_item && $scope.selected_item.time >= 0 && $scope.lectures[$scope.selected_item.lec_id]) {
         var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion") {
           var q_ind = $scope.inner_highlight_index
           time = $scope.selected_item.data[q_ind].post.time
-          $log.debug(time)
+          // $log.debug(time)
         }
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)
       }
@@ -882,8 +957,12 @@ angular.module('scalearAngularApp')
             "gridlines": {
               "count": 7
             },
-            "viewWindow": { "max": student_count }
-          }
+            "viewWindow": { "max": student_count },
+            "textPosition": 'none'
+
+          },
+          "tooltip": { "isHtml": true },
+
         };
         if( formatter == 'formatQuizChartData' ||formatter == 'formatSurveyChartData'){
           // first_correct , last_not_correct 
@@ -1069,8 +1148,8 @@ angular.module('scalearAngularApp')
       }, { "disable_in_input": true, "propagate": false });
 
       shortcut.add("m", function() {
-        $log.debug($scope.selected_item)
-        $log.debug($scope.selected_item.data.quiz_type)
+        // $log.debug($scope.selected_item)
+        // $log.debug($scope.selected_item.data.quiz_type)
         if ($scope.selected_item) {
           if ($scope.selected_item.type == "discussion") {
             var q_ind = $scope.inner_highlight_index
@@ -1086,7 +1165,7 @@ angular.module('scalearAngularApp')
             }
           } else if ($scope.selected_item.type == "free_question") {
             if ($scope.selected_item.data.quiz_type == 'survey') {
-              $log.debug($scope.inner_highlight_index)
+              // $log.debug($scope.inner_highlight_index)
               if ($scope.highlight_level == 1) {
                 $scope.selected_item.data.show = !$scope.selected_item.data.show
                 $scope.updateHideQuizQuestion($scope.selected_item.data.answers[0].quiz_id, $scope.selected_item.data.id, $scope.selected_item.data.show, $scope.selected_item.type, $scope.selected_item.data.quiz_type)
@@ -1111,7 +1190,7 @@ angular.module('scalearAngularApp')
       }, { "disable_in_input": true, "propagate": false });
 
       shortcut.add("ESC", function() {
-        $log.debug($scope.selected_item)
+        // $log.debug($scope.selected_item)
         resizePlayerSmall()
         if ($scope.selected_item.type == 'discussion') {
           $scope.selected_item.data.forEach(function(discussion) {
@@ -1129,13 +1208,13 @@ angular.module('scalearAngularApp')
       }, { "disable_in_input": false, "propagate": false });
 
       shortcut.add("enter", function() {
-        $log.debug($scope.selected_item)
+        // $log.debug($scope.selected_item)
         if ($scope.selected_item.type == 'discussion') {
           var q_ind = $scope.inner_highlight_index
           $scope.sendComment($scope.selected_item.data[q_ind].post)
           $scope.selected_item.data[q_ind].post.show_feedback = false
         } else if ($scope.selected_item.type == "free_question") {
-          $log.debug("free text")
+          // $log.debug("free text")
           var q_ind = $scope.inner_highlight_index
           $scope.sendFeedback($scope.selected_item.data.answers[q_ind])
           $scope.selected_item.data.answers[q_ind].show_feedback = false

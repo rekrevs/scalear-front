@@ -14,6 +14,8 @@ angular.module('scalearAngularApp')
       question: 2
     }
 
+    var REPLACE_STYLING = "[REPLACE-STYLING]"
+
     $scope.display = function() {
       resetVariables()
       openModal()
@@ -560,8 +562,6 @@ angular.module('scalearAngularApp')
             OnlineQuiz.getChartData({ online_quizzes_id: $scope.selected_timeline_item.data.id }, function(resp) {
               $scope.selected_timeline_item.data.answers = resp.chart
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatInclassQuizChartData')
-              $scope.loading_chart = false
-              $(window).resize()
             })
           }
           adjustQuizLayer()
@@ -663,6 +663,7 @@ angular.module('scalearAngularApp')
         }
         if($scope.selected_timeline_item.type == "charts"){
           var options =  (type != "lecture")? { 'backgroundColor': 'white' } : {}
+          $scope.loading_chart = true
           $scope.chart = (type == 'survey') ? $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatSurveyChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatLectureChartData')
         }
       }
@@ -745,6 +746,7 @@ angular.module('scalearAngularApp')
       var chart = {
         type: "BarChart",
         options: {
+          "width": angular.element(".reveal-modal").width()-50,
           "colors": ['green', 'gray'],
           "isStacked": "false",
           "fill": 25,
@@ -831,7 +833,7 @@ angular.module('scalearAngularApp')
           incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
         } else {
           correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
-          short_text = "=>  " + short_text
+          short_text = REPLACE_STYLING + short_text
           incorrect = 0
           if(!isSurvey()){
             correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "
@@ -1259,6 +1261,13 @@ angular.module('scalearAngularApp')
     $scope.chartReady = function() {
       $scope.loading_chart = false
       $(window).resize()
+
+      $("text:contains('"+REPLACE_STYLING+"')").each(function(idx, elem){
+        var $elem = $(elem)
+        var text = $elem.text().replace(REPLACE_STYLING, "")
+        $elem.html("<tspan>"+text+"</tspan>")
+      })
+
     }
 
     init();

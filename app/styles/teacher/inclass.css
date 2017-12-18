@@ -454,6 +454,11 @@
     z-index: 1006;
 }
 
+tspan {
+	font-weight: bold;
+	fill: green;
+}
+
 #content_list li {
     font-size: 10px;
 }

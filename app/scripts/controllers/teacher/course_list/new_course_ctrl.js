@@ -13,7 +13,6 @@ angular.module('scalearAngularApp')
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
       })
-
     $scope.timezones = ScalearUtils.listTimezones()
     $scope.course.time_zone = $scope.timezones[11] //GMT+0
     $scope.course.start_date = new Date()
@@ -33,7 +32,8 @@ angular.module('scalearAngularApp')
       var desc_temp = "",
         pre_temp = "",
         desc_temp_empty = "",
-        pre_temp_empty = ""
+        pre_temp_empty = "",
+        image_temp_empty = ""
       var course_info = $scope.import_from //$filter("filter")($scope.importing,{id:$scope.import_from},true)
       if(course_info) {
         var course_name_text = "\n" + splitter_text + " " + course_info.name + " :]\n"
@@ -45,6 +45,7 @@ angular.module('scalearAngularApp')
           pre_temp = course_name_text + course_info.prerequisites
         }
         pre_temp_empty = course_info.prerequisites
+        image_temp_empty = course_info.image_url
       }
       if($scope.course.description) {
         $scope.course.description = $scope.course.description.split(splitter_text)[0].trim() + desc_temp
@@ -55,6 +56,9 @@ angular.module('scalearAngularApp')
         $scope.course.prerequisites = $scope.course.prerequisites.split(splitter_text)[0].trim() + pre_temp
       } else {
         $scope.course.prerequisites = pre_temp_empty
+      }
+      if(!$scope.course.image_url){
+        $scope.course.image_url = image_temp_empty
       }
     }
 

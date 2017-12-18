@@ -182,6 +182,22 @@ angular.module('scalearAngularApp')
         }
         return text
       },
+      getShortAnswerText: function(text, len_answer){
+        var ratio = window.innerWidth / window.innerHeight 
+        if( 1.7 < ratio && window.innerWidth > 1280){ // 16/9  , 1280 width
+          if (len_answer >= 5 && text.length>20) {
+            return text.substring(0,20)+".."
+          }
+          return text
+        }
+        else if ( text.length>=20  ) {
+          if (len_answer >= 5 && text.length>=10) { 
+            return text.substring(0,10)+".."
+          }
+          return text.substring(0, 20)+".."
+        }
+        return text
+      },
       capitalize: function(s) {
         return s[0].toUpperCase() + s.slice(1);
       },

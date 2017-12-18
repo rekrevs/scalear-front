@@ -58,6 +58,8 @@ var d_q3_x = 169;
 var d_q3_y = 190;
 
 
+    // All teacher shortcuts functionality
+
 describe("Lecture validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
@@ -67,9 +69,9 @@ describe("Lecture validation", function(){
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		new_course.disable_email_reminders_modal_button_click()
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -215,7 +217,7 @@ describe("Lecture validation", function(){
 	
 	it("should delete course",function(){
 			course_list.open()
-			course_list.delete_teacher_course(2)
+			course_list.delete_teacher_course(1)
 			expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
@@ -232,9 +234,9 @@ describe("Video validation", function(){
 		new_course.create(params.short_name, params.course_name, params.course_end_date, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 		new_course.disable_email_reminders_modal_button_click()
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -296,12 +298,13 @@ describe("Video validation", function(){
 		cancel_editing();
 	})
 
-	it('should try setting a .mp4 url', function(){
+	xit('should try setting a .mp4 url', function(){
 		course_editor.change_item_url("http://it.uu.se/katalog/davbl791/wide-test.mp4")
+		// course_editor.change_item_url("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
       	// course_editor.open_video_settings()
 	})
 
-	it('should now have the new mp4 video', function(){
+	xit('should now have the new mp4 video', function(){
       	expect(course_editor.get_item_url()).toBe('http://it.uu.se/katalog/davbl791/wide-test.mp4')
 	})
 
@@ -398,13 +401,74 @@ describe("Video validation", function(){
 	})
 })
 
+describe("Link validation", function(){
+	it('should sign in as teacher', function(){
+		login_page.sign_in(params.teacher1.email, params.password)
+	})
+	it("should open new course",function(){
+		course_list.open()
+		course_list.open_teacher_course(1)
+	})
+	it("should go to edit mode",function(){
+		sub_header.open_edit_mode()
+	})
+	it("should add Link to the first module",function(){
+		var module = navigator.module(1)
+		module.open()
+        module.open_content_items()
+		content_items.add_link()
+        course_editor.rename_item("Link")
+	})
+
+	it('should make sure that the link name is set correctly', function(){
+        expect(course_editor.get_item_name()).toBe('Link')
+    })
+
+	it('should change the name to blank and check the error', function(){
+		course_editor.rename_item(' ');
+		error_feedback("Name can't be blank");
+		cancel_editing();
+	})
+	it('should make sure that the link url is set correctly', function(){
+		expect(course_editor.get_item_url()).toBe('http://')
+	})
+	it('should change link url to http://www.youtube.com/watch?v=SKqBmAHwSkg', function(){
+		course_editor.change_link_url("https://www.youtube.com/watch?v=SKqBmAHwSkg")
+	})
+	it('should make sure that the lecture url is set correctly', function(){
+	  expect(course_editor.get_item_url()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg')
+	})
+	it('should try setting the url to blank', function(){
+	    course_editor.change_link_url(" ")
+	})
+	it('should make sure that the lecture url is set correctly', function(){
+		expect(course_editor.get_item_url()).toBe('http://')
+	})
+	it('should try setting a Vimeo url', function(){
+		course_editor.change_link_url("vimeo.com/109672232")
+	})
+	it('should  make sure that the lecture url is set correctly', function(){
+		expect(course_editor.get_item_url()).toBe('vimeo.com/109672232')
+	})
+
+	it('should entering a string', function(){
+		course_editor.change_link_url("abc")
+	})
+	it('should make sure that the lecture url is set correctly', function(){
+		expect(course_editor.get_item_url()).toBe('abc')
+	})
+	it("should logout",function(){
+		header.logout()
+	})
+})
+
 describe("Quiz validation", function(){
 	it('should sign in as teacher', function(){
 		login_page.sign_in(params.teacher1.email, params.password)
 	})
-	it("should open course",function(){
+	it("should open new course",function(){
 		course_list.open()
-		course_list.open_teacher_course(2)
+		course_list.open_teacher_course(1)
 	})
 	it("should go to edit mode",function(){
 		sub_header.open_edit_mode()
@@ -499,9 +563,9 @@ describe("Quiz validation", function(){
 		// expect(element(by.css('[ng-if="!(item.appearance_time | visible) && item.class_name == quiz"]')).isDisplayed() ).toEqual(false)
 	})
 
-	it("should delete course",function(){
+	it("should delete new course",function(){
 		course_list.open()
-		course_list.delete_teacher_course(2)
+		course_list.delete_teacher_course(1)
 		expect(course_list.teacher_courses.count()).toEqual(1)
 	})
 	it("should logout",function(){
@@ -510,6 +574,7 @@ describe("Quiz validation", function(){
 })
 
 
+// Updating lecture due date 
 // Case where a lecture due date passed 
 // Case where a lecture is due today
 describe("Case where a lecture due date passed // Case where a lecture is due today",function(){
@@ -737,6 +802,7 @@ describe("Case where all items in a module are optional ",function(){
 		})
 	})
 })
+
 var months = ["January",
 							"February",
 							"March",

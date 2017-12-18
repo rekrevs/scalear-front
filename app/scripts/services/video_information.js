@@ -61,6 +61,7 @@ angular.module('scalearAngularApp')
 
     return {
       duration: 0,
+      current_time: 0, 
       volume: 0.8,
       speed: 1,
       quality: "720p",

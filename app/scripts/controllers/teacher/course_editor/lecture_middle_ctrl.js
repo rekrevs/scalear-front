@@ -35,7 +35,14 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onReady = function() {
       $scope.video_ready = true
-      $scope.lecture_player.controls.seek_and_pause(0)
+      var time = $state.params.time
+      if (time) {
+        $timeout(function (argument) {
+          $scope.seek(time-0.2)
+        })        
+      } else if (!($rootScope.is_mobile)) {
+        $scope.lecture_player.controls.seek_and_pause(0)
+      }
 
       $scope.lecture.timeline.items.forEach(function(item) {
         item.data && addItemToVideoQueue(item.data, item.type);
@@ -232,7 +239,6 @@ angular.module('scalearAngularApp')
           ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz()) ||
           ((!$scope.selected_quiz.isTextVideoQuiz() || $scope.selected_quiz.isTextSurvey()) && isFormValid())
         ) && $scope.selected_quiz.answers.length) {
-
         $scope.submitted = false;
         $scope.hide_alerts = true;
         $scope.quiz_deletable = false

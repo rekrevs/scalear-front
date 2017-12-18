@@ -37,7 +37,7 @@ describe("Module Statistics",function(){
 	    	navigator.module(1).open()
 		})
 		it("should check module statistics", function(){
-	    	expect(course_editor.total_time).toEqual("3 (14:21 total)")
+	    	expect(course_editor.total_time).toEqual("3 (14:12 total)")
 	    	expect(course_editor.total_lecture_questions).toEqual("8")
 	    	expect(course_editor.total_quiz_questions).toEqual("2 (10 Questions)")
 		})

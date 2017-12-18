@@ -14,6 +14,9 @@ InvideoQuiz.prototype = Object.create({}, {
 	type_time:{value:function(time){return this.time_field.clear().sendKeys(time)}},
 	done_button:{get:function(){return element(by.id("save_quiz_button"))}},
 	delete_button:{get:function(){return element(by.className('delete'))}},
+	alert_box:{get:function(){return  this.editor_panel.element(by.css('.alert.alert-box')) }},
+	alert:{get:function(){return element(by.id('alert')) }},
+
 	ocq:{get:function(){return element(by.id("ocq"))}},
 	mcq:{get:function(){return element(by.id("mcq"))}},
 	drag:{get:function(){return element(by.id("drag"))}},
@@ -23,16 +26,23 @@ InvideoQuiz.prototype = Object.create({}, {
 	ocq_survey:{get:function(){return element(by.id("ocq_survey"))}},
 	mcq_survey:{get:function(){return element(by.id("mcq_survey"))}},
 	free_text:{get:function(){return element(by.id("free_text"))}},
+	answer:{get:function(){return element(by.model("data.answer"))}},
 	explanation:{get:function(){return element(by.model("data.explanation"))}},
+	type_answer:{value:function(val){return this.answer.clear().sendKeys(val)}},
 	type_explanation:{value:function(val){return this.explanation.sendKeys(val)}},
 	correct_checkbox:{get:function(){return element(by.id("correct_checkbox"))}},
 	add_answer_button:{get:function(){return element(by.id("add_answer"))}},
 	text_answers:{get:function(){return element.all(by.css("div[name='answer']"))}},
+	text_answer:{value:function(num){return this.text_answers.get(num-1)}},
+	errors_answers:{get:function(){return element.all(by.css('.error.with-tiny-margin-bottom'))}},
+	
 	text_explanation:{get:function(){return element.all(by.css("div[name='explanation']"))}},
 	text_correct_checkbox:{get:function(){return element.all(by.model('answer.correct'))}},
 	quizzes:{get:function(){return element.all(by.repeater("quiz in lecture.timeline.items"))}},
 	quiz:{value:function(num){return this.quizzes.get(num-1)}},
 	count:{get:function(){return this.quizzes.count()}},
+	answers:{get:function(){return element.all(by.repeater("answer in selected_quiz.answers"))}},
+	in_video_answer:{value:function(num){return this.answers.get(num-1)}},
 	start_handle:{get:function (){ return element(by.className("squarebrackets_left"))}},
 	end_handle:{get:function (){ return element(by.className("squarebrackets_right"))}},
 	quiz_handle:{get:function (){ return element(by.className("quiz_circle"))}},
@@ -82,6 +92,9 @@ InvideoQuiz.prototype = Object.create({}, {
 	type_text_answer:{value:function(num, answer){
 		this.text_answers.get(num-1).sendKeys(answer)
 	}},
+	errors_answer:{value:function(num){
+		this.errors_answers.get(num-1)
+	}},
 	type_text_explanation:{value:function(num, explanation){
 		this.text_explanation.get(num-1).sendKeys(explanation)
 	}},
@@ -91,7 +104,17 @@ InvideoQuiz.prototype = Object.create({}, {
 	mark_correct:{value:function(){return this.correct_checkbox.click()}},
 	rename:{value:function(name){this.type_name(name)}},
 	change_time:{value:function(time){this.type_time(time)}},
-	save_quiz:{value:function(){this.done_button.click()}}
+	save_quiz:{value:function(){this.done_button.click()}},
+	wait_for_quiz:{value:function(){
+		// var quiz_layer = this.quiz_layer
+		var editor_panel = this.editor_panel
+		browser.driver.wait(function() {
+			return editor_panel.isPresent().then(function(disp) {
+				return disp;
+			}, 100000);
+	    });
+	}},
+
 })
 
 module.exports = InvideoQuiz;

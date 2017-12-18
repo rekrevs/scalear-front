@@ -194,7 +194,7 @@ angular.module('scalearAngularApp')
         }
 
         scope.deleteComment = function(comment) {
-          Forum.deleteComment({ comment_id: comment.comment.id, post_id: scope.item.data.id }, function(response) {
+          Forum.deleteComment({ comment_id: comment.id, post_id: scope.item.data.id }, function(response) {
             var index = scope.item.data.comments.indexOf(comment);
             scope.item.data.comments.splice(index, 1);
             scope.error_message = null
@@ -206,10 +206,11 @@ angular.module('scalearAngularApp')
             scope.error_message = null
             $log.debug("discussion", discussion)
             Forum.createComment({ comment: { content: current_reply, post_id: discussion.data.id, lecture_id: discussion.data.lecture_id } }, function(response) {
+              console.log(response.comment)
               if(discussion.data.comments)
-                discussion.data.comments.push(response)
+                discussion.data.comments.push(response.comment)
               else
-                discussion.data.comments = [response]
+                discussion.data.comments = [response.comment]
               current_reply = ""
             }, function() {})
           } else {
@@ -223,7 +224,7 @@ angular.module('scalearAngularApp')
     return {
       restrict: "E",
       scope: {
-        item: '=',
+        comment: '=',
         delete: '&'
       },
       templateUrl: '/views/forum/discussion_comment.html',
@@ -234,36 +235,36 @@ angular.module('scalearAngularApp')
           })
         scope.preview_as_student = $rootScope.preview_as_student
         scope.flagComment = function() {
-          Forum.flagComment({ comment_flag: { comment_id: scope.item.comment.id } },
+          Forum.flagComment({ comment_flag: { comment_id: scope.comment.id } },
             function(response) {
-              scope.item.comment.user_flag = 1;
-              scope.item.comment.flags_count++;
+              scope.comment.user_flag = 1;
+              scope.comment.flags_count++;
             }
           )
         }
         scope.unflagComment = function() {
-          Forum.flagComment({ comment_flag: { comment_id: scope.item.comment.id } },
+          Forum.flagComment({ comment_flag: { comment_id: scope.comment.id } },
             function(response) {
-              scope.item.comment.user_flag = 0;
-              scope.item.comment.flags_count--;
+              scope.comment.user_flag = 0;
+              scope.comment.flags_count--;
             }
           )
         }
 
         scope.upvoteComment = function() {
-          Forum.voteComment({ comment_vote: { vote: parseInt(scope.item.comment.user_vote) + 1, comment_id: scope.item.comment.id } },
+          Forum.voteComment({ comment_vote: { vote: parseInt(scope.comment.user_vote) + 1, comment_id: scope.comment.id } },
             function(response) {
-              scope.item.comment.user_vote = 1;
-              scope.item.comment.votes_count++;
+              scope.comment.user_vote = 1;
+              scope.comment.votes_count++;
             }
           )
         }
 
         scope.downvoteComment = function() {
-          Forum.voteComment({ comment_vote: { vote: parseInt(scope.item.comment.user_vote) - 1, comment_id: scope.item.comment.id } },
+          Forum.voteComment({ comment_vote: { vote: parseInt(scope.comment.user_vote) - 1, comment_id: scope.comment.id } },
             function(response) {
-              scope.item.comment.user_vote = 0;
-              scope.item.comment.votes_count--;
+              scope.comment.user_vote = 0;
+              scope.comment.votes_count--;
             }
           )
 

@@ -551,9 +551,9 @@ angular.module('scalearAngularApp')
         discussion.temp_response = null
         Forum.createComment({ comment: { content: text, post_id: discussion.id, lecture_id: discussion.lecture_id } },
           function(response) {
-            $log.debug(response)
+            $log.debug(response.comment)
             response.comment.hide = false
-            discussion.comments.push(response)
+            discussion.comments.push(response.comment)
             angular.element('ul.highlight .feedback textarea').blur()
           },
           function() {}

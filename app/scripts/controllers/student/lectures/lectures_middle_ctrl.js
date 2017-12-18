@@ -49,18 +49,18 @@ angular.module('scalearAngularApp')
     $scope.$watch('distance_peer_session_id', function(newval, oldval) {
       if ($scope.distance_peer_session_id && $scope.lecture != null) {
         if (!$scope.distance_peer_status) {
-          Lecture.checkIfInDistancePeerSession({
-              course_id: $scope.lecture.course_id,
-              lecture_id: $scope.lecture.id
-            }).$promise
-            .then(function(response) {
-              if (response.distance_peer != "no_peer_session") {
-                $scope.name = response.name
-                $scope.distance_peer_status = response.user_distance_peer.status
-                $scope.distance_peer_message_in_box = $translate.instant("distance_peer.message_video", { name: $scope.name })
-                $scope.lecture_player.events.onReady(true)
-              }
-            })
+          // Lecture.checkIfInDistancePeerSession({
+          //     course_id: $scope.lecture.course_id,
+          //     lecture_id: $scope.lecture.id
+          //   }).$promise
+          //   .then(function(response) {
+          //     if (response.distance_peer != "no_peer_session") {
+          //       $scope.name = response.name
+          //       $scope.distance_peer_status = response.user_distance_peer.status
+          //       $scope.distance_peer_message_in_box = $translate.instant("distance_peer.message_video", { name: $scope.name })
+          //       $scope.lecture_player.events.onReady(true)
+          //     }
+          //   })
         }
       }
     });
@@ -421,39 +421,40 @@ angular.module('scalearAngularApp')
           $scope.openStudentList($scope.lecture.id, $scope.lecture.course_id)
         }
         var quiz_time_offset = 0
-        $scope.lecture.video_quizzes.forEach(function(quiz, index) {
-          if (quiz.time >= $scope.total_duration - 2) {
-            quiz.time = ($scope.total_duration - 2) + quiz_time_offset
-            quiz_time_offset += 0.2
-          }
-          if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
-            $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function() {
-              showQuizOnline(quiz)
-              $scope.$apply()
-            })
-          } else {
-            if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
-              quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function() {
-                showQuizDistancePeer(quiz)
-              })
-              $scope.quiz_cue_distance_peer_list[quiz.id] = quiz_cue.id
+        if( $scope.lecture.video_quizzes ){
+          $scope.lecture.video_quizzes.forEach ( function(quiz, index) {
+            if (quiz.time >= $scope.total_duration - 2) {
+              quiz.time = ($scope.total_duration - 2) + quiz_time_offset
+              quiz_time_offset += 0.2
             }
-          }
-        })
-      })
-
-
-      $scope.lecture.annotations.forEach(function(marker) {
-        if (marker.annotation) {
-          $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
-            showAnnotation(marker.annotation)
-          })
-          $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
-            $scope.dismissAnnotation()
+            if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
+              $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function() {
+                showQuizOnline(quiz)
+                $scope.$apply()
+              })
+            } else {
+              if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
+                quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function() {
+                  showQuizDistancePeer(quiz)
+                })
+                $scope.quiz_cue_distance_peer_list[quiz.id] = quiz_cue.id
+              }
+            }
           })
         }
       })
-
+      if( $scope.lecture.annotations  ){
+        $scope.lecture.annotations.forEach(function(marker) {
+          if (marker.annotation) {
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
+              showAnnotation(marker.annotation)
+            })
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
+              $scope.dismissAnnotation()
+            })
+          }
+        })
+      }
       duration_milestones.forEach(function(milestone) {
         $scope.lecture_player.controls.cue(($scope.total_duration * milestone) / 100, function() {
           updateViewPercentage(milestone, "mile_cue")
@@ -482,20 +483,20 @@ angular.module('scalearAngularApp')
     var updateViewPercentage = function(milestone, source) {
       var lecture = $scope.lecture // in case request callback got delayed and lecture has changed
       $scope.not_done_msg = false
-      Lecture.updatePercentView({
-          course_id: $state.params.course_id,
-          lecture_id: $state.params.lecture_id
-        }, { percent: milestone },
-        function(data) {
-          $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-          if (data.lecture_done && !lecture.done) {
-            lecture.markDone()
-          } else if (milestone == 100)
-            $scope.not_done_msg = true
-          $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
-          $scope.lecture.watched_percentage = data.watched
-          $scope.lecture.quiz_percentage = data.quizzes_done[0] + " / " + data.quizzes_done[1]
-        })
+      // Lecture.updatePercentView({
+      //     course_id: $state.params.course_id,
+      //     lecture_id: $state.params.lecture_id
+      //   }, { percent: milestone },
+      //   function(data) {
+      //     $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
+      //     if (data.lecture_done && !lecture.done) {
+      //       lecture.markDone()
+      //     } else if (milestone == 100)
+      //       $scope.not_done_msg = true
+      //     $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
+      //     $scope.lecture.watched_percentage = data.watched
+      //     $scope.lecture.quiz_percentage = data.quizzes_done[0] + " / " + data.quizzes_done[1]
+      //   })
     }
 
     $scope.scrollIntoView = function() {
@@ -1270,57 +1271,57 @@ angular.module('scalearAngularApp')
       $scope.check_peer_fuction_is_called = true
       var deferred = $q.defer()
       if ($scope.lecture) {
-        Lecture.checkIfInDistancePeerSession({
-            course_id: $scope.lecture.course_id,
-            lecture_id: $scope.lecture.id
-          }).$promise
-          .then(function(response) {
-            if (response.distance_peer != "no_peer_session") {
-              $scope.distance_peer_session_id = response.distance_peer.distance_peer_id
-              startcheckIfDistancePeerIsAliveTimer()
+        // Lecture.checkIfInDistancePeerSession({
+        //     course_id: $scope.lecture.course_id,
+        //     lecture_id: $scope.lecture.id
+        //   }).$promise
+        //   .then(function(response) {
+        //     if (response.distance_peer != "no_peer_session") {
+        //       $scope.distance_peer_session_id = response.distance_peer.distance_peer_id
+        //       startcheckIfDistancePeerIsAliveTimer()
 
-              $scope.name = response.name
-                // to prevent student seek after quiz, will use variable next_stop_time
-              $scope.distance_peer_status = response.user_distance_peer.status
-              var index = $scope.lecture.video_quizzes.map(function(x) {
-                return x.id; }).indexOf(response.distance_peer.online_quiz_id);
-              if ($scope.distance_peer_status == 1) { // = 1  stop = start_time_of_next_quiz
-                if ($scope.lecture.video_quizzes[index + 1]) {
-                  $scope.next_stop_time = $scope.lecture.video_quizzes[index + 1].start_time
-                } else {
-                  $scope.next_stop_time = $scope.total_duration
-                }
-              }
-              if (index == -1) { index = 0 };
-              if ($scope.lecture.video_quizzes[index]) {
-                if ($scope.distance_peer_status == 5) { // = 5  stop = quiz.end_time
-                  $scope.next_stop_time = $scope.lecture.video_quizzes[index].end_time
-                } else if ([2, 3, 4].indexOf($scope.distance_peer_status) != -1) { // = 2,3,4  stop = quiz.time
-                  $scope.next_stop_time = $scope.lecture.video_quizzes[index].time
+        //       $scope.name = response.name
+        //         // to prevent student seek after quiz, will use variable next_stop_time
+        //       $scope.distance_peer_status = response.user_distance_peer.status
+        //       var index = $scope.lecture.video_quizzes.map(function(x) {
+        //         return x.id; }).indexOf(response.distance_peer.online_quiz_id);
+        //       if ($scope.distance_peer_status == 1) { // = 1  stop = start_time_of_next_quiz
+        //         if ($scope.lecture.video_quizzes[index + 1]) {
+        //           $scope.next_stop_time = $scope.lecture.video_quizzes[index + 1].start_time
+        //         } else {
+        //           $scope.next_stop_time = $scope.total_duration
+        //         }
+        //       }
+        //       if (index == -1) { index = 0 };
+        //       if ($scope.lecture.video_quizzes[index]) {
+        //         if ($scope.distance_peer_status == 5) { // = 5  stop = quiz.end_time
+        //           $scope.next_stop_time = $scope.lecture.video_quizzes[index].end_time
+        //         } else if ([2, 3, 4].indexOf($scope.distance_peer_status) != -1) { // = 2,3,4  stop = quiz.time
+        //           $scope.next_stop_time = $scope.lecture.video_quizzes[index].time
 
-                  if ([3, 4].indexOf($scope.distance_peer_status) != -1) {
-                    showQuizOnline($scope.lecture.video_quizzes[index])
-                    if ($scope.distance_peer_status == 3) {
-                      var timer = $scope.lecture.video_quizzes[index].self
-                    } else {
-                      var timer = $scope.lecture.video_quizzes[index].in_group
-                    }
-                    setStatusTimer(timer)
-                    startStatusTimer()
-                  }
-                }
-                if (!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list)) {
-                  var quiz_cue = $scope.lecture_player.controls.cue($scope.next_stop_time, function() {
-                    showQuizDistancePeer($scope.lecture.video_quizzes[index])
-                  })
-                  $scope.quiz_cue_distance_peer_list[$scope.lecture.video_quizzes[index].id] = quiz_cue.id
-                }
-              } else {
-                $scope.next_stop_time = $scope.total_duration
-              }
-            }
-            deferred.resolve()
-          });
+        //           if ([3, 4].indexOf($scope.distance_peer_status) != -1) {
+        //             showQuizOnline($scope.lecture.video_quizzes[index])
+        //             if ($scope.distance_peer_status == 3) {
+        //               var timer = $scope.lecture.video_quizzes[index].self
+        //             } else {
+        //               var timer = $scope.lecture.video_quizzes[index].in_group
+        //             }
+        //             setStatusTimer(timer)
+        //             startStatusTimer()
+        //           }
+        //         }
+        //         if (!($scope.lecture.video_quizzes[index].id in $scope.quiz_cue_distance_peer_list)) {
+        //           var quiz_cue = $scope.lecture_player.controls.cue($scope.next_stop_time, function() {
+        //             showQuizDistancePeer($scope.lecture.video_quizzes[index])
+        //           })
+        //           $scope.quiz_cue_distance_peer_list[$scope.lecture.video_quizzes[index].id] = quiz_cue.id
+        //         }
+        //       } else {
+        //         $scope.next_stop_time = $scope.total_duration
+        //       }
+        //     }
+        //     deferred.resolve()
+        //   });
       } else {
         deferred.resolve()
       }

@@ -38,8 +38,8 @@
                             <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                                 <div style="margin-bottom: 5px;">
                                     <span ng-if="::(item.data.user_id == current_user.id)">
-                                        <img ng-show="::(item.data.privacy==0)" src="/images/private.png" tooltip="{{private_text}}"/>
-                                        <img ng-show="::(item.data.privacy==1)" src="/images/public.png" tooltip="{{public_text}}"/>
+                                        <img ng-show="::(item.data.privacy==0)" src="/images/private.png" tooltip="{{private_text}}"  tooltip-placement="top" tooltip-append-to-body="true"/>
+                                        <img ng-show="::(item.data.privacy==1)" src="/images/public.png" tooltip="{{public_text}}"  tooltip-placement="top" tooltip-append-to-body="true"/>
                                     </span>
                                     <span translate>discussion.q</span>
                                     <span ng-if="::(item.data.user_id != current_user.id)" class="discussion_title break-text" ng-text-truncate="item.data.content" ng-tt-words-threshold="{{turncatingcount}}" style="white-space: pre-line"></span>
@@ -56,7 +56,7 @@
         </div>
         <div class="comments-table">
             <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{ownpost: comment_data.comment.user_id == current_user.id, flagged: comment_data.comment.flags_count > 0}">
-                <discussion-comment item="comment_data" delete="deleteComment"/>
+                <discussion-comment comment="comment_data" delete="deleteComment"/>
             </div>
             <span>
                 <comment-box ng-if="::(!preview_as_student)" discussion="item" submit="reply"></comment-box>

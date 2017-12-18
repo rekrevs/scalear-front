@@ -1263,6 +1263,20 @@ td.right-border{
   padding-right: 15px !important;
 }
 
+.top-bar-section .has-dropdown.not-click:hover > .dropdown {
+  display: none;
+}
+
+.top-bar-section .has-dropdown.not-click > .dropdown {
+  display: block !important;
+  position: static !important;
+  height: auto;
+  width: auto;
+  overflow: visible;
+  clip: auto;
+  position: absolute !important;
+}
+
 .main-nav .top-bar-section ul li:hover > a{
   background-color: #ededeb !important;
   color: #222 !important;

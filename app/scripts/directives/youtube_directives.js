@@ -179,11 +179,12 @@ angular.module('scalearAngularApp')
           time = player_controls.getDuration() - 2
         }
         time += scope.start || 0
-        if (player_controls.readyState() == 0 && !(scope.start || scope.start == 0)) {
+        if (player_controls.readyState() == 0 ) {
           player.on("loadeddata",
             function() {
-              $log.debug("seek after load")
-              player.currentTime(time);
+              $timeout(function(){
+                player.currentTime(time);
+              })
             });
         } else {
           $log.debug("seeking now", time)

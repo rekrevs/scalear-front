@@ -110,7 +110,7 @@ ul.connected_blocks {
 	'land-medium-8':!ContentNavigator.status && delayed_timeline_open
 	}">
 		<div ng-show="lecture" class="small-12 columns no-padding with-small-padding-top">
-			<div id="main-video-container" ng-style="container_style">
+			<div id="main-video-container" ng-style="container_style" >
 				<form name="answer_form" novalidate>
 						<span class="no_solve" ng-if="!passed_requirments">
 							<center>
@@ -119,8 +119,10 @@ ul.connected_blocks {
 								</div>
 							</center>
 						</span>
-						<video_container ng-if="passed_requirments" ng-class="container_class" screenfull active="fullscreen" style="width:100%;height:100%;background:black">
-						  <youtube class="widescreen" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer" style="margin: 0 auto;">
+						<video_container ng-if="passed_requirments" ng-class="container_class" screenfull active="fullscreen" style="width:100%;height:100%;background:black" >
+						  <youtube class="widescreen" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time"  ng-style="video_layer" style="margin: 0 auto;">
+							<div ng-style="video_layer" ng-click="lectureLayerClick()">		
+							</div>
 						  	<div ng-if="temp_timeline_item">
 						    	<div class="on-video-textarea" ng-if="temp_timeline_item.type=='note'">
 						    		<textarea ng-model='temp_timeline_item.data' class="note-textarea" placeholder="Note..." ></textarea>
@@ -129,8 +131,8 @@ ul.connected_blocks {
 						    		<question_block class="disc-textarea" item="temp_timeline_item" />
 						    	</div>
 						    </div>
+							<quiz ng-show="show_progressbar" ng-style="quiz_layer" resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;" ng-click="quizLayerClick()">
 
-						    <quiz ng-show="show_progressbar && selected_quiz" ng-style="quiz_layer" resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;" >
 						      <!-- ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready) || video_end" -->
 						      <loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
 						      </loading>
@@ -220,7 +222,7 @@ ul.connected_blocks {
 				      </div>
 				      <ul class="connected_circles smaller_connected_circles" style="padding: 5px; margin: 5px 0;">
 				        <div translate translate-values='{name: name}'>distance_peer.in_distance_peer</div>
-				        <div ng-bind='distance_peer_message_in_box'></div>
+				        <div ng-bind='distance_peer_message_in_box' style="font-weight: bold;"></div>
 				        <button type="button" class="tiny success button no-margin" style="background-color: #b30000;font-size: 14px;" ng-click="endDistancePeerSession()" translate>distance_peer.end_peer_instruction</button>
 				      </ul>
 				    </div>

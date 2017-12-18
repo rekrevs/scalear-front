@@ -196,10 +196,11 @@
             <button ng-class="button_class" ng-click="nextSubItem()" class="next_btn button reall-tiny secondary"><i class="fi-next" /></button>
         </div>
         <div class="bottom-right no-padding-top right">
-
             <span ng-hide="selected_item.class_name=='quiz'">
                 <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" class="button reall-tiny secondary">{{hide_video_text}}</button>
-                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleZoomGraphVideo()" class="button reall-tiny secondary">{{zooom_graph_text}}</button>
+                <span ng-show="(selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')">
+                    <button ng-class="button_class+' '+dark_buttons" ng-click="toggleZoomGraphVideo()" class="button reall-tiny secondary">{{zooom_graph_text}}</button>
+                </span>
             </span>
         </div>
     </div>

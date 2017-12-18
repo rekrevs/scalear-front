@@ -1070,7 +1070,7 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.changeVideoQuestionClass = function(video_class,question_block_class){
+    $scope.changeVideoQuestionClass = function(video_class,question_block_class , x){
       $scope.video_class = video_class
       $scope.question_block_class =  question_block_class
     }
@@ -1112,7 +1112,7 @@ angular.module('scalearAngularApp')
       $scope.zooom_graph = false
       $scope.hide_video_text = $scope.button_names[4]
       $scope.zooom_graph_text = $scope.button_names[8]
-      $scope.changeVideoQuestionClass( 'full_screen_video' ,  $scope.question_class_normal )
+      $scope.changeVideoQuestionClass( 'full_screen_video' ,  $scope.question_class_normal)
       $timeout(function() {
         $scope.adjustTextSize()
       })

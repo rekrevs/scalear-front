@@ -62,7 +62,7 @@
                     <center  translate>  inclass.click_forward_result </center>
                 </div>
             </div>
-            <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'" class="normal_question_block" ng-class="text_class">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'" class="normal_question_block" ng-init="changeVideoQuestionClass('original_video' , 'normal_question_block')">
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="!hide_questions && selected_timeline_item.type.indexOf('confused') !=-1" class="normal_question_block" ng-class="text_class">
+            <div ng-if="!hide_questions && selected_timeline_item.type.indexOf('confused') !=-1" class="normal_question_block" ng-init="changeVideoQuestionClass('original_video' , 'normal_question_block')" >
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'" class="normal_question_block" ng-class="text_class">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'" class="normal_question_block" ng-init="changeVideoQuestionClass('original_video' , 'normal_question_block')" >
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <!-- <div>{{selected_timeline_item.data.type}}:</div> -->
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="!hide_questions && selected_timeline_item.type == 'primary_marker'" class="normal_question_block" ng-class="text_class">
+            <div ng-if="!hide_questions && selected_timeline_item.type == 'primary_marker'" class="normal_question_block" ng-init="changeVideoQuestionClass('original_video' , 'normal_question_block')" >
                 <div>
                     <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                         <div style="padding-left:5px;">

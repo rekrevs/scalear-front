@@ -336,7 +336,6 @@ angular.module('scalearAngularApp')
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()
-      // $scope.timer_interval = null;
       $scope.timer_interval_up = null;
     };
 
@@ -348,7 +347,6 @@ angular.module('scalearAngularApp')
       $scope.unregister_state_event();
       $scope.removeShortcuts()
       resetVariables()
-      // $interval.cancel($scope.timer_interval);
       $interval.cancel($scope.timer_interval_up);
       cancelSessionVotesTimer()
       cancelStageTimer()
@@ -432,9 +430,6 @@ angular.module('scalearAngularApp')
       if($scope.should_mute == true) {
         $scope.muteBtn()
       }
-      // if(!$scope.timer_interval) {
-      //   $scope.timer_interval = $interval($scope.timerCountdown, 1000);
-      // }
       if(!$scope.timer_interval_up) {
         $scope.timer_interval_up = $interval($scope.timerCountup, 1000);
       }
@@ -748,13 +743,11 @@ angular.module('scalearAngularApp')
 
     $scope.createChart = function(data, options, formatter) {
       var chart = {
-        // type: "ColumnChart",
         type: "BarChart",
         options: {
           "colors": ['green', 'gray'],
           "isStacked": "false",
           "fill": 25,
-          // "height": 180,
           "backgroundColor": 'beige',
           "displayExactValues": true,
           "legend": { "position": 'none' },
@@ -766,7 +759,6 @@ angular.module('scalearAngularApp')
             "ticks": [25, 50, 75, 100],
             "maxValue": 100,
             "viewWindowMode": 'maximized',
-            // "textPosition": 'none'
           }
         },
         data: $scope[formatter](data)
@@ -777,7 +769,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.chooseVideoQuestionBlockGlass = function(data_length){      
-      console.log( 'chooseVideoQuestionBlockGlass' )
       $scope.answers_more_than_four = false
       $scope.question_class_normal = 'normal_question_block'
       $scope.video_class_normal = 'original_video'
@@ -824,7 +815,6 @@ angular.module('scalearAngularApp')
         var text, correct, incorrect, tooltip_text, incorrect_tooltip_text, correct_tooltip_text
 
         text = ScalearUtils.getHtmlText(data[ind][2])
-        // var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
         var short_text =  text
         var tooltip_text = data[ind][2]
 
@@ -1075,7 +1065,7 @@ angular.module('scalearAngularApp')
         $scope.showQuestionBox()
       }
       else{
-        $scope.ZoomGraph()
+        $scope.zoomGraph()
       }
     }
 
@@ -1084,7 +1074,7 @@ angular.module('scalearAngularApp')
       $scope.question_block_class =  question_block_class
     }
 
-    $scope.ZoomGraph = function() {
+    $scope.zoomGraph = function() {
       $scope.zooom_graph_text = $scope.button_names[9]
       $scope.hide_video_text = $scope.button_names[3]
 
@@ -1183,23 +1173,6 @@ angular.module('scalearAngularApp')
       return (($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "survey") || ($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "html_survey"))
     }
 
-
-    // $scope.timerCountdown = function() {
-    //   if($scope.counter == 0) {
-    //     if($scope.timer == 0) {
-    //       $scope.counting_finished = true;
-    //       $scope.togglePause();
-    //     } else {
-    //       $scope.timer--;
-    //       $scope.counter = 59;
-    //     }
-    //   } else if(!$scope.counting_finished)
-    //     $scope.counter--;
-
-    //   $scope.sec_counter = $scope.counter < 10 ? '0' + $scope.counter : $scope.counter;
-    //   $scope.min_counter = $scope.timer < 10 ? '0' + $scope.timer : $scope.timer;
-    // }
-
     $scope.timerCountup = function() {
       if($scope.up_counter == 59) {
           $scope.up_timer++;
@@ -1213,11 +1186,9 @@ angular.module('scalearAngularApp')
 
     $scope.togglePause = function() {
       if($scope.counting) {
-        // $interval.cancel($scope.timer_interval);
         $interval.cancel($scope.timer_interval_up);
         $scope.counting = false;
       } else {
-        // $scope.timer_interval = $interval($scope.timerCountdown, 1000);
         $scope.timer_interval_up = $interval($scope.timerCountup, 1000);
         $scope.counting = true;
       }

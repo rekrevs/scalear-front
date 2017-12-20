@@ -50,10 +50,7 @@
                 </div>
                 <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && ( inclass_answer == true || inclass_session > 4) ) && chart" ng-class="chart_class">
                     <loading size="small" show="loading_chart" />
-                    <div google-chart chart="chart" on-ready="chartReady()"></div>
-                </div>
-                <div ng-show="" ng-class="chart_class" style="font-size: 20px;margin-top:0.45em;">
-                    
+                    <div google-chart chart="chart" agc-on-ready="chartReady()" ng-hide="loading_chart"></div>
                 </div>
                 <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;color:white;text-shadow: 2px 1px grey, 2px 1px grey;margin-top:0.45em;" class="stage_timer">
                     <center>{{stage_counter | format}}</center>
@@ -113,7 +110,8 @@
             <div style="background:white;" id="white_background">
                 <div style="padding-top: 1%;padding-left: 1%;font-size: 50px;line-height: 40px;opacity: 1;" ng-bind-html="selected_timeline_item.data.title"></div>
                 <div ng-if="selected_timeline_item.type == 'charts'" id='chart'>
-                    <div google-chart chart="chart"></div>
+                    <loading size="small" show="loading_chart" />
+                    <div google-chart chart="chart" agc-on-ready="chartReady()" ng-hide="loading_chart"></div>
                 </div>
                 <div ng-if="selected_timeline_item.type == 'Free Text Question'" style="padding-left:30px">
                     <ul style="padding:5px;color:black;font-weight:normal">

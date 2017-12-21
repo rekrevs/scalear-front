@@ -111,7 +111,6 @@ angular.module('scalearAngularApp')
               if (type != "meta")
                 for (var it in $scope.lectures[lec_id][type]) {
                   if (type == 'discussion') {
-                    console.log( $scope.lectures[lec_id][type][it][1][0] )
                     $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].time
                     for (var disc in $scope.lectures[lec_id][type][it][1]) {
                       $scope.lectures[lec_id][type][it][1][disc].hide = !$scope.lectures[lec_id][type][it][1][disc].hide
@@ -930,7 +929,7 @@ angular.module('scalearAngularApp')
         var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion") {
           var q_ind = $scope.inner_highlight_index
-          time = $scope.selected_item.data[q_ind].post.time
+          time = $scope.selected_item.data[q_ind].time
           $log.debug(time)
         }
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)

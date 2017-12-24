@@ -55,7 +55,7 @@
                         <center  translate>  inclass.click_forward_result </center>
                     </div>
                 </div>
-                <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'"  ng-init="changeVideoQuestionClass(30 , false)">
+                <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'"  ng-init="changeVideoQuestionBoxPercentage(30 , false)">
                     <div>
                         <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                             <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="!hide_questions && selected_timeline_item.type.indexOf('confused') !=-1"  ng-init="changeVideoQuestionClass(30 , false)" >
+                <div ng-if="!hide_questions && selected_timeline_item.type.indexOf('confused') !=-1"  ng-init="changeVideoQuestionBoxPercentage(30 , false)" >
                     <div>
                         <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                             <div style="padding-left:5px;">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'"  ng-init="changeVideoQuestionClass( 30 , false)" >
+                <div ng-if="!hide_questions && selected_timeline_item.type == 'free_question'"  ng-init="changeVideoQuestionBoxPercentage( 30 , false)" >
                     <div>
                         <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                             <div style="padding-left:5px;font-weight: bold;">
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </div>
-                <div ng-if="!hide_questions && selected_timeline_item.type == 'primary_marker'"  ng-init="changeVideoQuestionClass(30 , false)" >
+                <div ng-if="!hide_questions && selected_timeline_item.type == 'primary_marker'"  ng-init="changeVideoQuestionBoxPercentage(30 , false)" >
                     <div>
                         <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
                             <div style="padding-left:5px;font-weight: bold;">

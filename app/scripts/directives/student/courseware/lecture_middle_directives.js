@@ -171,11 +171,11 @@ angular.module('scalearAngularApp')
       });
   }
 }
-}).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
+}).directive('studentHtmlFree',['$translate','$log','$timeout',function($translate, $log, $timeout){
   return{
     restrict:'E',
     template: "<ng-form name='aform'>"+
-              "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
+              "<textarea id='html_free_text_field'  ng-click='enrollInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
               "</ng-form>"+
               "<div ng-bind-html='explanation[quiz.id]'></div>",
@@ -183,6 +183,14 @@ angular.module('scalearAngularApp')
       scope.$on("$destroy", function() {
         scope.explanation[scope.quiz.id] = null
       });
+
+      scope.enrollInputClick = function(e){ 
+        $timeout(function(){ 
+           $('#html_free_text_field').focus() 
+           e.stopPropagation() 
+        })     
+      }       
+
     }
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
@@ -398,10 +406,10 @@ angular.module('scalearAngularApp')
 
     }
   }
-}]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
+}]).directive('studentFreeText',['$rootScope','$translate','$log', '$timeout', function($rootScope, $translate, $log, $timeout){
   return {
     restrict:'E',
-    template: '<textarea placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea id="free_text_field" ng-click="enrollInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
     link:function(scope,elem){
       var setup=function(){
         scope.explanation_pop={}
@@ -420,6 +428,14 @@ angular.module('scalearAngularApp')
           }
         }
       })
+
+      scope.enrollInputClick = function(e){
+        $timeout(function(){
+           $('#free_text_field').focus()
+           e.stopPropagation()
+        })    
+      }
+
       scope.$on("$destroy", function() {
         scope.explanation[scope.quiz.id] = null
       });
@@ -575,7 +591,7 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
+    template: '<div id="note_area_text" ng-click="enrollInputClick($event)" e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
                 '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
                   '<span ng-bind-html="value"></span>'+
                 '</div>'+
@@ -618,6 +634,15 @@ angular.module('scalearAngularApp')
 
       if(!scope.value)
         scope.show()
+
+     scope.enrollInputClick = function(e){  
+      console.log('alert')
+        $timeout(function(){  
+          console.log('alert')
+           $('#note_area_text').focus()  
+           e.stopPropagation()  
+        })      
+      }        
 
       scope.saveData = function(){
         scope.$emit("note_updated")

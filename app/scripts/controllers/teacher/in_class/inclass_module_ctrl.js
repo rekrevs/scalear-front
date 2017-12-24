@@ -32,9 +32,6 @@ angular.module('scalearAngularApp')
       $scope.counter = $scope.timer > 0 ? 1 : 0;
       $scope.up_timer = 0 ; 
       $scope.up_counter = 0 ;
-      $scope.counting = true;
-      $scope.question_block_vs_video_percentage_small = 30
-      $scope.question_block_vs_video_percentage_large = 30
       $scope.timerCountup()
 
       angular.element($window).bind('resize',
@@ -83,15 +80,13 @@ angular.module('scalearAngularApp')
       $scope.selected_item = { start_time: 0 }
       $scope.selected_timeline_item = null
       $scope.quality_set = 'color-blue'
-      $scope.counting = true;
-      $scope.counting_finished = false
       $scope.inclass_answer = false
       $scope.quiz_layer = {}
       $scope.player_button_hover =false
       $scope.question_class_normal = 'normal_question_block'
       $scope.video_class_normal = 'original_video'
-      $scope.question_block_vs_video_percentage_small = 30
-      $scope.question_block_vs_video_percentage_large = 30
+      $scope.question_block_small = 30
+      $scope.question_block_large = 30
     }
 
     var init = function() {
@@ -761,9 +756,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.chooseVideoQuestionBlockGlass = function(data_length){      
-      $scope.question_block_vs_video_percentage_small = Math.min( Math.max( 30 , data_length * 9  ) , 95) 
-      $scope.question_block_vs_video_percentage_large = Math.min( 95 , data_length * 20  )
-      $scope.changeVideoQuestionClass( $scope.question_block_vs_video_percentage_small , false)
+      $scope.question_block_small = Math.min( Math.max( 30 , data_length * 9  ) , 95) 
+      $scope.question_block_large = Math.min( 95 , data_length * 20  )
+      $scope.changeVideoQuestionBoxPercentage( $scope.question_block_small , false)
     }
 
 
@@ -1051,27 +1046,23 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.changeVideoQuestionClass = function(question_block_vs_video_percentage, scroll_boolean){
+    $scope.changeVideoQuestionBoxPercentage = function(question_block, scrollable){
       var question_block = angular.element('.normal_question_block')
       var video_block = angular.element('.original_video')
 
       $timeout(function() {
         if((question_block.length != 0) &&  (video_block.length != 0)) {
-          question_block[0].style.maxHeight = question_block_vs_video_percentage+"%"
-          question_block[0].style.minHeight = question_block_vs_video_percentage+"%"
+          question_block[0].style.maxHeight = question_block+"%"
+          question_block[0].style.minHeight = question_block+"%"
           question_block[0].style.border = "1px solid darkgrey"
-          video_block[0].style.maxHeight = (95-question_block_vs_video_percentage)+"%"
-          video_block[0].style.minHeight = (95-question_block_vs_video_percentage)+"%"
+          video_block[0].style.maxHeight = (95-question_block)+"%"
+          video_block[0].style.minHeight = (95-question_block)+"%"
 
-          if (!question_block_vs_video_percentage) {
+          if (!question_block) {
             question_block[0].style.border = "0px solid darkgrey"
           }
 
-          if(scroll_boolean){
-            question_block[0].style.overflowY = 'auto';
-          } else{
-            question_block[0].style.overflowY =  'hidden';
-          }
+          question_block[0].style.overflowY = scrollable? 'auto' : 'hidden'
 
         }
       })
@@ -1083,7 +1074,7 @@ angular.module('scalearAngularApp')
 
       $scope.zooom_graph = true
       $scope.hide_questions = false
-      $scope.changeVideoQuestionClass( $scope.question_block_vs_video_percentage_large , true)
+      $scope.changeVideoQuestionBoxPercentage( $scope.question_block_large , true)
 
       if($scope.chart){
         $scope.chart.options.fontSize = 20
@@ -1097,7 +1088,7 @@ angular.module('scalearAngularApp')
       $scope.hide_video_text = $scope.button_names[3]
       $scope.zooom_graph_text = $scope.button_names[8]
 
-      $scope.changeVideoQuestionClass(  $scope.question_block_vs_video_percentage_small, false )
+      $scope.changeVideoQuestionBoxPercentage(  $scope.question_block_small, false )
       if($scope.chart){
         $scope.chart.options.fontSize = 15         
       }
@@ -1109,7 +1100,7 @@ angular.module('scalearAngularApp')
       $scope.zooom_graph = false
       $scope.hide_video_text = $scope.button_names[4]
       $scope.zooom_graph_text = $scope.button_names[8]
-      $scope.changeVideoQuestionClass(  0 , false)
+      $scope.changeVideoQuestionBoxPercentage(  0 , false)
       $scope.blurButtons()
     }
 
@@ -1147,7 +1138,7 @@ angular.module('scalearAngularApp')
       var space = question_block.height() * question_block.width();
       $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), 40) + 'px';
       if($scope.chart){
-        if( $scope.zooom_graph && $scope.question_block_vs_video_percentage_large == 95 ){
+        if( $scope.zooom_graph && $scope.question_block_large == 95 ){
           $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length  *  ( (question_block.height() - 50) / 4) 
         } else{
           $scope.chart.options.height = question_block.height() - 50 

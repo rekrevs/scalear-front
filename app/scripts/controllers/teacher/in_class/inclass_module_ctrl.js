@@ -1047,22 +1047,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.changeVideoQuestionBoxPercentage = function(question_block, scrollable){
-      var question_block = angular.element('.normal_question_block')
-      var video_block = angular.element('.original_video')
+      var question_block_element = angular.element('.normal_question_block')
+      var video_block_element = angular.element('.original_video')
 
       $timeout(function() {
-        if((question_block.length != 0) &&  (video_block.length != 0)) {
-          question_block[0].style.maxHeight = question_block+"%"
-          question_block[0].style.minHeight = question_block+"%"
-          question_block[0].style.border = "1px solid darkgrey"
-          video_block[0].style.maxHeight = (95-question_block)+"%"
-          video_block[0].style.minHeight = (95-question_block)+"%"
+        if((question_block_element.length != 0) &&  (video_block_element.length != 0)) {
+          question_block_element[0].style.maxHeight = question_block+"%"
+          question_block_element[0].style.minHeight = question_block+"%"
+          question_block_element[0].style.border = "1px solid darkgrey"
+          video_block_element[0].style.maxHeight = (95-question_block)+"%"
+          video_block_element[0].style.minHeight = (95-question_block)+"%"
 
           if (!question_block) {
-            question_block[0].style.border = "0px solid darkgrey"
+            question_block_element[0].style.border = "0px solid darkgrey"
           }
 
-          question_block[0].style.overflowY = scrollable? 'auto' : 'hidden'
+          question_block_element[0].style.overflowY = scrollable? 'auto' : 'hidden'
 
         }
       })

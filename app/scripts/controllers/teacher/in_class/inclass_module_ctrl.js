@@ -33,12 +33,8 @@ angular.module('scalearAngularApp')
       $scope.up_timer = 0 ; 
       $scope.up_counter = 0 ;
       $scope.counting = true;
-      $scope.question_class_normal = 'normal_question_block'
-      $scope.video_class_normal = 'original_video'
-
-      $scope.question_class_large = 'large_question_block'
-      $scope.video_class_small = 'small_screen_video'
-      // $scope.timerCountdown()
+      $scope.question_block_vs_video_percentage_small = 30
+      $scope.question_block_vs_video_percentage_large = 30
       $scope.timerCountup()
 
       angular.element($window).bind('resize',
@@ -94,9 +90,8 @@ angular.module('scalearAngularApp')
       $scope.player_button_hover =false
       $scope.question_class_normal = 'normal_question_block'
       $scope.video_class_normal = 'original_video'
-
-      $scope.question_class_large = 'large_question_block'
-      $scope.video_class_small = 'small_screen_video'
+      $scope.question_block_vs_video_percentage_small = 30
+      $scope.question_block_vs_video_percentage_large = 30
     }
 
     var init = function() {
@@ -750,18 +745,13 @@ angular.module('scalearAngularApp')
           "colors": ['green', 'gray'],
           "isStacked": "false",
           "fill": 25,
-          "backgroundColor": 'beige',
+          "backgroundColor": 'white',
           "displayExactValues": true,
           "legend": { "position": 'none' },
           "fontSize": 15,
-          "chartArea": { 'left': '70%' , "width": '90%'},
-          'bar': {'groupWidth': "75%"},
+          "chartArea": { 'left': '70%' , "width": '90%' , 'top':'10%'},
           "tooltip": { "isHtml": true },
-          "vAxis": {
-            "ticks": [25, 50, 75, 100],
-            "maxValue": 100,
-            "viewWindowMode": 'maximized',
-          }
+          "hAxis": { "textPosition": 'none' },
         },
         data: $scope[formatter](data)
       };
@@ -771,20 +761,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.chooseVideoQuestionBlockGlass = function(data_length){      
-      $scope.answers_more_than_four = false
-      $scope.question_class_normal = 'normal_question_block'
-      $scope.video_class_normal = 'original_video'
-      $scope.question_class_large = 'large_question_block'
-      $scope.video_class_small = 'small_screen_video'
-      if(  data_length > 4 ){
-        $scope.answers_more_than_four = true
-        $scope.question_class_normal = 'large_question_block'
-        $scope.video_class_normal = 'small_screen_video'
-        
-        $scope.question_class_large = 'full_screen_question_block'
-        $scope.video_class_small = 'remove_video'
-      }
-      $scope.changeVideoQuestionClass( $scope.video_class_normal , $scope.question_class_normal)
+      $scope.question_block_vs_video_percentage_small = Math.min( Math.max( 30 , data_length * 9  ) , 95) 
+      $scope.question_block_vs_video_percentage_large = Math.min( 95 , data_length * 20  )
+      $scope.changeVideoQuestionClass( $scope.question_block_vs_video_percentage_small , false)
     }
 
 
@@ -911,7 +890,7 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": ScalearUtils.getShortAnswerText( ScalearUtils.getHtmlText(text) , Object.keys(data).length )},
+            { "v": ScalearUtils.getHtmlText(text) },
             { "v": selfPercent },
             { "v": tooltip_text },
             { "v": style },
@@ -946,7 +925,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": ScalearUtils.getShortAnswerText(ScalearUtils.getHtmlText(data[ind][2]) , Object.keys(data).length )},
+            { "v": ScalearUtils.getHtmlText(data[ind][2])  },
             { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) },
             { "v": ScalearUtils.getHtmlText(data[ind][2]) }
           ]
@@ -1072,9 +1051,30 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.changeVideoQuestionClass = function(video_class,question_block_class , x){
-      $scope.video_class = video_class
-      $scope.question_block_class =  question_block_class
+    $scope.changeVideoQuestionClass = function(question_block_vs_video_percentage, scroll_boolean){
+      var question_block = angular.element('.normal_question_block')
+      var video_block = angular.element('.original_video')
+
+      $timeout(function() {
+        if((question_block.length != 0) &&  (video_block.length != 0)) {
+          question_block[0].style.maxHeight = question_block_vs_video_percentage+"%"
+          question_block[0].style.minHeight = question_block_vs_video_percentage+"%"
+          question_block[0].style.border = "1px solid darkgrey"
+          video_block[0].style.maxHeight = (95-question_block_vs_video_percentage)+"%"
+          video_block[0].style.minHeight = (95-question_block_vs_video_percentage)+"%"
+
+          if (!question_block_vs_video_percentage) {
+            question_block[0].style.border = "0px solid darkgrey"
+          }
+
+          if(scroll_boolean){
+            question_block[0].style.overflowY = 'auto';
+          } else{
+            question_block[0].style.overflowY =  'hidden';
+          }
+
+        }
+      })
     }
 
     $scope.zoomGraph = function() {
@@ -1083,14 +1083,12 @@ angular.module('scalearAngularApp')
 
       $scope.zooom_graph = true
       $scope.hide_questions = false
-      $scope.changeVideoQuestionClass( $scope.video_class_small , $scope.question_class_large)
+      $scope.changeVideoQuestionClass( $scope.question_block_vs_video_percentage_large , true)
 
-      $scope.chart.options.fontSize = 20       
-      $timeout(function() {
-        $scope.adjustTextSize()
-      })
+      if($scope.chart){
+        $scope.chart.options.fontSize = 20
+      }      
       $scope.blurButtons()
-
     }
 
     $scope.showQuestionBox = function() {
@@ -1099,14 +1097,11 @@ angular.module('scalearAngularApp')
       $scope.hide_video_text = $scope.button_names[3]
       $scope.zooom_graph_text = $scope.button_names[8]
 
-      $scope.changeVideoQuestionClass( $scope.video_class_normal , $scope.question_class_normal)
-
+      $scope.changeVideoQuestionClass(  $scope.question_block_vs_video_percentage_small, false )
       if($scope.chart){
         $scope.chart.options.fontSize = 15         
       }
-      $timeout(function() {
-        $scope.adjustTextSize()
-      })
+      $scope.blurButtons()      
     }
 
     $scope.hideQuestionBox = function() {
@@ -1114,10 +1109,7 @@ angular.module('scalearAngularApp')
       $scope.zooom_graph = false
       $scope.hide_video_text = $scope.button_names[4]
       $scope.zooom_graph_text = $scope.button_names[8]
-      $scope.changeVideoQuestionClass( 'full_screen_video' ,  $scope.question_class_normal)
-      $timeout(function() {
-        $scope.adjustTextSize()
-      })
+      $scope.changeVideoQuestionClass(  0 , false)
       $scope.blurButtons()
     }
 
@@ -1149,12 +1141,18 @@ angular.module('scalearAngularApp')
     }
 
     $scope.adjustTextSize = function() {
-      var question_block = angular.element('.'+$scope.question_block_class).not('.ng-hide');
+
+      var question_block = angular.element('.normal_question_block').not('.ng-hide');
       var chars = question_block.text().trim().length;
       var space = question_block.height() * question_block.width();
-      $scope.fontsize = Math.min(Math.sqrt(space / chars), 30) + 'px';
-      if($scope.chart)
-        $scope.chart.options.height = question_block.height() - 50
+      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), 40) + 'px';
+      if($scope.chart){
+        if( $scope.zooom_graph && $scope.question_block_vs_video_percentage_large == 95 ){
+          $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length  *  ( (question_block.height() - 50) / 4) 
+        } else{
+          $scope.chart.options.height = question_block.height() - 50 
+        }
+      }
     }
 
     $scope.lightUpButtons = function() {
@@ -1185,16 +1183,6 @@ angular.module('scalearAngularApp')
       }
       $scope.sec_counter_up = $scope.up_counter < 10 ? '0' + $scope.up_counter : $scope.up_counter;
       $scope.min_counter_up = $scope.up_timer < 10 ? '0' + $scope.up_timer : $scope.up_timer;
-    }
-
-    $scope.togglePause = function() {
-      if($scope.counting) {
-        $interval.cancel($scope.timer_interval_up);
-        $scope.counting = false;
-      } else {
-        $scope.timer_interval_up = $interval($scope.timerCountup, 1000);
-        $scope.counting = true;
-      }
     }
 
     var StageTimerCountdown = function() {

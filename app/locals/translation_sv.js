@@ -98,7 +98,8 @@ var translation_sv={
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
         try_reload:"Du kan fortsätta vänta eller prova att uppdatera sidan",
-    }
+    },
+    welcome_message_updated: "Välkommen Meddelande uppdaterad",    
   },
   time:{
     hours: "timmar",
@@ -179,6 +180,7 @@ var translation_sv={
     join_course: "Delta i en ny kurs (elev)",
     new_course: "Skapa en ny kurs (lärare)",
     review: "Bedöm",
+    welcome_message: "Välkommen Meddelande",    
     register:{
       teacher: "Lärare, registrering",
       student: "Student, registrering"
@@ -1006,6 +1008,7 @@ var translation_sv={
     time_zone: "Tidszon",
     course_code: "Kurskod",
     course_name: "Kursens namn",
+    university_note: "Universitet Anteckning",    
   },
   statistics:{
     statistics: "Statistik",
@@ -1132,6 +1135,9 @@ var translation_sv={
     languages:"Languages",
     en: 'English',
     sv: 'Svenska'
+  },
+  welcome_messages:{
+    description: "Ange texten som ska visas för användare från domänen {{domain}} när de loggar in. Denna text kommer att visas längst upp på sidan 'Skapa Kurs'.",
   }
 }
 

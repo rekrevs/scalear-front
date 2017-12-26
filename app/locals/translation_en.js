@@ -99,6 +99,7 @@ var translation_en={
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
     },
+    welcome_message_updated: "Welcome message updated",    
   },
   time:{
     hours: "hours",
@@ -179,6 +180,7 @@ var translation_en={
     join_course: "Join a new course (student)",
     new_course: "Create a new course (teacher)",
     review: "Review",
+    welcome_message: "Welcome Message",
     register:{
       teacher: "Teacher Registration",
       student: "Student Registration"
@@ -1007,6 +1009,7 @@ var translation_en={
     time_zone: "Course Timezone",
     course_code: "Course Code",
     course_name: "Course Name",
+    university_note: "University Note",
   },
   statistics:{
     statistics: "Statistics",
@@ -1133,6 +1136,9 @@ var translation_en={
     languages:"Languages",
     en: 'English',
     sv: 'Svenska'
+  },
+  welcome_messages:{
+    description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
   }
 }
 

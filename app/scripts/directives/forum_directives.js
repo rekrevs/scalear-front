@@ -206,7 +206,6 @@ angular.module('scalearAngularApp')
             scope.error_message = null
             $log.debug("discussion", discussion)
             Forum.createComment({ comment: { content: current_reply, post_id: discussion.data.id, lecture_id: discussion.data.lecture_id } }, function(response) {
-              console.log(response.comment)
               if(discussion.data.comments)
                 discussion.data.comments.push(response.comment)
               else

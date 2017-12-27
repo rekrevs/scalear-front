@@ -12,7 +12,6 @@ angular.module('scalearAngularApp')
         $scope.module_items = module.items
         Module.getStudentModule({ course_id: $stateParams.course_id, module_id: module.id },
           function(data) {
-            console.log(data)
             $scope.module_lectures = data.module_lectures;
 
             // arrange timeline
@@ -63,7 +62,6 @@ angular.module('scalearAngularApp')
             // }
           },
           function(error){
-            console.log(error.data.errors[0])
             ErrorHandler.showMessage(error.data.errors[0], 'errorMessage', 4000, "error");
             $state.go("course_list"); 
           }

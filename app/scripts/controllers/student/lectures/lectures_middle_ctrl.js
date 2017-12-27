@@ -49,18 +49,18 @@ angular.module('scalearAngularApp')
     $scope.$watch('distance_peer_session_id', function(newval, oldval) {
       if ($scope.distance_peer_session_id && $scope.lecture != null) {
         if (!$scope.distance_peer_status) {
-          // Lecture.checkIfInDistancePeerSession({
-          //     course_id: $scope.lecture.course_id,
-          //     lecture_id: $scope.lecture.id
-          //   }).$promise
-          //   .then(function(response) {
-          //     if (response.distance_peer != "no_peer_session") {
-          //       $scope.name = response.name
-          //       $scope.distance_peer_status = response.user_distance_peer.status
-          //       $scope.distance_peer_message_in_box = $translate.instant("distance_peer.message_video", { name: $scope.name })
-          //       $scope.lecture_player.events.onReady(true)
-          //     }
-          //   })
+          Lecture.checkIfInDistancePeerSession({
+              course_id: $scope.lecture.course_id,
+              lecture_id: $scope.lecture.id
+            }).$promise
+            .then(function(response) {
+              if (response.distance_peer != "no_peer_session") {
+                $scope.name = response.name
+                $scope.distance_peer_status = response.user_distance_peer.status
+                $scope.distance_peer_message_in_box = $translate.instant("distance_peer.message_video", { name: $scope.name })
+                $scope.lecture_player.events.onReady(true)
+              }
+            })
         }
       }
     });
@@ -483,20 +483,20 @@ angular.module('scalearAngularApp')
     var updateViewPercentage = function(milestone, source) {
       var lecture = $scope.lecture // in case request callback got delayed and lecture has changed
       $scope.not_done_msg = false
-      // Lecture.updatePercentView({
-      //     course_id: $state.params.course_id,
-      //     lecture_id: $state.params.lecture_id
-      //   }, { percent: milestone },
-      //   function(data) {
-      //     $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-      //     if (data.lecture_done && !lecture.done) {
-      //       lecture.markDone()
-      //     } else if (milestone == 100)
-      //       $scope.not_done_msg = true
-      //     $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
-      //     $scope.lecture.watched_percentage = data.watched
-      //     $scope.lecture.quiz_percentage = data.quizzes_done[0] + " / " + data.quizzes_done[1]
-      //   })
+      Lecture.updatePercentView({
+          course_id: $state.params.course_id,
+          lecture_id: $state.params.lecture_id
+        }, { percent: milestone },
+        function(data) {
+          $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
+          if (data.lecture_done && !lecture.done) {
+            lecture.markDone()
+          } else if (milestone == 100)
+            $scope.not_done_msg = true
+          $log.debug("Watched:" + data.watched + "%" + " solved:" + data.quizzes_done[0] + " total:" + data.quizzes_done[1], source)
+          $scope.lecture.watched_percentage = data.watched
+          $scope.lecture.quiz_percentage = data.quizzes_done[0] + " / " + data.quizzes_done[1]
+        })
     }
 
     $scope.scrollIntoView = function() {

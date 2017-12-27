@@ -175,18 +175,18 @@ angular.module('scalearAngularApp')
   return{
     restrict:'E',
     template: "<ng-form name='aform'>"+
-              "<textarea id='html_free_text_field'  ng-click='enrollInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
+              "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
               "</ng-form>"+
               "<div ng-bind-html='explanation[quiz.id]'></div>",
-    link:function(scope){
+    link:function(scope ,element){
       scope.$on("$destroy", function() {
         scope.explanation[scope.quiz.id] = null
       });
 
-      scope.enrollInputClick = function(e){ 
+      scope.studentHtmlFreeInputClick = function(e){ 
         $timeout(function(){ 
-           $('#html_free_text_field').focus() 
+           angular.element(element).find("textarea").focus()
            e.stopPropagation() 
         })     
       }       
@@ -409,7 +409,7 @@ angular.module('scalearAngularApp')
 }]).directive('studentFreeText',['$rootScope','$translate','$log', '$timeout', function($rootScope, $translate, $log, $timeout){
   return {
     restrict:'E',
-    template: '<textarea id="free_text_field" ng-click="enrollInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
     link:function(scope,elem){
       var setup=function(){
         scope.explanation_pop={}
@@ -429,10 +429,10 @@ angular.module('scalearAngularApp')
         }
       })
 
-      scope.enrollInputClick = function(e){
+      scope.freeTextInputClick = function(e){
         $timeout(function(){
-           $('#free_text_field').focus()
-           e.stopPropagation()
+            angular.element(elem).find("textarea").focus()
+            e.stopPropagation()
         })    
       }
 
@@ -591,8 +591,8 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div id="note_area_text" ng-click="enrollInputClick($event)" e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
-                '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
+    template: '<div  ng-click="noteAreaClick($event)" e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
+                '<div class="note" style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
                   '<span ng-bind-html="value"></span>'+
                 '</div>'+
                 '<div style="font-size: 10px; float: right; display: inline-block;">'+
@@ -635,11 +635,9 @@ angular.module('scalearAngularApp')
       if(!scope.value)
         scope.show()
 
-     scope.enrollInputClick = function(e){  
-      console.log('alert')
+     scope.noteAreaClick = function(e){  
         $timeout(function(){  
-          console.log('alert')
-           $('#note_area_text').focus()  
+            $('.note').focus() 
            e.stopPropagation()  
         })      
       }        

@@ -147,8 +147,8 @@
 										</span>
 									</span>
 									<b class="disc_screen_name">
-										<img ng-show="::(discussion.post.privacy==1)" class="public_img" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
-										<img ng-show="::(discussion.post.privacy==0)" class="private_img" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
+										<img ng-show="::(discussion.post.privacy==1)" class="public_img" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}" tooltip-placement="down" tooltip-append-to-body="true" />
+										<img ng-show="::(discussion.post.privacy==0)" class="private_img" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}" tooltip-placement="down" tooltip-append-to-body="true" />
 
 								 		<span >{{::discussion.post.screen_name}}</span>:
 							 		</b>

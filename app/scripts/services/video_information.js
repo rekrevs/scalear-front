@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('VideoInformation', ['$http', '$q', function($http, $q) {
+  .factory('VideoInformation', ['$http', '$q', '$interval', function($http, $q, $interval) {
 
-    var youtube_video_information = {}
+    var youtube_video_information = {},
+    duration= 0,
+    current_time= 0, 
+    volume= 0.8,
+    speed= 1,
+    quality= "720p";
 
     function generateYoutubeApiVideoUrl(id) {
       return "https://www.googleapis.com/youtube/v3/videos?id=" +
@@ -58,20 +63,49 @@ angular.module('scalearAngularApp')
       return(!isMP4(url) && !isYoutube(url) && url.trim().length > 0)
     }
 
+    function setDuration(newDuration) {
+      duration = newDuration
+    }
+
+    function waitForMediaSiteDurationSetup() {
+      console.log("will wait for duration")
+      var deferred = $q.defer();
+      var stop = $interval(function(){
+        console.log("checkedin duration...", duration)
+        if(duration){
+          console.log("got duration")
+          deferred.resolve(duration)
+          $interval.cancel(stop);
+        }
+      }, 500)
+      return deferred.promise;
+    }
+
+    function resetValues(argument) {
+      duration= 0
+      current_time= 0 
+      volume= 0.8
+      speed= 1
+      quality= "720p";
+    }
+
 
     return {
-      duration: 0,
-      current_time: 0, 
-      volume: 0.8,
-      speed: 1,
-      quality: "720p",
+      duration: duration,
+      current_time: current_time, 
+      volume: volume,
+      speed: speed,
+      quality: quality,
       requestInfoFromYoutube: requestInfoFromYoutube,
       isFinalUrl: isFinalUrl,
       isMP4: isMP4,
       invalidUrl: invalidUrl,
       getFinalUrl: getFinalUrl,
       isYoutube: isYoutube,
-      emptyCachedInfo:emptyCachedInfo
+      emptyCachedInfo:emptyCachedInfo,
+      waitForMediaSiteDurationSetup:waitForMediaSiteDurationSetup,
+      setDuration:setDuration,
+      resetValues:resetValues
     };
 
   }]);

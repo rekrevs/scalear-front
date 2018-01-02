@@ -5,7 +5,6 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
-    // console.log( $scope.lecture )
     $scope.video ={} 
     if($scope.lecture.inclass){$scope.video.type = 1}
     else if($scope.lecture.distance_peer){$scope.video.type= 2}
@@ -40,7 +39,6 @@ angular.module('scalearAngularApp')
       $scope.lecture.update()
     }
     $scope.setVideoType = function(){
-      // console.log($scope.video)
       $scope.lecture.inclass =  false
       $scope.lecture.distance_peer = false
       if($scope.video.type== 1){
@@ -49,8 +47,6 @@ angular.module('scalearAngularApp')
       if($scope.video.type== 2){
         $scope.lecture.distance_peer = true
       }
-      // console.log($scope.lecture.inclass)
-      // console.log($scope.lecture.distance_peer)
       $scope.updateLecture()
     }
     $scope.updateDueDate = function() {

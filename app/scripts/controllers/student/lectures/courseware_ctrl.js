@@ -53,7 +53,6 @@ angular.module('scalearAngularApp')
             // }
           },
           function(error){
-            console.log(error.data.errors[0])
             ErrorHandler.showMessage(error.data.errors[0], 'errorMessage', 4000, "error");
             $state.go("course_list"); 
           }

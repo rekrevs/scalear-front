@@ -102,8 +102,6 @@ angular.module('scalearAngularApp')
     }
 
     function setSelectedVideoQuiz(quiz) {
-      // quiz.selected = true
-      // console.log()
       quiz.formatedTime = $filter('format')(quiz.time)
       quiz.start_formatedTime = $filter('format')(quiz.start_time)
       quiz.end_formatedTime = $filter('format')(quiz.end_time)
@@ -260,8 +258,7 @@ angular.module('scalearAngularApp')
       }
 
       function update() {
-              var lecture = ItemsModel.getSelectedItem();
-              // console.log(lecture)
+        var lecture = ItemsModel.getSelectedItem();
         if(lecture.inclass || lecture.distance_peer) {
           video_quiz.intro = ScalearUtils.arrayToSeconds(video_quiz.intro_formatedTime.split(':'))
           video_quiz.self = ScalearUtils.arrayToSeconds(video_quiz.self_formatedTime.split(':'))
@@ -335,7 +332,6 @@ angular.module('scalearAngularApp')
             if(!(data.name_error ) ){
               return validateTime()
               .catch(function(errors){
-                // console.log(errors)
                 return {errors: errors}
               })
             }

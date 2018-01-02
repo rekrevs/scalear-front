@@ -714,7 +714,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.playHeadMouseDown = function(event) {
-        console.log("down");
         onplayhead = true;
 
         if(scope.is_mobile){
@@ -728,11 +727,9 @@ angular.module('scalearAngularApp')
       }
 
       scope.playHeadMouseUp = function(event) {
-        console.log("up");
         if (onplayhead == true) {
           onplayhead = false;
           if(scope.is_mobile){
-            console.log("removing");
             scope.hidePlayhead()
             window.removeEventListener('touchmove', scope.moveplayhead, true);
             window.removeEventListener("touchend", scope.playHeadMouseUp, true)
@@ -749,7 +746,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) {
-        console.log("moving");
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {

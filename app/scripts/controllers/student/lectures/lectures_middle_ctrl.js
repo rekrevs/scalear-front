@@ -648,8 +648,8 @@ angular.module('scalearAngularApp')
         }
       } else {
         if ($scope.quiz_mode) {
-          if ($scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time) { // // console.log("quiz")          // // console.log( $scope.selected_quiz.online_answers)
-            if ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") { // // console.log("html")              // // console.log($scope.answer_form.$error.atleastone)
+          if ($scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time) {
+            if ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") {
               if ($scope.answer_form.$error.atleastone) {
                 returnToQuiz($scope.selected_quiz.time)
               } else {

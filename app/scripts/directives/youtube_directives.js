@@ -73,13 +73,11 @@ angular.module('scalearAngularApp')
           if ($rootScope.is_mobile || scope.controls == "default")
             player.controls(true);
           player.autoplay(false);
-        }
-        else{
+        } else if (isMediaSite(scope.url)){
           $log.debug("mediasite")
-          console.log("mediasite")
           var video = Popcorn.HTMLMediaSiteVideoElement('#' + scope.id)
           player = Popcorn(video);
-          video.src = 'https://lecturenet.uu.nl/Site1/Play/4d777617e37a41fc824846576e8ab37a1d'
+          video.src = scope.url
           $log.debug(video.src)
         }
 
@@ -179,7 +177,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.seek = function(time) {
-        console.log("my seeking", time)
         $log.debug("entering sekking", time)
         time=  parseFloat(time)
         if (time < 0){
@@ -330,14 +327,8 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
-            console.log("youtube direvtin, seting duration", player_controls.getDuration(), player_controls.getAbsoluteDuration())
-            if(player_controls.youtube){
-              VideoInformation.setDuration(player_controls.getDuration())
-            }
-            else{
-              console.log("setting with absolute")
-              VideoInformation.setDuration(player_controls.getAbsoluteDuration())
-            }
+            var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
+            VideoInformation.setDuration(duration)
           });
 
         player.on('playing',
@@ -461,14 +452,19 @@ angular.module('scalearAngularApp')
         return video_url.match(/(.*mp4$)/)
       }
 
+      var isMediaSite = function(url) {
+        var video_url = url || scope.url || ""
+        return video_url.match(/(\/Play\/)/)
+      }
+
       player_controls.isYoutube = isYoutube
       player_controls.isMP4 = isMP4
 
       scope.$watch('url', function() {
         console.log("url change ", scope.url)
-        // if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url))){
+        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isMediaSite(scope.url) )){
           player_controls.refreshVideo()
-        // }
+        }
       })
 
       var unwatch = scope.$watch('player', function() {
@@ -651,7 +647,6 @@ angular.module('scalearAngularApp')
       scope.chosen_speed = 1
       scope.is_mobile = $rootScope.is_mobile
       $timeout(function() {
-        console.log("PROGRESS BSRD DURSTION ID", scope.player.controls.getVideoEndTime())
         scope.duration = scope.player.controls.getDuration();
         scope.video = {
           start_time: scope.player.controls.getVideoStartTime(),
@@ -659,8 +654,8 @@ angular.module('scalearAngularApp')
         }
         scope.$watch('editing', function() {
           if (scope.editing == 'video'){
-            scope.video.start_time= scope.player.controls.getVideoStartTime(),
-            scope.video.end_time= scope.player.controls.getVideoEndTime(),
+            scope.video.start_time= scope.player.controls.getVideoStartTime();
+            scope.video.end_time= scope.player.controls.getVideoEndTime();
             scope.duration = scope.player.controls.getAbsoluteDuration();
           }
           else

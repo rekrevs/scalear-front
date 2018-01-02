@@ -59,8 +59,12 @@ angular.module('scalearAngularApp')
       return url.match(/(.*mp4$)/);
     }
 
+    function isMediaSite(url) {
+      return url.match(/(\/Play\/)/)
+    }
+
     function invalidUrl(url) {
-      return(!isMP4(url) && !isYoutube(url) && url.trim().length > 0)
+      return(url.trim().length <= 0 && !isMP4(url) && !isYoutube(url) && !isMediaSite(url))
     }
 
     function setDuration(newDuration) {
@@ -68,14 +72,11 @@ angular.module('scalearAngularApp')
     }
 
     function waitForMediaSiteDurationSetup() {
-      console.log("will wait for duration")
       var deferred = $q.defer();
-      var stop = $interval(function(){
-        console.log("checkedin duration...", duration)
+      var watchDuration = $interval(function(){
         if(duration){
-          console.log("got duration")
           deferred.resolve(duration)
-          $interval.cancel(stop);
+          $interval.cancel(watchDuration);
         }
       }, 500)
       return deferred.promise;
@@ -102,10 +103,11 @@ angular.module('scalearAngularApp')
       invalidUrl: invalidUrl,
       getFinalUrl: getFinalUrl,
       isYoutube: isYoutube,
-      emptyCachedInfo:emptyCachedInfo,
-      waitForMediaSiteDurationSetup:waitForMediaSiteDurationSetup,
-      setDuration:setDuration,
-      resetValues:resetValues
+      emptyCachedInfo: emptyCachedInfo,
+      waitForMediaSiteDurationSetup: waitForMediaSiteDurationSetup,
+      setDuration: setDuration,
+      resetValues: resetValues,
+      isMediaSite: isMediaSite
     };
 
   }]);

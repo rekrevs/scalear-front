@@ -2,53 +2,10 @@
 (function( Popcorn, window, document ) {
 
   var
-
   CURRENT_TIME_MONITOR_MS = 10,
   EMPTY_STRING = "",
 
-  // Example: http://www.mediasite.com/watch?v=12345678901
-  regexMediaSite = /^.*(?:\/|v=)(.{11})/,
-
   ABS = Math.abs;
-
-  // Setup for MediaSite API
-  // msReady = false,
-  // msLoaded = false,
-  // msCallbacks = [];
-
-  // function isMediaSiteReady() {
-  //   // If the MediaSite iframe API isn't injected, to it now.
-  //   if( !msLoaded ) {
-  //     var tag = document.createElement( "script" );
-  //     var protocol = window.location.protocol === "file:" ? "http:" : "";
-
-  //     tag.src = protocol + "//www.mediasite.com/iframe_api";
-  //     var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
-  //     firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
-  //     msLoaded = true;
-  //   }
-  //   return msReady;
-  // }
-
-  // function addMediaSiteCallback( callback ) {
-  //   msCallbacks.unshift( callback );
-  // }
-
-  // An existing MediaSite references can break us.
-  // Remove it and use the one we can trust.
-  // if ( window.Mediasite ) {
-  //   window.quarantineMediasite = window.Mediasite;
-  //   window.Mediasite = null;
-  // }
-
-  // window.onMediaSiteIframeAPIReady = function() {
-  //   msReady = true;
-  //   var i = msCallbacks.length;
-  //   while( i-- ) {
-  //     msCallbacks[ i ]();
-  //     delete msCallbacks[ i ];
-  //   }
-  // };
 
   function HTMLMediaSiteVideoElement( id ) {
 
@@ -134,7 +91,6 @@
       durationReady = true;
       // ensure we are muted.
       onMuted();
-      console.log("onPlayerReady firstPlay", firstPlay )
 
       if ( firstPlay ) {
         onFirstPlay();
@@ -144,7 +100,6 @@
 
     function onPlayerError(event) {
       // There's no perfect mapping to HTML5 errors from MediaSite errors.
-      console.log("onPlayerError", event.errorCode )
       var err = { name: "MediaError" };
 
       switch( event.errorCode ) {
@@ -152,24 +107,24 @@
         // invalid parameter
         case 500:
           err.message = "Invalid video parameter.";
-          err.code = MediaError.MEDIA_ERR_ABORTED;
+          err.code = event.errorCode;
           break;
 
         // HTML5 Error
         case 424:
           err.message = "The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.";
-          err.code = MediaError.MEDIA_ERR_DECODE;
+          err.code = event.errorCode;
           break;
         // requested video not found
         case 510:
           err.message = "Video not found.";
-          err.code = MediaError.MEDIA_ERR_NETWORK;
+          err.code = event.errorCode;
           break;
 
         // video can't be embedded by request of owner
         case 511:
           err.message = "Video not usable.";
-          err.code = MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED;
+          err.code = event.errorCode;
           break;
 
         default:
@@ -183,12 +138,8 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-      // addMediaReadyCallback(function() {
-      //   bufferedInterval = setInterval( monitorBuffered, 50 );
-      // });
 
       // Set initial paused state
-      console.log("onFirstPlay", impl )
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
         addMediaReadyCallback(function() {
@@ -230,8 +181,6 @@
 
     function onPlayerStateChange( event ) {
 
-      console.log("onPlayerStateChange", event.playState,  Mediasite.PlayState.Playing)
-
       switch( event.playState ) {
 
         // ended
@@ -241,13 +190,11 @@
 
         // playing
         case Mediasite.PlayState.Playing:
-        console.log("playing state1 firstPlay",firstPlay)
           if( !firstPlay ) {
             // fake ready event
             firstPlay = true;
 
             // Duration ready happened first, we're now ready.
-            console.log("playing state2 durationReady",durationReady)
             if ( durationReady ) {
               onFirstPlay();
             }
@@ -319,58 +266,19 @@
       elem.setAttribute("id", elemId)
     }
 
-    // parseDuration = function(DurationString) {
-    //   var matches = DurationString.match(/^P([0-9]+Y|)?([0-9]+M|)?([0-9]+D|)?T?([0-9]+H|)?([0-9]+M|)?([0-9]+S|)?$/),
-    //       result = {};
-
-    //   if (matches) {
-    //       result.year = parseInt(matches[1]) || 0;
-    //       result.month = parseInt(matches[2]) || 0;
-    //       result.day = parseInt(matches[3]) || 0;
-    //       result.hour = parseInt(matches[4]) || 0;
-    //       result.minute = parseInt(matches[5]) || 0;
-    //       result.second = parseInt(matches[6]) || 0;
-
-    //       result.toString = function() {
-    //           var string = '';
-
-    //           if (this.year) string += this.year + ' Year' + (this.year == 1 ? '': 's') + ' ';
-    //           if (this.month) string += this.month + ' Month' + (this.month == 1 ? '': 's') + ' ';
-    //           if (this.day) string += this.day + ' Day' + (this.day == 1 ? '': 's') + ' ';
-    //           if (this.hour) string += this.hour + ' Hour' + (this.hour == 1 ? '': 's') + ' ';
-    //           if (this.minute) string += this.minute + ' Minute' + (this.minute == 1 ? '': 's') + ' ';
-    //           if (this.second) string += this.second + ' Second' + (this.second == 1 ? '': 's') + ' ';
-
-    //           return string;
-    //       }
-
-    //       return result;
-    //   } else {
-    //       return false;
-    //   }
-    // }
-
     function changeSrc( aSrc ) {
-      // if( !self._canPlaySrc( aSrc ) ) {
-      //   impl.error = {
-      //     name: "MediaError",
-      //     message: "Media Source Not Supported",
-      //     code: MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED
-      //   };
-      //   self.dispatchEvent( "error" );
-      //   return;
-      // }
-      console.log("aSrc", aSrc)
-      aSrc = aSrc || 'https://lecturenet.uu.nl/Site1/Play/4d777617e37a41fc824846576e8ab37a1d'
+      if( !self._canPlaySrc( aSrc ) ) {
+        impl.error = {
+          name: "MediaError",
+          message: "Media Source Not Supported",
+          code: 511
+        };
+        self.dispatchEvent( "error" );
+        return;
+      }
       aSrc = aSrc + (aSrc.indexOf("?") == -1 ? "?" : "&") + "player=MediasiteIntegration"
 
       impl.src = aSrc;
-
-      // Make sure MediaSite is ready, and if not, register a callback
-      // if( !isMediaSiteReady() ) {
-      //   addMediaSiteCallback( function() { changeSrc( aSrc ); } );
-      //   return;
-      // }
 
       if( playerReady ) {
         resetPlayer();
@@ -379,73 +287,6 @@
       elem.setAttribute("id", elemId)
       parent.appendChild( elem );
 
-      // Use any player vars passed on the URL
-      // var playerVars = self._util.parseUri( aSrc ).queryKey;
-
-      // Remove the video id, since we don't want to pass it
-      // delete playerVars.v;
-
-      // Sync autoplay, but manage internally
-      // impl.autoplay = playerVars.autoplay === "1" || impl.autoplay;
-      // delete playerVars.autoplay;
-
-      // Sync loop, but manage internally
-      // impl.loop = playerVars.loop === "1" || impl.loop;
-      // delete playerVars.loop;
-
-      // Don't show related videos when ending
-      // playerVars.rel = playerVars.rel || 0;
-
-      // Don't show MediaSite's branding
-      // playerVars.modestbranding = playerVars.modestbranding || 1;
-
-      // Don't show annotations by default
-      // playerVars.iv_load_policy = playerVars.iv_load_policy || 3;
-
-      // Don't show video info before playing
-      // playerVars.showinfo = playerVars.showinfo || 0;
-
-      // Specify our domain as origin for iframe security
-      // var domain = window.location.protocol === "file:" ? "*" :
-        // window.location.protocol + "//" + window.location.host;
-      // playerVars.origin = playerVars.origin || domain;
-
-      // Show/hide controls. Sync with impl.controls and prefer URL value.
-      // playerVars.controls = playerVars.controls=="1" || impl.controls ? 2 : 0;
-      // impl.controls = playerVars.controls;
-
-      // Set wmode to transparent to show video overlays
-      // playerVars.wmode = playerVars.wmode || "opaque";
-
-      // Get video ID out of mediasite url
-      // aSrc = regexMediaSite.exec( aSrc )[ 1 ];
-
-      // // var xhrURL = "https://gdata.mediasite.com/feeds/api/videos/" + aSrc + "?v=2&alt=jsonc&callback=?";
-      // var xhrURL = "https://www.googleapis.com/mediasite/v3/videos?id=" + aSrc + "&part=contentDetails&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&fields=items(contentDetails(duration))"
-      // // Get duration value.
-
-      // Popcorn.getJSONP( xhrURL, function( resp ) {
-      //   var warning = "failed to retreive duration data, reason: ";
-      //   if ( resp.error ) {
-      //     console.warn( warning + resp.error.message );
-      //     return ;
-      //   } else if ( !resp.items || resp.items.length ==0 ) {
-      //     console.warn( warning + "no response data" );
-      //     return;
-      //   }
-
-      //   var duration = parseDuration(resp.items[0].contentDetails.duration)
-      //   impl.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//resp.data.duration;
-      //   self.dispatchEvent( "durationchange" );
-      //   durationReady = true;
-
-      //   // First play happened first, we're now ready.
-      //   if ( firstPlay ) {
-      //     onFirstPlay();
-      //   }
-      // });
-
-      console.log("media url set", aSrc)
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {
@@ -478,21 +319,11 @@
       }
     }
 
-    // function monitorBuffered() {
-    //   var fraction = player.getVideoLoadedFraction();
-
-    //   if ( fraction && lastLoadedFraction !== fraction ) {
-    //     lastLoadedFraction = fraction;
-    //     onProgress();
-    //   }
-    // }
-
     function getCurrentTime() {
       return impl.currentTime;
     }
 
     function changeCurrentTime( aTime ) {
-      console.log("changing to", aTime)
       impl.currentTime = aTime;
       if( !mediaReady ) {
         addMediaReadyCallback( function() {
@@ -509,7 +340,6 @@
 
     function onTimeUpdate() {
       self.dispatchEvent( "timeupdate" );
-      console.log("onTimeUpdate")
     }
 
     function onSeeking() {
@@ -518,7 +348,6 @@
       // catchRoguePauseEvent = true;
       impl.seeking = true;
       self.dispatchEvent( "seeking" );
-      console.log("onSeeking")
     }
 
     function onSeeked() {
@@ -528,7 +357,6 @@
       self.dispatchEvent( "seeked" );
       self.dispatchEvent( "canplay" );
       self.dispatchEvent( "canplaythrough" );
-      console.log("onSeeked")
     }
 
     function onPlay() {
@@ -553,12 +381,10 @@
         }
         self.dispatchEvent( "playing" );
       }
-      console.log("onPlay")
     }
 
     function onProgress() {
       self.dispatchEvent( "progress" );
-      console.log("onProgress")
     }
 
     self.play = function() {
@@ -568,7 +394,6 @@
         return;
       }
       player.play();
-      console.log("play")
     };
 
     function onPause() {
@@ -578,7 +403,6 @@
         clearInterval( timeUpdateInterval );
         self.dispatchEvent( "pause" );
       }
-      console.log("onPause")
     }
 
     self.pause = function() {
@@ -632,7 +456,6 @@
         self.dispatchEvent( "timeupdate" );
         self.dispatchEvent( "ended" );
       }
-      console.log("onEnded")
     }
 
     function setVolume( aValue ) {
@@ -645,13 +468,11 @@
       }
       player.setVolume( impl.volume * 100 );
       self.dispatchEvent( "volumechange" );
-      console.log("setVolume")
     }
 
     function getVolume() {
       // MediaSite has getVolume(), but for sync access we use impl.volume
       return impl.volume;
-      console.log("getVolume")
     }
 
     function setMuted( aValue ) {
@@ -662,7 +483,6 @@
       }
       player[ aValue ? "mute" : "unMute" ]();
       self.dispatchEvent( "volumechange" );
-      console.log("mute")
     }
 
     function getMuted() {
@@ -676,7 +496,6 @@
           return impl.src;
         },
         set: function( aSrc ) {
-          console.log("setting")
           if( aSrc && aSrc !== impl.src ) {
             changeSrc( aSrc );
           }
@@ -828,11 +647,10 @@
 
   HTMLMediaSiteVideoElement.prototype = new Popcorn._MediaElementProto();
   HTMLMediaSiteVideoElement.prototype.constructor = HTMLMediaSiteVideoElement;
-  // HTMLMediaSiteVideoElement.prototype.getSpeed = getSpeeds();
 
   // Helper for identifying URLs we know how to play.
   HTMLMediaSiteVideoElement.prototype._canPlaySrc = function( url ) {
-    return (/(?:http:\/\/www\.|http:\/\/|www\.|\.|^)(youtu).*(?:\/|v=)(.{11})/).test( url ) ?
+    return (/(\/Play\/)/).test( url ) ?
       "probably" :
       EMPTY_STRING;
   };

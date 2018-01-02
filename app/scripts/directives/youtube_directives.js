@@ -42,7 +42,6 @@ angular.module('scalearAngularApp')
         player_events = {}
 
       var loadVideo = function() {
-        console.log("loading video")
         scope.kill_popcorn()
         player_controls.youtube = false
         if (!scope.controls || scope.controls == undefined)
@@ -461,7 +460,6 @@ angular.module('scalearAngularApp')
       player_controls.isMP4 = isMP4
 
       scope.$watch('url', function() {
-        console.log("url change ", scope.url)
         if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isMediaSite(scope.url) )){
           player_controls.refreshVideo()
         }

@@ -599,6 +599,7 @@ var translation_sv={
     quiz_time: "Quiz-tidpunkt",
     marker_time: "Markörens tid",
     note_time: "Anteckning tid",
+    note_duration: "Anteckning varaktighet",
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",

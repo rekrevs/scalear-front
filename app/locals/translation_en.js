@@ -600,6 +600,7 @@ var translation_en={
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
     note_time: "Note Time",
+    note_duration: "Note Duration",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",

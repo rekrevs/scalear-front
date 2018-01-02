@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 
     }
 
-    function addMarker(insert_time) {
+    function addMarker(insert_time, h, w, l, t) {
       var deferred = $q.defer()
       var lecture = ItemsModel.getSelectedItem();
       var video_duration = VideoInformation.duration
@@ -46,10 +46,19 @@ angular.module('scalearAngularApp')
       if(same_markers.length > 0) {
         deferred.resolve(same_markers[0].data)
       } else {
+        var marker_data = {
+          height: h || 0,
+          width: w || 0,
+          xcoor: l || 0,
+          ycoor: t || 0,
+          time: insert_time
+        }
+
         Lecture.newMarker({
             course_id: lecture.course_id,
             lecture_id: lecture.id,
-            time: insert_time,
+            },{
+            marker: marker_data
           })
           .$promise
           .then(function(data) {
@@ -103,7 +112,12 @@ angular.module('scalearAngularApp')
           online_marker: {
             time: marker.time,
             title: marker.title,
-            annotation: marker.annotation
+            annotation: marker.annotation,
+            duration: marker.duration,
+            xcoor: marker.xcoor,
+            ycoor: marker.ycoor,
+            width: marker.width,
+            height: marker.height
           }
         }).$promise
       }

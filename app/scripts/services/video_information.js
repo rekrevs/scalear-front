@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
     }
 
     function invalidUrl(url) {
-      return(url.trim().length <= 0 && !isMP4(url) && !isYoutube(url) && !isMediaSite(url))
+      return(url.trim().length <= 0 || (!isMP4(url) && !isYoutube(url) && !isMediaSite(url)) )
     }
 
     function setDuration(newDuration) {

@@ -154,6 +154,7 @@ ul.connected_blocks {
 						    </quiz>
 						    <annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && lecture.distance_peer" />
 					      	<annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && !selected_quiz && !lecture.distance_peer" />
+					      	<dynmaic-annotation data="dynmaic_annotation" close="dismissDynmaicAnnotation" action="toggleVideoPlayback" ng-if="dynmaic_annotation && !selected_quiz && !lecture.distance_peer" />
 					      	<annotation text="selected_quiz.question" close="dismissQuestionText" ng-if="selected_quiz.actual_display_text" />
 
 						  </youtube>

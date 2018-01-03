@@ -320,7 +320,15 @@ angular.module('scalearAngularApp')
 
     $scope.addOnlineMarker = function(display_editor) {
       var insert_time = $scope.lecture_player.controls.getTime()
-      MarkerModel.addMarker(insert_time)
+      var answer_width = 250,
+        answer_height = 100,
+        element = angular.element("#ontop"),
+        the_top = 0.9,
+        the_left = 0,
+        the_width = 0.5,
+        the_height = 0.1;
+
+      MarkerModel.addMarker(insert_time, the_height, the_width, the_left, the_top)
         .then(function(marker) {
           addItemToVideoQueue(marker, "marker")
           if (display_editor) {

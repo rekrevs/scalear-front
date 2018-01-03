@@ -493,17 +493,18 @@ angular.module('scalearAngularApp')
       })
 
 
-      $scope.lecture.annotations.forEach(function(marker) {
-        if (marker.annotation) {
-          $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
-            showAnnotation(marker.annotation)
-          })
-          $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
-            $scope.dismissAnnotation()
-          })
-        }
-      })
-
+      if( $scope.lecture.annotations  ){
+        $scope.lecture.annotations.forEach(function(marker) {
+          if (marker.annotation) {
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
+              showDynmaicAnnotation(marker)
+            })
+            $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
+              $scope.dismissDynmaicAnnotation()
+            })
+          }
+        })
+      }
       duration_milestones.forEach(function(milestone) {
         $scope.lecture_player.controls.cue(($scope.total_duration * milestone) / 100, function() {
           updateViewPercentage(milestone, "mile_cue")
@@ -699,6 +700,8 @@ angular.module('scalearAngularApp')
       $log.debug("playing ")
       checkIfQuizSolved()
       $scope.dismissAnnotation()
+      $scope.dismissDynmaicAnnotation()
+
       if (!$scope.quiz_mode && $scope.distance_peer_session_id) {
         checkIfCanLeaveStatus()
       }
@@ -1249,6 +1252,9 @@ angular.module('scalearAngularApp')
     $scope.dismissAnnotation = function() {
       $scope.annotation = null
     }
+    $scope.dismissDynmaicAnnotation = function() {
+      $scope.dynmaic_annotation = null
+    }    
     $scope.dismissQuestionText = function() {
       $scope.selected_quiz.actual_display_text = null
     }
@@ -1301,9 +1307,14 @@ angular.module('scalearAngularApp')
     }
 
     var showAnnotation = function(annotation) {
+      $scope.dismissDynmaicAnnotation()
       $scope.annotation = annotation
     }
 
+    var showDynmaicAnnotation = function(annotation) {
+      $scope.dismissAnnotation()
+      $scope.dynmaic_annotation = annotation
+    }
     //  Distance peer methods
     var checkIfCanLeaveStatus = function() {
       if (parseInt($scope.lecture_player.controls.getTime().toFixed(2)) >= parseInt($scope.next_stop_time.toFixed(2))) {

@@ -615,7 +615,7 @@ angular.module('scalearAngularApp')
       var visible_discussions = Array(1)
       if(Array.isArray(current_timeline_item.data)) {
         visible_discussions = current_timeline_item.data.filter(function(elem) {
-          return elem.post.hide
+          return elem.hide
         })
       }
       if(current_timeline_item.data && (current_timeline_item.data.show === false || !visible_discussions.length)) {

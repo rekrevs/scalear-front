@@ -111,11 +111,11 @@ angular.module('scalearAngularApp')
               if (type != "meta")
                 for (var it in $scope.lectures[lec_id][type]) {
                   if (type == 'discussion') {
-                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].post.time
+                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].time
                     for (var disc in $scope.lectures[lec_id][type][it][1]) {
-                      $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
-                      for (var com in $scope.lectures[lec_id][type][it][1][disc].post.comments) {
-                        $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
+                      $scope.lectures[lec_id][type][it][1][disc].hide = !$scope.lectures[lec_id][type][it][1][disc].hide
+                      for (var com in $scope.lectures[lec_id][type][it][1][disc].comments) {
+                        $scope.lectures[lec_id][type][it][1][disc].comments[com].hide = !$scope.lectures[lec_id][type][it][1][disc].comments[com].hide
                       }
                     }
                   } else if (type == 'charts') {
@@ -551,9 +551,9 @@ angular.module('scalearAngularApp')
         discussion.temp_response = null
         Forum.createComment({ comment: { content: text, post_id: discussion.id, lecture_id: discussion.lecture_id } },
           function(response) {
-            $log.debug(response)
+            $log.debug(response.comment)
             response.comment.hide = false
-            discussion.comments.push(response)
+            discussion.comments.push(response.comment)
             angular.element('ul.highlight .feedback textarea').blur()
           },
           function() {}
@@ -929,7 +929,7 @@ angular.module('scalearAngularApp')
         var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion") {
           var q_ind = $scope.inner_highlight_index
-          time = $scope.selected_item.data[q_ind].post.time
+          time = $scope.selected_item.data[q_ind].time
           $log.debug(time)
         }
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)

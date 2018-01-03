@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal) {
+  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', 'UserSession','User', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal, UserSession, User) {
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.new_course')
     $rootScope.subheader_message = $translate.instant("navigation.new_course")
     $scope.submitting = false;
     $scope.course = {}
+    $scope.welcome_message = null
     $scope.course.selected_subdomain = {'All':true}
     $scope.course.email_discussion = false
     CourseModel.getUserOtherCourses().then(function(data) {
@@ -22,6 +23,17 @@ angular.module('scalearAngularApp')
     $scope.course.end_date.setDate($scope.course.start_date.getDate() + (days_in_week * default_course_duration));
 
     $scope.import_from = null
+
+    UserSession.getCurrentUser() 
+    .then(function(user) { 
+      $scope.current_user = user 
+      User.getWelcomeMessage({ id: user.id }, 
+        function(data) { 
+            if (data){ 
+              $scope.welcome_message = data.welcome_message 
+            } 
+        }) 
+    }) 
 
     $scope.addImportInformation = function() {
       var splitter_text = "[" + $translate.instant("navigation.copied_from")

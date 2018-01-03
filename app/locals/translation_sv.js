@@ -600,6 +600,7 @@ var translation_sv={
     marker_time: "Markörens tid",
     note_time: "Anteckning tid",
     note_duration: "Anteckning varaktighet",
+    note_as_slide: "Fullskärm Anteckning",    
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",

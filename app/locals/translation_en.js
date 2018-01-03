@@ -601,6 +601,7 @@ var translation_en={
     marker_time: "Marker Time",
     note_time: "Note Time",
     note_duration: "Note Duration",
+    note_as_slide: "Fullscreen Note",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",

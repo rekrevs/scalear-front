@@ -497,11 +497,16 @@ angular.module('scalearAngularApp')
         $scope.lecture.annotations.forEach(function(marker) {
           if (marker.annotation) {
             $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
-              showDynmaicAnnotation(marker)
+              if (marker.as_slide) {
+                $scope.lecture_player.controls.pause()
+              }
+              showDynmaicAnnotation(marker)              
             })
-            $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
-              $scope.dismissDynmaicAnnotation()
-            })
+            if (!marker.as_slide) {
+              $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
+                $scope.dismissDynmaicAnnotation()
+              })
+            }
           }
         })
       }
@@ -591,6 +596,7 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
       $scope.closeReviewNotify()
       $scope.dismissAnnotation()
+      $scope.dismissDynmaicAnnotation()
       var current_time = $scope.lecture_player.controls.getTime()
       $scope.seek_to_time = time
       if (!lecture_id || lecture_id == $scope.lecture.id) { //if current lecture
@@ -1261,12 +1267,13 @@ angular.module('scalearAngularApp')
 
     $scope.endDistancePeerSession = function() {
       $scope.dismissAnnotation()
+      $scope.dismissDynmaicAnnotation()
       clearQuiz()
       changeStatusAndWaitTobeSync(6, null)
     }
 
     $scope.quizLayerClick =  function() {
-      if (!$scope.quiz_mode){
+      if (!$scope.quiz_mode && !$scope.dynmaic_annotation.as_slide){
         $scope.toggleVideoPlayback()
       }
     }

@@ -117,7 +117,8 @@ angular.module('scalearAngularApp')
             xcoor: marker.xcoor,
             ycoor: marker.ycoor,
             width: marker.width,
-            height: marker.height
+            height: marker.height,
+            as_slide: marker.as_slide
           }
         }).$promise
       }

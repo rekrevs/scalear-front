@@ -170,7 +170,7 @@ angular.module('scalearAngularApp')
       function validateUrl() {
         var deferred = $q.defer();
         if(VideoInformation.invalidUrl(lecture.url)) {
-          deferred.resolve($translate.instant('editor.details.incompatible_video_link'));
+          deferred.reject($translate.instant('editor.details.incompatible_video_link'));
         } else {
           validate()
             .then(function() {
@@ -194,11 +194,9 @@ angular.module('scalearAngularApp')
                     deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                     return deferred.promise
                   })
-              } else if(VideoInformation.isMP4(lecture.url)) {
-                deferred.resolve()
               } else {
-                deferred.reject($translate.instant('editor.details.incompatible_video_link'))
-              }
+                deferred.resolve()
+              } 
             })
             .catch(function(msg) {
               deferred.reject(msg)
@@ -222,6 +220,7 @@ angular.module('scalearAngularApp')
       }
 
       function updateUrl() {
+        VideoInformation.resetValues()
         var deferred = $q.defer();
         lecture.aspect_ratio = "widescreen"
         lecture.url = lecture.url.trim()
@@ -239,20 +238,30 @@ angular.module('scalearAngularApp')
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
                 update().then(function() {
-                  deferred.resolve();
+                  deferred.resolve(true);
                 });
                 $rootScope.$broadcast("update_module_time", lecture.group_id)
               })
-          } else {
+          } else if(VideoInformation.isMP4(lecture.url)) {
             var video = $('video')
             video.bind('loadeddata', function(event) {
               lecture.start_time = 0
               lecture.end_time = event.target.duration || 0
               update().then(function() {
-                deferred.resolve();
+                deferred.resolve(false);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
+          }else if(VideoInformation.isMediaSite(lecture.url)){
+            VideoInformation.waitForMediaSiteDurationSetup().then(function (duration) {
+              lecture.duration = duration
+              lecture.start_time = 0
+              lecture.end_time = lecture.duration
+              update().then(function() {
+                deferred.resolve(false);
+              });
+              $rootScope.$broadcast("update_module_time", lecture.group_id)
+            })
           }
         } else {
           lecture.url = "none"

@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('VideoInformation', ['$http', '$q', function($http, $q) {
+  .factory('VideoInformation', ['$http', '$q', '$interval', function($http, $q, $interval) {
 
-    var youtube_video_information = {}
+    var youtube_video_information = {},
+    duration= 0,
+    current_time= 0, 
+    volume= 0.8,
+    speed= 1,
+    quality= "720p";
 
     function generateYoutubeApiVideoUrl(id) {
       return "https://www.googleapis.com/youtube/v3/videos?id=" +
@@ -54,24 +59,55 @@ angular.module('scalearAngularApp')
       return url.match(/(.*mp4$)/);
     }
 
+    function isMediaSite(url) {
+      return url.match(/(\/Play\/)/)
+    }
+
     function invalidUrl(url) {
-      return(!isMP4(url) && !isYoutube(url) && url.trim().length > 0)
+      return(url.trim().length <= 0 || (!isMP4(url) && !isYoutube(url) && !isMediaSite(url)) )
+    }
+
+    function setDuration(newDuration) {
+      duration = newDuration
+    }
+
+    function waitForMediaSiteDurationSetup() {
+      var deferred = $q.defer();
+      var watchDuration = $interval(function(){
+        if(duration){
+          deferred.resolve(duration)
+          $interval.cancel(watchDuration);
+        }
+      }, 500)
+      return deferred.promise;
+    }
+
+    function resetValues(argument) {
+      duration= 0
+      current_time= 0 
+      volume= 0.8
+      speed= 1
+      quality= "720p";
     }
 
 
     return {
-      duration: 0,
-      current_time: 0, 
-      volume: 0.8,
-      speed: 1,
-      quality: "720p",
+      duration: duration,
+      current_time: current_time, 
+      volume: volume,
+      speed: speed,
+      quality: quality,
       requestInfoFromYoutube: requestInfoFromYoutube,
       isFinalUrl: isFinalUrl,
       isMP4: isMP4,
       invalidUrl: invalidUrl,
       getFinalUrl: getFinalUrl,
       isYoutube: isYoutube,
-      emptyCachedInfo:emptyCachedInfo
+      emptyCachedInfo: emptyCachedInfo,
+      waitForMediaSiteDurationSetup: waitForMediaSiteDurationSetup,
+      setDuration: setDuration,
+      resetValues: resetValues,
+      isMediaSite: isMediaSite
     };
 
   }]);

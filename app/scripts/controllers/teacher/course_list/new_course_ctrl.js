@@ -21,10 +21,6 @@ angular.module('scalearAngularApp')
     var default_course_duration =  10 //weeks
     $scope.course.end_date.setDate($scope.course.start_date.getDate() + (days_in_week * default_course_duration));
 
-    // $scope.course.start_date = moment().format('DD-MMMM-YYYY')
-    // $scope.course.end_date = moment().add(210,'days').format('DD-MMMM-YYYY')
-
-
     $scope.import_from = null
 
     $scope.addImportInformation = function() {
@@ -34,7 +30,7 @@ angular.module('scalearAngularApp')
         desc_temp_empty = "",
         pre_temp_empty = "",
         image_temp_empty = ""
-      var course_info = $scope.import_from //$filter("filter")($scope.importing,{id:$scope.import_from},true)
+      var course_info = $scope.import_from
       if(course_info) {
         var course_name_text = "\n" + splitter_text + " " + course_info.name + " :]\n"
         if(course_info.description) {
@@ -116,8 +112,6 @@ angular.module('scalearAngularApp')
     function validateDate() {
       var deferred = $q.defer()
       var errors = {}
-      // $scope.course.start_date = new Date($scope.course.start_date)
-      // $scope.course.end_date = new Date($scope.course.end_date)
       var a = true
       if (($scope.course.start_date == "Invalid Date" || $scope.course.start_date == null )) {
         errors["start_date"] = ["not a Date"]
@@ -140,20 +134,15 @@ angular.module('scalearAngularApp')
           deferred.resolve(errors)
         }
       }
-      // $scope.course.start_date = moment($scope.course.start_date).format('DD-MMMM-YYYY')
-      // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
       return deferred.promise
     }
 
 
     $scope.createCourse = function() {
       $scope.submitting = true;
-      // if($scope.form.$valid) {
       validateDate()
       .then(function(errors) {
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
-        // $scope.course.start_date = new Date($scope.course.start_date)
-        // $scope.course.end_date = new Date($scope.course.end_date)
         var selected_subdomain = $scope.course.selected_subdomain
         var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
@@ -167,16 +156,12 @@ angular.module('scalearAngularApp')
             }
           })
           .catch(function(response) {
-            // $scope.course.start_date = moment($scope.course.start_date).format('DD-MMMM-YYYY')
-            // $scope.course.end_date = moment($scope.course.end_date).format('DD-MMMM-YYYY')
             $scope.submitting = false;
             $scope.server_errors = response.data.errors
-            // console.log($scope.server_errors)
             $scope.course.selected_subdomain = selected_subdomain
             $scope.course.email_discussion = email_discussion
           })
       }) 
-      // else {
       .catch(function(errors) {
           $scope.server_errors = errors
           $scope.submitting = false;

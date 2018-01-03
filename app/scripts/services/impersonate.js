@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     });
 
   }])
-  .factory("Preview", ['Impersonate', '$state', '$cookieStore', 'ContentNavigator', '$rootScope', '$log', 'UserSession', function(Impersonate, $state, $cookieStore, ContentNavigator, $rootScope, $log, UserSession) {
+  .factory("Preview", ['Impersonate', '$state', '$cookieStore', 'ContentNavigator', '$rootScope', '$log', 'UserSession', 'Token', function(Impersonate, $state, $cookieStore, ContentNavigator, $rootScope, $log, UserSession, Token) {
 
     var current_user = null
 
@@ -61,6 +61,8 @@ angular.module('scalearAngularApp')
           UserSession.allowRefetchOfUser()
           $cookieStore.put('preview_as_student', true)
           $cookieStore.put('new_user_id', data.user.id)
+          //token of preview user
+          Token.setToken(data.token)
           $rootScope.preview_as_student = true
           current_user = null
           $state.go(new_state.name, new_state.params, { reload: true })
@@ -82,13 +84,17 @@ angular.module('scalearAngularApp')
         var state = $cookieStore.get('state')
         ContentNavigator.close()
         $rootScope.$broadcast("exit_preview")
-        $state.go(state,params,{notify:false,reload:false, location:'replace', inherit:true});
+        if(state){
+          $state.go(state,params,{notify:false,reload:false, location:'replace', inherit:true});
+        }
 
         Impersonate.destroy({
           old_user_id: $cookieStore.get('old_user_id'),
           new_user_id: $cookieStore.get('new_user_id')
-        }, function() {
+        }, function(data) {
           UserSession.allowRefetchOfUser()
+          // token of main user(teacher)
+          Token.setToken(data.token)
           clean()
           $rootScope.preview_as_student = false
           current_user = null

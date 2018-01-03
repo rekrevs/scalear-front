@@ -135,6 +135,9 @@ angular.module('scalearAngularApp')
         if(lecture.graded_module) {
           lecture.graded = module.graded;
         }
+        if(lecture.skip_ahead_module) {
+          lecture.skip_ahead = module.skip_ahead;
+        }
       })
 
       $rootScope.$on("Lecture:" + lecture.id + ":add_to_timeline", function(evt, time, type, item) {

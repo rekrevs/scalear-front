@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
       lecture[column] = data;
       var temp_lecture = LectureModel.createInstance(lecture);
       if(column == 'url') {
+        temp_lecture.url = $filter("formatURL")(temp_lecture.url)
         return temp_lecture.validateUrl(); // returns a promise
       } else {
         return temp_lecture.validate() // return a promise

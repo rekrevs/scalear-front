@@ -698,7 +698,7 @@ var translation_en={
         use_module_required: "Use Module’s Required",
         use_module_skip_ahead: "Use Module’s Skip Ahead",
         vidoe_not_exist: "Video may not exist or may still be uploading",
-        incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
+        incompatible_video_link: "Invalid movie type. Please provide a valid YouTube, .mp4 or a MediaSite URL.",
         student_link_lecture:"Student link to lecture",
         appearance_date: "Appearance Date",
         due_date: "Due Date",

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation',  function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -34,19 +34,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onReady = function() {
-      $scope.video_ready = true
-      var time = $state.params.time
-      if (time) {
-        $timeout(function (argument) {
-          $scope.seek(time-0.2)
-        })        
-      } else if (!($rootScope.is_mobile)) {
-        $scope.lecture_player.controls.seek_and_pause(0)
-      }
+      VideoInformation.waitForDurationSetup()
+        .then(function(){
+          $scope.video_ready = true
+          var time = $state.params.time
+          if (time) {
+            $timeout(function (argument) {
+              $scope.seek(time-0.2)
+            })        
+          } else if (!($rootScope.is_mobile)) {
+            $scope.lecture_player.controls.seek_and_pause(0)
+          }
 
-      $scope.lecture.timeline.items.forEach(function(item) {
-        item.data && addItemToVideoQueue(item.data, item.type);
-      })
+          $scope.lecture.timeline.items.forEach(function(item) {
+            item.data && addItemToVideoQueue(item.data, item.type);
+          })
+        })
     }
 
     $scope.lecture_player.events.onPlay = function() {

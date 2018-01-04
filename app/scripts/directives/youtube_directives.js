@@ -453,7 +453,7 @@ angular.module('scalearAngularApp')
 
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""
-        return video_url.match(/(\/Play\/)/)
+        return video_url.match(/^(http|https):\/\/.*(\/Play\/)/)
       }
 
       player_controls.isYoutube = isYoutube

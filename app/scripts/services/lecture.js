@@ -256,7 +256,7 @@ angular.module('scalearAngularApp')
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
           }else if(VideoInformation.isMediaSite(lecture.url)){
-            VideoInformation.waitForMediaSiteDurationSetup().then(function (duration) {
+            VideoInformation.waitForDurationSetup().then(function (duration) {
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration

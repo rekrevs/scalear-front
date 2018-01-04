@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
     }
 
     function isMediaSite(url) {
-      return url.match(/(\/Play\/)/)
+      return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
 
     function invalidUrl(url) {
@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
       parent.duration = newDuration
     }
 
-    function waitForMediaSiteDurationSetup() {
+    function waitForDurationSetup() {
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
         if(parent.duration){
@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
       getFinalUrl: getFinalUrl,
       isYoutube: isYoutube,
       emptyCachedInfo: emptyCachedInfo,
-      waitForMediaSiteDurationSetup: waitForMediaSiteDurationSetup,
+      waitForDurationSetup: waitForDurationSetup,
       setDuration: setDuration,
       resetValues: resetValues,
       isMediaSite: isMediaSite

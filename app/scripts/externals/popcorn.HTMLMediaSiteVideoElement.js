@@ -650,7 +650,7 @@
 
   // Helper for identifying URLs we know how to play.
   HTMLMediaSiteVideoElement.prototype._canPlaySrc = function( url ) {
-    return (/(\/Play\/)/).test( url ) ?
+    return (/^(http|https):\/\/.*(\/Play\/)/).test( url ) ?
       "probably" :
       EMPTY_STRING;
   };

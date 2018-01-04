@@ -697,7 +697,7 @@ var translation_sv={
         use_module_required: "Använd moduls nödvändighet",
         use_module_skip_ahead: "Använd moduls hoppa över",
         vidoe_not_exist: "Videon saknas eller laddas fortfarande upp",
-        incompatible_video_link: "Ej valid filmtyp. Var god välj en YouTube eller .mp4 URL.",
+        incompatible_video_link: "Ej valid filmtyp. Var god välj en YouTube, .mp4 eller MediaSite URL.",
         student_link_lecture:"Student-länk till video",
         appearance_date: "Publiceringsdatum",
         due_date: "Färdigdatum",

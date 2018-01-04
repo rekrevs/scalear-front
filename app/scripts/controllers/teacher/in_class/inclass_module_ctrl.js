@@ -881,7 +881,9 @@ angular.module('scalearAngularApp')
           group_count = data[ind][4] || 0,
           selfPercent = self_count/totalSelf*100,
           groupPercent = group_count/totalGroup*100,
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+
+            $translate.instant('inclass.self_stage')+": " + self_count + " ("+selfPercent+"%)"+"<br>"+
+            $translate.instant('inclass.group_stage')+": " + group_count + " ("+groupPercent+"%)"+"</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [

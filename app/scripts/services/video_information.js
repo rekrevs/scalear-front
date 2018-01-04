@@ -8,7 +8,9 @@ angular.module('scalearAngularApp')
     current_time= 0, 
     volume= 0.8,
     speed= 1,
-    quality= "720p";
+    quality= "720p",
+    parent= this;
+
 
     function generateYoutubeApiVideoUrl(id) {
       return "https://www.googleapis.com/youtube/v3/videos?id=" +
@@ -68,14 +70,14 @@ angular.module('scalearAngularApp')
     }
 
     function setDuration(newDuration) {
-      duration = newDuration
+      parent.duration = newDuration
     }
 
     function waitForMediaSiteDurationSetup() {
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
-        if(duration){
-          deferred.resolve(duration)
+        if(parent.duration){
+          deferred.resolve(parent.duration)
           $interval.cancel(watchDuration);
         }
       }, 500)
@@ -83,20 +85,20 @@ angular.module('scalearAngularApp')
     }
 
     function resetValues(argument) {
-      duration= 0
-      current_time= 0 
-      volume= 0.8
-      speed= 1
-      quality= "720p";
+      parent.duration= 0
+      parent.current_time= 0 
+      parent.volume= 0.8
+      parent.speed= 1
+      parent.quality= "720p";
     }
 
 
     return {
-      duration: duration,
-      current_time: current_time, 
-      volume: volume,
-      speed: speed,
-      quality: quality,
+      duration: parent.duration,
+      current_time: parent.current_time, 
+      volume: parent.volume,
+      speed: parent.speed,
+      quality: parent.quality,
       requestInfoFromYoutube: requestInfoFromYoutube,
       isFinalUrl: isFinalUrl,
       isMP4: isMP4,

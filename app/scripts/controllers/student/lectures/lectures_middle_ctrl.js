@@ -707,7 +707,6 @@ angular.module('scalearAngularApp')
       $log.debug("playing ")
       checkIfQuizSolved()
       $scope.dismissAnnotation()
-      $scope.dismissDynmaicAnnotation()
 
       if (!$scope.quiz_mode && $scope.distance_peer_session_id) {
         checkIfCanLeaveStatus()

@@ -101,6 +101,7 @@ angular.module('scalearAngularApp')
 
     $scope.seek = function(time) {
       $scope.lecture_player.controls.seek(time)
+      $scope.selected_marker = null      
     }
 
     $scope.addQuestion = function() {

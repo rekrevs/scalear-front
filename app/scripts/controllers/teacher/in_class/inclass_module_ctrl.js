@@ -794,7 +794,7 @@ angular.module('scalearAngularApp')
           tooltip_text += tmp_tooltip_text + "</div>"
         } else if(data[ind][1] == "gray") {
           number = Math.floor((data[ind][0] / $scope.students_count) * 100)
-          tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
+          tooltip_text = "<div style='color:black;padding:8px'>"+tmp_tooltip_text + "</div>"
         } else {
           number = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           text = REPLACE_STYLING + text

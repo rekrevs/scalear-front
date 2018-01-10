@@ -604,6 +604,8 @@ var translation_en={
     note_time: "Note Time",
     note_duration: "Note Duration",
     note_as_slide: "Fullscreen Note",
+    note_as_slide_description: "This note will pause the video until the student clicks Continue.",
+    note_as_slide_empty_description:"Put in your text below in the Annotations box.",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",

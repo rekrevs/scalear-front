@@ -2691,6 +2691,9 @@ body.ngdialog-open { overflow: initial !important; }
     text-rendering: optimizeLegibility;
 }
 
+.medium-editor-bold .medium-editor-p{
+    font-weight: bold;
+}
 .medium-editor-p:first-child {
     display: inline-block;
 }

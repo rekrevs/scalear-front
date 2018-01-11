@@ -1591,12 +1591,13 @@ angular.module('scalearAngularApp')
       })
     }
 
-    var updateViewPercentageEvent = $rootScope.$on('$stateChangeStart',
+    var unregisterStateEvent = $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
         var current_time = $scope.lecture_player.controls.getTime()
         if ( current_time ){
           var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
           updateViewPercentage( percent_view , "seek")
+          unregisterStateEvent()
         }
       })
 

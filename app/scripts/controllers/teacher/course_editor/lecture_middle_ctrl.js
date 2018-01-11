@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onMeta = function() {
       // update duration for all video types.
-      var total_duration = $scope.lecture_player.controls.ge()
+      var total_duration = $scope.lecture_player.controls.getDuration()
       if (Math.ceil($scope.lecture.duration) != Math.ceil(total_duration)) {
         $scope.lecture.duration = total_duration
         $scope.lecture.update()

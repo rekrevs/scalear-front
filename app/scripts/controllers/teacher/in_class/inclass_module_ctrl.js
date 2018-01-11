@@ -755,7 +755,7 @@ angular.module('scalearAngularApp')
       return chart
     }
 
-    $scope.chooseVideoQuestionBlockGlass = function(data_length){      
+    $scope.chooseVideoQuestionBlockGlass = function(data_length){   
       $scope.question_block_small = Math.min( Math.max( 30 , data_length * 9  ) , 95) 
       $scope.question_block_large = Math.min( 95 , data_length * 20  )
       $scope.changeVideoQuestionBoxPercentage( $scope.question_block_small , false)
@@ -1075,7 +1075,13 @@ angular.module('scalearAngularApp')
       $scope.hide_video_text = $scope.button_names[3]
       $scope.zooom_graph_text = $scope.button_names[8]
 
-      $scope.changeVideoQuestionBoxPercentage(  $scope.question_block_small, false )
+      if( $scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass') {
+        $scope.changeVideoQuestionBoxPercentage(  30, false )
+      }
+      else{
+        $scope.changeVideoQuestionBoxPercentage(  $scope.question_block_small, false )
+      }
+
       if($scope.chart){
         $scope.chart.options.fontSize = 25         
       }

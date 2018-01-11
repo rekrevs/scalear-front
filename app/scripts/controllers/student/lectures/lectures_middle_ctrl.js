@@ -601,14 +601,19 @@ angular.module('scalearAngularApp')
       $scope.dismissAnnotation()
       $scope.dismissDynmaicAnnotation()
       var current_time = $scope.lecture_player.controls.getTime()
+      var current_time_percent  = Math.round((current_time / $scope.total_duration) * 100)
       $scope.seek_to_time = time
       var percent_view = Math.round((($scope.seek_to_time / $scope.total_duration) * 100))
+      if ( ( $scope.lecture.watched_percentage < current_time_percent )  &&  ( percent_view < current_time_percent  ) ) {
+        updateViewPercentage( current_time_percent , "seek")
+      }
+
       if (!lecture_id || lecture_id == $scope.lecture.id) { //if current lecture
         if ($scope.next_stop_time < time && $scope.distance_peer_session_id) { // if in distance_peer session do not seek after next quiz time
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
         } 
-        else if( $scope.lecture.skip_ahead || (percent_view < $scope.lecture.watched_percentage) ){
+        else if( $scope.lecture.skip_ahead || (percent_view <  Math.max( $scope.lecture.watched_percentage , current_time_percent   )  ) ){ //
           if (time >= 0 && $scope.show_progressbar) {
             $scope.lecture_player.controls.seek(time)
             if (!$scope.log_event_timeout) {
@@ -1585,6 +1590,15 @@ angular.module('scalearAngularApp')
         }]
       })
     }
+
+    var updateViewPercentageEvent = $rootScope.$on('$stateChangeStart',
+      function(event, toState, toParams, fromState, fromParams, options) {
+        var current_time = $scope.lecture_player.controls.getTime()
+        if ( current_time ){
+          var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
+          updateViewPercentage( percent_view , "seek")
+        }
+      })
 
     init();
   }]);

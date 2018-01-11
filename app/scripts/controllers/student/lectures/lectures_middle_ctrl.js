@@ -499,7 +499,7 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
               if (marker.as_slide) {
                 $scope.lecture_player.controls.pause()
-                showAsSlideAnnotation(marker)              
+                showSlideNote(marker)              
               }
               else{
                 showDynmaicAnnotation(marker)                              
@@ -608,7 +608,7 @@ angular.module('scalearAngularApp')
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
         } 
-        else if( $scope.lecture.skip_ahead || !(percent_view > $scope.lecture.watched_percentage) ){
+        else if( $scope.lecture.skip_ahead || (percent_view < $scope.lecture.watched_percentage) ){
           if (time >= 0 && $scope.show_progressbar) {
             $scope.lecture_player.controls.seek(time)
             if (!$scope.log_event_timeout) {
@@ -639,7 +639,7 @@ angular.module('scalearAngularApp')
     $scope.progressSeek = function(time) {
       $scope.seek(time)
       checkIfQuizSolved()
-      checkIfAsSlideAnnotation()
+      checkIfSlideShown()
     }
 
     var checkIfQuizSolved = function() {
@@ -693,9 +693,9 @@ angular.module('scalearAngularApp')
       }
     }
 
-  var checkIfAsSlideAnnotation = function() {
-      if ($scope.as_slide_annotation) {
-        returnToAsSlideAnnotation($scope.as_slide_annotation.time)
+  var checkIfSlideShown = function() {
+      if ($scope.slide_note) {
+        returnToSlideNote($scope.slide_note.time)
       }
     }
 
@@ -712,7 +712,7 @@ angular.module('scalearAngularApp')
       $scope.lecture_player.controls.pause()
       showNotification('lectures.choose_correct_answer')
     }
-    var returnToAsSlideAnnotation = function(time) {
+    var returnToSlideNote = function(time) {
       $scope.seek(time)
       $scope.lecture_player.controls.pause()
     }
@@ -720,7 +720,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPlay = function() {
       $log.debug("playing ")
       checkIfQuizSolved()
-      checkIfAsSlideAnnotation()
+      checkIfSlideShown()
       $scope.dismissAnnotation()
       $scope.dismissDynmaicAnnotation()
 
@@ -1277,8 +1277,8 @@ angular.module('scalearAngularApp')
     $scope.dismissDynmaicAnnotation = function() {
       $scope.dynmaic_annotation = null
     }    
-    $scope.dismissAsSlideAnnotation = function() {
-      $scope.as_slide_annotation = null
+    $scope.dismissSlideNote = function() {
+      $scope.slide_note = null
     }    
     $scope.dismissQuestionText = function() {
       $scope.selected_quiz.actual_display_text = null
@@ -1287,13 +1287,13 @@ angular.module('scalearAngularApp')
     $scope.endDistancePeerSession = function() {
       $scope.dismissAnnotation()
       $scope.dismissDynmaicAnnotation()
-      $scope.dismissAsSlideAnnotation()
+      $scope.dismissSlideNote()
       clearQuiz()
       changeStatusAndWaitTobeSync(6, null)
     }
 
     $scope.quizLayerClick =  function() {
-      if ( ( !$scope.quiz_mode && !$scope.dynmaic_annotation ) || ( !$scope.quiz_mode && ($scope.dynmaic_annotation && !$scope.dynmaic_annotation.as_slide) ) ){
+      if ( !$scope.quiz_mode && ( (!$scope.dynmaic_annotation) ||  ($scope.dynmaic_annotation && !$scope.dynmaic_annotation.as_slide) ) ){
         $scope.toggleVideoPlayback()
       }
     }
@@ -1335,19 +1335,19 @@ angular.module('scalearAngularApp')
 
     var showAnnotation = function(annotation) {
       $scope.dismissDynmaicAnnotation()
-      $scope.dismissAsSlideAnnotation()
+      $scope.dismissSlideNote()
       $scope.annotation = annotation
     }
 
     var showDynmaicAnnotation = function(annotation) {
       $scope.dismissAnnotation()
-      $scope.dismissAsSlideAnnotation()
+      $scope.dismissSlideNote()
       $scope.dynmaic_annotation = annotation
     }
-    var showAsSlideAnnotation = function(annotation) {
+    var showSlideNote = function(annotation) {
       $scope.dismissAnnotation()
       $scope.dismissDynmaicAnnotation()
-      $scope.as_slide_annotation = annotation
+      $scope.slide_note = annotation
     }
 
     //  Distance peer methods

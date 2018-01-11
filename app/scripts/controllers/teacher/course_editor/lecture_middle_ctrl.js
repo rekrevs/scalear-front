@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onMeta = function() {
       // update duration for all video types.
-      var total_duration = $scope.lecture_player.controls.getDuration()
+      var total_duration = $scope.lecture_player.controls.ge()
       if (Math.ceil($scope.lecture.duration) != Math.ceil(total_duration)) {
         $scope.lecture.duration = total_duration
         $scope.lecture.update()
@@ -384,7 +384,7 @@ angular.module('scalearAngularApp')
 
     $scope.showAnnotation = function(marker) {
       $scope.selected_marker = marker
-      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.time), function() {
+      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
         $scope.selected_marker = null
       })
     }

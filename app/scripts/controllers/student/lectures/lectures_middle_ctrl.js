@@ -605,7 +605,7 @@ angular.module('scalearAngularApp')
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
         } 
-        else if( $scope.lecture.skip_ahead || (percent_view > $scope.lecture.watched_percentage) ){
+        else if( $scope.lecture.skip_ahead || !(percent_view > $scope.lecture.watched_percentage) ){
           if (time >= 0 && $scope.show_progressbar) {
             $scope.lecture_player.controls.seek(time)
             if (!$scope.log_event_timeout) {

@@ -108,7 +108,9 @@ angular.module('scalearAngularApp')
 
     $scope.seek = function(time) {
       $scope.lecture_player.controls.seek(time)
-      dismissMarkerAnnotation()
+      if (!$scope.editing_mode) {
+        $scope.dismissMarkerAnnotation()
+      }
     }
 
     $scope.addQuestion = function() {
@@ -386,11 +388,11 @@ angular.module('scalearAngularApp')
     $scope.showAnnotation = function(marker) {
       $scope.selected_marker = marker
       $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
-        dismissMarkerAnnotation()
+        $scope.dismissMarkerAnnotation()
       })
     }
     
-    function dismissMarkerAnnotation(){
+    $scope.dismissMarkerAnnotation = function(){
       $scope.selected_marker = null            
     }
 
@@ -432,7 +434,7 @@ angular.module('scalearAngularApp')
     }
 
     function clearMarkerVariables() {
-      dismissMarkerAnnotation()
+      $scope.dismissMarkerAnnotation()
       $scope.marker_errors = {}
       MarkerModel.clearSelectedMarker()
     }

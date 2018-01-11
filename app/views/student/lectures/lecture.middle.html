@@ -154,7 +154,7 @@ ul.connected_blocks {
 							  <as-slide-annotation data="slide_note" close="dismissSlideNote"  ng-if=' slide_note && slide_note.as_slide && !selected_quiz && !lecture.distance_peer' />
 						    </quiz>
 						    <annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && ( lecture.distance_peer || (!selected_quiz && !lecture.distance_peer) )" />
-					      	<dynmaic-annotation data="dynmaic_annotation" close="dismissDynmaicAnnotation" action="toggleVideoPlayback" ng-if="dynmaic_annotation && !dynmaic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
+					      	<dynmaic-annotation-student data="dynmaic_annotation" close="dismissDynmaicAnnotation" action="toggleVideoPlayback" ng-if="dynmaic_annotation && !dynmaic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
 					      	<annotation text="selected_quiz.question" close="dismissQuestionText" ng-if="selected_quiz.actual_display_text" />
 
 						  </youtube>

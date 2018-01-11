@@ -151,7 +151,7 @@ ul.connected_blocks {
 						        <b><span translate>global.note</span>:</b>
 						        <span translate>lectures.messages.did_not_get_credit</span>
 						      </div>
-							  <as-slide-annotation data="slide_note" close="dismissSlideNote"  ng-if=' slide_note && slide_note.as_slide && !selected_quiz && !lecture.distance_peer' />
+							  <slide-note data="slide_note" close="dismissSlideNote"  ng-if=' slide_note && slide_note.as_slide && !selected_quiz && !lecture.distance_peer' />
 						    </quiz>
 						    <annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && ( lecture.distance_peer || (!selected_quiz && !lecture.distance_peer) )" />
 					      	<dynmaic-annotation data="dynmaic_annotation" close="dismissDynmaicAnnotation" action="toggleVideoPlayback" ng-if="dynmaic_annotation && !dynmaic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
@@ -170,7 +170,7 @@ ul.connected_blocks {
 						      <button type="button" ng-hide="hide_quiz_button" class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()">{{check_answer_title | translate}}</button>
 						    </div>
 						    <div ng-show="slide_note" class="right" style="position:relative;right:30%">
-						      <button type="button" class="tiny success button no-margin check_answer_button" ng-click="dismissSlideNote()" translate>button.continue</button>
+						      <button type="button" class="tiny success button no-margin check_answer_button" ng-click="dismissSlideNote();toggleVideoPlayback()" translate>button.continue</button>
 						    </div>						    
 						  </progress-bar>
 						  <review_inclass id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass>

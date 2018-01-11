@@ -605,7 +605,7 @@ angular.module('scalearAngularApp')
       $scope.seek_to_time = time
       var percent_view = Math.round((($scope.seek_to_time / $scope.total_duration) * 100))
       if ( ( $scope.lecture.watched_percentage < current_time_percent )  &&  ( percent_view < current_time_percent  ) ) {
-        updateViewPercentage( Math.round((current_time / $scope.total_duration) * 100) , "seek")
+        updateViewPercentage( current_time_percent , "seek")
       }
 
       if (!lecture_id || lecture_id == $scope.lecture.id) { //if current lecture
@@ -613,7 +613,7 @@ angular.module('scalearAngularApp')
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
         } 
-        else if( $scope.lecture.skip_ahead || (percent_view <  Math.max( $scope.lecture.watched_percentage , Math.round(((current_time / $scope.total_duration) * 100))   )  ) ){ //
+        else if( $scope.lecture.skip_ahead || (percent_view <  Math.max( $scope.lecture.watched_percentage , current_time_percent   )  ) ){ //
           if (time >= 0 && $scope.show_progressbar) {
             $scope.lecture_player.controls.seek(time)
             if (!$scope.log_event_timeout) {
@@ -1593,8 +1593,8 @@ angular.module('scalearAngularApp')
 
     var updateViewPercentageEvent = $rootScope.$on('$stateChangeStart',
       function(event, toState, toParams, fromState, fromParams, options) {
-        if ($scope.lecture_player.controls.getTime()){
-          var current_time = $scope.lecture_player.controls.getTime()
+        var current_time = $scope.lecture_player.controls.getTime()
+        if ( current_time ){
           var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
           updateViewPercentage( percent_view , "seek")
         }

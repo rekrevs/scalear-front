@@ -730,7 +730,20 @@ angular.module('scalearAngularApp')
           resize: scope.calculateSize
         });              
       }
-
+    }
+  }
+}]).directive('dynmaicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+  return{
+    restrict:"E",
+    scope:{
+      data:'=',
+      close: '&',
+      action:'&'
+    },
+    templateUrl: '/views/student/lectures/dynmaic_annotation_student.html',
+    link:function(scope, element, attrs){
+      scope.closeBtn = scope.close()
+      scope.actionBtn = scope.action()
     }
   }
 }]).directive('slideNote',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){

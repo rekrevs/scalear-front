@@ -743,7 +743,7 @@ angular.module('scalearAngularApp')
           "backgroundColor": 'white',
           "displayExactValues": true,
           "legend": { "position": 'none' },
-          "fontSize": 15,
+          "fontSize": 25,
           "chartArea": { 'left': '70%' , "width": '90%' , 'top':'10%'},
           "tooltip": { "isHtml": true },
           "hAxis": { "textPosition": 'none' },
@@ -761,7 +761,6 @@ angular.module('scalearAngularApp')
       $scope.changeVideoQuestionBoxPercentage( $scope.question_block_small , false)
     }
 
-
     $scope.formatLectureChartData = function(data) {
       var formated_data = {}
       formated_data.cols = [{
@@ -777,59 +776,45 @@ angular.module('scalearAngularApp')
           "html": true
         }
       }, {
-        "label": $translate.instant('lectures.incorrect'),
-        "type": "number"
-      }, {
-        "type": "string",
-        "p": {
-          "role": "tooltip",
-          "html": true
-        }
+        role: "style", type: "string"
       }]
       formated_data.rows = []
       for(var ind in data) {
-        var text, correct, incorrect, tooltip_text, incorrect_tooltip_text, correct_tooltip_text
+        var text, number, incorrect, tooltip_text, color, tmp_tooltip_text
 
         text = ScalearUtils.getHtmlText(data[ind][2])
-        var short_text =  text
-        var tooltip_text = data[ind][2]
-
+        tmp_tooltip_text = data[ind][2]
+        color = data[ind][1]
         if(data[ind][1] == "orange") {
-          correct = 0
-          incorrect = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+        color = 'gray'
+          number = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           if(!isSurvey()){
-            incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
+            tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
           }
-          incorrect_tooltip_text += tooltip_text + "</div>"
+          tooltip_text += tmp_tooltip_text + "</div>"
         } else if(data[ind][1] == "gray") {
-          correct = 0
-          incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
-          incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
+          number = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          tooltip_text = "<div style='color:black;padding:8px'>"+tmp_tooltip_text + "</div>"
         } else {
-          correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
-          short_text = REPLACE_STYLING + short_text
-          incorrect = 0
+          number = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+          text = REPLACE_STYLING + text
           if(!isSurvey()){
-            correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "
+            tooltip_text = "<div style='color:black;padding:8px'>Correct: "
           }
-          correct_tooltip_text += tooltip_text + "</div>"
+          tooltip_text += tmp_tooltip_text + "</div>"
         }
-        // text = data[ind][2]
         var row = {
           "c": [
-            // { "v": ScalearUtils.getHtmlText(text) },
-            {"v": short_text},
-            { "v": correct },
-            { "v": correct_tooltip_text },
-            { "v": incorrect },
-            { "v": incorrect_tooltip_text }
+            { "v": text},
+            { "v": number },
+            { "v": tooltip_text },
+            { "v": color }
           ]
         }
         formated_data.rows.push(row)
       }
       return formated_data
     }
-
 
     $scope.formatInclassQuizChartData = function(data) {
       var formated_data = {}
@@ -1079,7 +1064,7 @@ angular.module('scalearAngularApp')
       $scope.changeVideoQuestionBoxPercentage( $scope.question_block_large , true)
 
       if($scope.chart){
-        $scope.chart.options.fontSize = 20
+        $scope.chart.options.fontSize = 35
       }      
       $scope.blurButtons()
     }
@@ -1092,7 +1077,7 @@ angular.module('scalearAngularApp')
 
       $scope.changeVideoQuestionBoxPercentage(  $scope.question_block_small, false )
       if($scope.chart){
-        $scope.chart.options.fontSize = 15         
+        $scope.chart.options.fontSize = 25         
       }
       $scope.blurButtons()      
     }

@@ -284,6 +284,16 @@ angular.module('scalearAngularApp')
           });
       }
 
+      function updateViewPercentage(milestone) {
+        return Lecture.updatePercentView({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, { 
+          percent: milestone 
+        })
+        .$promise
+    }
+
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
       }
@@ -325,6 +335,7 @@ angular.module('scalearAngularApp')
         removeFromTimeline: removeFromTimeline,
         instanceType: instanceType,
         remove: remove,
+        updateViewPercentage: updateViewPercentage,
         module: module,
         setAsSelected:setAsSelected,
         markDone:markDone,

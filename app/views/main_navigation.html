@@ -29,13 +29,13 @@
         <li has-dropdown>
           <a ng-show="user.intro_watched && user.info_complete" ng-if="user.roles.includes(9) || user.roles.includes(5)" class="white-with-hover color-gray-hover size-16-light" id="administration" ng-class="{'nav-item-active':('dashboard' | includedByState)}" translate>statistics.administration</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown>
-            <li ui-sref="school_statistics" >
-              <a class=" white-with-hover color-gray-hover size-16-light" id="school_statistics" >
+            <li>
+              <a class="lighter-grey dark-text" ui-sref="dashboard">
                 <span id="administration_button" translate>statistics.statistics_dashboard</span>
               </a>
             </li>
-            <li ui-sref="welcome_message" ng-if="user.get_school_administrator_domain=='all'"><!-- all'=>TO check that the user is school admin on all on univ. not an admin on depertmant -->
-              <a class=" white-with-hover color-gray-hover size-16-light" id="welcome_message" >
+            <li ng-if="user.get_school_administrator_domain=='all'"><!-- all'=>TO check that the user is school admin on all on univ. not an admin on depertmant -->
+              <a class="lighter-grey dark-text" ui-sref="welcome_message" >
                 <span id="welcome_message_button" translate>navigation.welcome_message</span>
               </a>
             </li>

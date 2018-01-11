@@ -1049,7 +1049,8 @@ var translation_en={
     rate_from: "rate from",
     to: "to",
     drag_to_zoom: 'Click and drag in the plot area to zoom in',
-    pinch_to_zoom: 'Pinch the chart to zoom in'
+    pinch_to_zoom: 'Pinch the chart to zoom in',
+    write_welcome_message: "Write welcome message"
   },
   player:{
     click_video_quality: "Click to change video quality",

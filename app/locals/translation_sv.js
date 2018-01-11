@@ -1048,7 +1048,8 @@ var translation_sv={
     rate_from: "värdera från",
     to: "till",
     drag_to_zoom: 'Klicka och dra i hela området för att zooma in',
-    pinch_to_zoom: '"Nyp" diagrammet för att zooma in'
+    pinch_to_zoom: '"Nyp" diagrammet för att zooma in',
+    write_welcome_message: "Skriv välkomstmeddelande"
   },
   player:{
     click_video_quality: "Klicka för att ändra videokvalitet",

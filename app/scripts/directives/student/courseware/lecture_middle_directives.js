@@ -733,7 +733,7 @@ angular.module('scalearAngularApp')
 
     }
   }
-}]).directive('asSlideAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+}]).directive('slideNote',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
   return{
     restrict:"E",
     scope:{
@@ -741,7 +741,7 @@ angular.module('scalearAngularApp')
       close: '&',
       action:'&'
     },
-    templateUrl: '/views/student/lectures/as_slide_annotation.html',
+    templateUrl: '/views/student/lectures/slide_note.html',
     link:function(scope, element, attrs){
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()

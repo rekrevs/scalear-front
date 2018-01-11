@@ -65,6 +65,10 @@ angular.module('scalearAngularApp')
       $scope.slow = true
     }
 
+    function showMarker(marker) {
+      $rootScope.$broadcast("show_online_marker", marker)
+    }    
+
     function addItemToVideoQueue(item_data, type) {
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
         if (!$scope.lecture_player.controls.paused()) {
@@ -72,8 +76,11 @@ angular.module('scalearAngularApp')
             if (type == 'quiz') {
               $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            } else
+            } else if ( !item_data.as_slide) {
               $scope.showAnnotation(item_data)
+            } else {
+              showMarker(item_data)
+            }
           })
         }
       })
@@ -378,7 +385,7 @@ angular.module('scalearAngularApp')
 
     $scope.showAnnotation = function(marker) {
       $scope.selected_marker = marker
-      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
+      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
         dismissMarkerAnnotation()
       })
     }

@@ -2707,6 +2707,13 @@ body.ngdialog-open { overflow: initial !important; }
   width:100%;
 }
 
+.medium-editor-textarea ul li{
+  list-style-type: disc;
+}
+
+.medium-editor-as-slide ul li{
+  list-style-type: disc;
+}
 
 /**********School Admin*****/
 .admin-uni{

@@ -27,10 +27,10 @@
         <!-- <li class="divider border-grey medium-opacity"></li> -->
         <li ng-if="user.roles.includes(5)"><a class="white-with-hover color-gray-hover size-16-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>statistics.statistics</a></li>
         <li has-dropdown>
-          <a ng-show="user.intro_watched && user.info_complete" ng-if="user.roles.includes(9) || user.roles.includes(5)" class="white-with-hover color-gray-hover size-16-light" id="administration" ng-class="{'nav-item-active':('dashboard' | includedByState)}" translate>statistics.administration</a>
+          <a ng-show="user.intro_watched && user.info_complete" ng-if="user.roles.includes(9) || user.roles.includes(5)" class="white-with-hover color-gray-hover size-16-light" id="administration" ng-class="{'nav-item-active':('school_statistics' | includedByState) || ('welcome_message' | includedByState) }" translate>statistics.administration</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown>
             <li>
-              <a class="lighter-grey dark-text" ui-sref="dashboard">
+              <a class="lighter-grey dark-text" ui-sref="school_statistics">
                 <span id="administration_button" translate>statistics.statistics_dashboard</span>
               </a>
             </li>

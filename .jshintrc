@@ -1,4 +1,5 @@
 {
+  "node": true,
   "browser": true,
   "esnext": false,
   "bitwise": false,
@@ -12,7 +13,7 @@
   "noarg": true,
   "forin": false,
   "funcscope": true,
-  "quotmark": true,
+  "quotmark": "double",
   "shadow": true,
   "regexp": false,
   "undef": true,

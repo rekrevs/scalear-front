@@ -124,16 +124,34 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-                jshintrc: '.jshintrc',
-                //reporterOutput: '<%= yeoman.app %>/jshint_log.txt',
-                '-W106': false, //camelCase
-                '-W033': false, // semicolon
+                ignores: [
+                    '<%= yeoman.app %>/scripts/externals/*',
+                ],
+                globals: {
+                    'angular': true,
+                    'inject': true,
+                    'sinon': true,
+                    'expect': true,
+                    'console': true,
+                },
+                strict: false,
+                curly: true,
+                eqeqeq: true,
+                forin: false,
+                funcscope: true,
+                indent: 2,
+                latedef: false,
+                noarg: true,
+                quotmark: true,
+                shadow: true,
+                undef: true,
+                browser: true,
+                sub: true,
+                loopfunc: true
             },
-            all: [
-                // 'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/**/*.js'
-            ]
+            target: ['<%= yeoman.app %>/scripts/**/*.js']
         },
+
         coffee: {
             options: {
                 sourceMap: true,
@@ -158,11 +176,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        // not used since Uglify task does concat,
-        // but still available if needed
-        /*concat: {
-      dist: {}
-    },*/
         rev: {
             dist: {
                 files: {
@@ -502,8 +515,6 @@ module.exports = function(grunt) {
                 dest: '<%= yeoman.dist %>'
             },
         },
-
-
         aws: grunt.file.readJSON('app/grunt-aws.json'),
         aws_s3: {
             options: {
@@ -611,9 +622,7 @@ module.exports = function(grunt) {
                     }
                 }, ],
             }
-
         },
-
         ngconstant: {
             options: {
                 space: '  '
@@ -630,7 +639,7 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '4.2.9 (' + new Date().toUTCString() + ')',
+                        version: '4.2.14 (' + new Date().toUTCString() + ')',
                         instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
@@ -655,7 +664,7 @@ module.exports = function(grunt) {
                         ga_token: "UA-66097980-1",
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '4.2.9 (' + new Date().toUTCString() + ')',
+                        version: '4.2.14 (' + new Date().toUTCString() + ')',
                         instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
@@ -680,7 +689,7 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '4.2.9 (' + new Date().toUTCString() + ')',
+                        version: '4.2.14 (' + new Date().toUTCString() + ')',
                         instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
@@ -705,7 +714,7 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: 'https://scalear-staging2.herokuapp.com',
                         redirection_url: 'https://scalear-staging2.herokuapp.com/#/',
-                        version: '4.2.9 (' + new Date().toUTCString() + ')',
+                        version: '4.2.14 (' + new Date().toUTCString() + ')',
                         instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
@@ -755,7 +764,7 @@ module.exports = function(grunt) {
                         ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '4.2.9 (' + new Date().toUTCString() + ')',
+                        version: '4.2.14 (' + new Date().toUTCString() + ')',
                         instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",

@@ -83,6 +83,21 @@ angular.module('scalearAngularApp')
         '<small class="error position-absolute z-one" ng-show="marker_errors.time_error" ng-bind="marker_errors.time_error"></small>' +
         '</div>' +
         '</div>' +
+        '<div class="row" style="text-align:left;margin-left:0;">' +
+        '<div class="small-3 columns"><span translate>editor.note_as_slide</span>:</div>' +
+        '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
+        '<input class="marker_as_slide" type="checkbox" ng-model="selected_marker.as_slide" style="margin-bottom:0;"/>' + 
+        '(<span translate>editor.note_as_slide_description</span>)'+
+        '<small class="error position-absolute z-one" ng-show="marker_errors.as_slide_error" ng-bind="marker_errors.as_slide_error"></small>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row" style="text-align:left;margin-left:0;" ng-hide="selected_marker.as_slide">' +
+        '<div class="small-3 columns"><span translate>editor.note_duration</span>:</div>' +
+        '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
+        '<input class="marker_duration" type="text" ng-model="selected_marker.duration" style="height: 30px;margin-bottom:0;">' +
+        '<small class="error position-absolute z-one" ng-show="marker_errors.duration_error" ng-bind="marker_errors.duration_error"></small>' +
+        '</div>' +
+        '</div>' +        
         '<delete_button id="delete_marker_button" size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
         '<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>' +
         '</h6>' +
@@ -102,8 +117,11 @@ angular.module('scalearAngularApp')
            $("input.marker_time").focus()
           }
           else if($("input.marker_time").is(':focus')){
-           $("#save_marker_button").focus()
+           $("#input.marker_duration").focus()
           }
+          else if($("input.marker_duration").is(':focus')){
+           $("#save_marker_button").focus()
+          }          
           else if($("#save_marker_button").is(':focus')){
             if(tab_enter == 'enter'){
              $("#save_marker_button").click()
@@ -369,7 +387,6 @@ angular.module('scalearAngularApp')
         scope.calculateSize = function() {
           var ontop = angular.element('.ontop');
           var main = angular.element(element.children()[0])
-          $log.debug(scope.area_width + ", " + scope.area_height)
           scope.data.width = main.width() / ontop.width();
           scope.data.height = main.height() / (ontop.height());
         }

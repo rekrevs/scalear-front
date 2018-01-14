@@ -10,16 +10,15 @@
     <ul class="title-area">
       <li class="name">
         <h1>
-				<a ng-if="!lti_embed" id="home" ui-sref="home" class="dark-text must-show-inline" >
-					<img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
-					<span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
-				</a>
-        <div ng-if="lti_embed" class="dark-text must-show-inline" >
-          <img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
-          <span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
-        </div>
-
-			</h1>
+  				<a ng-if="!lti_embed" id="home" ui-sref="home" class="dark-text must-show-inline" >
+  					<img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
+  					<span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
+  				</a>
+          <div ng-if="lti_embed" class="dark-text must-show-inline" >
+            <img src="images/logo.png" style="width: 28px;margin-top: -3px;"/>
+            <span style="font-weight: 100;" >Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></span>
+          </div>
+  			</h1>
       </li>
       <li toggle-top-bar class="menu-icon" ng-hide="lti_embed" ><a class="dark-text" href="">menu</a></li>
     </ul>
@@ -27,7 +26,21 @@
       <ul ng-show="user.roles[0]" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
         <!-- <li class="divider border-grey medium-opacity"></li> -->
         <li ng-if="user.roles.includes(5)"><a class="white-with-hover color-gray-hover size-16-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>statistics.statistics</a></li>
-        <li ng-if="user.roles.includes(9) || user.roles.includes(5)"><a class=" white-with-hover color-gray-hover size-16-light" id="school_statistics" ui-sref-active="nav-item-active" ui-sref="school_statistics" ng-click="closeMenu()" translate>statistics.administration</a></li>
+        <li has-dropdown>
+          <a ng-show="user.intro_watched && user.info_complete" ng-if="user.roles.includes(9) || user.roles.includes(5)" class="white-with-hover color-gray-hover size-16-light" id="administration" ng-class="{'nav-item-active':('school_statistics' | includedByState) || ('welcome_message' | includedByState) }" translate>statistics.administration</a>
+          <ul class="lighter-grey-no-hover" top-bar-dropdown>
+            <li>
+              <a class="lighter-grey dark-text" ui-sref="school_statistics">
+                <span id="administration_button" translate>statistics.statistics_dashboard</span>
+              </a>
+            </li>
+            <li ng-if="user.get_school_administrator_domain=='all'"><!-- all'=>TO check that the user is school admin on all on univ. not an admin on depertmant -->
+              <a class="lighter-grey dark-text" ui-sref="welcome_message" >
+                <span id="welcome_message_button" translate>navigation.welcome_message</span>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li has-dropdown>
           <a ng-show="user.intro_watched && user.info_complete" class="white-with-hover color-gray-hover size-16-light" id="dashboard" ng-class="{'nav-item-active':('dashboard' | includedByState)}" translate>navigation.dashboard</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown>
@@ -123,8 +136,6 @@
         <li has-dropdown>
           <a class="white-with-hover color-gray-hover size-16-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" translate>navigation.help</a>
           <ul class="lighter-grey-no-hover" top-bar-dropdown>
-<!--             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started" translate>help.getting_started.student</a></li>
-            <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" translate>help.getting_started.teacher</a></li> -->
             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" ><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.student</span></a></li>
             <li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started"><span translate> help.getting_started</span><span> </span><span translate>help.getting_started.teacher</span></a></li>
 

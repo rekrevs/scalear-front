@@ -14,11 +14,15 @@ angular.module('scalearAngularApp')
       question: 2
     }
 
+    var REPLACE_STYLING = "[REPLACE-STYLING]"
+
     $scope.display = function() {
       resetVariables()
       openModal()
       changeButtonsSize()
-      $scope.hide_text = $scope.button_names[3]
+      $scope.hide_video_text = $scope.button_names[3]
+      $scope.zooom_graph_text = $scope.button_names[8]
+      $scope.zooom_graph = false      
       $scope.setOriginalClass()
       $scope.setInclassShortcuts()
       screenfull.request();
@@ -26,8 +30,9 @@ angular.module('scalearAngularApp')
       $scope.blurButtons();
       $scope.timer = Math.ceil($scope.review_question_count * $scope.time_parameters.question + $scope.review_video_quiz_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question + $scope.inclass_quizzes_time + $scope.review_quiz_count * $scope.time_parameters.quiz);
       $scope.counter = $scope.timer > 0 ? 1 : 0;
-      $scope.counting = true;
-      $scope.timerCountdown()
+      $scope.up_timer = 0 ; 
+      $scope.up_counter = 0 ;
+      $scope.timerCountup()
 
       angular.element($window).bind('resize',
         function() {
@@ -69,21 +74,27 @@ angular.module('scalearAngularApp')
       $scope.timeline_itr = 0
       $scope.show_black_screen = false
       $scope.hide_questions = false
+      $scope.zooom_graph = false
       $scope.dark_buttons = "dark_button"
       $scope.fullscreen = false
       $scope.selected_item = { start_time: 0 }
       $scope.selected_timeline_item = null
       $scope.quality_set = 'color-blue'
-      $scope.counting = true;
-      $scope.counting_finished = false
       $scope.inclass_answer = false
       $scope.quiz_layer = {}
+      $scope.player_button_hover =false
+      $scope.question_class_normal = 'normal_question_block'
+      $scope.video_class_normal = 'original_video'
+      $scope.question_block_small = 30
+      $scope.question_block_large = 30
     }
 
     var init = function() {
       $scope.timeline = { lecture: {}, survey: {}, quiz:{} }
+      $scope.markers_count = 0
       $scope.module = angular.copy(ModuleModel.getSelectedModule())
       $scope.module.items = []
+      $scope.player_button_hover =false
       getLectureCharts()
       getQuizCharts()
     }
@@ -102,8 +113,10 @@ angular.module('scalearAngularApp')
             $scope.timeline['lecture'][lec_id] = { all: new Timeline(), filtered: new Timeline() }
             for(var type in $scope.lectures[lec_id]) {
               for(var it in $scope.lectures[lec_id][type]) {
-                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title)
+                if(type == "markers" && $scope.lectures[lec_id][type][it][1].title){
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], "primary_marker", $scope.lectures[lec_id][type][it][1] || {})
+                  $scope.markers_count += 1
+                }
                 else
                   $scope.timeline['lecture'][lec_id]['all'].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1] || {})
                 if(type == "inclass" && $scope.lectures[lec_id][type][it][1].show) {
@@ -315,7 +328,7 @@ angular.module('scalearAngularApp')
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()
-      $scope.timer_interval = null;
+      $scope.timer_interval_up = null;
     };
 
     var cleanUp = function() {
@@ -326,7 +339,7 @@ angular.module('scalearAngularApp')
       $scope.unregister_state_event();
       $scope.removeShortcuts()
       resetVariables()
-      $interval.cancel($scope.timer_interval);
+      $interval.cancel($scope.timer_interval_up);
       cancelSessionVotesTimer()
       cancelStageTimer()
     }
@@ -409,8 +422,8 @@ angular.module('scalearAngularApp')
       if($scope.should_mute == true) {
         $scope.muteBtn()
       }
-      if(!$scope.timer_interval) {
-        $scope.timer_interval = $interval($scope.timerCountdown, 1000);
+      if(!$scope.timer_interval_up) {
+        $scope.timer_interval_up = $interval($scope.timerCountup, 1000);
       }
     }
 
@@ -454,7 +467,6 @@ angular.module('scalearAngularApp')
           discussion.data.color = "white"
           discussion.data.timer = timers.discussion
           sub_items.splice(++item_index, 0, discussion);
-          console.log("current_item", current_item);
           var chart_marker = { time: current_item.time, type: 'marker', data: { time: current_item.data.time, status: 'answer' } }
           sub_items.splice(++item_index, 0, chart_marker);
 
@@ -540,8 +552,6 @@ angular.module('scalearAngularApp')
             OnlineQuiz.getChartData({ online_quizzes_id: $scope.selected_timeline_item.data.id }, function(resp) {
               $scope.selected_timeline_item.data.answers = resp.chart
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, { colors: ['rgb(0, 140, 186)', 'rgb(67, 172, 106)'] }, 'formatInclassQuizChartData')
-              $scope.loading_chart = false
-              $(window).resize()
             })
           }
           adjustQuizLayer()
@@ -643,6 +653,7 @@ angular.module('scalearAngularApp')
         }
         if($scope.selected_timeline_item.type == "charts"){
           var options =  (type != "lecture")? { 'backgroundColor': 'white' } : {}
+          $scope.loading_chart = true
           $scope.chart = (type == 'survey') ? $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatSurveyChartData') : $scope.createChart($scope.selected_timeline_item.data.answers, options, 'formatLectureChartData')
         }
       }
@@ -679,7 +690,6 @@ angular.module('scalearAngularApp')
       $timeout(function() {
         $scope.adjustTextSize()
       })
-
       $scope.blurButtons()
     }
 
@@ -724,31 +734,32 @@ angular.module('scalearAngularApp')
 
     $scope.createChart = function(data, options, formatter) {
       var chart = {
-        type: "ColumnChart",
+        type: "BarChart",
         options: {
+          "width": angular.element(".reveal-modal").width()-50,
           "colors": ['green', 'gray'],
           "isStacked": "false",
           "fill": 25,
-          "height": 180,
-          "backgroundColor": 'beige',
+          "backgroundColor": 'white',
           "displayExactValues": true,
           "legend": { "position": 'none' },
-          "fontSize": 12,
-          "chartArea": { width: '82%' },
+          "fontSize": 25,
+          "chartArea": { 'left': '70%' , "width": '90%' , 'top':'10%'},
           "tooltip": { "isHtml": true },
-          "vAxis": {
-            "ticks": [25, 50, 75, 100],
-            "maxValue": 100,
-            "viewWindowMode": 'maximized',
-            "textPosition": 'none'
-          }
+          "hAxis": { "textPosition": 'none' },
         },
         data: $scope[formatter](data)
       };
+      $scope.chooseVideoQuestionBlockGlass(Object.keys(data).length)
       angular.extend(chart.options, options)
       return chart
     }
 
+    $scope.chooseVideoQuestionBlockGlass = function(data_length){   
+      $scope.question_block_small = Math.min( Math.max( 30 , data_length * 9  ) , 95) 
+      $scope.question_block_large = Math.min( 95 , data_length * 20  )
+      $scope.changeVideoQuestionBoxPercentage( $scope.question_block_small , false)
+    }
 
     $scope.formatLectureChartData = function(data) {
       var formated_data = {}
@@ -765,59 +776,45 @@ angular.module('scalearAngularApp')
           "html": true
         }
       }, {
-        "label": $translate.instant('lectures.incorrect'),
-        "type": "number"
-      }, {
-        "type": "string",
-        "p": {
-          "role": "tooltip",
-          "html": true
-        }
+        role: "style", type: "string"
       }]
       formated_data.rows = []
       for(var ind in data) {
-        var text, correct, incorrect, tooltip_text, incorrect_tooltip_text, correct_tooltip_text
+        var text, number, incorrect, tooltip_text, color, tmp_tooltip_text
 
         text = ScalearUtils.getHtmlText(data[ind][2])
-        var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
-        console.log(short_text)
-        var tooltip_text = data[ind][2]
-
+        tmp_tooltip_text = data[ind][2]
+        color = data[ind][1]
         if(data[ind][1] == "orange") {
-          correct = 0
-          incorrect = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+        color = 'gray'
+          number = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
           if(!isSurvey()){
-            incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
+            tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
           }
-          incorrect_tooltip_text += tooltip_text + "</div>"
+          tooltip_text += tmp_tooltip_text + "</div>"
         } else if(data[ind][1] == "gray") {
-          correct = 0
-          incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
-          incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
+          number = Math.floor((data[ind][0] / $scope.students_count) * 100)
+          tooltip_text = "<div style='color:black;padding:8px'>"+tmp_tooltip_text + "</div>"
         } else {
-          correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
-          incorrect = 0
+          number = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+          text = REPLACE_STYLING + text
           if(!isSurvey()){
-            correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "
+            tooltip_text = "<div style='color:black;padding:8px'>Correct: "
           }
-          correct_tooltip_text += tooltip_text + "</div>"
+          tooltip_text += tmp_tooltip_text + "</div>"
         }
-        // text = data[ind][2]
         var row = {
           "c": [
-            // { "v": ScalearUtils.getHtmlText(text) },
-            {"v": short_text}, 
-            { "v": correct },
-            { "v": correct_tooltip_text },
-            { "v": incorrect },
-            { "v": incorrect_tooltip_text }
+            { "v": text},
+            { "v": number },
+            { "v": tooltip_text },
+            { "v": color }
           ]
         }
         formated_data.rows.push(row)
       }
       return formated_data
     }
-
 
     $scope.formatInclassQuizChartData = function(data) {
       var formated_data = {}
@@ -854,26 +851,40 @@ angular.module('scalearAngularApp')
         }
       }]
       formated_data.rows = []
+      var totalSelf = 0;
+      var totalGroup = 0;
+      for (var question in data){
+        if(data[question][2]!= "Never tried"){
+          totalSelf+=data[question][0];
+          totalGroup+=data[question][4];
+        }
+      }
+      
       for(var ind in data) {
         var text = data[ind][2],
           self_count = data[ind][0] || 0,
           group_count = data[ind][4] || 0,
-          self = Math.floor((self_count / 10) * 100),
-          group = Math.floor((group_count / 10) * 100),
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
+          selfPercent = self_count/totalSelf*100,
+          groupPercent = group_count/totalGroup*100,
+          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+
+            $translate.instant('inclass.self_stage')+": " + self_count + " ("+selfPercent+"%)"+"<br>"+
+            $translate.instant('inclass.group_stage')+": " + group_count + " ("+groupPercent+"%)"+"</div>",
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
         var row = {
           "c": [
-            { "v": ScalearUtils.getShortAnswerText( ScalearUtils.getHtmlText(text) , Object.keys(data).length )},
-            { "v": self },
+            { "v": ScalearUtils.getHtmlText(text) },
+            { "v": selfPercent },
             { "v": tooltip_text },
             { "v": style },
-            { "v": group },
+            { "v": groupPercent },
             { "v": tooltip_text },
             { "v": style }
           ]
         }
-        formated_data.rows.push(row)
+        //remove never tried column
+        if(text!="Never tried"){
+          formated_data.rows.push(row)
+        }
       }
       return formated_data
     }
@@ -896,7 +907,7 @@ angular.module('scalearAngularApp')
 
         var row = {
           "c": [
-            { "v": ScalearUtils.getShortAnswerText(ScalearUtils.getHtmlText(data[ind][2]) , Object.keys(data).length )},
+            { "v": ScalearUtils.getHtmlText(data[ind][2])  },
             { "v": Math.floor((data[ind][0] / $scope.students_count) * 100) },
             { "v": ScalearUtils.getHtmlText(data[ind][2]) }
           ]
@@ -1001,7 +1012,7 @@ angular.module('scalearAngularApp')
       $scope.question_class = 'original_question'
       $scope.chart_class = 'original_chart'
       $scope.student_question_class = 'original_student_question'
-      $scope.question_block = 'question_block'
+      $scope.question_block = 'normal_question_block'
       $scope.showQuestionBox()
     }
 
@@ -1012,48 +1023,120 @@ angular.module('scalearAngularApp')
         $scope.hideQuestionBox()
     }
 
-    $scope.showQuestionBox = function() {
-      $scope.hide_questions = false
-      $scope.hide_text = $scope.button_names[3]
-      $scope.video_class = 'original_video'
-      $scope.blurButtons()
+
+    $scope.toggleZoomGraphVideo = function() {
+      if($scope.zooom_graph){        
+        $scope.showQuestionBox()
+      }
+      else{
+        $scope.zoomGraph()
+      }
+    }
+
+    $scope.changeVideoQuestionBoxPercentage = function(question_block, scrollable){
+      var question_block_element = angular.element('.normal_question_block')
+      var video_block_element = angular.element('.original_video')
+
       $timeout(function() {
-        $scope.adjustTextSize()
+        if((question_block_element.length != 0) &&  (video_block_element.length != 0)) {
+          question_block_element[0].style.maxHeight = question_block+"%"
+          question_block_element[0].style.minHeight = question_block+"%"
+          question_block_element[0].style.border = "1px solid darkgrey"
+          video_block_element[0].style.maxHeight = (95-question_block)+"%"
+          video_block_element[0].style.minHeight = (95-question_block)+"%"
+
+          if (!question_block) {
+            question_block_element[0].style.border = "0px solid darkgrey"
+          }
+
+          question_block_element[0].style.overflowY = scrollable? 'auto' : 'hidden'
+
+        }
       })
-      $(window).resize()
+    }
+
+    $scope.zoomGraph = function() {
+      $scope.zooom_graph_text = $scope.button_names[9]
+      $scope.hide_video_text = $scope.button_names[3]
+
+      $scope.zooom_graph = true
+      $scope.hide_questions = false
+      $scope.changeVideoQuestionBoxPercentage( $scope.question_block_large , true)
+
+      if($scope.chart){
+        $scope.chart.options.fontSize = 35
+      }      
+      $scope.blurButtons()
+    }
+
+    $scope.showQuestionBox = function() {
+      $scope.zooom_graph = false
+      $scope.hide_questions = false
+      $scope.hide_video_text = $scope.button_names[3]
+      $scope.zooom_graph_text = $scope.button_names[8]
+
+      if( $scope.selected_timeline_item && $scope.selected_timeline_item.type == 'inclass') {
+        $scope.changeVideoQuestionBoxPercentage(  30, false )
+      }
+      else{
+        $scope.changeVideoQuestionBoxPercentage(  $scope.question_block_small, false )
+      }
+
+      if($scope.chart){
+        $scope.chart.options.fontSize = 25         
+      }
+      $scope.blurButtons()      
     }
 
     $scope.hideQuestionBox = function() {
       $scope.hide_questions = true
-      $scope.hide_text = $scope.button_names[4]
-      $scope.video_class = 'zoom_video'
+      $scope.zooom_graph = false
+      $scope.hide_video_text = $scope.button_names[4]
+      $scope.zooom_graph_text = $scope.button_names[8]
+      $scope.changeVideoQuestionBoxPercentage(  0 , false)
       $scope.blurButtons()
-      $(window).resize()
     }
 
     var changeButtonsSize = function() {
       var win = angular.element($window)
       var win_width = win.width()
       if(win_width < 660) {
-        $scope.button_names = ['Ex', 'Ov', 'Sh', 'H', 'U', '', 'P', 'R']
+        $scope.button_names = ['Ex', 'Ov', 'Sh', 'H', 'U', '', 'P', 'R', 'Z G' , 'Z V']
         if(win_width < 510)
           $scope.button_class = 'smallest_font_button'
         else
           $scope.button_class = 'small_font_button'
       } else {
         $scope.button_class = 'big_font_button'
-        $scope.button_names = [$translate.instant('inclass.exit'), '', '', $translate.instant('inclass.hide'), $translate.instant('inclass.show'), '5sec', $translate.instant('inclass.pause'), $translate.instant('inclass.resume')]
+        $scope.button_names = [$translate.instant('inclass.exit'), '', '', $translate.instant('inclass.video_only'),
+                               $translate.instant('inclass.show_graph'), '5sec', $translate.instant('inclass.pause'),
+                               $translate.instant('inclass.resume') , $translate.instant('inclass.zoom_graph') ,$translate.instant('inclass.zoom_video') ]
       }
-      $scope.hide_text = $scope.hide_questions ? $scope.button_names[4] : $scope.button_names[3]
+      $scope.hide_video_text = $scope.hide_questions ? $scope.button_names[4] : $scope.button_names[3]
+      $scope.zooom_graph_text = $scope.zooom_graph ? $scope.button_names[9] : $scope.button_names[8]
+    }
+
+    $scope.playerButtonTooltip = function() {
+      $scope.player_button_hover =true
+    }
+
+    $scope.playerButtonTooltipLeave = function() {
+      $scope.player_button_hover =false
     }
 
     $scope.adjustTextSize = function() {
-      var question_block = angular.element('.question_block').not('.ng-hide');
+
+      var question_block = angular.element('.normal_question_block').not('.ng-hide');
       var chars = question_block.text().trim().length;
       var space = question_block.height() * question_block.width();
-      $scope.fontsize = Math.min(Math.sqrt(space / chars), 30) + 'px';
-      if($scope.chart)
-        $scope.chart.options.height = question_block.height() - 5
+      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), 40) + 'px';
+      if($scope.chart){
+        if( $scope.zooom_graph && $scope.question_block_large == 95 ){
+          $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length  *  ( (question_block.height() - 50) / 4) 
+        } else{
+          $scope.chart.options.height = question_block.height() - 50 
+        }
+      }
     }
 
     $scope.lightUpButtons = function() {
@@ -1075,31 +1158,15 @@ angular.module('scalearAngularApp')
       return (($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "survey") || ($scope.selected_timeline_item.data.type && $scope.selected_timeline_item.data.type.toLowerCase() == "html_survey"))
     }
 
-
-    $scope.timerCountdown = function() {
-      if($scope.counter == 0) {
-        if($scope.timer == 0) {
-          $scope.counting_finished = true;
-          $scope.togglePause();
-        } else {
-          $scope.timer--;
-          $scope.counter = 59;
-        }
-      } else if(!$scope.counting_finished)
-        $scope.counter--;
-
-      $scope.sec_counter = $scope.counter < 10 ? '0' + $scope.counter : $scope.counter;
-      $scope.min_counter = $scope.timer < 10 ? '0' + $scope.timer : $scope.timer;
-    }
-
-    $scope.togglePause = function() {
-      if($scope.counting) {
-        $interval.cancel($scope.timer_interval);
-        $scope.counting = false;
+    $scope.timerCountup = function() {
+      if($scope.up_counter == 59) {
+          $scope.up_timer++;
+          $scope.up_counter = 0;
       } else {
-        $scope.timer_interval = $interval($scope.timerCountdown, 1000);
-        $scope.counting = true;
+        $scope.up_counter++;
       }
+      $scope.sec_counter_up = $scope.up_counter < 10 ? '0' + $scope.up_counter : $scope.up_counter;
+      $scope.min_counter_up = $scope.up_timer < 10 ? '0' + $scope.up_timer : $scope.up_timer;
     }
 
     var StageTimerCountdown = function() {
@@ -1166,6 +1233,13 @@ angular.module('scalearAngularApp')
     $scope.chartReady = function() {
       $scope.loading_chart = false
       $(window).resize()
+
+      $("text:contains('"+REPLACE_STYLING+"')").each(function(idx, elem){
+        var $elem = $(elem)
+        var text = $elem.text().replace(REPLACE_STYLING, "")
+        $elem.html("<tspan>"+text+"</tspan>")
+      })
+
     }
 
     init();

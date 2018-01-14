@@ -83,19 +83,16 @@ angular.module('scalearAngularApp')
         event.preventDefault();
         event.stopPropagation();
       }      
-      // console.log("lti_tool_redirect")
-      // console.log($stateParams.resource_context_id)
-          Lti.ltiToolRedirectSaveData({
-            consumer_key: $stateParams.consumer_key,
-            resource_context_id: $stateParams.resource_context_id,
-            type: type,
-            type_id: type_id
-          })
-          .$promise
-          .then(function(data) {
-            // console.log(true)
-            $scope.selected_resource = true
-          })
+      Lti.ltiToolRedirectSaveData({
+        consumer_key: $stateParams.consumer_key,
+        resource_context_id: $stateParams.resource_context_id,
+        type: type,
+        type_id: type_id
+      })
+      .$promise
+      .then(function(data) {
+        $scope.selected_resource = true
+      })
       
     }
 

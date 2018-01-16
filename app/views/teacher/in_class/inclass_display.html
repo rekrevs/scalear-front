@@ -44,9 +44,9 @@
                           <span ng-if="selected_timeline_item.data.question_type == 'MCQ'" >( <span translate>  inclass.multiple_choice </span> )</span>
                       </div>
                     </div>
-                    <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && ( inclass_answer == true || inclass_session > 4) ) && chart" ng-class="chart_class">
+                    <div ng-show="selected_timeline_item.type == 'charts' || (selected_timeline_item.type == 'inclass' && ( inclass_answer == true || inclass_session > 4) ) && chart" ng-class="chart_class" style="margin-left: 20px;"> 
                         <loading size="small" show="loading_chart" />
-                        <div google-chart chart="chart" agc-on-ready="chartReady()" ng-hide="loading_chart"></div>
+                        <div google-chart chart="chart" agc-on-ready="chartReady()" ng-hide="loading_chart" style="width: 90%"></div>
                     </div>
                     <div ng-show="(inclass_session == 2 || inclass_session == 3)" style="font-size: 60px;margin-top:0.45em;" class="stage_timer">
                         <center>{{stage_counter | format}}</center>
@@ -183,7 +183,7 @@
             </button>
             <button ng-class="button_class" ng-click="nextSubItem()" class="next_btn button reall-tiny secondary"><i class="fi-next" /></button>
         </div>
-        <div class="bottom-right no-padding-top right">
+        <div class="bottom-right no-padding-top ">
             <span ng-hide="selected_item.class_name=='quiz'">
                 <button ng-hide="(selected_timeline_item.type == 'primary_marker')" ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" class="button reall-tiny secondary">{{hide_video_text}}</button>
                 <span ng-show="(selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')">

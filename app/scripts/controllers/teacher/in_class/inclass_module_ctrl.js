@@ -32,6 +32,8 @@ angular.module('scalearAngularApp')
       $scope.counter = $scope.timer > 0 ? 1 : 0;
       $scope.up_timer = 0 ; 
       $scope.up_counter = 0 ;
+      $scope.chart_font_size_small = Math.round( (20.0/1920) * window.screen.availWidth )
+      $scope.chart_font_size_large = Math.round( (35.0/1920) * window.screen.availWidth )
       $scope.timerCountup()
 
       angular.element($window).bind('resize',
@@ -743,7 +745,6 @@ angular.module('scalearAngularApp')
           "backgroundColor": 'white',
           "displayExactValues": true,
           "legend": { "position": 'none' },
-          "fontSize": 25,
           "chartArea": { 'left': '70%' , "width": '90%' , 'top':'10%'},
           "tooltip": { "isHtml": true },
           "hAxis": { "textPosition": 'none' },
@@ -831,11 +832,6 @@ angular.module('scalearAngularApp')
           "html": true
         }
       }, {
-        "type": "string",
-        "p": {
-          "role": "style",
-        }
-      }, {
         "label": $translate.instant('inclass.group_stage'),
         "type": "number"
       }, {
@@ -843,11 +839,6 @@ angular.module('scalearAngularApp')
         "p": {
           "role": "tooltip",
           "html": true
-        }
-      }, {
-        "type": "string",
-        "p": {
-          "role": "style",
         }
       }]
       formated_data.rows = []
@@ -869,16 +860,14 @@ angular.module('scalearAngularApp')
           tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>"+
             $translate.instant('inclass.self_stage')+": " + self_count + " ("+selfPercent+"%)"+"<br>"+
             $translate.instant('inclass.group_stage')+": " + group_count + " ("+groupPercent+"%)"+"</div>",
-          style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : ''
+          text = (data[ind][1] == 'green') ? REPLACE_STYLING + text : text
         var row = {
           "c": [
             { "v": ScalearUtils.getHtmlText(text) },
             { "v": selfPercent },
             { "v": tooltip_text },
-            { "v": style },
             { "v": groupPercent },
             { "v": tooltip_text },
-            { "v": style }
           ]
         }
         //remove never tried column
@@ -1041,15 +1030,11 @@ angular.module('scalearAngularApp')
         if((question_block_element.length != 0) &&  (video_block_element.length != 0)) {
           question_block_element[0].style.maxHeight = question_block+"%"
           question_block_element[0].style.minHeight = question_block+"%"
-          question_block_element[0].style.border = "1px solid darkgrey"
+          question_block_element[0].style.border = ( question_block > 0  ? 1 : 0 )+"px solid darkgrey"
+          question_block_element[0].style.overflowY = scrollable? 'auto' : 'hidden'
           video_block_element[0].style.maxHeight = (95-question_block)+"%"
           video_block_element[0].style.minHeight = (95-question_block)+"%"
 
-          if (!question_block) {
-            question_block_element[0].style.border = "0px solid darkgrey"
-          }
-
-          question_block_element[0].style.overflowY = scrollable? 'auto' : 'hidden'
 
         }
       })
@@ -1064,7 +1049,7 @@ angular.module('scalearAngularApp')
       $scope.changeVideoQuestionBoxPercentage( $scope.question_block_large , true)
 
       if($scope.chart){
-        $scope.chart.options.fontSize = 35
+        $scope.chart.options.fontSize = $scope.chart_font_size_large
       }      
       $scope.blurButtons()
     }
@@ -1083,7 +1068,7 @@ angular.module('scalearAngularApp')
       }
 
       if($scope.chart){
-        $scope.chart.options.fontSize = 25         
+        $scope.chart.options.fontSize = $scope.chart_font_size_small
       }
       $scope.blurButtons()      
     }
@@ -1129,7 +1114,7 @@ angular.module('scalearAngularApp')
       var question_block = angular.element('.normal_question_block').not('.ng-hide');
       var chars = question_block.text().trim().length;
       var space = question_block.height() * question_block.width();
-      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), 40) + 'px';
+      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), Math.round(  (40.0/1920) * window.screen.availWidth ) ) + 'px';
       if($scope.chart){
         if( $scope.zooom_graph && $scope.question_block_large == 95 ){
           $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length  *  ( (question_block.height() - 50) / 4) 
@@ -1231,17 +1216,23 @@ angular.module('scalearAngularApp')
     }
 
     $scope.chartReady = function() {
-      $scope.loading_chart = false
-      $(window).resize()
-
-      $("text:contains('"+REPLACE_STYLING+"')").each(function(idx, elem){
-        var $elem = $(elem)
-        var text = $elem.text().replace(REPLACE_STYLING, "")
-        $elem.html("<tspan>"+text+"</tspan>")
-      })
-
+      if (!$scope.chart.options.fontSize){
+        $scope.chart.options.fontSize = $scope.chart_font_size_small
+      }
+      $timeout(function() {
+        $("text:contains('"+REPLACE_STYLING+"')").each(function(idx, elem){
+          var $elem = $(elem)
+          var text = $elem.text().replace(REPLACE_STYLING, "")
+          $elem.html("<tspan>"+text+"</tspan>")
+        })
+        $("div[style*='background: infobackground;']:contains('"+REPLACE_STYLING+"')").each(function(idx, elem){
+          var $elem = $(elem)
+          var text = $elem.text().replace(REPLACE_STYLING, "")
+          $elem.text(text) 
+        })
+        $(window).resize()
+        $scope.loading_chart = false
+      }, );
     }
-
     init();
-
   }]);

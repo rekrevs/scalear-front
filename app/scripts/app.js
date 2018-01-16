@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
     $httpProvider.defaults.withCredentials = true;
-    // $httpProvider.interceptors.push('ServerInterceptor');
+    $httpProvider.interceptors.push('ServerInterceptor');
     $httpProvider.interceptors.push('TokenServerInterceptor');
 
     $urlRouterProvider.otherwise('/');

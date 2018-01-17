@@ -454,7 +454,6 @@ tspan {
 .bottom-right{
 	display: inline-block;
 	width: 25%;
-	padding-right: 2%;
 	text-align: right;
 	padding-top: 10px;
 	vertical-align: bottom;

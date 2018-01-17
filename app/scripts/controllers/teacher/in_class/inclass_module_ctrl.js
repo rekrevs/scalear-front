@@ -33,11 +33,12 @@ angular.module('scalearAngularApp')
       $scope.up_timer = 0 ; 
       $scope.up_counter = 0 ;
 
-      $scope.text_font_size_small =  (20.0/1920)
-      $scope.text_font_size_large = (35.0/1920)
-      $scope.title_font_size = (40.0/1920)
-      $scope.chart_font_size_small = Math.round( $scope.text_font_size_small * window.screen.availWidth )
-      $scope.chart_font_size_large = Math.round( $scope.text_font_size_large * window.screen.availWidth )
+      $scope.text_font_size_small =  20.0/1920
+      $scope.text_font_size_large = 35.0/1920
+      $scope.title_font_size = 40.0/1920
+      $scope.chart_font_size_small = calculateFontSize($scope.text_font_size_small)
+      $scope.chart_font_size_large = calculateFontSize( $scope.text_font_size_large)
+
 
       $scope.timerCountup()
 
@@ -70,6 +71,10 @@ angular.module('scalearAngularApp')
       }
 
     };
+
+    var calculateFontSize = function(font_size){
+      return Math.round( font_size * window.screen.availWidth )      
+    }
 
     var resetVariables = function() {
       $scope.play_pause_class = "fi-play"
@@ -1119,7 +1124,7 @@ angular.module('scalearAngularApp')
       var question_block = angular.element('.normal_question_block').not('.ng-hide');
       var chars = question_block.text().trim().length;
       var space = question_block.height() * question_block.width();
-      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), Math.round(  $scope.title_font_size * window.screen.availWidth ) ) + 'px';
+      $scope.fontsize = Math.min((Math.sqrt(space / chars) + 5 ), calculateFontSize( $scope.title_font_size) ) + 'px';
       if($scope.chart){
         if( $scope.zooom_graph && $scope.question_block_large == 95 ){
           $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length  *  ( (question_block.height() - 50) / 4) 

@@ -161,14 +161,6 @@ angular.module('scalearAngularApp')
         angular.extend($scope.module_summary[$scope.module_id], data.module)
       })
 
-      // Module.getModuleCharts({
-      //     course_id: $stateParams.course_id,
-      //     module_id: $stateParams.module_id
-      //   },
-      //   function(data) {
-      //   },
-      //   function() {}
-      // )
     }
 
     var getQuizCharts = function() {
@@ -405,23 +397,6 @@ angular.module('scalearAngularApp')
         quiz: quiz.data.id,
         hide: hide
       })
-    }
-
-    $scope.updateHideQuestion = function(id, value) {
-      if (value)
-        $scope.review_question_count--
-        else
-          $scope.review_question_count++
-          Module.hideQuestion({
-              course_id: $stateParams.course_id,
-              module_id: $stateParams.module_id
-            }, {
-              question: id,
-              hide: value
-            },
-            function() {},
-            function() {}
-          )
     }
 
     $scope.updateHideDiscussion = function(id, value) {

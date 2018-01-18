@@ -16,9 +16,9 @@ angular.module('scalearAngularApp')
         'show_confirmation':{method:'GET', headers:headers, params:{action: 'confirmation'}},
         'update_account':{method:'PUT', headers:headers},
         'delete_account':{method:'delete', headers:headers},
-        'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers},
+        'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers}, //NOT DONE
         'updateCompletionWizard':{method: 'POST', params:{action: 'update_completion_wizard'}, headers:headers},
-        'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
+        'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}}, // NOT DONE
         'userExist': { method: 'GET', headers: headers , params: {action: 'user_exist'}},
         'getSubdomains': { method: 'GET', headers: headers , params: {action: 'get_subdomains'}},
         'getWelcomeMessage': { method: 'GET', headers: headers , params: {action: 'get_welcome_message'}},

@@ -341,7 +341,9 @@ angular.module('scalearAngularApp')
           ui.draggable.addClass('dropped')
           scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.html()
           ui.draggable.attr('id', scope.data.id)
-          scope.$apply()
+          if (!scope.$root.$$phase) {
+            scope.$apply()
+          }
         }
         else{
           var drag_elem = angular.element('#'+scope.data.id)
@@ -361,7 +363,9 @@ angular.module('scalearAngularApp')
       var clear=function(draggable){
         if(draggable.attr('id')==scope.data.id){
           scope.studentAnswers[scope.quiz.id][scope.data.id]=''
-          scope.$apply()
+          if (!scope.$root.$$phase) {
+            scope.$apply()
+          }
         }
         draggable.css('background-color', '')
         draggable.attr('id', '')

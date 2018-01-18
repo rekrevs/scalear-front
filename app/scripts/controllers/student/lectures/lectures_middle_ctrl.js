@@ -1314,13 +1314,8 @@ angular.module('scalearAngularApp')
       changeStatusAndWaitTobeSync(6, null)
     }
 
-    $scope.quizLayerClick =  function() {
-      if ( !$scope.quiz_mode && ( (!$scope.dynmaic_annotation) ||  ($scope.dynmaic_annotation && !$scope.dynmaic_annotation.as_slide) ) ){
-        $scope.toggleVideoPlayback()
-      }
-    }
     $scope.lectureLayerClick =  function() {
-      if (!$scope.quiz_mode){
+      if ( !$scope.quiz_mode && ( (!$scope.dynmaic_annotation) ||  ($scope.dynmaic_annotation && !$scope.dynmaic_annotation.as_slide) ) ){
         $scope.toggleVideoPlayback()
       }
     }

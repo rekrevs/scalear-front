@@ -1259,11 +1259,6 @@ angular.module('scalearAngularApp')
       changeStatusAndWaitTobeSync(6, null)
     }
 
-    $scope.quizLayerClick =  function() {
-      if (!$scope.quiz_mode){
-        $scope.toggleVideoPlayback()
-      }
-    }
     $scope.lectureLayerClick =  function() {
       if (!$scope.quiz_mode){
         $scope.toggleVideoPlayback()

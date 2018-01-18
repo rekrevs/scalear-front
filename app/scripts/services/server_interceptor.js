@@ -109,7 +109,6 @@ angular.module('scalearAngularApp')
             $interval.cancel($rootScope.stop);
             $rootScope.stop = undefined;
           }
-          console.log(rejection.data.errors[0])
           ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
         }
 
@@ -125,12 +124,10 @@ angular.module('scalearAngularApp')
             $rootScope.stop = undefined;
           }
 
-          // ErrorHandler.showMessage('Error ' + ': ' + 'Unknown Error.', 'errorMessage', 4000, "error");
           ErrorHandler.showMessage('A server error occurred. If this continues, please use the Support link in the Help menu to contact technical support.', 'errorMessage', 4000, "error");
         }
 
         if(rejection.status == 401 && rejection.config.url.search(re) != -1) {
-          // URLInformation.redirect = URLInformation.history
           var $state = $injector.get('$state');
           if($cookieStore.get('preview_as_student')) {
             $log.debug("preview_as_student")

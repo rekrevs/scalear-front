@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('detailsUrl', ['$timeout', '$translate', function($timeout, $translate) {
+  }]).directive('detailsUrl', ['$timeout', '$translate','$filter', function($timeout, $translate, $filter) {
     return {
       template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>',
       restrict: 'E',
@@ -65,6 +65,7 @@ angular.module('scalearAngularApp')
         };
 
         scope.saveData = function() {
+          scope.value = $filter("formatURL")(scope.value)
           $timeout(function() {
             // if(scope.text !== scope.value) {
               scope.text = scope.value

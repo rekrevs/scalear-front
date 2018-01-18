@@ -21,6 +21,8 @@ angular.module('scalearAngularApp')
         'samlSignup': { method: 'POST', headers: headers , params: {action: 'saml_signup'}},
         'userExist': { method: 'GET', headers: headers , params: {action: 'user_exist'}},
         'getSubdomains': { method: 'GET', headers: headers , params: {action: 'get_subdomains'}},
+        'getWelcomeMessage': { method: 'GET', headers: headers , params: {action: 'get_welcome_message'}},
+        'submitWelcomeMessage': { method: 'POST', headers: headers , params: {action: 'submit_welcome_message'}},
 
 
       });

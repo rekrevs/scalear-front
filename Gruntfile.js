@@ -124,16 +124,34 @@ module.exports = function(grunt) {
         },
         jshint: {
             options: {
-                jshintrc: '.jshintrc',
-                //reporterOutput: '<%= yeoman.app %>/jshint_log.txt',
-                '-W106': false, //camelCase
-                '-W033': false, // semicolon
+                ignores: [
+                    '<%= yeoman.app %>/scripts/externals/*',
+                ],
+                globals: {
+                    'angular': true,
+                    'inject': true,
+                    'sinon': true,
+                    'expect': true,
+                    'console': true,
+                },
+                strict: false,
+                curly: true,
+                eqeqeq: true,
+                forin: false,
+                funcscope: true,
+                indent: 2,
+                latedef: false,
+                noarg: true,
+                quotmark: true,
+                shadow: true,
+                undef: true,
+                browser: true,
+                sub: true,
+                loopfunc: true
             },
-            all: [
-                // 'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/**/*.js'
-            ]
+            target: ['<%= yeoman.app %>/scripts/**/*.js']
         },
+
         coffee: {
             options: {
                 sourceMap: true,
@@ -158,11 +176,6 @@ module.exports = function(grunt) {
                 }]
             }
         },
-        // not used since Uglify task does concat,
-        // but still available if needed
-        /*concat: {
-      dist: {}
-    },*/
         rev: {
             dist: {
                 files: {
@@ -502,8 +515,6 @@ module.exports = function(grunt) {
                 dest: '<%= yeoman.dist %>'
             },
         },
-
-
         aws: grunt.file.readJSON('app/grunt-aws.json'),
         aws_s3: {
             options: {
@@ -611,9 +622,7 @@ module.exports = function(grunt) {
                     }
                 }, ],
             }
-
         },
-
         ngconstant: {
             options: {
                 space: '  '

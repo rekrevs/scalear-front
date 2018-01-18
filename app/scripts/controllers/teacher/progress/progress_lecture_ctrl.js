@@ -812,7 +812,6 @@ angular.module('scalearAngularApp')
 
           ]
         }
-        // console.log(row)
         formated_data.rows.push(row)
       }
       return formated_data

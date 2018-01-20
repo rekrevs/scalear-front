@@ -28,6 +28,9 @@
     "inject": true,
     "sinon": true,
     "expect": true,
-    "console": true
+    "console": true,
+    "shortcut": true,
+    "screenfull": true,
+    "$": true
   }
 }

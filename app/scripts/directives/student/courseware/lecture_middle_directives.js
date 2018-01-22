@@ -262,7 +262,7 @@ angular.module('scalearAngularApp')
       setup()
     }
   };
-}]).directive('studentDrag',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
+}]).directive('studentDrag',['$rootScope','$translate','$log','ScalearUtils', function($rootScope, $translate, $log,ScalearUtils){
   return {
     restrict:'E',
     templateUrl: '/views/student/lectures/answer_drag.html',
@@ -341,7 +341,7 @@ angular.module('scalearAngularApp')
           ui.draggable.addClass('dropped')
           scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.html()
           ui.draggable.attr('id', scope.data.id)
-          scope.$apply()
+          ScalearUtils.safeApply()
         }
         else{
           var drag_elem = angular.element('#'+scope.data.id)
@@ -361,7 +361,7 @@ angular.module('scalearAngularApp')
       var clear=function(draggable){
         if(draggable.attr('id')==scope.data.id){
           scope.studentAnswers[scope.quiz.id][scope.data.id]=''
-          scope.$apply()
+          ScalearUtils.safeApply()
         }
         draggable.css('background-color', '')
         draggable.attr('id', '')

@@ -581,6 +581,7 @@ angular.module("scalearAngularApp")
             OnlineQuiz.getChartData({ online_quizzes_id: $scope.selected_timeline_item.data.id }, function(resp) {
               $scope.selected_timeline_item.data.answers = resp.chart;
               $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, { colors: ["rgb(0, 140, 186)", "rgb(67, 172, 106)"] }, "formatInclassQuizChartData");
+              $scope.chart.is_inclass_quiz= true;
             });
           }
           adjustQuizLayer();
@@ -791,10 +792,10 @@ angular.module("scalearAngularApp")
     };
 
     $scope.chooseVideoQuestionBlockGlass = function(data_length) {
-      var maxDataLength = 95;
-      var minDataLength = 30;
-      $scope.question_block_small = Math.min(Math.max(minDataLength, data_length * 9), maxDataLength);
-      $scope.question_block_large = Math.min(maxDataLength, data_length * 20);
+      var max_data_length = 95;
+      var min_data_length = 30;
+      $scope.question_block_small = Math.min(Math.max(min_data_length, data_length * 9), max_data_length);
+      $scope.question_block_large = Math.min(max_data_length, data_length * 20);
       $scope.changeVideoQuestionBoxPercentage($scope.question_block_small, false);
     };
 
@@ -1147,13 +1148,15 @@ angular.module("scalearAngularApp")
       $scope.fontsize = Math.min(font_size_container, font_size_screen) + "px";
     }
 
-    function adjustChartSize() {
+    function adjustChartSize() {      
       if ($scope.chart) {
         var question_block = angular.element(".normal_question_block").not(".ng-hide");
+        var question_block_height = question_block.height() - 50;
         if ($scope.zooom_graph && $scope.question_block_large == 95) {
-          $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length * ((question_block.height() - 50) / 4);
+          var bar_height_ratio = ($scope.chart.is_inclass_quiz)? 5 : 4;
+          $scope.chart.options.height = Object.keys($scope.selected_timeline_item.data.answers).length * (question_block_height / bar_height_ratio);
         } else {
-          $scope.chart.options.height = question_block.height() - 50;
+          $scope.chart.options.height = question_block_height;
         }
       }
     }

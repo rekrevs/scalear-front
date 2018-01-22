@@ -577,7 +577,7 @@ angular.module('scalearAngularApp')
 
 
     $scope.deleteComment = function(comment, discussion) {
-      Forum.deleteComment({ comment_id: comment.comment.id, post_id: discussion.id },
+      Forum.deleteComment({ comment_id: comment.id, post_id: discussion.id },
         function() {
           discussion.comments.splice(discussion.comments.indexOf(comment), 1)
         },
@@ -595,9 +595,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeCommentFlag = function(comment, discussion) {
-      Forum.removeAllCommentFlags({ comment_id: comment.comment.id, post_id: discussion.id },
+      Forum.removeAllCommentFlags({ comment_id: comment.id, post_id: discussion.id },
         function() {
-          discussion.comments[discussion.comments.indexOf(comment)].comment.flags_count = 0
+          discussion.comments[discussion.comments.indexOf(comment)].flags_count = 0
         },
         function() {}
       )

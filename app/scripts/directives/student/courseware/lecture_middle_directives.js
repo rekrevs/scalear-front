@@ -591,7 +591,7 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div  ng-click="noteAreaClick($event)" e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
+    template: '<div   e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
                 '<div class="note" style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
                   '<span ng-bind-html="value"></span>'+
                 '</div>'+
@@ -635,12 +635,14 @@ angular.module('scalearAngularApp')
       if(!scope.value)
         scope.show()
 
-     scope.noteAreaClick = function(e){  
-        $timeout(function(){  
-            $('.note').focus() 
-           e.stopPropagation()  
-        })      
-      }        
+    // TODO fix edit note on mobile
+    //  scope.noteAreaClick = function(e){  
+    //    console.log("note clicked")
+    //     $timeout(function(){  
+    //         $('.note').focus() 
+    //        e.stopPropagation()  
+    //     })      
+    //   }        
 
       scope.saveData = function(){
         scope.$emit("note_updated")

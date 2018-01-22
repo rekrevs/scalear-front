@@ -87,7 +87,7 @@ angular.module("scalearAngularApp")
           break;
       }
 
-      return Math.round(percent * window.screen.availWidth)/100;
+      return Math.round(percent * window.screen.availWidth) / 100;
     }
 
     var resetVariables = function() {
@@ -818,31 +818,32 @@ angular.module("scalearAngularApp")
       }];
       formated_data.rows = [];
       for (var ind in data) {
-        var text, number, incorrect, tooltip_text, color, tmp_tooltip_text;
-        text = ScalearUtils.getHtmlText(data[ind][2]);
-        tmp_tooltip_text = data[ind][2];
-        color = data[ind][1];
-        if (data[ind][1] == "orange") {
-          color = "gray";
-          number = Math.floor(((data[ind][0] + data[ind][3]) / $scope.students_count) * 100);
-          if (!isSurvey()) {
-            tooltip_text = "<div style='color:black;padding:8px'>Incorrect: ";
-          }
-          tooltip_text += tmp_tooltip_text + "</div>";
-        } else if (data[ind][1] == "gray") {
+        var formatted_text = data[ind][2],
+          raw_text = ScalearUtils.getHtmlText(formatted_text),
+          number,
+          tooltip_text = "<div style='color:black;padding:8px'>",
+          color = data[ind][1];
+
+        if (color == "gray") {
           number = Math.floor((data[ind][0] / $scope.students_count) * 100);
-          tooltip_text = "<div style='color:black;padding:8px'>" + tmp_tooltip_text + "</div>";
         } else {
           number = Math.floor(((data[ind][0] + data[ind][3]) / $scope.students_count) * 100);
-          text = REPLACE_STYLING + text;
-          if (!isSurvey()) {
-            tooltip_text = "<div style='color:black;padding:8px'>Correct: ";
+          var answer_status = "Correct: ";
+          if (color == "orange") {
+            color = "gray";
+            answer_status = "Incorrect: ";
+          } else {
+            raw_text = REPLACE_STYLING + raw_text;
           }
-          tooltip_text += tmp_tooltip_text + "</div>";
+          if (!isSurvey()) {
+            tooltip_text += answer_status;
+          }
         }
+
+        tooltip_text += formatted_text + "</div>";
         var row = {
           "c": [
-            { "v": text },
+            { "v": raw_text },
             { "v": number },
             { "v": tooltip_text },
             { "v": color }
@@ -878,36 +879,37 @@ angular.module("scalearAngularApp")
         }
       }];
       formated_data.rows = [];
-      var totalSelf = 0;
-      var totalGroup = 0;
+      var total_self = 0;
+      var total_group = 0;
       for (var question in data) {
         if (data[question][2] != "Never tried") {
-          totalSelf += data[question][0];
-          totalGroup += data[question][4];
+          total_self += data[question][0];
+          total_group += data[question][4];
         }
       }
 
       for (var ind in data) {
-        var text = data[ind][2],
+        var formatted_text = data[ind][2],
+          raw_text = ScalearUtils.getHtmlText(formatted_text),
           self_count = data[ind][0] || 0,
           group_count = data[ind][4] || 0,
-          selfPercent = self_count / totalSelf * 100,
-          groupPercent = group_count / totalGroup * 100,
-          tooltip_text = "<div style='padding:8px'><b>" + text + "</b><br>" +
-          $translate.instant("inclass.self_stage") + ": " + self_count + " (" + selfPercent + "%)" + "<br>" +
-          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + groupPercent + "%)" + "</div>",
-          text = (data[ind][1] == "green") ? REPLACE_STYLING + text : text;
+          self_percent = self_count / total_self * 100,
+          group_percent = group_count / total_group * 100,
+          tooltip_text = "<div style='padding:8px'><b>" + formatted_text + "</b><br>" +
+          $translate.instant("inclass.self_stage") + ": " + self_count + " (" + self_percent + "%)" + "<br>" +
+          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + group_percent + "%)" + "</div>",
+          raw_text = (data[ind][1] == "green") ? REPLACE_STYLING + raw_text : raw_text;
         var row = {
           "c": [
-            { "v": ScalearUtils.getHtmlText(text) },
-            { "v": selfPercent },
+            { "v": raw_text },
+            { "v": self_percent },
             { "v": tooltip_text },
-            { "v": groupPercent },
+            { "v": group_percent },
             { "v": tooltip_text },
           ]
         };
         //remove never tried column
-        if (text != "Never tried") {
+        if (raw_text != "Never tried") {
           formated_data.rows.push(row);
         }
       }

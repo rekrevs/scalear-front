@@ -136,7 +136,9 @@ angular.module('scalearAngularApp')
 				}
 			})
       scope.$on("$destroy", function() {
-        scope.explanation[scope.answer.id] = null
+        if(scope.explanation && scope.explanation[scope.answer.id]){
+          scope.explanation[scope.answer.id] = null
+        }
       });
 			// if(scope.answer.correct){
 			// 	scope.radioChange(scope.answer);

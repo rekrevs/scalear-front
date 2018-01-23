@@ -34,7 +34,6 @@ angular.module('scalearAngularApp')
           angular.extend(obj.late_lectures, data.late_lectures)
 
           $log.debug(obj)
-
           angular.extend($scope, obj)
 
           $timeout(function() {
@@ -55,7 +54,7 @@ angular.module('scalearAngularApp')
         status = (status == "Finished on Time") ? 1 : 2
       else
         status = 0
-      if(lecture_quiz) { //1 for lecture 0 for quiz
+      if(lecture_quiz == 1) { //1 for lecture 2 for quiz
         Lecture.changeLectureStatus({
           course_id: $stateParams.course_id,
           lecture_id: module_id

@@ -2792,12 +2792,26 @@ angular.module("mm.foundation.topbar", [])
                 });
                 element.bind('click', function(event) {
                     if(!topBar.settings.isHover && !topBar.breakpoint()){
+                        was_clicked_twice = element[0].className.indexOf("not-click")
+                        $('#main').click(function(){
+                          $('.not-click').toggleClass('not-click')
+                          $('#main').unbind('click')              
+                        })
+
+                        if( $('.not-click').size() != 0  ){
+                          $('.not-click').toggleClass('not-click')                          
+                        }
+                        if(was_clicked_twice != -1){
+                          element.toggleClass('not-click');
+                        }
                         element.toggleClass('not-click');
                     }
                 });
                 
                 element.bind('mouseleave', function() {
+                  if(topBar.settings.isHover){
                     element.removeClass('not-click');
+                  }
                 });
 
                 $scope.$on('$destroy', function(){

@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
     $httpProvider.defaults.withCredentials = true;
-    // $httpProvider.interceptors.push('ServerInterceptor');
+    $httpProvider.interceptors.push('ServerInterceptor');
     $httpProvider.interceptors.push('TokenServerInterceptor');
 
     $urlRouterProvider.otherwise('/');
@@ -342,6 +342,11 @@ angular.module('scalearAngularApp')
           url: '/school_statistics',
           templateUrl: '/views/statistics/school_statistics.html',
           controller: 'schoolStatisticsCtrl'
+        })
+        .state('welcome_message', {
+          url: '/welcome_message',
+          templateUrl: '/views/welcome_message.html',
+          controller: 'welcomeMessageCtrl'
         })
         .state('show_shared', {
           url: '/show_shared',

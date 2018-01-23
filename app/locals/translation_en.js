@@ -99,6 +99,7 @@ var translation_en={
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
     },
+    welcome_message_updated: "Welcome message updated",    
   },
   time:{
     hours: "hours",
@@ -142,7 +143,7 @@ var translation_en={
   support:{
     ipad:"iPad support is currently in beta.",
     mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Student video support is available for Android and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
+    issue_and_recommendation:"Student video support is available for Android 4.4 and higher and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -179,6 +180,7 @@ var translation_en={
     join_course: "Join a new course (student)",
     new_course: "Create a new course (teacher)",
     review: "Review",
+    welcome_message: "Welcome Message",
     register:{
       teacher: "Teacher Registration",
       student: "Student Registration"
@@ -529,6 +531,10 @@ var translation_en={
     video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
+    video_only: "Video Only",
+    zoom_graph: "Zoom Graph",
+    zoom_video: "Zoom Video",
+    show_graph: "Show Graph",
     exit: "Exit",
     blackscreen_close: "Click or Press 'b' to return",
     blackscreen_done: "Review finished. Press ESC to end",
@@ -555,14 +561,14 @@ var translation_en={
     click_forward_result: 'Press forward to view in-class voting results.',
   },
   distance_peer:{
-    invited: 'Invite a student to Join a Distance Peer Session' ,
+    invited: 'Invite a student to Join a distance peer session' ,
     invited_instruction: 'Choose a student ' ,
     distance_peer_instruction: 'Please call up your partner while you do these questions so you can discuss them in real-time. Remember that for the Individual quizzes you are both supposed to answer on your own, but when you get to the Group part of the quiz you are encouraged to discuss the answers together.',
     invited_by: 'You are invited by' ,
     invited_by_instruction: 'Click on button of student you want to join ' ,
     wait_for_acceptance: 'Wait For Acceptance' ,
-    wait_for_acceptance_instruction: 'Wait For Acceptance from student or you cancel the invitation' ,
-    waiting_response_of_back_end: 'Check if you invited to join Distance Peer Session' ,
+    wait_for_acceptance_instruction: 'Wait For acceptance from student or cancel the invitation' ,
+    waiting_response_of_back_end: 'Check if you\'re invited to join a distance peer session' ,
     invite_another_button: "Invite another student to join",
     video_stage: 'Please watch the video.',
     intro_stage: "Quiz:Intro",
@@ -570,17 +576,22 @@ var translation_en={
     multiple_choice: '@:inclass.multiple_choice',
     group_stage: 'Quiz:Group',
     end_video_stage: 'Quiz:End',
-    end_peer_instruction: "End Peer Instruction",
+    end_peer_instruction: "End Distance Peer Instruction",
     in_distance_peer: 'You are participating in a distance peer instruction lesson with {{name}}.',
-    the_another_student_finished_status: '{{name}} finished this status, you can resume',
-    waiting_the_another_student_to_finish: 'Waiting {{name}} to finish this status',
+    the_another_student_finished_status: '{{name}} finished {{status}}, you can resume',
+    waiting_the_another_student_to_finish: 'Waiting {{name}} to finish {{status}}',
     click_on_button_below_to_end_session: 'Click on button below to end distance peer session',
-    message_video: 'Please watch the video and complete the quizzes.',
-    message_quiz_intro: 'Please watch the quiz introduction.',
-    message_quiz_end: 'Please watch the quiz end.',
-    message_quiz_self: 'Please answer the quiz on your own. (Do not discuss it with {{name}} at this time.)',
-    message_quiz_group: 'Please discuss your answer with {{name}} and choose your final answer. (You do not have to choose the same answers.)',
-    prevent_seek_forward: 'you can not seek to time after quiz',
+    the_another_student_finished_message_video: 'Please watch the video to get to the peer instruction questions.',
+    the_another_student_finished_message_quiz_intro: 'Press play to watch the introduction to the question.',
+    the_another_student_finished_message_quiz_self: 'Please choose your individual answer. (Do not discuss your answer with your partner.)',
+    the_another_student_finished_message_quiz_group: 'Please discuss your answer with your partner and choose your final answer. (You do not have to choose the same answers.)',
+    the_another_student_finished_message_quiz_end: "Please watch the teacher's explanation of the answer.",
+    waiting_message_quiz_intro_after_video: 'Waiting for your partner to finish watching the video.' ,
+    waiting_message_quiz_self_after_intro: 'Waiting for your partner to finish watching the introduction.' ,
+    waiting_message_quiz_group_after_self: 'Waiting for your partner to choose his or her individual answer. (Do not discuss your answer with your partner.)' ,
+    waiting_message_quiz_end_after_group: 'Waiting for your partner to choose his or her answer after the discussion.' ,
+    waiting_message_video_after_quiz_end: "Waiting for your partner to finish watching the teacher's explanation." ,
+    prevent_seek_forward: 'Please do not skip ahead of your partner.',
     can_not_leave_this_status: '{{name}} did not finish this status, you can not go to the next status',
     other_student_ended_session: '{{name}} ended the distance peer session ',
     student_cancelled:'{{name}} cancelled the invitation',
@@ -591,6 +602,10 @@ var translation_en={
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
     note_time: "Note Time",
+    note_duration: "Note Duration",
+    note_as_slide: "Fullscreen Note",
+    note_as_slide_description: " (This note will pause the video until the student clicks Continue.)",
+    note_as_slide_empty_description:"Put in your text below in the Annotations box.",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",
@@ -604,6 +619,7 @@ var translation_en={
     start_time_bigger_than_end_time: "End time must be after start time",
     header: "Header",
     answer:"@:global.answer",
+    inclass_student_note: "Why did you choose that answer? (For your own notes.)",
     type: "Type",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
@@ -625,6 +641,7 @@ var translation_en={
       invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
         students_must_complete_required:"All required items must be completed on-time for the student to receive credit for the module",
+        students_can_not_skep_ahead:"@:editor.details.skip_ahead_description",
         click_to_delete: "Click here to delete, click outside to close",
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
@@ -681,8 +698,9 @@ var translation_en={
         use_module_due: "Use Module’s Due Date",
         use_module_in_order: "Use Module’s Order",
         use_module_required: "Use Module’s Required",
+        use_module_skip_ahead: "Use Module’s Skip Ahead",
         vidoe_not_exist: "Video may not exist or may still be uploading",
-        incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
+        incompatible_video_link: "Invalid movie type. Please provide a valid YouTube, .mp4 or a MediaSite URL.",
         student_link_lecture:"Student link to lecture",
         appearance_date: "Appearance Date",
         due_date: "Due Date",
@@ -692,11 +710,13 @@ var translation_en={
         student_link_module:"Student link to module",
         has_due_date: "has due date",
         required:"@:global.required",
+        skip_ahead: "Skip Ahead",
         in_order: "In Order",
         retries: "Retries",
         display_text:"Display question over video",
         display_text_explain:"(Use if the question text is not in the video.)",
-        student_link_quiz:"Student link to quiz"
+        student_link_quiz:"Student link to quiz",
+        skip_ahead_description: "Allow students to skip ahead in video",
     },
     popover:{
         shown_in_graph: "Shown on results graph",
@@ -718,6 +738,7 @@ var translation_en={
   lectures:{
     messages:{
         thank_you_answer: "Thank you for your answer",
+        press_to_continue: "Press play to continue.",
         did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
         please_choose_one_answer: "Please choose at least one answer",
         please_choose_an_answer: "Please choose your answer(s).",
@@ -747,8 +768,9 @@ var translation_en={
         exit_fullscreen: "Exit Fullscreen",
         fullscreen: "Fullscreen",
         check_answer: "Check Answer",
-        start_distance_peer: "Start Distance Peer",
-        submit: "@:button.submit"
+        start_distance_peer: "Start Distance Peer Instruction",
+        submit: "@:button.submit",
+        submit_my_vote: "Submit my vote",
     },
     tooltip:{
         unsolved_quiz: "You have to complete the quiz as part of the video before you can jump to it",
@@ -995,6 +1017,7 @@ var translation_en={
     time_zone: "Course Timezone",
     course_code: "Course Code",
     course_name: "Course Name",
+    university_note: "University Note",
   },
   statistics:{
     statistics: "Statistics",
@@ -1026,7 +1049,8 @@ var translation_en={
     rate_from: "rate from",
     to: "to",
     drag_to_zoom: 'Click and drag in the plot area to zoom in',
-    pinch_to_zoom: 'Pinch the chart to zoom in'
+    pinch_to_zoom: 'Pinch the chart to zoom in',
+    write_welcome_message: "Write welcome message"
   },
   player:{
     click_video_quality: "Click to change video quality",
@@ -1121,6 +1145,9 @@ var translation_en={
     languages:"Languages",
     en: 'English',
     sv: 'Svenska'
+  },
+  welcome_messages:{
+    description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
   }
 }
 

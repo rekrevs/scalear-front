@@ -136,7 +136,9 @@ angular.module('scalearAngularApp')
 				}
 			})
       scope.$on("$destroy", function() {
-        scope.explanation[scope.answer.id] = null
+        if(scope.explanation && scope.explanation[scope.answer.id]){
+          scope.explanation[scope.answer.id] = null
+        }
       });
 			// if(scope.answer.correct){
 			// 	scope.radioChange(scope.answer);
@@ -171,18 +173,26 @@ angular.module('scalearAngularApp')
       });
   }
 }
-}).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
+}).directive('studentHtmlFree',['$translate','$log','$timeout',function($translate, $log, $timeout){
   return{
     restrict:'E',
     template: "<ng-form name='aform'>"+
-              "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
+              "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
               "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>"+
               "</ng-form>"+
               "<div ng-bind-html='explanation[quiz.id]'></div>",
-    link:function(scope){
+    link:function(scope ,element){
       scope.$on("$destroy", function() {
         scope.explanation[scope.quiz.id] = null
       });
+
+      scope.studentHtmlFreeInputClick = function(e){ 
+        $timeout(function(){ 
+           angular.element(element).find("textarea").focus()
+           e.stopPropagation() 
+        })     
+      }       
+
     }
   }
 }]).directive("studentAnswerVideo",['$log',function($log){
@@ -398,10 +408,10 @@ angular.module('scalearAngularApp')
 
     }
   }
-}]).directive('studentFreeText',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
+}]).directive('studentFreeText',['$rootScope','$translate','$log', '$timeout', function($rootScope, $translate, $log, $timeout){
   return {
     restrict:'E',
-    template: '<textarea placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+    template: '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
     link:function(scope,elem){
       var setup=function(){
         scope.explanation_pop={}
@@ -420,6 +430,14 @@ angular.module('scalearAngularApp')
           }
         }
       })
+
+      scope.freeTextInputClick = function(e){
+        $timeout(function(){
+            angular.element(elem).find("textarea").focus()
+            e.stopPropagation()
+        })    
+      }
+
       scope.$on("$destroy", function() {
         scope.explanation[scope.quiz.id] = null
       });
@@ -575,8 +593,8 @@ angular.module('scalearAngularApp')
   }
 }]).directive('notesArea', ['$timeout',function($timeout){
   return{
-    template: '<div e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
-                '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
+    template: '<div  ng-click="noteAreaClick($event)" e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">'+
+                '<div class="note" style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
                   '<span ng-bind-html="value"></span>'+
                 '</div>'+
                 '<div style="font-size: 10px; float: right; display: inline-block;">'+
@@ -619,6 +637,13 @@ angular.module('scalearAngularApp')
       if(!scope.value)
         scope.show()
 
+     scope.noteAreaClick = function(e){  
+        $timeout(function(){  
+            $('.note').focus() 
+           e.stopPropagation()  
+        })      
+      }        
+
       scope.saveData = function(){
         scope.$emit("note_updated")
         if(!scope.value)
@@ -653,6 +678,85 @@ angular.module('scalearAngularApp')
       action:'&'
     },
     templateUrl: '/views/student/lectures/annotation.html',
+    link:function(scope, element, attrs){
+      scope.closeBtn = scope.close()
+      scope.actionBtn = scope.action()
+    }
+  }
+}]).directive('dynmaicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+  return{
+    restrict:"E",
+    scope:{
+      data:'=',
+      close: '&',
+      action:'&'
+    },
+    templateUrl: '/views/student/lectures/dynmaic_annotation.html',
+    link:function(scope, element, attrs){
+      scope.closeBtn = scope.close()
+      scope.actionBtn = scope.action()
+
+      scope.calculatePosition = function() {
+        var ontop = angular.element('.ontop');
+        var main = angular.element(element.children()[0])
+        scope.data.xcoor = parseFloat(main.position().left) / ontop.width();
+        scope.data.ycoor = parseFloat(main.position().top) / ontop.height();
+        scope.calculateSize()
+      }
+
+      scope.calculateSize = function(event,ui) {
+        var ontop = angular.element('.ontop');
+        var main = angular.element(element.children()[0])
+        var textarea = angular.element( main[0].querySelector('.medium-editor-p'))[0]
+        if ( ui && ( main[0].offsetWidth  <  textarea.offsetWidth  ) ){
+          ui.size.width = textarea.offsetWidth +10
+          scope.data.width = ui.size.width / (ontop.width()) ;
+        } 
+        else{
+          scope.data.width = main[0].offsetWidth / (ontop.width()) ;          
+        }
+        if ( ui && (main[0].offsetHeight <  textarea.offsetHeight) ){
+          ui.size.height = textarea.offsetHeight +10
+          scope.data.height = scope.data.height / (ontop.height()) ;
+        }
+        else{
+          scope.data.height = main[0].offsetHeight / (ontop.height()) ;                    
+        }
+      }
+
+
+      if ( !CourseModel.isStudent() ) {
+        angular.element(element.children()[0]).resizable({
+          containment: ".videoborder",
+          stop: scope.calculateSize,
+          resize: scope.calculateSize
+        });              
+      }
+    }
+  }
+}]).directive('dynmaicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+  return{
+    restrict:"E",
+    scope:{
+      data:'=',
+      close: '&',
+      action:'&'
+    },
+    templateUrl: '/views/student/lectures/dynmaic_annotation_student.html',
+    link:function(scope, element, attrs){
+      scope.closeBtn = scope.close()
+      scope.actionBtn = scope.action()
+    }
+  }
+}]).directive('slideNote',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+  return{
+    restrict:"E",
+    scope:{
+      data:'=',
+      close: '&',
+      action:'&'
+    },
+    templateUrl: '/views/student/lectures/slide_note.html',
     link:function(scope, element, attrs){
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()

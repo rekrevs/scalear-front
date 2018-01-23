@@ -98,7 +98,8 @@ var translation_sv={
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
         try_reload:"Du kan fortsätta vänta eller prova att uppdatera sidan",
-    }
+    },
+    welcome_message_updated: "Välkommen Meddelande uppdaterad",    
   },
   time:{
     hours: "timmar",
@@ -142,7 +143,7 @@ var translation_sv={
   support:{
     ipad:"Stöd för iPad är för närvarande i beta.",
     mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
-    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
+    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android 4.4 och senare och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
   navigation:{
@@ -179,6 +180,7 @@ var translation_sv={
     join_course: "Delta i en ny kurs (elev)",
     new_course: "Skapa en ny kurs (lärare)",
     review: "Bedöm",
+    welcome_message: "Välkommen Meddelande",    
     register:{
       teacher: "Lärare, registrering",
       student: "Student, registrering"
@@ -528,6 +530,10 @@ var translation_sv={
     video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
+    video_only: "Endast Video",
+    zoom_graph: "Zoom Graf",
+    zoom_video: "Zooma Video",
+    show_graph: "Visa Graf",
     exit: "Avsluta",
     blackscreen_close: "Klicka eller tryck på 'b' för att gå tillbaka",
     blackscreen_done: "Genomgången klar. Klicka på ESC för att avsluta",
@@ -569,17 +575,22 @@ var translation_sv={
     multiple_choice: '@:inclass.multiple_choice',
     group_stage: 'Quiz:Grupp',
     end_video_stage: 'Quiz:Slut',
-    end_session: "Avsluta Distance Peer sessionen",
+    end_peer_instruction: "Avsluta Distance Peer sessionen",
     in_distance_peer: 'Du deltar i en Distance Peer session med namnet {{name}}.',
-    the_another_student_finished_status: '{{name}} har slutfört denna del, du kan fortsätta',
-    waiting_the_another_student_to_finish: 'Väntar på att {{name}} ska slutföra denna del',
+    the_another_student_finished_status: '{{name}} har slutfört {{status}}, du kan fortsätta',    
+    waiting_the_another_student_to_finish: 'Väntar på att {{name}} ska slutföra {{status}}',
     click_on_button_below_to_end_session: 'Klicka på knappen nedan för att avsluta Distance Peer sessionen',
-    message_video: 'Var god se filmen och besvara quizzarna.',
-    message_quiz_intro: 'Var god se quiz-introduktionen.',
-    message_quiz_end: 'Var god se den avslutande delen.',
-    message_quiz_self: 'Var god besvara detta quiz på egen hand. (Diskutera det inte med {{name}} i detta steg.)',
-    message_quiz_group: 'Var god diskutera dit svar med {{name}} och välj ett slutligt svar. (Ni behöver inte välja samma svar.)',
-    prevent_seek_forward: 'du kan inte spola fram filmen till en tidpunkt efter ett quiz',
+    the_another_student_finished_message_video: 'Snälla du titta på videon för att komma till peer-instruktionsfrågorna.',
+    the_another_student_finished_message_quiz_intro: 'Snälla du tryck på play för att titta på introduktionen av frågan.',
+    the_another_student_finished_message_quiz_self: 'Snälla du  välj ett svar frågan på egen hand. (Diskutera inte det med din partner.)',
+    the_another_student_finished_message_quiz_group: 'Snälla du diskutera ditt svar med din partner och välj ditt senaste svar. (Du behöver inte välja samma svar.)',
+    the_another_student_finished_message_quiz_end: 'Snälla du tryck på play för att titta på lärarens förklaring av svaret.',
+    waiting_message_quiz_intro_after_video: 'Väntar på att din partner slutföra titta på videon.' ,
+    waiting_message_quiz_self_after_intro: 'Väntar på att din partner slutföra titta på introduktionen.' ,
+    waiting_message_quiz_group_after_self: 'Väntar på din partner att välja sitt individuella svar. (Diskutera inte ditt svar med din partner.)' ,
+    waiting_message_quiz_end_after_group: 'Väntar på din partner att välja sitt svar efter diskussionen.' ,
+    waiting_message_video_after_quiz_end: 'Väntar på din partner att slutföra titta på lärarens förklaring.' ,    
+    prevent_seek_forward: 'Var snäll och gå inte över din partner.',
     can_not_leave_this_part: '{{name}} har inte avslutat denna del än, så du kan inte fortsätta till nästa del',
     other_student_ended_session: '{{name}} avslutade Distance Peer sessionen',
     student_cancelled:'{{name}} avbrutit inbjudan.',
@@ -590,6 +601,10 @@ var translation_sv={
     quiz_time: "Quiz-tidpunkt",
     marker_time: "Markörens tid",
     note_time: "Anteckning tid",
+    note_duration: "Anteckning varaktighet",
+    note_as_slide: "Fullskärm Anteckning",
+    note_as_slide_description: " (Den här anteckningen pausar videon tills studenten klickar på Fortsätt.)",
+    note_as_slide_empty_description: "Sätt i texten nedan i rutan annotering.",    
     start_time: "Start-tid",
     end_time: "Slut-tid",
     intro_timer:"Timer Intro del",
@@ -603,6 +618,7 @@ var translation_sv={
     start_time_bigger_than_end_time: "Slut-tid måste vara efter start-tid",
     header: "Rubrik",
     answer:"@:global.answer",
+    inclass_student_note: "Varför valde du det svaret? (För dina egna anteckningar.)",    
     type: "Typ",
     quiz:"@:global.quiz",
     survey:"@:global.survey",
@@ -624,6 +640,7 @@ var translation_sv={
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Alla nödvändiga objekt måste fyllas i, i tid, för att studenten ska få tillgodoräkna sig modulen",
+        students_can_not_skep_ahead:"@:editor.details.skip_ahead_description", 
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
@@ -680,8 +697,9 @@ var translation_sv={
         use_module_due: "Använd modulens färdigdatum",
         use_module_in_order: "Använd moduls ordning",
         use_module_required: "Använd moduls nödvändighet",
+        use_module_skip_ahead: "Använd moduls hoppa över",
         vidoe_not_exist: "Videon saknas eller laddas fortfarande upp",
-        incompatible_video_link: "Ej valid filmtyp. Var god välj en YouTube eller .mp4 URL.",
+        incompatible_video_link: "Ej valid filmtyp. Var god välj en YouTube, .mp4 eller MediaSite URL.",
         student_link_lecture:"Student-länk till video",
         appearance_date: "Publiceringsdatum",
         due_date: "Färdigdatum",
@@ -691,11 +709,13 @@ var translation_sv={
         student_link_module:"Student-länk till modulen",
         has_due_date: "Har färdigdatum",
         required:"@:global.required",
+        skip_ahead: "Hoppa över",
         in_order: "I ordning",
         retries: "försök",
         display_text:"Visa fråga över videon",
         display_text_explain:"(Använd om frågan texten är inte i videon.)",
-        student_link_quiz:"Student-länk till quiz"
+        student_link_quiz:"Student-länk till quiz",
+        skip_ahead_description: "Tillåta eleverna hoppa framåt i video", 
     },
     popover:{
         shown_in_graph: "Visas i resultatdiagram",
@@ -717,6 +737,7 @@ var translation_sv={
   lectures:{
     messages:{
         thank_you_answer: "Tack för ditt svar",
+        press_to_continue: "Tryck spela till fortsätta.",        
         did_not_get_credit: "Videon ej markerad som sedd. För att markeras som sedd måste hela videon ses och frågorna besvaras (men inte nödvändigtvis rätt!).",
         please_choose_one_answer: "Välj minst ett svar",
         please_choose_an_answer: "Var god välj ditt (dina) svar",
@@ -746,8 +767,9 @@ var translation_sv={
         exit_fullscreen: "Gå ur helskärmsläge",
         fullscreen: "Helskärm",
         check_answer: "Kontrollera svaret",
-        start_distance_peer: "Starta Distance Peer",
+        start_distance_peer: "Starta Distance Peer sessionen",
         submit: "@:button.submit",
+        submit_my_vote: "Skicka min rösta",        
     },
     tooltip:{
         unsolved_quiz: "Du måste ha svarat på quizen innan du kan hoppa till den",
@@ -994,6 +1016,7 @@ var translation_sv={
     time_zone: "Tidszon",
     course_code: "Kurskod",
     course_name: "Kursens namn",
+    university_note: "Universitet Anteckning",    
   },
   statistics:{
     statistics: "Statistik",
@@ -1025,7 +1048,8 @@ var translation_sv={
     rate_from: "värdera från",
     to: "till",
     drag_to_zoom: 'Klicka och dra i hela området för att zooma in',
-    pinch_to_zoom: '"Nyp" diagrammet för att zooma in'
+    pinch_to_zoom: '"Nyp" diagrammet för att zooma in',
+    write_welcome_message: "Skriv välkomstmeddelande"
   },
   player:{
     click_video_quality: "Klicka för att ändra videokvalitet",
@@ -1120,6 +1144,9 @@ var translation_sv={
     languages:"Languages",
     en: 'English',
     sv: 'Svenska'
+  },
+  welcome_messages:{
+    description: "Ange texten som ska visas för användare från domänen {{domain}} när de loggar in. Denna text kommer att visas längst upp på sidan 'Skapa Kurs'.",
   }
 }
 

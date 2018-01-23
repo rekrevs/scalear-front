@@ -10,6 +10,16 @@ angular.module('scalearAngularApp')
     $('#enrollkey_field').select()
   },1000)
 
+  $scope.enrollInputClick = function(e){
+      
+    $timeout(function(){
+       $('#enrollkey_field').focus()
+       e.stopPropagation()
+    })  
+    
+  }
+  
+
   $scope.enrollStudent = function () {
   	$log.debug($scope);
   	if($scope.form.key.$valid){

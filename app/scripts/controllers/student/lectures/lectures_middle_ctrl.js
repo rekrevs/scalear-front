@@ -698,7 +698,6 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPlay = function() {
       $log.debug("playing ")
       checkIfQuizSolved()
-      $scope.dismissAnnotation()
       if (!$scope.quiz_mode && $scope.distance_peer_session_id) {
         checkIfCanLeaveStatus()
       }

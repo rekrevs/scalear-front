@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
       "saveHtml": { method: 'POST', params: { action: 'save_html' }, headers: headers },
       "deleteConfused": { method: 'DELETE', params: { action: 'delete_confused' }, headers: headers }, // NOT DONE
       "saveNote": { method: 'POST', params: { action: 'save_note' }, headers: headers },
-      "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers }, // NOT DONE
+      "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers },
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
       "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, // NOT DONE
       "changeLectureStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },

@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
       "showInclass": { method: 'POST', params: { action: 'show_question_inclass' }, headers: headers },
       "showStudent": { method: 'POST', params: { action: 'show_question_student' }, headers: headers }, // NOT DONE
       "saveStudentQuiz": { method: 'POST', params: { action: 'save_student_quiz_angular' }, headers: headers },
-      "quizCopy": { method: 'POST', params: { action: 'quiz_copy' }, headers: headers }, // NOT DONE
+      "quizCopy": { method: 'POST', params: { action: 'quiz_copy' }, headers: headers },
       "changeQuizStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers } // NOT DONE
     });

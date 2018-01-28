@@ -11,17 +11,17 @@ angular.module('scalearAngularApp')
       "getQuestions": { method: 'GET', params: { action: 'get_questions_angular' }, headers: headers },
       "updateQuestions": { method: 'PUT', params: { action: 'update_questions_angular' }, headers: headers },
       "validateQuiz": { method: 'PUT', params: { action: 'validate_quiz_angular' }, headers: headers },
-      "makeVisible": { method: 'POST', params: { action: 'make_visible' }, headers: headers }, // NOT DONE
-      "hideResponses": { method: 'POST', params: { action: 'hide_responses' }, headers: headers }, // NOT DONE
-      "hideResponseStudent": { method: 'POST', params: { action: 'hide_response_student' }, headers: headers }, // NOT DONE
+      "makeVisible": { method: 'POST', params: { action: 'make_visible' }, headers: headers },
+      "hideResponses": { method: 'POST', params: { action: 'hide_responses' }, headers: headers },
+      "hideResponseStudent": { method: 'POST', params: { action: 'hide_response_student' }, headers: headers },
       "sendFeedback": { method: 'POST', params: { action: 'create_or_update_survey_responses' }, headers: headers },
-      "deleteFeedback": { method: 'POST', params: { action: 'delete_response' }, headers: headers }, // NOT DONE
+      "deleteFeedback": { method: 'POST', params: { action: 'delete_response' }, headers: headers },
       "showInclass": { method: 'POST', params: { action: 'show_question_inclass' }, headers: headers },
-      "showStudent": { method: 'POST', params: { action: 'show_question_student' }, headers: headers }, // NOT DONE
+      "showStudent": { method: 'POST', params: { action: 'show_question_student' }, headers: headers },
       "saveStudentQuiz": { method: 'POST', params: { action: 'save_student_quiz_angular' }, headers: headers },
-      "quizCopy": { method: 'POST', params: { action: 'quiz_copy' }, headers: headers }, // NOT DONE
+      "quizCopy": { method: 'POST', params: { action: 'quiz_copy' }, headers: headers },
       "changeQuizStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
-      "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers } // NOT DONE
+      "updateGrade": { method: 'POST', params: { action: 'update_grade' }, headers: headers }
     });
 
   }]).factory("QuizModel", ['Quiz', 'ModuleModel', '$rootScope', function(Quiz, ModuleModel, $rootScope) {

@@ -449,12 +449,11 @@ tspan {
 }
 .bottom-middle{
 	display: inline-block;
-	width: 35%;
+	width: 48%;
 }
 .bottom-right{
 	display: inline-block;
 	width: 25%;
-	padding-right: 2%;
 	text-align: right;
 	padding-top: 10px;
 	vertical-align: bottom;

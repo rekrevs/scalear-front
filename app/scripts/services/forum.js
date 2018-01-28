@@ -14,8 +14,8 @@ angular.module('scalearAngularApp')
         'deleteComment':{method: 'DELETE', params: {action: 'delete_comment'}, headers: headers},
         'voteComment':{method: 'POST', params: {action: 'vote_comment'}, headers: headers},
         'flagComment':{method: 'POST', params: {action: 'flag_comment'}, headers: headers},
-        'removeAllFlags':{method: 'DELETE', params: {action: 'remove_all_flags'}, headers: headers},// Not Done 
-        'removeAllCommentFlags':{method: 'DELETE', params: {action: 'remove_all_comment_flags'}, headers: headers},// Not Done 
+        'removeAllFlags':{method: 'DELETE', params: {action: 'remove_all_flags'}, headers: headers},
+        'removeAllCommentFlags':{method: 'DELETE', params: {action: 'remove_all_comment_flags'}, headers: headers},
         'hideDiscussion':{method: 'POST', params: {action: 'hide_post'}, headers: headers},
         'hideComment':{method: 'POST', params: {action: 'hide_comment'}, headers: headers},
         'updatePost':{method: 'POST', params: {action: 'update_post'}, headers: headers}

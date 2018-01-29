@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
         'showShared':{method:'GET',headers:headers,params:{action: 'show_shared'}},
         'accpetShared':{method:'POST',headers:headers,params:{action: 'accept_shared'}},
         'rejectShared':{method:'POST',headers:headers,params:{action: 'reject_shared'}},
-        'updateSharedData':{method:'POST',headers:headers,params:{action: 'update_shared_data'}} // NOT DONE 
+        'updateSharedData':{method:'POST',headers:headers,params:{action: 'update_shared_data'}}
     });
 
 }])

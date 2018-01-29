@@ -16,7 +16,6 @@ angular.module('scalearAngularApp')
             User.change_password({}, $scope.user,
                 function (resp, headers) {
                     UserSession.signIn(resp.data).then(function(data){
-                        console.log(data)
                         $state.go("dashboard");
                     })
                 },

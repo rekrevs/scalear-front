@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
       'update': { method: 'PUT', headers: headers },
       'destroy': { method: 'DELETE', headers: headers },
       'validate': { method: 'PUT', headers: headers, params: { action: 'validate_custom_link' } },
-      "linkCopy": { method: 'POST', params: { action: 'link_copy' }, headers: headers } //NOT DONE
+      "linkCopy": { method: 'POST', params: { action: 'link_copy' }, headers: headers }
     });
 
   }]).factory("LinkModel", ['CustomLink', 'Module', 'ModuleModel', '$filter', '$rootScope', function(CustomLink, Module, ModuleModel, $filter, $rootScope) {

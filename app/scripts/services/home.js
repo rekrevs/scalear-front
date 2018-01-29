@@ -6,8 +6,8 @@ angular.module('scalearAngularApp')
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/:lang/home/:action', {lang:$translate.use()},
       { 
-      	'contactUs': { method: 'GET', params: {action: 'contact_us'}, headers: headers }, // Not Done
-      	'technicalProblem': { method: 'GET', params: {action: 'technical_problem'}, headers: headers }, // Not Done
+      	'contactUs': { method: 'GET', params: {action: 'contact_us'}, headers: headers },
+      	'technicalProblem': { method: 'GET', params: {action: 'technical_problem'}, headers: headers },
       	'getNotifications':{method: 'GET', ignoreLoadingBar: true, params: {action: 'notifications'}, headers: headers},
       	'acceptCourse':{method: 'POST', params: {action: 'accept_course'}, headers: headers},
       	'rejectCourse':{method: 'POST', params: {action: 'reject_course'}, headers: headers},

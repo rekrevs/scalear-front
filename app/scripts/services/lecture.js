@@ -19,11 +19,11 @@ angular.module('scalearAngularApp')
       "confused": { method: 'POST', params: { action: 'confused' }, headers: headers },
       "saveOnline": { method: 'POST', params: { action: 'save_online' }, headers: headers },
       "saveHtml": { method: 'POST', params: { action: 'save_html' }, headers: headers },
-      "deleteConfused": { method: 'DELETE', params: { action: 'delete_confused' }, headers: headers }, // NOT DONE
+      "deleteConfused": { method: 'DELETE', params: { action: 'delete_confused' }, headers: headers },
       "saveNote": { method: 'POST', params: { action: 'save_note' }, headers: headers },
-      "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers }, // NOT DONE
+      "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers },
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
-      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, // NOT DONE
+      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, 
       "changeLectureStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
@@ -37,9 +37,6 @@ angular.module('scalearAngularApp')
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
-
-
-
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {

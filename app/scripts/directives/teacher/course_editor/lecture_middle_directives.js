@@ -93,9 +93,9 @@ angular.module('scalearAngularApp')
         '</div>' +
         '<div class="row" style="text-align:left;margin-left:0;">' +
         '<div class="small-3 columns"><span translate>editor.note_as_slide</span>:</div>' +
-        '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
+        '<div class="small-9 left columns no-padding" style="margin-bottom: 5px;">' +
         '<input class="marker_as_slide" type="checkbox" ng-model="selected_marker.as_slide" style="margin-bottom:0;"/>' + 
-        '(<span translate>editor.note_as_slide_description</span>)'+
+        '<span translate>editor.note_as_slide_description</span>'+
         '<small class="error position-absolute z-one" ng-show="marker_errors.as_slide_error" ng-bind="marker_errors.as_slide_error"></small>' +
         '</div>' +
         '</div>' +

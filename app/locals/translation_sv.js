@@ -603,7 +603,7 @@ var translation_sv={
     note_time: "Anteckning tid",
     note_duration: "Anteckning varaktighet",
     note_as_slide: "Fullskärm Anteckning",
-    note_as_slide_description: "Den här anteckningen pausar videon tills studenten klickar på Fortsätt.",
+    note_as_slide_description: " (Den här anteckningen pausar videon tills studenten klickar på Fortsätt.)",
     note_as_slide_empty_description: "Sätt i texten nedan i rutan annotering.",    
     start_time: "Start-tid",
     end_time: "Slut-tid",

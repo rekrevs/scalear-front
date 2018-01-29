@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
       'destroy': { method: 'DELETE', headers: headers },
       'getMarkerList': { method: 'GET', params: { action: 'get_marker_list' }, headers: headers },
       'validateName': { method: 'PUT', params: { action: 'validate_name' }, headers: headers },
-      'updateHide': { method: 'POST', params: { action: 'update_hide' }, headers: headers }, // NOT DONE
+      'updateHide': { method: 'POST', params: { action: 'update_hide' }, headers: headers },
     });
   }]).factory('MarkerModel', ['OnlineMarker', '$rootScope', 'ItemsModel', '$q', '$filter', 'VideoInformation', 'Lecture', 'ScalearUtils', function(OnlineMarker, $rootScope, ItemsModel, $q, $filter, VideoInformation, Lecture, ScalearUtils) {
 

@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/ie.html'
         })
         .state('login', {
-            url: '/users/login',
+            url: '/users/login?access-token&client&expiry&token-type&uid',
             templateUrl: '/views/login.html',
             controller: 'LoginCtrl',
             params : { email: null}

@@ -7,7 +7,6 @@ angular.module('scalearAngularApp')
 
 
     function setToken(recievedToken){
-      console.log(recievedToken)
       token = recievedToken;
       $cookieStore.put('token', recievedToken)
     }
@@ -16,7 +15,6 @@ angular.module('scalearAngularApp')
       if(token){
         return token;
       } else if ($cookieStore.get('token')){
-        console.log("using cookie")
         token = $cookieStore.get('token');
         return token;
       } else {

@@ -1,10 +1,19 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession', "$http", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http) {
+  .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession', "$http", "Token", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http, Token) {
 
     $scope.user = {}
     $scope.user.email = $state.params.email || ""
+    
+    // in case of saml sign-in
+    if($state.params['access-token']){
+      Token.setToken($state.params)
+      User.getCurrentUser({},function(){
+        $state.go("dashboard");
+      });
+
+    }
 
     Page.setTitle('navigation.login')
     $('#user_email').select()
@@ -45,7 +54,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.login = function() {
-      console.log($scope.user)
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
 
@@ -85,23 +93,18 @@ angular.module('scalearAngularApp')
     }
 
     var next = function(user) {
-      console.log(user)
       if (!user.info_complete) {
-        console.log("1")
         $state.go("edit_account");
         ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', null, "error");
       } else if (URLInformation.hasEnroll()) {
-        console.log("2")
         
         $window.location.href = URLInformation.getEnrollLink()
         URLInformation.clearEnrollLink()
       } else if (URLInformation.shouldRedirect()) {
-        console.log("3")
         
         $window.location.href = URLInformation.getRedirectLink()
         URLInformation.clearRedirectLink()
       } else {
-        console.log("4")
         
         $state.go("dashboard");
       }

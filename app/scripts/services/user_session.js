@@ -54,9 +54,6 @@ angular.module('scalearAngularApp')
     function signIn(user) {
       var userSignedIn = $q.defer()
       User.signIn({}, user, function (data, headers) {
-        console.log(data)
-        console.log(headers())
-
         Token.setToken(headers())
         userSignedIn.resolve({user: data, token: headers()});
         

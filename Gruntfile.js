@@ -218,7 +218,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg}',
+          src: '{,*/}*.{png,jpg,jpeg,gif}',
           dest: '<%= yeoman.dist %>/images'
         }]
       }
@@ -464,12 +464,6 @@ module.exports = function(grunt) {
           dest: '<%= yeoman.dist %>/',
           extDot: 'last',
           ext: '.css.gz'
-        },
-        {
-          expand: true,
-          cwd: '<%= yeoman.dist %>',
-          src: ['images/**/*'],
-          dest: '<%= yeoman.dist %>/',
         }]
       }
     },
@@ -484,7 +478,7 @@ module.exports = function(grunt) {
     ngconstant: {
       options: {
         dest: '<%= yeoman.app %>/scripts/config.js',
-        wrap: true,
+        wrap: "'use strict';\n{%= __ngModule %}\n",
         name: 'config',
         constants: {
           scalear_api: {

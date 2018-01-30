@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
       'getQuizCharts': { method: 'GET', params: { action: 'get_quiz_charts' }, headers: headers },
       'getQuizChartsInclass': { method: 'GET', params: { action: 'get_quiz_charts_inclass' }, headers: headers },
       'getSurveyCharts': { method: 'GET', params: { action: 'get_survey_charts' }, headers: headers },
+      'getSurveyChart': { method: 'GET', params: { action: 'get_survey_chart_angular' }, headers: headers },
       'getInclassStudentStatus': { method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_inclass_student_status' } },
       'getModuleSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_module_summary' } },
       'getOnlineQuizSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_online_quiz_summary' } },

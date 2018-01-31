@@ -698,7 +698,6 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPlay = function() {
       $log.debug("playing ")
       checkIfQuizSolved()
-      $scope.dismissAnnotation()
       if (!$scope.quiz_mode && $scope.distance_peer_session_id) {
         checkIfCanLeaveStatus()
       }
@@ -1259,11 +1258,6 @@ angular.module('scalearAngularApp')
       changeStatusAndWaitTobeSync(6, null)
     }
 
-    $scope.quizLayerClick =  function() {
-      if (!$scope.quiz_mode){
-        $scope.toggleVideoPlayback()
-      }
-    }
     $scope.lectureLayerClick =  function() {
       if (!$scope.quiz_mode){
         $scope.toggleVideoPlayback()

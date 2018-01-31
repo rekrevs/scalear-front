@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
       transclude: true,
       replace: true,
       restrict: 'E',
-      template: '<div class="ontop" id="video_ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+      template: '<div style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
     };
   })
   .directive('quizEditPanel', ['$timeout', '$q', 'OnlineQuiz', '$translate', 'ScalearUtils','VideoInformation', function($timeout, $q, OnlineQuiz, $translate, ScalearUtils, VideoInformation) {

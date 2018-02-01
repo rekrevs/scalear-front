@@ -22,6 +22,12 @@ audio:not([controls]) {
   display: none;
   height: 0; }
 
+.google-visualization-tooltip {
+  position: absolute !important;
+  right: 50px !important;
+  top :0;
+  z-index:10;
+}
 /**
  * Address `[hidden]` styling not present in IE 8/9.
  * Hide the `template` element in IE, Safari, and Firefox < 22.

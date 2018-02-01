@@ -92,6 +92,7 @@ angular.module('scalearAngularApp')
 			"bar":{"groupWidth":5}
 		}
 		chart.data = $scope.formatStatisticsChartData(chart_data)
+		chart.options.tooltip= {"isHtml":true}
 		if(type == 'confused')
 			chart.data = getReallyConfused(chart.data)
 		if(type == 'questions'){

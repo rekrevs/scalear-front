@@ -481,31 +481,39 @@ angular.module('scalearAngularApp')
       for (var each_30_second = 30; each_30_second < $scope.total_duration; each_30_second = each_30_second + 30) {
         duration_milestones.push(((each_30_second / $scope.total_duration) * 100))
       }
-
-      checkPeerSession().then(function() {
+      
+      checkPeerSession().then(function () {
         if (!close_student && $scope.lecture.distance_peer && !$scope.distance_peer_session_id) {
           $scope.openStudentList($scope.lecture.id, $scope.lecture.course_id)
         }
         var quiz_time_offset = 0
-        $scope.lecture.video_quizzes.forEach(function(quiz, index) {
-          if (quiz.time >= $scope.total_duration - 2) {
-            quiz.time = ($scope.total_duration - 2) + quiz_time_offset
-            quiz_time_offset += 0.2
-          }
-          if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
-            $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function() {
-              showQuizOnline(quiz)
-              // $scope.$apply()
-            })
-          } else {
-            if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
-              quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function() {
-                showQuizDistancePeer(quiz)
-              })
-              $scope.quiz_cue_distance_peer_list[quiz.id] = quiz_cue.id
+        if ($scope.lecture.video_quizzes) {
+          $scope.lecture.video_quizzes.forEach(function (quiz, index) {
+            if (quiz.time >= $scope.total_duration - 2) {
+              quiz.time = ($scope.total_duration - 2) + quiz_time_offset
+              quiz_time_offset += 0.2
             }
-          }
-        })
+            if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
+              $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function () {
+                showQuizOnline(quiz)
+                // $scope.$apply()
+              })
+            } else {
+              if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
+                quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function () {
+                  showQuizDistancePeer(quiz)
+                })
+              } else {
+                if (!(quiz.id in $scope.quiz_cue_distance_peer_list)) {
+                  quiz_cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.start_time), function () {
+                    showQuizDistancePeer(quiz)
+                  })
+                  $scope.quiz_cue_distance_peer_list[quiz.id] = quiz_cue.id
+                }
+              }
+            }
+          })
+        }
       })
 
 
@@ -555,7 +563,7 @@ angular.module('scalearAngularApp')
     }
 
     var updateViewPercentage = function(milestone, source) {
-      if(milestone > $scope.lecture.watched_percentage){
+      if(!$scope.lecture.watched_percentage || milestone > $scope.lecture.watched_percentage){
         var lecture = $scope.lecture // in case request callback got delayed and lecture has changed
         $scope.not_done_msg = false
         return lecture.updateViewPercentage(milestone)

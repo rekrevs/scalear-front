@@ -28,9 +28,9 @@ angular.module('scalearAngularApp')
       function(data){
         $scope.teacher_courses = $scope.teacher_courses.concat(data.teacher_courses)
         $scope.student_courses = $scope.student_courses.concat(data.student_courses)
-
+        
+        course_offset+=course_limit
         if(course_offset<data.total){
-          course_offset+=course_limit
           getCourses(course_offset, course_limit)
         }
         else{

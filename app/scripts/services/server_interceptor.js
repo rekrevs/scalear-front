@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate', '$cookieStore', '$location', 'URLInformation', function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate, $cookieStore, $location, URLInformation) {
+  .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate', '$cookieStore', '$location', 'URLInformation','Token', function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate, $cookieStore, $location, URLInformation, Token) {
    //server and also front end requests (requesting partials and so on..)
 
     return {
@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
         // change language to current language
         var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
         config.url = config.url.replace(regex, scalear_api.host + "/" + $translate.use() + "/");
+
         return config || $q.when(config);
       },
 

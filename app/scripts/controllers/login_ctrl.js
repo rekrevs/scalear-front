@@ -1,10 +1,19 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession', "$http", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http) {
+  .controller('LoginCtrl', ['$state', '$scope', '$rootScope', 'scalear_api', '$window', '$log', '$translate', 'User', 'Page', 'ErrorHandler', 'ngDialog', 'MobileDetector', 'Saml', '$location', 'SWAMID', '$cookieStore', '$timeout', 'URLInformation', 'UserSession', "$http", "Token", function($state, $scope, $rootScope, scalear_api, $window, $log, $translate, User, Page, ErrorHandler, ngDialog, MobileDetector, Saml, $location, SWAMID, $cookieStore, $timeout, URLInformation, UserSession, $http, Token) {
 
     $scope.user = {}
     $scope.user.email = $state.params.email || ""
+    
+    // in case of saml sign-in
+    if($state.params['access-token']){
+      Token.setToken($state.params)
+      User.getCurrentUser({},function(){
+        $state.go("dashboard");
+      });
+
+    }
 
     Page.setTitle('navigation.login')
     $('#user_email').select()
@@ -47,23 +56,25 @@ angular.module('scalearAngularApp')
     $scope.login = function() {
       $scope.sending = true;
       UserSession.allowRefetchOfUser()
-      User.signIn({}, { "user": $scope.user },
-        function(data) {
-          $cookieStore.put('login_provider', 'scalablelearning')
-          $log.debug("login success")
-          $scope.sending = false;
-          $rootScope.$broadcast("Course:get_current_courses")
-          $scope.is_mobile = MobileDetector.isMobile()
-          if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
-            showMobileWarning(function() {
-              next(data)
-            })
-          } else
-            next(data)
-        },
-        function() {
-          $scope.sending = false;
-        });
+
+      UserSession.signIn($scope.user)
+        .then(
+           function(response) {
+             
+              $cookieStore.put('login_provider', 'scalablelearning')
+              $log.debug("login success")
+              $scope.sending = false;
+              $rootScope.$broadcast("Course:get_current_courses")
+              $scope.is_mobile = MobileDetector.isMobile()
+              if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
+                showMobileWarning(function() {
+                  next(response.user.data)
+                })
+              } else
+                next(response.user.data)
+        }
+        )
+       
     }
 
     $scope.join = function() {
@@ -86,12 +97,15 @@ angular.module('scalearAngularApp')
         $state.go("edit_account");
         ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', null, "error");
       } else if (URLInformation.hasEnroll()) {
+        
         $window.location.href = URLInformation.getEnrollLink()
         URLInformation.clearEnrollLink()
       } else if (URLInformation.shouldRedirect()) {
+        
         $window.location.href = URLInformation.getRedirectLink()
         URLInformation.clearRedirectLink()
       } else {
+        
         $state.go("dashboard");
       }
     }

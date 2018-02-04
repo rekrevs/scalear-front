@@ -111,11 +111,11 @@ angular.module('scalearAngularApp')
               if (type != "meta")
                 for (var it in $scope.lectures[lec_id][type]) {
                   if (type == 'discussion') {
-                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].post.time
+                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].time
                     for (var disc in $scope.lectures[lec_id][type][it][1]) {
-                      $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
-                      for (var com in $scope.lectures[lec_id][type][it][1][disc].post.comments) {
-                        $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
+                      $scope.lectures[lec_id][type][it][1][disc].hide = !$scope.lectures[lec_id][type][it][1][disc].hide
+                      for (var com in $scope.lectures[lec_id][type][it][1][disc].comments) {
+                        $scope.lectures[lec_id][type][it][1][disc].comments[com].hide = !$scope.lectures[lec_id][type][it][1][disc].comments[com].hide
                       }
                     }
                   } else if (type == 'charts') {
@@ -161,14 +161,6 @@ angular.module('scalearAngularApp')
         angular.extend($scope.module_summary[$scope.module_id], data.module)
       })
 
-      // Module.getModuleCharts({
-      //     course_id: $stateParams.course_id,
-      //     module_id: $stateParams.module_id
-      //   },
-      //   function(data) {
-      //   },
-      //   function() {}
-      // )
     }
 
     var getQuizCharts = function() {
@@ -407,23 +399,6 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.updateHideQuestion = function(id, value) {
-      if (value)
-        $scope.review_question_count--
-        else
-          $scope.review_question_count++
-          Module.hideQuestion({
-              course_id: $stateParams.course_id,
-              module_id: $stateParams.module_id
-            }, {
-              question: id,
-              hide: value
-            },
-            function() {},
-            function() {}
-          )
-    }
-
     $scope.updateHideDiscussion = function(id, value) {
       if (value)
         $scope.review_question_count--
@@ -553,7 +528,7 @@ angular.module('scalearAngularApp')
           function(response) {
             // $log.debug(response)
             response.comment.hide = false
-            discussion.comments.push(response)
+            discussion.comments.push(response.comment)
             angular.element('ul.highlight .feedback textarea').blur()
           },
           function() {}
@@ -602,7 +577,7 @@ angular.module('scalearAngularApp')
 
 
     $scope.deleteComment = function(comment, discussion) {
-      Forum.deleteComment({ comment_id: comment.comment.id, post_id: discussion.id },
+      Forum.deleteComment({ comment_id: comment.id, post_id: discussion.id },
         function() {
           discussion.comments.splice(discussion.comments.indexOf(comment), 1)
         },
@@ -620,9 +595,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeCommentFlag = function(comment, discussion) {
-      Forum.removeAllCommentFlags({ comment_id: comment.comment.id, post_id: discussion.id },
+      Forum.removeAllCommentFlags({ comment_id: comment.id, post_id: discussion.id },
         function() {
-          discussion.comments[discussion.comments.indexOf(comment)].comment.flags_count = 0
+          discussion.comments[discussion.comments.indexOf(comment)].flags_count = 0
         },
         function() {}
       )
@@ -928,8 +903,8 @@ angular.module('scalearAngularApp')
         var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion") {
           var q_ind = $scope.inner_highlight_index
-          time = $scope.selected_item.data[q_ind].post.time
-          // $log.debug(time)
+          time = $scope.selected_item.data[q_ind].time
+          $log.debug(time)
         }
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta)
       }

@@ -26,8 +26,10 @@ angular.module('scalearAngularApp')
 				$scope.win_width = (90.5*win.width())/100
 				var scale = $scope.win_width/$scope.statistics.width
 				$scope.statistics.lecture_names.forEach(function(name){
-					name[0]*= scale
+					name[0]*=scale
 				})
+				//another copy because we will need initial values when resetting zoom
+				$scope.lecture_names = angular.copy($scope.statistics.lecture_names)
 			}
 		)
 	}
@@ -41,7 +43,8 @@ angular.module('scalearAngularApp')
 	}
 
 	var getChartWidth=function(){
-		return $scope.win_width
+		var win = angular.element($window)
+		return (90.5*win.width())/100
 	}
 
 	$scope.formatStatisticsChartData = function(data){
@@ -89,7 +92,9 @@ angular.module('scalearAngularApp')
 				left: 35,
 				width:getChartWidth()
 			},
-			"bar":{"groupWidth":5}
+			"bar":{"groupWidth":5},
+			// "explorer": {axis: 'horizontal',maxZoomIn: .5 }
+			// "explorer": {actions: ['dragToZoom', 'rightClickToReset'] }
 		}
 		chart.data = $scope.formatStatisticsChartData(chart_data)
 		if(type == 'confused')
@@ -98,7 +103,7 @@ angular.module('scalearAngularApp')
 			chart.options.tooltip= {"isHtml": true}
 			chart.data = setQuestionsTooltip(chart.data)
 		}
-		return chart
+		$scope['chart'+type] = chart
 	}
 
 	var getReallyConfused= function(data){
@@ -176,6 +181,28 @@ angular.module('scalearAngularApp')
 		}
 		else
 			$scope.statistics_player.controls.seek_and_pause(to_seek)
+	}
+
+	$scope.zoomGraph = function(x){
+		for (let type in $scope.types){
+			if(x){ //zoom in or out
+				$scope['chart'+$scope.types[type]].options.width = $scope['chart'+$scope.types[type]].options.width*x
+				$scope['chart'+$scope.types[type]].options.chartArea.width = $scope['chart'+$scope.types[type]].options.chartArea.width*x
+			} else { //rest zoom (x=0)
+				$scope['chart'+$scope.types[type]].options.width = getChartWidth()+100
+				$scope['chart'+$scope.types[type]].options.chartArea.width = getChartWidth()
+			}
+			
+		}
+			if(x){
+				$scope.lecture_names.forEach(function(name){name[0]*=x})
+				$scope.win_width*=x
+			} else {
+				$scope.lecture_names.forEach(function(name,index){
+					name[0] = $scope.statistics.lecture_names[index][0]
+				})
+				$scope.win_width = getChartWidth()+100;
+			}
 	}
 
 	getStudentStatistics()

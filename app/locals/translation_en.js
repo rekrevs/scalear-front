@@ -835,6 +835,10 @@ var translation_en={
         correct:"@:global.correct",
         question_not_checked:"@:dashboard.not_checked",
         completed:"@:events.completed",
+        confused: 'Shows the number of students who clicked the "confused" button at that time in the video. If a student clicked the button more than once in the same place, it is shown in red',
+        back: 'Shows the number of students who went back in the video from that time in the video',
+        pauses: 'Shows the number of students who paused at that time in the video',
+        questions: 'Shows the number of students who asked questions at that time in the video'
     },
     popover:{
         change_status: "Change Status",

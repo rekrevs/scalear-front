@@ -42,9 +42,9 @@
                 <div ng-if='question.question_type.toUpperCase()=="DRAG"'>
                     <div class="small-12 columns with-margin-top">
                        <ul class='sortable custome' ui-sortable ng-model='studentAnswers[question.id]'>
-                          <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default with-small-padding with-tiny-margin'>
+                          <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default with-small-padding with-tiny-margin' pop-over="drag_explanation[$index]">
                              <div class='ui-icon ui-icon-arrowthick-2-n-s handle must-show-inline valign-middle'></div>
-                             <div class="must-show-inline" ng-bind-html="answer" pop-over="drag_explanation[$index]" ></div>
+                             <div class="must-show-inline" ng-bind-html="answer" ></div>
                           </li>
                        </ul>
                     </div>

@@ -34,11 +34,9 @@ angular.module("scalearAngularApp")
           state_name += ".overview";
         }
         return {name: state_name, params: $state.params, prev: state_name.replace("courseware", "course_editor")};
-      } else if ($state.includes("course.edit_course_information")) {
-        return {name: "course.course_information", params: default_params};
       } else {
-        return {name: "course", params: default_params};
-      }
+        return {name: "course.course_information", params: default_params, prev: "course.edit_course_information"};
+      } 
     }
 
     function previewStart() {

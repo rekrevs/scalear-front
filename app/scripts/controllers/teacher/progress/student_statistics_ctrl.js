@@ -184,11 +184,11 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.zoomGraph = function(x){
-		for (let type in $scope.types){
+		for (var type in $scope.types){
 			if(x){ //zoom in or out
 				$scope['chart'+$scope.types[type]].options.width = $scope['chart'+$scope.types[type]].options.width*x
 				$scope['chart'+$scope.types[type]].options.chartArea.width = $scope['chart'+$scope.types[type]].options.chartArea.width*x
-			} else { //rest zoom (x=0)
+			} else { //reset zoom (x=0)
 				$scope['chart'+$scope.types[type]].options.width = getChartWidth()+100
 				$scope['chart'+$scope.types[type]].options.chartArea.width = getChartWidth()
 			}

@@ -749,6 +749,9 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/dynmaic_annotation_student.html',
     link:function(scope, element, attrs){
+      if (scope.data.question){
+        scope.data.annotation = scope.data.question
+      }
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()
     }

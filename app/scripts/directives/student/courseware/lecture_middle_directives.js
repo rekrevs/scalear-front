@@ -685,7 +685,7 @@ angular.module('scalearAngularApp')
       scope.actionBtn = scope.action()
     }
   }
-}]).directive('dynmaicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+}]).directive('dynamicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
   return{
     restrict:"E",
     scope:{
@@ -693,7 +693,7 @@ angular.module('scalearAngularApp')
       close: '&',
       action:'&'
     },
-    templateUrl: '/views/student/lectures/dynmaic_annotation.html',
+    templateUrl: '/views/student/lectures/dynamic_annotation.html',
     link:function(scope, element, attrs){
       if (scope.data.instanceType()=="VideoQuiz"){
         scope.data.annotation = scope.data.question
@@ -739,7 +739,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('dynmaicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+}]).directive('dynamicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
   return{
     restrict:"E",
     scope:{
@@ -747,7 +747,7 @@ angular.module('scalearAngularApp')
       close: '&',
       action:'&'
     },
-    templateUrl: '/views/student/lectures/dynmaic_annotation_student.html',
+    templateUrl: '/views/student/lectures/dynamic_annotation_student.html',
     link:function(scope, element, attrs){
       if (scope.data.question){
         scope.data.annotation = scope.data.question

@@ -286,7 +286,11 @@ angular.module('scalearAngularApp')
             self: video_quiz.self,
             in_group: video_quiz.in_group,
             discussion: video_quiz.discussion,
-            display_text: video_quiz.display_text
+            display_text: video_quiz.display_text,
+            xcoor: video_quiz.xcoor,
+            ycoor: video_quiz.ycoor,
+            height: video_quiz.height,
+            width: video_quiz.width
           },
         }).$promise
       }

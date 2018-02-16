@@ -696,7 +696,12 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/student/lectures/dynamic_annotation.html',
     link:function(scope, element, attrs){
       if (scope.data.instanceType()=="VideoQuiz"){
-        scope.data.annotation = scope.data.question
+        //question is initially save as text
+        var question = scope.data.question 
+        if(question.indexOf('medium-editor-p')<0){
+          question = '<p class="medium-editor-p">'+question+'</p>'
+        }
+        scope.data.annotation = question
       }
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()
@@ -713,6 +718,7 @@ angular.module('scalearAngularApp')
         var ontop = angular.element('.ontop');
         var main = angular.element(element.children()[0])
         var textarea = angular.element( main[0].querySelector('.medium-editor-p'))[0]
+        console.log(textarea)
         if ( ui && ( main[0].offsetWidth  <  textarea.offsetWidth  ) ){
           ui.size.width = textarea.offsetWidth +10
           scope.data.width = ui.size.width / (ontop.width()) ;

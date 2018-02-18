@@ -32,11 +32,13 @@
 			<div ng-repeat="type in types" ng-init="createStatisticsChart(type)">
 				<div google-chart chart="{{'chart'+type}}" agc-on-select="skipToTime(selectedItem, type)"></div>
 			</div>
-			<div ng-style="{margin:'0 auto',width:'50%'}">
-				<button ng-click="zoomGraph(.75)" class="button primary radius large"><i class="fi-zoom-out "></i></button> 
-				<button ng-click="zoomGraph(0)" class="button primary radius large">Reset</button>
-				<button ng-click="zoomGraph(1.5)" class="button primary radius large"><i class="fi-zoom-in"></i></button>
-			</div>
+
+			<ul class="button-group round with-margin">
+				<li><button ng-click="zoomGraph(.75)" class="tiny"><i class="fi-zoom-out "></i></button></li>
+				<li><button ng-click="zoomGraph(0)" class="tiny">Reset</button></li>
+				<li><button ng-click="zoomGraph(1.5)" class="tiny"><i class="fi-zoom-in"></i></button></li>
+			</ul>
+
 		</div>
 	</div>
 </div>

@@ -696,42 +696,36 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/student/lectures/dynamic_annotation.html',
     link:function(scope, element, attrs){
       if (scope.data.instanceType()=="VideoQuiz"){
-        //question is initially save as text
-        var question = scope.data.question 
-        if(question.indexOf('medium-editor-p')<0){
-          question = '<p class="medium-editor-p">'+question+'</p>'
-        }
-        scope.data.annotation = question
+        scope.data.annotation = scope.data.question 
       }
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()
 
+      var ontop = angular.element('.ontop');
+      var draggableArea = angular.element(element.children().first())
+      var textarea = angular.element(draggableArea.children().first())
+
       scope.calculatePosition = function() {
-        var ontop = angular.element('.ontop');
-        var main = angular.element(element.children()[0])
-        scope.data.xcoor = parseFloat(main.position().left) / ontop.width();
-        scope.data.ycoor = parseFloat(main.position().top) / ontop.height();
+        scope.data.xcoor = parseFloat(draggableArea.position().left) / ontop.width();
+        scope.data.ycoor = parseFloat(draggableArea.position().top) / ontop.height();
         scope.calculateSize()
       }
 
       scope.calculateSize = function(event,ui) {
-        var ontop = angular.element('.ontop');
-        var main = angular.element(element.children()[0])
-        var textarea = angular.element( main[0].querySelector('.medium-editor-p'))[0]
-        console.log(textarea)
-        if ( ui && ( main[0].offsetWidth  <  textarea.offsetWidth  ) ){
-          ui.size.width = textarea.offsetWidth +10
+        if ( ui && ( textarea[0].offsetWidth+20  <  textarea[0].scrollWidth+20  ) ){
+          ui.size.width = textarea[0].scrollWidth +20
           scope.data.width = ui.size.width / (ontop.width()) ;
         } 
         else{
-          scope.data.width = main[0].offsetWidth / (ontop.width()) ;          
+          scope.data.width = draggableArea[0].offsetWidth / (ontop.width()) ;          
         }
-        if ( ui && (main[0].offsetHeight <  textarea.offsetHeight) ){
-          ui.size.height = textarea.offsetHeight +10
+       
+        if ( ui && (textarea[0].offsetHeight+20 <  textarea[0].scrollHeight+20) ){
+          ui.size.height = textarea[0].scrollHeight +20
           scope.data.height = scope.data.height / (ontop.height()) ;
         }
         else{
-          scope.data.height = main[0].offsetHeight / (ontop.height()) ;                    
+          scope.data.height = draggableArea[0].offsetHeight / (ontop.height()) ;                    
         }
       }
 

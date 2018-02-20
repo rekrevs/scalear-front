@@ -526,12 +526,12 @@ angular.module('scalearAngularApp')
                 showSlideNote(marker)              
               }
               else{
-                showdynamicAnnotation(marker)                              
+                showDynamicAnnotation(marker)                              
               }
             })
             if (!marker.as_slide) {
               $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
-                $scope.dismissdynamicAnnotation()
+                $scope.dismissDynamicAnnotation()
               })
             }
           }
@@ -625,7 +625,7 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
       $scope.closeReviewNotify()
       $scope.dismissAnnotation()
-      $scope.dismissdynamicAnnotation()
+      $scope.dismissDynamicAnnotation()
       var current_time = $scope.lecture_player.controls.getTime()
       var current_time_percent  = Math.round((current_time / $scope.total_duration) * 100)
       $scope.seek_to_time = time
@@ -1304,7 +1304,7 @@ angular.module('scalearAngularApp')
     $scope.dismissAnnotation = function() {
       $scope.annotation = null
     }
-    $scope.dismissdynamicAnnotation = function() {
+    $scope.dismissDynamicAnnotation = function() {
       $scope.dynamic_annotation = null
     }    
     $scope.dismissSlideNote = function() {
@@ -1316,7 +1316,7 @@ angular.module('scalearAngularApp')
 
     $scope.endDistancePeerSession = function() {
       $scope.dismissAnnotation()
-      $scope.dismissdynamicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.dismissSlideNote()
       clearQuiz()
       changeStatusAndWaitTobeSync(6, null)
@@ -1359,19 +1359,19 @@ angular.module('scalearAngularApp')
     }
 
     var showAnnotation = function(annotation) {
-      $scope.dismissdynamicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.dismissSlideNote()
       $scope.annotation = annotation
     }
 
-    var showdynamicAnnotation = function(annotation) {
+    var showDynamicAnnotation = function(annotation) {
       $scope.dismissAnnotation()
       $scope.dismissSlideNote()
       $scope.dynamic_annotation = annotation
     }
     var showSlideNote = function(annotation) {
       $scope.dismissAnnotation()
-      $scope.dismissdynamicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.slide_note = annotation
     }
 

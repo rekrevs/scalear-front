@@ -178,5 +178,14 @@ angular.module('scalearAngularApp')
 			$scope.statistics_player.controls.seek_and_pause(to_seek)
 	}
 
+	$scope.exportCsv = function(){
+		Module.exportModuleTimelineCsv({
+			course_id:$stateParams.course_id,
+			module_id:$stateParams.module_id
+		}, function(){
+			console.log("export csv")
+		})
+	}
+
 	getStudentStatistics()
 }]);

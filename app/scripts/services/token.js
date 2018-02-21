@@ -1,14 +1,28 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('Token', ['$cookieStore', function($cookieStore) {
+  .factory('Token', ['$cookieStore','$q','$interval', function($cookieStore, $q, $interval) {
 
     var token = null;
-
+    var interval = null;
 
     function setToken(recievedToken){
       token = recievedToken;
       $cookieStore.put('token', recievedToken)
+    }
+
+    function setTokenWithPromise(recievedToken){
+      console.log("started token")
+      token = recievedToken;
+      $cookieStore.put('token', recievedToken)
+      var deferred = $q.defer();
+      var stopInterval = $interval(function(){
+        if ( token.uid && $cookieStore.get('token').uid == token.uid) {
+          $interval.cancel(stopInterval)
+          deferred.resolve()
+        }
+      }, 250);
+      return deferred.promise
     }
 
     function getToken(){
@@ -24,7 +38,8 @@ angular.module('scalearAngularApp')
 
     return {
       getToken: getToken,
-      setToken: setToken
+      setToken: setToken,
+      setTokenWithPromise: setTokenWithPromise
     };
 
 

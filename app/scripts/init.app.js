@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour', 'Course', 'URLInformation', 'CourseModel', function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course, URLInformation, CourseModel) {
+  .run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour', 'Course', 'URLInformation', 'CourseModel', 'Token', '$location', function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour, Course, URLInformation, CourseModel, Token, $location) {
 
     try {
       MathJax && MathJax.Hub.Config({
@@ -96,60 +96,75 @@ angular.module('scalearAngularApp')
         $tour.end();
       }
       URLInformation.addToHistory($state.href(from, fromParams))
-      UserSession.getCurrentUser()
-        .then(function(current_user) {
-          if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
-            $state.go("ie");
-          }
-          if(!current_user.info_complete) {
-            $state.go('edit_account', {},{notify: false})
-            ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', 4000, "error");
-          } else {
-            if(toParams.course_id) {
-              CourseModel.getCourseRole(toParams.course_id)
-                .then(function(role) {
-                  if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
-                    $state.go("course_list");
-                    showErrorMsg($state.href(to, toParams))
-                  }
-                })
+
+      // check if controller from lti_course_list && redirect_boolean == true 
+      // if true then sign in user then and return a promsie to user.session  
+      if( ( to.controller == "ltiSignInTokenCtrl" || to.controller == "ltiCourseListCtrl" ) &&  toParams['access-token'] ){
+        Token.setTokenWithPromise(toParams)
+          .then(function(){
+            if( toParams['redirect_boolean'] == 'true'){
+              ev.preventDefault();
+              $location.url(toParams['redirect_local_url']);
             }
-            if(to.name === 'home') {
-              $state.go('course_list');
-              // $state.go("dashboard")
+          })
+          .catch(function() {})        
+      }
+      else{
+        UserSession.getCurrentUser()
+          .then(function(current_user) {
+            if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
+              $state.go("ie");
             }
-            if(to.name === 'confirmed' && current_user.intro_watched) {
-              // if(from.name === 'show_confirmation') {
-              //   $state.go("confirmed")
-              // }
-              // else {
+            if(!current_user.info_complete) {
+              $state.go('edit_account', {},{notify: false})
+              ErrorHandler.showMessage($translate.instant("error_message.update_account_information"), 'errorMessage', 4000, "error");
+            } else {
+              if(toParams.course_id) {
+                CourseModel.getCourseRole(toParams.course_id)
+                  .then(function(role) {
+                    if((stateTeacher(to.name) && CourseModel.isStudent()) || (stateStudent(to.name) && CourseModel.isTeacher())) { // student trying to access teacher page  // teacher trying to access student page
+                      $state.go("course_list");
+                      showErrorMsg($state.href(to, toParams))
+                    }
+                  })
+              }
+              if(to.name === 'home') {
+                $state.go('course_list');
+                // $state.go("dashboard")
+              }
+              if(to.name === 'confirmed' && current_user.intro_watched) {
+                // if(from.name === 'show_confirmation') {
+                //   $state.go("confirmed")
+                // }
+                // else {
+                  $state.go("home");
+                  showErrorMsg($state.href(to, toParams))
+                // }
+              }
+              else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
+                $state.go('confirmed')
+              } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page
+                $state.go("course_list");
+              } else if(stateNoAuth(to.name)) {
                 $state.go("home");
                 showErrorMsg($state.href(to, toParams))
-              // }
+              }
             }
-            else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
-              $state.go('confirmed')
-            } else if((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup")) { // teacher going to home, redirected to courses page
-              $state.go("course_list");
-            } else if(stateNoAuth(to.name)) {
-              $state.go("home");
-              showErrorMsg($state.href(to, toParams))
+          })
+          .catch(function() {
+            if(to.name === 'home') {
+              $state.go("landing")
             }
-          }
-        })
-        .catch(function() {
-          if(to.name === 'home') {
-            $state.go("landing")
-          }
-          if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
-            $state.go("login");
-            var url = $state.href(to, toParams)
-            if(/courses\/enroll\?id=/.test(url)){
-              URLInformation.setEnrollLink(url)
+            if(!routeClean(to.name)) { // user not logged in trying to access a page that needs authentication.
+              $state.go("login");
+              var url = $state.href(to, toParams)
+              if(/courses\/enroll\?id=/.test(url)){
+                URLInformation.setEnrollLink(url)
+              }
+              showErrorMsg(url)
             }
-            showErrorMsg(url)
-          }
-        })
+          })        
+      }
     });
 
   }])

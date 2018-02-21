@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
-    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = false;
     $httpProvider.interceptors.push('ServerInterceptor');
     $httpProvider.interceptors.push('TokenServerInterceptor');
 
@@ -334,9 +334,14 @@ angular.module('scalearAngularApp')
           controller: 'statisticsCtrl'
         })
         .state('lti_course_list', {
-            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key&resource_context_id',
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key&resource_context_id&access-token&client&expiry&token-type&uid&redirect_local_url&redirect_boolean',
             templateUrl: '/views/teacher/course_list/lti_course_list.html',
             controller: 'ltiCourseListCtrl'
+        })
+        .state('lti_sign_in_token', {
+            url: '/lti_sign_in_token?redirect_local_url&status&redirect_boolean&access-token&client&expiry&token-type&uid',
+            templateUrl: '/views/teacher/course_list/lti_sign_in_token.html',
+            controller: 'ltiSignInTokenCtrl'
         })
         .state('school_statistics', {
           url: '/school_statistics',

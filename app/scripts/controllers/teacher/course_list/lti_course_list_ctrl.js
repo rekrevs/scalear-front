@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ltiCourseListCtrl', ['$rootScope', '$scope', 'Lti', '$state', '$window','$location','Page','$stateParams', 'User', '$translate', function($rootScope, $scope, Lti, $state, $window,$location, Page, $stateParams , User , $translate) {
+  .controller('ltiCourseListCtrl', ['$rootScope', '$scope', 'Lti', '$state', '$window','$location','Page','$stateParams', 'User', '$translate', 'Token', function($rootScope, $scope, Lti, $state, $window,$location, Page, $stateParams , User , $translate, Token) {
 
     $scope.return_url = $stateParams.return_url
     $scope.full_name = $stateParams.full_name
@@ -18,9 +18,9 @@ angular.module('scalearAngularApp')
 
 
     $window.scrollTo(0, 0);
-    // Page.setTitle('navigation.lti_course_list')
+    // Page.setTitle('navigation.lti_course_list')    
     Page.setTitle('lti.lti')
-
+    
     var  a = $location.absUrl()
     $scope.location_state = $location.path().split('/').pop()
     if ($scope.location_state == 'lti_course_list' && $stateParams.return_url == 'lti_tool_redirect'){
@@ -29,6 +29,7 @@ angular.module('scalearAngularApp')
     // if(a.indexOf('3000')){
     //   $window.location.href =  a.replace("3000", "9000");
     // }
+    Token.setToken($state.params)
 
     User.getCurrentUser()
       .$promise
@@ -64,8 +65,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.join = function() {
-      var url = $location.absUrl().split('lti')[0] + 'users/login'
-      // var url = $location.absUrl().split('lti')[0] + 'users/signup?mail='+$scope.email+'&givenName='+$scope.first_name+'&sn='+$scope.last_name
+      var url = $location.absUrl().split('lti')[0] + 'users/signup?mail='+$scope.email+'&givenName='+$scope.first_name+'&sn='+$scope.last_name
       window.open(url,'_blank');
     }
 

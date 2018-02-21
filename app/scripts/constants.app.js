@@ -1,6 +1,6 @@
 angular.module('scalearAngularApp') 
 .constant('headers',{
-    'withCredentials': true, 
+    'withCredentials': false, 
     'X-Requested-With': 'XMLHttpRequest'
     } 
 

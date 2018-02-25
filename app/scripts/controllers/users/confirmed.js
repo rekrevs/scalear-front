@@ -63,7 +63,9 @@ angular.module('scalearAngularApp')
           scope: $scope
         })
         .then(function(value) {
-          $scope.privacy_approved = true
+          User.agreeToPrivacyPolicy({ id: $scope.current_user.id },{},function(response){
+            $scope.privacy_approved = true
+          })
         }, function(reason) {
           $rootScope.busy_loading = true;
           UserSession.logout().then(function() {

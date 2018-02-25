@@ -6,7 +6,15 @@ angular.module('scalearAngularApp')
 	$scope.statistics_player={}
 	$scope.statistics_player.events={}
 	$scope.module= ModuleModel.getSelectedModule()
-	$scope.types=['confused', 'back', 'pauses', 'questions']
+	$scope.types=['questions','confused', 'back', 'pauses' ]
+
+  $scope.mouseoutHandler= function(row,column,chartWrapper){
+
+    $("#toolTip").mouseleave(function(){
+       chartWrapper.visualization.setSelection(null);
+    })
+
+  }
 
 	var getStudentStatistics = function(){
 		$scope.loading_statistics_chart=true
@@ -91,13 +99,18 @@ angular.module('scalearAngularApp')
 			},
 			"bar":{"groupWidth":5}
 		}
+
 		chart.data = $scope.formatStatisticsChartData(chart_data)
 		if(type == 'confused')
 			chart.data = getReallyConfused(chart.data)
 		if(type == 'questions'){
 			chart.options.tooltip= {"isHtml": true}
+      chart.options.tooltip.trigger = "both"
+
 			chart.data = setQuestionsTooltip(chart.data)
+
 		}
+
 		return chart
 	}
 
@@ -124,21 +137,28 @@ angular.module('scalearAngularApp')
 		data.cols.push({"type":"string","p":{"role":"tooltip", 'html': true}})
 		for(var i in data.rows){
 			var tooltip_text = generateTooltipHtml(data.rows[i].c[0].v, data.rows[i].c[1].v, $scope.statistics.question_text[i][1])
-			data.rows[i].c.push({"v":tooltip_text})
+
+      data.rows[i].c.push({"v":tooltip_text})
 		}
 		return data
 	}
 
 	var generateTooltipHtml = function(time, count, questions){
-		var new_time=[]
+
+    var new_time=[]
 		new_time[0] = time[0]
 		new_time[1]=time[1]<10? "0"+time[1] : time[1]
 		new_time[2]=time[2]<10? "0"+time[2] : time[2]
 		var formatted_time = new_time[0]+":"+new_time[1]+":"+new_time[2]
-		var html = "<div style='padding:8px 0 0 5px'><b>"+formatted_time+"</b><br>#"+$translate.instant('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
-		for(var i in questions){
-			html +="<div style='width:400px;margin-left:5px;overflow-wrap:break-word'>- "+questions[i]+"</div><br>"
-		}
+		var html = "<div id='toolTip' style='padding:8px 0 0 5px;'  ><b> "+formatted_time+"</b><br>#"+$translate.instant('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
+    html +="<div  style='width:400px;height:90px;margin-left:5px;overflow:scroll;' >"
+  	for(var i in questions){
+			html += "-"+questions[i]
+ //overflow-wrap:break-word
+    }
+    html += "</div>"
+    // registerChartListener("click",function(){alert("hi")},$scope.chart.tooltip)
+
 		return html
 	}
 

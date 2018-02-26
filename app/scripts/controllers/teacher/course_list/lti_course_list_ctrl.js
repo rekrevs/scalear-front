@@ -16,7 +16,6 @@ angular.module('scalearAngularApp')
     $scope.no_common_courses = false
     $scope.selected_resource = false
 
-
     $window.scrollTo(0, 0);
     // Page.setTitle('navigation.lti_course_list')    
     Page.setTitle('lti.lti')
@@ -29,7 +28,9 @@ angular.module('scalearAngularApp')
     // if(a.indexOf('3000')){
     //   $window.location.href =  a.replace("3000", "9000");
     // }
-    Token.setToken($state.params)
+    if($state.params['access-token']){
+      Token.setToken($state.params)
+    }
 
     User.getCurrentUser()
       .$promise

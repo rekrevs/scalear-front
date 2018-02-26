@@ -23,22 +23,20 @@ angular.module('scalearAngularApp')
     }
 
     function manageStudentState($state) {
-      var default_params = { course_id: $state.params.course_id }
+      var default_params = { course_id: $state.params.course_id };
       if ($state.params.module_id) {
-        var state_name = "course.module.courseware"
+        var state_name = "course.module.courseware";
         if ($state.params.lecture_id) {
-          state_name += ".lecture"
+          state_name += ".lecture";
         } else if ($state.params.quiz_id) {
-          state_name += ".quiz"
+          state_name += ".quiz";
         } else {
-          state_name += ".overview"
+          state_name += ".overview";
         }
-        return {name: state_name, params: $state.params, prev: state_name.replace("courseware", "course_editor")}
-      } else if ($state.includes("course.edit_course_information")) {
-        return {name: 'course.course_information', params: default_params}
+        return {name: state_name, params: $state.params, prev: state_name.replace("courseware", "course_editor")};
       } else {
-        return {name: 'course', params: default_params}
-      }
+        return {name: "course.course_information", params: default_params, prev: "course.edit_course_information"};
+      } 
     }
 
     function previewStart() {

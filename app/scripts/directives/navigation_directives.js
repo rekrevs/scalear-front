@@ -298,7 +298,8 @@ angular.module('scalearAngularApp')
           if (VideoInformation.current_time!=0){
             $state.params['time'] = Math.floor(VideoInformation.current_time)
           }
-          $state.go("preview",$state.params, { reload: true })
+          Preview.start();
+          // $state.go("preview",$state.params, { reload: true })
         }
 
         scope.addModule = function() {

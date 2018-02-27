@@ -35,9 +35,11 @@ angular.module('scalearAngularApp')
         }
         return {name: state_name, params: $state.params, prev: state_name.replace("courseware", "course_editor")}
       } else if ($state.includes("course.edit_course_information")) {
-        return {name: 'course.course_information', params: default_params}
+        console.log("2")
+        return {name: 'course.course_information', params: default_params, prev: "course.edit_course_information"}
       } else {
-        return {name: 'course', params: default_params}
+        console.log("3")
+        return {name: 'course', params: default_params, prev: 'course'}
       }
     }
 

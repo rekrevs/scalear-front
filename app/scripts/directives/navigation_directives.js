@@ -266,9 +266,9 @@ angular.module('scalearAngularApp')
             		ContentNavigator.close()
             	})
             }
-            // if(!MobileDetector.isPhone()) {
+            if (item_type != "customlink"){
               $state.go('course.module.' + mode + '.' + item_type, params)
-            // }
+            }
             if(!(mode == 'courseware' && item_type == 'customlink')) {
               scope.currentitem = { id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id }
             }
@@ -298,7 +298,8 @@ angular.module('scalearAngularApp')
           if (VideoInformation.current_time!=0){
             $state.params['time'] = Math.floor(VideoInformation.current_time)
           }
-          $state.go("preview",$state.params, { reload: true })
+          Preview.start();
+          // $state.go("preview",$state.params, { reload: true })
         }
 
         scope.addModule = function() {

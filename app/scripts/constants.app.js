@@ -1,7 +1,7 @@
-'use strict';
-
-angular.module('scalearAngularApp')
-.constant('headers', {
-    withCredentials: true,
+angular.module('scalearAngularApp') 
+.constant('headers',{
+    'withCredentials': true, 
     'X-Requested-With': 'XMLHttpRequest'
-})
+    } 
+
+) 

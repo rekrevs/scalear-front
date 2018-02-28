@@ -7,7 +7,6 @@ angular.module('scalearAngularApp')
   return $resource(scalear_api.host+'/:lang/shared_items/:shared_item_id/:action', { lang:$translate.use()},
     {
         'create': { method: 'POST', headers:headers},
-        'show': {method:'GET', headers:headers},
         'destroy': { method: 'DELETE', headers:headers },
         'showShared':{method:'GET',headers:headers,params:{action: 'show_shared'}},
         'accpetShared':{method:'POST',headers:headers,params:{action: 'accept_shared'}},

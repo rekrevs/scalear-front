@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
+    $httpProvider.interceptors.push('TokenServerInterceptor');
 
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -46,7 +47,7 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/ie.html'
         })
         .state('login', {
-            url: '/users/login',
+            url: '/users/login?access-token&client&expiry&token-type&uid',
             templateUrl: '/views/login.html',
             controller: 'LoginCtrl',
             params : { email: null}
@@ -95,7 +96,7 @@ angular.module('scalearAngularApp')
             params : {email: null}
         })
         .state('change_password', {
-            url: '/users/password/edit?reset_password_token',
+            url: '/users/password/edit?token&client_id&uid',
             templateUrl: '/views/users/password/edit.html',
             controller: 'UsersPasswordEditCtrl'
         })
@@ -341,6 +342,11 @@ angular.module('scalearAngularApp')
           url: '/school_statistics',
           templateUrl: '/views/statistics/school_statistics.html',
           controller: 'schoolStatisticsCtrl'
+        })
+        .state('welcome_message', {
+          url: '/welcome_message',
+          templateUrl: '/views/welcome_message.html',
+          controller: 'welcomeMessageCtrl'
         })
         .state('show_shared', {
           url: '/show_shared',

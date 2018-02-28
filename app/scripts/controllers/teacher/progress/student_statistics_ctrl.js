@@ -82,7 +82,9 @@ angular.module('scalearAngularApp')
 				viewWindow:{
 					"min":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0],
 					"max":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0]
-				}
+				},
+        format: 'HH:mm:ss'
+
 			},
 			"legend": 'none',
 			chartArea:{

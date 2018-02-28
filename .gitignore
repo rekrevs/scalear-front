@@ -9,3 +9,4 @@ selenium/
 .idea/
 coverageE2E
 app/scripts/config.js
+package-lock.json

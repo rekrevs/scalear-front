@@ -54,6 +54,8 @@ angular.module('scalearAngularApp')
           else if ( 0 < (new_time - quiz_time ) && (new_time - quiz_time ) < 0.5 ) {
             new_time = quiz_time + 0.5
 
+          }else if( (new_time - quiz_time ) ==0 ){
+            new_time = quiz_time + 0.5
           }
 
         }

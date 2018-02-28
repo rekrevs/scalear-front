@@ -261,12 +261,13 @@ angular.module('scalearAngularApp')
     }
 
     var showQuizOnline = function(quiz) {
-      var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);      
+
+      var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);
       $scope.next_quiz = null
       if ($scope.lecture.video_quizzes[index + 1]) {
         if (($scope.lecture.video_quizzes[index + 1].time - quiz.time) <= 1)
           $scope.next_quiz = $scope.lecture.video_quizzes[index + 1]
-      }      
+      }
       $scope.seek(quiz.time)
       $scope.lecture_player.controls.pause()
       $scope.closeReviewNotify()
@@ -481,7 +482,7 @@ angular.module('scalearAngularApp')
       for (var each_30_second = 30; each_30_second < $scope.total_duration; each_30_second = each_30_second + 30) {
         duration_milestones.push(((each_30_second / $scope.total_duration) * 100))
       }
-      
+
       checkPeerSession().then(function () {
         if (!close_student && $scope.lecture.distance_peer && !$scope.distance_peer_session_id) {
           $scope.openStudentList($scope.lecture.id, $scope.lecture.course_id)
@@ -495,6 +496,7 @@ angular.module('scalearAngularApp')
             }
             if (!$scope.lecture.distance_peer || !$scope.distance_peer_session_id) {
               $scope.lecture_player.controls.cue($scope.lecture.start_time + (quiz.time - 0.1), function () {
+
                 showQuizOnline(quiz)
                 // $scope.$apply()
               })
@@ -523,10 +525,11 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1), function() {
               if (marker.as_slide) {
                 $scope.lecture_player.controls.pause()
-                showSlideNote(marker)              
+
+                showSlideNote(marker)
               }
               else{
-                showDynmaicAnnotation(marker)                              
+                showDynmaicAnnotation(marker)
               }
             })
             if (!marker.as_slide) {
@@ -580,7 +583,7 @@ angular.module('scalearAngularApp')
           })
       }
 
-      return $q.when({}); 
+      return $q.when({});
     }
 
     $scope.scrollIntoView = function() {
@@ -638,7 +641,7 @@ angular.module('scalearAngularApp')
         if ($scope.next_stop_time < time && $scope.distance_peer_session_id) { // if in distance_peer session do not seek after next quiz time
           $scope.lecture_player.controls.pause()
           showAnnotation($translate.instant("distance_peer.prevent_seek_forward"))
-        } 
+        }
         else if( $scope.lecture.skip_ahead || (percent_view <  Math.max( $scope.lecture.watched_percentage , current_time_percent   )  ) ){ //
           if (time >= 0 && $scope.show_progressbar) {
             $scope.lecture_player.controls.seek(time)
@@ -832,7 +835,7 @@ angular.module('scalearAngularApp')
 
     $scope.toggleFullscreen = function() {
       $scope.fullscreen ? goSmallScreen() : goFullscreen()
-      logVideoEvent("fullscreen", $scope.lecture_player.controls.getTime())
+      logVideoEvent("fullscreen", $scope.lecture_player.controls.get())
     }
 
     $scope.toggleVideoPlayback = function() {
@@ -949,7 +952,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addNote = function() {
-      var time = $scope.lecture_player.controls.getTime()
+      var time = $scope.lecture_player.getTime()
       $scope.last_fullscreen_state = $scope.fullscreen
       $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
       TimelineFilter.set('note', true)
@@ -1013,7 +1016,7 @@ angular.module('scalearAngularApp')
             changeQuizStatus(data)
             if($scope.selected_quiz.question_type=="Free Text Question"){
               addFreeTextAnswerNote($scope.studentAnswers[$scope.selected_quiz.id])
-            }            
+            }
           });
       } else {
         $log.debug("invalid form")
@@ -1132,7 +1135,7 @@ angular.module('scalearAngularApp')
           }
           sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
-            middle_msg = "lectures.messages.press_to_continue"            
+            middle_msg = "lectures.messages.press_to_continue"
             sub_message = ''
           }
           if (!data.correct && $scope.selected_quiz.question_type.toUpperCase() == "DRAG" && $scope.selected_quiz.quiz_type.toUpperCase() == "HTML") {
@@ -1306,10 +1309,10 @@ angular.module('scalearAngularApp')
     }
     $scope.dismissDynmaicAnnotation = function() {
       $scope.dynmaic_annotation = null
-    }    
+    }
     $scope.dismissSlideNote = function() {
       $scope.slide_note = null
-    }    
+    }
     $scope.dismissQuestionText = function() {
       $scope.selected_quiz.actual_display_text = null
     }

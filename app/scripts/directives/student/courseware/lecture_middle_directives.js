@@ -186,12 +186,12 @@ angular.module('scalearAngularApp')
         scope.explanation[scope.quiz.id] = null
       });
 
-      scope.studentHtmlFreeInputClick = function(e){ 
-        $timeout(function(){ 
+      scope.studentHtmlFreeInputClick = function(e){
+        $timeout(function(){
            angular.element(element).find("textarea").focus()
-           e.stopPropagation() 
-        })     
-      }       
+           e.stopPropagation()
+        })
+      }
 
     }
   }
@@ -435,7 +435,7 @@ angular.module('scalearAngularApp')
         $timeout(function(){
             angular.element(elem).find("textarea").focus()
             e.stopPropagation()
-        })    
+        })
       }
 
       scope.$on("$destroy", function() {
@@ -638,13 +638,13 @@ angular.module('scalearAngularApp')
         scope.show()
 
     // TODO fix edit note on mobile
-    //  scope.noteAreaClick = function(e){  
+    //  scope.noteAreaClick = function(e){
     //    console.log("note clicked")
-    //     $timeout(function(){  
-    //         $('.note').focus() 
-    //        e.stopPropagation()  
-    //     })      
-    //   }        
+    //     $timeout(function(){
+    //         $('.note').focus()
+    //        e.stopPropagation()
+    //     })
+    //   }
 
       scope.saveData = function(){
         scope.$emit("note_updated")
@@ -713,16 +713,16 @@ angular.module('scalearAngularApp')
         if ( ui && ( main[0].offsetWidth  <  textarea.offsetWidth  ) ){
           ui.size.width = textarea.offsetWidth +10
           scope.data.width = ui.size.width / (ontop.width()) ;
-        } 
+        }
         else{
-          scope.data.width = main[0].offsetWidth / (ontop.width()) ;          
+          scope.data.width = main[0].offsetWidth / (ontop.width()) ;
         }
         if ( ui && (main[0].offsetHeight <  textarea.offsetHeight) ){
           ui.size.height = textarea.offsetHeight +10
           scope.data.height = scope.data.height / (ontop.height()) ;
         }
         else{
-          scope.data.height = main[0].offsetHeight / (ontop.height()) ;                    
+          scope.data.height = main[0].offsetHeight / (ontop.height()) ;
         }
       }
 
@@ -732,7 +732,7 @@ angular.module('scalearAngularApp')
           containment: ".videoborder",
           stop: scope.calculateSize,
           resize: scope.calculateSize
-        });              
+        });
       }
     }
   }

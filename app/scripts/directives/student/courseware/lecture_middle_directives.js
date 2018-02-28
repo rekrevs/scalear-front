@@ -685,7 +685,7 @@ angular.module('scalearAngularApp')
       scope.actionBtn = scope.action()
     }
   }
-}]).directive('dynmaicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+}]).directive('dynamicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
   return{
     restrict:"E",
     scope:{
@@ -693,59 +693,11 @@ angular.module('scalearAngularApp')
       close: '&',
       action:'&'
     },
-    templateUrl: '/views/student/lectures/dynmaic_annotation.html',
+    templateUrl: '/views/student/lectures/dynamic_annotation_student.html',
     link:function(scope, element, attrs){
-      scope.closeBtn = scope.close()
-      scope.actionBtn = scope.action()
-
-      scope.calculatePosition = function() {
-        var ontop = angular.element('.ontop');
-        var main = angular.element(element.children()[0])
-        scope.data.xcoor = parseFloat(main.position().left) / ontop.width();
-        scope.data.ycoor = parseFloat(main.position().top) / ontop.height();
-        scope.calculateSize()
+      if (scope.data.question){
+        scope.data.annotation = scope.data.question
       }
-
-      scope.calculateSize = function(event,ui) {
-        var ontop = angular.element('.ontop');
-        var main = angular.element(element.children()[0])
-        var textarea = angular.element( main[0].querySelector('.medium-editor-p'))[0]
-        if ( ui && ( main[0].offsetWidth  <  textarea.offsetWidth  ) ){
-          ui.size.width = textarea.offsetWidth +10
-          scope.data.width = ui.size.width / (ontop.width()) ;
-        } 
-        else{
-          scope.data.width = main[0].offsetWidth / (ontop.width()) ;          
-        }
-        if ( ui && (main[0].offsetHeight <  textarea.offsetHeight) ){
-          ui.size.height = textarea.offsetHeight +10
-          scope.data.height = scope.data.height / (ontop.height()) ;
-        }
-        else{
-          scope.data.height = main[0].offsetHeight / (ontop.height()) ;                    
-        }
-      }
-
-
-      if ( !CourseModel.isStudent() ) {
-        angular.element(element.children()[0]).resizable({
-          containment: ".videoborder",
-          stop: scope.calculateSize,
-          resize: scope.calculateSize
-        });              
-      }
-    }
-  }
-}]).directive('dynmaicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
-  return{
-    restrict:"E",
-    scope:{
-      data:'=',
-      close: '&',
-      action:'&'
-    },
-    templateUrl: '/views/student/lectures/dynmaic_annotation_student.html',
-    link:function(scope, element, attrs){
       scope.closeBtn = scope.close()
       scope.actionBtn = scope.action()
     }

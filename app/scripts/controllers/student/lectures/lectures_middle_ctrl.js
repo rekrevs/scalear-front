@@ -526,12 +526,12 @@ angular.module('scalearAngularApp')
                 showSlideNote(marker)              
               }
               else{
-                showDynmaicAnnotation(marker)                              
+                showDynamicAnnotation(marker)                              
               }
             })
             if (!marker.as_slide) {
               $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
-                $scope.dismissDynmaicAnnotation()
+                $scope.dismissDynamicAnnotation()
               })
             }
           }
@@ -625,7 +625,7 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
       $scope.closeReviewNotify()
       $scope.dismissAnnotation()
-      $scope.dismissDynmaicAnnotation()
+      $scope.dismissDynamicAnnotation()
       var current_time = $scope.lecture_player.controls.getTime()
       var current_time_percent  = Math.round((current_time / $scope.total_duration) * 100)
       $scope.seek_to_time = time
@@ -1304,8 +1304,8 @@ angular.module('scalearAngularApp')
     $scope.dismissAnnotation = function() {
       $scope.annotation = null
     }
-    $scope.dismissDynmaicAnnotation = function() {
-      $scope.dynmaic_annotation = null
+    $scope.dismissDynamicAnnotation = function() {
+      $scope.dynamic_annotation = null
     }    
     $scope.dismissSlideNote = function() {
       $scope.slide_note = null
@@ -1316,14 +1316,14 @@ angular.module('scalearAngularApp')
 
     $scope.endDistancePeerSession = function() {
       $scope.dismissAnnotation()
-      $scope.dismissDynmaicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.dismissSlideNote()
       clearQuiz()
       changeStatusAndWaitTobeSync(6, null)
     }
 
     $scope.lectureLayerClick =  function() {
-      if ( !$scope.quiz_mode && ( (!$scope.dynmaic_annotation) ||  ($scope.dynmaic_annotation && !$scope.dynmaic_annotation.as_slide) ) ){
+      if ( !$scope.quiz_mode && ( (!$scope.dynamic_annotation) ||  ($scope.dynamic_annotation && !$scope.dynamic_annotation.as_slide) ) ){
         $scope.toggleVideoPlayback()
       }
     }
@@ -1359,19 +1359,19 @@ angular.module('scalearAngularApp')
     }
 
     var showAnnotation = function(annotation) {
-      $scope.dismissDynmaicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.dismissSlideNote()
       $scope.annotation = annotation
     }
 
-    var showDynmaicAnnotation = function(annotation) {
+    var showDynamicAnnotation = function(annotation) {
       $scope.dismissAnnotation()
       $scope.dismissSlideNote()
-      $scope.dynmaic_annotation = annotation
+      $scope.dynamic_annotation = annotation
     }
     var showSlideNote = function(annotation) {
       $scope.dismissAnnotation()
-      $scope.dismissDynmaicAnnotation()
+      $scope.dismissDynamicAnnotation()
       $scope.slide_note = annotation
     }
 

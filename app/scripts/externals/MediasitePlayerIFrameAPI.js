@@ -1216,7 +1216,7 @@ Mediasite.PlaybackTracker = (function () {
                 _tolerance = 0;
             }
 
-            _minChunkDuration = Math.min(0.1, _tolerance);
+            _minChunkDuration = Math.min(1, _tolerance);
         };
 
         self.getTolerance = getTolerance;

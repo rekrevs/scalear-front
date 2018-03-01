@@ -835,7 +835,7 @@ angular.module('scalearAngularApp')
 
     $scope.toggleFullscreen = function() {
       $scope.fullscreen ? goSmallScreen() : goFullscreen()
-      logVideoEvent("fullscreen", $scope.lecture_player.controls.get())
+      logVideoEvent("fullscreen", $scope.lecture_player.controls.getTime())
     }
 
     $scope.toggleVideoPlayback = function() {
@@ -952,7 +952,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addNote = function() {
-      var time = $scope.lecture_player.getTime()
+      var time = $scope.lecture_player.controls.getTime()
       $scope.last_fullscreen_state = $scope.fullscreen
       $scope.last_video_state = !$scope.lecture_player.controls.paused() //$scope.play_pause_class;
       TimelineFilter.set('note', true)

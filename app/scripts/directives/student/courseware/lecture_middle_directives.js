@@ -637,15 +637,7 @@ angular.module('scalearAngularApp')
       if(!scope.value)
         scope.show()
 
-    // TODO fix edit note on mobile
-    //  scope.noteAreaClick = function(e){
-    //    console.log("note clicked")
-    //     $timeout(function(){
-    //         $('.note').focus()
-    //        e.stopPropagation()
-    //     })
-    //   }
-
+    
       scope.saveData = function(){
         scope.$emit("note_updated")
         if(!scope.value)

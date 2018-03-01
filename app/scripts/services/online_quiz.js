@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
     }
 
     function getFinalQuizTime(time, lecture) {
-      // var new_time = parseInt(time)
+      
       var new_time = time
       lecture.timeline.items.forEach(function(item) {
 

@@ -759,7 +759,8 @@ var translation_en={
         marker:"@:global.marker",
         watched:"Watched",
         quizzes:"quizzes",
-        required_quizzes:"required quizzes"
+        required_quizzes:"required quizzes",
+        export_chart: "Export Chart",
     },
     button:{
         ask_question: "Ask a Question",

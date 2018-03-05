@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ltiCourseListCtrl', ['$rootScope', '$scope', 'Lti', '$state', '$window','$location','Page','$stateParams', 'User', '$translate', 'Token', function($rootScope, $scope, Lti, $state, $window,$location, Page, $stateParams , User , $translate, Token) {
+  .controller('ltiCourseListCtrl', ['$rootScope', '$scope', 'Lti', '$state', '$window','$location','Page','$stateParams', 'UserSession', '$translate', 'Token', function($rootScope, $scope, Lti, $state, $window,$location, Page, $stateParams , UserSession , $translate, Token) {
 
     $scope.return_url = $stateParams.return_url
     $scope.full_name = $stateParams.full_name
@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
       Token.setToken($state.params)
     }
 
-    User.getCurrentUser()
+    UserSession.getCurrentUser()
       .then(function(data) {
         if (data.user == 'null') {
           // SHOW NEW

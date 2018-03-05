@@ -3,12 +3,15 @@
 angular.module('scalearAngularApp')
   .service('ScalearUtils', ['$rootScope', '$translate', function($rootScope, $translate) {
     var  validateTime = function(time, video_duration, bolean_duration) {
-      var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+      // var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+      var int_regex = /^\d\d:\d\d:\d\d\.\d\d\d$/; //checking format
+
       if(int_regex.test(time)) {
         var hhmm = time.split(':'); // split hours and minutes
         var hours = parseInt(hhmm[0]); // get hours and parse it to an int
         var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
         var seconds = parseInt(hhmm[2]);
+
         // check if hours or minutes are incorrect
         var calculated_duration = (hours * 60 * 60) + (minutes * 60) + (seconds);
         if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds < 0 || seconds > 59) { // display error
@@ -22,7 +25,7 @@ angular.module('scalearAngularApp')
     }
 
     var validateTimeForTrim = function(time, video_duration, bolean_duration ,start_time) {
-      // start_time attr is used with time =  end_time to check that starttime is before endtime 
+      // start_time attr is used with time =  end_time to check that starttime is before endtime
       var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
       if(int_regex.test(time)) {
         var hhmm = time.split(':'); // split hours and minutes
@@ -183,7 +186,7 @@ angular.module('scalearAngularApp')
         return text
       },
       getShortAnswerText: function(text, len_answer){
-        var ratio = window.innerWidth / window.innerHeight 
+        var ratio = window.innerWidth / window.innerHeight
         if( 1.7 < ratio && window.innerWidth > 1280){ // 16/9  , 1280 width
           if (len_answer >= 5 && text.length>20) {
             return text.substring(0,20)+".."
@@ -191,7 +194,7 @@ angular.module('scalearAngularApp')
           return text
         }
         else if ( text.length>=20  ) {
-          if (len_answer >= 5 && text.length>=10) { 
+          if (len_answer >= 5 && text.length>=10) {
             return text.substring(0,10)+".."
           }
           return text.substring(0, 20)+".."

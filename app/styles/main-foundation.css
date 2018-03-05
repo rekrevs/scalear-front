@@ -2966,8 +2966,10 @@ dd#second_accordion > a{
 dd#second_accordion > a:hover{
       background: #cacaca;
 }
-
-/* google charts */
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
 
 .google-visualization-tooltip {
   position: absolute !important;

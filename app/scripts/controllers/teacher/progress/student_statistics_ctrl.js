@@ -22,7 +22,7 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
     $scope.statistics_player = {};
     $scope.statistics_player.events = {};
     $scope.module = ModuleModel.getSelectedModule();
-    $scope.types = ["confused", "back", "pauses", "questions"];
+    $scope.types=['questions','confused', 'back', 'pauses' ];
 
     var getStudentStatistics = function() {
       $scope.loading_statistics_chart = true;
@@ -55,6 +55,12 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
         /(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/
       );
     };
+
+    $scope.mouseoutHandler= function(row,column,chartWrapper){
+      $("#toolTip").mouseleave(function(){
+        chartWrapper.visualization.setSelection(null);
+      })
+    }
 
     $scope.getStatisticsType = function(ind) {
       return $scope.types[ind];
@@ -118,6 +124,7 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
       }
       if (type == "questions") {
         chart.options.tooltip = { isHtml: true };
+        chart.options.tooltip.trigger = "both";
         chart.data = setQuestionsTooltip(chart.data);
       }
       $scope["chart" + type] = chart;
@@ -163,20 +170,12 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
       new_time[1] = time[1] < 10 ? "0" + time[1] : time[1];
       new_time[2] = time[2] < 10 ? "0" + time[2] : time[2];
       var formatted_time = new_time[0] + ":" + new_time[1] + ":" + new_time[2];
-      var html =
-        "<div style='padding:8px 0 0 5px'><b>" +
-        formatted_time +
-        "</b><br>#" +
-        $translate.instant("global.students") +
-        ":  <b>" +
-        count +
-        "</b></div><hr style='padding:0;margin:4px 0'>";
-      for (var i in questions) {
-        html +=
-          "<div style='width:400px;margin-left:5px;overflow-wrap:break-word'>- " +
-          questions[i] +
-          "</div><br>";
+      var html = "<div id='toolTip' style='padding:8px 0 0 5px;'  ><b> "+formatted_time+"</b><br>#"+$translate.instant('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>";
+      html +="<div  style='width:400px;height:90px;margin-left:5px;overflow:scroll;' >";
+      for(var i in questions){
+        html += "-"+questions[i]
       }
+      html += "</div>"
       return html;
     };
 

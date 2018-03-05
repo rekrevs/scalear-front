@@ -1,17 +1,18 @@
 <!--build:css(.tmp/styles) styles/progress.css -->
-<link rel="stylesheet" href="styles/teacher/progress.css"/>
+<link rel="stylesheet" href="styles/teacher/progress.css" />
 <!-- endbuild -->
 
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
 	<h4 ng-show="module.name" class="small-12 columns with-small-padding-top">
-		<b><span translate>progress.home.module_timeline</span>: </b>
+		<b>
+			<span translate>progress.home.module_timeline</span>: </b>
 		<span>{{module.name}}</span>
 	</h4>
 	<div class="row">
 		<div class="small-6 small-push-3 columns">
-			<center >
-				<video_container >
-					<youtube  id="statistics_video" url="lecture_url" controls="default" player="statistics_player" class="flex-video widescreen">
+			<center>
+				<video_container>
+					<youtube id="statistics_video" url="lecture_url" controls="default" player="statistics_player" class="flex-video widescreen">
 					</youtube>
 				</video_container>
 			</center>
@@ -20,23 +21,42 @@
 	<br />
 	<div class="row">
 		<div id="labels">
-			<div id="first_label"  class="inverted">#<span translate data-tooltip translate-attr="{title:'progress.tooltip.confused'}" >progress.confused</span></div>
-			<div id="second_label" class="inverted">#<span translate data-tooltip translate-attr="{title:'progress.tooltip.back'}">progress.back</span></div>
-			<div id="third_label"  class="inverted">#<span translate data-tooltip translate-attr="{title:'progress.tooltip.back'}">progress.pauses</span></div>
-			<div id="fourth_label" class="inverted">#<span translate data-tooltip translate-attr="{title:'progress.tooltip.questions'}">progress.questions</span></div>
+			<div id="first_label" class="inverted">#
+				<span translate data-tooltip translate-attr="{title:'progress.tooltip.questions'}">progress.questions</span>
+			</div>
+			<div id="second_label" class="inverted">#
+				<span translate data-tooltip translate-attr="{title:'progress.tooltip.confused'}">progress.confused</span>
+			</div>
+			<div id="third_label" class="inverted">#
+				<span translate data-tooltip translate-attr="{title:'progress.tooltip.back'}">progress.back</span>
+			</div>
+			<div id="fourth_label" class="inverted">#
+				<span translate data-tooltip translate-attr="{title:'progress.tooltip.pauses'}">progress.pauses</span>
+			</div>
 		</div>
-		<div style="overflow-x:auto; overflow-y:hidden;" >
-			<div style="margin-left:35px;" ng-style="{width: win_width}"> 
-				<div class="lecture_name truncate" ng-repeat="name in lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+		<div style="overflow-x:auto; overflow-y:hidden;">
+			<div style="margin-left:35px;" ng-style="{width: win_width}">
+				<div class="lecture_name truncate" ng-repeat="name in lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}"
+				 style="display:inline-block;text-align:center">{{name[1]}}</div>
 			</div>
 			<div ng-repeat="type in types" ng-init="createStatisticsChart(type)">
-				<div google-chart chart="{{'chart'+type}}" agc-on-select="skipToTime(selectedItem, type)"></div>
+				<div google-chart chart="{{'chart'+type}}" agc-on-select="skipToTime(selectedItem, type)" agc-on-mouseout="chartToolTipMouseOutHandler(row,column,chartWrapper)"></div>
 			</div>
 
 			<ul class="button-group round with-margin">
-				<li><button ng-click="zoomGraph(.75)" class="tiny"><i class="fi-zoom-out "></i></button></li>
-				<li><button ng-click="zoomGraph(0)" class="tiny">Reset</button></li>
-				<li><button ng-click="zoomGraph(1.5)" class="tiny"><i class="fi-zoom-in"></i></button></li>
+				<li>
+					<button ng-click="zoomGraph(.75)" class="tiny">
+						<i class="fi-zoom-out "></i>
+					</button>
+				</li>
+				<li>
+					<button ng-click="zoomGraph(0)" class="tiny">Reset</button>
+				</li>
+				<li>
+					<button ng-click="zoomGraph(1.5)" class="tiny">
+						<i class="fi-zoom-in"></i>
+					</button>
+				</li>
 			</ul>
 
 		</div>

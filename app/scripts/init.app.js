@@ -107,7 +107,9 @@ angular.module('scalearAngularApp')
               $location.url(toParams['redirect_local_url']);
             }
           })
-          .catch(function() {})        
+          .catch(function(error) {
+            $log.debug("Token error: " + error);
+          })        
       }
       else{
         UserSession.getCurrentUser()
@@ -130,16 +132,9 @@ angular.module('scalearAngularApp')
               }
               if(to.name === 'home') {
                 $state.go('course_list');
-                // $state.go("dashboard")
               }
               if(to.name === 'confirmed' && current_user.intro_watched) {
-                // if(from.name === 'show_confirmation') {
-                //   $state.go("confirmed")
-                // }
-                // else {
-                  $state.go("home");
                   showErrorMsg($state.href(to, toParams))
-                // }
               }
               else if( to.name !== 'confirmed' && !current_user.intro_watched && to.name !== "edit_account") {
                 $state.go('confirmed')

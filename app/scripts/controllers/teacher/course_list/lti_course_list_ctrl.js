@@ -17,17 +17,12 @@ angular.module('scalearAngularApp')
     $scope.selected_resource = false
 
     $window.scrollTo(0, 0);
-    // Page.setTitle('navigation.lti_course_list')    
     Page.setTitle('lti.lti')
     
-    var  a = $location.absUrl()
     $scope.location_state = $location.path().split('/').pop()
     if ($scope.location_state == 'lti_course_list' && $stateParams.return_url == 'lti_tool_redirect'){
       $scope.location_state = 'lti_tool_redirect'
     } 
-    // if(a.indexOf('3000')){
-    //   $window.location.href =  a.replace("3000", "9000");
-    // }
     if($state.params['access-token']){
       Token.setToken($state.params)
     }

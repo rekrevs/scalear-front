@@ -4,7 +4,6 @@ angular.module('scalearAngularApp')
   .factory('Token', ['$cookieStore','$q','$interval', function($cookieStore, $q, $interval) {
 
     var token = null;
-    var interval = null;
 
     function setToken(recievedToken){
       token = recievedToken;
@@ -12,7 +11,6 @@ angular.module('scalearAngularApp')
     }
 
     function setTokenWithPromise(recievedToken){
-      console.log("started token")
       token = recievedToken;
       $cookieStore.put('token', recievedToken)
       var deferred = $q.defer();

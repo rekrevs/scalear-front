@@ -780,7 +780,7 @@ angular.module("scalearAngularApp")
           "backgroundColor": "white",
           "displayExactValues": true,
           "legend": { "position": "none" },
-          "chartArea": { "left": "70%", "width": "90%", "top": "10%" },
+          "chartArea": { "left": "70%", "width": "90%", "top": "17%" },
           "tooltip": { "isHtml": true },
           "hAxis": { "textPosition": "none" },
         },
@@ -1148,7 +1148,7 @@ angular.module("scalearAngularApp")
       $scope.fontsize = Math.min(font_size_container, font_size_screen) + "px";
     }
 
-    function adjustChartSize() {      
+    function adjustChartSize() {
       if ($scope.chart) {
         var question_block = angular.element(".normal_question_block").not(".ng-hide");
         var question_block_height = question_block.height() - 50;

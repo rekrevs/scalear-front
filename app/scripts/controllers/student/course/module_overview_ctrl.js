@@ -35,19 +35,4 @@ angular.module('scalearAngularApp')
 
     getSummaryModule($state.params.module_id, $state.params.course_id)
 
-    // if(module.sub_items_size > 0) {
-    // Module.getLastWatched({
-    //     course_id: $stateParams.course_id,
-    //     module_id: module.id
-    //   },
-    //   function(data) {
-    //     if(data.last_watched != -1) {
-    //       $state.go('course.module.courseware.lecture', { 'module_id': module.id, 'lecture_id': data.last_watched })
-    //       scope.currentitem = { id: data.last_watched }
-    //     } else {
-    //       $state.go('course.module.courseware.quiz', { 'module_id': module.id, 'quiz_id': data.first_quiz_id })
-    //       scope.currentitem = { id: data.first_quiz_id }
-    //     }
-    //   })
-
   }]);

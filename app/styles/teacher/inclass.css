@@ -139,6 +139,9 @@
 	margin-left: 2%;
 
 }
+.medium-editor-p {
+	font-weight: bold; 
+}
 
 .dark_button{
 	background: #1a1a1a !important;
@@ -165,14 +168,23 @@
 	left: 0;
 }
 .original_video{
-	max-height:75%;
-	min-height:75%;
+	max-height:65%;
+	min-height:65%;
 	height:75%;
 	position: relative;
 	margin-bottom:0;
 }
 
-.zoom_video{
+.small_screen_video{
+	max-height:30%;
+	min-height:30%;
+	height:96%;
+	/*position: absolute;*/
+	margin-bottom:0;
+}
+
+
+.full_screen_video{
 	max-height:96%;
 	min-height:96%;
 	height:96%;
@@ -180,11 +192,19 @@
 	margin-bottom:0;
 }
 
+.remove_video{
+	max-height:0%;
+	min-height:0%;
+	height:0%;
+	/*position: absolute;*/
+	margin-bottom:0;
+}
+
 .original_question{
-	max-width: 60%;
-	min-width: 60%;
+/*	max-width: 35%;
+	min-width: 35%;*/
 	/*height:20%;*/
-	float: left;
+	/*float: left;*/
 	padding-top: 0.5%;
 	padding-left: 1%;
 	font-size: 40px;
@@ -226,7 +246,7 @@
 }
 
 .zoom_question{
-	background:beige;
+	background:white;
 
 	max-width: 50%;
     min-width: 25%;
@@ -249,16 +269,20 @@
 }
 
 .original_chart, .stage_timer{
-	max-width: 40%;
-	min-width: 40%;
+/*	max-height: 65%;
+	min-height: 65%;*/
+/*	bottom: 0 ;
+	position: absolute;*/
+/*	max-width: 65%;
+	min-width: 65%;
 	float:right;
 	opacity:1;
 	left:0 !important;
-	top:0 !important;
+	top:0 !important;*/
 }
 
 .zoom_chart{
-	background:beige;
+	background:white;
 	max-width: 40%;
 	min-width: 40%;
 	float:left;
@@ -274,31 +298,22 @@
     box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
     /*overflow-y: hidden;*/
 }
-
-.question_block{
+.normal_question_block{
 	position:relative;
 	border: 1px solid darkgrey;
-	max-height: 21%;
-	min-height: 21%;
+	max-height: 30%;
+	min-height: 30%;
 	overflow-y: hidden;
-	background:beige;
+	background:white;
 	z-index: 0;
 }
-/*.question_block_free_text{
-	position:relative;
-	border: 1px solid darkgrey;
-	max-height: 24%;
-	min-height: 24%;
-	overflow-y: auto;
-	background:beige;
-}*/
 .zoom_question_block{
 	position:relative;
 	/*border: 1px solid darkgrey; */
 	max-height: 24%;
 	min-height: 24%;
 	/*overflow-y: auto;
-	background:beige;*/
+	background:white;*/
 }
 .disucssion.original_question{
 	max-width: 98%;
@@ -405,6 +420,12 @@
     z-index: 1006;
 }
 
+tspan {
+	font-weight: bold;
+	fill: green;
+	text-decoration: underline;
+}
+
 #content_list li {
     font-size: 10px;
 }
@@ -428,12 +449,11 @@
 }
 .bottom-middle{
 	display: inline-block;
-	width: 35%;
+	width: 48%;
 }
 .bottom-right{
 	display: inline-block;
 	width: 25%;
-	padding-right: 2%;
 	text-align: right;
 	padding-top: 10px;
 	vertical-align: bottom;

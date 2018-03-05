@@ -728,7 +728,6 @@ angular.module('scalearAngularApp')
         }
 
         scope.goToLectureQuiz = function(course_id, group_id, id, type) {
-          console.log("in function")
           if(type == 'lecture'){
             $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
           }
@@ -896,19 +895,10 @@ angular.module('scalearAngularApp')
                     title: "<span style='font-size:12px;' ng-bind-html='online_quiz_name[online_quiz.id]' ></span> ",
                     content: "<div ng-bind-html='content[online_quiz.id]' style='margin-bottom: 10px;font-size:12px;'></div>"+
                       "<div ng-if='lecture_quiz_boolean[online_quiz.id]'><div ng-if=\"quiz_completion_data_series[online_quiz['data'][0]].color != '#a4a9ad' \" style='font-size:12px;' translate>dashboard.click_retry_quiz</div></div>" ,
-                      // "<div class='right' style='bottom: 10px;right: 10px;'>" +
-                      // "<a class='button left tiny green module-review ' style='pointer-events: visible;margin-bottom: 0;margin-top: 10px;margin-bottom:10px' ng-click='goTo(moduledata.course_id, moduledata.id, online_quiz.lecture_id, online_quiz.time)' translate>dashboard.try_again</a>"+
-                      // "</div>",
                     html: true,
                     trigger: 'hover',
                     placement: 'bottom',
-                    container: '#student_popover',
-                    // adjustRight: function(pop, container, body ){
-                    //   console.log(pop)
-                    //   console.log(container[0])
-                    //   console.log(body[0])
-                    //   return pop
-                    // }
+                    container: '#student_popover'
                   }
                   if( online_quiz['data'].length == 2 ){
                     scope.online_quiz_color[online_quiz.id] = {
@@ -917,7 +907,6 @@ angular.module('scalearAngularApp')
                     scope.online_quiz_group_color[online_quiz.id] = {
                       "backgroundColor": scope.quiz_completion_data_series[online_quiz['data'][1]].color
                     }
-                    // scope.content[online_quiz.id] ={}
                     scope.content[online_quiz.id] ={}
                     scope.content[online_quiz.id][0] = scope.quiz_completion_data_series[online_quiz['data'][0]].group_name
                     scope.content[online_quiz.id][1] = scope.quiz_completion_data_series[online_quiz['data'][1]].name
@@ -973,7 +962,6 @@ angular.module('scalearAngularApp')
           }
         }
         scope.goToLectureQuiz = function(course_id, group_id, id, type) {
-          console.log("in function")
           if(type == 'lecture'){
             $state.go("course.module.courseware.lecture", { course_id: course_id, module_id: group_id, lecture_id: id})
           }

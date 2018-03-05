@@ -1,5 +1,5 @@
-.prefix{
-	z-index: 0;
+.prefix {
+  z-index: 0;
 }
 
 .overlay {
@@ -7,57 +7,52 @@
   height: 100%;
   position: absolute;
   display: block;
-  /*opacity: 0.7;*/
   background-color: rgba(255, 255, 255, 0.8);
   z-index: 2;
   text-align: center;
 }
 
-input[type="checkbox"].editable-input.editable-has-buttons{
-	width:12px !important;
+input[type="checkbox"].editable-input.editable-has-buttons {
+  width: 12px !important;
 }
 
-.details_accordian details-date > form > span > ul.f-dropdown{
+.details_accordian details-date>form>span>ul.f-dropdown {
   left: 35% !important;
-  /*top: 12rem !important;*/
-      margin-bottom: 0;
+  margin-bottom: 0;
 }
 
-#module details-date > form > span > ul.f-dropdown{
-  /*left:0% !important;*/
-  /*left: 37% !important;*/
+#module details-date>form>span>ul.f-dropdown {
   top: 3.3rem !important;
 }
 
-#bg_fix details-time > form > span > div > table{
-      background-color: #F9F9F9;
+#bg_fix details-time>form>span>div>table {
+  background-color: #F9F9F9;
 }
 
-a.editable-click { 
-	/*color: green;*/
-	border-bottom: none;
+a.editable-click {
+  border-bottom: none;
 }
-/*a.editable-click:hover { 
-    color: #47a447;
-    border-bottom-color: #47a447;
-}*/
-.editable-input-large{
-	width:80% !important;
+
+.editable-input-large {
+  width: 80% !important;
 }
+
 #details input[type='text'].editable-input {
-	width:120px !important;
-	font-size:12px !important;
-}
-#details input[type='date'].editable-input {
-	width:120px !important;
-	font-size:12px !important;
-}
-#details input[type='number'].editable-input {
-	width:120px !important;
-	font-size:12px !important;
+  width: 120px !important;
+  font-size: 12px !important;
 }
 
-.drop-div{
+#details input[type='date'].editable-input {
+  width: 120px !important;
+  font-size: 12px !important;
+}
+
+#details input[type='number'].editable-input {
+  width: 120px !important;
+  font-size: 12px !important;
+}
+
+.drop-div {
   border: 2px dashed black;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
@@ -68,155 +63,128 @@ a.editable-click {
   overflow: auto;
 }
 
-/*.editable-checkbox{
-	width:15px !important;
-	font-size:12px !important;
-}*/
-/*.editable-buttons button{
-	width:20px !important;
-	padding:0px !important;
-}*/
-
-/*.editable-wrap{
-	white-space: normal;
-	width:100%;
-}*/
-label{
-	font-size:12px !important;
+label {
+  font-size: 12px !important;
 }
 
-.timepicker td, .timepicker td a{
-	padding:0;
-	text-align: center;
-	vertical-align: middle;
-	border:initial;
-}
-.timepicker input{
-	padding:0;
-}
-.timepicker table{
-	vertical-align: middle;
-}
-.timepicker .well{
-	padding: 0px 5px;
-}
-.timepicker .well .btn{
-	padding: 2px 4px;
-	margin: 0 4px;
+.timepicker td,
+.timepicker td a {
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  border: initial;
 }
 
-.selected{
-	background-color: rgb(252,248,227);
+.timepicker input {
+  padding: 0;
 }
 
-.bigimg{
-  width:150px;
-} 
-
-.insert_quiz{
-	font-size: 12px;
+.timepicker table {
+  vertical-align: middle;
 }
 
-.wall{
-  position:absolute;
-  width:500px;
-  height:306px;
-  z-index:5;
+.timepicker .well {
+  padding: 0px 5px;
 }
 
-.hasDatepicker{
-	z-index:1000;
+.timepicker .well .btn {
+  padding: 2px 4px;
+  margin: 0 4px;
+}
+
+.selected {
+  background-color: rgb(252, 248, 227);
+}
+
+.bigimg {
+  width: 150px;
+}
+
+.insert_quiz {
+  font-size: 12px;
+}
+
+.wall {
+  position: absolute;
+  width: 500px;
+  height: 306px;
+  z-index: 5;
+}
+
+.hasDatepicker {
+  z-index: 1000;
 }
 
 #ui-datepicker-div {
   z-index: 9999999!important;
 }
 
-.popover{
-	z-index:2000;
+.popover {
+  z-index: 2000;
   width: 270px;
 }
 
-.popover-content{
-	/*width: 240px;*/
-	max-height:340px;
-	overflow-y:auto;
+.popover-content {
+  max-height: 340px;
+  overflow-y: auto;
 }
 
-.arrow{
+.arrow {
   top: 50%
 }
 
-.q_label{
-	width:100px;
-	display:inline-block;
-}  
+.q_label {
+  width: 100px;
+  display: inline-block;
+}
 
-.dropped_drag{
-    border: 2px dashed rgb(0, 0, 0);
-    border-radius: 6px;
-    background-color: white; 
-    padding:0px;
-    position:absolute;
-    min-height:40px;
-    min-width: 20px;
-    }
-/*.answer_div{
-	width: auto;
-    height: 100%;
-	margin-left:10px;
-	margin-bottom:20px;	
-	position: relative;
-  padding: 39px 19px 14px;
-  border: 1px solid #ddd;
-  -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-          border-radius: 4px;
-}*/
+.dropped_drag {
+  border: 2px dashed rgb(0, 0, 0);
+  border-radius: 6px;
+  background-color: white;
+  padding: 0px;
+  position: absolute;
+  min-height: 40px;
+  min-width: 20px;
+}
 
-.answer_img{
+.answer_img {
   width: 13px;
-  height:13px;
-  /*z-index: 5; */
+  height: 13px;
 }
 
-.answer_drag{
+.answer_drag {
   width: 300px;
-  height:40px;
+  height: 40px;
   position: absolute;
 }
 
-/*.answer_div:before{
-	content: "Answers";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  padding: 3px 7px;
-  font-size: 12px;
-  font-weight: bold;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
-  color: #9da0a4;
-  -webkit-border-radius: 4px 0 4px 0;
-     -moz-border-radius: 4px 0 4px 0;
-          border-radius: 4px 0 4px 0;
-}*/
-.sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
-.sortable li {  padding: 0.3em;  font-size: 1.4em; height: 50px; }
+.sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 80%;
+}
 
-.quiz_title{
+.sortable li {
+  padding: 0.3em;
+  font-size: 1.4em;
+  height: 50px;
+}
+
+.quiz_title {
   width: 50%;
 }
 
-.exit{
-    top:0px;
-    right:10px;
-    position:absolute;
-    color:gray;
-    text-decoration: none;
+.exit {
+  top: 0px;
+  right: 10px;
+  position: absolute;
+  color: gray;
+  text-decoration: none;
 }
 
-.dragged{
+.dragged {
   float: left;
   padding: 10px;
   padding-top: 10px;
@@ -224,15 +192,12 @@ label{
   border: 1px solid #ddd;
   margin: 0 0 0 10px;
   background: #fff;
-  position:absolute;
-  top:10px;
-  left:10px;
-  margin-top:0px;
-  cursor:move;
-  /*-moz-border-radius: 10px;*/
-/*-webkit-border-radius: 10px;*/
-/*border-radius: 10px;*/
--moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  margin-top: 0px;
+  cursor: move;
+  -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
 }
 
 .input-prepend {
@@ -242,10 +207,10 @@ label{
   white-space: nowrap;
   vertical-align: middle;
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 
-.position-header{
+.position-header {
   position: absolute;
   left: -49px;
   font-weight: bold;
@@ -255,7 +220,6 @@ label{
 .input-prepend .add-on {
   border-radius: 4px 0 0 4px;
   vertical-align: top;
-  /*border-radius: 0;*/
   margin-right: -1px;
   display: inline-block;
   width: auto;
@@ -269,6 +233,5 @@ label{
   text-shadow: 0 1px 0 #fff;
   background-color: #eee;
   border: 1px solid #ccc;
-  float:left;
-
+  float: left;
 }

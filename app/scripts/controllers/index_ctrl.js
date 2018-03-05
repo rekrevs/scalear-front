@@ -28,7 +28,8 @@ angular.module('scalearAngularApp')
     })
 
     UserSession.getCurrentUser()
-    .then(function () {
+    .then(function (user) {
+      console.log(user)
        getCurrentCourses()
     })
 

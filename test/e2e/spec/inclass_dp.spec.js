@@ -191,19 +191,19 @@ student2_browser = utils.new_session()
         video.seek(99)
         sleep(1000)
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("you can not seek to time after quiz")
+        expect(student_dp.annotation.getText()).toContain("'Please do not skip ahead of your partner.")
       })
       it("should play video and watch video state",function(){
         video.play()
         student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("to finish this status")
+        expect(student_dp.annotation.getText()).toContain("'Waiting for your partner to finish watching the video.")
         // video.seek(8)
       })
       it("should try and to be prevented",function(){
         video.play()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("did not finish this status, you can not go to the next status")
+        expect(student_dp.annotation.getText()).toContain("'Waiting for your partner to finish watching the video.")
       })
     })
     describe('Student 2 ', function(){
@@ -214,7 +214,7 @@ student2_browser = utils.new_session()
         video.play()
         student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("to finish this status")
+        expect(student_dp.annotation.getText()).toContain("'Waiting for your partner to finish watching the video.")
       })
     })
   })
@@ -230,7 +230,7 @@ student2_browser = utils.new_session()
         sleep(7000)
         // student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Press play to watch the introduction to the question.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
@@ -242,7 +242,7 @@ student2_browser = utils.new_session()
         // sleep(7000)
         // student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Press play to watch the introduction to the question.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:Intro")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
@@ -269,7 +269,7 @@ student2_browser = utils.new_session()
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
         student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("to finish this status")
+        expect(student_dp.annotation.getText()).toContain("Waiting for your partner to finish watching the introduction.")
       })
     })    
   })
@@ -420,7 +420,7 @@ student2_browser = utils.new_session()
         utils.switch_browser(student_browser)
         sleep(7000)
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Please watch the teacher's explanation of the answer.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:End")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
@@ -431,7 +431,7 @@ student2_browser = utils.new_session()
       it("should be able to begin quiz End state ",function(){
         utils.switch_browser(student2_browser)
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Please watch the teacher's explanation of the answer.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Quiz:End")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
@@ -463,7 +463,7 @@ student2_browser = utils.new_session()
         sleep(7000)
         // student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Please watch the video to get to the peer instruction questions.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Please watch the video")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);
@@ -475,7 +475,7 @@ student2_browser = utils.new_session()
         // sleep(7000)
         // student_dp.wait_state_to_finished()
         expect(student_dp.annotation.isDisplayed()).toEqual(true);
-        expect(student_dp.annotation.getText()).toContain("finished this status, you can resume")
+        expect(student_dp.annotation.getText()).toContain("Please watch the video to get to the peer instruction questions.")
         expect(student_dp.distance_peer_panel.isDisplayed()).toEqual(true);
         expect(student_dp.distance_peer_panel.getText()).toContain("Please watch the video")
         expect(student_dp.stage_timer_distance_peer.isDisplayed()).toEqual(false);

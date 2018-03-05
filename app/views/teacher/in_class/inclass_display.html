@@ -56,11 +56,14 @@
         <div ng-if="!hide_questions && selected_timeline_item.type == 'discussion'" ng-init="changeVideoQuestionBoxPercentage(30 , false)">
           <div>
             <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
-              <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)" ng-show="question.post.hide" style="padding-left:5px;">
-                <span ng-bind-html="question.post.content"></span>
-                <span class="color-dark-grey" ng-repeat="comment in question.post.comments" ng-show="comment.comment.hide">
+              <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.time)" ng-show="question.hide" style="padding-left:5px;">
+
+                <span ng-bind-html="question.content"></span>
+                <span>{{ question.comments }}</span>
+                <span class="color-dark-grey" ng-repeat="comment in question.comments" ng-show="comment.hide">
                   <br />
-                  <i style="padding-left:15px" ng-bind-html="comment.comment.content"></i>
+                  <i style="padding-left:15px" ng-bind-html="comment.content"></i>
+
                 </span>
               </div>
             </div>
@@ -142,12 +145,13 @@
             <li ng-repeat="item in timeline['lecture'][module_item.id]['filtered'].items|inclassMenuFilter" ng-click="skipToItem(module_item, item, 'lecture')" ng-class="{'active': (selected_timeline_item.data.id == item.data.id && selected_timeline_item.type == item.type) }">
               <div ng-if="item.type=='discussion'">
                 <b translate>inclass.discussion</b>:
+
                 <div ng-if="item.data.length == 1">
-                  <div style="padding: 0 5px;" ng-bind-html="item.data[0].post.content"></div>
+                  <div style="padding: 0 5px;" ng-bind-html="item.data[0].content"></div>
                 </div>
                 <ol ng-if="item.data.length > 1">
                   <li ng-repeat="discussion in item.data|filter:{'post.hide':true}">
-                    <div style="padding: 0 5px;" ng-bind-html="discussion.post.content"></div>
+                    <div style="padding: 0 5px;" ng-bind-html="discussion.content"></div>
                   </li>
                 </ol>
               </div>

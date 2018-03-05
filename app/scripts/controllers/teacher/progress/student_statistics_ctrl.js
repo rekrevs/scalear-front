@@ -124,7 +124,8 @@ angular.module('scalearAngularApp')
 		data.cols.push({"type":"string","p":{"role":"tooltip", 'html': true}})
 		for(var i in data.rows){
 			var tooltip_text = generateTooltipHtml(data.rows[i].c[0].v, data.rows[i].c[1].v, $scope.statistics.question_text[i][1])
-			data.rows[i].c.push({"v":tooltip_text})
+
+      data.rows[i].c.push({"v":tooltip_text})
 		}
 		return data
 	}

@@ -50,8 +50,7 @@
             </span>
     	</form>
     </div>
-
-    <div class="with-margin-top small-12 columns">
+    <div class="with-margin-top small-12 columns" ng-if="passed_requirments">
         <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts==quiz.retries+1 && quiz.quiz_type == 'survey') || save_inprogress" type="button" class="button tiny" ng-click="saveQuiz('save')">
            <span translate>button.save</span>
         </button>

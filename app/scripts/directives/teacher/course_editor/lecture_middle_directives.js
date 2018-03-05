@@ -869,4 +869,58 @@ angular.module('scalearAngularApp')
         }
       }
     };
+  }]).directive('dynamicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+    return{
+      restrict:"E",
+      scope:{
+        data:'=',
+        close: '&',
+        action:'&'
+      },
+      templateUrl: '/views/student/lectures/dynamic_annotation.html',
+      link:function(scope, element, attrs){
+        if (scope.data.instanceType()=="VideoQuiz"){
+          scope.data.annotation = scope.data.question 
+        }
+        scope.closeBtn = scope.close()
+        scope.actionBtn = scope.action()
+  
+        var ontop = angular.element('.ontop');
+        var draggableArea = angular.element(element.children().first())
+        var textarea = angular.element(draggableArea.children().first())
+  
+        scope.calculatePosition = function() {
+          scope.data.xcoor = parseFloat(draggableArea.position().left) / ontop.width();
+          scope.data.ycoor = parseFloat(draggableArea.position().top) / ontop.height();
+          scope.calculateSize()
+        }
+  
+        scope.calculateSize = function(event,ui) {
+          if ( ui && ( textarea[0].offsetWidth+20  <  textarea[0].scrollWidth+20  ) ){
+            ui.size.width = textarea[0].scrollWidth +20
+            scope.data.width = ui.size.width / (ontop.width()) ;
+          } 
+          else{
+            scope.data.width = draggableArea[0].offsetWidth / (ontop.width()) ;          
+          }
+         
+          if ( ui && (textarea[0].offsetHeight+20 <  textarea[0].scrollHeight+20) ){
+            ui.size.height = textarea[0].scrollHeight +20
+            scope.data.height = scope.data.height / (ontop.height()) ;
+          }
+          else{
+            scope.data.height = draggableArea[0].offsetHeight / (ontop.height()) ;                    
+          }
+        }
+  
+  
+        if ( !CourseModel.isStudent() ) {
+          angular.element(element.children()[0]).resizable({
+            containment: ".videoborder",
+            stop: scope.calculateSize,
+            resize: scope.calculateSize
+          });              
+        }
+      }
+    }
   }])

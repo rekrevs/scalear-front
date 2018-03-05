@@ -834,6 +834,10 @@ var translation_sv={
         correct:"@:global.correct",
         question_not_checked:"@:dashboard.not_checked",
         completed:"@:events.completed",
+        confused: 'Visar antalet studenter som klickade på "förvirrad" knappen vid den tiden i videon. Om en student klickade på knappen mer än en gång på samma plats visas den i rött',
+        back:'Visar antalet studenter som gick tillbaka i videon från den tiden i videon',
+        pauses: 'Visar antalet studenter som pausade vid den tiden i videon',
+        questions: 'Visar antalet studenter som ställde frågor på den tiden i videon'
     },
     popover:{
         change_status: "Ändra status",

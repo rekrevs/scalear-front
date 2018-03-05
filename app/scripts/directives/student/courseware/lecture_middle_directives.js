@@ -655,7 +655,6 @@ angular
         }
       };
     }
-<<<<<<< HEAD
   ])
   .directive("notesTimeline", [
     "$log",
@@ -901,24 +900,6 @@ angular
           scope.actionBtn = scope.action();
         }
       };
-=======
-  }
-}]).directive('dynamicAnnotationStudent',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
-  return{
-    restrict:"E",
-    scope:{
-      data:'=',
-      close: '&',
-      action:'&'
-    },
-    templateUrl: '/views/student/lectures/dynamic_annotation_student.html',
-    link:function(scope, element, attrs){
-      if (scope.data.question){
-        scope.data.annotation = scope.data.question
-      }
-      scope.closeBtn = scope.close()
-      scope.actionBtn = scope.action()
->>>>>>> feature/resizable_quiz
     }
   ])
   .directive("slideNote", [

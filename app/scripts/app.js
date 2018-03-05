@@ -364,7 +364,7 @@ angular.module('scalearAngularApp')
         })
         .state('preview', {
           url: '/preview',
-          params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null,time:null },
+          params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null,time:null, prevState:null },
           controller: ['Preview','$state',function(Preview,$state){
                 Preview.start()
             }

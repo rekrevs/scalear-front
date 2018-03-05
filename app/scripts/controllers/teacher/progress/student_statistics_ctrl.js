@@ -250,6 +250,15 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
       }
     };
 
+    $scope.exportCsv = function(){
+      Module.exportModuleTimelineCsv({
+        course_id:$stateParams.course_id,
+        module_id:$stateParams.module_id
+      }, function(){
+        console.log("export csv")
+      })
+    }
+
     getStudentStatistics();
   }
 ]);

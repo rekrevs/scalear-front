@@ -27,8 +27,8 @@
 							</div>
 							<answervideo ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'" ng-repeat="answer in selected_quiz.answers" data="answer" list="selected_quiz.allPos" quiz="selected_quiz" remove="selected_quiz.removeAnswer($index)" save="saveQuizBtn()"/>
 							<answerform ng-hide="selected_quiz.hide_quiz_answers" ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="selected_quiz.addHtmlAnswer" remove="selected_quiz.removeHtmlAnswer" subtype="selected_quiz.quiz_type"/>
-							<dynmaic-annotation data="selected_marker" ng-if='editing_mode && !selected_marker.as_slide && selected_marker.annotation && selected_marker.annotation !=""' />
-							<dynmaic-annotation-student close="dismissMarkerAnnotation" data="selected_marker" ng-if='!editing_mode && !selected_marker.as_slide && selected_marker.annotation && selected_marker.annotation !=""' />
+							<dynamic-annotation data="selected_marker" ng-if='editing_mode && !selected_marker.as_slide && selected_marker.annotation && selected_marker.annotation !=""' />
+							<dynamic-annotation data="selected_quiz" ng-if='editing_mode && selected_quiz.question && selected_quiz.display_text'  />
 
 							<slide-note data="selected_marker" ng-if=' selected_marker.as_slide' />
 						</quiz>

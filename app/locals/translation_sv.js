@@ -758,7 +758,8 @@ var translation_sv={
         marker:"@:global.marker",
         watched: "Sedda",
         quizzes: "quizzar",
-        required_quizzes: "erfoderliga quiz"
+        required_quizzes: "erfoderliga quiz",
+        export_chart: "Exportera tabell",
     },
     button:{
         ask_question: "Ställ en fråga",

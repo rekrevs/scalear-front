@@ -28,7 +28,6 @@ angular.module('scalearAngularApp')
     }
 
     User.getCurrentUser()
-      .$promise
       .then(function(data) {
         if (data.user == 'null') {
           // SHOW NEW

@@ -9,6 +9,7 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
   "$log",
   "$window",
   "ModuleModel",
+  "ErrorHandler",
   function(
     $scope,
     $stateParams,
@@ -17,7 +18,8 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
     $translate,
     $log,
     $window,
-    ModuleModel
+    ModuleModel,
+    ErrorHandler
   ) {
     $scope.statistics_player = {};
     $scope.statistics_player.events = {};
@@ -254,8 +256,10 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
       Module.exportModuleTimelineCsv({
         course_id:$stateParams.course_id,
         module_id:$stateParams.module_id
-      }, function(){
-        console.log("export csv")
+      }, function(response){
+        if(response.notice) {
+          ErrorHandler.showMessage(response.notice, 'errorMessage', 4000, 'success');
+        }
       })
     }
 

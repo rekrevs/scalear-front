@@ -69,6 +69,7 @@
                     </li>
                 </div>
             </ul>
+            <button  ng-class="{'no-padding control-button captions-on':captions,'no-padding control-button captions-off':!captions}" ng-click="captionsToggle()">cc</button>
         </div>
         <div ng-transclude></div>
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate></div>

@@ -218,7 +218,8 @@
     }
 
     function onPlayerStateChange( event ) {
-
+      console.log(player.getOptions('captions'))
+      console.log(player.getOption('captions','track'))
       switch( event.data ) {
 
         // ended
@@ -594,7 +595,7 @@
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
-
+    
     self.destroy = function(){
       resetPlayer()
     }
@@ -754,6 +755,12 @@
         },
         set: function( aValue ) {
           setMuted( self._util.isAttributeSet( aValue ) );
+        }
+      },
+
+      captionTracks: {
+        get: function(){
+          return "aaa"
         }
       },
 

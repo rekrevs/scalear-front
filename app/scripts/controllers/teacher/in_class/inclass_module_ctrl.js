@@ -828,7 +828,7 @@ angular.module("scalearAngularApp")
         // in case of normal quizze: data[0] = all grades count
         var not_first_try_grades_count = data[ind][3] || 0;
 
-        if (color == "gray") {
+        if (color == "grey") {
           number = Math.floor((data[ind][0] / $scope.students_count) * 100);
         } else {
           number = Math.floor(((data[ind][0] + not_first_try_grades_count) / $scope.students_count) * 100);

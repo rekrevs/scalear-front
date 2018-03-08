@@ -795,7 +795,7 @@ angular.module('scalearAngularApp')
             incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
           }
           incorrect_tooltip_text += tooltip_text + "</div>"
-        } else if(data[ind][1] == "gray") {
+        } else if(data[ind][1] == "grey") {
           correct = 0
           incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
           incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"

@@ -3,11 +3,11 @@
 <!-- endbuild -->
 
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
-	<h4 ng-show="module.name" class="small-12 columns with-small-padding-top">
-		<b>
-			<span translate>progress.home.module_timeline</span>: </b>
+	<h4 ng-show="module.name" class="small-8 columns with-small-padding-top">
+		<b><span translate>progress.home.module_timeline</span>: </b>
 		<span>{{module.name}}</span>
 	</h4>
+	<button class="button tiny with-margin secondary" ng-click="exportCsv()" translate>lectures.timeline.export_chart</button>
 	<div class="row">
 		<div class="small-6 small-push-3 columns">
 			<center>

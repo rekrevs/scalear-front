@@ -32,7 +32,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.generateLaunchUrl = function(){
-        $modal.open({
+      $modal.open({
         templateUrl: '/views/teacher/course_list/lti_course_list.html',
         scope: $scope,
         controller: 'ltiCourseListCtrl'

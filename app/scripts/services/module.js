@@ -28,7 +28,9 @@ angular.module('scalearAngularApp')
       'getModuleSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_module_summary' } },
       'getOnlineQuizSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_online_quiz_summary' } },
       'getDiscussionSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_discussion_summary' } },
-      'updateAllInclassSessions': { method: 'POST', ignoreLoadingBar: true, headers: headers, params: { action: 'update_all_inclass_sessions' } }
+      'updateAllInclassSessions': { method: 'POST', ignoreLoadingBar: true, headers: headers, params: { action: 'update_all_inclass_sessions' } },
+      'exportModuleTimelineCsv': { method: 'GET', headers: headers, params: { action: 'export_module_timeline_csv' } }
+      
     });
   }])
   .factory('ModuleModel', ['Module', '$rootScope', function(Module, $rootScope) {

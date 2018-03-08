@@ -783,12 +783,14 @@ angular.module('scalearAngularApp')
 
         text = ScalearUtils.getHtmlText(data[ind][2])
         var short_text =  ScalearUtils.getShortAnswerText(text,Object.keys(data).length)
-        console.log(short_text)
         var tooltip_text = data[ind][2]
+         // in case of lecture's quiz: data[0] = first_try_grades_count & data[3] = not_first_try_grades_count
+         // in case of normal quizze: data[0] = all grades count
+        var not_first_try_grades_count = data[ind][3] || 0;
 
         if(data[ind][1] == "orange") {
           correct = 0
-          incorrect = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+          incorrect = Math.floor(( (data[ind][0]+not_first_try_grades_count) / $scope.students_count) * 100)
           if(!isSurvey()){
             incorrect_tooltip_text = "<div style='color:black;padding:8px'>Incorrect: "
           }
@@ -798,7 +800,7 @@ angular.module('scalearAngularApp')
           incorrect = Math.floor((data[ind][0] / $scope.students_count) * 100)
           incorrect_tooltip_text = "<div style='color:black;padding:8px'>"+tooltip_text + "</div>"
         } else {
-          correct = Math.floor(( (data[ind][0]+data[ind][3]) / $scope.students_count) * 100)
+          correct = Math.floor(( (data[ind][0]+not_first_try_grades_count) / $scope.students_count) * 100)
           incorrect = 0
           if(!isSurvey()){
             correct_tooltip_text = "<div style='color:black;padding:8px'>Correct: "

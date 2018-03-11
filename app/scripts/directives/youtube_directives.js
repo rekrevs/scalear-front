@@ -28,7 +28,6 @@ angular.module('scalearAngularApp')
     link: function(scope, element) {
 
       scope.vq = 'hd720';
-      var captions = $cookieStore.get("captions") || 0;
 
       scope.$on('$destroy', function() {
         scope.kill_popcorn();
@@ -110,7 +109,7 @@ angular.module('scalearAngularApp')
           query += "&end=" + end
         if(vq)
           query += "&vq=" + vq
-        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1&cc_load_policy="+captions+"&autoplay=" + autoplay + "&controls=" + controls + "&theme=light"+ query;
+        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1"+"&autoplay=" + autoplay + "&controls=" + controls + "&theme=light"+ query;
       }
 
       scope.kill_popcorn = function() {
@@ -627,12 +626,10 @@ angular.module('scalearAngularApp')
       seek: "&",
       timeline: '=',
       role: '&',
-      editing: "=",
-      captionsToggle: "@"
+      editing: "="
     },
     templateUrl: "/views/progress_bar.html",
     link: function(scope, element, attrs) {
-      scope.captions = $cookieStore.get('captions')
       scope.user_role = scope.role()
       var player = scope.player.element
       var progress_bar = angular.element('.progressBar');
@@ -811,8 +808,11 @@ angular.module('scalearAngularApp')
         scope.volume_class == "mute" ? scope.mute() : scope.unmute()
       }
 
-      scope.captionsToggle = function(){
-        console.log(player.src)
+      scope.captionTracks = player.video.getCaptionTracks();
+
+      scope.setCaptionTrack = function(track){
+        scope.selectedCaptionTrack = track;
+        player.video.setCaptionTrack(track);
       }
 
       var unwatchMute = scope.$watch("volume", function() {

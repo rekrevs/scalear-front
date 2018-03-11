@@ -56,20 +56,31 @@
         <div class="right hide-for-semi-medium" >
             <button  class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" title="::('player.click_video_quality'|translate)"></button>
             <ul id="quality_list" class="f-dropdown top-dropdown">
-                <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174)">
+                <div class="small-4 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174)">
                     <li class="dark-text" translate>player.quality</li>
                     <li ng-repeat="quality in qualities" ng-class="{'blue': chosen_quality==quality}">
                         <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality(quality)"><small>{{quality_names[quality]}}</small></a>
                     </li>
                 </div>
-                <div class="small-6 columns no-padding" style="border-left: 1px solid rgb(174, 174, 174);">
+                <div class="small-4 columns no-padding" style="border-left: 1px solid rgb(174, 174, 174);">
                     <li class="dark-text" translate>player.speed</li>
                     <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }">
                         <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed)"><small>x{{speed}}</small></a>
                     </li>
                 </div>
+                <div class="small-4 columns no-padding" style="border-left: 1px solid rgb(174, 174, 174);">
+                    <li class="dark-text">Captions</li>
+                    <li ng-repeat="track in captionTracks" ng-class="{'blue': selectedCaptionTrack == track}">
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setCaptionTrack(track)"><small>{{track.displayName}}</small></a>
+                    </li>
+                    <li ng-if="captionTracks.length>0">
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setCaptionTrack({})"><small>Off</small></a>
+                    </li>
+                    <li ng-if="captionTracks.length<=0">
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ><small>No captions available</small></a>
+                    </li>
+                </div>
             </ul>
-            <button  ng-class="{'no-padding control-button captions-on':captions,'no-padding control-button captions-off':!captions}" ng-click="captionsToggle()">cc</button>
         </div>
         <div ng-transclude></div>
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()" tooltip="{{'lectures.tooltip.video_shortcut'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate></div>

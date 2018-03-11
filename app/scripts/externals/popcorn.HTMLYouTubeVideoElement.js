@@ -173,6 +173,9 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
+      player.setOption('captions','reload',true);
+      player.setOption('captions','track',{});
+      
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
@@ -218,8 +221,6 @@
     }
 
     function onPlayerStateChange( event ) {
-      console.log(player.getOptions('captions'))
-      console.log(player.getOption('captions','track'))
       switch( event.data ) {
 
         // ended
@@ -599,6 +600,13 @@
     self.destroy = function(){
       resetPlayer()
     }
+    self.getCaptionTracks = function(){
+      return player.getOption('captions','tracklist');
+    }
+
+    self.setCaptionTrack = function(track){
+      player.setOption('captions','track',track)
+    }
 
     function onEnded() {
       if( impl.loop ) {
@@ -755,12 +763,6 @@
         },
         set: function( aValue ) {
           setMuted( self._util.isAttributeSet( aValue ) );
-        }
-      },
-
-      captionTracks: {
-        get: function(){
-          return "aaa"
         }
       },
 

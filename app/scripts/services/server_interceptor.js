@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate', '$cookieStore', '$location', 'URLInformation', function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate, $cookieStore, $location, URLInformation) {
+  .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate', '$cookieStore', '$location', 'URLInformation','Token', function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate, $cookieStore, $location, URLInformation, Token) {
    //server and also front end requests (requesting partials and so on..)
 
     return {
@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
         // change language to current language
         var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
         config.url = config.url.replace(regex, scalear_api.host + "/" + $translate.use() + "/");
+
         return config || $q.when(config);
       },
 
@@ -109,7 +110,6 @@ angular.module('scalearAngularApp')
             $interval.cancel($rootScope.stop);
             $rootScope.stop = undefined;
           }
-          console.log(rejection.data.errors[0])
           ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 4000, "error");
         }
 
@@ -125,12 +125,10 @@ angular.module('scalearAngularApp')
             $rootScope.stop = undefined;
           }
 
-          // ErrorHandler.showMessage('Error ' + ': ' + 'Unknown Error.', 'errorMessage', 4000, "error");
           ErrorHandler.showMessage('A server error occurred. If this continues, please use the Support link in the Help menu to contact technical support.', 'errorMessage', 4000, "error");
         }
 
         if(rejection.status == 401 && rejection.config.url.search(re) != -1) {
-          // URLInformation.redirect = URLInformation.history
           var $state = $injector.get('$state');
           if($cookieStore.get('preview_as_student')) {
             $log.debug("preview_as_student")

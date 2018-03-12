@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation',  function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -34,19 +34,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onReady = function() {
-      $scope.video_ready = true
-      var time = $state.params.time
-      if (time) {
-        $timeout(function (argument) {
-          $scope.seek(time-0.2)
-        })        
-      } else if (!($rootScope.is_mobile)) {
-        $scope.lecture_player.controls.seek_and_pause(0)
-      }
+      VideoInformation.waitForDurationSetup()
+        .then(function(){
+          $scope.video_ready = true
+          var time = $state.params.time
+          if (time) {
+            $timeout(function (argument) {
+              $scope.seek(time-0.2)
+            })        
+          } else if (!($rootScope.is_mobile)) {
+            $scope.lecture_player.controls.seek_and_pause(0)
+          }
 
-      $scope.lecture.timeline.items.forEach(function(item) {
-        item.data && addItemToVideoQueue(item.data, item.type);
-      })
+          $scope.lecture.timeline.items.forEach(function(item) {
+            item.data && addItemToVideoQueue(item.data, item.type);
+          })
+        })
     }
 
     $scope.lecture_player.events.onPlay = function() {
@@ -62,6 +65,10 @@ angular.module('scalearAngularApp')
       $scope.slow = true
     }
 
+    function showMarker(marker) {
+      $rootScope.$broadcast("show_online_marker", marker)
+    }    
+
     function addItemToVideoQueue(item_data, type) {
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
         if (!$scope.lecture_player.controls.paused()) {
@@ -69,8 +76,11 @@ angular.module('scalearAngularApp')
             if (type == 'quiz') {
               $scope.lecture_player.controls.seek_and_pause(item_data.time);
               $scope.showOnlineQuiz(item_data)
-            } else
+            } else if ( !item_data.as_slide) {
               $scope.showAnnotation(item_data)
+            } else {
+              showMarker(item_data)
+            }
           })
         }
       })
@@ -98,6 +108,9 @@ angular.module('scalearAngularApp')
 
     $scope.seek = function(time) {
       $scope.lecture_player.controls.seek(time)
+      if (!$scope.editing_mode) {
+        $scope.dismissMarkerAnnotation()
+      }
     }
 
     $scope.addQuestion = function() {
@@ -320,7 +333,15 @@ angular.module('scalearAngularApp')
 
     $scope.addOnlineMarker = function(display_editor) {
       var insert_time = $scope.lecture_player.controls.getTime()
-      MarkerModel.addMarker(insert_time)
+      var answer_width = 250,
+        answer_height = 100,
+        element = angular.element("#ontop"),
+        the_top = 0.9,
+        the_left = 0,
+        the_width = 0.5,
+        the_height = 0.1;
+
+      MarkerModel.addMarker(insert_time, the_height, the_width, the_left, the_top)
         .then(function(marker) {
           addItemToVideoQueue(marker, "marker")
           if (display_editor) {
@@ -366,9 +387,13 @@ angular.module('scalearAngularApp')
 
     $scope.showAnnotation = function(marker) {
       $scope.selected_marker = marker
-      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + 5), function() {
-        $scope.selected_marker = null
+      $scope.lecture_player.controls.cue($scope.lecture.start_time + (marker.time - 0.1 + marker.duration), function() {
+        $scope.dismissMarkerAnnotation()
       })
+    }
+    
+    $scope.dismissMarkerAnnotation = function(){
+      $scope.selected_marker = null            
     }
 
     $scope.deleteMarkerButton = function(marker) {
@@ -409,7 +434,7 @@ angular.module('scalearAngularApp')
     }
 
     function clearMarkerVariables() {
-      $scope.selected_marker = null
+      $scope.dismissMarkerAnnotation()
       $scope.marker_errors = {}
       MarkerModel.clearSelectedMarker()
     }

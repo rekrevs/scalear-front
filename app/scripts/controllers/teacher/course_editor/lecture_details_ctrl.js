@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
-    // console.log( $scope.lecture )
     $scope.video ={} 
     if($scope.lecture.inclass){$scope.video.type = 1}
     else if($scope.lecture.distance_peer){$scope.video.type= 2}
@@ -28,6 +27,7 @@ angular.module('scalearAngularApp')
       lecture[column] = data;
       var temp_lecture = LectureModel.createInstance(lecture);
       if(column == 'url') {
+        temp_lecture.url = $filter("formatURL")(temp_lecture.url)
         return temp_lecture.validateUrl(); // returns a promise
       } else {
         return temp_lecture.validate() // return a promise
@@ -40,7 +40,6 @@ angular.module('scalearAngularApp')
       $scope.lecture.update()
     }
     $scope.setVideoType = function(){
-      // console.log($scope.video)
       $scope.lecture.inclass =  false
       $scope.lecture.distance_peer = false
       if($scope.video.type== 1){
@@ -49,8 +48,6 @@ angular.module('scalearAngularApp')
       if($scope.video.type== 2){
         $scope.lecture.distance_peer = true
       }
-      // console.log($scope.lecture.inclass)
-      // console.log($scope.lecture.distance_peer)
       $scope.updateLecture()
     }
     $scope.updateDueDate = function() {
@@ -82,8 +79,8 @@ angular.module('scalearAngularApp')
 
     $scope.updateLectureUrl = function() {
       $scope.lecture.updateUrl()
-        .then(function() {
-          checkToTrim()
+        .then(function(should_trim) {
+          should_trim && checkToTrim()
         })
     }
 

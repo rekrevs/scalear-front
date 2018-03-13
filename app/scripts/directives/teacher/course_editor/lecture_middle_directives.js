@@ -91,6 +91,21 @@ angular.module('scalearAngularApp')
         '<small class="error position-absolute z-one" ng-show="marker_errors.time_error" ng-bind="marker_errors.time_error"></small>' +
         '</div>' +
         '</div>' +
+        '<div class="row" style="text-align:left;margin-left:0;">' +
+        '<div class="small-3 columns"><span translate>editor.note_as_slide</span>:</div>' +
+        '<div class="small-9 left columns no-padding" style="margin-bottom: 5px;">' +
+        '<input class="marker_as_slide" type="checkbox" ng-model="selected_marker.as_slide" style="margin-bottom:0;"/>' + 
+        '<span translate>editor.note_as_slide_description</span>'+
+        '<small class="error position-absolute z-one" ng-show="marker_errors.as_slide_error" ng-bind="marker_errors.as_slide_error"></small>' +
+        '</div>' +
+        '</div>' +
+        '<div class="row" style="text-align:left;margin-left:0;" ng-hide="selected_marker.as_slide">' +
+        '<div class="small-3 columns"><span translate>editor.note_duration</span>:</div>' +
+        '<div class="small-4 left columns no-padding" style="margin-bottom: 5px;">' +
+        '<input class="marker_duration" type="text" ng-model="selected_marker.duration" style="height: 30px;margin-bottom:0;">' +
+        '<small class="error position-absolute z-one" ng-show="marker_errors.duration_error" ng-bind="marker_errors.duration_error"></small>' +
+        '</div>' +
+        '</div>' +        
         '<delete_button id="delete_marker_button" size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
         '<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>' +
         '</h6>' +
@@ -110,8 +125,11 @@ angular.module('scalearAngularApp')
            $("input.marker_time").focus()
           }
           else if($("input.marker_time").is(':focus')){
-           $("#save_marker_button").focus()
+           $("#input.marker_duration").focus()
           }
+          else if($("input.marker_duration").is(':focus')){
+           $("#save_marker_button").focus()
+          }          
           else if($("#save_marker_button").is(':focus')){
             if(tab_enter == 'enter'){
              $("#save_marker_button").click()
@@ -377,7 +395,6 @@ angular.module('scalearAngularApp')
         scope.calculateSize = function() {
           var ontop = angular.element('.ontop');
           var main = angular.element(element.children()[0])
-          $log.debug(scope.area_width + ", " + scope.area_height)
           scope.data.width = main.width() / ontop.width();
           scope.data.height = main.height() / (ontop.height());
         }
@@ -852,4 +869,58 @@ angular.module('scalearAngularApp')
         }
       }
     };
+  }]).directive('dynamicAnnotation',['$filter','$rootScope', 'CourseModel','$timeout', function($filter, $rootScope, CourseModel, $timeout){
+    return{
+      restrict:"E",
+      scope:{
+        data:'=',
+        close: '&',
+        action:'&'
+      },
+      templateUrl: '/views/student/lectures/dynamic_annotation.html',
+      link:function(scope, element, attrs){
+        if (scope.data.instanceType()=="VideoQuiz"){
+          scope.data.annotation = scope.data.question 
+        }
+        scope.closeBtn = scope.close()
+        scope.actionBtn = scope.action()
+  
+        var ontop = angular.element('.ontop');
+        var draggableArea = angular.element(element.children().first())
+        var textarea = angular.element(draggableArea.children().first())
+  
+        scope.calculatePosition = function() {
+          scope.data.xcoor = parseFloat(draggableArea.position().left) / ontop.width();
+          scope.data.ycoor = parseFloat(draggableArea.position().top) / ontop.height();
+          scope.calculateSize()
+        }
+  
+        scope.calculateSize = function(event,ui) {
+          if ( ui && ( textarea[0].offsetWidth+20  <  textarea[0].scrollWidth+20  ) ){
+            ui.size.width = textarea[0].scrollWidth +20
+            scope.data.width = ui.size.width / (ontop.width()) ;
+          } 
+          else{
+            scope.data.width = draggableArea[0].offsetWidth / (ontop.width()) ;          
+          }
+         
+          if ( ui && (textarea[0].offsetHeight+20 <  textarea[0].scrollHeight+20) ){
+            ui.size.height = textarea[0].scrollHeight +20
+            scope.data.height = scope.data.height / (ontop.height()) ;
+          }
+          else{
+            scope.data.height = draggableArea[0].offsetHeight / (ontop.height()) ;                    
+          }
+        }
+  
+  
+        if ( !CourseModel.isStudent() ) {
+          angular.element(element.children()[0]).resizable({
+            containment: ".videoborder",
+            stop: scope.calculateSize,
+            resize: scope.calculateSize
+          });              
+        }
+      }
+    }
   }])

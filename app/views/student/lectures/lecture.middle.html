@@ -8,7 +8,7 @@
   </span>
 </span>
 <span id="lecture_container" style="overflow:hidden">
-  <div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{ 
+  <div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
     'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
     'large-uncentered land-uncentered': delayed_timeline_open,
     'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
@@ -54,6 +54,7 @@
                   <b><span translate>global.note</span>:</b>
                   <span translate>lectures.messages.did_not_get_credit</span>
                 </div>
+                <slide-note data="slide_note" close="dismissSlideNote" ng-if="slide_note && slide_note.as_slide && !selected_quiz && !lecture.distance_peer"/>
               </video-overlay>
               <quiz class="video-overlay" ng-show='quiz_mode && show_progressbar' ng-style="quiz_layer" resizable-video quiz-layer="quiz_layer" aspect-ratio="lecture.aspect_ratio" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
                 <div ng-if="selected_quiz.quiz_type == 'html' || selected_quiz.quiz_type == 'html_survey'">
@@ -63,9 +64,8 @@
                   <student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers" />
                 </div>
               </quiz>
-              <annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && lecture.distance_peer" />
-              <annotation text="annotation" close="dismissAnnotation" action="toggleVideoPlayback" ng-if="annotation && !selected_quiz && !lecture.distance_peer" />
-              <annotation text="selected_quiz.question" close="dismissQuestionText" ng-if="selected_quiz.actual_display_text" />
+              <dynamic-annotation-student   close="dismissDynamicAnnotation" action="toggleVideoPlayback" data="dynamic_annotation" ng-if="dynamic_annotation && !dynamic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
+              <dynamic-annotation-student close="dismissQuestionText" data="selected_quiz"  ng-if="selected_quiz.actual_display_text" />
             </youtube>
             <progress-bar class='video-progress-bar' ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">
               <div ng-show="video_end && !distance_peer_session_id" class="video-end-panel">
@@ -77,6 +77,9 @@
               </div>
               <div ng-show="quiz_mode" class="right check-answer-btn">
                 <button type="button" ng-hide="hide_quiz_button" class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()">{{check_answer_title | translate}}</button>
+              </div>
+              <div ng-show="slide_note" class="right check-answer-btn">
+              	<button type="button" class="tiny success button no-margin check_answer_button" ng-click="dismissSlideNote();toggleVideoPlayback()" translate>button.continue</button>
               </div>
             </progress-bar>
             <review_inclass id="review_inclass" class="review-inclass-panel" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()"></review_inclass>

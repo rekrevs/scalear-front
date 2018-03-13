@@ -17,8 +17,9 @@ angular.module('scalearAngularApp')
 
     //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');
 
-    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.defaults.withCredentials = false;
     $httpProvider.interceptors.push('ServerInterceptor');
+    $httpProvider.interceptors.push('TokenServerInterceptor');
 
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -46,7 +47,7 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/ie.html'
         })
         .state('login', {
-            url: '/users/login',
+            url: '/users/login?access-token&client&expiry&token-type&uid',
             templateUrl: '/views/login.html',
             controller: 'LoginCtrl',
             params : { email: null}
@@ -95,7 +96,7 @@ angular.module('scalearAngularApp')
             params : {email: null}
         })
         .state('change_password', {
-            url: '/users/password/edit?reset_password_token',
+            url: '/users/password/edit?token&client_id&uid',
             templateUrl: '/views/users/password/edit.html',
             controller: 'UsersPasswordEditCtrl'
         })
@@ -333,14 +334,24 @@ angular.module('scalearAngularApp')
           controller: 'statisticsCtrl'
         })
         .state('lti_course_list', {
-            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key&resource_context_id',
+            url: '/lti_course_list?return_url&email&full_name&first_name&last_name&consumer_key&resource_context_id&access-token&client&expiry&token-type&uid&redirect_local_url&redirect_boolean',
             templateUrl: '/views/teacher/course_list/lti_course_list.html',
             controller: 'ltiCourseListCtrl'
+        })
+        .state('lti_sign_in_token', {
+            url: '/lti_sign_in_token?redirect_local_url&status&redirect_boolean&access-token&client&expiry&token-type&uid',
+            templateUrl: '/views/teacher/course_list/lti_sign_in_token.html',
+            controller: 'ltiSignInTokenCtrl'
         })
         .state('school_statistics', {
           url: '/school_statistics',
           templateUrl: '/views/statistics/school_statistics.html',
           controller: 'schoolStatisticsCtrl'
+        })
+        .state('welcome_message', {
+          url: '/welcome_message',
+          templateUrl: '/views/welcome_message.html',
+          controller: 'welcomeMessageCtrl'
         })
         .state('show_shared', {
           url: '/show_shared',

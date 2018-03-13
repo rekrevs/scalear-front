@@ -72,14 +72,23 @@ angular.module('scalearAngularApp')
           if ($rootScope.is_mobile || scope.controls == "default")
             player.controls(true);
           player.autoplay(false);
+        } else if (isMediaSite(scope.url)){
+          $log.debug("mediasite")
+          var video = Popcorn.HTMLMediaSiteVideoElement('#' + scope.id)
+          player = Popcorn(video);
+          video.src = scope.url
+          $log.debug(video.src)
         }
-        if (scope.player)
+
+        if (scope.player){
           scope.player.element = player
+        }
         setupEvents()
         parent.focus()
         scope.timeout_promise = $interval(function() {
-          if (player_controls.readyState() == 0 && !$rootScope.is_mobile)
+          if (player_controls.readyState() == 0 && !$rootScope.is_mobile){
             scope.$emit('slow', isYoutube(scope.url))
+          }
         }, 15000, 1)
       }
 
@@ -175,8 +184,8 @@ angular.module('scalearAngularApp')
         if (time > player_controls.getDuration()){
           time = player_controls.getDuration()
         }
-        if (player_controls.getDuration() - time < 2 ){
-          time = player_controls.getDuration() - 2
+        if (player_controls.getDuration() - time < 1 ){
+          time = player_controls.getDuration() - 1
         }
         time += scope.start || 0
         if (player_controls.readyState() == 0 ) {
@@ -317,7 +326,8 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               scope.$apply();
             }
-            VideoInformation.duration =  player_controls.getDuration()
+            var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
+            VideoInformation.setDuration(duration)
           });
 
         player.on('playing',
@@ -441,12 +451,18 @@ angular.module('scalearAngularApp')
         return video_url.match(/(.*mp4$)/)
       }
 
+      var isMediaSite = function(url) {
+        var video_url = url || scope.url || ""
+        return video_url.match(/^(http|https):\/\/.*(\/Play\/)/)
+      }
+
       player_controls.isYoutube = isYoutube
       player_controls.isMP4 = isMP4
 
       scope.$watch('url', function() {
-        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url)))
+        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isMediaSite(scope.url) )){
           player_controls.refreshVideo()
+        }
       })
 
       var unwatch = scope.$watch('player', function() {
@@ -636,8 +652,8 @@ angular.module('scalearAngularApp')
         }
         scope.$watch('editing', function() {
           if (scope.editing == 'video'){
-            scope.video.start_time= scope.player.controls.getVideoStartTime(),
-            scope.video.end_time= scope.player.controls.getVideoEndTime(),
+            scope.video.start_time= scope.player.controls.getVideoStartTime();
+            scope.video.end_time= scope.player.controls.getVideoEndTime();
             scope.duration = scope.player.controls.getAbsoluteDuration();
           }
           else
@@ -714,7 +730,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.playHeadMouseDown = function(event) {
-        console.log("down");
         onplayhead = true;
 
         if(scope.is_mobile){
@@ -728,11 +743,9 @@ angular.module('scalearAngularApp')
       }
 
       scope.playHeadMouseUp = function(event) {
-        console.log("up");
         if (onplayhead == true) {
           onplayhead = false;
           if(scope.is_mobile){
-            console.log("removing");
             scope.hidePlayhead()
             window.removeEventListener('touchmove', scope.moveplayhead, true);
             window.removeEventListener("touchend", scope.playHeadMouseUp, true)
@@ -749,7 +762,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) {
-        console.log("moving");
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {

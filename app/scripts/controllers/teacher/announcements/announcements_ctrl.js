@@ -49,23 +49,25 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.hideAnnouncement = function(this_announcement){ //get old data.
-      $scope.disable_new = false;
-      $scope.saving = false;
-      this_announcement.show=false
-  		if(this_announcement.id){
-		    Announcement.show(
-          {
-            course_id: $stateParams.course_id,
-            announcement_id:this_announcement.id
-          },
-  			  function(data){
-    				this_announcement=data;
-  			 }
-  		  );
-  		}
-      else{
-        $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
-  		}
+      if (!(typeof(this_announcement) == 'string')){
+        $scope.disable_new = false;
+        $scope.saving = false;
+        this_announcement.show=false
+    		if(this_announcement.id){
+  		    Announcement.show(
+            {
+              course_id: $stateParams.course_id,
+              announcement_id:this_announcement.id
+            },
+    			  function(data){
+      				this_announcement=data;
+    			 }
+    		  );
+    		}
+        else{
+          $scope.announcements.splice($scope.announcements.indexOf(this_announcement), 1);
+    		}        
+      }
   	}
 
   	$scope.showAnnouncement = function(this_announcement){
@@ -89,7 +91,7 @@ angular.module('scalearAngularApp')
   		if(!this_announcement.id){ // create new one
   		  Announcement.create(
           {course_id: $stateParams.course_id},
-          {announcement:{announcement:this_announcement.announcement}},
+          {announcement:{announcement:this_announcement.announcement , course_id: $stateParams.course_id }},
           function(data){
             $scope.announcements[$scope.announcements.length-1] = data.announcement;
             $scope.disable_new = false;

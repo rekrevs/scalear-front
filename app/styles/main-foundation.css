@@ -534,10 +534,10 @@ span.error, small.error{
 }
 
 .transparent-darkblue, .transparent-darkblue-hover{
-  background:rgba(120,152,162,0.6)
+  background:rgba(120,152,162,0.6) !important;
 }
 .transparent-darkblue-hover:hover{
-  background:rgb(120,152,162)
+  background:rgb(120,152,162) !important;
 }
 
 .repeating_red_pattern{
@@ -2691,6 +2691,9 @@ body.ngdialog-open { overflow: initial !important; }
     text-rendering: optimizeLegibility;
 }
 
+.medium-editor-bold .medium-editor-p{
+    font-weight: bold;
+}
 .medium-editor-p:first-child {
     display: inline-block;
 }
@@ -2707,6 +2710,13 @@ body.ngdialog-open { overflow: initial !important; }
   width:100%;
 }
 
+.medium-editor-textarea ul li{
+  list-style-type: disc;
+}
+
+.medium-editor-as-slide ul li{
+  list-style-type: disc;
+}
 
 /**********School Admin*****/
 .admin-uni{
@@ -2773,6 +2783,25 @@ body.ngdialog-open { overflow: initial !important; }
   word-wrap: break-word;
   word-break: break-all;
 }
+/****************************Admin welcome message************/
+.admin-message-box{
+  width:80%;
+  margin: 40px auto;
+}
+.admin-rich-area-text{
+  overflow: hidden;
+  padding: 4px;
+  resize: none;
+  min-height: 150px;
+  display: inline-block;
+}
+.admin-button{
+  float: right;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+
 /*
 @media (max-width: 1024px){
   .row .adminRow{

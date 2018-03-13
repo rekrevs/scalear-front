@@ -6,12 +6,12 @@ angular.module('scalearAngularApp')
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/:lang/kpis/:document_id/:action', {lang:$translate.use()},
       {
-        'readData':{method: 'GET', headers:headers, params: {action: 'read_data'} },
-        'readTotals':{method: 'GET', headers:headers, params: {action: 'read_totals'} },
-        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} },
+        'readData':{method: 'GET', headers:headers, params: {action: 'read_data'} }, // Not DONE
+        'readTotals':{method: 'GET', headers:headers, params: {action: 'read_totals'} }, // Not DONE
+        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} }, // Not DONE
         'readTotalsForDuration':{method: 'GET', headers:headers, params: {action: 'read_totals_for_duration'} },
         'getReportDataCourseDuration':{method: 'POST', headers:headers, params: {action: 'get_report_data_course_duration'} },
-        'exportSchoolStatistics':{method:'GET',headers:headers, params: {action: 'export_school_statistics'}}
+        'exportSchoolStatistics':{method:'GET',headers:headers, params: {action: 'export_school_statistics'}} // Not DONE
 
       });
 

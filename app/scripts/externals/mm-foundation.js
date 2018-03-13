@@ -2392,8 +2392,8 @@ angular.module("mm.foundation.topbar", [])
             return false;
         };
     }])
-    .directive('topBar', ['$timeout','$compile', '$window', '$document',
-        function ($timeout, $compile, $window, $document) {
+    .directive('topBar', ['$timeout','$compile', '$window', '$document', 'ScalearUtils',
+        function ($timeout, $compile, $window, $document, ScalearUtils) {
 
         var win = angular.element($window);
         var head = angular.element($document[0].querySelector('head'));
@@ -2562,13 +2562,13 @@ angular.module("mm.foundation.topbar", [])
                     });
                     topbar.removeClass('expanded');
                     $scope.height = '';
-                    $scope.$apply();
+                    ScalearUtils.safeApply();
                 });
 
                 // update sticky positioning
                 win.bind("scroll", function() {
                     updateStickyPositioning();
-                    $scope.$apply();
+                    ScalearUtils.safeApply();
                 });
 
                 $scope.$on('$destroy', function(){

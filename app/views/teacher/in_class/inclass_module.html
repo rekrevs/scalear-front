@@ -26,12 +26,12 @@
                         <inner_title type="'inclass.discussion' | translate" class="small-10 columns" style="margin-right:5px; float:none" />
                         <ul style="padding:5px;padding-right:0;color:black;font-weight:normal;font-size: 14px;">
                             <li ng-repeat="discussion in item.data">
-                                <show_box ng-init="discussion.post.hide = !discussion.post.hide" value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id, discussion.post.hide)" text="global.visible" class="right" />
-                                <div ng-bind-html="::(discussion.post.content)"></div>
+                                <show_box ng-init="discussion.hide = !discussion.hide" value="discussion.hide" action="updateHideDiscussion(discussion.id, discussion.hide)" text="global.visible" class="right" />
+                                <div ng-bind-html="::(discussion.content)"></div>
                                 <ul>
-                                    <li class="size-14" ng-repeat="comment in discussion.post.comments">
-                                        <show_box ng-init="comment.comment.hide = !comment.comment.hide" value="comment.comment.hide" action="updateHideComment(comment.comment, discussion.post)" text="global.visible" class="right" />
-                                        <i ng-bind-html="::(comment.comment.content)"></i>
+                                    <li class="size-14" ng-repeat="comment in discussion.comments">
+                                        <show_box ng-init="comment.hide = !comment.hide" value="comment.hide" action="updateHideComment(comment, discussion)" text="global.visible" class="right" />
+                                        <i ng-bind-html="::(comment.content)"></i>
                                     </li>
                                 </ul>
                             </li>

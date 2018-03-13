@@ -39,7 +39,6 @@ angular.module('scalearAngularApp')
           return respone.domains
         })
         .catch(function(respone) {
-          console.log(respone)
           return []
         })
     }

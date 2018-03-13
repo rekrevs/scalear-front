@@ -12,12 +12,11 @@ angular.module('scalearAngularApp')
     //   })
 
     $scope.update_account = function() {
+      console.log($scope.user)
       $scope.sending = true;
       delete $scope.user.errors
       $scope.user.first_day = $scope.user.first_day.id
-      User.update_account({}, {
-        user: $scope.user
-      }, function(response) {
+      User.update_account({},$scope.user, function(response) {
         $modalInstance.close();
         if($scope.user.intro_watched == false) {
           $state.go('confirmed')

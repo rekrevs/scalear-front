@@ -78,9 +78,7 @@ angular.module('scalearAngularApp')
         })
       } else {
         $scope.user.first_day = $scope.user.first_day.id
-        User.update_account({}, {
-            user: $scope.user
-          },
+        User.update_account({}, $scope.user,
           function() {
             UserSession.allowRefetchOfUser()
             $state.go("home")

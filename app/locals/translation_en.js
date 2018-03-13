@@ -99,6 +99,7 @@ var translation_en={
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
     },
+    welcome_message_updated: "Welcome message updated",    
   },
   time:{
     hours: "hours",
@@ -179,6 +180,7 @@ var translation_en={
     join_course: "Join a new course (student)",
     new_course: "Create a new course (teacher)",
     review: "Review",
+    welcome_message: "Welcome Message",
     register:{
       teacher: "Teacher Registration",
       student: "Student Registration"
@@ -529,6 +531,10 @@ var translation_en={
     video_quiz: "@:global.video_quiz",
     hide:"@:button.hide",
     show:"@:button.show",
+    video_only: "Video Only",
+    zoom_graph: "Zoom Graph",
+    zoom_video: "Zoom Video",
+    show_graph: "Show Graph",
     exit: "Exit",
     blackscreen_close: "Click or Press 'b' to return",
     blackscreen_done: "Review finished. Press ESC to end",
@@ -596,6 +602,10 @@ var translation_en={
     quiz_time: "Quiz Time",
     marker_time: "Marker Time",
     note_time: "Note Time",
+    note_duration: "Note Duration",
+    note_as_slide: "Fullscreen Note",
+    note_as_slide_description: " (This note will pause the video until the student clicks Continue.)",
+    note_as_slide_empty_description:"Put in your text below in the Annotations box.",
     start_time: "Start Time",
     end_time: "End Time",
     intro_timer:"Intro Timer",
@@ -631,6 +641,7 @@ var translation_en={
       invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
         students_must_complete_required:"All required items must be completed on-time for the student to receive credit for the module",
+        students_can_not_skep_ahead:"@:editor.details.skip_ahead_description",
         click_to_delete: "Click here to delete, click outside to close",
         create_link_time: "Create a link to this time in the video",
         video_info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed",
@@ -687,8 +698,9 @@ var translation_en={
         use_module_due: "Use Module’s Due Date",
         use_module_in_order: "Use Module’s Order",
         use_module_required: "Use Module’s Required",
+        use_module_skip_ahead: "Use Module’s Skip Ahead",
         vidoe_not_exist: "Video may not exist or may still be uploading",
-        incompatible_video_link: "Invalid movie type. Please provide a YouTube or .mp4 URL.",
+        incompatible_video_link: "Invalid movie type. Please provide a valid YouTube, .mp4 or a MediaSite URL.",
         student_link_lecture:"Student link to lecture",
         appearance_date: "Appearance Date",
         due_date: "Due Date",
@@ -698,11 +710,13 @@ var translation_en={
         student_link_module:"Student link to module",
         has_due_date: "has due date",
         required:"@:global.required",
+        skip_ahead: "Skip Ahead",
         in_order: "In Order",
         retries: "Retries",
         display_text:"Display question over video",
         display_text_explain:"(Use if the question text is not in the video.)",
-        student_link_quiz:"Student link to quiz"
+        student_link_quiz:"Student link to quiz",
+        skip_ahead_description: "Allow students to skip ahead in video",
     },
     popover:{
         shown_in_graph: "Shown on results graph",
@@ -1003,6 +1017,7 @@ var translation_en={
     time_zone: "Course Timezone",
     course_code: "Course Code",
     course_name: "Course Name",
+    university_note: "University Note",
   },
   statistics:{
     statistics: "Statistics",
@@ -1034,7 +1049,8 @@ var translation_en={
     rate_from: "rate from",
     to: "to",
     drag_to_zoom: 'Click and drag in the plot area to zoom in',
-    pinch_to_zoom: 'Pinch the chart to zoom in'
+    pinch_to_zoom: 'Pinch the chart to zoom in',
+    write_welcome_message: "Write welcome message"
   },
   player:{
     click_video_quality: "Click to change video quality",
@@ -1129,6 +1145,9 @@ var translation_en={
     languages:"Languages",
     en: 'English',
     sv: 'Svenska'
+  },
+  welcome_messages:{
+    description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
   }
 }
 

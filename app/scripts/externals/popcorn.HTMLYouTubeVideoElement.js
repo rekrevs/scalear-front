@@ -173,6 +173,9 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
+      player.setOption('captions','reload',true);
+      player.setOption('captions','track',{});
+      
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
@@ -218,7 +221,6 @@
     }
 
     function onPlayerStateChange( event ) {
-
       switch( event.data ) {
 
         // ended
@@ -594,9 +596,16 @@
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
-
+    
     self.destroy = function(){
       resetPlayer()
+    }
+    self.getCaptionTracks = function(){
+      return player.getOption('captions','tracklist');
+    }
+
+    self.setCaptionTrack = function(track){
+      player.setOption('captions','track',track)
     }
 
     function onEnded() {

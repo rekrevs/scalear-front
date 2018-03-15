@@ -266,9 +266,7 @@ angular.module('scalearAngularApp')
             		ContentNavigator.close()
             	})
             }
-            if (item_type != "customlink"){
-              $state.go('course.module.' + mode + '.' + item_type, params)
-            }
+            $state.go('course.module.' + mode + '.' + item_type, params)
             if(!(mode == 'courseware' && item_type == 'customlink')) {
               scope.currentitem = { id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id }
             }

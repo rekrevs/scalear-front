@@ -780,7 +780,7 @@ angular.module("scalearAngularApp")
           "backgroundColor": "white",
           "displayExactValues": true,
           "legend": { "position": "none" },
-          "chartArea": { "left": "70%", "width": "90%", "top": "17%" },
+          "chartArea": { "left": "70%", "width": "90%", "top": "10%" },
           "tooltip": { "isHtml": true },
           "hAxis": { "textPosition": "none" },
         },

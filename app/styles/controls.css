@@ -273,3 +273,14 @@ input[type='range']::-webkit-slider-thumb {
   top: 8px;
   position: relative;
 }
+
+.captions-on, .captions-on:focus{
+  background-color: transparent;
+  color: red;
+  text-decoration: underline;
+  text-underline-position: under;
+}
+.captions-off, .captions-off:focus{
+  background-color: transparent;
+  color:black;
+}

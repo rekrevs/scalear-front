@@ -40,7 +40,7 @@
 				 style="display:inline-block;text-align:center">{{name[1]}}</div>
 			</div>
 			<div ng-repeat="type in types" ng-init="createStatisticsChart(type)">
-				<div google-chart chart="{{'chart'+type}}" agc-on-select="skipToTime(selectedItem, type)" agc-on-mouseout="chartToolTipMouseOutHandler(row,column,chartWrapper)"></div>
+				<div google-chart chart="{{'chart'+type}}" agc-on-select="skipToTime(selectedItem, type)" agc-on-ready="chartToolTipOnreadyHandler(row,column,chartWrapper)"></div>
 			</div>
 		</div>
 		<div class="row">

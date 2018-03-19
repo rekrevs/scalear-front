@@ -30,10 +30,12 @@
 
 	<p translate="privacy.policy_changes_details"></p> 
 
+	<input type="checkbox" ng-model="agree_to_terms" id="privacy-agree-checkbox"><label for="privacy-agree-checkbox" translate>privacy.policy_agree</label>
+
 	<p translate="privacy.last_update"></p>
 	
 	<center>
-		<button type="button" ng-click="confirm()" class="btn btn-default center" translate="privacy.understand"></button>
+		<button type="button" ng-disabled="!agree_to_terms" ng-click="confirm()" class="btn btn-default center" translate="privacy.agree"></button>
 		<button type="button" ng-click="closeThisDialog('button')" class="btn btn-default alert center" translate="privacy.cancel" ></button>	
 	</center>
  </div>

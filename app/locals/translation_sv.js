@@ -759,7 +759,7 @@ var translation_sv={
         watched: "Sedda",
         quizzes: "quizzar",
         required_quizzes: "erfoderliga quiz",
-        export_chart: "Exportera tabell",
+        export_chart: "Exportera data",
     },
     button:{
         ask_question: "Ställ en fråga",

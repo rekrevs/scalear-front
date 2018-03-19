@@ -124,12 +124,12 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
         },
         bar: { groupWidth: 5 }
       };
+      chart.options.tooltip = { isHtml: true };
       chart.data = $scope.formatStatisticsChartData(chart_data);
       if (type == "confused") {
         chart.data = getReallyConfused(chart.data);
       }
       if (type == "questions") {
-        chart.options.tooltip = { isHtml: true };
         chart.options.tooltip.trigger = "both";
         chart.data = setQuestionsTooltip(chart.data);
       }

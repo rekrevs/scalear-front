@@ -875,13 +875,12 @@ angular.module('scalearAngularApp')
       scope:{
         data:'=',
         close: '&',
-        action:'&'
+        action:'&',
+        textToShow: '='
       },
       templateUrl: '/views/student/lectures/dynamic_annotation.html',
       link:function(scope, element, attrs){
-        if (scope.data.instanceType()=="VideoQuiz"){
-          scope.data.annotation = scope.data.question 
-        }
+        
         scope.closeBtn = scope.close()
         scope.actionBtn = scope.action()
   

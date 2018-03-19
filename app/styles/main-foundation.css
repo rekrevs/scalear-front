@@ -2966,7 +2966,7 @@ dd#second_accordion > a{
 dd#second_accordion > a:hover{
       background: #cacaca;
 }
-::-webkit-scrollbar {
+.tooltip-content::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 10px;
 }

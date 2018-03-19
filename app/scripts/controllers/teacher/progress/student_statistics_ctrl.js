@@ -173,7 +173,7 @@ angular.module("scalearAngularApp").controller("studentStatisticsCtrl", [
       new_time[2] = time[2] < 10 ? "0" + time[2] : time[2];
       var formatted_time = new_time[0] + ":" + new_time[1] + ":" + new_time[2];
       var html = "<div id='toolTip' style='padding:8px 0 0 5px;'  ><b> "+formatted_time+"</b><br>#"+$translate.instant('global.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>";
-      html +="<div  style='width:400px;height:90px;margin-left:5px;overflow:scroll;' >";
+      html +="<div  class='tooltip-content' style='width:400px;height:90px;margin-left:5px;overflow:scroll;' >";
       for(var i in questions){
         html += "-"+questions[i]
       }

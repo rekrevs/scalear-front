@@ -760,7 +760,7 @@ var translation_en={
         watched:"Watched",
         quizzes:"quizzes",
         required_quizzes:"required quizzes",
-        export_chart: "Export Chart",
+        export_chart: "Export Data",
     },
     button:{
         ask_question: "Ask a Question",

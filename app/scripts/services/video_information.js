@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
       return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
     }
 
-    function getFinalUrl(id) {
+    service.getFinalUrl = function(id) {
       return "https://www.youtube.com/watch?v=" + id;
     }
 

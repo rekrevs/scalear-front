@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
           if(!scope.item.data || !scope.item.data.isEdit)
             scope.postQuestion(scope.item)
           else
-            scope.updateQuestion(scope.item.data)
+            scope.updateQuestion(scope.item)
           scope.$apply()
         }, { "disable_in_input": false });
 

@@ -529,7 +529,7 @@ angular.module('scalearAngularApp')
                 showSlideNote(marker)
               }
               else{
-                showDynamicAnnotation(marker)                              
+                showDynamicAnnotation(marker)
               }
             })
             if (!marker.as_slide) {
@@ -1309,7 +1309,7 @@ angular.module('scalearAngularApp')
     }
     $scope.dismissDynamicAnnotation = function() {
       $scope.dynamic_annotation = null
-    }    
+    }
     $scope.dismissSlideNote = function() {
       $scope.slide_note = null
     }

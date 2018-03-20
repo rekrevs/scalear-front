@@ -493,7 +493,7 @@ angular
       return {
         restrict: "E",
         template:
-          '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+          '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 12px;"></textarea>',
         link: function(scope, elem) {
           var setup = function() {
             scope.explanation_pop = {};

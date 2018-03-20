@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .service('ScalearUtils', ['$rootScope', '$translate', function($rootScope, $translate) {
     var  validateTime = function(time, video_duration, bolean_duration) {
       // var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
-      var int_regex = /^\d\d:\d\d:\d\d$/; //checking format
+      var int_regex = /^\d\d:\d\d:\d\d(\.\d\d\d)?$/; //checking format
 
       if(int_regex.test(time)) {
         var hhmm = time.split(':'); // split hours and minutes

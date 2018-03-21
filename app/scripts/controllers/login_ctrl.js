@@ -8,11 +8,11 @@ angular.module('scalearAngularApp')
     
     // in case of saml sign-in
     if($state.params['access-token']){
-      Token.setToken($state.params)
-      User.getCurrentUser({},function(){
-        $state.go("dashboard");
-      });
-
+      Token.setTokenWithPromise($state.params).then(function(){
+        User.getCurrentUser({},function(){
+          $state.go("dashboard");
+        });
+      })
     }
 
     Page.setTitle('navigation.login')

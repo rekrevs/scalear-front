@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersSignUpCtrl', ['$scope', 'User', '$state', 'Page', '$filter', '$location', 'ngDialog', '$modal', function($scope, User, $state, Page, $filter, $location, ngDialog ,$modal) {
+  .controller('UsersSignUpCtrl', ['$scope', 'User', '$state', 'Page', '$filter', '$location', 'ngDialog', '$modal', '$rootScope', function($scope, User, $state, Page, $filter, $location, ngDialog ,$modal, $rootScope) {
     Page.setTitle('account.sign_up')
 
     var setupScreenName = function() {
@@ -28,43 +28,11 @@ angular.module('scalearAngularApp')
     init()
 
     $scope.signUp = function() {
-      if($scope.is_saml) {
-        $scope.user.saml = $scope.is_saml
-        User.samlSignup({}, {
-          user: $scope.user,
-          // role_id: $scope.user.role_ids
-        }).$promise
-        .then(function(data) {
-          $state.go('confirmed');
-        })
-        .catch(function(response){
-          $scope.user.errors = response.data.errors
-        })
-      } else {
-        if(!$scope.user.password_confirmation) {
-          $scope.user.password_confirmation = ' '
-        }
-        delete $scope.user.errors
-        User.signUp({}, $scope.user, function() {
-          $state.go('thanks_for_registering',{ email : $scope.user.email});
-        }, function(response) {
-          if(response.data.errors.school_provider){
-            $modal.open({
-              templateUrl: '/views/school_provider_modal.html',
-              controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
-                $scope.close = function () {
-                 $modalInstance.dismiss();
-               };
-             }],
-              scope: $scope
-            })
-          }
-          else
-          {
-            $scope.user.errors = response.data.errors
-          }
-        })
-      }
+      User.validateUser({},$scope.user,function(response){
+        $scope.privacyPopover();
+      }, function(response){
+        $scope.user.errors = response.data.errors
+      })
     }
 
     $scope.$watch('user.password',function(newVal,oldVal,scope){
@@ -79,4 +47,52 @@ angular.module('scalearAngularApp')
     $scope.$watch('user.email', function(){
         setupScreenName()
     });
+
+    $scope.privacyPopover = function() {
+      ngDialog.openConfirm({
+          template: '/views/privacy_popover.html',
+          className: 'ngdialog-theme-default dialogwidth800',
+          showClose: false,
+          scope: $scope
+        })
+        .then(function(value) { //user agree to privacy policy terms
+           if ($scope.is_saml) {
+             $scope.user.saml = $scope.is_saml;
+             User.samlSignup({}, { user: $scope.user }, function(response) {
+                 User.agreeToPrivacyPolicy( { id: response.user.id },{},function() {
+                     $state.go("login",{"access-token":response.token['access-token'],uid:response.token.uid,client:response.token.client});
+                   }
+                 );
+               }, function(response) {
+                 $scope.user.errors = response.data.errors;
+               });
+           } else {
+              if (!$scope.user.password_confirmation) {
+                $scope.user.password_confirmation = " ";
+              }
+              delete $scope.user.errors;
+              User.signUp({}, $scope.user, function(response) {
+                User.agreeToPrivacyPolicy({ id: response.data.id },{},function(){
+                  $state.go('thanks_for_registering',{ email : $scope.user.email});
+                });
+              }, function(response) {
+                if(response.data.errors.school_provider){
+                  $modal.open({
+                    templateUrl: '/views/school_provider_modal.html',
+                    controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
+                      $scope.close = function () {
+                        $modalInstance.dismiss();
+                      };
+                    }],
+                    scope: $scope
+                  })
+                }
+                else
+                {
+                  $scope.user.errors = response.data.errors
+                }
+              })
+           }
+        });
+    }
   }]);

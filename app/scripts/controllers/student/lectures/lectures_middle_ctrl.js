@@ -563,7 +563,7 @@ angular.module('scalearAngularApp')
     }
 
     var updateViewPercentage = function(milestone, source) {
-      if(!$scope.lecture.watched_percentage || milestone > $scope.lecture.watched_percentage){
+      if(!$scope.lecture.watched_percentage || milestone > $scope.lecture.watched_percentage || !$scope.lecture.done){
         var lecture = $scope.lecture // in case request callback got delayed and lecture has changed
         $scope.not_done_msg = false
         return lecture.updateViewPercentage(milestone)

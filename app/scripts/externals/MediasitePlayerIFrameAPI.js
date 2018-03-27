@@ -1,28 +1,28 @@
 /// <summary>
 /// Mediasite Player SDK v7.0.29
-/// 
+///
 /// To create a Mediasite player, include this file and instantiate the player.  (One document can contain many players.)
 /// <pre>
 ///     <script src="path/to/assets/MediasitePlayerIFrameApi.js"></script>  <-- Source file for IFrame Player API -->
-/// 
+///
 ///     <div id="myPlayer">
 ///        <--
-///            This element will be replaced by an iframe containing the Mediasite presentation. 
+///            This element will be replaced by an iframe containing the Mediasite presentation.
 ///            The iframe will have the same ID; in this case, "myPlayer".
 ///        -->
 ///    </div>
-/// 
+///
 ///     <script>
 ///         // Create a Mediasite IFrame Player
-///         var player = new Mediasite.Player('myPlayer', 
+///         var player = new Mediasite.Player('myPlayer',
 ///             {
 ///                 url: 'http:///mediasite.server.com/path/to/Mediasite/Play/presentationID',
 ///                 events: {
 ///                     'ready': function () { console.log('Player ready'); },
 ///                     'error': function (errorData) {
-///                            console.log('Error: ' 
-///                                + Mediasite.ErrorDescription[errorData.errorCode] 
-///                                + (errorData.details ? ' (' + errorData.details + ')' : '')); 
+///                            console.log('Error: '
+///                                + Mediasite.ErrorDescription[errorData.errorCode]
+///                                + (errorData.details ? ' (' + errorData.details + ')' : ''));
 ///                     },
 ///                     'playstatechanged': onPlayStateChanged
 ///                 }
@@ -31,7 +31,7 @@
 ///
 ///        player.removeHandler('playstatechanged', onPlayStateChanged);
 ///
-///        function onPlayStateChanged(playState) { 
+///        function onPlayStateChanged(playState) {
 ////            console.log("Play state changed: " + playState);
 ////        }
 ///
@@ -214,7 +214,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
             }
 
             // Client and server APIs are allegedly incompatible;
-            // either they can't talk to each other 
+            // either they can't talk to each other
             // or the commands/events/data are significantly different
             if (typeof _versionMismatchCheck == "undefined") {
                 _versionMismatchCheck = server.version;
@@ -634,7 +634,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
             return cloneArrayAndItems(_model.Get("pastSessionPlayedSegments"));
         };
 
-        // #endregion 
+        // #endregion
         initialize();
     };
 
@@ -992,7 +992,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
 
         singleton.parseIncomingMessageEvent = function (eventData) {
             // Expected eventData (string):
-            //      messagePrefix 
+            //      messagePrefix
             //      + _messageDelimiter
             //      + JSON.stringify(contents)
             // or expected initialization data (string):
@@ -1163,7 +1163,7 @@ Mediasite.PlaybackTracker = (function () {
         }
 
 
-        
+
 
 
         function onReady() {

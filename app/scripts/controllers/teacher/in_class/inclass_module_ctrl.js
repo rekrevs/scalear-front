@@ -824,11 +824,14 @@ angular.module("scalearAngularApp")
           number,
           tooltip_text = "<div style='color:black;padding:8px'>",
           color = data[ind][1];
+        // in case of lecture's quiz: data[0] = first_try_grades_count & data[3] = not_first_try_grades_count
+        // in case of normal quizze: data[0] = all grades count
+        var not_first_try_grades_count = data[ind][3] || 0;
 
-        if (color == "gray") {
+        if (color == "grey") {
           number = Math.floor((data[ind][0] / $scope.students_count) * 100);
         } else {
-          number = Math.floor(((data[ind][0] + data[ind][3]) / $scope.students_count) * 100);
+          number = Math.floor(((data[ind][0] + not_first_try_grades_count) / $scope.students_count) * 100);
           var answer_status = "Correct: ";
           if (color == "orange") {
             color = "gray";

@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
           query += "&end=" + end
         if(vq)
           query += "&vq=" + vq
-        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1&autoplay=" + autoplay + "&controls=" + controls + "&theme=light" + query;
+        return base_url + "?modestbranding=0&showinfo=0&rel=0&autohide=0&playsinline=1"+"&autoplay=" + autoplay + "&controls=" + controls + "&theme=light"+ query;
       }
 
       scope.kill_popcorn = function() {
@@ -806,6 +806,13 @@ angular.module('scalearAngularApp')
 
       scope.muteToggle = function() {
         scope.volume_class == "mute" ? scope.mute() : scope.unmute()
+      }
+
+      scope.captionTracks = player.video.getCaptionTracks();
+
+      scope.setCaptionTrack = function(track){
+        scope.selectedCaptionTrack = track;
+        player.video.setCaptionTrack(track);
       }
 
       var unwatchMute = scope.$watch("volume", function() {

@@ -67,29 +67,16 @@ angular.module('scalearAngularApp')
       }
     }
 
+    $scope.$watch('user.password',function(newVal,oldVal,scope){
+      scope.user.errors = {};
+      if(/^(?=.*[a-z])(?=.*\d)/.test(newVal) && newVal.length >7){
+        delete scope.user.errors;
+      } else if(newVal.length >0) {
+        scope.user.errors.password = ["must include at least one lowercase letter and one digit and at least 8 characters"];
+      }
+    });
+
     $scope.$watch('user.email', function(){
         setupScreenName()
-    })
-    // $scope.sign_up = function() {
-    //     $scope.sending = true;
-    //     $scope.final_user = angular.copy($scope.user)
-    //     if(!$scope.final_user.password_confirmation){
-    //         $scope.final_user.password_confirmation = ' '
-    //     }
-    //     delete $scope.final_user.errors
-    //     User.sign_up({}, {
-    //         user: $scope.final_user
-    //     }, function() {
-    //         $scope.sending = false;
-    //         $state.go('thanks_for_registering',{type:1});
-    //     }, function(response) {
-    //         $scope.user.errors = response.data.errors
-    //         $scope.sending = false;
-    //     })
-    // }
-
-    // $scope.$watch('current_lang', function(newval, oldval) {
-    //     if (newval != oldval)
-    //         delete $scope.user.errors
-    // });
+    });
   }]);

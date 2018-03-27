@@ -410,8 +410,9 @@ var translation_en={
     code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
+    policy_agree: "I agree to the ScalableLearning Privacy Policy and I consent to allow ScalableLearning to Process my data",
     last_update: "Last update: 24-May-2017",
-    understand: "I understand",
+    agree: "Agree",
     cancel: "Cancel",
   },
   faq:{
@@ -759,7 +760,8 @@ var translation_en={
         marker:"@:global.marker",
         watched:"Watched",
         quizzes:"quizzes",
-        required_quizzes:"required quizzes"
+        required_quizzes:"required quizzes",
+        export_chart: "Export Data",
     },
     button:{
         ask_question: "Ask a Question",
@@ -835,6 +837,10 @@ var translation_en={
         correct:"@:global.correct",
         question_not_checked:"@:dashboard.not_checked",
         completed:"@:events.completed",
+        confused: 'Shows the number of students who clicked the "confused" button at that time in the video. If a student clicked the button more than once in the same place, it is shown in red',
+        back: 'Shows the number of students who went back in the video from that time in the video',
+        pauses: 'Shows the number of students who paused at that time in the video',
+        questions: 'Shows the number of students who asked questions at that time in the video'
     },
     popover:{
         change_status: "Change Status",

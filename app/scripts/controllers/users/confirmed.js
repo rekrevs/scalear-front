@@ -4,11 +4,12 @@ angular.module('scalearAngularApp')
   .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', 'scalear_api', '$translate', '$log', 'ngDialog','URLInformation','$window', function($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log, ngDialog, URLInformation, $window) {
     $scope.user_email = $state.params.type
     $scope.remaining = 5;
-    $scope.show_ending = false
-    $scope.privacy_approved = false
-    $scope.player = {}
-    $scope.player.controls = {}
-    $scope.player.events = {}
+    $scope.show_ending = false;
+    $scope.privacy_approved = false;
+    $scope.player = {};
+    $scope.player.controls = {};
+    $scope.player.events = {};
+    $scope.agree_to_terms = false;
     Page.setTitle('Welcome to ScalableLearning');
     $rootScope.subheader_message = $translate.instant("intro.title")
     $scope.student_or_teacher = null 
@@ -62,7 +63,9 @@ angular.module('scalearAngularApp')
           scope: $scope
         })
         .then(function(value) {
-          $scope.privacy_approved = true
+          User.agreeToPrivacyPolicy({ id: $scope.current_user.id },{},function(response){
+            $scope.privacy_approved = true
+          })
         }, function(reason) {
           $rootScope.busy_loading = true;
           UserSession.logout().then(function() {

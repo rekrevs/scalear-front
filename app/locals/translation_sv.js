@@ -717,6 +717,11 @@ var translation_sv={
         display_text_explain:"(Använd om frågan texten är inte i videon.)",
         student_link_quiz:"Student-länk till quiz",
         skip_ahead_description: "Tillåta eleverna hoppa framåt i video", 
+        graded: "Graderade",
+        quiz_pass_fail: "denna quiz är godkänd / misslyckad",
+        show_explanation: "Visa förklaring efter varje försök",
+        correct_to_pass: " korrekt krävs för att passera"
+        
     },
     popover:{
         shown_in_graph: "Visas i resultatdiagram",

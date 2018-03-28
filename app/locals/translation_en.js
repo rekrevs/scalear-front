@@ -718,6 +718,10 @@ var translation_en={
         display_text_explain:"(Use if the question text is not in the video.)",
         student_link_quiz:"Student link to quiz",
         skip_ahead_description: "Allow students to skip ahead in video",
+        graded: "Graded",
+        quiz_pass_fail: "This quiz is pass/fail",
+        show_explanation: "Show explanation after each try",
+        correct_to_pass: " correct required to pass",
     },
     popover:{
         shown_in_graph: "Shown on results graph",

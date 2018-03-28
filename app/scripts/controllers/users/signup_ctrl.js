@@ -45,6 +45,7 @@ angular.module('scalearAngularApp')
           $scope.user.password_confirmation = ' '
         }
         delete $scope.user.errors
+        $scope.user['confirm_success_url'] = location.protocol + '//' +location.host +"/#/users/confirmation"
         User.signUp({}, $scope.user, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {

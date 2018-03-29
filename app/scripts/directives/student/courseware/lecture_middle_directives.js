@@ -222,7 +222,7 @@ angular
         restrict: "E",
         template:
           "<ng-form name='aform'>" +
-          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>" +
+          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;font-size:10px;' required></textarea>" +
           "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>" +
           "</ng-form>" +
           "<div ng-bind-html='explanation[quiz.id]'></div>",

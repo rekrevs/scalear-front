@@ -213,16 +213,18 @@ angular
       }
     };
   })
-  .directive("studentHtmlFree", [
-    "$translate",
-    "$log",
-    "$timeout",
-    function($translate, $log, $timeout) {
+  .directive("studentHtmlFree", ["$translate","$log","$timeout","MobileDetector", function($translate, $log, $timeout, MobileDetector) {
+      // caret doesnt appear on iphone for font sizes bigger than 10px
+      var fontSize = "14px"
+      if (MobileDetector.isMobile()){
+        fontSize = "10px";
+      } 
+        
       return {
         restrict: "E",
         template:
           "<ng-form name='aform'>" +
-          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;font-size:10px;' required></textarea>" +
+          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:600px;height:110px;caret-color:blue;font-size:"+fontSize +";' required></textarea>" +
           "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>" +
           "</ng-form>" +
           "<div ng-bind-html='explanation[quiz.id]'></div>",

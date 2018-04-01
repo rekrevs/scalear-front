@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
             controller: 'UsersConfirmationNewCtrl'
         })
         .state('show_confirmation', {
-            url: '/users/confirmation?confirmation_token',
+            url: '/users/confirmation?access-token&account_confirmation_success&client&client_id&uid',
             templateUrl: '/views/users/confirmation/show.html',
             controller: 'UsersConfirmationShowCtrl'
         })

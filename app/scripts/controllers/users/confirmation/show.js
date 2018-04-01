@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
         }]
       })
     }
-    else if($stateParams['account_confirmation_success'] == "invalid" || $stateParams['account_confirmation_success'] == "confirmed"){
+    else if($stateParams['account_confirmation_success'] == "false"){
       $modal.open({
         template: '<style>.reveal-modal{height:auto;overflow: hidden;}</style>'+
         "<center><span translate>account.invalid_confirmation</span><br>"+

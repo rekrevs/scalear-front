@@ -29,22 +29,20 @@ angular.module('scalearAngularApp')
 
     $scope.signUp = function() {
       if($scope.is_saml) {
-        $scope.user.saml = $scope.is_saml
+        $scope.user.saml = $scope.is_saml;
         User.samlSignup({}, {
           user: $scope.user,
-          // role_id: $scope.user.role_ids
-        }).$promise
-        .then(function(data) {
-          $state.go('confirmed');
-        })
-        .catch(function(response){
-          $scope.user.errors = response.data.errors
+        },function(response){
+          $state.go("login", response.token);
+        },function(response){
+          $scope.user.errors = response.data.errors;
         })
       } else {
         if(!$scope.user.password_confirmation) {
           $scope.user.password_confirmation = ' '
         }
         delete $scope.user.errors
+        $scope.user['confirm_success_url'] = location.protocol + '//' +location.host +"/#/users/confirmation"
         User.signUp({}, $scope.user, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {

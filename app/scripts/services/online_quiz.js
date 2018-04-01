@@ -40,14 +40,24 @@ angular.module('scalearAngularApp')
     }
 
     function getFinalQuizTime(time, lecture) {
-      var new_time = parseInt(time)
+      
+      var new_time = time
       lecture.timeline.items.forEach(function(item) {
+
         if(item.type == 'quiz') {
-          var quiz_time = parseInt(item.data.time)
-          if(quiz_time == new_time + 1)
-            new_time += 2
-          else if(quiz_time == new_time)
-            new_time += 1
+
+          var quiz_time = item.data.time
+          if( 0 < (quiz_time - new_time) && (quiz_time - new_time ) <  0.5 ){
+            new_time = quiz_time - 0.5
+
+          }
+          else if ( 0 < (new_time - quiz_time ) && (new_time - quiz_time ) < 0.5 ) {
+            new_time = quiz_time + 0.5
+
+          }else if( (new_time - quiz_time ) ==0 ){
+            new_time = quiz_time + 0.5
+          }
+
         }
       })
       return new_time
@@ -60,7 +70,7 @@ angular.module('scalearAngularApp')
       if(insert_time < 1) {
         insert_time = 1
       }
-      insert_time = getFinalQuizTime(insert_time, lecture)
+     insert_time = getFinalQuizTime(insert_time, lecture)
 
       if(insert_time >= video_duration) {
         insert_time = video_duration - 2
@@ -102,17 +112,18 @@ angular.module('scalearAngularApp')
     }
 
     function setSelectedVideoQuiz(quiz) {
-      quiz.formatedTime = $filter('format')(quiz.time)
-      quiz.start_formatedTime = $filter('format')(quiz.start_time)
-      quiz.end_formatedTime = $filter('format')(quiz.end_time)
-      
-      // #####  check for quiz.inclass and for new table for 
+      quiz.formatedTime = $filter('format')(quiz.time,'hh:mm:ss.MMM')
+
+      quiz.start_formatedTime = $filter('format')(quiz.start_time,'hh:mm:ss.MMM')
+      quiz.end_formatedTime = $filter('format')(quiz.end_time,'hh:mm:ss.MMM')
+
+      // #####  check for quiz.inclass and for new table for
       if(!(quiz.inclass && quiz.inclass_session))
         quiz.inclass_session = { intro: 120, self: 120, in_group: 120, discussion: 120 }
-      quiz.intro_formatedTime = $filter('format')(quiz.intro)
-      quiz.self_formatedTime = $filter('format')(quiz.self)
-      quiz.group_formatedTime = $filter('format')(quiz.in_group)
-      quiz.discussion_formatedTime = $filter('format')(quiz.discussion)
+      quiz.intro_formatedTime = $filter('format')(quiz.intro,'hh:mm:ss.MMM')
+      quiz.self_formatedTime = $filter('format')(quiz.self,'hh:mm:ss.MMM')
+      quiz.group_formatedTime = $filter('format')(quiz.in_group,'hh:mm:ss.MMM')
+      quiz.discussion_formatedTime = $filter('format')(quiz.discussion,'hh:mm:ss.MMM')
       selected_video_quiz = quiz
       return getSelectedVideoQuiz()
     }

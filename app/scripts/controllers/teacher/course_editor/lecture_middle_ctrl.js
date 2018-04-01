@@ -41,7 +41,7 @@ angular.module('scalearAngularApp')
           if (time) {
             $timeout(function (argument) {
               $scope.seek(time-0.2)
-            })        
+            })
           } else if (!($rootScope.is_mobile)) {
             $scope.lecture_player.controls.seek_and_pause(0)
           }
@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
 
     function showMarker(marker) {
       $rootScope.$broadcast("show_online_marker", marker)
-    }    
+    }
 
     function addItemToVideoQueue(item_data, type) {
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
@@ -120,6 +120,7 @@ angular.module('scalearAngularApp')
 
     $scope.insertQuiz = function(quiz_type, question_type) {
       var insert_time = $scope.lecture_player.controls.getTime()
+
       VideoQuizModel.addVideoQuiz(insert_time, quiz_type, question_type)
         .then(function(quiz) {
           $scope.lecture_player.controls.seek_and_pause(quiz.time)
@@ -391,9 +392,9 @@ angular.module('scalearAngularApp')
         $scope.dismissMarkerAnnotation()
       })
     }
-    
+
     $scope.dismissMarkerAnnotation = function(){
-      $scope.selected_marker = null            
+      $scope.selected_marker = null
     }
 
     $scope.deleteMarkerButton = function(marker) {

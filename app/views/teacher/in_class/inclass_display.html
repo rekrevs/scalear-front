@@ -57,9 +57,7 @@
           <div>
             <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" class="disucssion" ng-class="question_class" style="padding-left:5px;padding-top: 0.5%;">
               <div ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.time)" ng-show="question.hide" style="padding-left:5px;">
-
                 <span ng-bind-html="question.content"></span>
-                <span>{{ question.comments }}</span>
                 <span class="color-dark-grey" ng-repeat="comment in question.comments" ng-show="comment.hide">
                   <br />
                   <i style="padding-left:15px" ng-bind-html="comment.content"></i>

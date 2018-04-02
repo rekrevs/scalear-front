@@ -410,9 +410,10 @@ var translation_sv={
     code_conduct_details: "Denna sekretesspolicy följer GÉANT Data Protection Code of conduct, version 1.0, 14 juni 2013.",
     policy_changes: "Förändringar av sekretesspolicyn",
     policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Ändringar av sekretesspolicyn börjar gälla när de publiceras här.",
+    policy_agree: "Jag godkänner Privacy Policy för ScalableLearning och jag godkänner att ScalableLearning kan behandla mina data",
     last_update: "Senast uppdaterad: 2017-05-24",
-    understand: "I understand",
-    cancel: "Cancel",
+    agree: "hålla med",
+    cancel: "annullera",
   },
   faq:{
     faq:"Vanliga frågor",
@@ -759,7 +760,7 @@ var translation_sv={
         watched: "Sedda",
         quizzes: "quizzar",
         required_quizzes: "erfoderliga quiz",
-        export_chart: "Exportera tabell",
+        export_chart: "Exportera data",
     },
     button:{
         ask_question: "Ställ en fråga",

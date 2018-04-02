@@ -213,16 +213,18 @@ angular
       }
     };
   })
-  .directive("studentHtmlFree", [
-    "$translate",
-    "$log",
-    "$timeout",
-    function($translate, $log, $timeout) {
+  .directive("studentHtmlFree", ["$translate","$log","$timeout","MobileDetector", function($translate, $log, $timeout, MobileDetector) {
+      // caret doesnt appear on iphone for font sizes bigger than 10px
+      var fontSize = "14px"
+      if (MobileDetector.isMobile()){
+        fontSize = "10px";
+      } 
+        
       return {
         restrict: "E",
         template:
           "<ng-form name='aform'>" +
-          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>" +
+          "<textarea ng-click='studentHtmlFreeInputClick($event)' ng-model='studentAnswers[quiz.id]' style='width:600px;height:110px;caret-color:blue;font-size:"+fontSize +";' required></textarea>" +
           "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='error_message.required'></span><br/>" +
           "</ng-form>" +
           "<div ng-bind-html='explanation[quiz.id]'></div>",
@@ -493,7 +495,7 @@ angular
       return {
         restrict: "E",
         template:
-          '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 14px;"></textarea>',
+          '<textarea ng-click="freeTextInputClick($event)" placeholder="Write your answer here..." pop-over="explanation_pop" ng-model="studentAnswers[quiz.id]" ng-style="{left: (data.xcoor*100)+\'%\', top: (data.ycoor*100)+\'%\', width:(data.width*100)+\'%\', height:(data.height*100)+\'%\'}"  style="resize:none;position:absolute;font-size: 12px;"></textarea>',
         link: function(scope, elem) {
           var setup = function() {
             scope.explanation_pop = {};
@@ -824,7 +826,7 @@ angular
       };
     }
   ])
-  .directive("dynmaicAnnotation", [
+  .directive("dynamicAnnotationStudent", [
     "$filter",
     "$rootScope",
     "CourseModel",
@@ -835,67 +837,12 @@ angular
         scope: {
           data: "=",
           close: "&",
-          action: "&"
+          action: "&",
+          textToShow: "="
         },
-        templateUrl: "/views/student/lectures/dynmaic_annotation.html",
+        templateUrl: "/views/student/lectures/dynamic_annotation_student.html",
         link: function(scope, element, attrs) {
-          scope.closeBtn = scope.close();
-          scope.actionBtn = scope.action();
-
-          scope.calculatePosition = function() {
-            var ontop = angular.element(".ontop");
-            var main = angular.element(element.children()[0]);
-            scope.data.xcoor = parseFloat(main.position().left) / ontop.width();
-            scope.data.ycoor = parseFloat(main.position().top) / ontop.height();
-            scope.calculateSize();
-          };
-
-          scope.calculateSize = function(event, ui) {
-            var ontop = angular.element(".ontop");
-            var main = angular.element(element.children()[0]);
-            var textarea = angular.element(
-              main[0].querySelector(".medium-editor-p")
-            )[0];
-            if (ui && main[0].offsetWidth < textarea.offsetWidth) {
-              ui.size.width = textarea.offsetWidth + 10;
-              scope.data.width = ui.size.width / ontop.width();
-            } else {
-              scope.data.width = main[0].offsetWidth / ontop.width();
-            }
-            if (ui && main[0].offsetHeight < textarea.offsetHeight) {
-              ui.size.height = textarea.offsetHeight + 10;
-              scope.data.height = scope.data.height / ontop.height();
-            } else {
-              scope.data.height = main[0].offsetHeight / ontop.height();
-            }
-          };
-
-          if (!CourseModel.isStudent()) {
-            angular.element(element.children()[0]).resizable({
-              containment: ".videoborder",
-              stop: scope.calculateSize,
-              resize: scope.calculateSize
-            });
-          }
-        }
-      };
-    }
-  ])
-  .directive("dynmaicAnnotationStudent", [
-    "$filter",
-    "$rootScope",
-    "CourseModel",
-    "$timeout",
-    function($filter, $rootScope, CourseModel, $timeout) {
-      return {
-        restrict: "E",
-        scope: {
-          data: "=",
-          close: "&",
-          action: "&"
-        },
-        templateUrl: "/views/student/lectures/dynmaic_annotation_student.html",
-        link: function(scope, element, attrs) {
+         
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
         }

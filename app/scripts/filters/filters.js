@@ -10,8 +10,15 @@ angular.module('scalearAngularApp')
     if (hr < 10)  { hr    = "0" + hr; }
     if (min < 10) { min = "0" + min; }
     if (sec < 10) { sec  = "0" + sec; }
-    if (millisec < 10){ millisec = "00"+ millisec;}
-    if (millisec < 100){ millisec = "0"+ millisec;}
+    if (millisec < 10){ 
+      millisec = "00"+ millisec;
+    } else if (millisec < 100){ 
+      millisec = "0"+ millisec;
+    } else if (millisec == 0){
+      millisec = "000"
+    }
+    // if (millisec < 100){ millisec = "0"+ millisec;}
+    
 
     // if (hr)       { hr   = "00"; }
 
@@ -23,7 +30,7 @@ angular.module('scalearAngularApp')
       formatted_time = formatted_time.replace('m', min*1+""); // check for single minute formatting
       formatted_time = formatted_time.replace('ss', sec);
       formatted_time = formatted_time.replace('s', sec*1+""); // check for single second formatting
-      formatted_time = formatted_time.replace('MMM', millisec*1+""); // check for millisecond format formatting
+      formatted_time = formatted_time.replace('MMM', millisec+""); // check for millisecond format formatting
 
       return formatted_time;
     }

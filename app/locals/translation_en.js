@@ -410,8 +410,9 @@ var translation_en={
     code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Changes to the privacy policy take effect when posted here.",
+    policy_agree: "I agree to the ScalableLearning Privacy Policy and I consent to allow ScalableLearning to Process my data",
     last_update: "Last update: 24-May-2017",
-    understand: "I understand",
+    agree: "Agree",
     cancel: "Cancel",
   },
   faq:{
@@ -760,7 +761,7 @@ var translation_en={
         watched:"Watched",
         quizzes:"quizzes",
         required_quizzes:"required quizzes",
-        export_chart: "Export Chart",
+        export_chart: "Export Data",
     },
     button:{
         ask_question: "Ask a Question",

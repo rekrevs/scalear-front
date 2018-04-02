@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
         'getSubdomains': { method: 'GET', headers: headers , params: {action: 'get_subdomains'}},
         'getWelcomeMessage': { method: 'GET', headers: headers , params: {action: 'get_welcome_message'}},
         'submitWelcomeMessage': { method: 'POST', headers: headers , params: {action: 'submit_welcome_message'}},
+        'agreeToPrivacyPolicy': { method: 'POST', headers: headers , params: {action: 'agree_to_privacy_policy'}},
 
 
       });

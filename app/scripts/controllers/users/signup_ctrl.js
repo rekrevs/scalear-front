@@ -29,22 +29,20 @@ angular.module('scalearAngularApp')
 
     $scope.signUp = function() {
       if($scope.is_saml) {
-        $scope.user.saml = $scope.is_saml
+        $scope.user.saml = $scope.is_saml;
         User.samlSignup({}, {
           user: $scope.user,
-          // role_id: $scope.user.role_ids
-        }).$promise
-        .then(function(data) {
-          $state.go('confirmed');
-        })
-        .catch(function(response){
-          $scope.user.errors = response.data.errors
+        },function(response){
+          $state.go("login", response.token);
+        },function(response){
+          $scope.user.errors = response.data.errors;
         })
       } else {
         if(!$scope.user.password_confirmation) {
           $scope.user.password_confirmation = ' '
         }
         delete $scope.user.errors
+        $scope.user['confirm_success_url'] = location.protocol + '//' +location.host +"/#/users/confirmation"
         User.signUp({}, $scope.user, function() {
           $state.go('thanks_for_registering',{ email : $scope.user.email});
         }, function(response) {
@@ -67,29 +65,16 @@ angular.module('scalearAngularApp')
       }
     }
 
+    $scope.$watch('user.password',function(newVal,oldVal,scope){
+      scope.user.errors = {};
+      if(/^(?=.*[a-z])(?=.*\d)/.test(newVal) && newVal.length >7){
+        delete scope.user.errors;
+      } else if(newVal.length >0) {
+        scope.user.errors.password = ["must include at least one lowercase letter and one digit and at least 8 characters"];
+      }
+    });
+
     $scope.$watch('user.email', function(){
         setupScreenName()
-    })
-    // $scope.sign_up = function() {
-    //     $scope.sending = true;
-    //     $scope.final_user = angular.copy($scope.user)
-    //     if(!$scope.final_user.password_confirmation){
-    //         $scope.final_user.password_confirmation = ' '
-    //     }
-    //     delete $scope.final_user.errors
-    //     User.sign_up({}, {
-    //         user: $scope.final_user
-    //     }, function() {
-    //         $scope.sending = false;
-    //         $state.go('thanks_for_registering',{type:1});
-    //     }, function(response) {
-    //         $scope.user.errors = response.data.errors
-    //         $scope.sending = false;
-    //     })
-    // }
-
-    // $scope.$watch('current_lang', function(newval, oldval) {
-    //     if (newval != oldval)
-    //         delete $scope.user.errors
-    // });
+    });
   }]);

@@ -808,7 +808,9 @@ angular.module('scalearAngularApp')
         scope.volume_class == "mute" ? scope.mute() : scope.unmute()
       }
 
-      scope.captionTracks = player.video.getCaptionTracks();
+      scope.loadCaptionTracks = function(){
+        scope.captionTracks = player.video.getCaptionTracks();
+      }
 
       scope.setCaptionTrack = function(track){
         scope.selectedCaptionTrack = track;

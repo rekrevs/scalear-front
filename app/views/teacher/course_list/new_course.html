@@ -1,8 +1,10 @@
+
+
   <div ng-if="welcome_message"  class="small-12 medium-8 large-9 columns right">
-    <div style="padding: 25px; margin: 10px 0px; border-bottom: 1px solid lightgrey; margin-bottom: 55px;" id="welcome_message"> 
-          <span ng-bind-html="welcome_message"></span> 
-    </div> 
-  </div> 
+    <div style="padding: 25px; margin: 10px 0px; border-bottom: 1px solid lightgrey; margin-bottom: 55px;" id="welcome_message">
+          <span ng-bind-html="welcome_message"></span>
+    </div>
+  </div>
 
 <form novalidate class="form-horizontal" name="form" ng-submit="createCourse()">
   <div class="small-12 medium-4 large-3 columns">
@@ -137,12 +139,12 @@
       <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
     </p>
     <h5 translate class="subheader">courses.new.copy_from_existing</h5>
-    <h5 style="line-height:1"><small translate>courses.new.course_item_shift</small></h5>            
+    <h5 style="line-height:1"><small translate>courses.new.course_item_shift</small></h5>
     <div class="row with-margin-bottom">
       <div class="small-10 columns">
-        <select ng-model="import_from" ng-change="addImportInformation()" ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
+        <select ng-model="import_from" ng-change="addImportInformation(import_from)" ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
       </div>
-      <div ng-show="import_from" class="small-2 columns" style="margin-top: 3px;">
+      <div  class="small-2 columns" style="margin-top: 3px;">
         <button type="button" class="button secondary tiny" ng-click="unselectCourse()"><span translate>courses.new.button.unselect</span></button>
       </div>
     </div>

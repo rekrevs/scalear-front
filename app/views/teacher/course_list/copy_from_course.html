@@ -1,0 +1,40 @@
+
+<div class="small-15 columns">
+<style class="ng-scope">
+.reveal-modal {
+  width: 55%;
+  height: auto
+}
+</style>
+
+
+<h4><translate>courses.new.copy_from_existing</translate></h4>
+<div ng-hide="hide_Ask_Copy" class="muted with-margin-bottom">
+
+
+  <div ><translate>courses.new.ask_copy_from_existing</translate>
+      <div class="right">
+          <br>
+          <button type="button" ng-click="close()" class="button small with-margin-right no-margin-bottom  "><translate>global.new</translate></button>
+          <button type="button" ng-click="showCourseSeleciton(); hideAskCopy()" class="button small success no-margin-bottom "><translate>global.copy</translate></button>
+      </div>
+  </div>
+</div>
+
+<div ng-show="show_course_selection" class="row with-margin-bottom muted">
+<div  ><translate>courses.new.ask_choose_from_existing</translate></div>
+
+      <div style="line-height:1">
+      <select ng-model="selected_course"  ng-change=" showSelectedCourseDetails(selected_course)  " ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"  ></select>
+      <div  ng-show="selected_course_details" >
+           <h6>Description:</h6>
+           <p>{{ selected_course_description}}</p>
+           <h6>Prerequists:</h6>
+           <p>{{ selected_course_prerequists}}</p>
+           <button type="button" ng-click="addImportInformation(selected_course);close()" class="button small success no-margin-bottom right"><translate>global.copy</translate></button>
+
+      </div>
+      </div>
+
+</div>
+</div>

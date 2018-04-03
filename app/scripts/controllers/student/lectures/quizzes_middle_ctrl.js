@@ -88,6 +88,13 @@ angular.module('scalearAngularApp')
       }
     }
 
+    $scope.$watch('correct',function(correct){
+      if (correct){
+        $scope.numberOfCorrectAnswers = Object.values(correct).reduce(function(n,value){return n + (value == '1')},0);
+        $scope.pass = $scope.numberOfCorrectAnswers >= $scope.quiz.correct_question_count;
+      }
+    })
+
 
     if($scope.quiz){
       ItemsModel.setSelectedItem($scope.quiz)

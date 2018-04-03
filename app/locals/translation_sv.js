@@ -720,7 +720,9 @@ var translation_sv={
         graded: "Graderade",
         quiz_pass_fail: "denna quiz är godkänd / misslyckad",
         show_explanation: "Visa förklaring efter varje försök",
-        correct_to_pass: " korrekt krävs för att passera"
+        correct_to_pass: " korrekt krävs för att passera",
+        pass: "Klara",
+        fail: "Misslyckas",
         
     },
     popover:{
@@ -894,6 +896,8 @@ var translation_sv={
     optional:"@:global.optional",
     already_submitted: "Du har lämnat in",
     no_more_attempts: "och har inga fler försök kvar",
+    graded_quiz: "graderade frågesport",
+    correct_required_to_pass: "korrekta svar som krävs för att passera.",
     grade:{
         under_review: "föremål för översyn",
         partial:"Partiell",

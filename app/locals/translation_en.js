@@ -722,6 +722,8 @@ var translation_en={
         quiz_pass_fail: "This quiz is pass/fail",
         show_explanation: "Show explanation after each try",
         correct_to_pass: " correct required to pass",
+        pass: "Pass",
+        fail: "Fail",
     },
     popover:{
         shown_in_graph: "Shown on results graph",
@@ -894,6 +896,8 @@ var translation_en={
     optional:"@:global.optional",
     already_submitted: "You've submitted the",
     no_more_attempts: "and have no more attempts left",
+    graded_quiz: "Graded quiz",
+    correct_required_to_pass: "correct answers required to pass.",
     grade:{
         under_review:"Under Review",
         partial:"Partial",

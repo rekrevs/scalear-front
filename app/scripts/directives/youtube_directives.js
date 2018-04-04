@@ -809,7 +809,9 @@ angular.module('scalearAngularApp')
       }
 
       scope.loadCaptionTracks = function(){
-        scope.captionTracks = player.video.getCaptionTracks();
+        if (!scope.captionTracks){
+          scope.captionTracks = player.video.getCaptionTracks();
+        }
       }
 
       scope.setCaptionTrack = function(track){

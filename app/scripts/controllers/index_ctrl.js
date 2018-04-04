@@ -29,8 +29,13 @@ angular.module('scalearAngularApp')
 
     UserSession.getCurrentUser()
     .then(function (user) {
-      console.log(user)
        getCurrentCourses()
+    },function(error){
+      //preview user is deleted from database
+      if($rootScope.preview_as_student){
+        $rootScope.preview_as_student = null;
+        $cookieStore.remove('preview_as_student')
+      }
     })
 
     $rootScope.$on("Course:get_current_courses", function() {

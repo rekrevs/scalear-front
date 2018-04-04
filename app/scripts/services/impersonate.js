@@ -132,14 +132,6 @@ angular
           var state = $cookieStore.get("state");
           ContentNavigator.close();
           $rootScope.$broadcast("exit_preview");
-          if (state) {
-            $state.go(state, params, {
-              notify: false,
-              reload: false,
-              location: "replace",
-              inherit: true
-            });
-          }
 
           Impersonate.destroy(
             {
@@ -148,7 +140,7 @@ angular
             },
             function(data) {
               UserSession.allowRefetchOfUser();
-              // token of main user(teacher)
+             // token of main user(teacher)
               Token.setToken(data.token);
               clean();
               $rootScope.preview_as_student = false;

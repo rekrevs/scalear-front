@@ -63,7 +63,7 @@ table.table_matrix_height tbody{
                             <img tooltip="{{tooltip}}." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         </span>
                         <!-- correct question >= correct questions threshold -->
-                        <span ng-style="{'font-weight':'bold', 'color':module[2]>=module[8]? 'green':'gray', 'margin-left':'5px'}" ng-if="module[7]==3">{{(module[2]>=module[8])? "Pass":"Fail"}}</span>
+                        <span ng-style="{'font-weight':'bold', 'color':module[2]>=module[8]? 'green':'gray', 'margin-left':'5px'}" ng-if="module[7]==3">{{(module[2]>=module[8])? "editor.details.pass":"editor.details.fail" | translate}}</span>
                         <div ng-if="module[1]>0 && !student.status[module[0]]" >{{::'('+module[1]+' '+('time.days'|translate)+')'}}</div>
                     </center>
                 </span>

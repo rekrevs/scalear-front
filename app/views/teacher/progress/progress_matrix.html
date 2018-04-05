@@ -49,18 +49,21 @@ table.table_matrix_height tbody{
         <tr ng-repeat="student in students" >
             <td class="column-width"><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right">{{student.full_name}}</span></td>
             <td class="state column-width" ng-repeat='module in status[student.id] track by $index'>
-                <span ng-if="::( module.length == 8)">
+                <span ng-if="::( module.length >= 8)">
+                    <!-- quiz: [id,(-1 didnt finish, 0 finished on time, n late n days), correct_answers_question, total_question_count ,not_checked_question, 0, 0] -->
                     <center>
                        <span ng-if="::(module[7]==1)">
                             <img tooltip=" {{'progress.tooltip.watched_video' | translate}}:{{module[6]}}%, {{module[2]}}/{{module[3]}} {{'progress.tooltip.quizzes_solved' | translate}}, {{module[4]}}/{{module[5]}} {{'progress.tooltip.quizzes_optional_solved' | translate}}." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
                             style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         </span>
-                        <span ng-if="::( (module[7]==2) && (module[4]!=0) )">
-                            <img tooltip="{{'progress.tooltip.correct' | translate}} {{module[2]}}/{{module[3]}} , {{module[4]}} {{'progress.tooltip.question_not_checked' | translate}}." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
+                        <!-- normal quizzes and exams -->
+                        <!-- module[4] != 0 means has non-checked questions -->
+                        <span ng-if="::(module[7]==2 || module[7]==3)" 
+                            ng-init="tooltip= (module[4]==0)?('progress.tooltip.correct' | translate) + ' ' + module[2] + '/' + module[3] : ('progress.tooltip.correct' | translate) + ' ' + module[2] + '/' + module[3] + ' , ' + module[4] + ' ' + ('progress.tooltip.question_not_checked' | translate)">
+                            <img tooltip="{{tooltip}}." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         </span>
-                        <span ng-if="::( (module[7]==2) && (module[4]==0) )">
-                            <img tooltip="{{'progress.tooltip.completed' | translate}} {{module[2]}}/{{module[3]}} ." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
-                        </span>                    
+                        <!-- correct question >= correct questions threshold -->
+                        <span ng-style="{'font-weight':'bold', 'color':module[2]>=module[8]? 'green':'gray', 'margin-left':'5px'}" ng-if="module[7]==3">{{(module[2]>=module[8])? "Pass":"Fail"}}</span>
                         <div ng-if="module[1]>0 && !student.status[module[0]]" >{{::'('+module[1]+' '+('time.days'|translate)+')'}}</div>
                     </center>
                 </span>

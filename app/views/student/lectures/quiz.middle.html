@@ -61,7 +61,7 @@
         <button id="next_button" type="button" ng-show="next_item.id" ng-click="nextItem()" class="button tiny">
             <span translate>button.next</span>
         </button>
-        <span ng-if="quiz.exam" class="right with-margin-right" ng-style="{color: pass?'green':'red'}">{{numberOfCorrectAnswers}} / {{quiz.questions.length}} <span translate>global.correct</span>. <span >{{pass ? 'editor.details.pass' : 'editor.details.fail' | translate}}</span></span>
+        <span ng-if="quiz.exam && status.status == 'Submitted'" class="right with-margin-right" ng-style="{color: pass?'green':'red'}">{{numberOfCorrectAnswers}} / {{quiz.questions.length}} <span translate>global.correct</span>. <span >{{pass ? 'editor.details.pass' : 'editor.details.fail' | translate}}</span></span>
     </div>
     <div ng-if="current_survey.visible" ng-repeat="element in ordered_survey">
         <div ng-show="survey_chart_data && survey_chart_data[element[0]].student_show" style="padding:10px 40px" >

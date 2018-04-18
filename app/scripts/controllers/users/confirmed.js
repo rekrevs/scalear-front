@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', 'scalear_api', '$translate', '$log', 'ngDialog','URLInformation','$window', function($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log, ngDialog, URLInformation, $window) {
+  .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', 'scalear_api', '$translate', '$log', 'URLInformation','$window', function($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log, URLInformation, $window) {
     $scope.user_email = $state.params.type
     $scope.remaining = 5;
     $scope.show_ending = false;
@@ -16,7 +16,6 @@ angular.module('scalearAngularApp')
     UserSession.getCurrentUser()
       .then(function(user) {
         $scope.current_user = user
-        $scope.privacyPopover();
       })
 
     $scope.player.events.onEnd = function() {
@@ -53,26 +52,6 @@ angular.module('scalearAngularApp')
           $state.go('course_list');
         }
       );
-    }
-
-    $scope.privacyPopover = function() {
-      ngDialog.openConfirm({
-          template: '/views/privacy_popover.html',
-          className: 'ngdialog-theme-default dialogwidth800',
-          showClose: false,
-          scope: $scope
-        })
-        .then(function(value) {
-          User.agreeToPrivacyPolicy({ id: $scope.current_user.id },{},function(response){
-            $scope.privacy_approved = true
-          })
-        }, function(reason) {
-          $rootScope.busy_loading = true;
-          UserSession.logout().then(function() {
-            $state.go("login");
-            $rootScope.busy_loading = false;
-          });
-        });
     }
 
   }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('QuestionModel', ['Quiz', 'CourseEditor', 'ErrorHandler', 'ItemsModel', '$translate', function(Quiz, CourseEditor, ErrorHandler, ItemsModel, $translate) {
+  .factory('QuestionModel', ['Quiz', 'CourseEditor', 'ErrorHandler', 'ItemsModel', '$translate', '$rootScope',function(Quiz, CourseEditor, ErrorHandler, ItemsModel, $translate, $rootScope) {
 
     var questions = []
 
@@ -72,6 +72,7 @@ angular.module('scalearAngularApp')
           data[index] = questions[index]
         }
       }
+      $rootScope.$broadcast('questions_count:updated',questions.length);
       return Quiz.updateQuestions({
           course_id: quiz.course_id,
           quiz_id: quiz.id
@@ -116,6 +117,7 @@ angular.module('scalearAngularApp')
       addAnswer: addAnswer,
       removeAnswer: removeAnswer,
       addHeader: addHeader,
-      removeHeader: removeHeader
+      removeHeader: removeHeader,
+      questions: questions
     }
   }])

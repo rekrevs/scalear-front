@@ -1,11 +1,11 @@
 <div class="small-12 columns">
 	</br>
 	<div class="row no-margin">
-		<div class="small-8 columns">		
+		<div class="small-8 columns">
 			<div class="small-12 columns">
 				<h4><b translate>navigation.announcements</b></h4>
 			</div>
-		
+
 			<div class="small-12 columns">
 				<span translate>announcements.post</span>
 			</div>
@@ -20,6 +20,7 @@
 			<h5 class="muted" translate>announcements.empty</h5>
 		</center>
 	</div>
+    <div id="kal_player" style="width:400px;height:330px;"></div>
 	<br />
 	<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}| reverse" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving"></announcement-item>
 </div>

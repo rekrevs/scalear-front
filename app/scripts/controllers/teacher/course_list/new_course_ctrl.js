@@ -12,7 +12,12 @@ angular.module('scalearAngularApp')
      $scope.status = '  ';
     $scope.welcome_message = null
     $scope.course.selected_subdomain = {'All':true}
+    $scope.hide_ask_copy = false;
     $scope.course.email_discussion = false
+    $scope.selected_course_details = false;
+    $scope.selected_course = null;
+    $scope.selected_course_description=null;
+    $scope.selected_course_prerequists = null;
     CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -156,8 +161,6 @@ angular.module('scalearAngularApp')
       }
       return deferred.promise
     }
-
-
     $scope.createCourse = function() {
       $scope.submitting = true;
       validateDate()
@@ -191,7 +194,6 @@ angular.module('scalearAngularApp')
      // Appending dialog to document.body to cover sidenav in docs app
      $modal.open({
        templateUrl: '/views/teacher/course_list/copy_from_course.html',
-
        scope: $scope,
        controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
          $scope.close = function () {
@@ -201,28 +203,20 @@ angular.module('scalearAngularApp')
         };
       }],
      })
-
-
-   };
-  $scope.$on('$viewContentLoaded', function() {
+    };
+    $scope.$on('$viewContentLoaded', function() {
        $scope.showConfirm()
     });
-  $scope.hide_Ask_Copy = false;
-  $scope.hideAskCopy = function(){
-      $scope.hide_Ask_Copy = true;
-  }
-   $scope.showCourseSeleciton = function () {
-     $scope.show_course_selection = true;
-   }
-   $scope.selected_course_details = false;
-   $scope.selected_course = null;
-   $scope.selected_course_description=null;
-   $scope.selected_course_prerequists = null;
-   $scope.showSelectedCourseDetails = function(selected_course){
-        $scope.selected_course_details=true;
-        $scope.selected_course=selected_course;
-        $scope.selected_course_description= ScalearUtils.getHtmlText(selected_course.description);
-        $scope.selected_course_prerequists = ScalearUtils.getHtmlText(selected_course.prerequisites);
-
-   }
+    $scope.hideAskCopy = function(){
+       $scope.hide_ask_copy = true;
+    }
+    $scope.showCourseSeleciton = function () {
+       $scope.show_course_selection = true;
+    }
+    $scope.showSelectedCourseDetails = function(selected_course){
+       $scope.selected_course_details=true;
+       $scope.selected_course=selected_course;
+       $scope.selected_course_description= ScalearUtils.getHtmlText(selected_course.description);
+       $scope.selected_course_prerequists = ScalearUtils.getHtmlText(selected_course.prerequisites);
+    }
   }]);

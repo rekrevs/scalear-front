@@ -758,7 +758,6 @@ angular
             shortcut.add(
               "esc",
               function() {
-                console.log("i m in escape");
                 $("form.editable-textarea").submit();
               },
               { disable_in_input: false }

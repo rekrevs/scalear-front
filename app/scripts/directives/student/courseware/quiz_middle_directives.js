@@ -54,19 +54,18 @@ angular.module('scalearAngularApp')
         })
 
         function updateExplanation() {
-          if (scope.quiz.show_explanation){
             scope.quiz.questions.forEach(function(question) {
               if(question.question_type.toUpperCase() !== "DRAG") {
                 question.answers.forEach(function(answer) {
-                  answer.options = scope.getExplanationPop(answer.id)
+                  answer.options = scope.explanation[answer.id]?scope.getExplanationPop(answer.id) : '';
                 })
               } else {
                 scope.studentAnswers[question.id].forEach(function(answer, idx) {
-                  scope.drag_explanation[idx] = scope.getExplanationPop(question.answers[0].id, idx)
+                  scope.drag_explanation[idx] = scope.explanation[question.answers[0].id]? scope.getExplanationPop(question.answers[0].id, idx) : '';
                 })
               }
             })
-          }
+          
         }
 
       }

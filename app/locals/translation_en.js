@@ -392,6 +392,7 @@ var translation_en={
   privacy:{
     policy: "Terms and conditions",
     terms_intro:"You are deemed to accept and agree to abide by the following Terms and Conditions when you create a user account, log in, and/or use the ScalableLearning service.",
+    privacy_text:"Privacy",
     information_collect: "What information we collect",
     information_collect_details: "We collect information on how you use the site, and how you interact with and create educational content. This includes responses to quizzes, lecture videos played, pauses, seeks, questions asked, questions answered, clicks on the confused button, responses to surveys, and general site navigation. We also collect information on how teachers use the site, including use of the course construction tools, progress visualization, in-class display tools, course content and structure, and general site navigation. This information includes the time, type of action, the response, and the account associated with the action.",
     information_use:"How information we collect",

@@ -44,7 +44,6 @@ angular.module('scalearAngularApp')
     })
 
     $rootScope.$on("Course:set_modules", function(ev, modules) {
-      console.log(modules)
       setModules(modules)
     })
 

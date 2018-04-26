@@ -390,7 +390,7 @@ var translation_sv={
     reviewed_inclass: "Vill du att läraren skall gå igenom denna fråga i klassrummet"
   },
   privacy:{
-    policy: "Sekretesspolicy",
+    policy: "användningsvillkor",
     terms_intro:"Genom att skapa ett användarkonto, logga in och/eller använda ScalableLearning-tjänsten accepterar du dessa villkor.",
     privacy_text:"Integritet",
     information_collect: "Vilken information vi samlar in",

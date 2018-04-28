@@ -12,6 +12,9 @@ body {
   padding:10px;
   background:#5ee;
 }*/
+#thick{
+  font-weight: bold;
+}
 .container {
 padding-bottom: 25px;
 padding-top: 45px;
@@ -49,7 +52,10 @@ width: 78%;
   /*overflow-y: hidden !important;*/
 }
 
-
+ul.disc li{
+  list-style-type: disc;
+}
+/*put list elements in bullets*/
 .content-navigator-bottom-container{
   border-top: 2px groove lightgray;
   height: 11%;

@@ -218,8 +218,8 @@ angular
       var fontSize = "14px"
       if (MobileDetector.isMobile()){
         fontSize = "10px";
-      } 
-        
+      }
+
       return {
         restrict: "E",
         template:
@@ -390,7 +390,6 @@ angular
               ui.draggable.css("background-color", "lightblue");
               ui.draggable.css("width", scope.data.width * 100 + "%");
               ui.draggable.css("height", scope.data.height * 100 + "%");
-
               ui.draggable.css("word-wrap", "break-word");
               ui.draggable.css("overflow", "hidden");
               var ontop_w = angular.element("#ontop").width();
@@ -424,6 +423,9 @@ angular
             destroyPopover(ui.draggable);
             clear(ui.draggable);
             ui.draggable.css("font-size", "15px");
+            ui.draggable.css("overflow", "scroll");
+
+
           };
 
           var clear = function(draggable) {
@@ -842,7 +844,7 @@ angular
         },
         templateUrl: "/views/student/lectures/dynamic_annotation_student.html",
         link: function(scope, element, attrs) {
-         
+
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
         }

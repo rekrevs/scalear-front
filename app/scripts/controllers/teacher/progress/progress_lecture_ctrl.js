@@ -134,7 +134,6 @@ angular.module('scalearAngularApp')
           // $log.debug($scope.timeline)
           if ($stateParams.item_id != null) {
             scrollToSubItem($stateParams.item_id)
-            // seekToItem()
           }
         },
         function() {}
@@ -271,8 +270,6 @@ angular.module('scalearAngularApp')
                   $scope.selected_item = item
                   item.lec_id=disc.lecture_id
                   disc.show_feedback=true
-                  console.log("========scrollTOSubItem====disc===")
-                  console.log(disc)
                   seekToItem()
                 }
               })
@@ -346,8 +343,6 @@ angular.module('scalearAngularApp')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
       $scope.selected_item = item
-      console.log("selected_item")
-      console.log(item)
       var parent_div = ul.closest('div')
       if (parent_div.attr('id')) {
         var id = parent_div.attr('id').split('_')
@@ -908,13 +903,7 @@ angular.module('scalearAngularApp')
 
     var seekToItem = function() {
       // $log.debug("seeking to item", $scope.selected_item)
-      console.log("here")
-      console.log($scope.selected_item)
-      console.log($scope.selected_item.time )
-      console.log($scope.selected_item.lec_id)
-      console.log($scope.lectures[$scope.selected_item.lec_id])
       if ($scope.selected_item && $scope.selected_item.time >= 0 && $scope.lectures[$scope.selected_item.lec_id]) {
-        console.log("in seek to item")
         var time = $scope.selected_item.time
         if ($scope.selected_item.type == "discussion") {
           var q_ind = $scope.inner_highlight_index

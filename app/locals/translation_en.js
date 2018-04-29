@@ -99,7 +99,7 @@ var translation_en={
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
     },
-    welcome_message_updated: "Welcome message updated",    
+    welcome_message_updated: "Welcome message updated",
   },
   time:{
     hours: "hours",
@@ -638,6 +638,7 @@ var translation_en={
     annotation:"Annotation",
     tooltip:{
       invisible: "Not currently visible to students.",
+      visible_quiz: "Published: visible to students.",
       invisible_quiz:"Unpublished: not visible to students.",
       invisible_cont: "Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",

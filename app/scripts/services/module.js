@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
       'getDiscussionSummary' :{ method: 'GET', ignoreLoadingBar: true, headers: headers, params: { action: 'get_discussion_summary' } },
       'updateAllInclassSessions': { method: 'POST', ignoreLoadingBar: true, headers: headers, params: { action: 'update_all_inclass_sessions' } },
       'exportModuleTimelineCsv': { method: 'GET', headers: headers, params: { action: 'export_module_timeline_csv' } }
-      
+
     });
   }])
   .factory('ModuleModel', ['Module', '$rootScope', function(Module, $rootScope) {

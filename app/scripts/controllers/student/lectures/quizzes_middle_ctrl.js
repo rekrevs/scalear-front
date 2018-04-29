@@ -90,8 +90,8 @@ angular.module('scalearAngularApp')
 
     $scope.$watch('correct',function(correct){
       if (correct){
-        //number of keys in the 'correct' object whose value is 1 
-        $scope.numberOfCorrectAnswers = Object.values(correct).reduce(function(n,value){return n + (value == '1')},0);
+        //number of keys in the 'correct' object whose value is 1 or 3 (1 is correct for mcq/ocq/drag, 3 is correct for free text with match)
+        $scope.numberOfCorrectAnswers = Object.values(correct).reduce(function(n,value){return n + (value == '1' || value == '3')},0);
         $scope.pass = $scope.numberOfCorrectAnswers >= $scope.quiz.correct_question_count;
       }
     })

@@ -68,6 +68,8 @@ var translation_en={
     votes: "Votes",
     no: "No",
     courses_list: "Courses List",
+    new:"New",
+    copy:"Copy"
   },
   mailer:{
     send_email: "Send An Email",
@@ -99,7 +101,7 @@ var translation_en={
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
     },
-    welcome_message_updated: "Welcome message updated",    
+    welcome_message_updated: "Welcome message updated",
   },
   time:{
     hours: "hours",
@@ -1008,6 +1010,9 @@ var translation_en={
             unselect:"Unselect"
         },
         copy_from_existing: "Copy Data from Existing Course",
+        copy_from_existing_title: "Copy Data",
+        ask_copy_from_existing:"Would you like to create a new empty course or copy material from an existing course?",
+        ask_choose_from_existing:"Please choose one of your existing courses to copy content from",
         course_item_shift: "Course items will be shifted according to the course start date.",
     },
     start_date: "Start Date",

@@ -22,6 +22,7 @@ angular.module('scalearAngularApp')
       $scope.user.last_name = $scope.saml_user.sn || ""
       $scope.user.university = $scope.saml_user.o || ""
       $scope.user.password = $state.params.input2 || ""
+      $scope.user.is_saml = $scope.is_saml || false;
       setupScreenName()
     }
 

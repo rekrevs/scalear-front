@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     var service = {
       youtube_video_information: {},
       duration: 0,
-      current_time: 0, 
+      current_time: 0,
       volume: 0.8,
       speed: 1,
       quality: "720p"
@@ -41,7 +41,10 @@ angular.module('scalearAngularApp')
     service.emptyCachedInfo=function(){
       service.youtube_video_information = {}
     }
-
+    service.isKatlura=function(url){
+       console.log(url)
+       return url.toString().startsWith("<iframe")
+    }
     service.isYoutube=function(url) {
       var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
       if(!match)
@@ -66,7 +69,8 @@ angular.module('scalearAngularApp')
     }
 
     service.invalidUrl=function(url) {
-      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url)) )
+      console.log("we r in invalidUrl:"+service.isKatlura(url))
+      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
     }
 
     service.setDuration=function(newDuration) {
@@ -86,7 +90,7 @@ angular.module('scalearAngularApp')
 
     service.resetValues=function() {
       service.duration= 0
-      service.current_time= 0 
+      service.current_time= 0
       service.volume= 0.8
       service.speed= 1
       service.quality= "720p";

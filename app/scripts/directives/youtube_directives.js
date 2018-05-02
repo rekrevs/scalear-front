@@ -78,6 +78,10 @@ angular.module('scalearAngularApp')
           player = Popcorn(video);
           video.src = scope.url
           $log.debug(video.src)
+        }else if (isKaltura(scope.url)){
+          console.log("kaltura");
+          var f = extractKalturaIDs(scope.url);
+          console.log(f)
         }
 
         if (scope.player){
@@ -90,6 +94,26 @@ angular.module('scalearAngularApp')
             scope.$emit('slow', isYoutube(scope.url))
           }
         }, 15000, 1)
+      }
+      var extractKalturaIDs = function(url){
+        //ex1:<iframe src="http://www.kaltura.com/p/{PARTNER_ID}/sp/{PARTNER_ID}00/embedIframeJs/uiconf_id/{UICONF_ID}/partner_id/{PARTNER_ID}?iframeembed=true&playerId={UNIQUE_OBJ_ID}&entry_id={ENTRY_ID}" width="400" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
+        //ex2:<iframe src="https://cdnapisec.kaltura.com/p/1763741/sp/176374100/embedIframeJs/uiconf_id/24747631/partner_id/1763741?iframeembed=true&playerId=kplayer&entry_id=0_n8xcunnj&flashvars[streamerType]=auto" width="560" height="395" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
+        var kalturaIDs = {}
+        var frame_src
+        frame_src = url.split(" ")[1]
+        var frame_src_slash_splitted = frame_src.split('/')
+        kalturaIDs.partner_id = frame_src_slash_splitted[4]
+        kalturaIDs.uiconf_id  = frame_src_slash_splitted[9]
+        var frame_src_equal_splitted
+        frame_src_equal_splitted = frame_src.split("=")
+
+        if (frame_src_equal_splitted[4].includes("flashvars")) {//url has flash vars
+          var frame_src_equal_and_splitted = frame_src_equal_splitted[4].split('&')
+          kalturaIDs.entry_id   = frame_src_equal_and_splitted[0]
+        }else{//url has not flash vars
+          kalturaIDs.entry_id   = frame_src_equal_splitted[4]
+        }
+        return kalturaIDs
       }
 
       var formatYoutubeURL = function(url, vq, start, end, autoplay, controls) {
@@ -450,6 +474,12 @@ angular.module('scalearAngularApp')
         var video_url = url || scope.url || ""
         return video_url.match(/(.*mp4$)/)
       }
+      var isKaltura= function(frame_url) {
+        var url = frame_url.split(" ")[1]
+        var video_url = url || scope.url.split(" ")[1]|| ""
+        return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[1-9]+\/[a-zA-Z]+\/[1-9]+00\/[a-zA-Z]+\/uiconf_id\/([1-9]+)\/partner_id\/([1-9]+).*&entry_id=(.+)(&.*)?/)
+
+      }
 
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""
@@ -460,7 +490,8 @@ angular.module('scalearAngularApp')
       player_controls.isMP4 = isMP4
 
       scope.$watch('url', function() {
-        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isMediaSite(scope.url) )){
+        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) )){
+          console.log("here")
           player_controls.refreshVideo()
         }
       })

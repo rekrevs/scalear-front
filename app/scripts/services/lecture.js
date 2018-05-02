@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
       "saveNote": { method: 'POST', params: { action: 'save_note' }, headers: headers },
       "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers },
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
-      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, 
+      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers },
       "changeLectureStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
@@ -168,6 +168,7 @@ angular.module('scalearAngularApp')
           validate()
             .then(function() {
               var type = VideoInformation.isYoutube(lecture.url)
+              console.log("validateUrl:"+type)
               if(type) {
                 var id = type[1]
                 VideoInformation.emptyCachedInfo()
@@ -189,7 +190,7 @@ angular.module('scalearAngularApp')
                   })
               } else {
                 deferred.resolve()
-              } 
+              }
             })
             .catch(function(msg) {
               deferred.reject(msg)
@@ -257,7 +258,6 @@ angular.module('scalearAngularApp')
             })
           }
         } else {
-          lecture.url = "none"
           deferred.reject()
         }
         return deferred.promise;
@@ -278,8 +278,8 @@ angular.module('scalearAngularApp')
         return Lecture.updatePercentView({
           course_id: lecture.course_id,
           lecture_id: lecture.id
-        }, { 
-          percent: milestone 
+        }, {
+          percent: milestone
         })
         .$promise
     }

@@ -54,7 +54,20 @@ angular.module('scalearAngularApp')
           template: '/views/privacy_popover.html',
           className: 'ngdialog-theme-default dialogwidth800',
           showClose: false,
-          scope: $scope
+          scope: $scope,
+          controller: ['$scope',function(scope){
+            var dialog; 
+            var x = 0;
+            var int  = setInterval(function(){
+              dialog = document.getElementsByClassName("ngdialog-content")[0];
+              if(dialog){
+                dialog.scrollTo(0,0);
+                clearInterval(int);
+              } else if(++x == 1000){
+                clearInterval(int);
+              }
+            },10);
+          }]
         })
         .then(function(value) { //user agree to privacy policy terms
            if ($scope.is_saml) {

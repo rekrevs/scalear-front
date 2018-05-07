@@ -390,7 +390,7 @@ var translation_en={
     reviewed_inclass: "Would you like the teacher to review this question in class"
   },
   privacy:{
-    policy: "Terms and conditions",
+    policy: "Terms and Conditions",
     terms_intro:"You are deemed to accept and agree to abide by the following Terms and Conditions when you create a user account, log in, and/or use the ScalableLearning service.",
     privacy_text:"Privacy",
     information_collect: "What information we collect",
@@ -439,7 +439,7 @@ var translation_en={
     code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Any significant changes in the privacy policy will be sent by email to all active accounts. Changes to the privacy policy take effect when posted here.",
-    policy_agree: "I agree to the ScalableLearning Privacy Policy and I consent to allow ScalableLearning to Process my data",
+    policy_agree: "I agree to the ScalableLearning Privacy Policy and I consent to allow ScalableLearning to Process my data.",
     last_update: "Last update: Feb-2018",
     agree: "Agree",
     cancel: "Cancel",

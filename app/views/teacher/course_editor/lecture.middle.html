@@ -4,6 +4,7 @@
 			<b><span translate>editor.video_editor</span>: </b>
 			<span>{{lecture.name}}</span>
 		</h4>
+		<div id="kal_player" style="width:400px;height:330px;"></div>
 		<overlay ng-show="lecture.url=='none'">
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url</h3>
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url_continue</h3>
@@ -82,3 +83,35 @@
 		</center>
 	</div>
 </div>
+<!-- <script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+<script>
+			kWidget.embed({
+				 'targetId': 'kal_player',
+				 'wid': '_243342',
+				 'uiconf_id' : '12905712',
+				 'entry_id' : '0_uka1msg4',
+				 'flashvars':{ // flashvars allows you to set runtime uiVar configuration overrides.
+							'myPlugin':{
+									'fooAttribute': 'bar',
+									'barAttribute': 'foo'
+								},
+							'autoPlay': false
+				 },
+				 'params':{ // params allows you to set flash embed params such as wmode, allowFullScreen etc
+							'wmode': 'transparent'
+				 },
+				 readyCallback: function( playerId ){
+					 var kdp = document.getElementById( playerId );
+					 var foo = "bar";
+					 // using kBind we will register to player's play event
+
+
+					 kdp.kBind( "mute", function(){
+						// console will log "play bar":
+							console.log("mute " + foo);
+						// stop listening to the play event using kUnbind:
+						 // kdp.kUnbind('playerPaused');
+					 });
+													}
+									});
+		</script> -->

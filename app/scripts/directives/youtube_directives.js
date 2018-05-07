@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
         player_events = {}
 
       var loadVideo = function() {
+console.log(1)
         scope.kill_popcorn()
         player_controls.youtube = false
         if (!scope.controls || scope.controls == undefined)
@@ -52,10 +53,14 @@ angular.module('scalearAngularApp')
           scope.autoplay = 1;
 
         if (isYoutube(scope.url)) {
-          $log.debug("youtube")
+console.log(2)
           player_controls.youtube = true
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
+console.log("video ")
+console.log(video)
           player = Popcorn(video);
+          console.log("youtube player")
+          console.log(player)
           video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
@@ -79,14 +84,22 @@ angular.module('scalearAngularApp')
           video.src = scope.url
           $log.debug(video.src)
         }else if (isKaltura(scope.url)){
-          console.log("kaltura");
+          console.log("kaltura")
           var f = extractKalturaIDs(scope.url);
-          console.log(f)
-        }
 
+          //video = Popcorn.getKalturaVideo(scope.url);
+          //player=Popcorn.getKalturaPlayer(f)
+//          document.appendChild(video)
+
+          //document.body.appendChild(player);
+
+        }
+console.log(3)
         if (scope.player){
           scope.player.element = player
         }
+console.log("4")
+console.log(player)
         setupEvents()
         parent.focus()
         scope.timeout_promise = $interval(function() {
@@ -95,6 +108,7 @@ angular.module('scalearAngularApp')
           }
         }, 15000, 1)
       }
+
       var extractKalturaIDs = function(url){
         //ex1:<iframe src="http://www.kaltura.com/p/{PARTNER_ID}/sp/{PARTNER_ID}00/embedIframeJs/uiconf_id/{UICONF_ID}/partner_id/{PARTNER_ID}?iframeembed=true&playerId={UNIQUE_OBJ_ID}&entry_id={ENTRY_ID}" width="400" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
         //ex2:<iframe src="https://cdnapisec.kaltura.com/p/1763741/sp/176374100/embedIframeJs/uiconf_id/24747631/partner_id/1763741?iframeembed=true&playerId=kplayer&entry_id=0_n8xcunnj&flashvars[streamerType]=auto" width="560" height="395" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
@@ -341,6 +355,8 @@ angular.module('scalearAngularApp')
       }
 
       var setupEvents = function() {
+        console.log(5)
+        player = scope.player.element
         player.on("loadeddata",
           function() {
             $log.debug("Video data loaded and ready")
@@ -478,20 +494,17 @@ angular.module('scalearAngularApp')
         var url = frame_url.split(" ")[1]
         var video_url = url || scope.url.split(" ")[1]|| ""
         return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[1-9]+\/[a-zA-Z]+\/[1-9]+00\/[a-zA-Z]+\/uiconf_id\/([1-9]+)\/partner_id\/([1-9]+).*&entry_id=(.+)(&.*)?/)
-
       }
-
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""
         return video_url.match(/^(http|https):\/\/.*(\/Play\/)/)
       }
 
       player_controls.isYoutube = isYoutube
-      player_controls.isMP4 = isMP4
+      player_controls.isMP  = isMP4
 
       scope.$watch('url', function() {
         if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) )){
-          console.log("here")
           player_controls.refreshVideo()
         }
       })

@@ -175,7 +175,7 @@
     function onFirstPlay() {
       player.setOption('captions','reload',true);
       player.setOption('captions','track',{});
-      
+
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
@@ -596,7 +596,7 @@
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
-    
+
     self.destroy = function(){
       resetPlayer()
     }

@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
     $scope.agree_to_terms = false;
     Page.setTitle('Welcome to ScalableLearning');
     $rootScope.subheader_message = $translate.instant("intro.title")
-    $scope.student_or_teacher = null 
+    $scope.student_or_teacher = null
     UserSession.getCurrentUser()
       .then(function(user) {
         $scope.current_user = user

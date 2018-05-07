@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
     };
   })
   .directive('videoOverlay', function() {
-    return { 
+    return {
       transclude: true,
       replace: true,
       restrict: 'E',
@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
         '<div class="row" style="text-align:left;margin-left:0;">' +
         '<div class="small-3 columns"><span translate>editor.note_as_slide</span>:</div>' +
         '<div class="small-9 left columns no-padding" style="margin-bottom: 5px;">' +
-        '<input class="marker_as_slide" type="checkbox" ng-model="selected_marker.as_slide" style="margin-bottom:0;"/>' + 
+        '<input class="marker_as_slide" type="checkbox" ng-model="selected_marker.as_slide" style="margin-bottom:0;"/>' +
         '<span translate>editor.note_as_slide_description</span>'+
         '<small class="error position-absolute z-one" ng-show="marker_errors.as_slide_error" ng-bind="marker_errors.as_slide_error"></small>' +
         '</div>' +
@@ -105,7 +105,7 @@ angular.module('scalearAngularApp')
         '<input class="marker_duration" type="text" ng-model="selected_marker.duration" style="height: 30px;margin-bottom:0;">' +
         '<small class="error position-absolute z-one" ng-show="marker_errors.duration_error" ng-bind="marker_errors.duration_error"></small>' +
         '</div>' +
-        '</div>' +        
+        '</div>' +
         '<delete_button id="delete_marker_button" size="big" action="deleteMarkerButton(selected_marker)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>' +
         '<button id="save_marker_button" ng-disabled="disable_save_button" class="button tiny" style="float:right" ng-click="saveMarkerBtn(selected_marker)" translate>events.done</button>' +
         '</h6>' +
@@ -129,7 +129,7 @@ angular.module('scalearAngularApp')
           }
           else if($("input.marker_duration").is(':focus')){
            $("#save_marker_button").focus()
-          }          
+          }
           else if($("#save_marker_button").is(':focus')){
             if(tab_enter == 'enter'){
              $("#save_marker_button").click()
@@ -189,10 +189,10 @@ angular.module('scalearAngularApp')
         scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)
         scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)
         scope.$watch('lecture.start_time', function(newval,oldval){
-          scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)        
+          scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)
         })
         scope.$watch('lecture.end_time', function(newval,oldval){
-          scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)        
+          scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)
         })
 
         scope.closeTrimVideo = function() {
@@ -373,7 +373,7 @@ angular.module('scalearAngularApp')
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
         "</div>" +
         "</div>" +
-        "<div class='dragged handle' data-drag='true' style='height: 46px; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<div class='dragged handle' data-drag='true' style='max-width:350px;max-height:95px; overflow: scroll; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<span class='position-header error light-grey dark-text no-margin' style='top: 6px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>editor.drag.start</span></span>" +
         "<span class='no-margin' ng-bind-html='data.answer'></span>" +
         "</div>" +
@@ -880,45 +880,45 @@ angular.module('scalearAngularApp')
       },
       templateUrl: '/views/student/lectures/dynamic_annotation.html',
       link:function(scope, element, attrs){
-        
+
         scope.closeBtn = scope.close()
         scope.actionBtn = scope.action()
-  
+
         var ontop = angular.element('.ontop');
         var draggableArea = angular.element(element.children().first())
         var textarea = angular.element(draggableArea.children().first())
-  
+
         scope.calculatePosition = function() {
           scope.data.xcoor = parseFloat(draggableArea.position().left) / ontop.width();
           scope.data.ycoor = parseFloat(draggableArea.position().top) / ontop.height();
           scope.calculateSize()
         }
-  
+
         scope.calculateSize = function(event,ui) {
           if ( ui && ( textarea[0].offsetWidth+20  <  textarea[0].scrollWidth+20  ) ){
             ui.size.width = textarea[0].scrollWidth +20
             scope.data.width = ui.size.width / (ontop.width()) ;
-          } 
-          else{
-            scope.data.width = draggableArea[0].offsetWidth / (ontop.width()) ;          
           }
-         
+          else{
+            scope.data.width = draggableArea[0].offsetWidth / (ontop.width()) ;
+          }
+
           if ( ui && (textarea[0].offsetHeight+20 <  textarea[0].scrollHeight+20) ){
             ui.size.height = textarea[0].scrollHeight +20
             scope.data.height = scope.data.height / (ontop.height()) ;
           }
           else{
-            scope.data.height = draggableArea[0].offsetHeight / (ontop.height()) ;                    
+            scope.data.height = draggableArea[0].offsetHeight / (ontop.height()) ;
           }
         }
-  
-  
+
+
         if ( !CourseModel.isStudent() ) {
           angular.element(element.children()[0]).resizable({
             containment: ".videoborder",
             stop: scope.calculateSize,
             resize: scope.calculateSize
-          });              
+          });
         }
       }
     }

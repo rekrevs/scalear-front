@@ -330,6 +330,7 @@
       firstPlay = false;
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
+
     }
 
     function destroyElement(){
@@ -337,6 +338,7 @@
         return;
       }
       parent.removeChild( elem );
+      kWidget.destroy(id.split("#")[1]);
       elem = document.createElement( "div" );
     }
 
@@ -513,6 +515,7 @@ console.log("before embed")
 
 
     function monitorCurrentTime() {
+      console.log("monitor current time")
       var playerTime = player.getCurrentTime();
       if ( !impl.seeking ) {
         if ( ABS( impl.currentTime - playerTime ) > CURRENT_TIME_MONITOR_MS ) {
@@ -526,6 +529,7 @@ console.log("before embed")
     }
 
     function monitorBuffered() {
+      console.log("monitor buffered")
       var fraction = player.getVideoLoadedFraction();
 
       if ( fraction && lastLoadedFraction !== fraction ) {
@@ -543,27 +547,28 @@ console.log("before embed")
     }
 
     function changeCurrentTime( aTime ) {
+      console.log("changeCurrent")
       impl.currentTime = aTime;
-      // if( !mediaReady ) {
-      //   addMediaReadyCallback( function() {
-      //
-      //     onSeeking();
-      //   //   player.seekTo( aTime );
-      //   });
-      //   return;
-      //
-      // }
-      //
-      // onSeeking();
-      // player.seekTo( aTime );
-      self.player.kBind( 'mediaReady', function(){
-      		// Seek to 30 seconds from the start of the video
+      if( !mediaReady ) {
+        addMediaReadyCallback( function() {
+
+          onSeeking();
+        //   player.seekTo( aTime );
+        });
+        return;
+
+      }
+
+      onSeeking();
+      player.seekTo( aTime );
+      console.log("change current time")
       		self.player.sendNotification("doSeek", aTime);
-      	})
+
 
     }
 
     function onTimeUpdate() {
+      console.log("time update");
 
       self.dispatchEvent( "timeupdate" );
     }
@@ -573,7 +578,9 @@ console.log("before embed")
       // we don't want to listen for this, so this state catches the event.
       // catchRoguePauseEvent = true;
       impl.seeking = true;
+
       self.dispatchEvent( "seeking" );
+
 
     }
 
@@ -611,6 +618,7 @@ console.log("before embed")
     }
 
     function onProgress() {
+      console.log("pogress");
       self.dispatchEvent( "progress" );
     }
 
@@ -723,18 +731,21 @@ console.log("before embed")
         console.log("getVolume")
         return player.evaluate('{video.volume}')
 
-      },5000);
+      },7000);
 
     }
 
     function setMuted( aValue ) {
-      impl.muted = aValue;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { setMuted( impl.muted ); } );
-        return;
-      }
-      player[ aValue ? "mute" : "unMute" ]();
-      self.dispatchEvent( "volumechange" );
+      // impl.muted = aValue;
+      // if( !mediaReady ) {
+      //   addMediaReadyCallback( function() { setMuted( impl.muted ); } );
+      //   return;
+      // }
+      // player[ aValue ? "mute" : "unMute" ]();
+      // self.dispatchEvent( "volumechange" );
+
+      console.log("in Mute");
+      player.sendNotification("changeVolume",0);
     }
 
     function getMuted() {

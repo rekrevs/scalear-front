@@ -748,6 +748,7 @@ console.log(player)
       }
 
       scope.showPlayhead = function(event) {
+        console.log("howplayhead")
         if (scope.playhead_timeout)
           $timeout.cancel(scope.playhead_timeout)
         scope.playhead_class = "playhead_big"
@@ -797,6 +798,7 @@ console.log(player)
       }
 
       scope.moveplayhead = function(event) {
+        console.log("move")
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {

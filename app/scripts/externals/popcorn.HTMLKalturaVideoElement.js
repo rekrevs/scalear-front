@@ -389,7 +389,7 @@
       if( !isKalturaReady(aSrc) ) {
         console.log("in if isKalturaReady")
         // addKalturaCallback( function() { changeSrc( aSrc ); } );
-        return;
+        //return;
       }
       console.log(" in changeSrc after isKalready ")
       console.log(aSrc)
@@ -401,7 +401,7 @@
       }
 
       parent.appendChild( elem );
-
+console.log("after if player ready")
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
 
@@ -483,23 +483,29 @@
       }else{//url has not flash vars
         kalturaIDs.entry_id   = frame_src_equal_splitted[4]
       }
+console.log("before embed")
 
-
-
+      var targetId = id.split("#")[1]
+      setTimeout(function(){
         kWidget.embed({
-           'targetId': id.split("#")[1],
+           'targetId': targetId,
            'wid':  '_'+kalturaIDs.partner_id,
            'uiconf_id' : kalturaIDs.uiconf_id,
            'entry_id' : kalturaIDs.entry_id,
-           readyCallback: function( playerId ){
-              player = document.getElementById( playerId );
+            'flashvars':{
+              'controlBarContainer.plugin': false,
+	            'largePlayBtn.plugin': false,
+	            'loadingSpinner.plugin': false
+            },
+         readyCallback: function( targetId ){
+              player = document.getElementById( targetId );
+         }
 
-           }
         });
 
+      },3000)
 
-
-      console.log(player)
+    console.log("after embed!!!")
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
@@ -529,25 +535,36 @@
     }
 
     function getCurrentTime() {
+      video.player.currentTime
+      var t = self.player.evaluate('{video.player.currentTime}');
+      console.log("time ----->"+t)
+      impl.currentTime = t;
       return impl.currentTime;
     }
 
     function changeCurrentTime( aTime ) {
       impl.currentTime = aTime;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() {
+      // if( !mediaReady ) {
+      //   addMediaReadyCallback( function() {
+      //
+      //     onSeeking();
+      //   //   player.seekTo( aTime );
+      //   });
+      //   return;
+      //
+      // }
+      //
+      // onSeeking();
+      // player.seekTo( aTime );
+      self.player.kBind( 'mediaReady', function(){
+      		// Seek to 30 seconds from the start of the video
+      		self.player.sendNotification("doSeek", aTime);
+      	})
 
-          onSeeking();
-        //   player.seekTo( aTime );
-        });
-        return;
-      }
-
-      onSeeking();
-      player.seekTo( aTime );
     }
 
     function onTimeUpdate() {
+
       self.dispatchEvent( "timeupdate" );
     }
 
@@ -557,6 +574,7 @@
       // catchRoguePauseEvent = true;
       impl.seeking = true;
       self.dispatchEvent( "seeking" );
+
     }
 
     function onSeeked() {
@@ -569,7 +587,7 @@
     }
 
     function onPlay() {
-
+      console.log("onplay")
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;
@@ -597,25 +615,31 @@
     }
 
     self.play = function() {
+      console.log("play")
       impl.paused = false;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.play(); } );
-        return;
-      }
-      player.playVideo();
+      // if( !mediaReady ) {
+      //   addMediaReadyCallback( function() { self.play(); } );
+      //   return;
+      // }
+      // player.playVideo();
+      player.sendNotification("doPlay");
     };
 
     function onPause() {
+
       impl.paused = true;
       if ( !playerPaused ) {
         playerPaused = true;
         clearInterval( timeUpdateInterval );
         self.dispatchEvent( "pause" );
+
       }
     }
 
     self.pause = function() {
       impl.paused = true;
+      console.log("pause");
+      player.sendNotification("doPause");
       if( !mediaReady ) {
         addMediaReadyCallback( function() { self.pause(); } );
         return;
@@ -625,6 +649,7 @@
       // except for the case of an actual pause.
       catchRoguePauseEvent = false;
       player.pauseVideo();
+
     };
 
     self.getSpeeds = function(){
@@ -636,7 +661,7 @@
     }
 
     self.getAvailableQuality=function(){
-      return player.getAvailableQualityLevels()
+      //return player.getAvailableQualityLevels()
     }
 
     self.getQuality=function(){
@@ -680,19 +705,26 @@
 
     function setVolume( aValue ) {
       impl.volume = aValue;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() {
-          setVolume( impl.volume );
-        });
-        return;
-      }
-      player.setVolume( impl.volume * 100 );
-      self.dispatchEvent( "volumechange" );
+      console.log("setVolume")
+      player.sendNotification("changeVolume",aValue);
+      // if( !mediaReady ) {
+      //   addMediaReadyCallback( function() {
+      //     setVolume( impl.volume );
+      //   });
+      //   return;
+      // }
+      // player.setVolume( impl.volume * 100 );
+      // self.dispatchEvent( "volumechange" );
     }
 
     function getVolume() {
       // Kaltura has getVolume(), but for sync access we use impl.volume
-      return player.evaluate('{video.volume}')
+      setTimeout(function(){
+        console.log("getVolume")
+        return player.evaluate('{video.volume}')
+
+      },5000);
+
     }
 
     function setMuted( aValue ) {

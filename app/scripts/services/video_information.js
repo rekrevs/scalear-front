@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
     }
 
     service.requestInfoFromYoutube=function(id) {
+      console.log("requestInfoFromYoutube(3)")
       var deferred = $q.defer();
       var url = generateYoutubeApiVideoUrl(id)
       if(!service.youtube_video_information[url]) {
@@ -67,6 +68,9 @@ angular.module('scalearAngularApp')
     service.isMediaSite=function(url) {
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
+    service.isKaltura=function(url) {
+      return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
+    }
 
     service.invalidUrl=function(url) {
       console.log("we r in invalidUrl:"+service.isKatlura(url))
@@ -74,17 +78,22 @@ angular.module('scalearAngularApp')
     }
 
     service.setDuration=function(newDuration) {
+      console.log("setdurstion")
       service.duration = newDuration
     }
 
     service.waitForDurationSetup=function() {
+      console.log("waitForDurationSetup(3)")
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
+        console.log("in watch duration")
         if(service.duration){
+          console.log("in service.duration")
           deferred.resolve(service.duration)
           $interval.cancel(watchDuration);
         }
       }, 500)
+
       return deferred.promise;
     }
 

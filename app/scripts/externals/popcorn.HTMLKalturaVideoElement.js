@@ -18,7 +18,7 @@
 
   function isKalturaReady(url) {
     // If the Kaltura iframe API isn't injected, to it now.
-    console.log("in isKalturaReady "+url)
+
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
       var tag = document.createElement( "script" );
       tag.src = url.split(" ")[1].split("=")[1].substr(1).split("?")[0]
@@ -95,7 +95,7 @@
         networkState: self.NETWORK_EMPTY,
         readyState: self.HAVE_NOTHING,
         seeking: false,
-        autoplay: EMPTY_STRING,
+        autoplay: false,
         preload: EMPTY_STRING,
         controls: false,
         loop: false,
@@ -203,46 +203,56 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-      player.setOption('captions','reload',true);
-      player.setOption('captions','track',{});
-
+      //player.setOption('captions','reload',true);
+      //player.setOption('captions','track',{});
+     console.log("-------->onFirstPlay<---------")
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
-
+      console.log("-------->onFirstPlay<------1---")
       // Set initial paused state
+      console.log(impl.autoplay || !impl.paused);
+      console.log(impl.autoplay );
+      console.log( !impl.paused)
       if( impl.autoplay || !impl.paused ) {
+        consol.log("in in 1in in11111111111")
         impl.paused = false;
         addMediaReadyCallback(function() {
           onPlay();
         });
       } else {
+        console.log("222222222222222")
         // if a pause happens while seeking, ensure we catch it.
         // in Kaltura seeks fire pause events, and we don't want to listen to that.
         // except for the case of an actual pause.
         catchRoguePauseEvent = false;
-        player.pauseVideo();
+        player.sendNotification("doPause");
       }
-
+  console.log("-------->onFirstPlay<------2---")
       // Ensure video will now be unmuted when playing due to the mute on initial load.
-      if( !impl.muted ) {
-        player.unMute();
-      }
+      // if( !impl.muted ) {
+      //   player.unMute();
+      // }
+  console.log("-------->onFirstPlay<------3---")
 
       impl.readyState = self.HAVE_METADATA;
       self.dispatchEvent( "loadedmetadata" );
-      currentTimeInterval = setInterval( monitorCurrentTime,
-                                         CURRENT_TIME_MONITOR_MS );
-
+      currentTimeInterval = setInterval( monitorCurrentTime,CURRENT_TIME_MONITOR_MS );
+      //cuurentTimeInterval = player.evaluate('{video.player.currentTime}');
+    console.log("-------->onFirstPlay<------4---")
+    console.log("kaltura dispatch loadeddata")
       self.dispatchEvent( "loadeddata" );
-
+      console.log("-------->onFirstPlay<------5----tamam---")
       impl.readyState = self.HAVE_FUTURE_DATA;
       self.dispatchEvent( "canplay" );
 
       mediaReady = true;
-      while( mediaReadyCallbacks.length ) {
-        mediaReadyCallbacks[ 0 ]();
-        mediaReadyCallbacks.shift();
+    //  console.log(mediaReadyCallbacks[0])
+      //console.log(mediaReadyCallbacks[1])
+     while( mediaReadyCallbacks.length ) {
+       mediaReadyCallbacks[ 0 ]();
+       mediaReadyCallbacks.shift();
+
       }
 
       // We can't easily determine canplaythrough, but will send anyway.
@@ -251,7 +261,9 @@
     }
 
     function onPlayerStateChange( event ) {
-      switch( event.data ) {
+//uninitialized / loading / ready / playing / paused / buffering / playbackError
+      console.log("on playerStateChange");
+      switch( event ) {
 
         // ended
         case YT.PlayerState.ENDED:
@@ -259,13 +271,16 @@
           break;
 
         // playing
-        case YT.PlayerState.PLAYING:
+        case "playing":
+          console.log("playing playinf first");
           if( !firstPlay ) {
+            console.log("firstPlay in");
             // fake ready event
             firstPlay = true;
-
+            console.log(durationReady);
             // Duration ready happened first, we're now ready.
             if ( durationReady ) {
+              console.log("first 1 kaltura");
               onFirstPlay();
             }
           } else if ( catchRoguePlayEvent ) {
@@ -277,7 +292,7 @@
           break;
 
         // paused
-        case YT.PlayerState.PAUSED:
+        case "paused":
 
           // Kaltura fires a paused event before an ended event.
           // We have no need for this.
@@ -295,7 +310,7 @@
           break;
 
         // buffering
-        case YT.PlayerState.BUFFERING:
+        case "buffering":
           impl.networkState = self.NETWORK_LOADING;
           self.dispatchEvent( "waiting" );
           break;
@@ -330,7 +345,7 @@
       firstPlay = false;
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
-
+      player.sendNotification("cleanMedia");
     }
 
     function destroyElement(){
@@ -374,7 +389,7 @@
     }
 
     function changeSrc( aSrc ) {
-      console.log("in change source")
+
       // if( !self._canPlaySrc( aSrc ) ) {
       //   impl.error = {
       //     name: "MediaError",
@@ -389,12 +404,11 @@
 
       // Make sure Kaltura is ready, and if not, register a callback
       if( !isKalturaReady(aSrc) ) {
-        console.log("in if isKalturaReady")
+
         // addKalturaCallback( function() { changeSrc( aSrc ); } );
         //return;
       }
-      console.log(" in changeSrc after isKalready ")
-      console.log(aSrc)
+
 
       if( playerReady ) {
         resetPlayer();
@@ -403,7 +417,7 @@
       }
 
       parent.appendChild( elem );
-console.log("after if player ready")
+
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
 
@@ -443,32 +457,8 @@ console.log("after if player ready")
       playerVars.wmode = playerVars.wmode || "opaque";
 
       // Get video ID out of Kaltura url
-      aSrc = regexKaltura.exec( aSrc )[ 1 ];
+      //aSrc = regexKaltura.exec( aSrc )[ 1 ];
 
-      // var xhrURL = "https://gdata.Kaltura.com/feeds/api/videos/" + aSrc + "?v=2&alt=jsonc&callback=?";
-      var xhrURL = "https://www.googleapis.com/Kaltura/v3/videos?id=" + aSrc + "&part=contentDetails&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&fields=items(contentDetails(duration))"
-      // Get duration value.
-
-      // Popcorn.getJSONP( xhrURL, function( resp ) {
-      //   var warning = "failed to retreive duration data, reason: ";
-      //   if ( resp.error ) {
-      //     console.warn( warning + resp.error.message );
-      //     return ;
-      //   } else if ( !resp.items || resp.items.length ==0 ) {
-      //     console.warn( warning + "no response data" );
-      //     return;
-      //   }
-      //
-      //   var duration = parseDuration(resp.items[0].contentDetails.duration)
-      //   impl.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//resp.data.duration;
-      //   self.dispatchEvent( "durationchange" );
-      //   durationReady = true;
-      //
-      //   // First play happened first, we're now ready.
-      //   if ( firstPlay ) {
-      //     onFirstPlay();
-      //   }
-      // });
 
       var kalturaIDs = {}
       var frame_src
@@ -485,7 +475,7 @@ console.log("after if player ready")
       }else{//url has not flash vars
         kalturaIDs.entry_id   = frame_src_equal_splitted[4]
       }
-console.log("before embed")
+
 
       var targetId = id.split("#")[1]
       setTimeout(function(){
@@ -495,19 +485,38 @@ console.log("before embed")
            'uiconf_id' : kalturaIDs.uiconf_id,
            'entry_id' : kalturaIDs.entry_id,
             'flashvars':{
+              'autoPlay':false,
               'controlBarContainer.plugin': false,
 	            'largePlayBtn.plugin': false,
 	            'loadingSpinner.plugin': false
             },
          readyCallback: function( targetId ){
               player = document.getElementById( targetId );
+
+
+              player.kBind("playerReady",function(){
+                  var duration_secs = parseInt(player.evaluate(" {duration} "));
+                  console.log(typeof(duration_secs))
+                  console.log("===>"+duration_secs)
+                  impl.duration = duration_secs
+                  self.dispatchEvent( "durationchange" );
+                  // durationReady = true;
+                  durationReady = true;
+                  onFirstPlay();
+
+
+              });
+              player.kBind("playerStateChange",onPlayerStateChange);
+      
+
+
          }
 
         });
 
       },3000)
 
-    console.log("after embed!!!")
+
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
@@ -515,10 +524,12 @@ console.log("before embed")
 
 
     function monitorCurrentTime() {
-      console.log("monitor current time")
-      var playerTime = player.getCurrentTime();
+
+      var playerTime = getCurrentTime();
+
       if ( !impl.seeking ) {
         if ( ABS( impl.currentTime - playerTime ) > CURRENT_TIME_MONITOR_MS ) {
+
           onSeeking();
           onSeeked();
         }
@@ -529,9 +540,15 @@ console.log("before embed")
     }
 
     function monitorBuffered() {
-      console.log("monitor buffered")
-      var fraction = player.getVideoLoadedFraction();
+      //console.log("monitor buffered")
+      var fraction;
+      player.kBind('bufferProgress', function(event){
 
+				fraction=player.evaluate("{video.buffer.percent}")
+	    })
+
+      //console.log("lastLoadedFraction:"+lastLoadedFraction)
+      //console.log("fraction:"+fraction)
       if ( fraction && lastLoadedFraction !== fraction ) {
         lastLoadedFraction = fraction;
         onProgress();
@@ -539,37 +556,35 @@ console.log("before embed")
     }
 
     function getCurrentTime() {
-      video.player.currentTime
-      var t = self.player.evaluate('{video.player.currentTime}');
-      console.log("time ----->"+t)
+      //video.player.currentTime
+      var t = player.evaluate('{video.player.currentTime}');
+      //console.log("time ----->"+t)
       impl.currentTime = t;
       return impl.currentTime;
     }
 
     function changeCurrentTime( aTime ) {
-      console.log("changeCurrent")
+
       impl.currentTime = aTime;
       if( !mediaReady ) {
         addMediaReadyCallback( function() {
 
           onSeeking();
-        //   player.seekTo( aTime );
+        //  player.seekTo( aTime );
         });
         return;
 
       }
 
       onSeeking();
-      player.seekTo( aTime );
-      console.log("change current time")
-      		self.player.sendNotification("doSeek", aTime);
+      //player.seekTo( aTime );
+
+      player.sendNotification("doSeek", aTime);
 
 
     }
 
     function onTimeUpdate() {
-      console.log("time update");
-
       self.dispatchEvent( "timeupdate" );
     }
 
@@ -594,7 +609,7 @@ console.log("before embed")
     }
 
     function onPlay() {
-      console.log("onplay")
+
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;
@@ -603,6 +618,7 @@ console.log("before embed")
         clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
+
       impl.paused = false;
 
       if( playerPaused ) {
@@ -618,12 +634,12 @@ console.log("before embed")
     }
 
     function onProgress() {
-      console.log("pogress");
+      console.log("on progress")
       self.dispatchEvent( "progress" );
     }
 
     self.play = function() {
-      console.log("play")
+
       impl.paused = false;
       // if( !mediaReady ) {
       //   addMediaReadyCallback( function() { self.play(); } );
@@ -646,17 +662,18 @@ console.log("before embed")
 
     self.pause = function() {
       impl.paused = true;
-      console.log("pause");
-      player.sendNotification("doPause");
+
+
       if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.pause(); } );
+        addMediaReadyCallback( function() { player.sendNotification("doPause"); } );
         return;
       }
       // if a pause happens while seeking, ensure we catch it.
       // in Kaltura seeks fire pause events, and we don't want to listen to that.
       // except for the case of an actual pause.
       catchRoguePauseEvent = false;
-      player.pauseVideo();
+      //player.pauseVideo();
+      player.sendNotification("doPause");
 
     };
 
@@ -713,7 +730,7 @@ console.log("before embed")
 
     function setVolume( aValue ) {
       impl.volume = aValue;
-      console.log("setVolume")
+
       player.sendNotification("changeVolume",aValue);
       // if( !mediaReady ) {
       //   addMediaReadyCallback( function() {
@@ -728,7 +745,7 @@ console.log("before embed")
     function getVolume() {
       // Kaltura has getVolume(), but for sync access we use impl.volume
       setTimeout(function(){
-        console.log("getVolume")
+
         return player.evaluate('{video.volume}')
 
       },7000);
@@ -744,7 +761,7 @@ console.log("before embed")
       // player[ aValue ? "mute" : "unMute" ]();
       // self.dispatchEvent( "volumechange" );
 
-      console.log("in Mute");
+
       player.sendNotification("changeVolume",0);
     }
 
@@ -930,7 +947,7 @@ console.log("before embed")
   };
   // Popcorn.HTMLKalturaVideoElement._canPlaySrc = HTMLKalturaVideoElement.prototype._canPlaySrc;
   Popcorn.getKalturaPlayer = function(IDs){
-    console.log("at getkaltruaplayer:"+IDs)
+
     return new getPlayer(IDs);
   }
   // Popcorn.getKalturaVideo = function(url){

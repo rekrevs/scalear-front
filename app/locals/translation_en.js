@@ -434,7 +434,7 @@ var translation_en={
     acceptable_use_policy_details_11:"You are liable for the consequences of any violations by you of the Acceptable Use Policy.",
     other:"Other",
     legal_entity: "Legal Entity/Service Provider",
-    legal_entity_details: "ScalableLearning is provided by SICS Swedish ICT AB, Färögatan 33, SE-16451 Kista, Sweden.",
+    legal_entity_details: "ScalableLearning is provided by RISE SICS AB, Box 1263, SE-16429 Kista, Sweden.",
     code_conduct: "GÉANT Data Protection Code of Conduct",
     code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",

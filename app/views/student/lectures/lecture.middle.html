@@ -28,7 +28,7 @@
           </span>
           <video_container class="video-container" ng-if="passed_requirments" ng-class="container_class" screenfull active="fullscreen">
             <youtube  class="widescreen video-layer" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer">
-              <div id="kal_player" style="width:400px;height:330px;">hello</div>
+              <!-- <div id="kal_player" style="width:400px;height:330px;">hello</div> -->
               <div ng-if="temp_timeline_item">
                 <div class="on-video-textarea" ng-if="temp_timeline_item.type=='note'">
                   <textarea ng-model='temp_timeline_item.data' class="note-textarea" placeholder="Note..."></textarea>

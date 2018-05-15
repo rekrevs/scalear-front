@@ -30,12 +30,14 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
       }
       $scope.slow = false
+      console.log("vid red false")
       $scope.video_ready = false
     }
 
     $scope.lecture_player.events.onReady = function() {
       VideoInformation.waitForDurationSetup()
         .then(function(){
+          console.log("vid red tru")
           $scope.video_ready = true
           var time = $state.params.time
           if (time) {
@@ -62,7 +64,11 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $scope.is_youtube = is_youtube
-      $scope.slow = true
+      console.log("slow = true+"+is_youtube)
+      if (is_youtube){ // kaltura vids are too slowly loading which vanishes the progressbar
+        $scope.slow = true
+      }
+
     }
 
     function showMarker(marker) {
@@ -97,7 +103,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.refreshVideo = function() {
+
       $scope.slow = false
+      console.log("vid red false")
       $scope.video_ready = false
       var temp_url = $scope.lecture.url
       $scope.lecture.url = ""

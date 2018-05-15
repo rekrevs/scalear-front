@@ -114,6 +114,7 @@
             player.playVideo();
           else{
             if ( durationReady ) {
+              console.log("first 3");              
               onFirstPlay();
             }
           }
@@ -173,6 +174,7 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
+      console.log("youtube firstplay")
       player.setOption('captions','reload',true);
       player.setOption('captions','track',{});
 
@@ -200,6 +202,7 @@
       }
 
       impl.readyState = self.HAVE_METADATA;
+      console.log(self)
       self.dispatchEvent( "loadedmetadata" );
       currentTimeInterval = setInterval( monitorCurrentTime,
                                          CURRENT_TIME_MONITOR_MS );
@@ -236,6 +239,7 @@
 
             // Duration ready happened first, we're now ready.
             if ( durationReady ) {
+              console.log("first 1");
               onFirstPlay();
             }
           } else if ( catchRoguePlayEvent ) {
@@ -430,6 +434,7 @@
 
         // First play happened first, we're now ready.
         if ( firstPlay ) {
+          console.log("first 2");
           onFirstPlay();
         }
       });
@@ -539,6 +544,7 @@
     }
 
     function onProgress() {
+
       self.dispatchEvent( "progress" );
     }
 

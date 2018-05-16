@@ -24,7 +24,7 @@
       tag.src = url.split(" ")[1].split("=")[1].substr(1).split("?")[0]
       console.log(tag)
       var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
-      firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
+      //firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
 
       kLoaded = true;
     }
@@ -70,7 +70,9 @@
     window.quarantineYT = window.YT;
     window.YT = null;
   }
-
+  window.jsCallbackReady = function (widgetId){
+    console.log("-------><-------");
+  }
 
   function HTMLKalturaVideoElement( id ) {
     console.log("ID:"+id)
@@ -117,9 +119,8 @@
       firstPlay = false;
 
 
-    var targetId = id.split("#")[1]
-    player = document.getElementById( targetId );
-    player.addJsListener("kdpReady", "onKdpReady")
+
+
 
     // Namespace all events we'll produce
     self._eventNamespace = Popcorn.guid( "HTMLKalturaVideoElement::" );
@@ -498,7 +499,8 @@
          readyCallback: function( targetId ){
 
 
-
+           var targetId = id.split("#")[1]
+           player = document.getElementById( targetId );
               player.kBind("playerReady",function(){
                   var duration_secs = parseInt(player.evaluate(" {duration} "));
                   console.log(typeof(duration_secs))

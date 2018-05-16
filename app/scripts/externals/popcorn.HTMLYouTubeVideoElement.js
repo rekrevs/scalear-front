@@ -114,7 +114,7 @@
             player.playVideo();
           else{
             if ( durationReady ) {
-              console.log("first 3");              
+              console.log("first 3");
               onFirstPlay();
             }
           }

@@ -61,7 +61,7 @@
 
 
   function addKalturaCallback( callback ) {
-    ytCallbacks.unshift( callback );
+    kCallbacks.unshift( callback );
   }
 
   // An existing Kaltura references can break us.
@@ -71,14 +71,6 @@
     window.YT = null;
   }
 
-  window.onKalturaIframeAPIReady = function() {
-    ytReady = true;
-    var i = ytCallbacks.length;
-    while( i-- ) {
-      ytCallbacks[ i ]();
-      delete ytCallbacks[ i ];
-    }
-  };
 
   function HTMLKalturaVideoElement( id ) {
     console.log("ID:"+id)
@@ -124,6 +116,11 @@
       timeUpdateInterval,
       firstPlay = false;
 
+
+    var targetId = id.split("#")[1]
+    player = document.getElementById( targetId );
+    player.addJsListener("kdpReady", "onKdpReady")
+
     // Namespace all events we'll produce
     self._eventNamespace = Popcorn.guid( "HTMLKalturaVideoElement::" );
 
@@ -131,7 +128,15 @@
 
     // Mark this as Kaltura
     self._util.type = "Kaltura";
-
+    function onKdpReady() {
+      console.log("kdpReady")
+      kReady = true;
+      var i = kCallbacks.length;
+      while( i-- ) {
+        kCallbacks[ i ]();
+        delete kCallbacks[ i ];
+      }
+    }
     function addMediaReadyCallback( callback ) {
       mediaReadyCallbacks.unshift( callback );
     }
@@ -215,7 +220,7 @@
       console.log(impl.autoplay );
       console.log( !impl.paused)
       if( impl.autoplay || !impl.paused ) {
-        consol.log("in in 1in in11111111111")
+        console.log("in in 1in in11111111111")
         impl.paused = false;
         addMediaReadyCallback(function() {
           onPlay();
@@ -405,8 +410,8 @@
       // Make sure Kaltura is ready, and if not, register a callback
       if( !isKalturaReady(aSrc) ) {
 
-        // addKalturaCallback( function() { changeSrc( aSrc ); } );
-        //return;
+          addKalturaCallback( function() { changeSrc( aSrc ); } );
+          return;
       }
 
 
@@ -477,7 +482,7 @@
       }
 
 
-      var targetId = id.split("#")[1]
+
       setTimeout(function(){
         kWidget.embed({
            'targetId': targetId,
@@ -491,7 +496,7 @@
 	            'loadingSpinner.plugin': false
             },
          readyCallback: function( targetId ){
-              player = document.getElementById( targetId );
+
 
 
               player.kBind("playerReady",function(){
@@ -507,7 +512,7 @@
 
               });
               player.kBind("playerStateChange",onPlayerStateChange);
-      
+
 
 
          }

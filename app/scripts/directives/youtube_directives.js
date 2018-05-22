@@ -83,17 +83,15 @@ angular.module('scalearAngularApp')
           $log.debug(video.src)
         }else if (isKaltura(scope.url)){
 
-          // var IDs = extractKalturaIDs(scope.url);
+
 
           var video = Popcorn.HTMLKalturaVideoElement('#' + scope.id);
 
           video.src = scope.url
 
           player = Popcorn(video);
-          //player=Popcorn.getKalturaPlayer(f)
-//          document.appendChild(video)
-
-          //document.body.appendChild(player);
+          //player.controls(true);
+          player_controls.kaltura = true;
 
         }
 
@@ -308,6 +306,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getSpeeds = function() {
+        console.log("speeds<<<-------")
         return player.media.getSpeeds();
       }
 
@@ -316,7 +315,11 @@ angular.module('scalearAngularApp')
           if (player_controls.getSpeeds().indexOf(speed) != -1) {
             player.media.setSpeed(speed)
           }
-        } else {
+        }else if (scope.player.controls.kaltura) {
+          if (player_controls.getSpeeds().indexOf(speed) != -1) {
+            player.media.setSpeed(speed)
+          }
+        }else {
           player.video.playbackRate = speed
         }
 
@@ -342,8 +345,6 @@ angular.module('scalearAngularApp')
       }
 
       var setupEvents = function() {
-
-        console.log("in setUpEvents")
         player.on("loadeddata",
           function() {
             $log.debug("Video data loaded and ready")
@@ -907,7 +908,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.setQuality = function(quality) {
-        scope.player.controls.changeQuality(quality)
+        //scope.player.controls.changeQuality(quality)
         scope.chosen_quality = quality;
       }
 
@@ -1130,13 +1131,16 @@ angular.module('scalearAngularApp')
       })
 
       player.on('playing', function() {
+
         if (scope.player.controls.youtube)
           scope.chosen_quality = scope.player.controls.getQuality()
         scope.play_class = "pause";
         scope.$apply()
       })
-
-      if (scope.player.controls.youtube) {
+      console.log("controls kaltura out !!!!!!")
+      console.log(scope.player.controls.kaltura)
+      if (scope.player.controls.youtube || scope.player.controls.kaltura) {
+        console.log("controls kaltura !!!!!!")
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
         if ($cookieStore.get('volume') != null){
@@ -1150,9 +1154,10 @@ angular.module('scalearAngularApp')
         }
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
-
+        if(scope.player.controls.kaltura)   scope.player.controls.play();
         $timeout(function() {
           scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+          //if(scope.player.controls.kaltura){scope.player.controls.pause()}
         }, 2000)
         scope.setQuality(scope.chosen_quality)
       } else {

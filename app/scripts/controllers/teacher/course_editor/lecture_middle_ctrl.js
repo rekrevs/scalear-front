@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
       }
       $scope.slow = false
-      console.log("vid red false")
+  
       $scope.video_ready = false
     }
 
@@ -187,6 +187,7 @@ angular.module('scalearAngularApp')
 
 
     $scope.addDoubleClickBind = function(event) {
+      console.log("in double click bind")
       if ($scope.editing_mode && $scope.editing_type == 'quiz' && !$scope.selected_quiz.hide_quiz_answers && !$scope.selected_quiz.isFreeTextVideoQuiz()) {
         var answer_width, answer_height,
           answer_text = "Answer " + ($scope.selected_quiz.answers.length + 1)

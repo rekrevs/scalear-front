@@ -4,7 +4,6 @@
 			<b><span translate>editor.video_editor</span>: </b>
 			<span>{{lecture.name}}</span>
 		</h4>
-		<div id="kal_player" style="width:400px;height:330px;"></div>
 		<overlay ng-show="lecture.url=='none'">
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url</h3>
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url_continue</h3>
@@ -17,6 +16,7 @@
 			<center>
 				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12">
 					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
+						
 						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">

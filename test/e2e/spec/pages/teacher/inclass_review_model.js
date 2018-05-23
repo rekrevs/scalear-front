@@ -5,7 +5,7 @@ var ReviewModel=function(model){}
 ReviewModel.prototype= Object.create({},{
   review_model:{get:function() {return element(by.className("whiteboard"))}},
   lecture_title:{get:function(){return this.review_model.element(by.className("lecture_title")).getText()}},
-  question_block:{get:function(){return this.review_model.element(by.className("question_block"))}},
+  question_block:{get:function(){return this.review_model.element(by.className("normal_question_block"))}},
   white_background_block:{get:function(){return this.review_model.element(by.id("white_background"))}},
   white_chart:{get:function(){return this.white_background_block.all(by.id('chart')) }},
   free_text_question_title:{get:function(){ return this.white_background_block.getText()}},

@@ -31,8 +31,8 @@ StudentDP.prototype= Object.create({}, {
       }, 100000);
     });
   }},
-  stage_timer_distance_peer:{get:function(){return element(by.id("stage_timer_distance_peer")) }},
-  distance_peer_panel:{get:function(){return element(by.id("distance_peer_panel")) }},
+  stage_timer_distance_peer:{get:function(){return element(by.css("[ng-show*='!fullscreen'] .distance-peer-timer")) }},
+  distance_peer_panel:{get:function(){return element(by.css("[ng-show*='!fullscreen'] .distance-peer-panel")) }},
   end_distance_peer_click:{value:function(num){return this.distance_peer_panel.element(by.css("button")).click() }},
   annotation:{get:function(){return element(by.css("annotation")) }},
   notification:{get:function(){return element(by.tagName("notification"))}},

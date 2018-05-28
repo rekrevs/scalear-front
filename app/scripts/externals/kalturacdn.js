@@ -1,10 +1,10 @@
 /**
-* Kaltura HTML5 Library v2.56  
+* Kaltura HTML5 Library v2.56
 * http://html5video.org/kaltura-player/docs/
-* 
-* This is free software released under the GPL2 see README more info 
+*
+* This is free software released under the GPL2 see README more info
 * http://html5video.org/kaltura-player/docs/readme
-* 
+*
 * Copyright 2018 Kaltura Inc.
 */
 window['MWEMBED_VERSION'] = '2.56';

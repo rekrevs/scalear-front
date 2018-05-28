@@ -371,7 +371,8 @@
       }
 
       parent.appendChild( elem );
-
+      console.log(parent)
+      console.log(elem)
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
 

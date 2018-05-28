@@ -82,15 +82,9 @@ angular.module('scalearAngularApp')
           video.src = scope.url
           $log.debug(video.src)
         }else if (isKaltura(scope.url)){
-
-
-
           var video = Popcorn.HTMLKalturaVideoElement('#' + scope.id);
-
           video.src = scope.url
-
           player = Popcorn(video);
-          //player.controls(true);
           player_controls.kaltura = true;
 
         }
@@ -100,6 +94,7 @@ angular.module('scalearAngularApp')
         }
 
         setupEvents()
+
         parent.focus()
         scope.timeout_promise = $interval(function() {
           if (player_controls.readyState() == 0 && !$rootScope.is_mobile){
@@ -143,6 +138,8 @@ angular.module('scalearAngularApp')
         if (scope.timeout_promise)
           $timeout.cancel(scope.timeout_promise)
       }
+
+
       player_controls.play = function() {
         player.play();
       }
@@ -193,8 +190,10 @@ angular.module('scalearAngularApp')
         return player.readyState()
       }
 
-      player_controls.seek = function(time) {
 
+
+      player_controls.seek = function(time) {
+        console.log("in seek")
         $log.debug("entering sekking", time)
         time=  parseFloat(time)
         if (time < 0){
@@ -216,12 +215,15 @@ angular.module('scalearAngularApp')
               $timeout(function(){
 
                 player.currentTime(time);
+
               })
             });
         } else {
           $log.debug("seeking now", time)
           player.currentTime(time);
+
         }
+
         parent.focus()
 
       }
@@ -306,7 +308,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getSpeeds = function() {
-        console.log("speeds<<<-------")
         return player.media.getSpeeds();
       }
 
@@ -344,6 +345,19 @@ angular.module('scalearAngularApp')
         VideoInformation.quality = quality
       }
 
+      player_controls.setKalturaControlBar = function(){
+
+        var inReview = $("#progress_lec_video")
+        var inEdit   = $("#lecture_video")
+        var inClass  = $("#inclass_video")
+        console.log("inReview",inReview.length)
+        console.log("inEdit",inEdit.length)
+        console.log("inClass",inClass.length)
+        if( inReview.length)     player.video.showControlBar()
+        else if (inEdit.length)  player.video.hideControlBar()
+        else if (inClass.length) player.video.hideControlBar()
+
+      }
       var setupEvents = function() {
         player.on("loadeddata",
           function() {
@@ -359,6 +373,12 @@ angular.module('scalearAngularApp')
             var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             console.log("duration in setupEvents:"+duration)
             VideoInformation.setDuration(duration)
+            console.log("isKaltura(scope.url)")
+            console.log(isKaltura(scope.url))
+            if(isKaltura(scope.url))
+              {player_controls.setKalturaControlBar()
+               console.log("++++++++++++++++")
+              }
           });
 
         player.on('playing',
@@ -497,6 +517,7 @@ angular.module('scalearAngularApp')
 
       player_controls.isYoutube = isYoutube
       player_controls.isMP  = isMP4
+      player_controls.isKaltura = isKaltura
 
       scope.$watch('url', function() {
 
@@ -656,7 +677,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', 'VideoInformation',function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter ,VideoInformation) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', 'VideoInformation','ScalearUtils',function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter ,VideoInformation,ScalearUtils) {
   return {
     transclude: true,
     restrict: 'E',
@@ -689,8 +710,10 @@ angular.module('scalearAngularApp')
         console.log("duration:::::::"+scope.duration)
         scope.video = {
           start_time: scope.player.controls.getVideoStartTime(),
-          end_time: scope.player.controls.getVideoEndTime(),
+          end_time: scope.player.controls.getVideoEndTime()
+
         }
+        console.log("  scope.video",  scope.video)
         scope.$watch('editing', function() {
           if (scope.editing == 'video'){
             scope.video.start_time= scope.player.controls.getVideoStartTime();
@@ -754,7 +777,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.showPlayhead = function(event) {
-
         if (scope.playhead_timeout)
           $timeout.cancel(scope.playhead_timeout)
         scope.playhead_class = "playhead_big"
@@ -805,7 +827,7 @@ angular.module('scalearAngularApp')
 
       scope.moveplayhead = function(event) {
 
-
+        console.log("in move play head")
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
@@ -829,12 +851,15 @@ angular.module('scalearAngularApp')
       }
 
       scope.play = function() {
+        console.log("in play<------")
         if (scope.player.controls.paused()) {
           scope.player.controls.play()
           scope.play_class = "pause";
+          console.log(1)
         } else {
           scope.player.controls.pause()
           scope.play_class = "play";
+          console.log(2)
         }
       }
 
@@ -908,8 +933,9 @@ angular.module('scalearAngularApp')
       }
 
       scope.setQuality = function(quality) {
-        //scope.player.controls.changeQuality(quality)
+        scope.player.controls.changeQuality(quality)
         scope.chosen_quality = quality;
+
       }
 
       scope.scrollEvent = function(type, id) {
@@ -1127,7 +1153,8 @@ angular.module('scalearAngularApp')
 
       player.on('pause', function() {
         scope.play_class = "play";
-        scope.$apply()
+        //scope.$apply()
+        ScalearUtils.safeApply()
       })
 
       player.on('playing', function() {
@@ -1135,7 +1162,8 @@ angular.module('scalearAngularApp')
         if (scope.player.controls.youtube)
           scope.chosen_quality = scope.player.controls.getQuality()
         scope.play_class = "pause";
-        scope.$apply()
+        //scope.$apply()
+        ScalearUtils.safeApply()
       })
       console.log("controls kaltura out !!!!!!")
       console.log(scope.player.controls.kaltura)
@@ -1154,10 +1182,13 @@ angular.module('scalearAngularApp')
         }
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
-        if(scope.player.controls.kaltura)   scope.player.controls.play();
+
+
         $timeout(function() {
+
           scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-          //if(scope.player.controls.kaltura){scope.player.controls.pause()}
+
+            //if(scope.player.controls.kaltura)   scope.player.controls.pause();
         }, 2000)
         scope.setQuality(scope.chosen_quality)
       } else {

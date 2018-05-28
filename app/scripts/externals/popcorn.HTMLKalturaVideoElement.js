@@ -20,6 +20,7 @@
     // If the Kaltura iframe API isn't injected, to it now.
     console.log(2)
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+      console.log("isKalturaReady loading scripts");
       var tag = document.createElement( "script" );
       tag.src = url.split(" ")[1].split("=")[1].substr(1).split("?")[0]
       console.log(tag)
@@ -27,8 +28,11 @@
       firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
       console.log(3)
       kLoaded = true;
+
+      onKalturaAPIReady()
     }
     console.log("4 kReady:"+kReady);
+
     return kReady;
   };
 
@@ -73,7 +77,7 @@
     window.quarantineYT = window.YT;
     window.YT = null;
   }
-  window.jsCallbackReady = function (widgetId){
+  function onKalturaAPIReady(){
     kReady = true;
     console.log(7)
     console.log("k library ready callback fired kReady:"+kReady)
@@ -96,8 +100,10 @@
 
     var self = this,
       parent = typeof id === "string" ? document.querySelector( id ) : id,
-      elem = document.createElement( "div" ),
-      impl = {
+      elem = document.createElement( "div" );
+    elem.setAttribute('id', 'kalturaVideo')
+
+    var impl = {
         src: EMPTY_STRING,
         networkState: self.NETWORK_EMPTY,
         readyState: self.HAVE_NOTHING,
@@ -135,20 +141,22 @@
       video_srcs=[];
 
 
-
-
-
+    var parent_innerHTML = document.getElementById("lecture_video")
+    // console.log(parent_innerHTML)
     // Namespace all events we'll produce
-    self._eventNamespace = Popcorn.guid( "HTMLKalturaVideoElement::" );
+    self._eventNamespace =  Popcorn.guid( "HTMLKalturaVideoElement::" );
 
     self.parentNode = parent;
 
     // Mark this as Kaltura
     self._util.type = "Kaltura";
-
+    // console.log(document.getElementById("lecture_video"))
+    // console.log(document.getElementById("lecture_video").innerHTML)
     function addMediaReadyCallback( callback ) {
+
       mediaReadyCallbacks.unshift( callback );
     }
+
 
     function onPlayerReady( event ) {
       var onMuted = function() {
@@ -158,6 +166,8 @@
             player.playVideo();
           else{
             if ( durationReady ) {
+              // console.log(document.getElementById("lecture_video"))
+              // console.log(document.getElementById("lecture_video").innerHTML)
               onFirstPlay();
             }
           }
@@ -219,11 +229,13 @@
     function onFirstPlay() {
       //player.setOption('captions','reload',true);
       //player.setOption('captions','track',{});
-     console.log("-------->onFirstPlay<---------")
+
+      console.log("-------->onFirstPlay<---------")
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
       console.log("-------->onFirstPlay<------1---")
+
       // Set initial paused state
       console.log(impl.autoplay || !impl.paused);
       console.log(impl.autoplay );
@@ -232,6 +244,7 @@
 
         impl.paused = false;
         addMediaReadyCallback(function() {
+          console.log("before onPlay")
           onPlay();
         });
         setTimeout( function(){  },2000)
@@ -242,34 +255,33 @@
         // in Kaltura seeks fire pause events, and we don't want to listen to that.
         // except for the case of an actual pause.
         catchRoguePauseEvent = false;
-
+        // console.log(document.getElementById("lecture_video").innerHTML)
         player.sendNotification("doPause");
       }
-  console.log("-------->onFirstPlay<------2---")
+      console.log("-------->onFirstPlay<------2---")
       // Ensure video will now be unmuted when playing due to the mute on initial load.
       // if( !impl.muted ) {
       //   player.unMute();
       // }
-  console.log("-------->onFirstPlay<------3---")
+      console.log("-------->onFirstPlay<------3---")
 
       impl.readyState = self.HAVE_METADATA;
       self.dispatchEvent( "loadedmetadata" );
       currentTimeInterval = setInterval( monitorCurrentTime,CURRENT_TIME_MONITOR_MS );
       //cuurentTimeInterval = player.evaluate('{video.player.currentTime}');
-    console.log("-------->onFirstPlay<------4---")
-    console.log("kaltura dispatch loadeddata")
+      console.log("-------->onFirstPlay<------4---")
+      console.log("kaltura dispatch loadeddata")
       self.dispatchEvent( "loadeddata" );
       console.log("-------->onFirstPlay<------5----tamam---")
       impl.readyState = self.HAVE_FUTURE_DATA;
       self.dispatchEvent( "canplay" );
 
       mediaReady = true;
-    //  console.log(mediaReadyCallbacks[0])
+      //  console.log(mediaReadyCallbacks[0])
       //console.log(mediaReadyCallbacks[1])
-     while( mediaReadyCallbacks.length ) {
-       mediaReadyCallbacks[ 0 ]();
-       mediaReadyCallbacks.shift();
-
+      while( mediaReadyCallbacks.length ) {
+        mediaReadyCallbacks[ 0 ]();
+        mediaReadyCallbacks.shift();
       }
 
       // We can't easily determine canplaythrough, but will send anyway.
@@ -279,32 +291,38 @@
     }
 
     function onPlayerStateChange( event ) {
-//uninitialized / loading / ready / playing / paused / buffering / playbackError
-      console.log("on playerStateChange");
+      //uninitialized / loading / ready / playing / paused / buffering / playbackError
+
+
+      console.log("event",event)
       switch( event ) {
 
         // ended
-        case YT.PlayerState.ENDED:
-          onEnded();
-          break;
+        // case YT.PlayerState.ENDED:
+        //   onEnded();
+        //   break;
 
         // playing
         case "playing":
-
+          console.log("playing 1")
           if( !firstPlay ) {
-
+            console.log("playing 2")
             // fake ready event
             firstPlay = true;
 
             // Duration ready happened first, we're now ready.
             if ( durationReady ) {
-
+              // console.log(document.getElementById("lecture_video"))
+              // console.log(document.getElementById("lecture_video").innerHTML)
+              console.log("playing 3")
               onFirstPlay();
             }
-          } else if ( catchRoguePlayEvent ) {
+          } else if ( catchRoguePlayEvent ){
+            console.log("playing 4")
             catchRoguePlayEvent = false;
             player.pauseVideo();
           } else {
+            console.log("playing 5")
             onPlay();
           }
           break;
@@ -315,8 +333,11 @@
           // Kaltura fires a paused event before an ended event.
           // We have no need for this.
           if ( player.getDuration() === player.getCurrentTime() ) {
+            onEnded();
+
             break;
           }
+
 
           // a seekTo call fires a pause event, which we don't want at this point.
           // as long as a seekTo continues to do this, we can safly toggle this state.
@@ -324,11 +345,13 @@
             catchRoguePauseEvent = false;
             break;
           }
+          console.log("---->paused<-----")
           onPause();
           break;
 
         // buffering
         case "buffering":
+          console.log("----->here<-----")
           impl.networkState = self.NETWORK_LOADING;
           self.dispatchEvent( "waiting" );
           break;
@@ -373,6 +396,7 @@
       parent.removeChild( elem );
       kWidget.destroy(id.split("#")[1]);
       elem = document.createElement( "div" );
+      elem.setAttribute('id', 'kalturaVideo')
     }
 
     parseDuration = function(DurationString) {
@@ -421,25 +445,30 @@
       impl.src = aSrc;
 
       // Make sure Kaltura is ready, and if not, register a callback
-      console.log(1)
+      // console.log(1)
       if( !isKalturaReady(aSrc) ) {
-           console.log(5)
-            addKalturaCallback( function() { changeSrc( aSrc ); } );
-          //  return;
+        console.log("kaltura not ready adding callback");
+        return addKalturaCallback( function() { changeSrc( aSrc ); } );
       }
 
-     console.log(8)
+      console.log("kaltura is ready");
+
+
+      // console.log(document.getElementById("lecture_video"))
+      // console.log(document.getElementById("lecture_video").innerHTML)
+      // console.log(8)
       if( playerReady ) {
         resetPlayer();
         resetPlayer();
         destroyElement();
       }
 
+
       parent.appendChild( elem );
-      console.log("parent:----->")
-      console.log(parent)
-      console.log("element:---->")
-      console.log(elem)
+
+      // var node = document.createElement("div");                 // Create a <li> node
+      // var textnode = document.createTextNode(parent_innerHTML.toString());         // Create a text node
+      //node.appendChild(textnode);
 
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
@@ -482,7 +511,6 @@
       // Get video ID out of Kaltura url
       //aSrc = regexKaltura.exec( aSrc )[ 1 ];
 
-
       var kalturaIDs = {}
       var frame_src
       frame_src = impl.src.split(" ")[1]
@@ -498,79 +526,76 @@
       }else{//url has not flash vars
         kalturaIDs.entry_id   = frame_src_equal_splitted[4]
       }
-
-
-
-     var targetId = id.split("#")[1]
+      var targetId = id.split("#")[1]
 
       setTimeout(function(){
         kWidget.embed({
-           'targetId': targetId,
-           'wid':  '_'+kalturaIDs.partner_id,
-           'uiconf_id' : kalturaIDs.uiconf_id,
-           'entry_id' : kalturaIDs.entry_id,
-            'flashvars':{
-              'autoPlay':false,
-              'controlBarContainer.plugin': false,
-	            'largePlayBtn.plugin': false,
-	            'loadingSpinner.plugin': false,
-              "sourceSelector": {
-            				"plugin" : true,
-            				"switchOnResize" : false,
-            				"simpleFormat" : true,
-            				"displayMode" : "size"
-            			},
-              "closedCaptions": {
-            				"layout" : "ontop",
-            				"useCookie" : true,
-            				"fontFamily" : "Arial",
-            				"fontsize" : "12",
-            				"fontColor" : "0xFFFFFF",
-            				"bg" : "0x335544",
-            				"useGlow" : false,
-            				"glowBlur" : "4",
-            				"glowColor" : "0x133693",
-            				"defaultLanguageKey" : "en",
-            				"hideWhenEmpty" : true,
-            				"whiteListLanguagesCodes" : "en,es,fr,jp"
-            			},
-              "playbackRateSelector": {
-            				"plugin" : true,
-            				"position" : "after",
-            				"loadingPolicy" : "onDemand",
-            				"defaultSpeed" : "1",
-            				"speeds" : ".5,.75,1,1.5,2",
-            				"relativeTo" : "PlayerHolder"
-            			}
-            },
-         readyCallback: function( targetId ){
-         player = document.getElementById( targetId );
-         rawPlayer = player.firstChild.contentWindow.document.getElementById(targetId);
+          'targetId': 'kalturaVideo',
+          'wid':  '_'+kalturaIDs.partner_id,
+          'uiconf_id' : kalturaIDs.uiconf_id,
+          'entry_id' : kalturaIDs.entry_id,
+          'flashvars':{
+                'autoPlay':false,
+                'controlBarContainer.plugin': true,
+  	            'largePlayBtn.plugin': false,
+  	            'loadingSpinner.plugin': false,
+                "sourceSelector": {
+          				"plugin" : true,
+          				"switchOnResize" : false,
+          				"simpleFormat" : true,
+          				"displayMode" : "size"
+          			},
+                "closedCaptions": {
+          				"layout" : "ontop",
+          				"useCookie" : true,
+          				"fontFamily" : "Arial",
+          				"fontsize" : "12",
+          				"fontColor" : "0xFFFFFF",
+          				"bg" : "0x335544",
+          				"useGlow" : false,
+          				"glowBlur" : "4",
+          				"glowColor" : "0x133693",
+          				"defaultLanguageKey" : "en",
+          				"hideWhenEmpty" : true,
+          				"whiteListLanguagesCodes" : "en,es,fr,jp"
+          			},
+                "playbackRateSelector": {
+          				"plugin" : true,
+          				"position" : "after",
+          				"loadingPolicy" : "onDemand",
+          				"defaultSpeed" : "1",
+          				"speeds" : ".5,.75,1,1.5,2",
+          				"relativeTo" : "PlayerHolder"
+          			}
+              },
+          readyCallback: function( playerId ){
+            console.log("playerId", playerId);
+            player = document.getElementById( playerId );
+            rawPlayer = player.firstChild.contentWindow.document.getElementById(playerId);
+            player.kBind("playerReady",function(){
+                var duration_secs = parseInt(player.evaluate(" {duration} "));
+                impl.duration = duration_secs
+                self.dispatchEvent( "durationchange" );
+                durationReady = true;
+                onFirstPlay();
 
-              player.kBind("playerReady",function(){
-                  var duration_secs = parseInt(player.evaluate(" {duration} "));
-
-                  impl.duration = duration_secs
-                  self.dispatchEvent( "durationchange" );
-                  // durationReady = true;
-                  durationReady = true;
-                  onFirstPlay();
-                  video_srcs = rawPlayer.plugins.sourceSelector.getSources()
-                  for(i in video_srcs){ video_srcs[i].size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(video_srcs[i]) }
-
-
-              });
-              player.kBind("playerStateChange",onPlayerStateChange);
-
-
-
+                var audioAndVideoSources = rawPlayer.plugins.sourceSelector.getSources()
+                for(i in audioAndVideoSources){
+                   var temp_size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(audioAndVideoSources[i])
+                   if (temp_size) {
+                    audioAndVideoSources[i].size =temp_size
+                    video_srcs.push(audioAndVideoSources[i])
+                   }
+                }
+            });
+            player.kBind("playerStateChange",onPlayerStateChange);
          }
-
         });
-
       },3000)
+    //  console.log(parent_innerHTML)
 
-
+      // console.log(document.getElementById("lecture_video"))
+      // console.log(document.getElementById("lecture_video").innerHTML)
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
@@ -578,7 +603,7 @@
 
 
     function monitorCurrentTime() {
-
+      //console.log("monitor current time")
       var playerTime = getCurrentTime();
 
       if ( !impl.seeking ) {
@@ -594,23 +619,20 @@
     }
 
     function getVideoSrc(srcs,quality){
+      console.log(srcs)
       quality = quality.toLowerCase()
       for(i in srcs){
         if (srcs[i].size == quality)
-            return srcs[i]
+            break;
       }
+      return  srcs[i]
     }
 
     function monitorBuffered() {
-      //console.log("monitor buffered")
       var fraction;
       player.kBind('bufferProgress', function(event){
-
 				fraction=player.evaluate("{video.buffer.percent}")
 	    })
-
-      //console.log("lastLoadedFraction:"+lastLoadedFraction)
-      //console.log("fraction:"+fraction)
       if ( fraction && lastLoadedFraction !== fraction ) {
         lastLoadedFraction = fraction;
         onProgress();
@@ -618,35 +640,25 @@
     }
 
     function getCurrentTime() {
-      //video.player.currentTime
-      //var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
       var t = rawPlayer.evaluate('{video.player.currentTime}');
       impl.currentTime = t;
       return impl.currentTime;
     }
 
     function changeCurrentTime( aTime ) {
-
       impl.currentTime = aTime;
       if( !mediaReady ) {
         addMediaReadyCallback( function() {
-
           onSeeking();
-        //  player.seekTo( aTime );
         });
         return;
-
       }
-
       onSeeking();
-      //player.seekTo( aTime );
-
       player.sendNotification("doSeek", aTime);
-
-
     }
 
     function onTimeUpdate() {
+
       self.dispatchEvent( "timeupdate" );
     }
 
@@ -655,10 +667,7 @@
       // we don't want to listen for this, so this state catches the event.
       // catchRoguePauseEvent = true;
       impl.seeking = true;
-
       self.dispatchEvent( "seeking" );
-
-
     }
 
     function onSeeked() {
@@ -671,21 +680,20 @@
     }
 
     function onPlay() {
-
+      console.log("onPlay")
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;
+        console.log("on play")
       }
       if(timeUpdateInterval)
         clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
-
+      console.log("timeUpdateInterval",timeUpdateInterval)
       impl.paused = false;
-
       if( playerPaused ) {
         playerPaused = false;
-
         // Only 1 play when video.loop=true
         if ( ( impl.loop && !loopedPlay ) || !impl.loop ) {
           loopedPlay = true;
@@ -696,13 +704,12 @@
     }
 
     function onProgress() {
-
       self.dispatchEvent( "progress" );
     }
 
     self.play = function() {
-
       impl.paused = false;
+      console.log("in play function")
       // if( !mediaReady ) {
       //   addMediaReadyCallback( function() { self.play(); } );
       //   return;
@@ -724,8 +731,6 @@
 
     self.pause = function() {
       impl.paused = true;
-
-
       if( !mediaReady ) {
         addMediaReadyCallback( function() { player.sendNotification("doPause"); } );
         return;
@@ -736,19 +741,15 @@
       catchRoguePauseEvent = false;
       //player.pauseVideo();
       player.sendNotification("doPause");
-
     };
 
     self.getSpeeds = function(){
       console.log("in getgetSpeeds")
-      //player.plugins.playbackRateSelector.getConfig()['speeds']
       var speed_temp  = player.evaluate('{playbackRateSelector.speeds}')
       return speed_temp.split(",")
-      //return player.getAvailablePlaybackRates();
     };
 
     self.setSpeed = function(speed){
-      //player.setPlaybackRate(speed)
       console.log("speed");
       player.sendNotification('playbackRateChangeSpeed', speed );
     }
@@ -756,20 +757,16 @@
     self.getAvailableQuality=function(){
           videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
           for (i in videoQualities ) {videoQualities[i]=videoQualities[i].toLowerCase()}
-          console.log("videoQualities")
-          console.log(videoQualities)
-          player.sendNotification("doPause")
+
+
           return videoQualities
     }
 
     self.getQuality=function(){
-
-
       var videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
       console.log("-----+videoQualities+-----")
       console.log(videoQualities)
-
-      return availableVideoQuality
+      return videoQualities
     }
 
     self.setQuality=function(quality){
@@ -779,8 +776,16 @@
       //raw.plugins.sourceSelector.getSourceSizeName(raw.mediaElement.selectedSource)
       //to set quality, we must provide corresponding source
 
-      var videoSrcOfQuality = getVideoSrc(video_srcs,quality)
-      raw.mediaElement.setSource(videoSrcOfQuality)
+      console.log("in set quality")
+      console.log(video_srcs)
+      console.log(quality)
+      var videoSrcOfChosenQuality = getVideoSrc(video_srcs,quality)
+      console.log(videoSrcOfChosenQuality)
+      rawPlayer.mediaElement.setSource(videoSrcOfChosenQuality)
+      console.log("rawPlayer.mediaElement.selectedSource:")
+      console.log(rawPlayer.mediaElement.selectedSource)
+
+
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
@@ -810,7 +815,18 @@
     self.unsetCaptionTrack = function(){
       player.sendNotification('hideClosedCaptions')
     }
+    self.showControlBar = function(){
+      rawPlayer.plugins.controlBarContainer.show()
+      rawPlayer.$interface.prevObject[0].style.height = ''
+      rawPlayer.plugins.controlBarContainer.$el[0].style.display = 'inline'
+    }
+    self.hideControlBar = function (divId){
+      console.log("self.hideControlBar")
 
+      rawPlayer.plugins.controlBarContainer.hide()
+      rawPlayer.$interface.prevObject[0].style.height = '100%'
+      rawPlayer.plugins.controlBarContainer.$el[0].style.display = 'none'
+    }
     function onEnded() {
       if( impl.loop ) {
         changeCurrentTime( 0 );
@@ -843,11 +859,9 @@
 
     function getVolume() {
       // Kaltura has getVolume(), but for sync access we use impl.volume
-      setTimeout(function(){
-
-        return player.evaluate('{video.volume}')
-
-      },7000);
+      // setTimeout(function(){
+      //   return player.evaluate('{video.volume}')
+      // },7000);
 
     }
 
@@ -1046,7 +1060,6 @@
   };
   // Popcorn.HTMLKalturaVideoElement._canPlaySrc = HTMLKalturaVideoElement.prototype._canPlaySrc;
   Popcorn.getKalturaPlayer = function(IDs){
-
     return new getPlayer(IDs);
   }
   // Popcorn.getKalturaVideo = function(url){

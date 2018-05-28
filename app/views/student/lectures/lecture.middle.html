@@ -70,8 +70,8 @@
             </youtube>
 
 
-
             <progress-bar class='video-progress-bar' ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">
+
               <div ng-show="video_end && !distance_peer_session_id" class="video-end-panel">
                 <button id="replay_button" class="button end-btn replay-btn" ng-click="replay()"  translate>button.replay</button>
                 <button id="next_button" class="button end-btn next-btn" ng-show='next_item.id' ng-click="nextItem()" translate>button.next</button>

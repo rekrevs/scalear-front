@@ -350,9 +350,7 @@ angular.module('scalearAngularApp')
         var inReview = $("#progress_lec_video")
         var inEdit   = $("#lecture_video")
         var inClass  = $("#inclass_video")
-        console.log("inReview",inReview.length)
-        console.log("inEdit",inEdit.length)
-        console.log("inClass",inClass.length)
+
         if( inReview.length)     player.video.showControlBar()
         else if (inEdit.length)  player.video.hideControlBar()
         else if (inClass.length) player.video.hideControlBar()
@@ -1165,6 +1163,7 @@ angular.module('scalearAngularApp')
         //scope.$apply()
         ScalearUtils.safeApply()
       })
+
       console.log("controls kaltura out !!!!!!")
       console.log(scope.player.controls.kaltura)
       if (scope.player.controls.youtube || scope.player.controls.kaltura) {

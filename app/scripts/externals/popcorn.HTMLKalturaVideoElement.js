@@ -276,6 +276,7 @@
       impl.readyState = self.HAVE_FUTURE_DATA;
       self.dispatchEvent( "canplay" );
 
+
       mediaReady = true;
       //  console.log(mediaReadyCallbacks[0])
       //console.log(mediaReadyCallbacks[1])
@@ -528,7 +529,7 @@
       }
       var targetId = id.split("#")[1]
 
-      setTimeout(function(){
+
         kWidget.embed({
           'targetId': 'kalturaVideo',
           'wid':  '_'+kalturaIDs.partner_id,
@@ -591,7 +592,7 @@
             player.kBind("playerStateChange",onPlayerStateChange);
          }
         });
-      },3000)
+      
     //  console.log(parent_innerHTML)
 
       // console.log(document.getElementById("lecture_video"))
@@ -817,15 +818,14 @@
     }
     self.showControlBar = function(){
       rawPlayer.plugins.controlBarContainer.show()
-      rawPlayer.$interface.prevObject[0].style.height = ''
-      rawPlayer.plugins.controlBarContainer.$el[0].style.display = 'inline'
+      rawPlayer.getVideoHolder()[0].style.height = ''
+      rawPlayer.getControlBarContainer()[0].style.display = 'inline'
     }
     self.hideControlBar = function (divId){
-      console.log("self.hideControlBar")
 
       rawPlayer.plugins.controlBarContainer.hide()
-      rawPlayer.$interface.prevObject[0].style.height = '100%'
-      rawPlayer.plugins.controlBarContainer.$el[0].style.display = 'none'
+      rawPlayer.getVideoHolder()[0].style.height = '100%'
+      rawPlayer.getControlBarContainer()[0].style.display = 'none'
     }
     function onEnded() {
       if( impl.loop ) {

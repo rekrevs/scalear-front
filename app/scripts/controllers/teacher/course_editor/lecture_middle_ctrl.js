@@ -30,14 +30,13 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
       }
       $scope.slow = false
-  
+
       $scope.video_ready = false
     }
 
     $scope.lecture_player.events.onReady = function() {
       VideoInformation.waitForDurationSetup()
         .then(function(){
-          console.log("vid red tru")
           $scope.video_ready = true
           var time = $state.params.time
           if (time) {
@@ -64,7 +63,6 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $scope.is_youtube = is_youtube
-      console.log("slow = true+"+is_youtube)
       if (is_youtube){ // kaltura vids are too slowly loading which vanishes the progressbar
         $scope.slow = true
       }
@@ -77,11 +75,13 @@ angular.module('scalearAngularApp')
 
     function addItemToVideoQueue(item_data, type) {
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
+        console.log(0)
         if (!$scope.lecture_player.controls.paused()) {
           $timeout(function() {
-            if (type == 'quiz') {
-              $scope.lecture_player.controls.seek_and_pause(item_data.time);
-              $scope.showOnlineQuiz(item_data)
+            if (type == 'quiz'){
+              console.log(1)
+              $scope.lecture_player.controls.seek_and_pause(item_data.time);console.log(2)
+              $scope.showOnlineQuiz(item_data);console.log(3)
             } else if ( !item_data.as_slide) {
               $scope.showAnnotation(item_data)
             } else {
@@ -103,9 +103,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.refreshVideo = function() {
-
       $scope.slow = false
-      console.log("vid red false")
       $scope.video_ready = false
       var temp_url = $scope.lecture.url
       $scope.lecture.url = ""
@@ -143,6 +141,7 @@ angular.module('scalearAngularApp')
     $scope.showOnlineQuiz = function(quiz) {
       $scope.selected_quiz = VideoQuizModel.getSelectedVideoQuiz()
       $scope.last_details_state = DetailsNavigator.getStatus()
+      console.log("$scope.selected_quiz",$scope.selected_quiz)
       if ($scope.selected_quiz != quiz) {
         saveOpenEditor()
           .then(function() {
@@ -187,7 +186,6 @@ angular.module('scalearAngularApp')
 
 
     $scope.addDoubleClickBind = function(event) {
-      console.log("in double click bind")
       if ($scope.editing_mode && $scope.editing_type == 'quiz' && !$scope.selected_quiz.hide_quiz_answers && !$scope.selected_quiz.isFreeTextVideoQuiz()) {
         var answer_width, answer_height,
           answer_text = "Answer " + ($scope.selected_quiz.answers.length + 1)
@@ -283,8 +281,8 @@ angular.module('scalearAngularApp')
         }
         $scope.submitted = true;
         $scope.hide_alerts = false;
-        $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)
-        $scope.selected_quiz.hide_quiz_answers = false
+        $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time);
+        $scope.selected_quiz.hide_quiz_answers =
         showQuizBackground($scope.selected_quiz)
         return true
       }

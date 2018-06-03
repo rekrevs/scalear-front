@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
             if ( current_time ){
               event.preventDefault();
               var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
-              console.log("mathjax is used here")
+
               updateViewPercentage( percent_view , "seek")
                 .then(function(){
                   $state.go(toState, toParams, options)
@@ -631,7 +631,6 @@ angular.module('scalearAngularApp')
       $scope.dismissAnnotation()
       $scope.dismissDynamicAnnotation()
       var current_time = $scope.lecture_player.controls.getTime()
-      console.log("current_time",current_time)
       var current_time_percent  = Math.round((current_time / $scope.total_duration) * 100)
       $scope.seek_to_time = time
       var percent_view = Math.round((($scope.seek_to_time / $scope.total_duration) * 100))

@@ -380,7 +380,7 @@ angular.module('scalearAngularApp')
         "<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>editor.drag.end</span></span>" +
         "</div>" +
         "</div>" +
-        "<div class='dragged handle' data-drag='true' style='height: 46px; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
+        "<div class='dragged handle' data-drag='true' style='max-width:350px;max-height:95px; overflow: scroll; border-radius: 10px; padding: 10px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >" +
         "<span class='position-header error light-grey dark-text no-margin' style='top: 6px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>editor.drag.start</span></span>" +
         "<span class='no-margin' ng-bind-html='data.answer'></span>" +
         "</div>" +

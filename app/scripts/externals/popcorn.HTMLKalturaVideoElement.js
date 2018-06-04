@@ -624,7 +624,13 @@
 
       }
     }
+    self.pauseAfterSeek = function(){
 
+       setTimeout(function(){self.pause()},1000)  
+
+
+
+    }
     self.pause = function() {
       impl.paused = true;
       if( !mediaReady ) {
@@ -635,6 +641,7 @@
       // in youtube seeks fire pause events, and we don't want to listen to that.
       // except for the case of an actual pause.
       catchRoguePauseEvent = false;
+
       player.sendNotification("doPause")
 
     };

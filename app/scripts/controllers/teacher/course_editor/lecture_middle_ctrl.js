@@ -48,6 +48,7 @@ angular.module('scalearAngularApp')
           }
 
           $scope.lecture.timeline.items.forEach(function(item) {
+            console.log("on ready")
             item.data && addItemToVideoQueue(item.data, item.type);
           })
         })
@@ -133,6 +134,7 @@ angular.module('scalearAngularApp')
           $scope.editing_mode = false
           $scope.quiz_deletable = true
           $scope.showOnlineQuiz(quiz)
+          console.log("addVideoQuiz")
           addItemToVideoQueue(quiz, "quiz")
           DetailsNavigator.open()
         })
@@ -241,6 +243,7 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           if (!(data && data.errors)) {
             removeItemFromVideoQueue($scope.selected_quiz);
+            console.log("saveQuizBtn")
             addItemToVideoQueue($scope.selected_quiz, "quiz");
             $scope.selected_quiz.update()
             return saveQuizAnswers(options)
@@ -351,6 +354,7 @@ angular.module('scalearAngularApp')
 
       MarkerModel.addMarker(insert_time, the_height, the_width, the_left, the_top)
         .then(function(marker) {
+          console.log("addMarker")
           addItemToVideoQueue(marker, "marker")
           if (display_editor) {
             $scope.lecture_player.controls.seek_and_pause(insert_time)
@@ -424,6 +428,7 @@ angular.module('scalearAngularApp')
             return true
           } else {
             removeItemFromVideoQueue(marker)
+            console.log("saveMarkerBtn")
             addItemToVideoQueue(marker, "marker")
             marker.update()
             closeMarkerMode()

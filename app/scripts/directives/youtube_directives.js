@@ -205,7 +205,7 @@ angular.module('scalearAngularApp')
         }
         if (player_controls.getDuration() - time < 1 ){
           time = player_controls.getDuration() - 1
-          console.log("time",time)
+
         }
         time += scope.start || 0
 
@@ -235,10 +235,10 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.seek_and_pause = function(time) {
-        console.log("time",time)
         if(isKaltura(scope.url)){
-            player_controls.seek(time-0.2)
-            setTimeout(function(){player.pause()},1000)
+            player_controls.seek(time)
+            console.log("player",player)
+            player.video.pauseAfterSeek()
         } else {
           player_controls.seek(time)
           player.pause()
@@ -508,11 +508,13 @@ angular.module('scalearAngularApp')
         return video_url.match(/(.*mp4$)/)
       }
       var isKaltura= function(frame_url) {
-        var url = frame_url.match( 'src\=(.*)[a-z]\"' )[0]
-        console.log("url",url)
+        var url
+        if (frame_url.match( 'src\=(.*)[a-z]\"' )){
+          url = frame_url.match( 'src\=(.*)[a-z]\"' )[0]
+        }
+
         var video_url = url || scope.url.split(" ")[1]|| ""
-      //  console.log( video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/))
-        console.log("video_url",video_url)
+
         return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
       }
       var isMediaSite = function(url) {

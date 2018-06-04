@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
-    $scope.video ={} 
+    $scope.video ={}
     if($scope.lecture.inclass){$scope.video.type = 1}
     else if($scope.lecture.distance_peer){$scope.video.type= 2}
     else{$scope.video.type = 0}
@@ -27,7 +27,10 @@ angular.module('scalearAngularApp')
       lecture[column] = data;
       var temp_lecture = LectureModel.createInstance(lecture);
       if(column == 'url') {
-        temp_lecture.url = $filter("formatURL")(temp_lecture.url)
+        if (!data.toString().startsWith("<iframe"))
+        {
+          temp_lecture.url = $filter("formatURL")(temp_lecture.url)
+        }
         return temp_lecture.validateUrl(); // returns a promise
       } else {
         return temp_lecture.validate() // return a promise
@@ -78,8 +81,10 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateLectureUrl = function() {
+    
       $scope.lecture.updateUrl()
         .then(function(should_trim) {
+
           should_trim && checkToTrim()
         })
     }

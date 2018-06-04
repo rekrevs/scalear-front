@@ -1,5 +1,105 @@
 <center>
   <loading size="big" show="!eventSources.length"></loading>
+
+    <!-- <div id="kal_player" style="width:400px;height:330px;">
+       <div>hello</div>
+    </div>
+    <script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+
+    <script>
+          kWidget.embed({
+             'targetId': 'kal_player',
+             'wid': '_243342',
+             'uiconf_id' : '12905712',
+             'entry_id' : '0_uka1msg4',
+             'flashvars':{ // flashvars allows you to set runtime uiVar configuration overrides.
+                  'myPlugin':{
+               				'fooAttribute': 'bar',
+               				'barAttribute': 'foo'
+               			},
+                  'autoPlay': false
+             },
+             'params':{ // params allows you to set flash embed params such as wmode, allowFullScreen etc
+                  'wmode': 'transparent'
+             },
+             readyCallback: function( playerId ){
+               var kdp = document.getElementById( playerId );
+               var foo = "bar";
+               // using kBind we will register to player's play event
+
+
+               kdp.kBind( "mute", function(){
+                // console will log "play bar":
+                  console.log("mute " + foo);
+                // stop listening to the play event using kUnbind:
+                 // kdp.kUnbind('playerPaused');
+               });
+               kdp.kBind( "unmute", function(){
+                // console will log "play bar":
+                  console.log("unmute " + foo);
+                // stop listening to the play event using kUnbind:
+                 // kdp.kUnbind('playerPaused');
+               });
+               kdp.kBind( "seek", function(){
+                // console will log "play bar":
+
+                // stop listening to the play event using kUnbind:
+                 // kdp.kUnbind('playerPaused');
+                   console.log('seek : '+ kdp.evaluate('{video.player.currentTime}')+" volume:"+kdp.evaluate('{video.volume}'));
+                   // kdp.sendNotification("doSeek", 30);
+
+               });
+            	 kdp.kBind( "playerPaused", function(){
+            		// console will log "play bar":
+
+            		// stop listening to the play event using kUnbind:
+            		 // kdp.kUnbind('playerPaused');
+                  console.log('video : '+ kdp.evaluate('{video.player.currentTime}')+" volume:"+kdp.evaluate('{video.volume}'));
+                  // kdp.sendNotification("doSeek", 30);
+
+            	 });
+               kdp.kBind( "playerPlayed", function(){
+               // console will log "play bar":
+                 console.log("playerPlayed:" +foo);
+               // stop listening to the play event using kUnbind:
+                // kdp.kUnbind('playerPaused');
+              });
+
+             kdp.kBind( "playerUpdatePlayhead", function(){
+             // console will log "play bar":
+               console.log("playerUpdatePlayhead:" +foo);
+             // stop listening to the play event using kUnbind:
+              // kdp.kUnbind('playerPaused');
+            });
+            kdp.kBind( "playerPlayEnd", function(){
+            // console will log "play bar":
+              console.log("playerPlayEnd:" );
+            // stop listening to the play event using kUnbind:
+             // kdp.kUnbind('playerPaused');
+           });
+           kdp.kBind( 'volumeChanged', function(){
+           // console will log "play bar":
+             console.log("My new volume:"+foo );
+           // stop listening to the play event using kUnbind:
+            // kdp.kUnbind('playerPaused');
+          });
+          kdp.kBind( "openFullScreen", function(){
+          // console will log "play bar":
+            console.log("openFullScreen:" );
+          // stop listening to the play event using kUnbind:
+           // kdp.kUnbind('playerPaused');
+         });
+         kdp.kBind( "closeFullScreen", function(){
+         // console will log "play bar":
+           console.log("closeFullScreen:" );
+         // stop listening to the play event using kUnbind:
+          // kdp.kUnbind('playerPaused');
+        }); -->
+
+
+
+    <!-- </script> -->
+
 </center>
 <span class="dashboard" ng-show="eventSources.length">
   <div class="small-12 large-6 columns" style="z-index: 2">
@@ -82,13 +182,3 @@
   </div>
 </span>
 <div id="quiz_bar" ng-hide='true'> </div>
-<!-- <button class="show-inline button really-tiny no-margin left" ng-click="toggleLargeCalendar()" ng-show="events.length" >
-        <span ng-show="!large_calendar">
-          <i class="fi-zoom-in size-10"/>
-          <span translate>dashboard.large_calendar</span>
-</span>
-<span ng-show="large_calendar">
-          <i class="fi-zoom-out size-10"/>
-          <span translate>dashboard.small_calendar</span>
-</span>
-</button> -->

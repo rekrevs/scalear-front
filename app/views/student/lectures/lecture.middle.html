@@ -9,7 +9,7 @@
 </span>
 <span id="lecture_container" style="overflow:hidden">
   <div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
-    'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
+    'large-12 land-medium-12 large-centered': !delayed_timeline_open,
     'large-uncentered land-uncentered': delayed_timeline_open,
     'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
     'land-medium-8':!ContentNavigator.status && delayed_timeline_open
@@ -27,7 +27,8 @@
             </center>
           </span>
           <video_container class="video-container" ng-if="passed_requirments" ng-class="container_class" screenfull active="fullscreen">
-            <youtube class="widescreen video-layer" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer">
+            <youtube  class="widescreen video-layer" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer">
+              <!-- <div id="kal_player" style="width:400px;height:330px;">hello</div> -->
               <div ng-if="temp_timeline_item">
                 <div class="on-video-textarea" ng-if="temp_timeline_item.type=='note'">
                   <textarea ng-model='temp_timeline_item.data' class="note-textarea" placeholder="Note..."></textarea>
@@ -67,7 +68,10 @@
               <dynamic-annotation-student   close="dismissDynamicAnnotation" action="toggleVideoPlayback" data="dynamic_annotation" text-to-show="'annotation'" ng-if="dynamic_annotation && !dynamic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
               <dynamic-annotation-student close="dismissQuestionText" data="selected_quiz"  text-to-show="'question'" ng-if="selected_quiz.actual_display_text" />
             </youtube>
+
+
             <progress-bar class='video-progress-bar' ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">
+
               <div ng-show="video_end && !distance_peer_session_id" class="video-end-panel">
                 <button id="replay_button" class="button end-btn replay-btn" ng-click="replay()"  translate>button.replay</button>
                 <button id="next_button" class="button end-btn next-btn" ng-show='next_item.id' ng-click="nextItem()" translate>button.next</button>
@@ -112,6 +116,7 @@
                 </div>
               </center>
               <center>
+
                 <button class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" translate>lectures.button.new_note</button>
                 <button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" translate>lectures.button.ask_question</button>
                 <button class="button small no-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" translate>lectures.button.im_confused</button>
@@ -154,7 +159,7 @@
             <button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.im_confused</button>
             <button id="fullscreen_button" ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.fullscreen</button>
             <div ng-hide='distance_peer_session_id'>
-              <button class='button small no-margin-bottom distance-peer-start-btn' ng-if='lecture.distance_peer' ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
+            <button class='button small no-margin-bottom distance-peer-start-btn' ng-if='lecture.distance_peer' ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
             </div>
           </center>
         </div>
@@ -162,4 +167,6 @@
     </div>
   </div>
   <student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" open="TimelineNavigator.status" />
+
+
 </span>

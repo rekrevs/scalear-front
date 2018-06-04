@@ -30,6 +30,7 @@ angular.module('scalearAngularApp')
         $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
       }
       $scope.slow = false
+
       $scope.video_ready = false
     }
 
@@ -47,6 +48,7 @@ angular.module('scalearAngularApp')
           }
 
           $scope.lecture.timeline.items.forEach(function(item) {
+            console.log("on ready")
             item.data && addItemToVideoQueue(item.data, item.type);
           })
         })
@@ -62,7 +64,10 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $scope.is_youtube = is_youtube
-      $scope.slow = true
+      if (is_youtube){ // kaltura vids are too slowly loading which vanishes the progressbar
+        $scope.slow = true
+      }
+
     }
 
     function showMarker(marker) {
@@ -71,11 +76,13 @@ angular.module('scalearAngularApp')
 
     function addItemToVideoQueue(item_data, type) {
       item_data.cue = $scope.lecture_player.controls.cue($scope.lecture.start_time + (item_data.time - 0.1), function() {
+        console.log(0)
         if (!$scope.lecture_player.controls.paused()) {
           $timeout(function() {
-            if (type == 'quiz') {
-              $scope.lecture_player.controls.seek_and_pause(item_data.time);
-              $scope.showOnlineQuiz(item_data)
+            if (type == 'quiz'){
+              console.log(1)
+              $scope.lecture_player.controls.seek_and_pause(item_data.time);console.log(2)
+              $scope.showOnlineQuiz(item_data);console.log(3)
             } else if ( !item_data.as_slide) {
               $scope.showAnnotation(item_data)
             } else {
@@ -127,6 +134,7 @@ angular.module('scalearAngularApp')
           $scope.editing_mode = false
           $scope.quiz_deletable = true
           $scope.showOnlineQuiz(quiz)
+          console.log("addVideoQuiz")
           addItemToVideoQueue(quiz, "quiz")
           DetailsNavigator.open()
         })
@@ -135,6 +143,7 @@ angular.module('scalearAngularApp')
     $scope.showOnlineQuiz = function(quiz) {
       $scope.selected_quiz = VideoQuizModel.getSelectedVideoQuiz()
       $scope.last_details_state = DetailsNavigator.getStatus()
+      console.log("$scope.selected_quiz",$scope.selected_quiz)
       if ($scope.selected_quiz != quiz) {
         saveOpenEditor()
           .then(function() {
@@ -234,6 +243,7 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           if (!(data && data.errors)) {
             removeItemFromVideoQueue($scope.selected_quiz);
+            console.log("saveQuizBtn")
             addItemToVideoQueue($scope.selected_quiz, "quiz");
             $scope.selected_quiz.update()
             return saveQuizAnswers(options)
@@ -274,8 +284,8 @@ angular.module('scalearAngularApp')
         }
         $scope.submitted = true;
         $scope.hide_alerts = false;
-        $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time)
-        $scope.selected_quiz.hide_quiz_answers = false
+        $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time);
+        $scope.selected_quiz.hide_quiz_answers =
         showQuizBackground($scope.selected_quiz)
         return true
       }
@@ -344,6 +354,7 @@ angular.module('scalearAngularApp')
 
       MarkerModel.addMarker(insert_time, the_height, the_width, the_left, the_top)
         .then(function(marker) {
+          console.log("addMarker")
           addItemToVideoQueue(marker, "marker")
           if (display_editor) {
             $scope.lecture_player.controls.seek_and_pause(insert_time)
@@ -417,6 +428,7 @@ angular.module('scalearAngularApp')
             return true
           } else {
             removeItemFromVideoQueue(marker)
+            console.log("saveMarkerBtn")
             addItemToVideoQueue(marker, "marker")
             marker.update()
             closeMarkerMode()

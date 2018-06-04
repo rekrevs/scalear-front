@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     restrict: "E",
     template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid"
   };
-}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation) {
+}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', 'ScalearUtils', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation, ScalearUtils) {
   return {
     transclude: true,
     restrict: 'E',
@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
         player_events = {}
 
       var loadVideo = function() {
+
         scope.kill_popcorn()
         player_controls.youtube = false
         if (!scope.controls || scope.controls == undefined)
@@ -52,10 +53,12 @@ angular.module('scalearAngularApp')
           scope.autoplay = 1;
 
         if (isYoutube(scope.url)) {
-          $log.debug("youtube")
+
           player_controls.youtube = true
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
+
           player = Popcorn(video);
+
           video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
@@ -78,12 +81,20 @@ angular.module('scalearAngularApp')
           player = Popcorn(video);
           video.src = scope.url
           $log.debug(video.src)
+        }else if (isKaltura(scope.url)){
+          var video = Popcorn.HTMLKalturaVideoElement('#' + scope.id);
+          player = Popcorn(video);
+          video.src = scope.url
+          player_controls.kaltura = true;
+
         }
 
         if (scope.player){
           scope.player.element = player
         }
+
         setupEvents()
+
         parent.focus()
         scope.timeout_promise = $interval(function() {
           if (player_controls.readyState() == 0 && !$rootScope.is_mobile){
@@ -91,6 +102,8 @@ angular.module('scalearAngularApp')
           }
         }, 15000, 1)
       }
+
+
 
       var formatYoutubeURL = function(url, vq, start, end, autoplay, controls) {
         var short_url = isShortYoutube(url)
@@ -113,6 +126,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.kill_popcorn = function() {
+
         if (player) {
           Popcorn.destroy(player);
           if (player.media.destroy)
@@ -125,6 +139,8 @@ angular.module('scalearAngularApp')
         if (scope.timeout_promise)
           $timeout.cancel(scope.timeout_promise)
       }
+
+
       player_controls.play = function() {
         player.play();
       }
@@ -152,6 +168,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getTime = function() {
+
         return player.currentTime() - scope.start
       }
 
@@ -175,6 +192,8 @@ angular.module('scalearAngularApp')
         return player.readyState()
       }
 
+
+
       player_controls.seek = function(time) {
         $log.debug("entering sekking", time)
         time=  parseFloat(time)
@@ -186,19 +205,27 @@ angular.module('scalearAngularApp')
         }
         if (player_controls.getDuration() - time < 1 ){
           time = player_controls.getDuration() - 1
+
         }
         time += scope.start || 0
+
+
         if (player_controls.readyState() == 0 ) {
           player.on("loadeddata",
             function() {
+
               $timeout(function(){
+
                 player.currentTime(time);
+
               })
             });
         } else {
           $log.debug("seeking now", time)
           player.currentTime(time);
+
         }
+
         parent.focus()
 
       }
@@ -208,8 +235,14 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.seek_and_pause = function(time) {
-        player_controls.seek(time)
-        player.pause()
+        if(isKaltura(scope.url)){
+            player_controls.seek(time)
+            console.log("player",player)
+            player.video.pauseAfterSeek()
+        } else {
+          player_controls.seek(time)
+          player.pause()
+        }
       }
 
       player_controls.setStartTime = function(time) {
@@ -234,6 +267,7 @@ angular.module('scalearAngularApp')
 
       player_controls.setVideoEndTime = function(time) {
         scope.end = Math.round(time)
+
       }
 
       player_controls.getVideoStartTime = function() {
@@ -246,6 +280,7 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
+
         scope.kill_popcorn()
         loadVideo()
       }
@@ -291,7 +326,11 @@ angular.module('scalearAngularApp')
           if (player_controls.getSpeeds().indexOf(speed) != -1) {
             player.media.setSpeed(speed)
           }
-        } else {
+        }else if (scope.player.controls.kaltura) {
+          if (player_controls.getSpeeds().indexOf(speed) != -1) {
+            player.media.setSpeed(speed)
+          }
+        }else {
           player.video.playbackRate = speed
         }
 
@@ -316,6 +355,17 @@ angular.module('scalearAngularApp')
         VideoInformation.quality = quality
       }
 
+      player_controls.setKalturaControlBar = function(){
+
+        var inReview = $("#progress_lec_video")
+        var inEdit   = $("#lecture_video")
+        var inClass  = $("#inclass_video")
+
+        if( inReview.length)     player.video.showControlBar()
+        else if (inEdit.length)  player.video.hideControlBar()
+        else if (inClass.length) player.video.hideControlBar()
+
+      }
       var setupEvents = function() {
         player.on("loadeddata",
           function() {
@@ -324,10 +374,15 @@ angular.module('scalearAngularApp')
               player.controls(false);
             if (player_events.onReady) {
               player_events.onReady();
-              scope.$apply();
+              // scope.$apply();
+              ScalearUtils.safeApply()
             }
+
             var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             VideoInformation.setDuration(duration)
+            if(isKaltura(scope.url))
+              {player_controls.setKalturaControlBar()
+              }
           });
 
         player.on('playing',
@@ -336,7 +391,8 @@ angular.module('scalearAngularApp')
             parent.focus()
             if (player_events.onPlay) {
               player_events.onPlay();
-              scope.$apply();
+              //scope.$apply();
+              ScalearUtils.safeApply()
             }
           });
 
@@ -361,7 +417,8 @@ angular.module('scalearAngularApp')
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();
-            scope.$apply();
+            // scope.$apply();
+            ScalearUtils.safeApply()
           }
         })
 
@@ -450,17 +507,29 @@ angular.module('scalearAngularApp')
         var video_url = url || scope.url || ""
         return video_url.match(/(.*mp4$)/)
       }
+      var isKaltura= function(frame_url) {
+        var url
+        if (frame_url.match( 'src\=(.*)[a-z]\"' )){
+          url = frame_url.match( 'src\=(.*)[a-z]\"' )[0]
+        }
 
+        var video_url = url || scope.url.split(" ")[1]|| ""
+
+        return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
+      }
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""
         return video_url.match(/^(http|https):\/\/.*(\/Play\/)/)
       }
 
       player_controls.isYoutube = isYoutube
-      player_controls.isMP4 = isMP4
+      player_controls.isMP  = isMP4
+      player_controls.isKaltura = isKaltura
 
       scope.$watch('url', function() {
-        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isMediaSite(scope.url) )){
+
+        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) )){
+
           player_controls.refreshVideo()
         }
       })
@@ -616,7 +685,7 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', 'VideoInformation',function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter ,VideoInformation) {
+}]).directive('progressBar', ['$rootScope', '$log', '$window', '$cookieStore', '$timeout', 'VideoQuizModel','$filter', 'VideoInformation','ScalearUtils',function($rootScope, $log, $window, $cookieStore, $timeout, VideoQuizModel, $filter ,VideoInformation,ScalearUtils) {
   return {
     transclude: true,
     restrict: 'E',
@@ -648,16 +717,22 @@ angular.module('scalearAngularApp')
         scope.duration = scope.player.controls.getDuration();
         scope.video = {
           start_time: scope.player.controls.getVideoStartTime(),
-          end_time: scope.player.controls.getVideoEndTime(),
+          end_time: scope.player.controls.getVideoEndTime()
+
         }
+
         scope.$watch('editing', function() {
           if (scope.editing == 'video'){
             scope.video.start_time= scope.player.controls.getVideoStartTime();
             scope.video.end_time= scope.player.controls.getVideoEndTime();
             scope.duration = scope.player.controls.getAbsoluteDuration();
+
+
           }
-          else
+          else{
             scope.duration = scope.player.controls.getDuration();
+
+          }
         })
 
         if(scope.is_mobile){
@@ -762,6 +837,8 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) {
+
+
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
@@ -785,12 +862,15 @@ angular.module('scalearAngularApp')
       }
 
       scope.play = function() {
+
         if (scope.player.controls.paused()) {
           scope.player.controls.play()
           scope.play_class = "pause";
+
         } else {
           scope.player.controls.pause()
           scope.play_class = "play";
+
         }
       }
 
@@ -847,6 +927,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.progressSeek = function(event) {
+
         if (!(scope.skip_progress_seek && scope.editing == 'quiz')) {
           var progress_bar = angular.element('.progressBar');
           var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth();
@@ -865,6 +946,7 @@ angular.module('scalearAngularApp')
       scope.setQuality = function(quality) {
         scope.player.controls.changeQuality(quality)
         scope.chosen_quality = quality;
+
       }
 
       scope.scrollEvent = function(type, id) {
@@ -1000,6 +1082,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.calculateVideoEndTime = function(event, meta) {
+
         meta.position.top = -4
         var offset = 25
         if (meta.position.left < scope.video.start_location + offset)
@@ -1010,6 +1093,7 @@ angular.module('scalearAngularApp')
         scope.video.end_time = (meta.position.left / scope.video.progress_width) * scope.duration
         scope.player.controls.setVideoEndTime(scope.video.end_time)
         scope.player.controls.absoluteSeek(scope.video.end_time)
+
       }
 
       scope.seekToQuiz = function(quiz) {
@@ -1043,16 +1127,9 @@ angular.module('scalearAngularApp')
         }
       });
 
-      // if(scope.is_mobile){
-      //   progress_bar.on('touchstart', scope.showPlayhead);
-      //   progress_bar.on('touchend', scope.hidePlayhead);
-      // }else{
-      //   progress_bar.on('mouseenter', scope.showPlayhead);
-      //   progress_bar.on('mouseleave', scope.hidePlayhead);
-      // }
-
 
       player.on('timeupdate', function() {
+
         if (onplayhead == false && scope.editing != 'video') {
           scope.current_time = scope.player.controls.getTime()
           VideoInformation.current_time = scope.current_time
@@ -1060,6 +1137,7 @@ angular.module('scalearAngularApp')
           scope.elapsed_head = scope.elapsed_width > 0.5 ? scope.elapsed_width - 0.45 : 0
           scope.elapsed_head = scope.elapsed_head > 99.4 ? 99.4 : scope.elapsed_head
         }
+
         scope.$apply()
       })
 
@@ -1080,17 +1158,22 @@ angular.module('scalearAngularApp')
 
       player.on('pause', function() {
         scope.play_class = "play";
-        scope.$apply()
+        //scope.$apply()
+        ScalearUtils.safeApply()
       })
 
       player.on('playing', function() {
+
         if (scope.player.controls.youtube)
           scope.chosen_quality = scope.player.controls.getQuality()
         scope.play_class = "pause";
-        scope.$apply()
+        //scope.$apply()
+        ScalearUtils.safeApply()
       })
 
-      if (scope.player.controls.youtube) {
+
+      if (scope.player.controls.youtube || scope.player.controls.kaltura) {
+
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
         if ($cookieStore.get('volume') != null){
@@ -1105,8 +1188,12 @@ angular.module('scalearAngularApp')
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
 
+
         $timeout(function() {
+
           scope.qualities = scope.player.controls.getAvailableQuality().reverse()
+
+            //if(scope.player.controls.kaltura)   scope.player.controls.pause();
         }, 2000)
         scope.setQuality(scope.chosen_quality)
       } else {

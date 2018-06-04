@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     var service = {
       youtube_video_information: {},
       duration: 0,
-      current_time: 0, 
+      current_time: 0,
       volume: 0.8,
       speed: 1,
       quality: "720p"
@@ -41,7 +41,9 @@ angular.module('scalearAngularApp')
     service.emptyCachedInfo=function(){
       service.youtube_video_information = {}
     }
-
+    service.isKatlura=function(url){
+       return url.toString().startsWith("<iframe")
+    }
     service.isYoutube=function(url) {
       var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
       if(!match)
@@ -64,16 +66,22 @@ angular.module('scalearAngularApp')
     service.isMediaSite=function(url) {
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
+    service.isKaltura=function(url) {
+      console.log(url)
+      return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
+    }
 
     service.invalidUrl=function(url) {
-      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url)) )
+      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
     }
 
     service.setDuration=function(newDuration) {
+
       service.duration = newDuration
     }
 
     service.waitForDurationSetup=function() {
+      console.log("in waitForDurationSetup")
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
         if(service.duration){
@@ -81,12 +89,13 @@ angular.module('scalearAngularApp')
           $interval.cancel(watchDuration);
         }
       }, 500)
+
       return deferred.promise;
     }
 
     service.resetValues=function() {
       service.duration= 0
-      service.current_time= 0 
+      service.current_time= 0
       service.volume= 0.8
       service.speed= 1
       service.quality= "720p";

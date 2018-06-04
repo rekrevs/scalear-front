@@ -15,7 +15,8 @@
 		<form name="answer_form" novalidate >
 			<center>
 				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12">
-					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
+
+					<youtube  id="lecture_video"  ng-style="video_layer" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
 						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
@@ -33,6 +34,7 @@
 							<slide-note data="selected_marker" ng-if=' selected_marker.as_slide' />
 						</quiz>
 					</youtube>
+
 					<progress-bar ng-if="!slow && lecture.url && video_ready" player="lecture_player" seek="seek" class="text-left" role="1" timeline="lecture.timeline" editing="editing_type">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
@@ -82,3 +84,35 @@
 		</center>
 	</div>
 </div>
+<!-- <script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+<script>
+			kWidget.embed({
+				 'targetId': 'kal_player',
+				 'wid': '_243342',
+				 'uiconf_id' : '12905712',
+				 'entry_id' : '0_uka1msg4',
+				 'flashvars':{ // flashvars allows you to set runtime uiVar configuration overrides.
+							'myPlugin':{
+									'fooAttribute': 'bar',
+									'barAttribute': 'foo'
+								},
+							'autoPlay': false
+				 },
+				 'params':{ // params allows you to set flash embed params such as wmode, allowFullScreen etc
+							'wmode': 'transparent'
+				 },
+				 readyCallback: function( playerId ){
+					 var kdp = document.getElementById( playerId );
+					 var foo = "bar";
+					 // using kBind we will register to player's play event
+
+
+					 kdp.kBind( "mute", function(){
+						// console will log "play bar":
+							console.log("mute " + foo);
+						// stop listening to the play event using kUnbind:
+						 // kdp.kUnbind('playerPaused');
+					 });
+													}
+									});
+		</script> -->

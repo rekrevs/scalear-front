@@ -237,7 +237,7 @@ angular.module('scalearAngularApp')
       player_controls.seek_and_pause = function(time) {
         console.log("time",time)
         if(isKaltura(scope.url)){
-            player_controls.seek(time-0.5)
+            player_controls.seek(time-0.2)
             setTimeout(function(){player.pause()},1000)
         } else {
           player_controls.seek(time)
@@ -508,8 +508,8 @@ angular.module('scalearAngularApp')
         return video_url.match(/(.*mp4$)/)
       }
       var isKaltura= function(frame_url) {
-        var url = frame_url.match( 'src\=(.*)[a-z]\" ' )[0]
-
+        var url = frame_url.match( 'src\=(.*)[a-z]\"' )[0]
+        console.log("url",url)
         var video_url = url || scope.url.split(" ")[1]|| ""
       //  console.log( video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/))
         console.log("video_url",video_url)

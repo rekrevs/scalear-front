@@ -16,18 +16,30 @@
   kLoaded = false,
   kCallbacks = [];
 
+  // <iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811441/sp/81144100/embedIframeJs/uiconf_id/32783592/partner_id/811441?iframeembed=true&playerId=kaltura_player&entry_id=1_4sdops0p&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&wid=1_ajwkn2r7" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Kaltura Player"></iframe>
+
   function isKalturaReady(url) {
     // If the Kaltura iframe API isn't injected, to it now.
     // addKalturaLibraryLoader()
-
+    console.log("kLoaded", kLoaded);
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+      console.log("loading kaltura API");
       var tag = document.createElement( "script" );
-      tag.src = url.split(" ")[1].split("=")[1].substr(1).split("?")[0]
+      var kalturaIDs = extractKalturaIDs(url)
+      tag.src = "https://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
+
+
       var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
-      console.log("tag.src",tag.src)
+
       firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
       kLoaded = true;
-      onKalturaAPIReady()
+      kWidgetInterval = setInterval(function(){
+        if(window.kWidget){
+          onKalturaAPIReady();
+          clearInterval(kWidgetInterval);
+        }
+      }, 500)
+
     }
     return kReady;
   };
@@ -39,12 +51,11 @@
       var temp_url = url.toString()
       var kalturaIDs = {}
 
-      console.log("ExtractIDs -----------")
 
       kalturaIDs.partner_id = url.match("\/p\/([1-9]+)")[1]
       kalturaIDs.uiconf_id  = url.match("\/uiconf_id\/([1-9]+)")[1]
       kalturaIDs.entry_id   = url.match("\&entry_id\=([0-9]_[a-z0-9]+)\&")[1]
-      console.log("kalturaIDs.partner_id",kalturaIDs.partner_id)
+
 
       // frame_src = url.split(" ")[1]
       // var frame_src_slash_splitted = frame_src.split('/')
@@ -59,7 +70,6 @@
       // }else{//url has not flash vars
       //   kalturaIDs.entry_id   = frame_src_equal_splitted[4]
       // }
-      console.log("kalturaIDs",kalturaIDs)
       return kalturaIDs
     }
 
@@ -81,6 +91,7 @@
     window.YT = null;
   }
   function onKalturaAPIReady(){
+
     kReady = true;
     var i = kCallbacks.length;
     while(i-- ) {
@@ -320,7 +331,7 @@
             catchRoguePauseEvent = false;
             break;
           }
-          console.log("in event Paused")
+
           onPause();
           break;
 
@@ -332,7 +343,7 @@
 
         // video cued
         case "cued":
-             console.log("in cued")
+          
           // XXX: cued doesn't seem to fire reliably, bug in Kaltura api?
           break;
       }
@@ -376,10 +387,17 @@
 
 
     function changeSrc( aSrc ) {
+      console.log("calling changeSrc", aSrc);
       impl.src = aSrc;
+      console.log("Checking if kaltura is ready");
       if( !isKalturaReady(aSrc) ) {
+        console.log("Kaltura not ready, trying again");
         return addKalturaCallback( function() { changeSrc( aSrc ); } );
+        console.log("tyb here?");
       }
+
+      console.log("do i come here?");
+
       if( playerReady ) {
         resetPlayer();
         resetPlayer();
@@ -626,7 +644,7 @@
     }
     self.pauseAfterSeek = function(){
 
-       setTimeout(function(){self.pause()},1000)  
+       setTimeout(function(){self.pause()},1000)
 
 
 

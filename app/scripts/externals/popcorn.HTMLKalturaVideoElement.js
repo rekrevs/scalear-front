@@ -21,9 +21,9 @@
   function isKalturaReady(url) {
     // If the Kaltura iframe API isn't injected, to it now.
     // addKalturaLibraryLoader()
-    console.log("kLoaded", kLoaded);
+
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
-      console.log("loading kaltura API");
+
       var tag = document.createElement( "script" );
       var kalturaIDs = extractKalturaIDs(url)
       tag.src = "https://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
@@ -343,7 +343,7 @@
 
         // video cued
         case "cued":
-          
+
           // XXX: cued doesn't seem to fire reliably, bug in Kaltura api?
           break;
       }
@@ -387,16 +387,15 @@
 
 
     function changeSrc( aSrc ) {
-      console.log("calling changeSrc", aSrc);
+
       impl.src = aSrc;
-      console.log("Checking if kaltura is ready");
+
       if( !isKalturaReady(aSrc) ) {
-        console.log("Kaltura not ready, trying again");
+
         return addKalturaCallback( function() { changeSrc( aSrc ); } );
-        console.log("tyb here?");
+
       }
 
-      console.log("do i come here?");
 
       if( playerReady ) {
         resetPlayer();
@@ -628,7 +627,7 @@
         return;
       }
       // player.playVideo();
-      console.log("in play")
+
       player.sendNotification("doPlay");
     };
 

@@ -576,6 +576,7 @@
     };
 
     self.getSpeeds = function(){
+
       return player.getAvailablePlaybackRates();
     };
 
@@ -584,6 +585,7 @@
     }
 
     self.getAvailableQuality=function(){
+      console.log("quality levels:"+player.getAvailableQualityLevels());
       return player.getAvailableQualityLevels()
     }
 

@@ -218,8 +218,8 @@ angular
       var fontSize = "14px"
       if (MobileDetector.isMobile()){
         fontSize = "10px";
-      } 
-        
+      }
+
       return {
         restrict: "E",
         template:
@@ -390,7 +390,6 @@ angular
               ui.draggable.css("background-color", "lightblue");
               ui.draggable.css("width", scope.data.width * 100 + "%");
               ui.draggable.css("height", scope.data.height * 100 + "%");
-
               ui.draggable.css("word-wrap", "break-word");
               ui.draggable.css("overflow", "hidden");
               var ontop_w = angular.element("#ontop").width();
@@ -424,6 +423,9 @@ angular
             destroyPopover(ui.draggable);
             clear(ui.draggable);
             ui.draggable.css("font-size", "15px");
+            ui.draggable.css("overflow", "scroll");
+
+
           };
 
           var clear = function(draggable) {
@@ -721,7 +723,7 @@ angular
         template:
           '<div   e-rich-textarea onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal; height:80px" style="padding:0 9px">' +
           '<div class="note" style="word-break: break-word; margin: 0px;cursor: text;float:left">' +
-          '<span ng-bind-html="value"></span>' +
+          '<span ng-bind-html="value" style="white-space: pre-wrap;"></span>' +
           "</div>" +
           '<div style="font-size: 10px; float: right; display: inline-block;">' +
           '<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>' +
@@ -842,7 +844,7 @@ angular
         },
         templateUrl: "/views/student/lectures/dynamic_annotation_student.html",
         link: function(scope, element, attrs) {
-         
+
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
         }

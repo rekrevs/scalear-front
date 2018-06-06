@@ -72,6 +72,7 @@ angular.module('scalearAngularApp')
     }
 
     service.invalidUrl=function(url) {
+      console.log('service.isKatlura(url)',service.isKatlura(url))
       return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
     }
 

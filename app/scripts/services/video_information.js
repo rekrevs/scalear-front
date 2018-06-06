@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
       service.youtube_video_information = {}
     }
     service.isKatlura=function(url){
-       return url.toString().startsWith("<iframe")
+       return url.toString().startsWith("<iframe ")
     }
     service.isYoutube=function(url) {
       var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
@@ -67,12 +67,12 @@ angular.module('scalearAngularApp')
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
     service.isKaltura=function(url) {
-      console.log(url)
+
       return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
     }
 
     service.invalidUrl=function(url) {
-      console.log('service.isKatlura(url)',service.isKatlura(url))
+
       return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
     }
 
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
     }
 
     service.waitForDurationSetup=function() {
-      console.log("in waitForDurationSetup")
+
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
         if(service.duration){

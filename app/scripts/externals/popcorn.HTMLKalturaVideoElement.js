@@ -52,8 +52,8 @@
       var kalturaIDs = {}
 
 
-      kalturaIDs.partner_id = url.match("\/p\/([1-9]+)")[1]
-      kalturaIDs.uiconf_id  = url.match("\/uiconf_id\/([1-9]+)")[1]
+      kalturaIDs.partner_id = url.match("\/p\/([0-9]+)")[1]
+      kalturaIDs.uiconf_id  = url.match("\/uiconf_id\/([0-9]+)")[1]
       kalturaIDs.entry_id   = url.match("\&entry_id\=([0-9]_[a-z0-9]+)\&")[1]
 
 

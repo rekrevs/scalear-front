@@ -225,7 +225,7 @@
 
         // ended
         case YT.PlayerState.ENDED:
-         console.log("event",event)
+      
           onEnded();
           break;
 

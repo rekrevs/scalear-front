@@ -139,7 +139,7 @@ angular.module('scalearAngularApp')
       })
 
       function update() {
-        console.log("------update--------")
+  
         var modified_lecture = angular.copy(lecture);
         delete modified_lecture.id;
         delete modified_lecture.created_at;
@@ -157,7 +157,7 @@ angular.module('scalearAngularApp')
           })
           .$promise
           .then(function(data) {
-            console.log("======then of update=========")
+
             angular.extend(lecture, data.lecture)
           })
       }
@@ -170,7 +170,7 @@ angular.module('scalearAngularApp')
           validate()
             .then(function() {
               var type = VideoInformation.isYoutube(lecture.url)
-              console.log("validateUrl:"+type)
+
               if(type) {
                 var id = type[1]
                 VideoInformation.emptyCachedInfo()
@@ -216,14 +216,14 @@ angular.module('scalearAngularApp')
       }
 
       function updateUrl() {
-        console.log("updateUrl(2)")
+
         VideoInformation.resetValues()
         var deferred = $q.defer();
         lecture.aspect_ratio = "widescreen"
         lecture.url = lecture.url.trim()
 
         if(lecture.url && lecture.url != "none" && lecture.url != "http://") {
-          console.log("inside if <<<<<<")
+
           var type = VideoInformation.isYoutube(lecture.url)
           if(type) {
             var video_id = type[1];
@@ -233,14 +233,14 @@ angular.module('scalearAngularApp')
 
             VideoInformation.requestInfoFromYoutube(video_id)
               .then(function(data) {
-                console.log("-------then of request info from youtube-------")
+
                 var duration = ScalearUtils.parseDuration(data.items[0].contentDetails.duration)
                 lecture.duration = (duration.hour * (60 * 60) + duration.minute * (60) + duration.second)
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
                 update().then(function() {
                   deferred.resolve(true);
-                  console.log("-------then of update-------")
+
                 });
                 $rootScope.$broadcast("update_module_time", lecture.group_id)
               })
@@ -265,15 +265,15 @@ angular.module('scalearAngularApp')
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             })
           }else if(VideoInformation.isKaltura(lecture.url)){
-            console.log("update url , in isKaltura")
+
             VideoInformation.waitForDurationSetup().then(function (duration) {
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration
-              console.log("****then of waitForDurationSetup***")
+
               update()
               .then(function() {
-                console.log("-----then of update-------")
+
                 deferred.resolve(true);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)

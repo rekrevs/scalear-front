@@ -156,9 +156,7 @@ angular.module('scalearAngularApp')
       .then(function(errors) {
         var import_from_id = $scope.import_from ? $scope.import_from.id : null
         var selected_subdomain = $scope.course.selected_subdomain
-        console.log("........")
-        console.log($scope.course.selected_subdomain)
-        console.log("........")
+
         var email_discussion = $scope.course.email_discussion
         CourseModel.create($scope.course, import_from_id)
           .then(function(data) {

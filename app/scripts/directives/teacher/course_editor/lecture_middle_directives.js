@@ -197,17 +197,13 @@ angular.module('scalearAngularApp')
 
         scope.closeTrimVideo = function() {
           scope.lecture_errors.start_time = ScalearUtils.validateTimeWithDurationForTrim(scope.selected_lecture.start_time_formated_time, duration)
-          console.log("scope.selected_lecture.start_time_formated_time",scope.selected_lecture.start_time_formated_time)
-          scope.lecture_errors.end_time = ScalearUtils.validateTimeWithDurationForTrim(scope.selected_lecture.end_time_formated_time, duration , scope.selected_lecture.start_time_formated_time)
-          console.log("scope.lecture_errors.end_time ",scope.selected_lecture.end_time_formated_time)
 
-          console.log("scope.lecture_errors.start_time",scope.lecture_errors.start_time)
-          console.log("scope.lecture_errors.end_time",scope.lecture_errors.end_time)
+          scope.lecture_errors.end_time = ScalearUtils.validateTimeWithDurationForTrim(scope.selected_lecture.end_time_formated_time, duration , scope.selected_lecture.start_time_formated_time)
+
           if ( !scope.lecture_errors.start_time && !scope.lecture_errors.end_time ){
             scope.lecture.start_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.start_time_formated_time.split(':'))
             scope.lecture.end_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.end_time_formated_time.split(':'))
-            console.log("scope.lecture.start_time",scope.lecture.start_time)
-            console.log("scope.lecture.end_time",scope.lecture.end_time)
+          
             $rootScope.$broadcast("close_trim_video")
           }
         }

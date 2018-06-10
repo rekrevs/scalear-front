@@ -62,14 +62,6 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.lecture_player.events.onSlow = function(is_youtube) {
-      $scope.is_youtube = is_youtube
-      if (is_youtube){ // kaltura vids are too slowly loading which vanishes the progressbar
-        $scope.slow = true
-      }
-
-    }
-
     function showMarker(marker) {
       $rootScope.$broadcast("show_online_marker", marker)
     }
@@ -428,7 +420,6 @@ angular.module('scalearAngularApp')
             return true
           } else {
             removeItemFromVideoQueue(marker)
-            
             addItemToVideoQueue(marker, "marker")
             marker.update()
             closeMarkerMode()

@@ -62,7 +62,6 @@ angular.module('scalearAngularApp')
           element.find('.quiz_name').focus();
           document.execCommand('selectAll', false, null);
         });
-
       }
     };
   }])
@@ -203,7 +202,7 @@ angular.module('scalearAngularApp')
           if ( !scope.lecture_errors.start_time && !scope.lecture_errors.end_time ){
             scope.lecture.start_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.start_time_formated_time.split(':'))
             scope.lecture.end_time = ScalearUtils.arrayToSeconds(scope.selected_lecture.end_time_formated_time.split(':'))
-          
+
             $rootScope.$broadcast("close_trim_video")
           }
         }

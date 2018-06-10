@@ -50,39 +50,28 @@ angular.module('scalearAngularApp')
         return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
       else return match
     }
-
     service.isFinalUrl=function(url) {
       return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
     }
-
     service.getFinalUrl = function(id) {
       return "https://www.youtube.com/watch?v=" + id;
     }
-
     service.isMP4=function(url) {
       return url.match(/(.*mp4$)/);
     }
-
     service.isMediaSite=function(url) {
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
     service.isKaltura=function(url) {
-
       return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
     }
-
     service.invalidUrl=function(url) {
-
       return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
     }
-
     service.setDuration=function(newDuration) {
-
       service.duration = newDuration
     }
-
     service.waitForDurationSetup=function() {
-
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
         if(service.duration){
@@ -90,7 +79,6 @@ angular.module('scalearAngularApp')
           $interval.cancel(watchDuration);
         }
       }, 500)
-
       return deferred.promise;
     }
 
@@ -101,8 +89,6 @@ angular.module('scalearAngularApp')
       service.speed= 1
       service.quality= "720p";
     }
-
-
     return service;
 
   }]);

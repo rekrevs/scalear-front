@@ -41,9 +41,6 @@ angular.module('scalearAngularApp')
     service.emptyCachedInfo=function(){
       service.youtube_video_information = {}
     }
-    service.isKatlura=function(url){
-       return url.toString().startsWith("<iframe ")
-    }
     service.isYoutube=function(url) {
       var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
       if(!match)

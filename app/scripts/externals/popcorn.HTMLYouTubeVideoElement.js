@@ -175,7 +175,6 @@
     function onFirstPlay() {
       player.setOption('captions','reload',true);
       player.setOption('captions','track',{});
-
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
@@ -225,7 +224,6 @@
 
         // ended
         case YT.PlayerState.ENDED:
-
           onEnded();
           break;
 
@@ -366,7 +364,6 @@
         resetPlayer();
         destroyElement();
       }
-
       parent.appendChild( elem );
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
@@ -430,7 +427,6 @@
 
         // First play happened first, we're now ready.
         if ( firstPlay ) {
-
           onFirstPlay();
         }
       });
@@ -540,7 +536,6 @@
     }
 
     function onProgress() {
-
       self.dispatchEvent( "progress" );
     }
 

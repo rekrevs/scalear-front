@@ -61,7 +61,10 @@ angular.module('scalearAngularApp')
         hideQuizBackground()
       }
     }
-
+    $scope.lecture_player.events.onSlow = function(is_youtube) {
+      $scope.is_youtube = is_youtube
+      $scope.slow = true
+    }
     function showMarker(marker) {
       $rootScope.$broadcast("show_online_marker", marker)
     }
@@ -277,7 +280,7 @@ angular.module('scalearAngularApp')
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time);
-        $scope.selected_quiz.hide_quiz_answers =
+        $scope.selected_quiz.hide_quiz_answers = false
         showQuizBackground($scope.selected_quiz)
         return true
       }

@@ -139,7 +139,7 @@ angular.module('scalearAngularApp')
       })
 
       function update() {
-  
+
         var modified_lecture = angular.copy(lecture);
         delete modified_lecture.id;
         delete modified_lecture.created_at;
@@ -254,27 +254,13 @@ angular.module('scalearAngularApp')
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
-          }else if(VideoInformation.isMediaSite(lecture.url)){
+          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url)){
             VideoInformation.waitForDurationSetup().then(function (duration) {
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration
               update().then(function() {
                 deferred.resolve(false);
-              });
-              $rootScope.$broadcast("update_module_time", lecture.group_id)
-            })
-          }else if(VideoInformation.isKaltura(lecture.url)){
-
-            VideoInformation.waitForDurationSetup().then(function (duration) {
-              lecture.duration = duration
-              lecture.start_time = 0
-              lecture.end_time = lecture.duration
-
-              update()
-              .then(function() {
-
-                deferred.resolve(true);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             })

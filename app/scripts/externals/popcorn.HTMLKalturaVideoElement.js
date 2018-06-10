@@ -390,6 +390,10 @@
         			},
               "KalturaClipDescription": {
                  "startTime": 30
+              },
+              "operationAttributes":{
+                "offset":2000,
+                "duration":10000
               }
             },
         readyCallback: function( playerId ){

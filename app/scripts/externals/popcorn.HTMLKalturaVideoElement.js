@@ -5,10 +5,6 @@
 
   CURRENT_TIME_MONITOR_MS = 10,
   EMPTY_STRING = "",
-
-  // Example: http://www.Kaltura.com/watch?v=12345678901
-  regexKaltura = /^.*(?:\/|v=)(.{11})/,
-
   ABS = Math.abs,
 
   // Setup for Kaltura API
@@ -16,21 +12,13 @@
   kLoaded = false,
   kCallbacks = [];
 
-  // <iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811441/sp/81144100/embedIframeJs/uiconf_id/32783592/partner_id/811441?iframeembed=true&playerId=kaltura_player&entry_id=1_4sdops0p&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&wid=1_ajwkn2r7" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Kaltura Player"></iframe>
-
   function isKalturaReady(url) {
-    // If the Kaltura iframe API isn't injected, to it now.
-    // addKalturaLibraryLoader()
-
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
-
       var tag = document.createElement( "script" );
       var kalturaIDs = extractKalturaIDs(url)
       tag.src = "https://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
 
-
       var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
-
       firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
       kLoaded = true;
       kWidgetInterval = setInterval(function(){
@@ -39,59 +27,26 @@
           clearInterval(kWidgetInterval);
         }
       }, 500)
-
     }
     return kReady;
   };
 
   function extractKalturaIDs(url){
-      //ex1:<iframe src="http://www.kaltura.com/p/{PARTNER_ID}/sp/{PARTNER_ID}00/embedIframeJs/uiconf_id/{UICONF_ID}/partner_id/{PARTNER_ID}?iframeembed=true&playerId={UNIQUE_OBJ_ID}&entry_id={ENTRY_ID}" width="400" height="330" allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
-      //ex2:<iframe src="https://cdnapisec.kaltura.com/p/1763741/sp/176374100/embedIframeJs/uiconf_id/24747631/partner_id/1763741?iframeembed=true&playerId=kplayer&entry_id=0_n8xcunnj&flashvars[streamerType]=auto" width="560" height="39 " allowfullscreen webkitallowfullscreen mozAllowFullScreen frameborder="0"></iframe>
-      //ex3:<iframe id="kaltura_player" src="https://cdnapisec.kaltura.com/p/811441/sp/81144100/embedIframeJs/uiconf_id/32783592/partner_id/811441?iframeembed=true&playerId=kaltura_player&entry_id=1_jbhi7kyg&flashvars[streamerType]=auto&amp;flashvars[localizationCode]=en&amp;flashvars[leadWithHTML5]=true&amp;flashvars[sideBarContainer.plugin]=true&amp;flashvars[sideBarContainer.position]=left&amp;flashvars[sideBarContainer.clickToClose]=true&amp;flashvars[chapters.plugin]=true&amp;flashvars[chapters.layout]=vertical&amp;flashvars[chapters.thumbnailRotator]=false&amp;flashvars[streamSelector.plugin]=true&amp;flashvars[EmbedPlayer.SpinnerTarget]=videoHolder&amp;flashvars[dualScreen.plugin]=true&amp;&wid=1_yxedkhzo" width="400" height="285" allowfullscreen webkitallowfullscreen mozAllowFullScreen allow="autoplay *; fullscreen *; encrypted-media *" frameborder="0" title="Kaltura Player"></iframe>
       var temp_url = url.toString()
       var kalturaIDs = {}
-
 
       kalturaIDs.partner_id = url.match("\/p\/([0-9]+)")[1]
       kalturaIDs.uiconf_id  = url.match("\/uiconf_id\/([0-9]+)")[1]
       kalturaIDs.entry_id   = url.match("\&entry_id\=([0-9]_[a-z0-9]+)\&")[1]
 
-
-      // frame_src = url.split(" ")[1]
-      // var frame_src_slash_splitted = frame_src.split('/')
-      // kalturaIDs.partner_id = frame_src_slash_splitted[4]
-      // kalturaIDs.uiconf_id  = frame_src_slash_splitted[9]
-      // var frame_src_equal_splitted
-      // frame_src_equal_splitted = frame_src.split("=")
-      //
-      // if (frame_src_equal_splitted[4].includes("flashvars")) {//url has flash vars
-      //   var frame_src_equal_and_splitted = frame_src_equal_splitted[4].split('&')
-      //   kalturaIDs.entry_id   = frame_src_equal_and_splitted[0]
-      // }else{//url has not flash vars
-      //   kalturaIDs.entry_id   = frame_src_equal_splitted[4]
-      // }
       return kalturaIDs
     }
-
- function getVideo(url){
-   var video = document.createElement("script")
-   video.src = url
-   return video
- }
-
 
   function addKalturaCallback( callback ) {
     kCallbacks.unshift( callback );
   }
 
-  // An existing Kaltura references can break us.
-  // Remove it and use the one we can trust.
-  if ( window.YT ) {
-    window.quarantineYT = window.YT;
-    window.YT = null;
-  }
   function onKalturaAPIReady(){
-
     kReady = true;
     var i = kCallbacks.length;
     while(i-- ) {
@@ -101,7 +56,6 @@
   }
 
   function HTMLKalturaVideoElement( id ) {
-
     // Kaltura iframe API requires postMessage
     if( !window.postMessage ) {
       throw "ERROR: HTMLKalturaVideoElement requires window.postMessage";
@@ -149,9 +103,6 @@
       firstPlay = false;
       video_srcs=[];
 
-
-    var parent_innerHTML = document.getElementById("lecture_video")
-
     // Namespace all events we'll produce
     self._eventNamespace =  Popcorn.guid( "HTMLKalturaVideoElement::" );
 
@@ -161,17 +112,31 @@
     self._util.type = "Kaltura";
 
     function addMediaReadyCallback( callback ) {
-
       mediaReadyCallbacks.unshift( callback );
     }
 
-
     function onPlayerReady( event ) {
+
+      var duration_secs = parseInt(player.evaluate(" {duration} "));
+      impl.duration = duration_secs
+      self.dispatchEvent( "durationchange" );
+      durationReady = true;
+      onFirstPlay();
+
+      var audioAndVideoSources = rawPlayer.plugins.sourceSelector.getSources()
+      for(i in audioAndVideoSources){
+         var temp_size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(audioAndVideoSources[i])
+         if (temp_size) {
+          audioAndVideoSources[i].size =temp_size
+          video_srcs.push(audioAndVideoSources[i])
+         }
+      }
+
       var onMuted = function() {
         if ( player.isMuted() ) {
           // force an initial play on the video, to remove autostart on initial seekTo.
           if ( !navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) )
-            player.playVideo();
+            player.sendNotification("doPlay")
           else{
             if ( durationReady ) {
               onFirstPlay();
@@ -187,7 +152,6 @@
       // Browsers using flash will have the pause() call take too long and cause some
       // sound to leak out. Muting before to prevent this.
       player.mute();
-
       // ensure we are muted.
       onMuted();
     }
@@ -233,36 +197,20 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-      //player.setOption('captions','reload',true);
-      //player.setOption('captions','track',{});
-
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
 
       // Set initial paused state
       if( impl.autoplay || !impl.paused ) {
-
         impl.paused = false;
         addMediaReadyCallback(function() {
           onPlay();
         });
-        setTimeout( function(){  },2000)
-
       } else {
-
-        // if a pause happens while seeking, ensure we catch it.
-        // in Kaltura seeks fire pause events, and we don't want to listen to that.
-        // except for the case of an actual pause.
         catchRoguePauseEvent = false;
         player.sendNotification("doPause");
       }
-
-      // Ensure video will now be unmuted when playing due to the mute on initial load.
-      // if( !impl.muted ) {
-      //   player.unMute();
-      // }
-
 
       impl.readyState = self.HAVE_METADATA;
       self.dispatchEvent( "loadedmetadata" );
@@ -294,7 +242,7 @@
         case "playbackComplete": {
             onEnded();
             break;
-          }
+        }
         case "playing":
 
           if( !firstPlay ) {
@@ -307,7 +255,7 @@
 
           } else if ( catchRoguePlayEvent ){
             catchRoguePlayEvent = false;
-            player.pauseVideo();
+            player.sendNotification("doPause");
           } else {
             onPlay();
           }
@@ -323,7 +271,6 @@
 
             break;
           }
-
 
           // a seekTo call fires a pause event, which we don't want at this point.
           // as long as a seekTo continues to do this, we can safly toggle this state.
@@ -360,8 +307,8 @@
       if( !( playerReady && player ) ) {
         return;
       }
-      player.stopVideo();
-      player.clearVideo();
+      player.sendNotification("doStop");
+      player.sendNotification("cleanMedia");
     }
 
     function resetPlayer(){
@@ -387,15 +334,11 @@
 
 
     function changeSrc( aSrc ) {
-
       impl.src = aSrc;
 
       if( !isKalturaReady(aSrc) ) {
-
         return addKalturaCallback( function() { changeSrc( aSrc ); } );
-
       }
-
 
       if( playerReady ) {
         resetPlayer();
@@ -403,49 +346,7 @@
         destroyElement();
       }
 
-
       parent.appendChild( elem );
-
-      var playerVars = self._util.parseUri( aSrc ).queryKey;
-
-      // Remove the video id, since we don't want to pass it
-      delete playerVars.v;
-
-      // Sync autoplay, but manage internally
-      impl.autoplay = playerVars.autoplay === "1" || impl.autoplay;
-      delete playerVars.autoplay;
-
-      // Sync loop, but manage internally
-      impl.loop = playerVars.loop === "1" || impl.loop;
-      delete playerVars.loop;
-
-      // Don't show related videos when ending
-      playerVars.rel = playerVars.rel || 0;
-
-      // Don't show Kaltura's branding
-      playerVars.modestbranding = playerVars.modestbranding || 1;
-
-      // Don't show annotations by default
-      playerVars.iv_load_policy = playerVars.iv_load_policy || 3;
-
-      // Don't show video info before playing
-      playerVars.showinfo = playerVars.showinfo || 0;
-
-      // Specify our domain as origin for iframe security
-      var domain = window.location.protocol === "file:" ? "*" :
-        window.location.protocol + "//" + window.location.host;
-      playerVars.origin = playerVars.origin || domain;
-
-      // Show/hide controls. Sync with impl.controls and prefer URL value.
-      playerVars.controls = playerVars.controls=="1" || impl.controls ? 2 : 0;
-      impl.controls = playerVars.controls;
-
-      // Set wmode to transparent to show video overlays
-      playerVars.wmode = playerVars.wmode || "opaque";
-
-      // Get video ID out of Kaltura url
-      //aSrc = regexKaltura.exec( aSrc )[ 1 ];
-
 
       var kalturaIDs = extractKalturaIDs(aSrc)
 
@@ -494,23 +395,10 @@
         readyCallback: function( playerId ){
           player = document.getElementById( playerId );
           rawPlayer = player.firstChild.contentWindow.document.getElementById(playerId);
-          player.kBind("playerReady",function(){
-              var duration_secs = parseInt(player.evaluate(" {duration} "));
-              impl.duration = duration_secs
-              self.dispatchEvent( "durationchange" );
-              durationReady = true;
-              onFirstPlay();
 
-              var audioAndVideoSources = rawPlayer.plugins.sourceSelector.getSources()
-              for(i in audioAndVideoSources){
-                 var temp_size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(audioAndVideoSources[i])
-                 if (temp_size) {
-                  audioAndVideoSources[i].size =temp_size
-                  video_srcs.push(audioAndVideoSources[i])
-                 }
-              }
-          });
+          player.kBind("playerReady",onPlayerReady);
           player.kBind("playerStateChange",onPlayerStateChange);
+          player.kBind("mediaError",onPlayerError)
        }
       });
 
@@ -524,7 +412,6 @@
       var playerTime = rawPlayer.evaluate('{video.player.currentTime}');
       if ( !impl.seeking ) {
         if ( ABS( impl.currentTime - playerTime ) > CURRENT_TIME_MONITOR_MS ) {
-
           onSeeking();
           onSeeked();
         }
@@ -546,10 +433,8 @@
     }
 
     function monitorBuffered() {
-      var fraction;
-      player.kBind('bufferProgress', function(event){
-				fraction=player.evaluate("{video.buffer.percent}")
-	    })
+      var fraction = player.evaluate("{video.buffer.percent}")
+
       if ( fraction && lastLoadedFraction !== fraction ) {
         lastLoadedFraction = fraction;
         onProgress();
@@ -557,8 +442,6 @@
     }
 
     function getCurrentTime() {
-      //var t = rawPlayer.evaluate('{video.player.currentTime}');
-      //impl.currentTime = t;
       return impl.currentTime;
     }
 
@@ -573,8 +456,8 @@
       onSeeking();
       player.sendNotification("doSeek", aTime);
     }
-    function onTimeUpdate() {
 
+    function onTimeUpdate() {
       self.dispatchEvent( "timeupdate" );
     }
 
@@ -626,28 +509,20 @@
         addMediaReadyCallback( function() { self.play(); } );
         return;
       }
-      // player.playVideo();
-
       player.sendNotification("doPlay");
     };
 
     function onPause() {
-
       impl.paused = true;
       if ( !playerPaused ) {
         playerPaused = true;
         clearInterval( timeUpdateInterval );
         self.dispatchEvent( "pause" );
-
       }
     }
     self.pauseAfterSeek = function(){
-
        setTimeout(function(){self.pause()},1000)
-
-
-
-    }
+    };
     self.pause = function() {
       impl.paused = true;
       if( !mediaReady ) {
@@ -658,9 +533,7 @@
       // in youtube seeks fire pause events, and we don't want to listen to that.
       // except for the case of an actual pause.
       catchRoguePauseEvent = false;
-
       player.sendNotification("doPause")
-
     };
 
     self.getSpeeds = function(){
@@ -673,11 +546,11 @@
     }
 
     self.getAvailableQuality=function(){
-          videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
-          for (i in videoQualities ) {videoQualities[i]=videoQualities[i].toLowerCase()}
-
-
-          return videoQualities
+      videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
+      for (i in videoQualities ){
+        videoQualities[i]=videoQualities[i].toLowerCase()
+      }
+      return videoQualities
     }
 
     self.getQuality=function(){
@@ -686,11 +559,6 @@
     }
 
     self.setQuality=function(quality){
-      //to get actual video source
-      //raw.mediaElement.selectedSource
-      //to get actual video quality
-      //raw.plugins.sourceSelector.getSourceSizeName(raw.mediaElement.selectedSource)
-      //to set quality, we must provide corresponding source
       var videoSrcOfChosenQuality = getVideoSrc(video_srcs,quality)
       rawPlayer.mediaElement.setSource(videoSrcOfChosenQuality)
       changeCurrentTime(getCurrentTime())
@@ -702,37 +570,41 @@
     }
     self.getCaptionTracks = function(){
 
-        //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
-          var captionLanguages = []
-          var captionObjects   = rawPlayer.plugins.closedCaptions.textSources
-          var l = captionObjects.length
-          while (l--){
-            if(captionObjects[l].loaded){
-              captionLanguages.push({'displayName': captionObjects[l].label})
-            }
-          }
-          return captionLanguages
+    //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
+      var captionLanguages = []
+      var captionObjects   = rawPlayer.plugins.closedCaptions.textSources
+      var l = captionObjects.length
+      while (l--){
+        if(captionObjects[l].loaded){
+          captionLanguages.push({'displayName': captionObjects[l].label})
+        }
+      }
+      return captionLanguages
     }
 
     self.setCaptionTrack = function(track){
       player.sendNotification('showClosedCaptions')
       if(Object.values(track ).length == 0 ) {
-        self.unsetCaptionTrack() }
+        self.unsetCaptionTrack()
+      }
     }
+
     self.unsetCaptionTrack = function(){
       player.sendNotification('hideClosedCaptions')
     }
+
     self.showControlBar = function(){
       rawPlayer.plugins.controlBarContainer.show()
       rawPlayer.getVideoHolder()[0].style.height = ''
       rawPlayer.getControlBarContainer()[0].style.display = 'inline'
     }
-    self.hideControlBar = function (divId){
 
+    self.hideControlBar = function (divId){
       rawPlayer.plugins.controlBarContainer.hide()
       rawPlayer.getVideoHolder()[0].style.height = '100%'
       rawPlayer.getControlBarContainer()[0].style.display = 'none'
     }
+
     function onEnded() {
       if( impl.loop ) {
         changeCurrentTime( 0 );
@@ -751,41 +623,25 @@
 
     function setVolume( aValue ) {
       impl.volume = aValue;
-
       player.sendNotification("changeVolume",aValue);
-      // if( !mediaReady ) {
-      //   addMediaReadyCallback( function() {
-      //     setVolume( impl.volume );
-      //   });
-      //   return;
-      // }
-      // player.setVolume( impl.volume * 100 );
-      // self.dispatchEvent( "volumechange" );
+      self.dispatchEvent( "volumechange" );
     }
 
     function getVolume() {
-      // Kaltura has getVolume(), but for sync access we use impl.volume
-      // setTimeout(function(){
-      //   return player.evaluate('{video.volume}')
-      // },7000);
-
+     return impl.volume;
     }
 
     function setMuted( aValue ) {
-      // impl.muted = aValue;
-      // if( !mediaReady ) {
-      //   addMediaReadyCallback( function() { setMuted( impl.muted ); } );
-      //   return;
-      // }
-      // player[ aValue ? "mute" : "unMute" ]();
-      // self.dispatchEvent( "volumechange" );
-
-
+      impl.muted = aValue;
+      if( !mediaReady ) {
+        addMediaReadyCallback( function() { setMuted( impl.muted ); } );
+        return;
+      }
       player.sendNotification("changeVolume",0);
+      self.dispatchEvent( "volumechange" );
     }
 
     function getMuted() {
-      // Kaltura has isMuted(), but for sync access we use impl.muted
       return impl.muted;
     }
 
@@ -833,7 +689,6 @@
 
       currentTime: {
         get: function() {
-          //console.log("getCurrentTime",getCurrentTime())
           return getCurrentTime();
         },
         set: function( aValue ) {
@@ -914,7 +769,6 @@
               if ( index === 0 ) {
                 return 0;
               }
-
               //throw fake DOMException/INDEX_SIZE_ERR
               throw "INDEX_SIZE_ERR: DOM Exception 1";
             },
@@ -948,27 +802,9 @@
 
   HTMLKalturaVideoElement.prototype = new Popcorn._MediaElementProto();
   HTMLKalturaVideoElement.prototype.constructor = HTMLKalturaVideoElement;
-  // HTMLKalturaVideoElement.prototype.getSpeed = getSpeeds();
-
-  // Helper for identifying URLs we know how to play.
-  HTMLKalturaVideoElement.prototype._canPlaySrc = function( url ) {
-    return (/(?:http:\/\/www\.|http:\/\/|www\.|\.|^)(youtu).*(?:\/|v=)(.{11})/).test( url ) ?
-      "probably" :
-      EMPTY_STRING;
-  };
-
-  // We'll attempt to support a mime type of video/x-Kaltura
-  // HTMLKalturaVideoElement.prototype.canPlayType = function( type ) {
-  //   return type === "video/x-Kaltura" ? "probably" : EMPTY_STRING;
-  // };
-
 
   Popcorn.HTMLKalturaVideoElement = function( id ) {
     return new HTMLKalturaVideoElement( id );
   };
-  // Popcorn.HTMLKalturaVideoElement._canPlaySrc = HTMLKalturaVideoElement.prototype._canPlaySrc;
-  Popcorn.getKalturaPlayer = function(IDs){
-    return new getPlayer(IDs);
-  }
 
 }( Popcorn, window, document ));

@@ -225,7 +225,7 @@
 
         // ended
         case YT.PlayerState.ENDED:
-      
+
           onEnded();
           break;
 

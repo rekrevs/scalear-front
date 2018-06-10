@@ -237,7 +237,6 @@ angular.module('scalearAngularApp')
       player_controls.seek_and_pause = function(time) {
         if(isKaltura(scope.url)){
             player_controls.seek(time)
-            console.log("player",player)
             player.video.pauseAfterSeek()
         } else {
           player_controls.seek(time)

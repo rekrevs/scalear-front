@@ -349,7 +349,6 @@ angular.module('scalearAngularApp')
               player.controls(false);
             if (player_events.onReady) {
               player_events.onReady();
-              // scope.$apply();
               ScalearUtils.safeApply()
             }
 
@@ -391,7 +390,6 @@ angular.module('scalearAngularApp')
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();
-            // scope.$apply();
             ScalearUtils.safeApply()
           }
         })
@@ -446,7 +444,6 @@ angular.module('scalearAngularApp')
           parent.focus()
           if (player_events.onSlow) {
             player_events.onSlow(data);
-            // scope.$apply();
           }
         })
       }

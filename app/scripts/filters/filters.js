@@ -10,15 +10,15 @@ angular.module('scalearAngularApp')
     if (hr < 10)  { hr    = "0" + hr; }
     if (min < 10) { min = "0" + min; }
     if (sec < 10) { sec  = "0" + sec; }
-    if (millisec < 10){
+    if (millisec < 10){ 
       millisec = "00"+ millisec;
-    } else if (millisec < 100){
+    } else if (millisec < 100){ 
       millisec = "0"+ millisec;
     } else if (millisec == 0){
       millisec = "000"
     }
     // if (millisec < 100){ millisec = "0"+ millisec;}
-
+    
 
     // if (hr)       { hr   = "00"; }
 

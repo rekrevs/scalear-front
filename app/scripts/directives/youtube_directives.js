@@ -42,7 +42,6 @@ angular.module('scalearAngularApp')
         player_events = {}
 
       var loadVideo = function() {
-
         scope.kill_popcorn()
         player_controls.youtube = false
         if (!scope.controls || scope.controls == undefined)
@@ -53,12 +52,10 @@ angular.module('scalearAngularApp')
           scope.autoplay = 1;
 
         if (isYoutube(scope.url)) {
-
           player_controls.youtube = true
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
-
+          $log.debug("youtube")
           player = Popcorn(video);
-
           video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
@@ -92,9 +89,7 @@ angular.module('scalearAngularApp')
         if (scope.player){
           scope.player.element = player
         }
-
         setupEvents()
-
         parent.focus()
         scope.timeout_promise = $interval(function() {
           if (player_controls.readyState() == 0 && !$rootScope.is_mobile){
@@ -102,8 +97,6 @@ angular.module('scalearAngularApp')
           }
         }, 15000, 1)
       }
-
-
 
       var formatYoutubeURL = function(url, vq, start, end, autoplay, controls) {
         var short_url = isShortYoutube(url)
@@ -126,7 +119,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.kill_popcorn = function() {
-
         if (player) {
           Popcorn.destroy(player);
           if (player.media.destroy)
@@ -139,8 +131,6 @@ angular.module('scalearAngularApp')
         if (scope.timeout_promise)
           $timeout.cancel(scope.timeout_promise)
       }
-
-
       player_controls.play = function() {
         player.play();
       }
@@ -168,7 +158,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.getTime = function() {
-
         return player.currentTime() - scope.start
       }
 
@@ -192,8 +181,6 @@ angular.module('scalearAngularApp')
         return player.readyState()
       }
 
-
-
       player_controls.seek = function(time) {
         $log.debug("entering sekking", time)
         time=  parseFloat(time)
@@ -205,7 +192,6 @@ angular.module('scalearAngularApp')
         }
         if (player_controls.getDuration() - time < 1 ){
           time = player_controls.getDuration() - 1
-
         }
         time += scope.start || 0
 
@@ -213,21 +199,15 @@ angular.module('scalearAngularApp')
         if (player_controls.readyState() == 0 ) {
           player.on("loadeddata",
             function() {
-
               $timeout(function(){
-
                 player.currentTime(time);
-
               })
             });
         } else {
           $log.debug("seeking now", time)
           player.currentTime(time);
-
         }
-
         parent.focus()
-
       }
 
       player_controls.absoluteSeek = function(time) {
@@ -359,8 +339,8 @@ angular.module('scalearAngularApp')
         if( inReview.length)     player.video.showControlBar()
         else if (inEdit.length)  player.video.hideControlBar()
         else if (inClass.length) player.video.hideControlBar()
-
       }
+
       var setupEvents = function() {
         player.on("loadeddata",
           function() {
@@ -375,9 +355,9 @@ angular.module('scalearAngularApp')
 
             var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             VideoInformation.setDuration(duration)
-            if(isKaltura(scope.url))
-              {player_controls.setKalturaControlBar()
-              }
+            if(isKaltura(scope.url)){
+              player_controls.setKalturaControlBar()
+            }
           });
 
         player.on('playing',
@@ -386,7 +366,6 @@ angular.module('scalearAngularApp')
             parent.focus()
             if (player_events.onPlay) {
               player_events.onPlay();
-              //scope.$apply();
               ScalearUtils.safeApply()
             }
           });
@@ -721,12 +700,9 @@ angular.module('scalearAngularApp')
             scope.video.start_time= scope.player.controls.getVideoStartTime();
             scope.video.end_time= scope.player.controls.getVideoEndTime();
             scope.duration = scope.player.controls.getAbsoluteDuration();
-
-
           }
           else{
             scope.duration = scope.player.controls.getDuration();
-
           }
         })
 
@@ -832,8 +808,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) {
-
-
         var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
@@ -857,15 +831,12 @@ angular.module('scalearAngularApp')
       }
 
       scope.play = function() {
-
         if (scope.player.controls.paused()) {
           scope.player.controls.play()
           scope.play_class = "pause";
-
         } else {
           scope.player.controls.pause()
           scope.play_class = "play";
-
         }
       }
 
@@ -1153,19 +1124,15 @@ angular.module('scalearAngularApp')
 
       player.on('pause', function() {
         scope.play_class = "play";
-        //scope.$apply()
         ScalearUtils.safeApply()
       })
 
       player.on('playing', function() {
-
         if (scope.player.controls.youtube)
           scope.chosen_quality = scope.player.controls.getQuality()
         scope.play_class = "pause";
-        //scope.$apply()
         ScalearUtils.safeApply()
       })
-
 
       if (scope.player.controls.youtube || scope.player.controls.kaltura) {
 
@@ -1183,21 +1150,16 @@ angular.module('scalearAngularApp')
         scope.qualities = ["auto", "small", "medium", "large"]
           // scope.chosen_quality = scope.player.controls.getQuality()
 
-
         $timeout(function() {
-
           scope.qualities = scope.player.controls.getAvailableQuality().reverse()
-
-            //if(scope.player.controls.kaltura)   scope.player.controls.pause();
-        }, 2000)
-        scope.setQuality(scope.chosen_quality)
+          }, 2000)
+          scope.setQuality(scope.chosen_quality)
       } else {
         scope.speeds = [0.8, 1, 1.2, 1.5, 1.8]
         scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
         scope.volume = $cookieStore.get('volume') || 0.8
         scope.qualities = ["auto"]
         scope.chosen_quality = scope.qualities[0]
-          // scope.setQuality(scope.chosen_quality)
       }
 
       scope.setSpeed(scope.chosen_speed)

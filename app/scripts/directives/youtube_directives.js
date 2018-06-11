@@ -321,15 +321,11 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.changeSpeed = function(speed) {
-        if (scope.player.controls.youtube) {
+        if (scope.player.controls.youtube ||scope.player.controls.kaltura) {
           if (player_controls.getSpeeds().indexOf(speed) != -1) {
             player.media.setSpeed(speed)
           }
-        }else if (scope.player.controls.kaltura) {
-          if (player_controls.getSpeeds().indexOf(speed) != -1) {
-            player.media.setSpeed(speed)
-          }
-        }else {
+        } else {
           player.video.playbackRate = speed
         }
 
@@ -522,7 +518,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.isYoutube = isYoutube
-      player_controls.isMP  = isMP4
+      player_controls.isMP4  = isMP4
       player_controls.isKaltura = isKaltura
 
       scope.$watch('url', function() {

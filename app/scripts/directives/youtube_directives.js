@@ -84,8 +84,8 @@ angular.module('scalearAngularApp')
           video.src = scope.url
           player_controls.kaltura = true;
           console.log('scope.controls',scope.controls)
-          if(!scope.controls){
-            console.log("player.video",player.video)
+          if(scope.controls){
+            console.log("show")
             callbacks.unshift(player.video.showControlBar)
           }
 
@@ -207,6 +207,7 @@ angular.module('scalearAngularApp')
               $timeout(function(){
                 player.currentTime(time);
               })
+
             });
         } else {
           $log.debug("seeking now", time)
@@ -214,9 +215,7 @@ angular.module('scalearAngularApp')
         }
         parent.focus()
 
-        // for (i in callbacks){
-        //   callbacks[i]()
-        // }
+
       }
 
       player_controls.absoluteSeek = function(time) {
@@ -381,6 +380,12 @@ angular.module('scalearAngularApp')
           });
 
         player.on('loadedmetadata', function() {
+          console.log("callbacks",callbacks)
+          var i;
+          for (i in callbacks){
+            callbacks[i]()
+            console.log("callbacks")
+          }
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();

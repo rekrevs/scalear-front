@@ -17,9 +17,10 @@
       var tag = document.createElement( "script" );
       var kalturaIDs = extractKalturaIDs(url)
       tag.src = "https://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
-
+      console.log("tag.src",tag.src)
       var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
       firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
+      console.log("the script is inserted")
       kLoaded = true;
       kWidgetInterval = setInterval(function(){
         if(window.kWidget){
@@ -403,8 +404,10 @@
           player.kBind("playerReady",onPlayerReady);
           player.kBind("playerStateChange",onPlayerStateChange);
           player.kBind("mediaError",onPlayerError)
+          player.kBind("mediaReady",function(){self.hideControlBar()})
        }
       });
+
 
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
@@ -603,7 +606,7 @@
       rawPlayer.getControlBarContainer()[0].style.display = 'inline'
     }
 
-    self.hideControlBar = function (divId){
+    self.hideControlBar = function (){
       rawPlayer.plugins.controlBarContainer.hide()
       rawPlayer.getVideoHolder()[0].style.height = '100%'
       rawPlayer.getControlBarContainer()[0].style.display = 'none'

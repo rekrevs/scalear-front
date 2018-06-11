@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
       return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
     }
     service.invalidUrl=function(url) {
-      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKatlura(url)) )
+      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKaltura(url)) )
     }
     service.setDuration=function(newDuration) {
       service.duration = newDuration

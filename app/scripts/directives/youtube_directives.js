@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
         scope.ready = "";
         scope.url = "";
       });
-
+      var callbacks = [];
       var player,
         player_controls = {},
         player_events = {}
@@ -83,6 +83,11 @@ angular.module('scalearAngularApp')
           player = Popcorn(video);
           video.src = scope.url
           player_controls.kaltura = true;
+          console.log('scope.controls',scope.controls)
+          if(!scope.controls){
+            console.log("player.video",player.video)
+            callbacks.unshift(player.video.showControlBar)
+          }
 
         }
 
@@ -208,6 +213,10 @@ angular.module('scalearAngularApp')
           player.currentTime(time);
         }
         parent.focus()
+
+        // for (i in callbacks){
+        //   callbacks[i]()
+        // }
       }
 
       player_controls.absoluteSeek = function(time) {
@@ -330,17 +339,6 @@ angular.module('scalearAngularApp')
         VideoInformation.quality = quality
       }
 
-      player_controls.setKalturaControlBar = function(){
-
-        var inReview = $("#progress_lec_video")
-        var inEdit   = $("#lecture_video")
-        var inClass  = $("#inclass_video")
-
-        if( inReview.length)     player.video.showControlBar()
-        else if (inEdit.length)  player.video.hideControlBar()
-        else if (inClass.length) player.video.hideControlBar()
-      }
-
       var setupEvents = function() {
         player.on("loadeddata",
           function() {
@@ -351,12 +349,8 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               ScalearUtils.safeApply()
             }
-
             var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             VideoInformation.setDuration(duration)
-            if(isKaltura(scope.url)){
-              player_controls.setKalturaControlBar()
-            }
           });
 
         player.on('playing',

@@ -175,6 +175,7 @@
     function onFirstPlay() {
       player.setOption('captions','reload',true);
       player.setOption('captions','track',{});
+      
       addMediaReadyCallback(function() {
         bufferedInterval = setInterval( monitorBuffered, 50 );
       });
@@ -364,7 +365,9 @@
         resetPlayer();
         destroyElement();
       }
+
       parent.appendChild( elem );
+
       // Use any player vars passed on the URL
       var playerVars = self._util.parseUri( aSrc ).queryKey;
 
@@ -593,7 +596,7 @@
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
-
+    
     self.destroy = function(){
       resetPlayer()
     }

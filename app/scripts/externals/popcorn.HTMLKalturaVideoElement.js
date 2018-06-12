@@ -16,11 +16,9 @@
     if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
       var tag = document.createElement( "script" );
       var kalturaIDs = extractKalturaIDs(url)
-      tag.src = "https://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
-      console.log("tag.src",tag.src)
+      tag.src = url.toString().split('src="')[1].split("?") //"http://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
       var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
       firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
-      console.log("the script is inserted")
       kLoaded = true;
       kWidgetInterval = setInterval(function(){
         if(window.kWidget){
@@ -404,11 +402,8 @@
           player.kBind("playerReady",onPlayerReady);
           player.kBind("playerStateChange",onPlayerStateChange);
           player.kBind("mediaError",onPlayerError)
-          player.kBind("mediaReady",function(){self.hideControlBar()})
        }
       });
-
-
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
@@ -603,13 +598,13 @@
     self.showControlBar = function(){
       rawPlayer.plugins.controlBarContainer.show()
       rawPlayer.getVideoHolder()[0].style.height = ''
-      rawPlayer.getControlBarContainer()[0].style.display = 'inline'
+      rawPlayer.getControlBarContainer()[0].style.display = "inline"
     }
 
     self.hideControlBar = function (){
       rawPlayer.plugins.controlBarContainer.hide()
       rawPlayer.getVideoHolder()[0].style.height = '100%'
-      rawPlayer.getControlBarContainer()[0].style.display = 'none'
+      rawPlayer.getControlBarContainer()[0].style.display = "none"
     }
 
     function onEnded() {

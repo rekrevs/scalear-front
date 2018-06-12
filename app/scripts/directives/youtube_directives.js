@@ -83,11 +83,7 @@ angular.module('scalearAngularApp')
           player = Popcorn(video);
           video.src = scope.url
           player_controls.kaltura = true;
-          console.log('scope.controls',scope.controls)
-          if(scope.controls){
-            console.log("show")
-            callbacks.unshift(player.video.showControlBar)
-          }
+          player_controls.setKcontrolBar()
 
         }
 
@@ -101,6 +97,17 @@ angular.module('scalearAngularApp')
             scope.$emit('slow', isYoutube(scope.url))
           }
         }, 15000, 1)
+      }
+
+      var addCallback = function (callback){
+        callbacks.unshift(callback)
+      }
+
+      var onReadyCallback = function (){
+        var i = callbacks.length;
+        while (i--){
+          callbacks[i]()
+        }
       }
 
       var formatYoutubeURL = function(url, vq, start, end, autoplay, controls) {
@@ -338,6 +345,14 @@ angular.module('scalearAngularApp')
         VideoInformation.quality = quality
       }
 
+      player_controls.setKcontrolBar = function(){
+        if(scope.controls){
+          addCallback(player.video.showControlBar)
+        } else {
+          addCallback(player.video.hideControlBar)
+        }
+      }
+
       var setupEvents = function() {
         player.on("loadeddata",
           function() {
@@ -350,6 +365,7 @@ angular.module('scalearAngularApp')
             }
             var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             VideoInformation.setDuration(duration)
+            onReadyCallback()
           });
 
         player.on('playing',
@@ -369,6 +385,7 @@ angular.module('scalearAngularApp')
               player_events.onPause();
               scope.$apply();
             }
+
           });
 
         player.on('timeupdate',
@@ -377,15 +394,10 @@ angular.module('scalearAngularApp')
               player_events.timeUpdate();
               scope.$apply();
             }
+
           });
 
         player.on('loadedmetadata', function() {
-          console.log("callbacks",callbacks)
-          var i;
-          for (i in callbacks){
-            callbacks[i]()
-            console.log("callbacks")
-          }
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();

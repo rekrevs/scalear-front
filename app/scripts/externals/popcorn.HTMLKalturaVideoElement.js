@@ -204,7 +204,7 @@
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
         addMediaReadyCallback(function() {
-          onPlay();
+        onPlay();
         });
       } else {
         catchRoguePauseEvent = false;
@@ -523,8 +523,9 @@
       }
     }
     self.pauseAfterSeek = function(){
-       setTimeout(function(){self.pause()},1000)
+      setTimeout(function(){self.pause()},1000)
     };
+
     self.pause = function() {
       impl.paused = true;
       if( !mediaReady ) {

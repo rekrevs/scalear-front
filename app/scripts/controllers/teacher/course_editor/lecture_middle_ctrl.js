@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
               $scope.seek(time-0.2)
             })
           } else if (!($rootScope.is_mobile)) {
+            console.log("here")
             $scope.lecture_player.controls.seek_and_pause(0)
           }
 

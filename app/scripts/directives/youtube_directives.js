@@ -230,9 +230,16 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.seek_and_pause = function(time) {
+
         if(isKaltura(scope.url)){
+          if(time==0){
+            console.log("in seek_and_pause time = 0 ")
+            player_controls.seek(0)
+          } else {
+            console.log("in seek_and_pause time =  ",time)
             player_controls.seek(time)
             player.video.pauseAfterSeek()
+          }
         } else {
           player_controls.seek(time)
           player.pause()
@@ -519,8 +526,10 @@ angular.module('scalearAngularApp')
       var unwatch = scope.$watch('player', function() {
         if (scope.player) {
           scope.player.controls = player_controls
-          if (scope.player.events)
+          if (scope.player.events){
             player_events = scope.player.events
+            console.log("player_events",player_events)
+          }
           scope.player.element = player
           scope.$emit("player ready")
           unwatch()

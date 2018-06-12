@@ -84,7 +84,7 @@ angular.module('scalearAngularApp')
           video.src = scope.url
           player_controls.kaltura = true;
           player_controls.setKcontrolBar()
-
+          console.log("1")
         }
 
         if (scope.player){

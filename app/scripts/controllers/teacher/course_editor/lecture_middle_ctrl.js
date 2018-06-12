@@ -48,7 +48,6 @@ angular.module('scalearAngularApp')
           }
 
           $scope.lecture.timeline.items.forEach(function(item) {
-
             item.data && addItemToVideoQueue(item.data, item.type);
           })
         })

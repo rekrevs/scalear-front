@@ -509,7 +509,6 @@
 
       impl.paused = false;
       if( !mediaReady ) {
-        console.log("media not ready")
         addMediaReadyCallback( function() { self.play(); } );
         return;
       }

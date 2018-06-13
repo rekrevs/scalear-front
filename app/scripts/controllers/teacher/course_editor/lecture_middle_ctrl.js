@@ -44,10 +44,8 @@ angular.module('scalearAngularApp')
               $scope.seek(time-0.2)
             })
           } else if (!($rootScope.is_mobile)) {
-            console.log("here")
             $scope.lecture_player.controls.seek_and_pause(0)
           }
-
           $scope.lecture.timeline.items.forEach(function(item) {
             item.data && addItemToVideoQueue(item.data, item.type);
           })

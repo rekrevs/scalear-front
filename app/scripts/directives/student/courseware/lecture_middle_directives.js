@@ -310,7 +310,7 @@ angular
                 html: true,
                 trigger: $rootScope.is_mobile ? "click" : "hover",
                 placement: scope.data.xcoor > 0.5 ? "left" : "right",
-                instant_show: "mouseover"
+                // instant_show: "mouseover"
               };
               $timeout(function() {
                 if (scope.explanation[scope.data.id][0]) {

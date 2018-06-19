@@ -1028,7 +1028,9 @@ angular.module('scalearAngularApp')
       var selected_answers
       if ($scope.selected_quiz.question_type == "OCQ" || $scope.selected_quiz.question_type == "MCQ") {
         selected_answers = []
+        console.log("$scope.selected_quiz.online_answers",$scope.selected_quiz.online_answers)
         $scope.selected_quiz.online_answers.forEach(function(answer) {
+          addMark(answer)
           if (answer.selected)
             selected_answers.push(answer.id)
         })
@@ -1036,7 +1038,6 @@ angular.module('scalearAngularApp')
           showNotification("lectures.choose_correct_answer")
           return
         }
-
         if ($scope.selected_quiz.question_type == "OCQ" && selected_answers.length == 1)
           selected_answers = selected_answers[0]
       } else if ($scope.selected_quiz.question_type == "Free Text Question") {
@@ -1075,6 +1076,18 @@ angular.module('scalearAngularApp')
       )
     }
 
+    var addMark = function(answer){
+      var mark = document.createElement("IMG");
+      if (answer.correct)
+       mark.setAttribute("src", "images/right1.png");
+      else
+       mark.setAttribute("src", "images/red_trash_big.png");
+      mark.style.left = ((answer.xcoor*100)+1)+'%'
+      mark.style.top = ((answer.ycoor*100)+2)+'%'
+      mark.style.position = "absolute"
+      mark.style.zIndex = "20"
+      document.getElementById("ontop").appendChild(mark);
+    }
     var addFreeTextAnswerNote = function(note_text){
         note_text = "Quiz: "+$scope.selected_quiz.question+"\nAnswer: " + note_text
         Lecture.saveNote(
@@ -1124,6 +1137,7 @@ angular.module('scalearAngularApp')
         } else {
           for (var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];
+          console.log("$scope.explanation",$scope.explanation)
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
           var sub_message = ''
           if ($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')) {
@@ -1142,7 +1156,6 @@ angular.module('scalearAngularApp')
             sub_message = ""
           }
           showNotification(verdict, sub_message, middle_msg)
-
           $scope.selected_quiz.solved_quiz = true;
         }
         $scope.display_review_message = true

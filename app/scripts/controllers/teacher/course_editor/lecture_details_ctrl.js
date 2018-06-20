@@ -27,10 +27,7 @@ angular.module('scalearAngularApp')
       lecture[column] = data;
       var temp_lecture = LectureModel.createInstance(lecture);
       if(column == 'url') {
-        if (!data.toString().startsWith("<iframe"))
-        {
-          temp_lecture.url = $filter("formatURL")(temp_lecture.url)
-        }
+        temp_lecture.url = $filter("formatURL")(temp_lecture.url)
         return temp_lecture.validateUrl(); // returns a promise
       } else {
         return temp_lecture.validate() // return a promise
@@ -81,10 +78,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateLectureUrl = function() {
-    
+
       $scope.lecture.updateUrl()
         .then(function(should_trim) {
-
           should_trim && checkToTrim()
         })
     }

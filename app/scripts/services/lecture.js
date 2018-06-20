@@ -266,6 +266,7 @@ angular.module('scalearAngularApp')
             })
           }
         } else {
+          lecture.url= "none"
           deferred.reject()
         }
 

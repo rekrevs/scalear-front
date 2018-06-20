@@ -14,9 +14,7 @@ angular.module('scalearAngularApp')
         User.getCurrentUser()
           .$promise
           .then(function(data) {
-            console.log(data)
             if(data.signed_in) {
-              console.log("user signed in")
               var user = JSON.parse(data.user);
               if(!user.last_name) {
                 user.last_name = ''
@@ -32,7 +30,6 @@ angular.module('scalearAngularApp')
               deferred_current_user.resolve(current_user)
               return getNotifications()
             } else {
-              console.log("not signed in")
               deferred_current_user.reject()
               
               removeCurrentUser()
@@ -69,7 +66,8 @@ angular.module('scalearAngularApp')
     }
 
     function setCurrentUser(user) {
-      console.log(user)
+      $log.debug("current user: ");
+      $log.debug(user);
       current_user = user
       $rootScope.current_user = user
     }

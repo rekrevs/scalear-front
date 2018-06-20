@@ -9,7 +9,7 @@
 </span>
 <span id="lecture_container" style="overflow:hidden">
   <div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
-    'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
+    'large-12 land-medium-12 large-centered': !delayed_timeline_open,
     'large-uncentered land-uncentered': delayed_timeline_open,
     'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
     'land-medium-8':!ContentNavigator.status && delayed_timeline_open
@@ -27,7 +27,7 @@
             </center>
           </span>
           <video_container class="video-container" ng-if="passed_requirments" ng-class="container_class" screenfull active="fullscreen">
-            <youtube class="widescreen video-layer" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer">
+            <youtube  class="widescreen video-layer" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' start="lecture.start_time" end="lecture.end_time" ng-style="video_layer">
               <div ng-if="temp_timeline_item">
                 <div class="on-video-textarea" ng-if="temp_timeline_item.type=='note'">
                   <textarea ng-model='temp_timeline_item.data' class="note-textarea" placeholder="Note..."></textarea>
@@ -112,6 +112,7 @@
                 </div>
               </center>
               <center>
+
                 <button class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.tooltip.click_or_type_note'|translate}}" translate>lectures.button.new_note</button>
                 <button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.tooltip.click_or_type_question'|translate}}" translate>lectures.button.ask_question</button>
                 <button class="button small no-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" translate>lectures.button.im_confused</button>
@@ -154,7 +155,7 @@
             <button id="confused_button" class="button small with-tiny-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.tooltip.click_or_type_confused'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.im_confused</button>
             <button id="fullscreen_button" ng-if="!fullscreen" class="button small with-tiny-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.tooltip.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" tooltip-placement="top" translate>lectures.button.fullscreen</button>
             <div ng-hide='distance_peer_session_id'>
-              <button class='button small no-margin-bottom distance-peer-start-btn' ng-if='lecture.distance_peer' ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
+            <button class='button small no-margin-bottom distance-peer-start-btn' ng-if='lecture.distance_peer' ng-click='openStudentList(lecture.id,lecture.course_id)' translate>lectures.button.start_distance_peer</button>
             </div>
           </center>
         </div>

@@ -1028,7 +1028,6 @@ angular.module('scalearAngularApp')
       var selected_answers
       if ($scope.selected_quiz.question_type == "OCQ" || $scope.selected_quiz.question_type == "MCQ") {
         selected_answers = []
-        console.log("$scope.selected_quiz.online_answers",$scope.selected_quiz.online_answers)
         $scope.selected_quiz.online_answers.forEach(function(answer) {
           addMark(answer)
           if (answer.selected)
@@ -1137,7 +1136,6 @@ angular.module('scalearAngularApp')
         } else {
           for (var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];
-          console.log("$scope.explanation",$scope.explanation)
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
           var sub_message = ''
           if ($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')) {

@@ -85,6 +85,7 @@ angular.module('scalearAngularApp')
     }
 
     var getLectureCharts = function() {
+
       Module.getModuleProgress({
           course_id: $stateParams.course_id,
           module_id: $stateParams.module_id
@@ -96,11 +97,11 @@ angular.module('scalearAngularApp')
             $scope.video_start = $scope.first_lecture.start_time
             $scope.video_end = $scope.first_lecture.end_time
             $scope.url = $scope.first_lecture.url+"&controls=1&fs=1&theme=light"
-            $scope.url_lecture_id = $scope.first_lecture.id 
+            $scope.url_lecture_id = $scope.first_lecture.id
           }
           else{
             $scope.url = $scope.first_lecture.url
-            $scope.url_lecture_id = $scope.first_lecture.id 
+            $scope.url_lecture_id = $scope.first_lecture.id
           }
 
           $scope.timeline['lecture'] = {}
@@ -616,16 +617,16 @@ angular.module('scalearAngularApp')
         if ($scope.progress_player.controls.isYoutube(video.url)) {
           $scope.video_start = video.start_time
           $scope.video_end = video.end_time
-          $scope.progress_player.controls.setStartTime(video.start_time) 
+          $scope.progress_player.controls.setStartTime(video.start_time)
           $scope.url = video.url + "&controls=1&fs=1&theme=light"
-          $scope.url_lecture_id = video.id     
-          $timeout(function() {  
-            $scope.progress_player.controls.seek_and_pause(time)  
-          },250)  
+          $scope.url_lecture_id = video.id
+          $timeout(function() {
+            $scope.progress_player.controls.seek_and_pause(time)
+          },250)
         }
         if ($scope.progress_player.controls.isMP4(video.url)) {
           $scope.url = video.url
-          $scope.url_lecture_id = video.id            
+          $scope.url_lecture_id = video.id
           $timeout(function() {
             $scope.progress_player.controls.seek_and_pause(time)
           })
@@ -634,21 +635,21 @@ angular.module('scalearAngularApp')
         // $timeout(function() {
         //   $scope.progress_player.controls.seek_and_pause(time)
         // })
-        if( $scope.selected_item.lec_id != $scope.url_lecture_id){  
-          $scope.video_start = video.start_time  
-          $scope.video_end = video.end_time  
-          $scope.progress_player.controls.setStartTime(video.start_time)  
-          $timeout(function() {  
-            $scope.progress_player.controls.seek_and_pause(time)  
-          },250)  
-          // $scope.url = video.url + "&controls=1&fs=1&theme=light"  
-          $scope.url_lecture_id = video.id            
-        }  
-        else{  
-          $timeout(function() {  
-            $scope.progress_player.controls.seek_and_pause(time)  
-          })  
-        } 
+        if( $scope.selected_item.lec_id != $scope.url_lecture_id){
+          $scope.video_start = video.start_time
+          $scope.video_end = video.end_time
+          $scope.progress_player.controls.setStartTime(video.start_time)
+          $timeout(function() {
+            $scope.progress_player.controls.seek_and_pause(time)
+          },250)
+          // $scope.url = video.url + "&controls=1&fs=1&theme=light"
+          $scope.url_lecture_id = video.id
+        }
+        else{
+          $timeout(function() {
+            $scope.progress_player.controls.seek_and_pause(time)
+          })
+        }
       }
     }
 
@@ -706,7 +707,7 @@ angular.module('scalearAngularApp')
         "type": "string",
         "p": {"role": "tooltip","html": true}
       }, {
-        "label": '', // Never Tried 
+        "label": '', // Never Tried
         "type": "number"
       }, {
         "type": "string",
@@ -718,10 +719,10 @@ angular.module('scalearAngularApp')
         "type": "string",
         "p": {"role": "tooltip","html": true}
       }]
-      
+
       formated_data.rows = []
       for (var ind in data) {
-        
+
         var text, correct, incorrect,
           first_correct = 0,
           last_correct = 0 ,
@@ -746,24 +747,24 @@ angular.module('scalearAngularApp')
             short_text += " (" + $translate.instant('editor.incorrect') + ")";
           first_not_correct = data[ind][0]
           last_not_correct = data[ind][3]
-          
+
           first_not_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
           last_not_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text + "<br>"+$translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
-        } 
+        }
         else if((data[ind][1] == "gray")){
-          did_not_try = data[ind][0] 
+          did_not_try = data[ind][0]
           did_not_try_tooltip_text =   "<div style='color:black;padding:8px'>"+$translate.instant("dashboard.never_tried")+'  : '+data[ind][0]+"</div>"
-        } 
+        }
         else if((data[ind][1] == "blue")){
           survey_tried = data[ind][0]
           survey_tried_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("dashboard.solved")+' : '+data[ind][0]+"</div>"
-        } 
+        }
         else {
           if (type != 'Survey')
             short_text += " (" + $translate.instant('editor.correct') + ")";
           first_correct = data[ind][0]
           last_correct = data[ind][3]
-          
+
           first_correct_tooltip_text =  "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')  : '+data[ind][0]+"</div>"
           last_correct_tooltip_text =   "<div style='color:black;padding:8px'>"+tooltip_text +  "<br>"+$translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')  : '+data[ind][3]+"</div>"
 
@@ -771,16 +772,16 @@ angular.module('scalearAngularApp')
       // first_correct, _tooltip , last_correct, _tooltip , first_not_correct, _tooltip , last_not_correct, _tooltip , did_not_try, _tooltip
         var row = {
           "c": [
-            {"v": short_text}, 
-            {"v": first_correct}, 
+            {"v": short_text},
+            {"v": first_correct},
             {"v": first_correct_tooltip_text },
-            {"v": last_correct}, 
+            {"v": last_correct},
             {"v": last_correct_tooltip_text },
-            {"v": first_not_correct}, 
+            {"v": first_not_correct},
             {"v": first_not_correct_tooltip_text },
-            {"v": last_not_correct}, 
+            {"v": last_not_correct},
             {"v": last_not_correct_tooltip_text },
-            {"v": did_not_try}, 
+            {"v": did_not_try},
             {"v": did_not_try_tooltip_text },
             {"v": survey_tried},
             {"v": survey_tried_tooltip_text },
@@ -833,7 +834,7 @@ angular.module('scalearAngularApp')
         // "<div style='padding:8px'><b>" + text + "</b><br>"+$translate.instant('inclass.self_stage')+": " + self_count + ", "+$translate.instant('inclass.group_stage')+": " + group_count + "</div>",
         var row = {
           "c": [
-            {"v": short_text}, 
+            {"v": short_text},
             {"v": correct},
             { "v": correct_tooltip_text },
             // { "v": tooltip_text },
@@ -939,7 +940,7 @@ angular.module('scalearAngularApp')
 
         };
         if( formatter == 'formatQuizChartData' ||formatter == 'formatSurveyChartData'){
-          // first_correct , last_not_correct 
+          // first_correct , last_not_correct
           chart.options['colors'] = ['#16A53F','#E66726']
         }
         angular.extend(chart.options, options)
@@ -974,7 +975,7 @@ angular.module('scalearAngularApp')
             "viewWindow": { "max": student_count },
             // "viewWindowMode": 'maximized',
             // "textPosition": 'none'
-          }          
+          }
         },
         data: $scope[formatter](data, type)
       };
@@ -985,11 +986,11 @@ angular.module('scalearAngularApp')
       var formated_data = {}
       formated_data.cols = [
         {"label": $translate.instant('global.students'),"type": "string"},
-        {"label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')' ,"type": "number"}, {"type": "string","p": {"role": "style"}}, 
+        {"label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.first_try")+')' ,"type": "number"}, {"type": "string","p": {"role": "style"}},
         {"label": $translate.instant("editor.correct")+' ('+$translate.instant("dashboard.final_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},
-        {"label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},         
+        {"label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.first_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},
         {"label": $translate.instant("editor.incorrect")+' ('+$translate.instant("dashboard.final_try")+')',"type": "number"}, {"type": "string","p": {"role": "style"}},
-        {"label": '',"type": "number"}, {"type": "string","p": {"role": "style"}}, 
+        {"label": '',"type": "number"}, {"type": "string","p": {"role": "style"}},
         {"label": $translate.instant("dashboard.solved"),"type": "number"}, {"type": "string","p": {"role": "style"}}
         ]
 
@@ -1016,18 +1017,18 @@ angular.module('scalearAngularApp')
           style = (data[ind][1] == 'green') ? 'stroke-color: black;stroke-width: 3;' : '',
           self_text = text + ' ('+$translate.instant('inclass.self_stage')+')',
           group_text = text + ' ('+$translate.instant('inclass.group_stage')+')'
-      
+
           if(data[ind][1] == 'green'){
             self_first_correct = data[ind][0] || 0
-            self_last_correct = data[ind][3] || 0 
+            self_last_correct = data[ind][3] || 0
             group_first_correct = data[ind][4] || 0
-            group_last_correct = data[ind][5] || 0         
+            group_last_correct = data[ind][5] || 0
           }
           else if(data[ind][1] == 'orange'){
             if (type != 'Survey')
               text += " (" + $translate.instant('editor.incorrect') + ")";
             self_first_not_correct = data[ind][0] || 0
-            self_last_not_correct = data[ind][3] || 0 
+            self_last_not_correct = data[ind][3] || 0
             group_first_not_correct = data[ind][4] || 0
             group_last_not_correct = data[ind][5] || 0
           }
@@ -1038,7 +1039,7 @@ angular.module('scalearAngularApp')
           else if((data[ind][1] == "blue")){
             self_survey_tried = data[ind][0]
             group_survey_tried = data[ind][3]
-          } 
+          }
 
         var row = {
           "c": [
@@ -1251,7 +1252,7 @@ angular.module('scalearAngularApp')
       if (percent < 10)
         return 'gray'
       else if (percent > 20)
-        return '#f5c343' // dark yellow 
+        return '#f5c343' // dark yellow
       else
         return 'black'
 

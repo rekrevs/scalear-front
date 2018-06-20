@@ -266,8 +266,12 @@ angular.module('scalearAngularApp')
           $scope.timeline['lecture'][lid].items.forEach(function(item) {
             if (item.type == "discussion") {
               item.data.forEach(function(disc) {
-                if (disc.post.id == item_id) {
-                  disc.post.show_feedback = true
+                if (disc.id == item_id) {
+                  disc.show_feedback = true
+                  $scope.selected_item = item
+                  item.lec_id=disc.lecture_id
+                  disc.show_feedback=true
+                  seekToItem()
                 }
               })
             }

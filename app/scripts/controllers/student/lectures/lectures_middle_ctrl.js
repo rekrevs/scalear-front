@@ -1028,10 +1028,11 @@ angular.module('scalearAngularApp')
       var selected_answers
       if ($scope.selected_quiz.question_type == "OCQ" || $scope.selected_quiz.question_type == "MCQ") {
         selected_answers = []
+        console.log($scope.selected_quiz.online_answers)
         $scope.selected_quiz.online_answers.forEach(function(answer) {
-          addMark(answer)
           if (answer.selected)
             selected_answers.push(answer.id)
+            addMark(answer)
         })
         if (selected_answers.length == 0) {
           showNotification("lectures.choose_correct_answer")
@@ -1051,6 +1052,7 @@ angular.module('scalearAngularApp')
         var count = 0
         for (var el in selected_answers)
           if (selected_answers[el])
+            addMark(selected_answers[el])
             count++
             if (count < $scope.selected_quiz.online_answers.length) {
               showNotification("lectures.must_place_items")
@@ -1077,12 +1079,16 @@ angular.module('scalearAngularApp')
 
     var addMark = function(answer){
       var mark = document.createElement("IMG");
-      if (answer.correct)
-       mark.setAttribute("src", "images/right1.png");
+      if (answer.selected)
+        if (answer.correct)
+         mark.setAttribute("src", "images/right1.png");
+        else
+         mark.setAttribute("src", "images/red_trash_big.png");
+      if (answer.xcoor<0.5)
+        mark.style.left = ((answer.xcoor*100)+1.5)+'%'
       else
-       mark.setAttribute("src", "images/red_trash_big.png");
-      mark.style.left = ((answer.xcoor*100)+1)+'%'
-      mark.style.top = ((answer.ycoor*100)+2)+'%'
+        mark.style.left = ((answer.xcoor*100)-2)+'%'
+      mark.style.top = (answer.ycoor*100)+'%'
       mark.style.position = "absolute"
       mark.style.zIndex = "20"
       document.getElementById("ontop").appendChild(mark);

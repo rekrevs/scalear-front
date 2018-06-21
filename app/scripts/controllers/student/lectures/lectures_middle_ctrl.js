@@ -1032,7 +1032,7 @@ angular.module('scalearAngularApp')
         $scope.selected_quiz.online_answers.forEach(function(answer) {
           if (answer.selected)
             selected_answers.push(answer.id)
-            addMark(answer)
+            addMark(answer,"CQ")
         })
         if (selected_answers.length == 0) {
           showNotification("lectures.choose_correct_answer")
@@ -1047,12 +1047,12 @@ angular.module('scalearAngularApp')
           return
         }
       } else { //DRAG
+        console.log("$scope.selected_quiz",$scope.selected_quiz)
         selected_answers = {}
         selected_answers = $scope.studentAnswers[$scope.selected_quiz.id]
         var count = 0
         for (var el in selected_answers)
           if (selected_answers[el])
-            addMark(selected_answers[el])
             count++
             if (count < $scope.selected_quiz.online_answers.length) {
               showNotification("lectures.must_place_items")
@@ -1073,26 +1073,41 @@ angular.module('scalearAngularApp')
           if($scope.selected_quiz.question_type=="Free Text Question"){
             addFreeTextAnswerNote(selected_answers)
           }
+          addMark(data,"DRAG")
         }
       )
     }
 
-    var addMark = function(answer){
-      var mark = document.createElement("IMG");
-      if (answer.selected)
-        if (answer.correct)
-         mark.setAttribute("src", "images/right1.png");
-        else
-         mark.setAttribute("src", "images/red_trash_big.png");
-      if (answer.xcoor<0.5)
-        mark.style.left = ((answer.xcoor*100)+1.5)+'%'
-      else
-        mark.style.left = ((answer.xcoor*100)-2)+'%'
-      mark.style.top = (answer.ycoor*100)+'%'
-      mark.style.position = "absolute"
-      mark.style.zIndex = "20"
-      document.getElementById("ontop").appendChild(mark);
+    var addMark = function(answer,type){
+      if (type == "CQ"){
+        var mark = document.createElement("IMG");
+        if (answer.selected){
+          if (answer.correct)
+           mark.setAttribute("src", "images/right1.png");
+          else
+           mark.setAttribute("src", "images/red_trash_big.png");
+        }
+        if (answer.xcoor<0.5){
+          mark.style.left = ((answer.xcoor*100)+1.5)+'%'
+        } else {
+          mark.style.left = ((answer.xcoor*100)-2)+'%'
+        }
+        mark.style.top = (answer.ycoor*100)+'%'
+        mark.style.position = "absolute"
+        mark.style.zIndex = "20"
+        document.getElementById("ontop").appendChild(mark);
+      }
+      if(type == "DRAG") { // answer is data
+        var online_answers_temp = $scope.selected_quiz.online_answers
+        var corrected_student_answers = answer.detailed_exp
+        var el
+
+        for ( el in online_answers_temp)
+          online_answers_temp[el].correction =  corrected_student_answers[online_answers_temp[el].id][0]
+
+      }
     }
+
     var addFreeTextAnswerNote = function(note_text){
         note_text = "Quiz: "+$scope.selected_quiz.question+"\nAnswer: " + note_text
         Lecture.saveNote(

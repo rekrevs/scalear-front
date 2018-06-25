@@ -69,18 +69,18 @@ angular.module('scalearAngularApp')
       $scope.paste(module_id)
     })
 
-    if($state.params.new_course) { 
-      $modal.open({ 
-        templateUrl: '/views/teacher/course_list/email_student_answers_modal.html', 
-        scope: $scope, 
-        controller:['$modalInstance', function($modalInstance ) { 
+    if($state.params.new_course) {
+      $modal.open({
+        templateUrl: '/views/teacher/course_list/email_student_answers_modal.html',
+        scope: $scope,
+        controller:['$modalInstance', function($modalInstance ) {
           $scope.updateEmailDiscussion = function (email_discussion) {
-            $scope.course.updateTeacherDiscussionEmail(email_discussion) 
-            $modalInstance.dismiss('cancel'); 
-          } 
-        }] 
-      }) 
-    }  
+            $scope.course.updateTeacherDiscussionEmail(email_discussion)
+            $modalInstance.dismiss('cancel');
+          }
+        }]
+      })
+    }
 
     $scope.capitalize = function(s) {
       return ScalearUtils.capitalize(s)
@@ -198,7 +198,6 @@ angular.module('scalearAngularApp')
       } else if(item.type == 'customlink') {
         LinkModel.paste(item, module_id)
       }
-
     }
 
     var openSharingModal = function(data) {

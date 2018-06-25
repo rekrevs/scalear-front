@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
                     });
                 }
                 else
-                  $rootScope.$broadcast("delete_module", scope.module)  
+                  $rootScope.$broadcast("delete_module", scope.module)
             }
 
             scope.copy=function(event){
@@ -72,12 +72,14 @@ angular.module('scalearAngularApp')
 
             scope.paste=function(event){
                 $log.debug("Paste")
+                console.log("scope.module.id",scope.module.id)
                 event.preventDefault();
                 $rootScope.$broadcast('paste_item', scope.module.id)
             }
 
             scope.share=function(event){
                 $log.debug("Share")
+                                console.log("share")
                 event.preventDefault();
                 $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
             }
@@ -102,13 +104,15 @@ angular.module('scalearAngularApp')
             }
 
             scope.copy=function(event){
-                $log.debug("copy")         
+                console.log("copy")
+                $log.debug("copy")
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.item)
             }
 
             scope.paste=function(event){
                 $log.debug("Paste")
+                console.log("scope.item.group_id",scope.item.group_id)
                 event.preventDefault();
                 $rootScope.$broadcast('paste_item', scope.item.group_id)
             }

@@ -57,9 +57,6 @@ angular.module('scalearAngularApp')
         var t
         t = $scope.selected_quiz.cue.start+1.1
         //$scope.selected_quiz.isSurvey() ?  t = $scope.selected_quiz.cue.start+1:t = $scope.selected_quiz.cue.start+1
-        console.log("$scope.selected_quiz.cue.start:",$scope.selected_quiz.cue.start)
-        console.log("$scope.selected_quiz.cue.end:",$scope.selected_quiz.cue.end)
-        console.log("t:",t)
         $scope.saveQuizBtn({ exit: true })
         $scope.seek(t)
       }
@@ -239,7 +236,6 @@ angular.module('scalearAngularApp')
     };
 
     $scope.saveQuizBtn = function(options) {
-      console.log("at saveQuizBtn ")
       $scope.quiz_errors = {}
       return $scope.selected_quiz.validate()
         .then(function(data) {
@@ -260,7 +256,6 @@ angular.module('scalearAngularApp')
     }
 
     function saveQuizAnswers(options) {
-      console.log("at saveQuizAnswers")
       if ((
           ($scope.answer_form.$valid && $scope.selected_quiz.isTextVideoQuiz()) ||
           ((!$scope.selected_quiz.isTextVideoQuiz() || $scope.selected_quiz.isTextSurvey()) && isFormValid())
@@ -294,7 +289,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.exitQuizBtn = function() {
-      console.log("at exitQuizBtn")
       if ($scope.quiz_deletable) {
         $scope.selected_quiz.deleteQuiz()
       }
@@ -313,7 +307,6 @@ angular.module('scalearAngularApp')
     }
 
     function closeQuizMode() {
-      console.log("at closeQuizMode")
       closeEditor()
       $scope.submitted = false
       $scope.quiz_layer.backgroundColor = ""
@@ -455,7 +448,6 @@ angular.module('scalearAngularApp')
     }
 
     function closeEditor() {
-      console.log("at closeEditor")
       $scope.editing_mode = false;
       $scope.hide_alerts = true;
       $scope.editing_type = null

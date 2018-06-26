@@ -38,6 +38,7 @@ angular.module('scalearAngularApp')
         scope.selected_quiz.has_end = scope.selected_quiz.end_time != scope.selected_quiz.time
         scope.invideo_quiz_type = scope.selected_quiz.quiz_type == "invideo"
 
+
         scope.updateQuizStartTime = function() {
           scope.selected_quiz.start_time = scope.selected_quiz.time
           if (scope.selected_quiz.has_start) {

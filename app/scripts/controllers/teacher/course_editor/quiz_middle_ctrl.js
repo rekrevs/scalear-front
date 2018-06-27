@@ -40,6 +40,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveQuestions = function() {
+      console.log("here------")
       if($scope.tform.$valid) {
         $scope.submitted = false;
         $scope.hide_alerts = true;

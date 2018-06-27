@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
                     });
                 }
                 else
-                  $rootScope.$broadcast("delete_module", scope.module)  
+                  $rootScope.$broadcast("delete_module", scope.module)
             }
 
             scope.copy=function(event){
@@ -102,7 +102,7 @@ angular.module('scalearAngularApp')
             }
 
             scope.copy=function(event){
-                $log.debug("copy")         
+                $log.debug("copy")
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.item)
             }
@@ -237,11 +237,13 @@ angular.module('scalearAngularApp')
             mode: '@',
             moduleitem: '@',
             tooltiptext: "@",
-            padded: '@'
+            padded: '@',
+            save:'&'
         },
         restrict: 'E',
         templateUrl: '/views/teacher/course_editor/delete_button.html',
         link: function(scope) {
+            console.log("delete_button scope",scope)
             scope.tooltiptext_translated = $translate.instant(scope.tooltiptext)
             scope.overlay = scope.overlaymode() || false
             scope.display_vertical = scope.vertical()

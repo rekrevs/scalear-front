@@ -62,7 +62,6 @@ angular.module('scalearAngularApp')
           element.find('.quiz_name').focus();
           document.execCommand('selectAll', false, null);
         });
-
       }
     };
   }])

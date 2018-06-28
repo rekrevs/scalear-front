@@ -231,13 +231,10 @@ angular.module('scalearAngularApp')
       player_controls.seek_and_pause = function(time) {
 
         if(isKaltura(scope.url)){
-          console.log("seek_and_pause in if isKaltura")
           if(time==0){
             player_controls.seek(0)
           } else {
-            console.log("in else time=",time)
             player_controls.seek(time)
-            console.log("done with k seek")
             player.video.pauseAfterSeek()
           }
         } else {
@@ -497,7 +494,6 @@ angular.module('scalearAngularApp')
         return video_url.match(/(.*mp4$)/)
       }
       var isKaltura= function(iframe) {
-      //  console.log("iframe",iframe)
         var url
         if (iframe.match( 'src\=(.*)[a-z]\"' )){
           url = iframe.match( 'src\=(.*)[a-z]\"' )[0]

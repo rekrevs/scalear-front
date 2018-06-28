@@ -166,6 +166,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
+        scope.tempDraggedItem
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user
@@ -310,6 +311,45 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('paste_item')
           else
             $rootScope.$broadcast('paste_item', module_id)
+        }
+
+        scope.copyDraggedItem=function(event,ui,{draggedItem}){
+          scope.tempDraggedItem = draggedItem
+          $rootScope.$broadcast('copy_item', draggedItem)
+        }
+
+        scope.deleteOriginalDraggedItem = function(){
+         $rootScope.$broadcast("delete_item",scope.tempDraggedItem )
+         scope.tempDraggedItem = null
+        }
+
+        scope.pasteDraggedItem = function(event,ui, {moduleId}) {
+          var targetModule
+          var itemsCountBeforePaste
+          var itemsCountAfterPaste
+          var el
+
+          for (el in scope.modules)
+            if (scope.modules[el].id == moduleId)
+              targetModule = scope.modules[el]
+
+          itemsCountBeforePaste = targetModule.items.length
+
+          new Promise(
+            function(resolve,reject){
+              $rootScope.$broadcast('paste_item',moduleId)
+              resolve(1);
+            }
+          ).then(function () {
+              setTimeout(function () {
+                itemsCountAfterPaste = targetModule.items.length
+                if (itemsCountAfterPaste > itemsCountBeforePaste)
+                  scope.deleteOriginalDraggedItem()
+              }, 300);
+            })
+            .catch(function (error) {
+              alert("drag unsucessfull");
+            });
         }
 
         scope.scrollIntoView = function(module) {

@@ -166,7 +166,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
-        scope.draggedItem
+        scope.tempDraggedItem
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user
@@ -313,21 +313,43 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('paste_item', module_id)
         }
 
-        scope.copyDrag=function(event,ui,draggedItem){
-          scope.draggedItem = draggedItem.draggedItem
-          $rootScope.$broadcast('copy_item', draggedItem.draggedItem)
-
+        scope.copyDraggedItem=function(event,ui,{draggedItem}){
+          scope.tempDraggedItem = draggedItem//.draggedItem
+          $rootScope.$broadcast('copy_item', draggedItem)
         }
 
-        scope.deleteOriginalDragged = function(){//event,ui,draggedItem
-         $rootScope.$broadcast("delete_item",scope.draggedItem )
-         scope.draggedItem = null
+        scope.deleteOriginalDraggedItem = function(){
+         $rootScope.$broadcast("delete_item",scope.tempDraggedItem )
+         scope.tempDraggedItem = null
         }
 
-        scope.pasteDrag = function(event,ui, module_id) {
-          $rootScope.$broadcast('paste_item',module_id.module_id)
-          scope.deleteOriginalDragged()
+        scope.pasteDraggedItem = function(event,ui, {moduleId}) {
+          var targetModule
+          var itemsCountBeforePaste
+          var itemsCountAfterPaste
+          var el
 
+          for (el in scope.modules)
+            if (scope.modules[el].id == moduleId)
+              targetModule = scope.modules[el]
+
+          itemsCountBeforePaste = targetModule.items.length
+
+          new Promise(
+            function(resolve,reject){
+              $rootScope.$broadcast('paste_item',moduleId)
+              resolve(1);
+            }
+          ).then(function () {
+              setTimeout(function () {
+                itemsCountAfterPaste = targetModule.items.length
+                if (itemsCountAfterPaste > itemsCountBeforePaste)
+                  scope.deleteOriginalDraggedItem()
+              }, 300);
+            })
+            .catch(function (error) {
+              alert("drag unsucessfull");
+            });
         }
 
         scope.scrollIntoView = function(module) {

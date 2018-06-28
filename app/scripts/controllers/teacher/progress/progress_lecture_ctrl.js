@@ -641,7 +641,7 @@ angular.module('scalearAngularApp')
           $scope.url_lecture_id = video.id
           $timeout(function() {
             $scope.progress_player.controls.seek_and_pause(time)
-        
+
           },1500) // the time out is more than 1 sec as pause of kaltura can only work after seek with 1 sec time interval
         }
       } else {
@@ -652,7 +652,6 @@ angular.module('scalearAngularApp')
           $timeout(function() {
             $scope.progress_player.controls.seek_and_pause(time)
           },250)
-          // $scope.url = video.url + "&controls=1&fs=1&theme=light"
           $scope.url_lecture_id = video.id
         }
         else{

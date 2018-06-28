@@ -314,7 +314,7 @@ angular.module('scalearAngularApp')
         }
 
         scope.copyDraggedItem=function(event,ui,{draggedItem}){
-          scope.tempDraggedItem = draggedItem//.draggedItem
+          scope.tempDraggedItem = draggedItem
           $rootScope.$broadcast('copy_item', draggedItem)
         }
 

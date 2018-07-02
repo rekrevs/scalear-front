@@ -2,13 +2,15 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl', ['$stateParams', '$scope', 'Quiz', 'CourseEditor', '$translate', '$log', '$rootScope', 'ErrorHandler', '$timeout', '$state', '$q', 'ItemsModel', 'QuizModel', 'QuestionModel','CourseModel','ModuleModel', function($stateParams, $scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler, $timeout, $state, $q, ItemsModel, QuizModel, QuestionModel, CourseModel, ModuleModel) {
-
+    $scope.currentDate = null
+    $scope.saved = false
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
     ItemsModel.setSelectedItem($scope.quiz)
     $scope.course = CourseModel.getSelectedCourse()
     $scope.module = ModuleModel.getSelectedModule()
     $scope.publish_state_visible = $scope.quiz.isVisible()
     $scope.module_visible = $scope.module.isVisible()
+    var autoSaveTimeOut = null;
     $scope.alert = {
       type: "alert",
       msg: "error_message.got_some_errors"
@@ -40,15 +42,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveQuestions = function() {
-      console.log("here------")
-      if($scope.tform.$valid) {
-        $scope.submitted = false;
-        $scope.hide_alerts = true;
-        QuestionModel.updateQuestions();
-      } else {
-        $scope.submitted = true;
-        $scope.hide_alerts = false;
-      }
+      $scope.saved = true
+      clearTimeout(autoSaveTimeOut)
+      autoSaveTimeOut=setTimeout(
+        function(){
+            console.log("here------")
+          if($scope.tform.$valid) {
+            $scope.submitted = false;
+            $scope.hide_alerts = true;
+            QuestionModel.updateQuestions();
+          } else {
+            $scope.submitted = true;
+            $scope.hide_alerts = false;
+          }
+        $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+        },500)
+
     }
 
     $scope.publish = function() {

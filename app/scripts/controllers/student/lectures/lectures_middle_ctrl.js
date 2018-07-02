@@ -261,7 +261,6 @@ angular.module('scalearAngularApp')
     }
 
     var showQuizOnline = function(quiz) {
-
       var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);
       $scope.next_quiz = null
       if ($scope.lecture.video_quizzes[index + 1]) {
@@ -739,6 +738,11 @@ angular.module('scalearAngularApp')
       $scope.quiz_layer.backgroundColor = ""
       $scope.quiz_layer.overflowX = ''
       $scope.quiz_layer.overflowY = ''
+      var marks = document.getElementsByClassName('mark')
+      while(marks[0]){
+        marks[0].parentNode.removeChild(marks[0])
+      }
+
     }
 
     var returnToQuiz = function(time) {
@@ -1028,7 +1032,6 @@ angular.module('scalearAngularApp')
       var selected_answers
       if ($scope.selected_quiz.question_type == "OCQ" || $scope.selected_quiz.question_type == "MCQ") {
         selected_answers = []
-        console.log($scope.selected_quiz.online_answers)
         $scope.selected_quiz.online_answers.forEach(function(answer) {
           if (answer.selected)
             selected_answers.push(answer.id)
@@ -1047,7 +1050,6 @@ angular.module('scalearAngularApp')
           return
         }
       } else { //DRAG
-        console.log("$scope.selected_quiz",$scope.selected_quiz)
         selected_answers = {}
         selected_answers = $scope.studentAnswers[$scope.selected_quiz.id]
         var count = 0
@@ -1073,7 +1075,6 @@ angular.module('scalearAngularApp')
           if($scope.selected_quiz.question_type=="Free Text Question"){
             addFreeTextAnswerNote(selected_answers)
           }
-          addMark(data,"DRAG")
         }
       )
     }
@@ -1095,17 +1096,10 @@ angular.module('scalearAngularApp')
         mark.style.top = (answer.ycoor*100)+'%'
         mark.style.position = "absolute"
         mark.style.zIndex = "20"
+        mark.className  = "mark"
         document.getElementById("ontop").appendChild(mark);
       }
-      if(type == "DRAG") { // answer is data
-        var online_answers_temp = $scope.selected_quiz.online_answers
-        var corrected_student_answers = answer.detailed_exp
-        var el
 
-        for ( el in online_answers_temp)
-          online_answers_temp[el].correction =  corrected_student_answers[online_answers_temp[el].id][0]
-
-      }
     }
 
     var addFreeTextAnswerNote = function(note_text){

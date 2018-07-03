@@ -166,7 +166,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
-        scope.tempDraggedItem
+        var tempDraggedItem
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user
@@ -314,26 +314,22 @@ angular.module('scalearAngularApp')
         }
 
         scope.copyDraggedItem=function(event,ui,{draggedItem}){
-          scope.tempDraggedItem = draggedItem
+          tempDraggedItem = draggedItem
           $rootScope.$broadcast('copy_item', draggedItem)
         }
 
         scope.deleteOriginalDraggedItem = function(){
-         $rootScope.$broadcast("delete_item",scope.tempDraggedItem )
-         scope.tempDraggedItem = null
+         $rootScope.$broadcast("delete_item",tempDraggedItem )
+         tempDraggedItem = null
         }
 
         scope.pasteDraggedItem = function(event,ui, {moduleId}) {
-          var targetModule
-          var itemsCountBeforePaste
           var itemsCountAfterPaste
           var el
 
-          for (el in scope.modules)
-            if (scope.modules[el].id == moduleId)
-              targetModule = scope.modules[el]
+          var targetModule = scope.modules.find(function(module){ return module.id === moduleId;});
 
-          itemsCountBeforePaste = targetModule.items.length
+          var itemsCountBeforePaste = targetModule.items.length
 
           new Promise(
             function(resolve,reject){

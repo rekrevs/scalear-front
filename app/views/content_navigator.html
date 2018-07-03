@@ -43,7 +43,7 @@
 									<i ng-if="::(item.class_name == 'lecture' && item.distance_peer)" class="fi-torsos-all with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'quiz' && item.quiz_type == 'quiz')" class="fi-clipboard-notes with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.quiz' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'quiz' && item.quiz_type == 'survey')" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.survey' | translate)}}"></i>
-									<div class="show-inline valign-middle left text-left" style="width: 65%;" style="color:red" >{{::item.name}} </div>
+									<div class="show-inline valign-middle left text-left" style="width: 65%;">{{::item.name}} </div>
 									<div class="no-padding text-right">
 										<small class="color-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</small>
 									</div>

@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveQuestions = function() {
-      $scope.saved = true
+      setTimeout(function(){
       clearTimeout(autoSaveTimeOut)
       autoSaveTimeOut=setTimeout(
         function(){
@@ -56,6 +56,8 @@ angular.module('scalearAngularApp')
           }
         $scope.currentDate = new Date().toLocaleString([], { hour12: true});
         },500)
+      },500)
+      $scope.saved = true
     }
 
     $scope.publish = function() {

@@ -1079,29 +1079,6 @@ angular.module('scalearAngularApp')
       )
     }
 
-    var addMark = function(answer,type){
-      if (type == "CQ"){
-        var mark = document.createElement("IMG");
-        if (answer.selected){
-          if (answer.correct)
-           mark.setAttribute("src", "images/right1.png");
-          else
-           mark.setAttribute("src", "images/red_trash_big.png");
-        }
-        if (answer.xcoor<0.5){
-          mark.style.left = ((answer.xcoor*100)+1.5)+'%'
-        } else {
-          mark.style.left = ((answer.xcoor*100)-2)+'%'
-        }
-        mark.style.top = (answer.ycoor*100)+'%'
-        mark.style.position = "absolute"
-        mark.style.zIndex = "20"
-        mark.className  = "mark"
-        document.getElementById("ontop").appendChild(mark);
-      }
-
-    }
-
     var addFreeTextAnswerNote = function(note_text){
         note_text = "Quiz: "+$scope.selected_quiz.question+"\nAnswer: " + note_text
         Lecture.saveNote(

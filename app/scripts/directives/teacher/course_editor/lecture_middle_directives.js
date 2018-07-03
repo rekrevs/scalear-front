@@ -578,7 +578,6 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/answer_forum.html',
       link: function(scope, element, iAttrs) {
-        console.log("scope",scope)
         scope.isSurvey = function() {
           return scope.subtype && (scope.subtype.toLowerCase() == "survey" || scope.subtype.toLowerCase() == "html_survey")
         }
@@ -605,17 +604,12 @@ angular.module('scalearAngularApp')
         }
 
         scope.removeAnswer = function(){
-          console.log("scope",scope)
-          console.log("before delete scope.quiz",scope.quiz)
-          //scope.quiz.content =""
           scope.quiz.answers.forEach(function (value, i) {
             value.explanation = ""
             if(!scope.isFreeText() ){
               value.content = ""
             }
           });
-          console.log("after delete scope.quiz",scope.quiz)
-
         }
 
         scope.quiz_types = [
@@ -685,9 +679,7 @@ angular.module('scalearAngularApp')
         "</ul>" +
         "</div>",
       link: function(scope) {
-        console.log("htmlanswer",scope)
         scope.removeAnswer = scope.remove()
-
         scope.updateValues = function() {
           scope.values = 0
           for (var element in scope.quiz.answers)

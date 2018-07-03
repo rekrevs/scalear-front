@@ -46,7 +46,6 @@ angular.module('scalearAngularApp')
       clearTimeout(autoSaveTimeOut)
       autoSaveTimeOut=setTimeout(
         function(){
-            console.log("here------")
           if($scope.tform.$valid) {
             $scope.submitted = false;
             $scope.hide_alerts = true;

@@ -56,7 +56,6 @@ angular.module('scalearAngularApp')
           }
         $scope.currentDate = new Date().toLocaleString([], { hour12: true});
         },500)
-
     }
 
     $scope.publish = function() {

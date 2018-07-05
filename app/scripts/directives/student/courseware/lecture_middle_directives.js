@@ -47,13 +47,14 @@ angular
           action: "&"
         },
         template:
-          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); addMark(selected_quiz);">{{"lectures.button.check_answer" | translate}}</button>',
+          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); ">{{"lectures.button.check_answer" | translate}}</button>'
+        ,
         link: function(scope, element, attrs) {
-              }
-        };
-      }
-    ])
 
+        }
+      };
+    }
+  ])
   .directive("studentAnswerForm", [
     "Lecture",
     "$stateParams",
@@ -64,9 +65,7 @@ angular
           quiz: "=",
           studentAnswers: "=",
           submitted: "=",
-          explanation: "=",
-          showmark: '=',
-
+          explanation: "="
         },
         restrict: "E",
         template:
@@ -260,13 +259,12 @@ angular
           data: "=",
           explanation: "=",
           studentAnswers: "=",
-          showmark: "=",
-          checkAnsClicked: "="
+          checkAnswerClicked:"="
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
-          "<div ng-switch-when='MCQ'><student-answer /></div>" +
-          "<div ng-switch-when='OCQ'><student-answer /></div>" +
+          "<div ng-switch-when='MCQ'><student-answer /><correction-mark /></div>" +
+          "<div ng-switch-when='OCQ'><student-answer /><correction-mark data='data' ng-show='checkAnswerClicked'/></div>" +
           "<div ng-switch-when='DRAG'><student-drag /></div>" +
           "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>" +
           "</div>"
@@ -290,6 +288,7 @@ angular
             element.attr("type", type);
           };
           scope.radioChange = function(corr_ans) {
+            $rootScope.$broadcast("answer_changed")
             if (scope.quiz.question_type == "OCQ") {
               $log.debug("radioChange");
               scope.quiz.online_answers.forEach(function(ans) {
@@ -849,68 +848,8 @@ angular
         },
         templateUrl: "/views/student/lectures/dynamic_annotation_student.html",
         link: function(scope, element, attrs) {
-
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
-        }
-      };
-    }
-  ])
-  .directive("studentAnswerCorrectionMarks", [
-    function() {
-      return {
-        restrict: "E",
-        scope: {
-          action: "&",
-          answer: "=",
-          quiz: "=",
-          showmark: "=",
-          checkAnsClicked:"="
-        },
-        // template:'<div ng-if="answer.selected"><img ng-src="{{answer.correct == true && "images/right1.png" ||"images/red_trash_big.png" }}"  > </div>',
-        // template:"<img ng-src='{{answer.correct == true && images/right1.png' ||'images/red_trash_big.png' }}' >",
-        templateUrl: "/views/student/lectures/mark.html",
-
-        link: function(scope, element, attrs) {
-          // scope.$watch("answer.selected", function(newval) {
-          //   scope.showmark = 0
-          // })
-          console.log("checkAnsClicked",scope.checkAnsClicked)
-          scope.$watch("showmark", function(newval) {
-            console.log("--------------------------------------------")
-            console.log( "answer", scope.answer)
-            var answer = scope.answer
-            console.log( scope.quiz )
-            var mark = element[0].firstChild
-            console.log("element",element)
-            // if (answer.selected){
-            //   if (answer.correct)
-            //    mark.setAttribute("src", "images/right1.png");
-            //   else
-            //    mark.setAttribute("src", "images/red_trash_big.png");
-            // }
-            // if (answer.xcoor<0.5){
-            //   console.log("mark",mark)
-            //   mark.style.left = ((answer.xcoor*100)+1.5)+'%'
-            // } else {
-            //   mark.style.left = ((answer.xcoor*100)-2)+'%'
-            // }
-            // mark.style.top = (answer.ycoor*100)+'%'
-            // mark.style.position = "absolute"
-            // mark.style.zIndex = "20"
-            // mark.className  = "mark"
-
-          })
-
-          // scope.addMark = function(answers){
-          //   var mark = element[0].firstChild
-          //   console.log("mark",mark)
-          //   answers.forEach(function(answer) {
-          //
-
-          //
-          //   })
-          // }
         }
       };
     }
@@ -932,6 +871,33 @@ angular
         link: function(scope, element, attrs) {
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
+        }
+      };
+    }
+  ])
+  .directive("correctionMark", [
+    function() {
+      return {
+        restrict: "E",
+        scope: {
+          data:"=",
+          checkAnsClicked:"="
+        },
+        templateUrl: "/views/student/lectures/mark.html",
+          link: function(scope, element, attrs) {
+            scope.setStyle=function(){
+              var answer = scope.data
+              var mark = element[0].firstElementChild
+              if (answer.xcoor<0.5){
+                mark.style.left = ((answer.xcoor*100)+1.5)+'%'
+              } else {
+                mark.style.left = ((answer.xcoor*100)-2)+'%'
+              }
+              mark.style.top = (answer.ycoor*100)+'%'
+              mark.style.position = "absolute"
+              mark.style.zIndex = "20"
+              mark.className  = "mark"
+          }
         }
       };
     }

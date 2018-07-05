@@ -742,10 +742,10 @@ angular.module('scalearAngularApp')
       $scope.quiz_layer.backgroundColor = ""
       $scope.quiz_layer.overflowX = ''
       $scope.quiz_layer.overflowY = ''
-      var marks = document.getElementsByClassName('mark')
-      while(marks[0]){
-        marks[0].parentNode.removeChild(marks[0])
-      }
+      // var marks = document.getElementsByClassName('mark')
+      // while(marks[0]){
+      //   marks[0].parentNode.removeChild(marks[0])
+      // }
 
     }
 

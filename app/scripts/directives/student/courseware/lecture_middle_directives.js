@@ -263,7 +263,7 @@ angular
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
-          "<div ng-switch-when='MCQ'><student-answer /><correction-mark /></div>" +
+          "<div ng-switch-when='MCQ'><student-answer /><correction-mark data='data' ng-show='checkAnswerClicked'/></div>" +
           "<div ng-switch-when='OCQ'><student-answer /><correction-mark data='data' ng-show='checkAnswerClicked'/></div>" +
           "<div ng-switch-when='DRAG'><student-drag /></div>" +
           "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>" +

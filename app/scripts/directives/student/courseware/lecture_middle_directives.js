@@ -47,34 +47,13 @@ angular
           action: "&"
         },
         template:
-          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); addMark();">{{"lectures.button.check_answer" | translate}}</button>',
+          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); addMark(selected_quiz);">{{"lectures.button.check_answer" | translate}}</button>',
         link: function(scope, element, attrs) {
-          scope.addMark = function(answer,type){
-            if (type == "CQ"){
-              var mark = document.createElement("IMG");
-              if (answer.selected){
-                if (answer.correct)
-                 mark.setAttribute("src", "images/right1.png");
-                else
-                 mark.setAttribute("src", "images/red_trash_big.png");
               }
-              if (answer.xcoor<0.5){
-                mark.style.left = ((answer.xcoor*100)+1.5)+'%'
-              } else {
-                mark.style.left = ((answer.xcoor*100)-2)+'%'
-              }
-              mark.style.top = (answer.ycoor*100)+'%'
-              mark.style.position = "absolute"
-              mark.style.zIndex = "20"
-              mark.className  = "mark"
-              document.getElementById("ontop").appendChild(mark);
-            }
+        };
+      }
+    ])
 
-          }
-        }
-      };
-    }
-  ])
   .directive("studentAnswerForm", [
     "Lecture",
     "$stateParams",
@@ -85,7 +64,9 @@ angular
           quiz: "=",
           studentAnswers: "=",
           submitted: "=",
-          explanation: "="
+          explanation: "=",
+          showmark: '=',
+
         },
         restrict: "E",
         template:
@@ -278,7 +259,9 @@ angular
           quiz: "=",
           data: "=",
           explanation: "=",
-          studentAnswers: "="
+          studentAnswers: "=",
+          showmark: "=",
+          checkAnsClicked: "="
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
@@ -869,6 +852,65 @@ angular
 
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
+        }
+      };
+    }
+  ])
+  .directive("studentAnswerCorrectionMarks", [
+    function() {
+      return {
+        restrict: "E",
+        scope: {
+          action: "&",
+          answer: "=",
+          quiz: "=",
+          showmark: "=",
+          checkAnsClicked:"="
+        },
+        // template:'<div ng-if="answer.selected"><img ng-src="{{answer.correct == true && "images/right1.png" ||"images/red_trash_big.png" }}"  > </div>',
+        // template:"<img ng-src='{{answer.correct == true && images/right1.png' ||'images/red_trash_big.png' }}' >",
+        templateUrl: "/views/student/lectures/mark.html",
+
+        link: function(scope, element, attrs) {
+          // scope.$watch("answer.selected", function(newval) {
+          //   scope.showmark = 0
+          // })
+          console.log("checkAnsClicked",scope.checkAnsClicked)
+          scope.$watch("showmark", function(newval) {
+            console.log("--------------------------------------------")
+            console.log( "answer", scope.answer)
+            var answer = scope.answer
+            console.log( scope.quiz )
+            var mark = element[0].firstChild
+            console.log("element",element)
+            // if (answer.selected){
+            //   if (answer.correct)
+            //    mark.setAttribute("src", "images/right1.png");
+            //   else
+            //    mark.setAttribute("src", "images/red_trash_big.png");
+            // }
+            // if (answer.xcoor<0.5){
+            //   console.log("mark",mark)
+            //   mark.style.left = ((answer.xcoor*100)+1.5)+'%'
+            // } else {
+            //   mark.style.left = ((answer.xcoor*100)-2)+'%'
+            // }
+            // mark.style.top = (answer.ycoor*100)+'%'
+            // mark.style.position = "absolute"
+            // mark.style.zIndex = "20"
+            // mark.className  = "mark"
+
+          })
+
+          // scope.addMark = function(answers){
+          //   var mark = element[0].firstChild
+          //   console.log("mark",mark)
+          //   answers.forEach(function(answer) {
+          //
+
+          //
+          //   })
+          // }
         }
       };
     }

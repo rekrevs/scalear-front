@@ -42,22 +42,25 @@ angular.module('scalearAngularApp')
     }
 
     $scope.saveQuestions = function() {
+      console.log("saveQuestions")
       setTimeout(function(){
-      clearTimeout(autoSaveTimeOut)
-      autoSaveTimeOut=setTimeout(
-        function(){
-          if($scope.tform.$valid) {
-            $scope.submitted = false;
-            $scope.hide_alerts = true;
-            QuestionModel.updateQuestions();
-          } else {
-            $scope.submitted = true;
-            $scope.hide_alerts = false;
-          }
-        $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+        if (autoSaveTimeOut){
+          clearTimeout(autoSaveTimeOut)
+        }
+        autoSaveTimeOut=setTimeout(
+          function(){
+            if($scope.tform.$valid) {
+              $scope.submitted = false;
+              $scope.hide_alerts = true;
+              QuestionModel.updateQuestions();
+            } else {
+              $scope.submitted = true;
+              $scope.hide_alerts = false;
+            }
+            $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+          },500)
         },500)
-      },500)
-      $scope.saved = true
+        $scope.saved = true
     }
 
     $scope.publish = function() {

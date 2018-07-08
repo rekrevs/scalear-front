@@ -38,7 +38,7 @@
 		</a>
 		<span ng-if="displayDeletePopup" ng-class="::{'count-padding':padded,'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay ease_in_out">
 	        <span class="form-controls-alert align-center" style="height: 85%;">
-	            <button ng-class="::{varticaldeletebutton: display_vertical}"  class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom"  ng-click="action({event:$event});showDeletePopup(false, $event);save();"><span>{{::'button.delete'| translate}}</span></button>
+	            <button ng-class="::{varticaldeletebutton: display_vertical}"  class="button alert tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom"  ng-click="action({event:$event});showDeletePopup(false, $event);"><span>{{::'button.delete'| translate}}</span></button>
 	            <button ng-class="::{varticaldeletebutton: display_vertical}"  class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="showDeletePopup(false, $event)"><span >{{::'button.cancel' | translate}}</span></button>
 	        </span>
 		</span>

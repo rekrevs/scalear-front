@@ -604,6 +604,8 @@ angular.module('scalearAngularApp')
         }
 
         scope.removeAnswer = function(){
+          console.log("in removeAns")
+          scope.save()
           scope.quiz.answers.forEach(function (value, i) {
             value.explanation = ""
             if(!scope.isFreeText() ){

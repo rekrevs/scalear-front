@@ -573,7 +573,8 @@ angular.module('scalearAngularApp')
         submitted: "=",
         subtype: "=",
         sortable: '@',
-        save:"&"
+        save:"&",
+        deleteQ : "&"
       },
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/answer_forum.html',
@@ -604,14 +605,13 @@ angular.module('scalearAngularApp')
         }
 
         scope.removeAnswer = function(){
-          console.log("in removeAns")
-          scope.save()
           scope.quiz.answers.forEach(function (value, i) {
             value.explanation = ""
             if(!scope.isFreeText() ){
               value.content = ""
             }
           });
+          //scope.save()
         }
 
         scope.quiz_types = [

@@ -14,7 +14,7 @@
 	<div ng-show="!preview">
 		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions'>
 			<div ng-repeat="question in questions" class="row soft-border quiz_sort">
-				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" save="saveQuestions()" add="addAnswer" remove="removeAnswer" removeq="removeQuestion" index="$index" sortable="true" />
+				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" save="saveQuestions()" add="addAnswer" remove="removeAnswer" removeq="removeAndSaveQuestions" index="$index" sortable="true" />
 				<div ng-if="question.question_type=='header'" class="small-12 columns" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'editor.messages.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>editor.header</span>:</label>

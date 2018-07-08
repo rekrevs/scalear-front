@@ -53,6 +53,7 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('delete_item', function(event, item) {
+
       if(item.class_name == 'lecture')
         $scope.removeLecture(item)
       else if(item.class_name == 'customlink')
@@ -65,8 +66,8 @@ angular.module('scalearAngularApp')
       $scope.copy(item)
     })
 
-    $scope.$on('paste_item', function(event, module_id) {
-      $scope.paste(module_id)
+    $scope.$on('paste_item', function(event, module_id,cut) {
+      $scope.paste(module_id,cut)
     })
 
     if($state.params.new_course) {
@@ -151,6 +152,7 @@ angular.module('scalearAngularApp')
           if($state.params.quiz_id == quiz.id)
             $state.go('course.module.course_editor.overview')
         })
+
     }
 
     $scope.addCustomLink = function(module_id) {
@@ -178,7 +180,8 @@ angular.module('scalearAngularApp')
         id: item.id,
         name: item.name,
         type: item.class_name || 'module',
-        show_msg: true
+        show_msg: true,
+        remove: item.remove
       }
     }
 
@@ -186,7 +189,7 @@ angular.module('scalearAngularApp')
       $rootScope.clipboard = null
     }
 
-    $scope.paste = function(module_id) {
+    $scope.paste = function(module_id,cut) {
       var item = $rootScope.clipboard
 
       if(item.type == 'module') {
@@ -197,6 +200,9 @@ angular.module('scalearAngularApp')
         QuizModel.paste(item, module_id)
       } else if(item.type == 'customlink') {
         LinkModel.paste(item, module_id)
+      }
+      if (cut){
+        $scope.$broadcast("delete_item",item)
       }
     }
 

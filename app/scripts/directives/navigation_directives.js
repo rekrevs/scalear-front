@@ -318,34 +318,10 @@ angular.module('scalearAngularApp')
           $rootScope.$broadcast('copy_item', draggedItem)
         }
 
-        scope.deleteOriginalDraggedItem = function(){
-         $rootScope.$broadcast("delete_item",tempDraggedItem )
-         tempDraggedItem = null
-        }
-
-        scope.pasteDraggedItem = function(event,ui, {moduleId}) {
-          var itemsCountAfterPaste
-          var el
-
+        scope.cutDraggedItem = function(event,ui, {moduleId}) {
           var targetModule = scope.modules.find(function(module){ return module.id === moduleId;});
-
-          var itemsCountBeforePaste = targetModule.items.length
-
-          new Promise(
-            function(resolve,reject){
-              $rootScope.$broadcast('paste_item',moduleId)
-              resolve(1);
-            }
-          ).then(function () {
-              setTimeout(function () {
-                itemsCountAfterPaste = targetModule.items.length
-                if (itemsCountAfterPaste > itemsCountBeforePaste)
-                  scope.deleteOriginalDraggedItem()
-              }, 300);
-            })
-            .catch(function (error) {
-              alert("drag unsucessfull");
-            });
+          var cut  = true
+          $rootScope.$broadcast('paste_item',moduleId,cut)
         }
 
         scope.scrollIntoView = function(module) {

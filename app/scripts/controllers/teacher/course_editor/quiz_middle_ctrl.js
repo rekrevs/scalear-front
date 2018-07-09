@@ -61,12 +61,15 @@ angular.module('scalearAngularApp')
             if($scope.tform.$valid) {
               $scope.submitted = false;
               $scope.hide_alerts = true;
-              QuestionModel.updateQuestions();
+              QuestionModel.updateQuestions()
+              .then(function(){
+                $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+              })
             } else {
               $scope.submitted = true;
               $scope.hide_alerts = false;
             }
-            $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+
           },500)
         },500)
         $scope.saved = true

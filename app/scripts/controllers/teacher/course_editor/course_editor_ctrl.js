@@ -54,12 +54,19 @@ angular.module('scalearAngularApp')
 
     $scope.$on('delete_item', function(event, item) {
 
-      if(item.class_name == 'lecture')
+      if(item.class_name == 'lecture') {
+
         $scope.removeLecture(item)
-      else if(item.class_name == 'customlink')
+
+      } else if(item.class_name == 'customlink') {
+
         $scope.removeCustomLink(item)
-      else
+
+      } else {
+
         $scope.removeQuiz(item)
+
+      }
     })
 
     $scope.$on('copy_item', function(event, item) {
@@ -191,19 +198,23 @@ angular.module('scalearAngularApp')
 
     $scope.paste = function(module_id,cut) {
       var item = $rootScope.clipboard
+      var successful_paste
 
       if(item.type == 'module') {
-        ModuleModel.paste(item)
+        successful_paste = ModuleModel.paste(item)
       } else if(item.type == 'lecture') {
-        LectureModel.paste(item, module_id)
+        successful_paste=LectureModel.paste(item, module_id)
       } else if(item.type == 'quiz') {
-        QuizModel.paste(item, module_id)
+        successful_paste = QuizModel.paste(item, module_id)
       } else if(item.type == 'customlink') {
-        LinkModel.paste(item, module_id)
+        successful_paste = LinkModel.paste(item, module_id)
       }
-      if (cut){
-        $scope.$broadcast("delete_item",item)
-      }
+
+      successful_paste.then(function(){
+        if(cut){
+          $scope.$broadcast("delete_item",item)
+        }
+      })
     }
 
     var openSharingModal = function(data) {

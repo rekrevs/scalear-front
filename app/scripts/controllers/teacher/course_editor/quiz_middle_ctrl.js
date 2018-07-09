@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
       $scope.removeQuestion()
       setTimeout(function(){
         $scope.saveQuestions()
-      },500) // time out to avoid saving on error message
+      },500) // time out to wait till error message vanish
     }
     $scope.removeAndSaveAnswer = function (index, question){
       $scope.removeAnswer(index, question)

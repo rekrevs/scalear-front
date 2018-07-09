@@ -237,8 +237,7 @@ angular.module('scalearAngularApp')
             mode: '@',
             moduleitem: '@',
             tooltiptext: "@",
-            padded: '@',
-            save:'&'
+            padded: '@'
         },
         restrict: 'E',
         templateUrl: '/views/teacher/course_editor/delete_button.html',

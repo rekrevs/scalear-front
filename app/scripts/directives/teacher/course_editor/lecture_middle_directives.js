@@ -573,8 +573,7 @@ angular.module('scalearAngularApp')
         submitted: "=",
         subtype: "=",
         sortable: '@',
-        save:"&",
-        deleteQ : "&"
+        save:"&"
       },
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/answer_forum.html',
@@ -611,7 +610,6 @@ angular.module('scalearAngularApp')
               value.content = ""
             }
           });
-          //scope.save()
         }
 
         scope.quiz_types = [
@@ -770,7 +768,7 @@ angular.module('scalearAngularApp')
     return {
       restrict: 'E',
       template: "<div class='small-12 no-padding columns'>" +
-        "<delete_button save='save()'  class='right with-small-margin-top' size='small' mode='content_navigator' color='dark' action='removeAnswer($index, quiz)' />" +
+        "<delete_button class='right with-small-margin-top' size='small' mode='content_navigator' color='dark' action='removeAnswer($index, quiz)' />" +
         "<ng-form name='aform'>" +
         "<div class='row collapse'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
@@ -803,7 +801,7 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       template: "<div class='small-12 no-padding columns'>" +
         "<ng-form name='aform'>" +
-        "<delete_button save='save()'  class='right with-small-margin-top' mode='content_navigator' size='small' color='dark' action='removeAnswer($index, quiz)' />" +
+        "<delete_button class='right with-small-margin-top' mode='content_navigator' size='small' color='dark' action='removeAnswer($index, quiz)' />" +
         "<div class='row collapse'>" +
         "<div class='small-2 columns' style='padding: 10px 0;'>" +
         "<label class='text-left' translate>editor.answer</label>" +

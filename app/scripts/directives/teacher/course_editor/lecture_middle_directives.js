@@ -316,7 +316,7 @@ angular.module('scalearAngularApp')
           template = "<form name='aform'>" +
           "<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>" +
           "<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>" +
-          "<div><rich-textarea rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
+          "<div><rich-textarea ng-change='save()' rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -329,14 +329,14 @@ angular.module('scalearAngularApp')
           "<span translate>editor.answer</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>" +
           // "<textarea rows=3 class='must_save medium-textarea' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>" +
-          "<div><rich-textarea rows=3 class='must_save answer_text' ng-model='data.answer' ng-class='{error: aform.answer.$error.required}' required ng-init='selectField($event)'/></div>"+
+          "<div><rich-textarea ng-change='save()' rows=3 class='must_save answer_text' ng-model='data.answer' ng-class='{error: aform.answer.$error.required}' required ng-init='selectField($event)'/></div>"+
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "</label>" +
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
           // "<textarea medium-editor bind-options='medium_editor_options' rows=3 class='must_save medium-editor-textarea' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
-          "<rich-textarea rows=3 class='must_save' ng-model='data.explanation' />"+
+          "<rich-textarea ng-change='save()' rows=3 class='must_save' ng-model='data.explanation' />"+
           "</label>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -443,15 +443,15 @@ angular.module('scalearAngularApp')
         var template = '<ul class="no-margin">' +
           '<label>' +
           '<span translate>editor.drag.instruction</span>' +
-          '<rich-textarea rows=3 style="resize:vertical;" class="answer_text must_save" ng-model="data.answer" ng-init="selectField()"/>' +
+          '<rich-textarea ng-change="save()"  rows=3 style="resize:vertical;" class="answer_text must_save" ng-model="data.answer" ng-init="selectField()"/>' +
           '</label>' +
           '<label>' +
           '<span translate>editor.drag.correct</span>:' +
-          '<rich-textarea rows=3 style="resize:vertical;" class="must_save" ng-model="data.explanation[pos]" />' +
+          '<rich-textarea ng-change= "save()" rows=3 style="resize:vertical;" class="must_save" ng-model="data.explanation[pos]" />' +
           '</label>' +
           '<label ng-repeat=\'num in list|filter:"!"+data.pos\' >' +
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
-          '<rich-textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
+          '<rich-textarea ng-change="save()" rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-5 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;" class="small-7 columns no-padding"></delete_button>' +
@@ -530,7 +530,7 @@ angular.module('scalearAngularApp')
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
-          "<rich-textarea rows=3 class='must_save' type='text' ng-model='data.explanation'></textarea>" +
+          "<rich-textarea ng-change='save()' rows=3 class='must_save' type='text' ng-model='data.explanation'></textarea>" +
           "</label>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           "</form>"
@@ -572,12 +572,12 @@ angular.module('scalearAngularApp')
         index: "=",
         submitted: "=",
         subtype: "=",
-        sortable: '@'
+        sortable: '@',
+        save:"&"
       },
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/answer_forum.html',
       link: function(scope, element, iAttrs) {
-
         scope.isSurvey = function() {
           return scope.subtype && (scope.subtype.toLowerCase() == "survey" || scope.subtype.toLowerCase() == "html_survey")
         }
@@ -601,6 +601,15 @@ angular.module('scalearAngularApp')
                 {scope.quiz.answers.splice(i, 1);}
             });
           }
+        }
+
+        scope.clearAnswer = function(){
+          scope.quiz.answers.forEach(function (value, i) {
+            value.explanation = ""
+            if(!scope.isFreeText() ){
+              value.content = ""
+            }
+          });
         }
 
         scope.quiz_types = [
@@ -671,7 +680,6 @@ angular.module('scalearAngularApp')
         "</div>",
       link: function(scope) {
         scope.removeAnswer = scope.remove()
-
         scope.updateValues = function() {
           scope.values = 0
           for (var element in scope.quiz.answers)
@@ -716,7 +724,7 @@ angular.module('scalearAngularApp')
             "<label class='text-left' translate>editor.explanation</label>" +
           "</div>" +
           "<div class='small-7 left columns no-padding' >" +
-            "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
+            "<rich-textarea  ng-change='save()' class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
           "</div>" +
         "</div>" +
 
@@ -750,7 +758,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
+        "<rich-textarea ng-change='save()' class='no-margin explain' type='text' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
         "</div>" +
 
         "</ng-form>"
@@ -767,12 +775,12 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.answer</label>" +
         "</div>" +
         "<div class='small-7 columns left no-padding'>" +
-        "<div><rich-textarea class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' /></div>" + //|| (submitted && aform.$error.atleastone)
+        "<div><rich-textarea ng-change='save()'  class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]' /></div>" + //|| (submitted && aform.$error.atleastone)
         "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>" +
         "</div>" +
         "<div class='small-2 columns' ng-if='!isSurvey()'>" +
         "<label><span translate>editor.correct</span></label>" +
-        "<input class='valign-middle' ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />" + //atleastone
+        "<input class='valign-middle' ng-change='updateValues(); save();' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />" + //atleastone
         "</div>" +
         "</div>" +
         "<div class ='row collapse' ng-if='!isSurvey()'>" +
@@ -780,7 +788,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin' class='explain'  name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
+        "<rich-textarea ng-change='save()' class='no-margin' class='explain'  name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation'/></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +
@@ -799,12 +807,12 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.answer</label>" +
         "</div>" +
         "<div class='small-7 columns left no-padding'>" +
-        "<div><rich-textarea class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]'/></div>" + //|| (submitted && aform.$error.atleastone)
+        "<div><rich-textarea ng-change='save()' class='no-margin' required name='answer' placeholder={{'editor.answer'|translate}} ng-model='answer[columna]'/></div>" + //|| (submitted && aform.$error.atleastone)
         "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>error_message.required</span>!</small>" +
         "</div>" +
         "<div class='small-2 columns' ng-if='!isSurvey()'>" +
         "<label><span translate>editor.correct</span></label>" +
-        "<input class='valign-middle' id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>" + //atleastone
+        "<input class='valign-middle' id='radio_correct' ng-change='save()' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>" + //atleastone
         "</div>" +
         "</div>" +
         "<div class ='row collapse' ng-if='!isSurvey()'>" +
@@ -812,7 +820,7 @@ angular.module('scalearAngularApp')
         "<label class='text-left' translate>editor.explanation</label>" +
         "</div>" +
         "<div class='small-7 left columns no-padding'>" +
-        "<rich-textarea class='no-margin' class='explain' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
+        "<rich-textarea ng-change='save()' class='no-margin' class='explain' name='explanation' placeholder={{'editor.explanation'|translate}} ng-model='answer.explanation' /></span>" +
         "</div>" +
         "</div>" +
         "</ng-form>" +

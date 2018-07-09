@@ -604,7 +604,7 @@ angular.module('scalearAngularApp')
           }
         }
 
-        scope.removeAnswer = function(){
+        scope.clearAnswer = function(){
           scope.quiz.answers.forEach(function (value, i) {
             value.explanation = ""
             if(!scope.isFreeText() ){

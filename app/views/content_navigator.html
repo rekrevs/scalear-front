@@ -78,7 +78,7 @@
 						</accordion-heading>
 	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">
-	             				<item_edit data-drag="true" data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" jqyoui-draggable="{animate:true,onStart:'copyDraggedItem({draggedItem:item})'}"  data="item" ng-click="showItem(item, 'course_editor')" />
+	             				<item_edit data-drag="true" style='width: 100%' data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" jqyoui-draggable="{animate:true,onStart:'copyDraggedItem({draggedItem:item})'}"  data="item" ng-click="showItem(item, 'course_editor')" />
 		            		</li>
 		            	</span>
 		            	<button id="new_item" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>

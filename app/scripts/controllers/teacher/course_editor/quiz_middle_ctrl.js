@@ -69,7 +69,6 @@ angular.module('scalearAngularApp')
               $scope.submitted = true;
               $scope.hide_alerts = false;
             }
-
           },500)
         },500)
         $scope.saved = true

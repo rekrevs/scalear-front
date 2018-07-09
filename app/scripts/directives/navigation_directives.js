@@ -318,7 +318,7 @@ angular.module('scalearAngularApp')
           $rootScope.$broadcast('copy_item', draggedItem)
         }
 
-        scope.cutDraggedItem = function(event,ui, {moduleId}) {
+        scope.pasteDraggedItem = function(event,ui, {moduleId}) {
           var targetModule = scope.modules.find(function(module){ return module.id === moduleId;});
           var cut  = true
           $rootScope.$broadcast('paste_item',moduleId,cut)

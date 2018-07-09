@@ -47,11 +47,7 @@ angular
           action: "&"
         },
         template:
-          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); ">{{"lectures.button.check_answer" | translate}}</button>'
-        ,
-        link: function(scope, element, attrs) {
-
-        }
+          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); ">{{"lectures.button.check_answer" | translate}}</button>',
       };
     }
   ])
@@ -258,13 +254,12 @@ angular
           quiz: "=",
           data: "=",
           explanation: "=",
-          studentAnswers: "=",
-          checkAnswerClicked:"="
+          studentAnswers: "="
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
-          "<div ng-switch-when='MCQ'><student-answer /><correction-mark data='data' ng-show='checkAnswerClicked'/></div>" +
-          "<div ng-switch-when='OCQ'><student-answer /><correction-mark data='data' ng-show='checkAnswerClicked'/></div>" +
+          "<div ng-switch-when='MCQ'><student-answer /></div>" +
+          "<div ng-switch-when='OCQ'><student-answer /></div>" +
           "<div ng-switch-when='DRAG'><student-drag /></div>" +
           "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>" +
           "</div>"
@@ -288,7 +283,6 @@ angular
             element.attr("type", type);
           };
           scope.radioChange = function(corr_ans) {
-            $rootScope.$broadcast("answer_changed")
             if (scope.quiz.question_type == "OCQ") {
               $log.debug("radioChange");
               scope.quiz.online_answers.forEach(function(ans) {
@@ -300,6 +294,7 @@ angular
 
           scope.$watch("explanation[data.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.data.id]) {
+              scope.checkAnswerClicked = true
               if (scope.explanation[scope.data.id][0]) {
                 scope.title_class = "green_notification";
                 scope.exp_title = "lectures.correct";
@@ -880,8 +875,7 @@ angular
       return {
         restrict: "E",
         scope: {
-          data:"=",
-          checkAnsClicked:"="
+          data:"="
         },
         templateUrl: "/views/student/lectures/mark.html",
           link: function(scope, element, attrs) {

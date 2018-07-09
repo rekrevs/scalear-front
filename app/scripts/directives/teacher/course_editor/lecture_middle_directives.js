@@ -213,7 +213,6 @@ angular.module('scalearAngularApp')
         quiz: "=",
         data: "=",
         list: '=',
-
         save: "&",
       remove: "&",
       },
@@ -232,10 +231,6 @@ angular.module('scalearAngularApp')
       restrict: 'E',
       templateUrl: '/views/teacher/course_editor/answer.html',
       link: function(scope, element, attrs) {
-        scope.reset = function (){
-          console.log("here")
-        }
-
         scope.setAnswerColor = function() {
           if (scope.quiz.question_type == "OCQ")
             scope.imgName = scope.data.correct ? scope.ocq_correct : scope.ocq_incorrect;
@@ -257,7 +252,6 @@ angular.module('scalearAngularApp')
         }
 
         scope.radioChange = function(corr_ans) {
-          console.log("here")
           if (scope.quiz.question_type == "OCQ") {
             $log.debug("radioChange")
             scope.quiz.answers.forEach(function(ans) {

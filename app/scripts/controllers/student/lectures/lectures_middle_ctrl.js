@@ -128,10 +128,6 @@ angular.module('scalearAngularApp')
         }
       })
 
-      $rootScope.$on('answer_changed', function(ev){
-        $scope.checkAnsClicked = false
-      })
-
       $scope.$on('remove_from_timeline', function(ev, item) { // used for deleting items from directives like confused and discussions
         if ($scope.timeline) {
           var lec_id = item.data ? item.data.lecture_id : $state.params.lecture_id
@@ -998,9 +994,8 @@ angular.module('scalearAngularApp')
         returnToState()
       });
     }
-    $scope.checkAnsClicked = false;
+
     $scope.checkAnswer = function() {
-      $scope.checkAnsClicked = true;
       ($scope.selected_quiz.quiz_type == "html" || $scope.selected_quiz.quiz_type == "html_survey") ? sendHtmlAnswers(): sendAnswers()
     }
 

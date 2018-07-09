@@ -213,7 +213,6 @@ angular.module('scalearAngularApp')
         quiz: "=",
         data: "=",
         list: '=',
-
         save: "&",
       remove: "&",
       },
@@ -263,6 +262,7 @@ angular.module('scalearAngularApp')
           }
 
         }
+
         scope.selectField = function() {
           $timeout(function() {
             // var elem = element.find('textarea')[0]

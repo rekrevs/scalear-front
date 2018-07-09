@@ -261,7 +261,6 @@ angular.module('scalearAngularApp')
     }
 
     var showQuizOnline = function(quiz) {
-
       var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);
       $scope.next_quiz = null
       if ($scope.lecture.video_quizzes[index + 1]) {
@@ -739,6 +738,7 @@ angular.module('scalearAngularApp')
       $scope.quiz_layer.backgroundColor = ""
       $scope.quiz_layer.overflowX = ''
       $scope.quiz_layer.overflowY = ''
+
     }
 
     var returnToQuiz = function(time) {
@@ -1036,7 +1036,6 @@ angular.module('scalearAngularApp')
           showNotification("lectures.choose_correct_answer")
           return
         }
-
         if ($scope.selected_quiz.question_type == "OCQ" && selected_answers.length == 1)
           selected_answers = selected_answers[0]
       } else if ($scope.selected_quiz.question_type == "Free Text Question") {
@@ -1142,7 +1141,6 @@ angular.module('scalearAngularApp')
             sub_message = ""
           }
           showNotification(verdict, sub_message, middle_msg)
-
           $scope.selected_quiz.solved_quiz = true;
         }
         $scope.display_review_message = true

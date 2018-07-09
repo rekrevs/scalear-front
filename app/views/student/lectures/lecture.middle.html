@@ -9,7 +9,7 @@
 </span>
 <span id="lecture_container" style="overflow:hidden">
   <div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
-    'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
+    'large-12 land-medium-12 large-centered': !delayed_timeline_open,
     'large-uncentered land-uncentered': delayed_timeline_open,
     'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
     'land-medium-8':!ContentNavigator.status && delayed_timeline_open
@@ -61,7 +61,7 @@
                   <student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation" />
                 </div>
                 <div ng-if="selected_quiz.quiz_type != 'html' && selected_quiz.quiz_type != 'html_survey'">
-                  <student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers" />
+                  <student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/> 
                 </div>
               </quiz>
               <dynamic-annotation-student   close="dismissDynamicAnnotation" action="toggleVideoPlayback" data="dynamic_annotation" text-to-show="'annotation'" ng-if="dynamic_annotation && !dynamic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />

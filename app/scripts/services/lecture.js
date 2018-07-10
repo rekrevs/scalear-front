@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
       "saveNote": { method: 'POST', params: { action: 'save_note' }, headers: headers },
       "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers },
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
-      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, 
+      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers },
       "changeLectureStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
@@ -90,7 +90,7 @@ angular.module('scalearAngularApp')
 
     function paste(lec, module_id) {
       var module = ModuleModel.getById(module_id)
-      Lecture.lectureCopy({ course_id: module.course_id }, {
+      return Lecture.lectureCopy({ course_id: module.course_id }, {
           lecture_id: lec.id,
           module_id: module.id
         })
@@ -189,7 +189,7 @@ angular.module('scalearAngularApp')
                   })
               } else {
                 deferred.resolve()
-              } 
+              }
             })
             .catch(function(msg) {
               deferred.reject(msg)
@@ -278,8 +278,8 @@ angular.module('scalearAngularApp')
         return Lecture.updatePercentView({
           course_id: lecture.course_id,
           lecture_id: lecture.id
-        }, { 
-          percent: milestone 
+        }, {
+          percent: milestone
         })
         .$promise
     }

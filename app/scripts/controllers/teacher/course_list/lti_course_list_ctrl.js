@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
           event.preventDefault();
           event.stopPropagation();
         }
-        var sl_url = location.protocol+"//"+location.host+"/en/lti/lti_launch_use?sl_type_id="+type_id+"%26sl_type="+type ;
+        var sl_url = location.protocol+"//"+location.host+"/en/lti/lti_launch_use?sl_type_id="+type_id+"&sl_type="+type ;
         var redirect_link = $scope.return_url+"?return_type=lti_launch_url&"+
           "url="+ sl_url+"&"+"text="+type_name +"&"+"title="+type_name;
         window.location.href= redirect_link;
@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
         event.stopPropagation();
       }
       $scope.selected_lauch_url = true;
-      $scope.sl_url = location.protocol+"//"+location.host+"/en/lti/lti_launch_use?sl_type_id="+type_id+"%26sl_type="+type;
+      $scope.sl_url = location.protocol+"//"+location.host+"/en/lti/lti_launch_use?sl_type_id="+type_id+"&sl_type="+type;
     }
 
     $scope.lti_tool_redirect = function(type, type_id , event, type_name){

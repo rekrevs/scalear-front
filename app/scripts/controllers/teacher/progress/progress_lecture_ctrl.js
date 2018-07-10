@@ -611,25 +611,19 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek = function(time, video) {
+      // $log.debug(video.url)
+      // $log.debug($scope.url)
 
       if ($scope.url.indexOf(video.url) == -1) {
         if ($scope.progress_player.controls.isYoutube(video.url) || $scope.progress_player.controls.isKaltura(video.url)) {
           $scope.video_start = video.start_time
           $scope.video_end = video.end_time
           $scope.progress_player.controls.setStartTime(video.start_time)
-
+          $scope.url = video.url + "&controls=1&fs=1&theme=light"
           $scope.url_lecture_id = video.id
-          if ($scope.progress_player.controls.isYoutube(video.url)){
-            $scope.url = video.url + "&controls=1&fs=1&theme=light"
-            $timeout(function() {
-              $scope.progress_player.controls.seek_and_pause(time)
-            },250)
-          } else if ($scope.progress_player.controls.isKaltura(video.url)) {
-            $scope.url = video.url
-            $timeout(function() {
-              $scope.progress_player.controls.seek_and_pause(time)
-            },1500)  // the time out is more than 1 sec as pause of kaltura can only work after seek with 1 sec time interval
-          }
+          $timeout(function() {
+            $scope.progress_player.controls.seek_and_pause(time)
+          },250)
         }
         if ($scope.progress_player.controls.isMP4(video.url)) {
           $scope.url = video.url
@@ -639,7 +633,6 @@ angular.module('scalearAngularApp')
           })
         }
 
-        }
       } else {
         if( $scope.selected_item.lec_id != $scope.url_lecture_id){
           $scope.video_start = video.start_time
@@ -648,7 +641,6 @@ angular.module('scalearAngularApp')
           $timeout(function() {
             $scope.progress_player.controls.seek_and_pause(time)
           },250)
-
           $scope.url_lecture_id = video.id
         }
         else{

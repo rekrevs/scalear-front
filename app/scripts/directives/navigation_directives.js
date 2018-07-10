@@ -166,6 +166,7 @@ angular.module('scalearAngularApp')
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
         scope.$state = $state
+        var tempDraggedItem
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user
@@ -310,6 +311,17 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('paste_item')
           else
             $rootScope.$broadcast('paste_item', module_id)
+        }
+
+        scope.copyDraggedItem=function(event,ui,{draggedItem}){
+          tempDraggedItem = draggedItem
+          $rootScope.$broadcast('copy_item', draggedItem)
+        }
+
+        scope.pasteDraggedItem = function(event,ui, {moduleId}) {
+          var targetModule = scope.modules.find(function(module){ return module.id === moduleId;});
+          var cut  = true
+          $rootScope.$broadcast('paste_item',moduleId,cut)
         }
 
         scope.scrollIntoView = function(module) {

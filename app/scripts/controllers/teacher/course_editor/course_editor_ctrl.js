@@ -73,8 +73,8 @@ angular.module('scalearAngularApp')
       $scope.copy(item)
     })
 
-    $scope.$on('paste_item', function(event, module_id,cut) {
-      $scope.paste(module_id,cut)
+    $scope.$on('paste_item', function(event, module_id, options) {
+      $scope.paste(module_id, options)
     })
 
     if($state.params.new_course) {
@@ -196,7 +196,7 @@ angular.module('scalearAngularApp')
       $rootScope.clipboard = null
     }
 
-    $scope.paste = function(module_id,cut) {
+    $scope.paste = function(module_id, options) {
       var item = $rootScope.clipboard
       var successful_paste
 
@@ -211,8 +211,8 @@ angular.module('scalearAngularApp')
       }
 
       successful_paste.then(function(){
-        if(cut){
-          $scope.$broadcast("delete_item",item)
+        if(options.cut){
+          $scope.$broadcast("delete_item", item)
         }
       })
     }

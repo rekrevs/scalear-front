@@ -85,6 +85,7 @@ angular.module('scalearAngularApp')
     }
 
     var getLectureCharts = function() {
+
       Module.getModuleProgress({
           course_id: $stateParams.course_id,
           module_id: $stateParams.module_id

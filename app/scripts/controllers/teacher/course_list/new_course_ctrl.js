@@ -32,16 +32,16 @@ angular.module('scalearAngularApp')
 
     $scope.import_from = null
 
-    UserSession.getCurrentUser()
-    .then(function(user) {
-      $scope.current_user = user
-      User.getWelcomeMessage({ id: user.id },
-        function(data) {
-            if (data){
-              $scope.welcome_message = data.welcome_message
-            }
-        })
-    })
+    UserSession.getCurrentUser() 
+    .then(function(user) { 
+      $scope.current_user = user 
+      User.getWelcomeMessage({ id: user.id }, 
+        function(data) { 
+            if (data){ 
+              $scope.welcome_message = data.welcome_message 
+            } 
+        }) 
+    }) 
 
 
     $scope.addImportInformation = function(chosen_course) {
@@ -97,12 +97,12 @@ angular.module('scalearAngularApp')
       }
     }
     $scope.toggleDomain = function(event) {
-      event.stopPropagation()
-      $modal.open({
-        templateUrl: '/views/teacher/course_list/school_registration_modal.html',
+      event.stopPropagation()      
+      $modal.open({ 
+        templateUrl: '/views/teacher/course_list/school_registration_modal.html', 
         plain: true,
         scope: $scope,
-        controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
+        controller: ['$scope', '$modalInstance', function($scope, $modalInstance){ 
           $scope.subdomain = {}
           $scope.course_domain = {}
           $scope.course_domain.selected_subdomain = {};
@@ -110,20 +110,20 @@ angular.module('scalearAngularApp')
           if (!$scope.course.selected_subdomain['All']){
             $scope.subdomain.boolean = 'custom'
           }
-          $scope.close = function () {
-            $modalInstance.dismiss();
+          $scope.close = function () { 
+            $modalInstance.dismiss(); 
          };
 
           $scope.updateDomainList = function(){
             $scope.course.selected_subdomain = $scope.course_domain.selected_subdomain
           };
-
+    
           $scope.setBooleanDomain= function(){
             if($scope.subdomain.boolean == "all"){
               $scope.course.selected_subdomain = {'All':true}
             }
             else{
-              delete $scope.course.selected_subdomain['All'];
+              delete $scope.course.selected_subdomain['All']; 
             }
           };
        }],
@@ -131,7 +131,7 @@ angular.module('scalearAngularApp')
           if (Object.keys($scope.course.selected_subdomain).map(function(key) {return $scope.course.selected_subdomain[key];}).indexOf(true) == -1) {
             $scope.course.selected_subdomain = {'All':true}
           }
-        });
+        }); 
     }
 
     function validateDate() {
@@ -142,17 +142,17 @@ angular.module('scalearAngularApp')
         errors["start_date"] = ["not a Date"]
         deferred.reject(errors)
         a = false
-      }
+      } 
       if (($scope.course.end_date == "Invalid Date" || $scope.course.end_date == null )) {
         errors["end_date"] = ["not a Date"]
         deferred.reject(errors)
         a = false
       }
-      if(a){
+      if(a){        
         if (!($scope.course.start_date < $scope.course.end_date)) {
           errors["start_date"] = ["must be before end date"]
           deferred.reject(errors)
-        }
+        } 
         else {
           errors["start_date"] = []
           errors["end_date"] = []
@@ -184,7 +184,7 @@ angular.module('scalearAngularApp')
             $scope.course.selected_subdomain = selected_subdomain
             $scope.course.email_discussion = email_discussion
           })
-      })
+      }) 
       .catch(function(errors) {
           $scope.server_errors = errors
           $scope.submitting = false;

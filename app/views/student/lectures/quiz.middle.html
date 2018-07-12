@@ -24,18 +24,15 @@
   </h3>
     <h5 class="subheader" ng-bind-html="quiz.instructions"></h5>
     <div class="small-12 columns">
-    	<p ng-if="status==null || status.attempts<quiz.retries+1">
+    	<p ng-if="status==null || status.attempts<=quiz.retries">
     		<span translate="quizzes.attempt_number"></span>:
-            {{status.attempts || 0}}/{{quiz.retries+1}}
+            {{status.attempts || 1}}/{{quiz.retries}}
     	</p>
-    	<p ng-if="status.attempts==quiz.retries+1">
+    	<p ng-if="status.attempts>quiz.retries">
     		<span translate="quizzes.used_up_all"></span>
-            {{quiz.retries+1}}
+            {{quiz.retries}}
             <span translate="quizzes.attempts"></span>
     	</p>
-    	<!-- <p ng-if="status!=null && status.attempts<quiz.retries+1">
-    		<span translate="quizzes.attempt_number"></span>: {{status.attempts}}/{{quiz.retries+1}}
-    	</p> -->
     </div>
     <hr>
     <div class="small-12 columns no-padding">
@@ -52,10 +49,10 @@
     	</form>
     </div>
     <div class="with-margin-top small-12 columns" ng-if="passed_requirments">
-        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts==quiz.retries+1 && quiz.quiz_type == 'survey') || save_inprogress" type="button" class="button tiny" ng-click="saveQuiz('save')">
+        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts>quiz.retries && quiz.quiz_type == 'survey') || save_inprogress" type="button" class="button tiny" ng-click="saveQuiz('save')">
            <span translate>button.save</span>
         </button>
-        <button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
+        <button ng-disabled="(status.status=='Submitted' && status.attempts>quiz.retries) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
             <span translate>button.submit</span>
         </button>
         <button id="next_button" type="button" ng-show="next_item.id" ng-click="nextItem()" class="button tiny">

@@ -1106,7 +1106,7 @@ angular.module('scalearAngularApp')
         displayResult(data)
       }
     }
-
+    $scope.correct_selections = false
     var displayResult = function(data) {
       if (data.msg != "Empty") { // he chose sthg
         var middle_msg = ''
@@ -1125,6 +1125,7 @@ angular.module('scalearAngularApp')
           for (var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
+          $scope.correct_selections = data.correct ? true : false
           var sub_message = ''
           if ($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')) {
             for (var el in data.explanation)

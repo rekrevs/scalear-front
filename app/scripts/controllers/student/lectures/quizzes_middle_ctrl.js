@@ -61,6 +61,7 @@ angular.module('scalearAngularApp')
           .then(function(data) {
             $scope.save_inprogress = false
             $scope.status = data.status;
+            $scope.saved = true
             $scope.alert_messages = data.alert_messages;
             $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
             $scope.next_item = data.next_item;

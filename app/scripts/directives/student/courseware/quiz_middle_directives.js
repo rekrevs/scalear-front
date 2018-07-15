@@ -8,7 +8,10 @@ angular.module('scalearAngularApp')
         studentAnswers: "=",
         submitted: "=",
         correct: "=",
-        explanation: "="
+        explanation: "=",
+        saveSelection:"=",
+        saved:"="
+
       },
       restrict: 'E',
       templateUrl: '/views/student/lectures/student_quiz.html',
@@ -30,6 +33,8 @@ angular.module('scalearAngularApp')
                 scope.values = 1;
             }
           }
+
+          scope.saveSelection('save')
           return scope.values
         };
         scope.valid = function(ques) {

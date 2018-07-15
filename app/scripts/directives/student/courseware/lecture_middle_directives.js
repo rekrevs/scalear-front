@@ -891,7 +891,7 @@ angular
               } else {
                 mark.style.left = ((answer.xcoor*100)-2)+'%'
               }
-              mark.style.top = ((answer.ycoor*100)-1)+'%'
+              mark.style.top = ((answer.ycoor*100)-0.5)+'%'
               mark.style.position = "absolute"
               mark.style.zIndex = "20"
               mark.className  = "mark"

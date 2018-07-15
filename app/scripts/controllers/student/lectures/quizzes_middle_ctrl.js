@@ -52,13 +52,14 @@ angular.module('scalearAngularApp')
       $log.debug(next_state)
       $state.go(next_state, to);
     }
-
+    $scope.saved=false
     $scope.saveQuiz = function(action) {
       $scope.save_inprogress = true
       if($scope.form.$valid || action == "save") { //validate only if submit.
         $scope.submitted = false;
         $scope.quiz.studentSolve($scope.studentAnswers, action)
           .then(function(data) {
+            $scope.saved=true
             $scope.save_inprogress = false
             $scope.status = data.status;
             $scope.alert_messages = data.alert_messages;

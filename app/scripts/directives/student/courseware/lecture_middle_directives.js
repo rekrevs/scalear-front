@@ -280,9 +280,11 @@ angular
           var setup = function() {
             scope.explanation_pop = {};
             var type = scope.quiz.question_type == "MCQ" ? "checkbox" : "radio";
-            element.attr("type", type);
+            element[0].children['student_answer'].setAttribute("type", type)
           };
+
           scope.radioChange = function(corr_ans) {
+            scope.checkAnswerClicked = false
             if (scope.quiz.question_type == "OCQ") {
               $log.debug("radioChange");
               scope.quiz.online_answers.forEach(function(ans) {
@@ -295,6 +297,9 @@ angular
           scope.$watch("explanation[data.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.data.id]) {
               scope.checkAnswerClicked = true
+              console.log("data",scope.data)
+              console.log("quiz",scope.quiz)
+              console.log("scope",scope)
               if (scope.explanation[scope.data.id][0]) {
                 scope.title_class = "green_notification";
                 scope.exp_title = "lectures.correct";

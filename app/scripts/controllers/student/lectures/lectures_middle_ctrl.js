@@ -1034,6 +1034,7 @@ angular.module('scalearAngularApp')
         })
         if (selected_answers.length == 0) {
           showNotification("lectures.choose_correct_answer")
+
           return
         }
         if ($scope.selected_quiz.question_type == "OCQ" && selected_answers.length == 1)

@@ -10,7 +10,10 @@ angular.module('scalearAngularApp')
         correct: "=",
         explanation: "=",
         saveSelection:"=",
-        saved:"="
+        saved:"=",
+        savedTime:"=",
+        updateTime:"=",
+        selectionSubmitted:"="
       },
       restrict: 'E',
       templateUrl: '/views/student/lectures/student_quiz.html',

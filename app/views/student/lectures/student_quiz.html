@@ -26,7 +26,6 @@
                         <label class="with-margin-top">
                             <input class="left with-small-margin-right with-tiny-margin-top" atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})' ng-class="{error: submitted && !valid(question.id)}"/>
                             <div ng-bind-html="answer.content" pop-over="answer.options"></div>
-                            <div ng-show="saved && studentAnswers[question.id][answer.id]">(saved)</div>
                             <small class='error' ng-show='submitted && !valid(question.id)' translate>quizzes.must_choose_answer</small>
                         </label>
                     </div>
@@ -53,3 +52,5 @@
         </div>
    </div>
 </div>
+<div class="small-12 column" style="color:grey; font-size:small;" ng-show="saved">Saved at: {{savedTime}}</div>
+<div class="small-12 column" style="color:grey; font-size:small;" ng-if="selectionSubmitted && !saved">Saved at: {{updateTime}}</div>

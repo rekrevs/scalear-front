@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 
     $scope.course = CourseModel.getSelectedCourse()
     $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
-
+    $scope.selectionUpdateTime
     var init = function() {
       if(!MobileDetector.isPhone()){
         ContentNavigator.open()
@@ -23,6 +23,10 @@ angular.module('scalearAngularApp')
                 }
               }
             }
+          }
+
+          if (data.status !== null){
+            $scope.selectionUpdateTime=data.status.updated_at
           }
           $scope.quiz.questions = data.questions
           $scope.studentAnswers = data.quiz_grades;
@@ -52,14 +56,16 @@ angular.module('scalearAngularApp')
       $log.debug(next_state)
       $state.go(next_state, to);
     }
-    $scope.saved=false
+    $scope.selectionSaved=false
+    $scope.selelectionSaveTime
     $scope.saveQuiz = function(action) {
       $scope.save_inprogress = true
       if($scope.form.$valid || action == "save") { //validate only if submit.
         $scope.submitted = false;
         $scope.quiz.studentSolve($scope.studentAnswers, action)
           .then(function(data) {
-            $scope.saved=true
+            $scope.selectionSaved=true
+            $scope.selelectionSaveTime = new Date().toLocaleString();
             $scope.save_inprogress = false
             $scope.status = data.status;
             $scope.alert_messages = data.alert_messages;

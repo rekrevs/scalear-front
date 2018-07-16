@@ -254,12 +254,13 @@ angular
           quiz: "=",
           data: "=",
           explanation: "=",
-          studentAnswers: "="
+          studentAnswers: "=",
+          correctSelections:"="
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
           "<div ng-switch-when='MCQ'><student-answer /></div>" +
-          "<div ng-switch-when='OCQ'><student-answer /></div>" +
+          "<div ng-switch-when='OCQ'><student-answer correct_selections='correct_selections'/></div>" +
           "<div ng-switch-when='DRAG'><student-drag /></div>" +
           "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>" +
           "</div>"
@@ -280,9 +281,12 @@ angular
           var setup = function() {
             scope.explanation_pop = {};
             var type = scope.quiz.question_type == "MCQ" ? "checkbox" : "radio";
-            element.attr("type", type);
+            element[0].children['student_answer'].setAttribute("type", type)
           };
           scope.radioChange = function(corr_ans) {
+            if(!scope.correctSelections){
+              scope.checkAnswerClicked = false
+            }
             if (scope.quiz.question_type == "OCQ") {
               $log.debug("radioChange");
               scope.quiz.online_answers.forEach(function(ans) {
@@ -291,7 +295,6 @@ angular
               corr_ans.selected = true;
             }
           };
-
           scope.$watch("explanation[data.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.data.id]) {
               scope.checkAnswerClicked = true
@@ -875,7 +878,8 @@ angular
       return {
         restrict: "E",
         scope: {
-          data:"="
+          data:"=",
+          correctSelections:"="
         },
         templateUrl: "/views/student/lectures/mark.html",
           link: function(scope, element, attrs) {
@@ -887,7 +891,7 @@ angular
               } else {
                 mark.style.left = ((answer.xcoor*100)-2)+'%'
               }
-              mark.style.top = (answer.ycoor*100)+'%'
+              mark.style.top = ((answer.ycoor*100)-0.5)+'%'
               mark.style.position = "absolute"
               mark.style.zIndex = "20"
               mark.className  = "mark"

@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
           }
 
           if (data.status !== null){
-            $scope.selectionUpdateTime=data.status.updated_at
+            $scope.selectionUpdateTime=new Date(data.status.updated_at).toLocaleString([], { hour12: true })
           }
           $scope.quiz.questions = data.questions
           $scope.studentAnswers = data.quiz_grades;
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
         $scope.quiz.studentSolve($scope.studentAnswers, action)
           .then(function(data) {
             $scope.selectionSaved=true
-            $scope.selelectionSaveTime = new Date().toLocaleString();
+            $scope.selelectionSaveTime = new Date().toLocaleString([], { hour12: true});
             $scope.save_inprogress = false
             $scope.status = data.status;
             $scope.alert_messages = data.alert_messages;

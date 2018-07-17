@@ -10,8 +10,6 @@ angular.module('scalearAngularApp')
         correct: "=",
         explanation: "=",
         saveSelection:"=",
-        saved:"=",
-        savedTime:"=",
         updateTime:"=",
         selectionSubmitted:"="
       },

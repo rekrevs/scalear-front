@@ -52,5 +52,4 @@
         </div>
    </div>
 </div>
-<div class="small-12 column" style="color:grey; font-size:small;" ng-show="saved">Saved at: {{savedTime}}</div>
-<div class="small-12 column" style="color:grey; font-size:small;" ng-if="selectionSubmitted && !saved">Saved at: {{updateTime}}</div>
+<div class="small-12 column" style="color:grey; font-size:small;" ng-show="selectionSubmitted !== 'Submitted' && updateTime">Saved at: {{updateTime}}</div>

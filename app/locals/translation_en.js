@@ -847,6 +847,7 @@ var translation_en={
     finished_on_time: "Finished on Time",
     finished_not_on_time: "Finished Not on Time",
     not_finished: "Not Finished",
+    not_started:"Not started",
     grade: "Grade",
     course_graph_desc: "Lecture and quiz completion percentages for all students",
     based_on_invideo: "Based on in-video questions answered",

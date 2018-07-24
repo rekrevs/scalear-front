@@ -39,14 +39,19 @@ angular.module('scalearAngularApp')
             container: 'body',
           }
         }
-        scope.getImg = function(module) {
-          module = parseInt(module);
-          if (module == -1)
-            return "not_finished"
-          else if (module == 0)
-            return "finished_on_time"
-          else
-            return "finished_not_on_time"
+        scope.getImg = function(module_1,module_6) {
+          module_1 = parseInt(module_1)
+          module_6 = parseInt(module_6)
+          if (module_1 == -1 && (module_6 == 0||isNaN(module_6))){
+             return "not_started"
+          } else if (module_1 == -1 && module_6>0){
+             return "not_finished"
+          } else if (module_1 == 0 ){
+             return "finished_on_time"
+          } else if(module_1>0 ){
+             return "finished_not_on_time"
+          }
+
         }
       }
     };

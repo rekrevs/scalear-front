@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
-    $scope.video ={} 
+    $scope.video ={}
     if($scope.lecture.inclass){$scope.video.type = 1}
     else if($scope.lecture.distance_peer){$scope.video.type= 2}
     else{$scope.video.type = 0}
@@ -78,6 +78,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateLectureUrl = function() {
+
       $scope.lecture.updateUrl()
         .then(function(should_trim) {
           should_trim && checkToTrim()

@@ -69,6 +69,7 @@ angular.module('scalearAngularApp')
             if(data.explanation)
               $scope.explanation = data.explanation;
             if(data.done[2])
+              console.log("data.done",data.done)
               $scope.quiz.markDone()
           })
       } else { // client validation error.

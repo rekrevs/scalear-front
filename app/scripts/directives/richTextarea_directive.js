@@ -211,7 +211,167 @@ angular.module('scalearAngularApp')
         function MathJaxCleanUp(elem) {
           $(elem).find("span[class*=MathJax]").remove()
         }
+        //////////////////////button image size 1///////////////////////////
+        var ImageSizeOneExtension = MediumEditor.extensions.button.extend({
+          name: 'size_1',
+          aria: 'Image size 32x32',
 
+          init: function() {
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.title = "Use this button to make the inserted image size 32X32"
+            this.button.innerHTML = '<b title="Size 1">size 1</b>';
+            this.on(this.button, 'click', this.handleClick.bind(this));
+            console.log(this)
+            // var self = this
+            // var editor_element = this.base.elements[0]
+
+          },
+          handleClick: function(event) {
+            this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
+            var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
+            this.base.removeElements(selectedImage)
+            selectedImage.setAttribute('class','size_1')
+            this.base.options.contentWindow.getSelection().baseNode.innerHTML = selectedImage.outerHTML
+            this.base.destroy()
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+
+          },
+          setActive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+
+          }
+        })
+
+        //////////////////////button image size 2///////////////////////////
+        var ImageSizeTwoExtension = MediumEditor.extensions.button.extend({
+          name: 'size_2',
+          aria: 'Image size 64x64',
+
+          init: function() {
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.title = "Use this button to make the inserted image size 64x64"
+            this.button.innerHTML = '<b title="Size 1">size 2</b>';
+            this.on(this.button, 'click', this.handleClick.bind(this));
+            // var self = this
+            // var editor_element = this.base.elements[0]
+
+          },
+          handleClick: function(event) {
+            this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
+            var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
+            selectedImage.setAttribute('class','size_2')
+            selectedImage.blur()
+            this.base.destroy()
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+
+          },
+          setActive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+
+          }
+        })
+        //////////////////////button image size 3///////////////////////////
+        var ImageSizeThreeExtension = MediumEditor.extensions.button.extend({
+          name: 'size_3',
+          aria: 'Image size 128x128',
+
+          init: function() {
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.title = "Use this button to make the inserted image size 128x128"
+            this.button.innerHTML = '<b title="Size 1">size 3</b>';
+            this.on(this.button, 'click', this.handleClick.bind(this));
+            // var self = this
+            // var editor_element = this.base.elements[0]
+
+          },
+          handleClick: function(event) {
+            this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
+            var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
+            selectedImage.setAttribute('class','size_3')
+
+            selectedImage.blur()
+            this.base.destroy()
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+
+          },
+          setActive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+
+          }
+        })
+        //////////////////////button image size 4///////////////////////////
+        var ImageSizeFourExtension = MediumEditor.extensions.button.extend({
+          name: 'size_4',
+          aria: 'Image size 256x256',
+
+          init: function() {
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.title = "Use this button to make the inserted image size 256x256"
+            this.button.innerHTML = '<b title="Size 1">size 4</b>';
+            this.on(this.button, 'click', this.handleClick.bind(this));
+            // var self = this
+            // var editor_element = this.base.elements[0]
+
+          },
+          handleClick: function(event) {
+            this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
+            var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
+            selectedImage.setAttribute('class','size_4')
+
+            selectedImage.blur()
+            this.base.destroy()
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+
+          },
+          setActive: function() {
+
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+
+          }
+        })
         //////////////////////////////////////////////////////////////////////////////
         var PictureExtension = MediumEditor.extensions.button.extend({
           name: 'picture',
@@ -240,46 +400,57 @@ angular.module('scalearAngularApp')
             var editor_element = this.base.elements[0]
             if(this.isActive()) {
 
-
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
-
               this.setInactive()
               src = selectedImage.getAttribute("src")
-              selectedImage.parentNode.innerHTML = "<p class='medium-editor-p'>"+ src +"<p>"
-              mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
 
+              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = "<p class='medium-editor-p'>"+ src +"<p>"
+              //mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
+              var toolbar = mediumEditor.getExtensionByName('toolbar');
+              toolbar.hideToolbar()
+              toolbar.hideToolbarDefaultActions()
             } else {
               this.setActive()
               var src = this.base.options.contentWindow.getSelection().toString().trim();
               //this.base.options.ownerDocument.execCommand('insertImage', false, src);
 
-              var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentElement
-              selectedLine.innerHTML = "<img src="+src+">"
+              var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
+
+              selectedLine.innerHTML = "<img class='medium-editor-element' src="+src+">"
 
               var transformedImage = selectedLine
 
-              //i will insert the image with certain class editable
-              //make a new instance of medium editor with buttons of img sizes
-
-              //
-              //
               var toolbar = mediumEditor.getExtensionByName('toolbar');
               toolbar.hideToolbar()
               toolbar.hideToolbarDefaultActions()
 
               var editor = new MediumEditor(transformedImage, {
-                  toolbar: {
-                      buttons: ['bold', 'italic', 'underline']
+                  toolbar:{
+                    buttons:['size_1','size_2','size_3','size_4']
+                  },
+                  extensions:{
+                    size_1: new ImageSizeOneExtension(),
+                    size_2: new ImageSizeTwoExtension(),
+                    size_3: new ImageSizeThreeExtension(),
+                    size_4: new ImageSizeFourExtension()
                   }
               });
+
               editor.selectElement(transformedImage)
-              editor.elements = []
+              editor.subscribe('hideToolbar',function(){
+                editor.destroy()
+              })
+              editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
+              
+
+
             }
             event.preventDefault();
             event.stopPropagation();
           },
 
           isAlreadyApplied: function(node){
+
             if(node.tagName === 'IMG'){
               return true
             } else {
@@ -303,7 +474,6 @@ angular.module('scalearAngularApp')
 
           }
         })
-
 
         ////////////////////////////////////////////////////////////////////
 

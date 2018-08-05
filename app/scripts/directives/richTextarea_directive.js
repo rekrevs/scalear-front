@@ -417,8 +417,12 @@ angular.module('scalearAngularApp')
               this.setInactive()
               src = selectedImage.getAttribute("src")
 
-              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = "<p class='medium-editor-p' >"+ src +"<p>"
+              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src//"<p class='medium-editor-p' >"+ src +"<p>"
+              console.log("mediumEditor.options.contentWindow.getSelection() :",mediumEditor.options.contentWindow.getSelection() )
               //mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
+
+              this.removeSize()
+
               var toolbar = mediumEditor.getExtensionByName('toolbar');
               toolbar.hideToolbar()
               toolbar.hideToolbarDefaultActions()
@@ -428,7 +432,7 @@ angular.module('scalearAngularApp')
               //this.base.options.ownerDocument.execCommand('insertImage', false, src);
 
               var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
-
+              console.log("this.base.options.contentWindow.getSelection().baseNode",this.base.options.contentWindow.getSelection().baseNode)
 
               selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage' src="+src+">"
               var transformedImage = selectedLine
@@ -456,13 +460,15 @@ angular.module('scalearAngularApp')
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 
               var all = this.base.getContent()
-
+              console.log("all:",all)
               this.base.resetContent(this.base.elements[0])
 
               this.base.setContent(all,0)
               var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
 
               insertedImage.parentNode.removeAttribute("data-medium-editor-element")
+              console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++")
+              console.log(this.base.getContent())
 
 
 
@@ -471,7 +477,23 @@ angular.module('scalearAngularApp')
             event.preventDefault();
             event.stopPropagation();
           },
-
+          removeSize: function(){
+            var classes = this.base.options.contentWindow.getSelection().baseNode.getAttribute('class')
+            if (classes.indexOf('size_1') != -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_1");
+              console.log("hree")
+              console.log(this.base.options.contentWindow.getSelection().baseNode.classList)
+            }
+            if (classes.indexOf('size_2')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_2");
+            }
+            if (classes.indexOf('size_3')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_3");
+            }
+            if (classes.indexOf('size_4')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_4");
+            }
+          },
           isAlreadyApplied: function(node){
 
             if(node.tagName === 'IMG'){

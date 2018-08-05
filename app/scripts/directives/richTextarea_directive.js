@@ -235,9 +235,11 @@ angular.module('scalearAngularApp')
             this.base.options.contentWindow.getSelection().baseNode.innerHTML = selectedImage.outerHTML
 
             var all = this.base.getContent()
-            this.base.resetContent()
-            console.log("conent reset")
-            this.base.setContent(all)
+            //console.log(all)
+
+            this.base.resetContent(this.base.elements[0])
+            console.log("content reset")
+            this.base.setContent(all,0)
 
             this.base.destroy()
           },
@@ -448,7 +450,12 @@ angular.module('scalearAngularApp')
               })
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 
+              var all = this.base.getContent()
+              //console.log(all)
 
+              this.base.resetContent(this.base.elements[0])
+              console.log("content reset")
+              this.base.setContent(all,0)
 
             }
             event.preventDefault();

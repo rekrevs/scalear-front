@@ -880,7 +880,6 @@ angular.module('scalearAngularApp')
       },
       templateUrl: '/views/student/lectures/dynamic_annotation.html',
       link:function(scope, element, attrs){
-
         scope.closeBtn = scope.close()
         scope.actionBtn = scope.action()
 

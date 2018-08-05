@@ -222,24 +222,27 @@ angular.module('scalearAngularApp')
             this.button.title = "Use this button to make the inserted image size 32X32"
             this.button.innerHTML = '<b title="Size 1">size 1</b>';
             this.on(this.button, 'click', this.handleClick.bind(this));
-            console.log(this)
+            //console.log(this)
             // var self = this
             // var editor_element = this.base.elements[0]
 
           },
           handleClick: function(event) {
-            this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
+            //this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
             var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
             this.base.removeElements(selectedImage)
             selectedImage.setAttribute('class','size_1')
             this.base.options.contentWindow.getSelection().baseNode.innerHTML = selectedImage.outerHTML
 
-            var all = this.base.getContent()
+
+            var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
+            var all = basic_editor.getContent()
             //console.log(all)
 
-            this.base.resetContent(this.base.elements[0])
-            console.log("content reset")
-            this.base.setContent(all,0)
+            basic_editor.resetContent(this.base.elements[0])
+            //document.getElementsByClassName('medium-editor-textarea')[2].firstElementChild.remove()
+            basic_editor.setContent(all,0)
+
 
             this.base.destroy()
           },
@@ -393,6 +396,7 @@ angular.module('scalearAngularApp')
             this.base.subscribe("editableClick", function(event, editor){
               if(event.target.tagName === 'IMG'){
                 mediumEditor.selectElement(event.target.parentNode)
+
               }
             })
             this.button = this.document.createElement('button');
@@ -406,13 +410,14 @@ angular.module('scalearAngularApp')
             var src
             var mediumEditor   = this.base
             var editor_element = this.base.elements[0]
+
             if(this.isActive()) {
 
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
               this.setInactive()
               src = selectedImage.getAttribute("src")
 
-              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = "<p class='medium-editor-p'>"+ src +"<p>"
+              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = "<p class='medium-editor-p' >"+ src +"<p>"
               //mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
               var toolbar = mediumEditor.getExtensionByName('toolbar');
               toolbar.hideToolbar()
@@ -424,13 +429,13 @@ angular.module('scalearAngularApp')
 
               var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
 
-              selectedLine.innerHTML = "<img class='medium-editor-element' src="+src+">"
 
+              selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage' src="+src+">"
               var transformedImage = selectedLine
 
               var toolbar = mediumEditor.getExtensionByName('toolbar');
-              toolbar.hideToolbar()
-              toolbar.hideToolbarDefaultActions()
+             toolbar.hideToolbar()
+             toolbar.hideToolbarDefaultActions()
 
               var editor = new MediumEditor(transformedImage, {
                   toolbar:{
@@ -451,11 +456,16 @@ angular.module('scalearAngularApp')
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 
               var all = this.base.getContent()
-              //console.log(all)
 
               this.base.resetContent(this.base.elements[0])
-              console.log("content reset")
+
               this.base.setContent(all,0)
+              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
+
+              insertedImage.parentNode.removeAttribute("data-medium-editor-element")
+
+
+
 
             }
             event.preventDefault();

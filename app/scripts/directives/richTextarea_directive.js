@@ -233,6 +233,12 @@ angular.module('scalearAngularApp')
             this.base.removeElements(selectedImage)
             selectedImage.setAttribute('class','size_1')
             this.base.options.contentWindow.getSelection().baseNode.innerHTML = selectedImage.outerHTML
+
+            var all = this.base.getContent()
+            this.base.resetContent()
+            console.log("conent reset")
+            this.base.setContent(all)
+
             this.base.destroy()
           },
           isActive: function() {
@@ -441,7 +447,7 @@ angular.module('scalearAngularApp')
                 editor.destroy()
               })
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
-              
+
 
 
             }

@@ -216,31 +216,26 @@ angular.module('scalearAngularApp')
           name: 'size_1',
           aria: 'Image size 32x32',
 
+
           init: function() {
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
             this.button.title = "Use this button to make the inserted image size 32X32"
             this.button.innerHTML = '<b title="Size 1">size 1</b>';
             this.on(this.button, 'click', this.handleClick.bind(this));
-            //console.log(this)
-            // var self = this
-            // var editor_element = this.base.elements[0]
 
           },
           handleClick: function(event) {
             //this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
             var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
+
             this.base.removeElements(selectedImage)
             selectedImage.setAttribute('class','size_1')
-            this.base.options.contentWindow.getSelection().baseNode.innerHTML = selectedImage.outerHTML
-
 
             var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
             var all = basic_editor.getContent()
-            //console.log(all)
 
             basic_editor.resetContent(this.base.elements[0])
-            //document.getElementsByClassName('medium-editor-textarea')[2].firstElementChild.remove()
             basic_editor.setContent(all,0)
 
 
@@ -384,12 +379,14 @@ angular.module('scalearAngularApp')
           }
         })
         //////////////////////////////////////////////////////////////////////////////
+        var clickCounter = 0
         var PictureExtension = MediumEditor.extensions.button.extend({
           name: 'picture',
           tagNames:'<img>',
           aria: 'picture support',
           contentDefault: 'Picture',
           init: function() {
+
             var mediumEditor = this.base
             var editor     = this.base.elements[0]
 
@@ -410,23 +407,25 @@ angular.module('scalearAngularApp')
             var src
             var mediumEditor   = this.base
             var editor_element = this.base.elements[0]
-
+            clickCounter += 1
+            console.log("clickCounter:",clickCounter)
             if(this.isActive()) {
               var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
-              insertedImage.parentNode.removeAttribute("data-medium-editor-element")
-              
+              if(insertedImage){
+                insertedImage.parentNode.removeAttribute("data-medium-editor-element")
+              }
+
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
               this.setInactive()
               src = selectedImage.getAttribute("src")
 
               mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src//"<p class='medium-editor-p' >"+ src +"<p>"
-              console.log("mediumEditor.options.contentWindow.getSelection() :",mediumEditor.options.contentWindow.getSelection() )
-              //mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
+
 
               this.removeSize()
 
               var all = this.base.getContent()
-              console.log("all:",all)
+
               this.base.resetContent(this.base.elements[0])
               this.base.setContent(all,0)
 
@@ -440,9 +439,9 @@ angular.module('scalearAngularApp')
               //this.base.options.ownerDocument.execCommand('insertImage', false, src);
 
               var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
-              console.log("this.base.options.contentWindow.getSelection().baseNode",this.base.options.contentWindow.getSelection().baseNode)
 
-              selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage' src="+src+">"
+
+              selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage_"+clickCounter+"' src="+src+">"
               var transformedImage = selectedLine
 
               var toolbar = mediumEditor.getExtensionByName('toolbar');
@@ -460,23 +459,27 @@ angular.module('scalearAngularApp')
                     size_4: new ImageSizeFourExtension()
                   }
               });
-
               editor.selectElement(transformedImage)
+
+
               editor.subscribe('hideToolbar',function(){
                 editor.destroy()
               })
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 
+              ////to make bind work, we rewrite the text area ///////////
+
               var all = this.base.getContent()
-              console.log("all:",all)
               this.base.resetContent(this.base.elements[0])
-
               this.base.setContent(all,0)
-              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
-
+              //editor.restoreSelection()
+              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage_"+clickCounter+"")
               insertedImage.parentNode.removeAttribute("data-medium-editor-element")
-              console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++")
-              console.log(this.base.getContent())
+              this.base.selectElement(insertedImage.parentNode)
+              //editor.selectElement(insertedImage)
+
+
+
 
 
 
@@ -489,8 +492,7 @@ angular.module('scalearAngularApp')
             var classes = this.base.options.contentWindow.getSelection().baseNode.getAttribute('class')
             if (classes.indexOf('size_1') != -1){
               this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_1");
-              console.log("hree")
-              console.log(this.base.options.contentWindow.getSelection().baseNode.classList)
+
             }
             if (classes.indexOf('size_2')!= -1){
               this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_2");

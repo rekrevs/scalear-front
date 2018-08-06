@@ -412,7 +412,9 @@ angular.module('scalearAngularApp')
             var editor_element = this.base.elements[0]
 
             if(this.isActive()) {
-
+              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
+              insertedImage.parentNode.removeAttribute("data-medium-editor-element")
+              
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
               this.setInactive()
               src = selectedImage.getAttribute("src")
@@ -422,6 +424,12 @@ angular.module('scalearAngularApp')
               //mediumEditor.selectElement(this.base.options.contentWindow.getSelection().baseNode.children[0].parentNode)
 
               this.removeSize()
+
+              var all = this.base.getContent()
+              console.log("all:",all)
+              this.base.resetContent(this.base.elements[0])
+              this.base.setContent(all,0)
+
 
               var toolbar = mediumEditor.getExtensionByName('toolbar');
               toolbar.hideToolbar()

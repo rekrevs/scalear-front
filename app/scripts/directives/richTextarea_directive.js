@@ -290,10 +290,7 @@ angular.module('scalearAngularApp')
             var editor_element = this.base.elements[0]
             clickCounter += 1
             if(this.isActive()) {
-              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage")
-              if(insertedImage){
-                insertedImage.parentNode.removeAttribute("data-medium-editor-element")
-              }
+
 
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
               this.setInactive()
@@ -314,6 +311,21 @@ angular.module('scalearAngularApp')
               toolbar.hideToolbar()
               toolbar.hideToolbarDefaultActions()
             } else {
+              var insertedImages = document.querySelectorAll("div.medium-editor-textarea p img")
+              if(insertedImages.length > 0){
+                var highestInsertedImageID
+                var i
+                for(i=0;i< insertedImages.length;i++){
+
+                  highestInsertedImageID = insertedImages[i].id.split("_")[1]
+                  if (highestInsertedImageID>clickCounter){
+                    clickCounter = parseInt(highestInsertedImageID)
+                  }
+                }
+                clickCounter+=1
+              }
+              
+
               this.setActive()
               var src = this.base.options.contentWindow.getSelection().toString().trim();
               //this.base.options.ownerDocument.execCommand('insertImage', false, src);

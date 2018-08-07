@@ -182,7 +182,6 @@ angular.module('scalearAngularApp')
             jax = MathJax.Hub.getAllJax();
           for(var i = 0, m = jax.length; i < m; i++) {
             var script = jax[i].SourceElement()
-
             var splitter = (script.type.indexOf("mode=display") == -1)? "$" : "$$"
              var tex = splitter + jax[i].originalText + splitter
             jax[i].Remove();
@@ -221,7 +220,6 @@ angular.module('scalearAngularApp')
             this.button.classList.add('medium-editor-action');
             this.button.innerHTML = this.buttonInnerHTML
             this.on(this.button, 'click', this.handleClick.bind(this));
-
           },
           handleClick: function(event) {
             var selectedImage
@@ -233,7 +231,6 @@ angular.module('scalearAngularApp')
             editImageId = selectedImage.id
             selectedImage.setAttribute('class',this.name)
             this.base.saveSelection()
-
             var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
             var all = basic_editor.getContent()
             basic_editor.resetContent(this.base.elements[0])
@@ -246,31 +243,25 @@ angular.module('scalearAngularApp')
             return this.button.classList.contains(activeClass);
           },
           setInactive: function() {
-
               var activeClass = this.base.options['activeButtonClass']
               this.button.classList.remove(activeClass);
-
           },
           setActive: function() {
-
               var activeClass = this.base.options['activeButtonClass']
               this.button.classList.add(activeClass);
-
           }
         })
 
         //////////////////////////////////////////////////////////////////////////////
         var clickCounter = 0
-        var PictureExtension = MediumEditor.extensions.button.extend({
-          name: 'picture',
+        var CustomImageExtension = MediumEditor.extensions.button.extend({
+          name: 'customImage',
           tagNames:'<img>',
           aria: 'picture support',
           contentDefault: 'Picture',
           init: function() {
-
             var mediumEditor = this.base
             var editor     = this.base.elements[0]
-
             this.base.subscribe("editableClick", function(event, editor){
               if(event.target.tagName === 'IMG'){
                 mediumEditor.selectElement(event.target.parentNode)
@@ -342,7 +333,6 @@ angular.module('scalearAngularApp')
               var all = this.base.getContent()
               this.base.resetContent(this.base.elements[0])
               this.base.setContent(all,0)
-
               var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage_"+clickCounter+"")
               insertedImage.parentNode.removeAttribute("data-medium-editor-element")
               this.base.selectElement(insertedImage.parentNode)
@@ -354,7 +344,6 @@ angular.module('scalearAngularApp')
             var classes = this.base.options.contentWindow.getSelection().baseNode.getAttribute('class')
             if (classes.indexOf('size_1') != -1){
               this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_1");
-
             }
             if (classes.indexOf('size_2')!= -1){
               this.base.options.contentWindow.getSelection().baseNode.classList.remove("size_2");
@@ -367,7 +356,6 @@ angular.module('scalearAngularApp')
             }
           },
           isAlreadyApplied: function(node){
-
             if(node.tagName === 'IMG'){
               return true
             } else {
@@ -379,13 +367,11 @@ angular.module('scalearAngularApp')
             return this.button.classList.contains(activeClass);
           },
           setInactive: function() {
-
               var activeClass = this.base.options['activeButtonClass']
               this.button.classList.remove(activeClass);
 
           },
           setActive: function() {
-
               var activeClass = this.base.options['activeButtonClass']
               this.button.classList.add(activeClass);
 
@@ -417,7 +403,7 @@ angular.module('scalearAngularApp')
               "justifyRight",
               "mathjax",
               "removeFormat",
-              "picture"
+              "customImage"
             ]
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
@@ -430,7 +416,7 @@ angular.module('scalearAngularApp')
             'increaseFontSize': new FontSizeIncreseExtension(),
             'decreaseFontSize': new FontSizeDecreaseExtension(),
             'mathjax': new MathJaxExtension(),
-            'picture': new PictureExtension()
+            'customImage': new CustomImageExtension()
           },
           'disableReturn': false
         }

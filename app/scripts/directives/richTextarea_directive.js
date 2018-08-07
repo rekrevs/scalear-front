@@ -212,34 +212,34 @@ angular.module('scalearAngularApp')
           $(elem).find("span[class*=MathJax]").remove()
         }
         //////////////////////button image size 1///////////////////////////
+        var editImageId = null
+        var editedImage = null
         var ImageSizeExtension = MediumEditor.extensions.button.extend({
           name: this.name,
-
-
-
           init: function() {
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
-
-            this.button.innerHTML = this.buttonInnerHTML//'<b title="Size 1">size 1</b>';
+            this.button.innerHTML = this.buttonInnerHTML
             this.on(this.button, 'click', this.handleClick.bind(this));
 
           },
           handleClick: function(event) {
-            //this.base.options.contentWindow.getSelection().baseNode.removeAttribute("data-medium-editor-element")
-            var selectedImage =this.base.options.contentWindow.getSelection().baseNode.children[0]
-
-            this.base.removeElements(selectedImage)
+            var selectedImage
+            if (editedImage){
+              selectedImage = editedImage
+            } else{
+              selectedImage = this.base.options.contentWindow.getSelection().baseNode.children[0]
+            }
+            editImageId = selectedImage.id
             selectedImage.setAttribute('class',this.name)
+            this.base.saveSelection()
 
             var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
             var all = basic_editor.getContent()
-
             basic_editor.resetContent(this.base.elements[0])
             basic_editor.setContent(all,0)
-
-
-            this.base.destroy()
+            this.base.restoreSelection()
+            editedImage=document.querySelector("div.medium-editor-textarea p img#"+editImageId+"")
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']
@@ -274,15 +274,12 @@ angular.module('scalearAngularApp')
             this.base.subscribe("editableClick", function(event, editor){
               if(event.target.tagName === 'IMG'){
                 mediumEditor.selectElement(event.target.parentNode)
-
               }
             })
             this.button = this.document.createElement('button');
             this.button.classList.add('medium-editor-action');
             this.button.innerHTML = "<i class='fi-photo'><i>";
             this.on(this.button, 'click', this.handleClick.bind(this));
-
-
           },
           handleClick: function(event) {
             var src
@@ -290,23 +287,14 @@ angular.module('scalearAngularApp')
             var editor_element = this.base.elements[0]
             clickCounter += 1
             if(this.isActive()) {
-
-
               var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
               this.setInactive()
               src = selectedImage.getAttribute("src")
-
-              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src//"<p class='medium-editor-p' >"+ src +"<p>"
-
-
+              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src//"<p class='medium-editor-p' >"+ src +"</p>"
               this.removeSize()
-
               var all = this.base.getContent()
-
               this.base.resetContent(this.base.elements[0])
               this.base.setContent(all,0)
-
-
               var toolbar = mediumEditor.getExtensionByName('toolbar');
               toolbar.hideToolbar()
               toolbar.hideToolbarDefaultActions()
@@ -316,7 +304,6 @@ angular.module('scalearAngularApp')
                 var highestInsertedImageID
                 var i
                 for(i=0;i< insertedImages.length;i++){
-
                   highestInsertedImageID = insertedImages[i].id.split("_")[1]
                   if (highestInsertedImageID>clickCounter){
                     clickCounter = parseInt(highestInsertedImageID)
@@ -324,21 +311,14 @@ angular.module('scalearAngularApp')
                 }
                 clickCounter+=1
               }
-              
-
               this.setActive()
               var src = this.base.options.contentWindow.getSelection().toString().trim();
-              //this.base.options.ownerDocument.execCommand('insertImage', false, src);
-
               var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
-
-
               selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage_"+clickCounter+"' src="+src+">"
               var transformedImage = selectedLine
-
               var toolbar = mediumEditor.getExtensionByName('toolbar');
-             toolbar.hideToolbar()
-             toolbar.hideToolbarDefaultActions()
+              toolbar.hideToolbar()
+              toolbar.hideToolbarDefaultActions()
 
               var editor = new MediumEditor(transformedImage, {
                   toolbar:{
@@ -353,30 +333,19 @@ angular.module('scalearAngularApp')
                   }
               });
               editor.selectElement(transformedImage)
-
-
               editor.subscribe('hideToolbar',function(){
                 editor.destroy()
               })
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 
               ////to make bind work, we rewrite the text area ///////////
-
               var all = this.base.getContent()
               this.base.resetContent(this.base.elements[0])
               this.base.setContent(all,0)
-              //editor.restoreSelection()
+
               var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage_"+clickCounter+"")
               insertedImage.parentNode.removeAttribute("data-medium-editor-element")
               this.base.selectElement(insertedImage.parentNode)
-              //editor.selectElement(insertedImage)
-
-
-
-
-
-
-
             }
             event.preventDefault();
             event.stopPropagation();

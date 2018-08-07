@@ -326,6 +326,8 @@ angular.module('scalearAngularApp')
               editor.selectElement(transformedImage)
               editor.subscribe('hideToolbar',function(){
                 editor.destroy()
+                editedImage = null
+                editImageId = null
               })
               editor.getExtensionByName('toolbar').getToolbarElement().style.width = 'auto'
 

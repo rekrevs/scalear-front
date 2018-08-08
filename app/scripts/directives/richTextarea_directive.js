@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: 'EA',
       template: "<textarea medium-editor bind-options='medium_editor_options' class='medium-editor-textarea' ></textarea>",
-      controller: ['$scope', '$attrs', '$interpolate', function($scope, $attrs, $interpolate) {
+      controller: ['$scope', '$attrs', '$element','$interpolate', function($scope, $attrs, $element, $interpolate) {
 
         // Medium Editor - Spectrum text color extension
         var currentTextSelection;
@@ -182,7 +182,6 @@ angular.module('scalearAngularApp')
             jax = MathJax.Hub.getAllJax();
           for(var i = 0, m = jax.length; i < m; i++) {
             var script = jax[i].SourceElement()
-
             var splitter = (script.type.indexOf("mode=display") == -1)? "$" : "$$"
              var tex = splitter + jax[i].originalText + splitter
             jax[i].Remove();
@@ -211,8 +210,171 @@ angular.module('scalearAngularApp')
         function MathJaxCleanUp(elem) {
           $(elem).find("span[class*=MathJax]").remove()
         }
+        //////////////////////button image size 1///////////////////////////
+        var editImageId = null
+        var editedImage = null
+        var ImageSizeExtension = MediumEditor.extensions.button.extend({
+          name: this.name,
+          init: function() {
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.innerHTML = this.buttonInnerHTML
+            this.on(this.button, 'click', this.handleClick.bind(this));
+          },
+          handleClick: function(event) {
+            var selectedImage = editedImage || this.base.options.contentWindow.getSelection().baseNode.children[0];
+            editImageId = selectedImage.id
+            selectedImage.setAttribute('class',this.imageSize)
+            this.base.saveSelection()
+            var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
+            var textareaContent = basic_editor.getContent()
+            basic_editor.resetContent(this.base.elements[0])
+            basic_editor.setContent(textareaContent,0)
+            this.base.restoreSelection()
+            editedImage=document.querySelector("div.medium-editor-textarea p img#"+editImageId+"")
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+          },
+          setActive: function() {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+          }
+        })
 
         //////////////////////////////////////////////////////////////////////////////
+        var clickCounter = 0
+        var CustomImageExtension = MediumEditor.extensions.button.extend({
+          name: 'customImage',
+          tagNames:'<img>',
+          aria: 'image support',
+          contentDefault: 'Image',
+          init: function() {
+            var mediumEditor = this.base
+            var editor     = this.base.elements[0]
+            this.base.subscribe("editableClick", function(event, editor){
+              if(event.target.tagName === 'IMG'){
+                mediumEditor.selectElement(event.target.parentNode)
+              }
+            })
+            this.button = this.document.createElement('button');
+            this.button.classList.add('medium-editor-action');
+            this.button.innerHTML = "<i class='fi-photo'><i>";
+            this.on(this.button, 'click', this.handleClick.bind(this));
+          },
+          handleClick: function(event) {
+            var src
+            var mediumEditor   = this.base
+            var editor_element = this.base.elements[0]
+            clickCounter += 1
+            if(this.isActive()) {
+              var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
+              this.setInactive()
+              src = selectedImage.getAttribute("src")
+              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src
+              this.removeSize()
+              var allTextareaContent = this.base.getContent()
+              this.base.resetContent(this.base.elements[0])
+              this.base.setContent(allTextareaContent,0)
+              var toolbar = mediumEditor.getExtensionByName('toolbar');
+              toolbar.hideToolbar()
+              toolbar.hideToolbarDefaultActions()
+            } else {
+              var insertedImages = document.querySelectorAll("div.medium-editor-textarea p img")
+              if(insertedImages.length > 0){
+                var highestInsertedImageID
+
+                for(var i=0;i< insertedImages.length;i++){
+                  highestInsertedImageID = insertedImages[i].id.split("_")[1]
+                  if (highestInsertedImageID>clickCounter){
+                    clickCounter = parseInt(highestInsertedImageID)
+                  }
+                }
+                clickCounter+=1
+              }
+              this.setActive()
+              var src = this.base.options.contentWindow.getSelection().toString().trim();
+              var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
+              selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage_"+clickCounter+"' src="+src+">"
+              var transformedImage = selectedLine
+              var toolbar = mediumEditor.getExtensionByName('toolbar');
+              toolbar.hideToolbar()
+              toolbar.hideToolbarDefaultActions()
+
+              var editor = new MediumEditor(transformedImage, {
+                  toolbar:{
+                    buttons:['small','medium','large','veryLarge','original']
+                  },
+                  extensions:{
+                    small: new ImageSizeExtension({name:"small",imageSize:"small_img",buttonInnerHTML:'<b title="Size 1">Small</b>'}),
+                    medium: new ImageSizeExtension({name:"medium",imageSize:"medium_img",buttonInnerHTML:'<b title="Size 2">Medium</b>'}),
+                    large: new ImageSizeExtension({name:"large",imageSize:"large_img",buttonInnerHTML:'<b title="Size 3">Large</b>'}),
+                    veryLarge: new ImageSizeExtension({name:"veryLarge",imageSize:"veryLarge_img",buttonInnerHTML:'<b title="Size 4">Very Large</b>'}),
+                    original: new ImageSizeExtension({name:"original",imageSize:"original",buttonInnerHTML:'<b title="Original">original</b>'})
+                  }
+              });
+              editor.selectElement(transformedImage)
+              editor.subscribe('hideToolbar',function(){
+                editor.destroy()
+                editedImage = null
+                editImageId = null
+              })
+              var toolbarElement = editor.getExtensionByName('toolbar').getToolbarElement()
+              toolbarElement.style.width = 'auto'
+              toolbarElement.classList.remove("medium-toolbar-arrow-under");
+              toolbarElement.classList.add("medium-size-toolbar-arrow-under");
+
+              ////to make bind work, we rewrite the text area ///////////
+              var allContent = this.base.getContent()
+              this.base.resetContent(this.base.elements[0])
+              this.base.setContent(allContent,0)
+              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage_"+clickCounter+"")
+              insertedImage.parentNode.removeAttribute("data-medium-editor-element")
+              this.base.selectElement(insertedImage.parentNode)
+            }
+            event.preventDefault();
+            event.stopPropagation();
+          },
+          removeSize: function(){
+            var classes = this.base.options.contentWindow.getSelection().baseNode.getAttribute('class')
+            if (classes.indexOf('small_img') != -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("small_img");
+            }
+            if (classes.indexOf('medium_img')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("medium_img");
+            }
+            if (classes.indexOf('large_img')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("large_img");
+            }
+            if (classes.indexOf('veryLarge_img')!= -1){
+              this.base.options.contentWindow.getSelection().baseNode.classList.remove("veryLarge_img");
+            }
+          },
+          isAlreadyApplied: function(node){
+            return node.tagName === 'IMG';
+          },
+          isActive: function() {
+            var activeClass = this.base.options['activeButtonClass']
+            return this.button.classList.contains(activeClass);
+          },
+          setInactive: function() {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.remove(activeClass);
+
+          },
+          setActive: function() {
+              var activeClass = this.base.options['activeButtonClass']
+              this.button.classList.add(activeClass);
+
+          }
+        })
+
+        ////////////////////////////////////////////////////////////////////
 
         $scope.medium_editor_options = {
           'toolbar': {
@@ -228,33 +390,32 @@ angular.module('scalearAngularApp')
               "colorPicker",
               { name: 'anchor', contentDefault: "<i class='fi-link size-18'></i>" },
               "anchor",
-              { name: 'image', contentDefault: "<i class='fi-photo size-18'></i>" },
               "quote",
               "pre",
               { name: 'orderedlist', contentDefault: "<i class='fi-list-number size-22' style='line-height:0'></i>" },
-              { name: 'unorderedlist', contentDefault: "<i class='fi-list-bullet size-22' style='line-height:0'></i>" },
+              { name: 'unorderedlist', contentDefault: "<i class='fi-list-bullet size-22' style='line-height:0'></i>"},
               "justifyLeft",
               "justifyCenter",
               "justifyRight",
               "mathjax",
-              "removeFormat"
-              // { name: 'removeFormat', contentDefault: "<b>clear</b>" },
+              "removeFormat",
+              "customImage"
             ]
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
           'paste': {
-                cleanPastedHTML: true,
-                forcePlainText: false
-            },
+              cleanPastedHTML: true,
+              forcePlainText: false
+          },
           'extensions': {
             'colorPicker': pickerExtension,
             'increaseFontSize': new FontSizeIncreseExtension(),
             'decreaseFontSize': new FontSizeDecreaseExtension(),
-            'mathjax': new MathJaxExtension()
+            'mathjax': new MathJaxExtension(),
+            'customImage': new CustomImageExtension()
           },
           'disableReturn': false
         }
-
       }]
     };
   }])

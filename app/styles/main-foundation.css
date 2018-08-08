@@ -27,6 +27,18 @@ padding-top: 45px;
   left:0;
   /*background:#ee5;*/
 }
+.small_img{
+  width:  32px;  
+}
+.medium_img{
+  width:  64px;
+}
+.large_img{
+  width:  128px;
+}
+.veryLarge_img{
+  width:  256px;
+}
 
 /*.navigator_open{
 left: 12% !important;
@@ -2705,7 +2717,21 @@ body.ngdialog-open { overflow: initial !important; }
 }
 
 .medium-toolbar-arrow-under:after{
-  top: 100px;
+    top: 100px;
+}
+
+.medium-size-toolbar-arrow-under:after{
+    top: 50px;
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 0;
+    border-width: 8px 8px 0 8px;
+    border-color: #242424 transparent transparent transparent;
 }
 
 .medium-editor-toolbar-form{

@@ -68,6 +68,8 @@ var translation_en={
     votes: "Votes",
     no: "No",
     courses_list: "Courses List",
+    new:"New",
+    copy:"Copy"
   },
   mailer:{
     send_email: "Send An Email",
@@ -748,6 +750,12 @@ var translation_en={
         display_text_explain:"(Use if the question text is not in the video.)",
         student_link_quiz:"Student link to quiz",
         skip_ahead_description: "Allow students to skip ahead in video",
+        graded: "Graded",
+        quiz_pass_fail: "This quiz is pass/fail",
+        show_explanation: "Show explanation after each try",
+        correct_to_pass: " correct required to pass",
+        pass: "Pass",
+        fail: "Fail",
     },
     popover:{
         shown_in_graph: "Shown on results graph",
@@ -921,6 +929,8 @@ var translation_en={
     optional:"@:global.optional",
     already_submitted: "You've submitted the",
     no_more_attempts: "and have no more attempts left",
+    graded_quiz: "Graded quiz",
+    correct_required_to_pass: "correct answers required to pass.",
     grade:{
         under_review:"Under Review",
         partial:"Partial",
@@ -1039,6 +1049,9 @@ var translation_en={
             unselect:"Unselect"
         },
         copy_from_existing: "Copy Data from Existing Course",
+        copy_from_existing_title: "Copy Data",
+        ask_copy_from_existing:"Would you like to create a new empty course or copy material from an existing course?",
+        ask_choose_from_existing:"Please choose one of your existing courses to copy content from",
         course_item_shift: "Course items will be shifted according to the course start date.",
     },
     start_date: "Start Date",

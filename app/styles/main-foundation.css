@@ -27,19 +27,19 @@ padding-top: 45px;
   left:0;
   /*background:#ee5;*/
 }
-.size_1{
+.small_img{
   width:  32px;
   height: 32px;
 }
-.size_2{
+.medium_img{
   width:  64px;
   height: 64px;
 }
-.size_3{
+.large_img{
   width:  128px;
   height: 128px;
 }
-.size_4{
+.veryLarge_img{
   width:  256px;
   height: 256px;
 }
@@ -2721,7 +2721,21 @@ body.ngdialog-open { overflow: initial !important; }
 }
 
 .medium-toolbar-arrow-under:after{
-  top: 100px;
+    top: 100px;
+}
+
+.medium-size-toolbar-arrow-under:after{
+    top: 50px;
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 0;
+    border-width: 8px 8px 0 8px;
+    border-color: #242424 transparent transparent transparent;
 }
 
 .medium-editor-toolbar-form{

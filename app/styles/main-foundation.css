@@ -28,20 +28,16 @@ padding-top: 45px;
   /*background:#ee5;*/
 }
 .small_img{
-  width:  32px;
-  height: 32px;
+  width:  32px;  
 }
 .medium_img{
   width:  64px;
-  height: 64px;
 }
 .large_img{
   width:  128px;
-  height: 128px;
 }
 .veryLarge_img{
   width:  256px;
-  height: 256px;
 }
 
 /*.navigator_open{

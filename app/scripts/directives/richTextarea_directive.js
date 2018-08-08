@@ -356,11 +356,7 @@ angular.module('scalearAngularApp')
             }
           },
           isAlreadyApplied: function(node){
-            if(node.tagName === 'IMG'){
-              return true
-            } else {
-              return false
-            }
+            return node.tagName === 'IMG';
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']

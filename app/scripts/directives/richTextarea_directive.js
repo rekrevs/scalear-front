@@ -243,8 +243,8 @@ angular.module('scalearAngularApp')
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
           'paste': {
-                cleanPastedHTML: true,
-                forcePlainText: false
+            forcePlainText: true,
+            cleanPastedHTML: false        
             },
           'extensions': {
             'colorPicker': pickerExtension,

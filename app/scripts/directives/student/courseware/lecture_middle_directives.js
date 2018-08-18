@@ -93,7 +93,7 @@ angular
           "</ul>" +
           "</div>",
         link: function(scope) {
-          scope.updateValues = function() {console.log("here")
+          scope.updateValues = function() {
             scope.values = 0;
             if (
               (scope.quiz.quiz_type == "html" ||

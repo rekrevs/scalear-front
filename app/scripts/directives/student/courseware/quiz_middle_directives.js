@@ -15,12 +15,14 @@ angular.module('scalearAngularApp')
       },
       restrict: 'E',
       templateUrl: '/views/student/lectures/student_quiz.html',
-      link: function(scope) {
+      link: function(scope,element) {
         scope.index = 0
         scope.drag_explanation = {}
+
         scope.getIndex = function() {
           return ++scope.index
         }
+
         scope.updateValues = function(ques) {
           if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
             scope.values = 0;
@@ -32,9 +34,26 @@ angular.module('scalearAngularApp')
                 scope.values = 1;
             }
           }
-          (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0) ? setTimeout(function(){scope.saveSelection('save')},1000) : scope.saveSelection('save')
+          scope.saveSelection('save')
           return scope.values
         };
+
+        var questionId = 0
+        scope.getQuestionId = function(id){
+          questionId = id
+        }
+
+        scope.$watch("studentAnswers",function(newAns,oldAns) {
+          setTimeout(function(){
+            var quizQuestions = scope.quiz.questions
+            var answeredQuestion = quizQuestions.find(function(el){return el.id ==  questionId })
+            if (typeof(answeredQuestion) != 'undefined')
+              if ( answeredQuestion.question_type == "drag")
+                if( newAns[questionId] !== oldAns[questionId] )
+                    scope.saveSelection('save')
+          },2000)
+        },true);
+
         scope.valid = function(ques) {
           return scope.updateValues(ques) != 0
         }

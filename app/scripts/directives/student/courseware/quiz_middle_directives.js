@@ -22,8 +22,13 @@ angular.module('scalearAngularApp')
         scope.getIndex = function() {
           return ++scope.index
         }
+        scope.sortableOptions={
+          stop:function(e,ui){
+            scope.saveSelection('save')
+          }
+        };
 
-        scope.updateValues = function(ques) {
+        scope.updateValues = function(ques) {console.log("here")
           if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
             scope.values = 0;
           else if(typeof(scope.studentAnswers[ques]) == "number" || (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
@@ -37,22 +42,6 @@ angular.module('scalearAngularApp')
           scope.saveSelection('save')
           return scope.values
         };
-
-        var questionId = 0
-        scope.getQuestionId = function(id){
-          questionId = id
-        }
-
-        scope.$watch("studentAnswers",function(newAns,oldAns) {
-          setTimeout(function(){
-            var quizQuestions = scope.quiz.questions
-            var answeredQuestion = quizQuestions.find(function(el){return el.id ==  questionId })
-            if (typeof(answeredQuestion) != 'undefined')
-              if ( answeredQuestion.question_type == "drag")
-                if( newAns[questionId] !== oldAns[questionId] )
-                    scope.saveSelection('save')
-          },2000)
-        },true);
 
         scope.valid = function(ques) {
           return scope.updateValues(ques) != 0

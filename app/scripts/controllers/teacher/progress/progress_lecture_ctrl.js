@@ -611,7 +611,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek = function(time, video) {
-
       if ($scope.url.indexOf(video.url) == -1) {
         if ($scope.progress_player.controls.isYoutube(video.url) || $scope.progress_player.controls.isKaltura(video.url)) {
           $scope.video_start = video.start_time
@@ -639,7 +638,6 @@ angular.module('scalearAngularApp')
           })
         }
 
-        }
       } else {
         if( $scope.selected_item.lec_id != $scope.url_lecture_id){
           $scope.video_start = video.start_time

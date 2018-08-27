@@ -61,7 +61,7 @@ table.table_matrix_height tbody{
                         <span ng-if="::( (module[7]==2) && (module[4]!=0) )">
                             <img tooltip="{{'progress.tooltip.correct' | translate}} {{module[2]}}/{{module[3]}} , {{module[4]}} {{'progress.tooltip.question_not_checked' | translate}}." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         </span>
-                        <span ng-if="::( (module[7]==2) && (module[4]==0) )">
+                        <span ng-if="::()(module[7]==2 || module[7]==3) && (module[4]==0) )" 
                             <img tooltip="{{'progress.tooltip.completed' | translate}} {{module[2]}}/{{module[3]}} ." tooltip-append-to-body="true" tooltip-placement="left" class="marker" ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}" style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
                         </span>
                         <div ng-if="module[1]>0 && !student.status[module[0]]" >{{::'('+module[1]+' '+('time.days'|translate)+')'}}</div>

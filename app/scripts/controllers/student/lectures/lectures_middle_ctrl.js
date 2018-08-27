@@ -143,6 +143,7 @@ angular.module('scalearAngularApp')
             if ( current_time ){
               event.preventDefault();
               var percent_view = Math.round(((current_time / $scope.total_duration) * 100))
+
               updateViewPercentage( percent_view , "seek")
                 .then(function(){
                   $state.go(toState, toParams, options)

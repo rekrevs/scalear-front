@@ -65,7 +65,9 @@ angular.module('scalearAngularApp')
         };
 
         scope.saveData = function() {
-          scope.value = $filter("formatURL")(scope.value)
+          if(!scope.value.toString().startsWith("<iframe")){
+              scope.value = $filter("formatURL")(scope.value)
+          }    
           $timeout(function() {
             // if(scope.text !== scope.value) {
               scope.text = scope.value

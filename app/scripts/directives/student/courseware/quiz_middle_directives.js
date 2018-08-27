@@ -18,11 +18,17 @@ angular.module('scalearAngularApp')
       link: function(scope) {
         scope.index = 0
         scope.drag_explanation = {}
+
         scope.getIndex = function() {
           return ++scope.index
         }
+        scope.sortableOptions={
+          stop:function(e,ui){
+            scope.saveSelection('save')
+          }
+        };
+
         scope.updateValues = function(ques) {
-          scope.values = 0;
           if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
             scope.values = 0;
           else if(typeof(scope.studentAnswers[ques]) == "number" || (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
@@ -36,6 +42,7 @@ angular.module('scalearAngularApp')
           scope.saveSelection('save')
           return scope.values
         };
+
         scope.valid = function(ques) {
           return scope.updateValues(ques) != 0
         }

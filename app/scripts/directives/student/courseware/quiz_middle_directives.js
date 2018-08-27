@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
       },
       restrict: 'E',
       templateUrl: '/views/student/lectures/student_quiz.html',
-      link: function(scope,element) {
+      link: function(scope) {
         scope.index = 0
         scope.drag_explanation = {}
 
@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
           }
         };
 
-        scope.updateValues = function(ques) {console.log("here")
+        scope.updateValues = function(ques) {
           if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
             scope.values = 0;
           else if(typeof(scope.studentAnswers[ques]) == "number" || (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved

@@ -26,11 +26,7 @@
     <div class="small-12 columns">
     	<p ng-if="status==null || status.attempts<=quiz.retries">
     		<span translate="quizzes.attempt_number"></span>:
-<<<<<<< HEAD
-            {{status.attempts || 1}}/{{quiz.retries+1}}
-=======
             {{status.attempts || 1}}/{{quiz.retries}}
->>>>>>> develop
     	</p>
     	<p ng-if="status.attempts>quiz.retries">
     		<span translate="quizzes.used_up_all"></span>

@@ -105,5 +105,22 @@
 				<span >{{link_url}}</span>
 			</td>
 		</tr>
+		<tr>
+			<td class="right-border"><span translate>editor.details.graded</span>:</td>
+			<td>
+				<input type="checkbox" ng-model="quiz.exam" ng-change="updateQuiz()" class="no-margin">
+				<span class="size-12" translate>editor.details.quiz_pass_fail</span>
+				</br>
+				<div ng-show="quiz.exam">
+					<details-number min="0" value="quiz.correct_question_count" save="updateQuiz()" validate="validateQuiz" column="correct_question_count" ></details-number> <span> / {{quiz.questions_count}}</span>
+					<span class="size-12" translate>editor.details.correct_to_pass</span></br>
+
+					<input type="checkbox" ng-model="quiz.show_explanation" ng-change="updateQuiz()" class="no-margin">
+					<span class="size-12" translate>editor.details.show_explanation</span>
+				</div>
+				
+				
+			</td>
+		</tr>
 	</table>
 </div>

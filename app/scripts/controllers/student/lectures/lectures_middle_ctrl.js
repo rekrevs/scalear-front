@@ -262,7 +262,6 @@ angular.module('scalearAngularApp')
     }
 
     var showQuizOnline = function(quiz) {
-
       var index = $scope.lecture.video_quizzes.map(function(x) {return x.time; }).indexOf(quiz.time);
       $scope.next_quiz = null
       if ($scope.lecture.video_quizzes[index + 1]) {
@@ -740,6 +739,7 @@ angular.module('scalearAngularApp')
       $scope.quiz_layer.backgroundColor = ""
       $scope.quiz_layer.overflowX = ''
       $scope.quiz_layer.overflowY = ''
+
     }
 
     var returnToQuiz = function(time) {
@@ -1037,7 +1037,6 @@ angular.module('scalearAngularApp')
           showNotification("lectures.choose_correct_answer")
           return
         }
-
         if ($scope.selected_quiz.question_type == "OCQ" && selected_answers.length == 1)
           selected_answers = selected_answers[0]
       } else if ($scope.selected_quiz.question_type == "Free Text Question") {
@@ -1107,7 +1106,7 @@ angular.module('scalearAngularApp')
         displayResult(data)
       }
     }
-
+    $scope.correct_selections = false
     var displayResult = function(data) {
       if (data.msg != "Empty") { // he chose sthg
         var middle_msg = ''
@@ -1126,6 +1125,7 @@ angular.module('scalearAngularApp')
           for (var el in data.detailed_exp)
             $scope.explanation[el] = data.detailed_exp[el];
           var verdict = data.correct ? "lectures.correct" : "lectures.incorrect"
+          $scope.correct_selections = data.correct ? true : false
           var sub_message = ''
           if ($scope.selected_quiz.quiz_type == 'html' && ($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' || $scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION')) {
             for (var el in data.explanation)
@@ -1143,7 +1143,6 @@ angular.module('scalearAngularApp')
             sub_message = ""
           }
           showNotification(verdict, sub_message, middle_msg)
-
           $scope.selected_quiz.solved_quiz = true;
         }
         $scope.display_review_message = true

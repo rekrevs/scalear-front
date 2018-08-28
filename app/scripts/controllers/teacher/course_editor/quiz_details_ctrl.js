@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$log', '$state', 'ItemsModel', 'QuizModel', 'CourseEditor',
-    function($stateParams, $scope, $log, $state, ItemsModel, QuizModel, CourseEditor) {
+  .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$log', '$state', 'ItemsModel', 'QuizModel', 'CourseEditor', 'QuestionModel',
+    function($stateParams, $scope, $log, $state, ItemsModel, QuizModel, CourseEditor, QuestionModel) {
 
       $scope.quiz = ItemsModel.getQuiz($stateParams.quiz_id)
       ItemsModel.setSelectedItem($scope.quiz)
@@ -42,7 +42,16 @@ angular.module('scalearAngularApp')
         return(new Date(appearance_time) <= new Date())
       }
 
+      $scope.$on("questions_count:updated",function(event,count){
+        $scope.quiz.questions_count = count;
+      })
+
       $scope.validateQuiz = function(column, data) {
+        if(column=="correct_question_count"){
+          if (data > $scope.quiz.questions_count){
+            return "Must be less than or equal to number of questions";
+          }
+        }
         var quiz = { id: $scope.quiz.id, course_id: $scope.quiz.course_id, group_id: $scope.quiz.group_id }
         quiz[column] = data;
         var temp_quiz = QuizModel.createInstance(quiz);

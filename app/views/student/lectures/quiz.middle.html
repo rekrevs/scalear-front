@@ -19,22 +19,24 @@
         <i ng-if="quiz.quiz_type=='survey'" class="fi-clipboard-pencil"></i>
         <!-- {{quiz.name}} -->
         <div ng-bind-html="quiz.name" ></div>
+      <span ng-if="quiz && quiz.exam" style="margin-left: 5px; margin-bottom:5px; font-size: 16px; font-weight:bold;"><span translate>quizzes.graded_quiz</span>. {{quiz.correct_question_count}} / {{quiz.questions_count}} <span translate>quizzes.correct_required_to_pass</span></span><br>
       <span ng-if="quiz && !quiz.graded" class="color-grey text-italic" style="margin-left: 5px; margin-bottom:5px; font-size: 16px;">(<span translate>lectures.optional</span>)</span>
   </h3>
     <h5 class="subheader" ng-bind-html="quiz.instructions"></h5>
     <div class="small-12 columns">
-    	<p ng-if="status==null || status.attempts<quiz.retries+1">
+    	<p ng-if="status==null || status.attempts<=quiz.retries">
     		<span translate="quizzes.attempt_number"></span>:
+<<<<<<< HEAD
             {{status.attempts || 1}}/{{quiz.retries+1}}
+=======
+            {{status.attempts || 1}}/{{quiz.retries}}
+>>>>>>> develop
     	</p>
-    	<p ng-if="status.attempts==quiz.retries+1">
+    	<p ng-if="status.attempts>quiz.retries">
     		<span translate="quizzes.used_up_all"></span>
-            {{quiz.retries+1}}
+            {{quiz.retries}}
             <span translate="quizzes.attempts"></span>
     	</p>
-    	<!-- <p ng-if="status!=null && status.attempts<quiz.retries+1">
-    		<span translate="quizzes.attempt_number"></span>: {{status.attempts}}/{{quiz.retries+1}}
-    	</p> -->
     </div>
     <hr>
     <div class="small-12 columns no-padding">
@@ -56,6 +58,7 @@
         <button id="next_button" type="button" ng-show="next_item.id" ng-click="nextItem()" class="button tiny">
             <span translate>button.next</span>
         </button>
+        <span ng-if="quiz.exam && status.status == 'Submitted'" class="right with-margin-right" ng-style="{color: pass?'green':'red'}">{{numberOfCorrectAnswers}} / {{quiz.questions.length}} <span translate>global.correct</span>. <span >{{pass ? 'editor.details.pass' : 'editor.details.fail' | translate}}</span></span>
     </div>
     <div ng-if="current_survey.visible" ng-repeat="element in ordered_survey">
         <div ng-show="survey_chart_data && survey_chart_data[element[0]].student_show" style="padding:10px 40px" >

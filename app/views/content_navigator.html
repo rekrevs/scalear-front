@@ -74,7 +74,7 @@
 				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
 					<accordion-group  class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}" context-menu data-target="module-menu" >
 						<accordion-heading class="accordion-heading">
-							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" jqyoui-droppable="{stack:false,onDrop:'pasteDraggedItem({moduleId:module.id})'}" data-drop="true" data-jqyoui-options />
+							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" jqyoui-droppable="{stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})'}" data-drop="true" data-jqyoui-options />
 						</accordion-heading>
 	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">

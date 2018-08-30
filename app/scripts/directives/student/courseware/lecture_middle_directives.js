@@ -894,6 +894,7 @@ angular
               mark.style.top = ((answer.ycoor*100)-0.5)+'%'
               mark.style.position = "absolute"
               mark.style.zIndex = "20"
+              mark.style.height = "20px"
               mark.className  = "mark"
           }
         }

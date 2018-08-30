@@ -43,6 +43,11 @@ angular.module('scalearAngularApp')
       }
 
       $scope.validateQuiz = function(column, data) {
+        if(column=="retries"){
+          if(data<1){
+            return "Must be more than 1"
+          }
+        }
         var quiz = { id: $scope.quiz.id, course_id: $scope.quiz.course_id, group_id: $scope.quiz.group_id }
         quiz[column] = data;
         var temp_quiz = QuizModel.createInstance(quiz);

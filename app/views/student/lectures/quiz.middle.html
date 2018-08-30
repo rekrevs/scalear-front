@@ -43,16 +43,12 @@
                 </div>
             </center>
             <span ng-if="passed_requirments">
-        		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct" explanation="explanation"></student-quiz>
-
+        		    <student-quiz  quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct" explanation="explanation"  save-selection="saveQuiz" update-time="selectionUpdateTime" selection-submitted="status.status"></student-quiz>
             </span>
     	</form>
     </div>
     <div class="with-margin-top small-12 columns" ng-if="passed_requirments">
-        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts>quiz.retries && quiz.quiz_type == 'survey') || save_inprogress" type="button" class="button tiny" ng-click="saveQuiz('save')">
-           <span translate>button.save</span>
-        </button>
-        <button ng-disabled="(status.status=='Submitted' && status.attempts>quiz.retries) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
+        <button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
             <span translate>button.submit</span>
         </button>
         <button id="next_button" type="button" ng-show="next_item.id" ng-click="nextItem()" class="button tiny">

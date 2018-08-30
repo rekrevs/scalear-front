@@ -18,7 +18,7 @@
             </div>
             <div class="small-12 columns">
                 <div class="small-12 column" ng-if='question.question_type == "Free Text Question"'>
-                    <textarea ng-model='studentAnswers[question.id]'></textarea>
+                    <textarea ng-model='studentAnswers[question.id]' ng-change='updateValues({{question.id}})' ng-model-options="{debounce:2000}"></textarea>
                     <div ng-bind-html="explanation[question.answers[0].id]"></div>
                 </div>
                 <div ng-if='question.question_type.toUpperCase()=="OCQ" || question.question_type.toUpperCase()=="MCQ"' ng-repeat='answer in question.answers'>
@@ -26,7 +26,6 @@
                         <label class="with-margin-top">
                             <input class="left with-small-margin-right with-tiny-margin-top" atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})' ng-class="{error: submitted && !valid(question.id)}"/>
                             <div ng-bind-html="answer.content" pop-over="answer.options"></div>
-
                             <small class='error' ng-show='submitted && !valid(question.id)' translate>quizzes.must_choose_answer</small>
                         </label>
                     </div>
@@ -39,12 +38,12 @@
                         </label>
                     </div>
                 </div>
-                <div ng-if='question.question_type.toUpperCase()=="DRAG"'>
-                    <div class="small-12 columns with-margin-top">
-                       <ul class='sortable custome' ui-sortable ng-model='studentAnswers[question.id]'>
-                          <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default with-small-padding with-tiny-margin' pop-over="drag_explanation[$index]">
-                             <div class='ui-icon ui-icon-arrowthick-2-n-s handle must-show-inline valign-middle'></div>
-                             <div class="must-show-inline" ng-bind-html="answer" ></div>
+                <div ng-if='question.question_type.toUpperCase()=="DRAG"' >
+                    <div class="small-12 columns with-margin-top"  >
+                       <ul class='sortable custome' ui-sortable="sortableOptions" ng-model='studentAnswers[question.id]'>
+                          <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default with-small-padding with-tiny-margin' pop-over="drag_explanation[$index]"  >
+                             <div class='ui-icon ui-icon-arrowthick-2-n-s handle must-show-inline valign-middle'  ></div>
+                             <div class="must-show-inline" ng-bind-html="answer"  ></div>
                           </li>
                        </ul>
                     </div>
@@ -53,3 +52,4 @@
         </div>
    </div>
 </div>
+<div class="small-12 column" style="color:grey; font-size:small;" ng-show="updateTime" >Saved at: {{updateTime}}</div>

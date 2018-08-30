@@ -24,6 +24,9 @@ angular.module('scalearAngularApp')
               }
             }
           }
+          if (data.status !== null){
+            $scope.selectionUpdateTime=new Date(data.status.updated_at).toLocaleString([], { hour12: true })
+          }
           $scope.quiz.questions = data.questions
           $scope.studentAnswers = data.quiz_grades;
           $scope.status = data.status;
@@ -53,12 +56,17 @@ angular.module('scalearAngularApp')
       $state.go(next_state, to);
     }
 
+
+    $scope.selectionUpdateTime
     $scope.saveQuiz = function(action) {
       $scope.save_inprogress = true
       if($scope.form.$valid || action == "save") { //validate only if submit.
         $scope.submitted = false;
         $scope.quiz.studentSolve($scope.studentAnswers, action)
           .then(function(data) {
+            if (data.status !== null){
+              $scope.selectionUpdateTime=new Date(data.status.updated_at).toLocaleString([], { hour12: true })
+            }
             $scope.save_inprogress = false
             $scope.status = data.status;
             $scope.alert_messages = data.alert_messages;

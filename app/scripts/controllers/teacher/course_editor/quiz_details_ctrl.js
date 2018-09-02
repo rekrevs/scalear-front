@@ -47,8 +47,6 @@ angular.module('scalearAngularApp')
       })
 
       $scope.validateQuiz = function(column, data) {
-        console.log(column);
-        console.log(data);
         if(column=="correct_question_count"){
           if (data > $scope.quiz.questions_count){
             return "Must be less than or equal to number of questions";

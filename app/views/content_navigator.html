@@ -70,27 +70,23 @@
 					<a ng-click='paste($event)' translate>context_menu.paste</a>
 				</li>
 			</ul>
-
-			<accordion class="accordion no-margin" close-others=false >
+			<accordion class="accordion no-margin" close-others=true >
 				<span ui-sortable="moduleSortableOptions" ng-model='modules' >
-					  
-					<accordion-group  class="module accordion-group" ng-repeat="module in modules" is-open="currentmodule.id == module.id" uib-collapse="collapse" context-menu data-target="module-menu" jqyoui-droppable="{multiple:true,stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})',onOut:'removeModuleSelection({module:module})'}" data-drop="true" data-jqyoui-options>
-
+					<accordion-group  class="module accordion-group" ng-repeat="module in modules" is-open="currentmodule.id == module.id" uib-collapse="collapse" context-menu data-target="module-menu" jqyoui-droppable="{multiple:true,stack:false,onOver:'showModuleHover({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})',onOut:'removeModuleHover({module:module})'}" data-drop="true" data-jqyoui-options>
 						<accordion-heading class="accordion-heading">
-
 							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)"  />
 						</accordion-heading>
-	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items' >
-		            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}"  >
-	             				<item_edit style='width:100%' data="item" ng-click="showItem(item, 'course_editor')" copy-dragged-item='copyDraggedItem' />
-		            		</li>
-		            	</span>
-		            	<button id="new_item" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>
-		            	<ul class="module-menu dropdown-menu text-left">
-										<li><a ng-click='copy($event)' >{{::'context_menu.copy'| translate}}</a></li>
-										<li ng-show="clipboard.type"><a ng-click='paste($event, module.id)' >{{::'context_menu.paste'| translate}}</a></li>
-										<li><a ng-click='share($event)' ></a>{{::'context_menu.share'| translate}}</li>
-									</ul>
+        			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items' >
+            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}"  >
+           				<item_edit style='width:100%' data="item" ng-click="showItem(item, 'course_editor')" copy-dragged-item='copyDraggedItem' />
+            		</li>
+            	</span>
+            	<button id="new_item" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>
+            	<ul class="module-menu dropdown-menu text-left">
+								<li><a ng-click='copy($event)' >{{::'context_menu.copy'| translate}}</a></li>
+								<li ng-show="clipboard.type"><a ng-click='paste($event, module.id)' >{{::'context_menu.paste'| translate}}</a></li>
+								<li><a ng-click='share($event)' ></a>{{::'context_menu.share'| translate}}</li>
+							</ul>
 					</accordion-group>
 				</span>
 			</accordion>
@@ -105,7 +101,7 @@
 		<div class="modules_container" style="height:100%;overflow:auto">
 			<accordion class="accordion no-margin">
 				<span>
-					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
+					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="currentmodule.id == module.id">
 						<accordion-heading class="accordion-heading">
 							<module data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" >
 							</module>

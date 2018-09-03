@@ -275,55 +275,30 @@ angular.module('scalearAngularApp')
         }
 
         scope.showModule = function(module, event) {
-          //console.log("event",event)
-          //console.log("module:",module)
-          if(scope.currentmodule && scope.currentmodule.id == module.id){
-            //event.stopPropagation()
-
+          if(scope.currentmodule){
+            event.stopPropagation()
           }
           if($state.includes("course.progress_overview") || $state.includes("course.progress_main") || $state.includes("course.progress_graph") || $state.includes("course.progress")) {
             $state.go('course.module.progress_overview', { module_id: module.id })
-
           } else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress") || $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students")) {
             $state.go('.', { module_id: module.id })
-
           } else if($state.includes("course.module.inclass") || $state.includes("course.inclass")) {
             $state.go('course.module.inclass', { module_id: module.id })
-
           } else {
             $state.go('course.module.course_editor.overview', { module_id: module.id })
             scope.currentmodule = { id: $state.params.module_id }
-
-            //ScalearUtils.safeApply()
-
           }
           $timeout(function() {
             scope.scrollIntoView(scope.currentmodule)
-            // console.log("6")
           })
         }
-        scope.removeModuleSelection = function(event,ui, data){
-          var m = document.getElementById("module_"+data.module.id)
-          console.log(m)
-          m.classList.remove("grey")
-          //event.stopPropagation()
-          ScalearUtils.safeApply()
+
+        scope.removeModuleHover = function(event,ui, data){
+          document.getElementById("module_"+data.module.id).classList.remove("moduleHovered")
         }
-        scope.showModuleDraggable = function(event,ui, data) {
-          //$state.go('course.module.course_editor.overview', { module_id: data.module.id })
-          //scope.currentmodule = { id:data.module.id }
 
-
-          //console.log(event)
-          //console.log(data)
-          //console.log(ui)
-          var m = document.getElementById("module_"+data.module.id)
-          console.log(m)
-          m.classList.add("grey")
-          //event.stopPropagation()
-          ScalearUtils.safeApply()
-          //event.stopPropagation()
-          // console.log("$state:",$state)
+        scope.showModuleHover = function(event,ui, data) {
+          document.getElementById("module_"+data.module.id).classList.add("moduleHovered")
         }
 
         scope.preview = function() {
@@ -349,12 +324,13 @@ angular.module('scalearAngularApp')
         scope.copyDraggedItem=function(event,ui, data){
           $rootScope.$broadcast('copy_item', data.draggedItem)
         }
-        scope.dropped = false
+
         scope.pasteDraggedItem = function(event,ui, data) {
           $rootScope.$broadcast('paste_item', data.moduleId, {cut: true})
           scope.currentmodule.id = data.moduleId
-          scope.dropped = true
-          ScalearUtils.safeApply()
+          document.getElementById("module_"+data.moduleId).classList.remove("currentmodule","selectedmodule","moduleHovered")
+
+
 
         }
 

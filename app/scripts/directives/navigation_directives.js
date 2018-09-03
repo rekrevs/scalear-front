@@ -304,10 +304,6 @@ angular.module('scalearAngularApp')
         }
         scope.collapse = false
         scope.showModuleDraggable = function(event,ui, data) {
-          //console.log("data:",data.module.id)
-          //console.log("event:",event)
-          //
-          console.log("over droppable")
           $state.go('course.module.course_editor.overview', { module_id: data.module.id })
           scope.currentmodule = { id:data.module.id }
           scope.collapse = true

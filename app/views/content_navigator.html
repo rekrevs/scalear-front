@@ -70,15 +70,17 @@
 					<a ng-click='paste($event)' translate>context_menu.paste</a>
 				</li>
 			</ul>
-			<accordion class="accordion no-margin" >
-				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
-					<accordion-group  class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}" context-menu data-target="module-menu" >
+
+			<accordion class="accordion no-margin" close-others=false >
+				<span ui-sortable="moduleSortableOptions" ng-model='modules' >
+					<div>{{currentmodule.id}}...{{uib-collapse}}</div>
+					<accordion-group  class="module accordion-group" ng-repeat="module in modules"    is-open="currentmodule.id == module.id" uib-collapse="collapse" context-menu data-target="module-menu" jqyoui-droppable="{multiple:true,stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})'}" data-drop="true" data-jqyoui-options>
 						<accordion-heading class="accordion-heading">
-							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" jqyoui-droppable="{stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})'}" data-drop="true" data-jqyoui-options />
+							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)"  />
 						</accordion-heading>
-	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-		            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">
-	             				<item_edit data-drag="true" style='width: 100%' data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" jqyoui-draggable="{animate:true,onStart:'copyDraggedItem({draggedItem:item})'}"  data="item" ng-click="showItem(item, 'course_editor')" />
+	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items' >
+		            		<li class="last-child item looks-like-a-link "  ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}"  >
+	             				<item_edit style='width:100%' data="item" ng-click="showItem(item, 'course_editor')" copy-dragged-item='copyDraggedItem' />
 		            		</li>
 		            	</span>
 		            	<button id="new_item" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>editor.button.add_content</span></button>

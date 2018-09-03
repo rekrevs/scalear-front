@@ -329,9 +329,6 @@ angular.module('scalearAngularApp')
           $rootScope.$broadcast('paste_item', data.moduleId, {cut: true})
           scope.currentmodule.id = data.moduleId
           document.getElementById("module_"+data.moduleId).classList.remove("currentmodule","selectedmodule","moduleHovered")
-
-
-
         }
 
         scope.scrollIntoView = function(module) {

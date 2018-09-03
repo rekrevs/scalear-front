@@ -73,9 +73,11 @@
 
 			<accordion class="accordion no-margin" close-others=false >
 				<span ui-sortable="moduleSortableOptions" ng-model='modules' >
-					<div>{{currentmodule.id}}...{{uib-collapse}}</div>
-					<accordion-group  class="module accordion-group" ng-repeat="module in modules"    is-open="currentmodule.id == module.id" uib-collapse="collapse" context-menu data-target="module-menu" jqyoui-droppable="{multiple:true,stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})'}" data-drop="true" data-jqyoui-options>
+					   {{currentmodule.id}}
+					<accordion-group  class="module accordion-group" ng-repeat="module in modules" is-open="currentmodule.id == module.id" uib-collapse="collapse" context-menu data-target="module-menu" jqyoui-droppable="{multiple:true,stack:false,onOver:'showModuleDraggable({module:module})',onDrop:'pasteDraggedItem({moduleId:module.id})',onOut:'removeModuleSelection({module:module})'}" data-drop="true" data-jqyoui-options>
+
 						<accordion-heading class="accordion-heading">
+
 							<module_edit   data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)"  />
 						</accordion-heading>
 	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items' >

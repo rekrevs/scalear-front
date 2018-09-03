@@ -302,11 +302,24 @@ angular.module('scalearAngularApp')
             // console.log("6")
           })
         }
-        scope.collapse = false
+        scope.removeModuleSelection = function(event,ui, data){
+          var m = document.getElementById("module_"+data.module.id)
+          console.log(m)
+          m.classList.remove("grey")
+          //event.stopPropagation()
+          ScalearUtils.safeApply()
+        }
         scope.showModuleDraggable = function(event,ui, data) {
-          $state.go('course.module.course_editor.overview', { module_id: data.module.id })
-          scope.currentmodule = { id:data.module.id }
-          scope.collapse = true
+          //$state.go('course.module.course_editor.overview', { module_id: data.module.id })
+          //scope.currentmodule = { id:data.module.id }
+
+
+          //console.log(event)
+          //console.log(data)
+          //console.log(ui)
+          var m = document.getElementById("module_"+data.module.id)
+          console.log(m)
+          m.classList.add("grey")
           //event.stopPropagation()
           ScalearUtils.safeApply()
           //event.stopPropagation()
@@ -336,9 +349,12 @@ angular.module('scalearAngularApp')
         scope.copyDraggedItem=function(event,ui, data){
           $rootScope.$broadcast('copy_item', data.draggedItem)
         }
-
+        scope.dropped = false
         scope.pasteDraggedItem = function(event,ui, data) {
           $rootScope.$broadcast('paste_item', data.moduleId, {cut: true})
+          scope.currentmodule.id = data.moduleId
+          scope.dropped = true
+          ScalearUtils.safeApply()
 
         }
 

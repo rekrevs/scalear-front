@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
       $scope.removeAnswer(index, question)
       $scope.saveQuestions()
     }
-
+    $scope.saving = false
     $scope.saveQuestions = function() {
       setTimeout(function(){
         if (autoSaveTimeOut){
@@ -61,9 +61,13 @@ angular.module('scalearAngularApp')
             if($scope.tform.$valid) {
               $scope.submitted = false;
               $scope.hide_alerts = true;
+              $scope.saving=true
+              $scope.saved=false
               QuestionModel.updateQuestions()
               .then(function(){
                 $scope.currentDate = new Date().toLocaleString([], { hour12: true});
+                $scope.saved = true
+                $scope.saving= false
               })
             } else {
               $scope.submitted = true;
@@ -71,7 +75,6 @@ angular.module('scalearAngularApp')
             }
           },500)
         },500)
-        $scope.saved = true
     }
 
     $scope.publish = function() {

@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation', 'ScalearUtils', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation, ScalearUtils) {
     return {
       restrict: 'E',
       replace: true,
@@ -294,11 +294,13 @@ angular.module('scalearAngularApp')
         }
 
         scope.removeModuleHover = function(event,ui, data){
-          document.getElementById("module_"+data.module.id).classList.remove("moduleHovered")
+          data.module.hovered = false
+          ScalearUtils.safeApply();
         }
 
         scope.showModuleHover = function(event,ui, data) {
-          document.getElementById("module_"+data.module.id).classList.add("moduleHovered")
+          data.module.hovered = true
+          ScalearUtils.safeApply();
         }
 
         scope.preview = function() {

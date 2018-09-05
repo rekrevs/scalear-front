@@ -87,7 +87,8 @@ angular.module('scalearAngularApp')
 }]).directive('itemEdit', ['$rootScope','$timeout','$anchorScroll','$location','$state','$log', function($rootScope, $timeout, $anchorScroll,$location,$state,$log) {
     return {
         scope: {
-            item:'=data'
+            item:'=data',
+            copyDraggedItem:'='
         },
         restrict: 'E',
         templateUrl: '/views/teacher/course_editor/item_edit.html',

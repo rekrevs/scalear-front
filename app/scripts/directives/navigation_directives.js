@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation', 'ScalearUtils', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation, ScalearUtils) {
     return {
       restrict: 'E',
       replace: true,
@@ -275,21 +275,32 @@ angular.module('scalearAngularApp')
         }
 
         scope.showModule = function(module, event) {
-          if(scope.currentmodule && scope.currentmodule.id == module.id)
+          if(scope.currentmodule){
             event.stopPropagation()
-          if($state.includes("course.progress_overview") || $state.includes("course.progress_main") || $state.includes("course.progress_graph") || $state.includes("course.progress"))
+          }
+          if($state.includes("course.progress_overview") || $state.includes("course.progress_main") || $state.includes("course.progress_graph") || $state.includes("course.progress")) {
             $state.go('course.module.progress_overview', { module_id: module.id })
-          else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress") || $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students"))
+          } else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress") || $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students")) {
             $state.go('.', { module_id: module.id })
-          else if($state.includes("course.module.inclass") || $state.includes("course.inclass")) {
+          } else if($state.includes("course.module.inclass") || $state.includes("course.inclass")) {
             $state.go('course.module.inclass', { module_id: module.id })
-          } else
+          } else {
             $state.go('course.module.course_editor.overview', { module_id: module.id })
             scope.currentmodule = { id: $state.params.module_id }
+          }
           $timeout(function() {
             scope.scrollIntoView(scope.currentmodule)
           })
+        }
 
+        scope.removeModuleHover = function(event,ui, data){
+          data.module.hovered = false
+          ScalearUtils.safeApply();
+        }
+
+        scope.showModuleHover = function(event,ui, data) {
+          data.module.hovered = true
+          ScalearUtils.safeApply();
         }
 
         scope.preview = function() {
@@ -310,6 +321,15 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('paste_item')
           else
             $rootScope.$broadcast('paste_item', module_id)
+        }
+
+        scope.copyDraggedItem=function(event,ui, data){
+          $rootScope.$broadcast('copy_item', data.draggedItem)
+        }
+
+        scope.pasteDraggedItem = function(event,ui, data) {
+          $rootScope.$broadcast('paste_item', data.moduleId, {cut: true})
+          scope.currentmodule.id = data.moduleId
         }
 
         scope.scrollIntoView = function(module) {

@@ -23,7 +23,7 @@
 				</div>
 			</div>
 		</form>
-		<div class="row" style="margin-top:10px">
+		<div class="row" style="margin-top:10px;padding: 0 15px;">
 			<center>
 				<div ng-show="submitted && !hide_alerts">
 					<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
@@ -37,7 +37,7 @@
 				<span ng-if="module_visible">
 					<button class="button small green" name="save_publish" ng-click="publish()" ng-if="!publish_state_visible" translate>button.publish</button>
 					<button class="button small green" name="save_publish" ng-click="unpublish()" ng-if="publish_state_visible" translate>button.unpublish</button>
-					<span ng-show="saved" style="font-size:  x-small;color: #a9a7a7;left: 5%;position: relative; ">Saved at: {{ currentDate }}</span>
+					<br><span ng-show="saving || saved" style="font-size:  0.8125rem;color: #a9a7a7;left: 39%;margin-right:auto;position: relative; ">{{saving? "Saving...": "All changes saved" }}</span>
 				</span>
 				</div>
 			</center>

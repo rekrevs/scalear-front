@@ -199,22 +199,24 @@ angular.module('scalearAngularApp')
     $scope.paste = function(module_id, options) {
       var item = $rootScope.clipboard
       var successful_paste
-
-      if(item.type == 'module') {
-        successful_paste = ModuleModel.paste(item)
-      } else if(item.type == 'lecture') {
-        successful_paste=LectureModel.paste(item, module_id)
-      } else if(item.type == 'quiz') {
-        successful_paste = QuizModel.paste(item, module_id)
-      } else if(item.type == 'customlink') {
-        successful_paste = LinkModel.paste(item, module_id)
+      if(item) {
+        if(item.type == 'module') {
+          successful_paste = ModuleModel.paste(item)
+        } else if(item.type == 'lecture') {
+          successful_paste=LectureModel.paste(item, module_id)
+        } else if(item.type == 'quiz') {
+          successful_paste = QuizModel.paste(item, module_id)
+        } else if(item.type == 'customlink') {
+          successful_paste = LinkModel.paste(item, module_id)
+        }
+        
+        successful_paste.then(function(){
+          if(options.cut){
+            $scope.$broadcast("delete_item", item)
+          }
+        })
       }
 
-      successful_paste.then(function(){
-        if(options.cut){
-          $scope.$broadcast("delete_item", item)
-        }
-      })
     }
 
     var openSharingModal = function(data) {

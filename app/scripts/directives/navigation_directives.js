@@ -330,7 +330,6 @@ angular.module('scalearAngularApp')
         scope.pasteDraggedItem = function(event,ui, data) {
           $rootScope.$broadcast('paste_item', data.moduleId, {cut: true})
           scope.currentmodule.id = data.moduleId
-          document.getElementById("module_"+data.moduleId).classList.remove("currentmodule","selectedmodule","moduleHovered")
         }
 
         scope.scrollIntoView = function(module) {

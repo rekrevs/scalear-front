@@ -3,13 +3,21 @@
 angular.module('scalearAngularApp')
   .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', 'UserSession','User', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal, UserSession, User) {
     $window.scrollTo(0, 0);
+    $scope.getHtmlText=ScalearUtils.getHtmlText;
     Page.setTitle('navigation.new_course')
     $rootScope.subheader_message = $translate.instant("navigation.new_course")
     $scope.submitting = false;
+    $scope.show_course_selection = false;
     $scope.course = {}
+     $scope.status = '  ';
     $scope.welcome_message = null
     $scope.course.selected_subdomain = {'All':true}
+    $scope.hide_ask_copy = false;
     $scope.course.email_discussion = false
+    $scope.selected_course_details = false;
+    $scope.selected_course = null;
+    $scope.selected_course_description=null;
+    $scope.selected_course_prerequists = null;
     CourseModel.getUserOtherCourses().then(function(data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -35,15 +43,19 @@ angular.module('scalearAngularApp')
         }) 
     }) 
 
-    $scope.addImportInformation = function() {
+
+    $scope.addImportInformation = function(chosen_course) {
+
       var splitter_text = "[" + $translate.instant("navigation.copied_from")
       var desc_temp = "",
         pre_temp = "",
         desc_temp_empty = "",
         pre_temp_empty = "",
         image_temp_empty = ""
-      var course_info = $scope.import_from
+      $scope.import_from = chosen_course
+      var course_info = chosen_course
       if(course_info) {
+
         var course_name_text = "\n" + splitter_text + " " + course_info.name + " :]\n"
         if(course_info.description) {
           desc_temp = course_name_text + course_info.description
@@ -57,6 +69,7 @@ angular.module('scalearAngularApp')
       }
       if($scope.course.description) {
         $scope.course.description = $scope.course.description.split(splitter_text)[0].trim() + desc_temp
+
       } else {
         $scope.course.description = desc_temp_empty
       }
@@ -148,8 +161,6 @@ angular.module('scalearAngularApp')
       }
       return deferred.promise
     }
-
-
     $scope.createCourse = function() {
       $scope.submitting = true;
       validateDate()
@@ -178,5 +189,34 @@ angular.module('scalearAngularApp')
           $scope.server_errors = errors
           $scope.submitting = false;
       })
+    }
+    $scope.showConfirm = function() {
+     // Appending dialog to document.body to cover sidenav in docs app
+     $modal.open({
+       templateUrl: '/views/teacher/course_list/copy_from_course.html',
+       scope: $scope,
+       controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
+         $scope.close = function () {
+           $scope.import_from = $scope.selected_course
+
+           $modalInstance.dismiss();
+        };
+      }],
+     })
+    };
+    $scope.$on('$viewContentLoaded', function() {
+       $scope.showConfirm()
+    });
+    $scope.hideAskCopy = function(){
+       $scope.hide_ask_copy = true;
+    }
+    $scope.showCourseSeleciton = function () {
+       $scope.show_course_selection = true;
+    }
+    $scope.showSelectedCourseDetails = function(selected_course){
+       $scope.selected_course_details=true;
+       $scope.selected_course=selected_course;
+       $scope.selected_course_description= ScalearUtils.getHtmlText(selected_course.description);
+       $scope.selected_course_prerequists = ScalearUtils.getHtmlText(selected_course.prerequisites);
     }
   }]);

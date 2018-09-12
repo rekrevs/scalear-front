@@ -138,7 +138,7 @@ angular.module('scalearAngularApp')
   }
 }).filter("formatURL", function(){
   return function(url){
-      if (!url.match(/^[a-zA-Z]+:\/\//)){
+      if (!url.match(/^[a-zA-Z]+:\/\//) && !url.toString().startsWith("<iframe")){
           url = 'http://' + url;
       }
     return url

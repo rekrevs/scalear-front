@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
       "saveNote": { method: 'POST', params: { action: 'save_note' }, headers: headers },
       "deleteNote": { method: 'DELETE', params: { action: 'delete_note' }, headers: headers },
       "lectureCopy": { method: 'POST', params: { action: 'lecture_copy' }, headers: headers },
-      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers }, 
+      "exportNotes": { method: 'GET', params: { action: 'export_notes' }, headers: headers },
       "changeLectureStatus": { method: 'POST', ignoreLoadingBar: true, params: { action: 'change_status_angular' }, headers: headers },
       "updatePercentView": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_percent_view' }, headers: headers },
       "confusedShowInclass": { method: 'POST', ignoreLoadingBar: true, params: { action: 'confused_show_inclass' }, headers: headers },
@@ -139,6 +139,7 @@ angular.module('scalearAngularApp')
       })
 
       function update() {
+
         var modified_lecture = angular.copy(lecture);
         delete modified_lecture.id;
         delete modified_lecture.created_at;
@@ -156,6 +157,7 @@ angular.module('scalearAngularApp')
           })
           .$promise
           .then(function(data) {
+
             angular.extend(lecture, data.lecture)
           })
       }
@@ -168,6 +170,7 @@ angular.module('scalearAngularApp')
           validate()
             .then(function() {
               var type = VideoInformation.isYoutube(lecture.url)
+
               if(type) {
                 var id = type[1]
                 VideoInformation.emptyCachedInfo()
@@ -189,7 +192,7 @@ angular.module('scalearAngularApp')
                   })
               } else {
                 deferred.resolve()
-              } 
+              }
             })
             .catch(function(msg) {
               deferred.reject(msg)
@@ -213,25 +216,31 @@ angular.module('scalearAngularApp')
       }
 
       function updateUrl() {
+
         VideoInformation.resetValues()
         var deferred = $q.defer();
         lecture.aspect_ratio = "widescreen"
         lecture.url = lecture.url.trim()
+
         if(lecture.url && lecture.url != "none" && lecture.url != "http://") {
+
           var type = VideoInformation.isYoutube(lecture.url)
           if(type) {
             var video_id = type[1];
             if(!VideoInformation.isFinalUrl(lecture.url)) {
               lecture.url = VideoInformation.getFinalUrl(video_id)
             }
+
             VideoInformation.requestInfoFromYoutube(video_id)
               .then(function(data) {
+
                 var duration = ScalearUtils.parseDuration(data.items[0].contentDetails.duration)
                 lecture.duration = (duration.hour * (60 * 60) + duration.minute * (60) + duration.second)
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
                 update().then(function() {
                   deferred.resolve(true);
+
                 });
                 $rootScope.$broadcast("update_module_time", lecture.group_id)
               })
@@ -245,7 +254,7 @@ angular.module('scalearAngularApp')
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
-          }else if(VideoInformation.isMediaSite(lecture.url)){
+          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url)){
             VideoInformation.waitForDurationSetup().then(function (duration) {
               lecture.duration = duration
               lecture.start_time = 0
@@ -257,9 +266,10 @@ angular.module('scalearAngularApp')
             })
           }
         } else {
-          lecture.url = "none"
+          lecture.url= "none"
           deferred.reject()
         }
+
         return deferred.promise;
       }
 
@@ -278,8 +288,8 @@ angular.module('scalearAngularApp')
         return Lecture.updatePercentView({
           course_id: lecture.course_id,
           lecture_id: lecture.id
-        }, { 
-          percent: milestone 
+        }, {
+          percent: milestone
         })
         .$promise
     }

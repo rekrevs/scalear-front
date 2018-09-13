@@ -24,6 +24,8 @@ angular.module('scalearAngularApp')
     }
 
     angular.extend($scope, QuestionModel);
+    addShortucts();
+
     $scope.getEditableQuestions()
       .then(function(questions) {
         $scope.questions = questions
@@ -74,4 +76,12 @@ angular.module('scalearAngularApp')
       $scope.publish_state_visible = $scope.quiz.isVisible()
       $scope.quiz.update()
     }
+
+    function addShortucts() {
+      shortcut.add("Shift+n",
+        function() {
+          console.log("keys pressed")
+        }, { "disable_in_input": true, 'propagate': false });
+    };
+
   }])

@@ -227,7 +227,11 @@ angular.module('scalearAngularApp')
             selectedImage.setAttribute('class',this.imageSize)
             this.base.saveSelection()
             var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
+            console.log("basic_editor:",basic_editor)
             var textareaContent = basic_editor.getContent()
+            if (!textareaContent){
+
+            }
             basic_editor.resetContent(this.base.elements[0])
             basic_editor.setContent(textareaContent,0)
             this.base.restoreSelection()

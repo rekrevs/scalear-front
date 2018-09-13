@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
                     });
                 }
                 else
-                  $rootScope.$broadcast("delete_module", scope.module)  
+                  $rootScope.$broadcast("delete_module", scope.module)
             }
 
             scope.copy=function(event){
@@ -102,7 +102,7 @@ angular.module('scalearAngularApp')
             }
 
             scope.copy=function(event){
-                $log.debug("copy")         
+                $log.debug("copy")
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.item)
             }

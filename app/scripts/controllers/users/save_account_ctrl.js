@@ -12,6 +12,10 @@ angular.module('scalearAngularApp')
     //   })
 
     $scope.update_account = function() {
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature_main_kaltura
       $scope.sending = true;
       delete $scope.user.errors
       $scope.user.first_day = $scope.user.first_day.id

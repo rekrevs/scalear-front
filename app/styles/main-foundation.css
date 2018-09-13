@@ -3006,3 +3006,6 @@ dd#second_accordion > a:hover{
   top :0 !important;
   z-index:10 !important;
 }
+.moduleHovered {
+  background-color: grey;
+}

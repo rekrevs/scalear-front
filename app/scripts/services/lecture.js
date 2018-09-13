@@ -90,7 +90,7 @@ angular.module('scalearAngularApp')
 
     function paste(lec, module_id) {
       var module = ModuleModel.getById(module_id)
-      Lecture.lectureCopy({ course_id: module.course_id }, {
+      return Lecture.lectureCopy({ course_id: module.course_id }, {
           lecture_id: lec.id,
           module_id: module.id
         })

@@ -617,6 +617,7 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, video) {
       // $log.debug(video.url)
       // $log.debug($scope.url)
+
       if ($scope.url.indexOf(video.url) == -1) {
         if ($scope.progress_player.controls.isYoutube(video.url)) {
           $scope.video_start = video.start_time
@@ -635,10 +636,8 @@ angular.module('scalearAngularApp')
             $scope.progress_player.controls.seek_and_pause(time)
           })
         }
+
       } else {
-        // $timeout(function() {
-        //   $scope.progress_player.controls.seek_and_pause(time)
-        // })
         if( $scope.selected_item.lec_id != $scope.url_lecture_id){
           $scope.video_start = video.start_time
           $scope.video_end = video.end_time
@@ -646,7 +645,6 @@ angular.module('scalearAngularApp')
           $timeout(function() {
             $scope.progress_player.controls.seek_and_pause(time)
           },250)
-          // $scope.url = video.url + "&controls=1&fs=1&theme=light"
           $scope.url_lecture_id = video.id
         }
         else{

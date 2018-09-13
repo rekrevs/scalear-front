@@ -11,7 +11,7 @@
 		<i ng-if="!(item.appearance_time | visible) && item.class_name == 'quiz'" style="margin-right:5px;float:left;color: #c41c24" class="fi-alert" tooltip="{{'editor.tooltip.invisible_quiz'|translate}}" tooltip-placement="right" tooltip-append-to-body="true" ></i>
 		<i ng-if="!(item.appearance_time | visible) && item.class_name == 'lecture'" style="margin-right:5px;float:left;color: #c41c24" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}"  tooltip-placement="right" tooltip-append-to-body="true" ></i>
 
-		<div class="show-inline valign-middle left text-left" style="width: 65%">{{item.name}}</div>
+		<div class="show-inline valign-middle left text-left" style="width: 65%" data-drag="true"  data-jqyoui-options="{revert: 'invalid', helper: 'clone'}" jqyoui-draggable="{animate:true,onStart:'copyDraggedItem({draggedItem:item})'}" >{{item.name}}</div>
 		<small class="color-dark-grey" style="padding:1px"><span>{{item.duration && (item.duration| formattime:'h:mm:ss') || ''}}</span></small>
 	</div>
 	<ul class="item-menu dropdown-menu text-left" >

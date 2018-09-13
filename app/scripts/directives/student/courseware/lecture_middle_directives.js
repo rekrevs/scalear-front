@@ -47,8 +47,7 @@ angular
           action: "&"
         },
         template:
-          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action()">{{"lectures.button.check_answer" | translate}}</button>',
-        link: function(scope, element, attrs) {}
+          '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action(); ">{{"lectures.button.check_answer" | translate}}</button>',
       };
     }
   ])
@@ -255,12 +254,13 @@ angular
           quiz: "=",
           data: "=",
           explanation: "=",
-          studentAnswers: "="
+          studentAnswers: "=",
+          correctSelections:"="
         },
         template:
           "<div ng-switch on='quiz.question_type.toUpperCase()'>" +
           "<div ng-switch-when='MCQ'><student-answer /></div>" +
-          "<div ng-switch-when='OCQ'><student-answer /></div>" +
+          "<div ng-switch-when='OCQ'><student-answer correct_selections='correct_selections'/></div>" +
           "<div ng-switch-when='DRAG'><student-drag /></div>" +
           "<div ng-switch-when='FREE TEXT QUESTION'><student-free-text /></div>" +
           "</div>"
@@ -281,9 +281,12 @@ angular
           var setup = function() {
             scope.explanation_pop = {};
             var type = scope.quiz.question_type == "MCQ" ? "checkbox" : "radio";
-            element.attr("type", type);
+            element[0].children['student_answer'].setAttribute("type", type)
           };
           scope.radioChange = function(corr_ans) {
+            if(!scope.correctSelections){
+              scope.checkAnswerClicked = false
+            }
             if (scope.quiz.question_type == "OCQ") {
               $log.debug("radioChange");
               scope.quiz.online_answers.forEach(function(ans) {
@@ -292,9 +295,9 @@ angular
               corr_ans.selected = true;
             }
           };
-
           scope.$watch("explanation[data.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.data.id]) {
+              scope.checkAnswerClicked = true
               if (scope.explanation[scope.data.id][0]) {
                 scope.title_class = "green_notification";
                 scope.exp_title = "lectures.correct";
@@ -310,7 +313,6 @@ angular
                 html: true,
                 trigger: $rootScope.is_mobile ? "click" : "hover",
                 placement: scope.data.xcoor > 0.5 ? "left" : "right",
-                instant_show: "mouseover"
               };
               $timeout(function() {
                 if (scope.explanation[scope.data.id][0]) {
@@ -844,7 +846,6 @@ angular
         },
         templateUrl: "/views/student/lectures/dynamic_annotation_student.html",
         link: function(scope, element, attrs) {
-
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
         }
@@ -868,6 +869,34 @@ angular
         link: function(scope, element, attrs) {
           scope.closeBtn = scope.close();
           scope.actionBtn = scope.action();
+        }
+      };
+    }
+  ])
+  .directive("correctionMark", [
+    function() {
+      return {
+        restrict: "E",
+        scope: {
+          data:"=",
+          correctSelections:"="
+        },
+        templateUrl: "/views/student/lectures/mark.html",
+          link: function(scope, element, attrs) {
+            scope.setStyle=function(){
+              var answer = scope.data
+              var mark = element[0].firstElementChild
+              if (answer.xcoor<0.5){
+                mark.style.left = ((answer.xcoor*100)+1.5)+'%'
+              } else {
+                mark.style.left = ((answer.xcoor*100)-2)+'%'
+              }
+              mark.style.top = ((answer.ycoor*100)-0.5)+'%'
+              mark.style.position = "absolute"
+              mark.style.zIndex = "20"
+              mark.style.height = "20px"
+              mark.className  = "mark"
+          }
         }
       };
     }

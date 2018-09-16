@@ -209,11 +209,15 @@ angular.module('scalearAngularApp')
         } else if(item.type == 'customlink') {
           successful_paste = LinkModel.paste(item, module_id)
         }
-        
+
         successful_paste.then(function(){
           if(options.cut){
             $scope.$broadcast("delete_item", item)
+            $rootScope.$broadcast("content_navigator_overlay", {status: false})
           }
+        }).catch(function(err){
+          console.log(err);
+          $rootScope.$broadcast("content_navigator_overlay", {status: false})
         })
       }
 

@@ -1699,6 +1699,22 @@ label{
   /*left: auto !important;*/
 }
 
+/* #scalable-spinner-image{
+  display: block;
+  width: 100px;
+  height: 100px;
+  z-index: 1000000000;
+} */
+
+/* #scalable-spinner-image .spinner-icon-image {
+  background-image: url("/images/loading3.gif");
+} */
+
+#scalable-spinner-image .spinner-icon-image{
+  content:url("/images/loading2.gif");
+  height: 25px;
+}
+
 /*Animations*/
 
 .fade {

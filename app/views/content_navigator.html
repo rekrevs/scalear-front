@@ -63,7 +63,7 @@
 	</span>
 	<span ng-switch-when="editor" ng-if="'**.course_editor.**' | includedByState">
 		<div class="content-navigator-bottom-container-height modules_container no-margin" context-menu data-target="content-menu">
-			<div ng-if='show_module_overlay' style="background: grey;width: 100%;height: 100%;opacity: 0.6;position: absolute;z-index: 1;">
+			<div ng-if='show_module_overlay' class="module_overlay">
 				<loading size='tiny' show='true' style="position:relative;top:25%;" />
 			</div>
 			<ul class="content-menu dropdown-menu text-left">

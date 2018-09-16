@@ -78,10 +78,7 @@ angular.module('scalearAngularApp')
     }
 
     function addShortucts() {
-      shortcut.add("Shift+n",
-        function() {
-          console.log("keys pressed")
-        }, { "disable_in_input": true, 'propagate': false });
+      shortcut.add("Shift+Enter",function() {});
     };
 
   }])

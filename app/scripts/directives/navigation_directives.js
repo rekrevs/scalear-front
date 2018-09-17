@@ -185,11 +185,9 @@ angular.module('scalearAngularApp')
             scope.currentitem = null
           }
         })
-
         $rootScope.$watch('clipboard', function() {
           scope.clipboard = $rootScope.clipboard
         })
-
         scope.$on('item_done', function(ev, item) {
           var time = 0
           if(!ContentNavigator.getStatus()) {
@@ -205,6 +203,9 @@ angular.module('scalearAngularApp')
               }, 1000)
             }
           }, time)
+        })
+        scope.$on('content_navigator_overlay', function(ev, data){
+          toggleModuleOverlay(data.status)
         })
 
         scope.moduleSortableOptions = {
@@ -238,17 +239,14 @@ angular.module('scalearAngularApp')
           }
         }
 
+
+        function toggleModuleOverlay(status){
+          scope.show_module_overlay = status
+        }
+
         scope.showModuleCourseware = function(module, event) {
           scope.currentmodule = module
-          // if(MobileDetector.isPhone()) {
-          //   $timeout(function() {
-          //     ContentNavigator.close()
-          //   })
-          //   // $state.go('course.module.student_inclass', { 'module_id': module.id })
-          //   $state.go("course.module.courseware.overview", {'module_id': module.id})
-          // } else {
           $state.go("course.module.courseware.overview", {'module_id': module.id})
-          //}
           event.stopPropagation()
         }
 
@@ -328,9 +326,11 @@ angular.module('scalearAngularApp')
         }
 
         scope.pasteDraggedItem = function(event,ui, data) {
-          $rootScope.$broadcast('paste_item', data.module.id, {cut: true})
+          toggleModuleOverlay(true)
           scope.currentmodule.id = data.module.id
           data.module.hovered = false
+          $rootScope.$broadcast('paste_item', data.module.id, {cut: true})
+
         }
 
         scope.scrollIntoView = function(module) {

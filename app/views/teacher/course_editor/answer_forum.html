@@ -12,7 +12,7 @@
 			      <span class="prefix"><span translate>global.question</span>:</span>
 			    </div>
 			    <div class="small-8 left columns" ng-class="{'small-10':!isNormalQuiz()}" style="    margin-bottom: 0.3rem;">
-			      <div><rich-textarea required name='qlabel' ng-model='quiz[column]'/></div>
+			      <div><rich-textarea required name='qlabel' ng-model='quiz[column]'/></div>{{quiz[column]}}
 			      <small class='error' ng-show='submitted && qform.qlabel.$error.required'><span translate>error_message.required</span>!</small>
 			    </div>
 		  	</div>
@@ -35,8 +35,8 @@
 		  	<div class="row">
 	  			<!-- <div class="small-10 small-push-1 columns" ng-if="(isFreeText() && quiz.match_type == 'Match Text')||!isFreeText()"> -->
 				<div class="small-10 small-push-1 columns" >
-					<htmlanswer />					
-				</div>			
+					<htmlanswer />
+				</div>
 		  	</div>
 		  	<div class="row">
 		  		<div class="small-11 small-push-1 columns text-left">

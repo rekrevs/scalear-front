@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
       replace: true,
       restrict: 'EA',
       template: "<textarea medium-editor bind-options='medium_editor_options' class='medium-editor-textarea' ></textarea>",
-      controller: ['$scope', '$attrs', '$element','$interpolate', function($scope, $attrs, $element, $interpolate) {
+      controller: ['$scope', '$attrs', '$element','$interpolate','ScalearUtils', function($scope, $attrs, $element, $interpolate,ScalearUtils) {
 
         // Medium Editor - Spectrum text color extension
         var currentTextSelection;
@@ -210,9 +210,9 @@ angular.module('scalearAngularApp')
         function MathJaxCleanUp(elem) {
           $(elem).find("span[class*=MathJax]").remove()
         }
-        //////////////////////button image size 1///////////////////////////
-        var editImageId = null
-        var editedImage = null
+
+        /////////////////////button image size 1///////////////////////////
+
         var ImageSizeExtension = MediumEditor.extensions.button.extend({
           name: this.name,
           init: function() {
@@ -222,20 +222,10 @@ angular.module('scalearAngularApp')
             this.on(this.button, 'click', this.handleClick.bind(this));
           },
           handleClick: function(event) {
-            var selectedImage = editedImage || this.base.options.contentWindow.getSelection().baseNode.children[0];
-            editImageId = selectedImage.id
-            selectedImage.setAttribute('class',this.imageSize)
-            this.base.saveSelection()
-            var basic_editor = MediumEditor.getEditorFromElement(document.getElementsByClassName('medium-editor-textarea')[2])
-            console.log("basic_editor:",basic_editor)
-            var textareaContent = basic_editor.getContent()
-            if (!textareaContent){
-
-            }
-            basic_editor.resetContent(this.base.elements[0])
-            basic_editor.setContent(textareaContent,0)
-            this.base.restoreSelection()
-            editedImage=document.querySelector("div.medium-editor-textarea p img#"+editImageId+"")
+            var selectedImage = this.base.options.contentWindow.getSelection().baseNode.children[0];
+            var $elem = angular.element(selectedImage);
+            $elem.addClass(this.imageSize);
+            this.execAction("insertHTML", {value: $elem[0].outerHTML});
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']
@@ -252,7 +242,7 @@ angular.module('scalearAngularApp')
         })
 
         //////////////////////////////////////////////////////////////////////////////
-        var clickCounter = 0
+        // var clickCounter = 0
         var CustomImageExtension = MediumEditor.extensions.button.extend({
           name: 'customImage',
           tagNames:'<img>',
@@ -260,7 +250,7 @@ angular.module('scalearAngularApp')
           contentDefault: 'Image',
           init: function() {
             var mediumEditor = this.base
-            var editor     = this.base.elements[0]
+            var editor = this.base.elements[0]
             this.base.subscribe("editableClick", function(event, editor){
               if(event.target.tagName === 'IMG'){
                 mediumEditor.selectElement(event.target.parentNode)
@@ -272,45 +262,23 @@ angular.module('scalearAngularApp')
             this.on(this.button, 'click', this.handleClick.bind(this));
           },
           handleClick: function(event) {
-            var src
             var mediumEditor   = this.base
             var editor_element = this.base.elements[0]
-            clickCounter += 1
-            if(this.isActive()) {
-              var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
-              this.setInactive()
-              src = selectedImage.getAttribute("src")
-              mediumEditor.options.contentWindow.getSelection().baseNode.innerHTML = src
-              this.removeSize()
-              var allTextareaContent = this.base.getContent()
-              this.base.resetContent(this.base.elements[0])
-              this.base.setContent(allTextareaContent,0)
-              var toolbar = mediumEditor.getExtensionByName('toolbar');
-              toolbar.hideToolbar()
-              toolbar.hideToolbarDefaultActions()
-            } else {
-              var insertedImages = document.querySelectorAll("div.medium-editor-textarea p img")
-              if(insertedImages.length > 0){
-                var highestInsertedImageID
 
-                for(var i=0;i< insertedImages.length;i++){
-                  highestInsertedImageID = insertedImages[i].id.split("_")[1]
-                  if (highestInsertedImageID>clickCounter){
-                    clickCounter = parseInt(highestInsertedImageID)
-                  }
-                }
-                clickCounter+=1
-              }
+            if(this.isActive()) {
+              this.setInactive()
+              var selectedImage  = mediumEditor.options.contentWindow.getSelection().baseNode.children[0]
+              var src = selectedImage.getAttribute("src")
+              this.execAction('insertHTML', {value: src })
+            } else {
               this.setActive()
               var src = this.base.options.contentWindow.getSelection().toString().trim();
-              var selectedLine = this.base.options.contentWindow.getSelection().baseNode.parentNode
-              selectedLine.innerHTML = "<img class='medium-editor-element' id='insertedImage_"+clickCounter+"' src="+src+">"
-              var transformedImage = selectedLine
-              var toolbar = mediumEditor.getExtensionByName('toolbar');
-              toolbar.hideToolbar()
-              toolbar.hideToolbarDefaultActions()
+              var imgHtml = "<img class='medium-editor-element' src="+src+">"
+              this.execAction('insertHTML', {value: imgHtml })
 
-              var editor = new MediumEditor(transformedImage, {
+              var transformedImage = this.base.options.contentWindow.getSelection().baseNode
+              console.log("transformedImage:",transformedImage.parentNode)
+              var editor = new MediumEditor(transformedImage.parentNode, {
                   toolbar:{
                     buttons:['small','medium','large','veryLarge','original']
                   },
@@ -322,59 +290,35 @@ angular.module('scalearAngularApp')
                     original: new ImageSizeExtension({name:"original",imageSize:"original",buttonInnerHTML:'<b title="Original">original</b>'})
                   }
               });
-              editor.selectElement(transformedImage)
+
+              editor.selectElement(transformedImage.parentNode)
+
               editor.subscribe('hideToolbar',function(){
                 editor.destroy()
-                editedImage = null
-                editImageId = null
               })
+
               var toolbarElement = editor.getExtensionByName('toolbar').getToolbarElement()
               toolbarElement.style.width = 'auto'
               toolbarElement.classList.remove("medium-toolbar-arrow-under");
               toolbarElement.classList.add("medium-size-toolbar-arrow-under");
-
-              ////to make bind work, we rewrite the text area ///////////
-              var allContent = this.base.getContent()
-              this.base.resetContent(this.base.elements[0])
-              this.base.setContent(allContent,0)
-              var insertedImage = document.querySelector("div.medium-editor-textarea p img#insertedImage_"+clickCounter+"")
-              insertedImage.parentNode.removeAttribute("data-medium-editor-element")
-              this.base.selectElement(insertedImage.parentNode)
             }
             event.preventDefault();
             event.stopPropagation();
           },
-          removeSize: function(){
-            var classes = this.base.options.contentWindow.getSelection().baseNode.getAttribute('class')
-            if (classes.indexOf('small_img') != -1){
-              this.base.options.contentWindow.getSelection().baseNode.classList.remove("small_img");
-            }
-            if (classes.indexOf('medium_img')!= -1){
-              this.base.options.contentWindow.getSelection().baseNode.classList.remove("medium_img");
-            }
-            if (classes.indexOf('large_img')!= -1){
-              this.base.options.contentWindow.getSelection().baseNode.classList.remove("large_img");
-            }
-            if (classes.indexOf('veryLarge_img')!= -1){
-              this.base.options.contentWindow.getSelection().baseNode.classList.remove("veryLarge_img");
-            }
-          },
           isAlreadyApplied: function(node){
-            return node.tagName === 'IMG';
+            return !!angular.element(node).children("img")[0]
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']
             return this.button.classList.contains(activeClass);
           },
           setInactive: function() {
-              var activeClass = this.base.options['activeButtonClass']
-              this.button.classList.remove(activeClass);
-
+            var activeClass = this.base.options['activeButtonClass']
+            this.button.classList.remove(activeClass);
           },
           setActive: function() {
-              var activeClass = this.base.options['activeButtonClass']
-              this.button.classList.add(activeClass);
-
+            var activeClass = this.base.options['activeButtonClass']
+            this.button.classList.add(activeClass);
           }
         })
 

@@ -68,6 +68,9 @@ angular.module('scalearAngularApp')
 
       }
     })
+    $scope.$on('clear_item', function(event, item) {
+      emptyClipboard()
+    })
 
     $scope.$on('copy_item', function(event, item) {
       $scope.copy(item)

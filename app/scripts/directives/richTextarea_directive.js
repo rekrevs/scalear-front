@@ -223,8 +223,14 @@ angular.module('scalearAngularApp')
           },
           handleClick: function(event) {
             var selectedImage = this.base.options.contentWindow.getSelection().baseNode.children[0];
+            console.log("selectedImage:",selectedImage);
             var $elem = angular.element(selectedImage);
             $elem.addClass(this.imageSize);
+            if(this.base.elements[0].childElementCount==1){
+              console.log("here")
+              //$elem[0].outerHTML = "<div><p>"+$elem[0].outerHTML+"</p></div>"
+              $elem[0].outerHTML = ' '
+            }
             this.execAction("insertHTML", {value: $elem[0].outerHTML});
           },
           isActive: function() {
@@ -245,7 +251,8 @@ angular.module('scalearAngularApp')
         // var clickCounter = 0
         var CustomImageExtension = MediumEditor.extensions.button.extend({
           name: 'customImage',
-          tagNames:'<img>',
+          tagNames:['img'],
+          action:'image',
           aria: 'image support',
           contentDefault: 'Image',
           init: function() {
@@ -273,12 +280,13 @@ angular.module('scalearAngularApp')
             } else {
               this.setActive()
               var src = this.base.options.contentWindow.getSelection().toString().trim();
-              var imgHtml = "<img class='medium-editor-element' src="+src+">"
+              var imgHtml = "<img class='medium-editor-element' src="+src+"></img>"
+              if (this.base.elements[0].childElementCount==1){
+                 imgHtml = "<div><p class='medium-editor-element'>"+imgHtml+"</p></div>"
+              }
               this.execAction('insertHTML', {value: imgHtml })
-
               var transformedImage = this.base.options.contentWindow.getSelection().baseNode
-              console.log("transformedImage:",transformedImage.parentNode)
-              var editor = new MediumEditor(transformedImage.parentNode, {
+              var editor = new MediumEditor(transformedImage, {
                   toolbar:{
                     buttons:['small','medium','large','veryLarge','original']
                   },
@@ -290,9 +298,7 @@ angular.module('scalearAngularApp')
                     original: new ImageSizeExtension({name:"original",imageSize:"original",buttonInnerHTML:'<b title="Original">original</b>'})
                   }
               });
-
-              editor.selectElement(transformedImage.parentNode)
-
+              editor.selectElement(transformedImage)
               editor.subscribe('hideToolbar',function(){
                 editor.destroy()
               })
@@ -305,8 +311,16 @@ angular.module('scalearAngularApp')
             event.preventDefault();
             event.stopPropagation();
           },
-          isAlreadyApplied: function(node){
-            return !!angular.element(node).children("img")[0]
+
+          isAlreadyApplied(node){
+            //if amoung text image
+            if(node.firstChild) {
+              return node.firstChild.nodeName === "IMG"
+            } else { //if first content in the editor
+              return node.nodeName==='IMG'
+            }
+
+
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']

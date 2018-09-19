@@ -24,8 +24,6 @@ angular.module('scalearAngularApp')
     }
 
     angular.extend($scope, QuestionModel);
-    addShortucts();
-
     $scope.getEditableQuestions()
       .then(function(questions) {
         $scope.questions = questions
@@ -76,16 +74,4 @@ angular.module('scalearAngularApp')
       $scope.publish_state_visible = $scope.quiz.isVisible()
       $scope.quiz.update()
     }
-
-    function addShortucts() {
-      shortcut.add("Enter",
-        function() {
-          var elem_name = angular.element(document.activeElement).attr('name')
-          if(elem_name == 'qlabel') {
-            QuestionModel.addQuestion()
-          }
-          $scope.$apply()
-        }, { "disable_in_input": false, 'propagate': true });
-    };
-
   }])

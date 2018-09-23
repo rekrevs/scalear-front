@@ -223,12 +223,9 @@ angular.module('scalearAngularApp')
           },
           handleClick: function(event) {
             var selectedImage = this.base.options.contentWindow.getSelection().baseNode.children[0];
-            console.log("selectedImage:",selectedImage);
             var $elem = angular.element(selectedImage);
             $elem.addClass(this.imageSize);
             if(this.base.elements[0].childElementCount==1){
-              console.log("here")
-              //$elem[0].outerHTML = "<div><p>"+$elem[0].outerHTML+"</p></div>"
               $elem[0].outerHTML = ' '
             }
             this.execAction("insertHTML", {value: $elem[0].outerHTML});
@@ -278,13 +275,17 @@ angular.module('scalearAngularApp')
               var src = selectedImage.getAttribute("src")
               this.execAction('insertHTML', {value: src })
             } else {
+
+
+
               this.setActive()
-              var src = this.base.options.contentWindow.getSelection().toString().trim();
-              var imgHtml = "<img class='medium-editor-element' src="+src+"></img>"
-              if (this.base.elements[0].childElementCount==1){
-                 imgHtml = "<div><p class='medium-editor-element'>"+imgHtml+"</p></div>"
-              }
+
+              var imgHtml = this.setImageHtmlElement()
+
+
+
               this.execAction('insertHTML', {value: imgHtml })
+
               var transformedImage = this.base.options.contentWindow.getSelection().baseNode
               var editor = new MediumEditor(transformedImage, {
                   toolbar:{
@@ -311,7 +312,57 @@ angular.module('scalearAngularApp')
             event.preventDefault();
             event.stopPropagation();
           },
+          setImageHtmlElement(){
+            var mediumEditor   = this.base
+            var editor_element = this.base.elements[0]
+            var src = mediumEditor.options.contentWindow.getSelection().toString().trim();
+            var selection = mediumEditor.options.contentWindow.getSelection()
+            var imgHtml ="<img class='medium-editor-element' src="+src+"></img>"
+            // the only element in editor
+             if (editor_element.childElementCount==1){
+               if (selection.getRangeAt(mediumEditor).startOffset!=0 || selection.baseNode.previousSibling){//the only element in editor with img url amoung text
+                 var mediumEditorContent = editor_element.innerText
+                 this.rewriteMediumEditorContent(mediumEditorContent,src)
+               } else {
+                 imgHtml = "<div><p class='medium-editor-element'>"+imgHtml+"</p></div>"
+               }
+             } else { // with elements before
+               if (selection.getRangeAt(this.base.getSelectedParentElement()).startOffset!=0 || selection.baseNode.previousSibling)
+                {this.rewriteSelectedElementParentContent(src)
+               }
+           }
+          return imgHtml
+          },
+          rewriteSelectedElementParentContent(url){
+            //specify the parent element
+            var selectedElementParent=this.base.getSelectedParentElement()
+            var selectedElementParentContent = selectedElementParent.innerText
+            //decompose its inner text aruond the url
+            var contentBlocks = selectedElementParentContent.split(url);
+            contentBlocks.splice(1,0,url)
+            //put each component in p
+            var newContent=""
+            for(var contentBlock of contentBlocks){
+              if(contentBlock){
+               newContent+= "<p class='medium-editor-p'>"+contentBlock+"</p>"
+              }
+            }
 
+            this.base.getSelectedParentElement().innerHTML = newContent
+            //re-select the previously selected text
+            this.base.selectElement(this.base.getSelectedParentElement().children[1])
+          },
+          rewriteMediumEditorContent(innerText,url){
+            this.base.saveSelection()
+            var contentBlocks = innerText.split(url);
+            contentBlocks.splice(1,0,url)
+            var newContent=""
+            for(var contentBlock of contentBlocks){
+              newContent+= "<p class='medium-editor-p'>"+contentBlock+"</p>"
+            }
+            this.base.setContent(newContent)
+            this.base.restoreSelection()
+          },
           isAlreadyApplied(node){
             //if amoung text image
             if(node.firstChild) {

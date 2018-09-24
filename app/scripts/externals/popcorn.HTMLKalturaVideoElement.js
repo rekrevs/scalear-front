@@ -527,7 +527,8 @@
       setTimeout(function(){self.pause()},1000)
     };
 
-    self.pause = function() {
+    self.pause = function() { console.log("in k pause");
+      console.log("mediaReady:",mediaReady);
       impl.paused = true;
       if( !mediaReady ) {
         addMediaReadyCallback( function() { self.pause(); } );

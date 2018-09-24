@@ -270,7 +270,8 @@ angular.module('scalearAngularApp')
           $scope.next_quiz = $scope.lecture.video_quizzes[index + 1]
       }
       $scope.seek(quiz.time)
-      $scope.lecture_player.controls.pause()
+      $scope.lecture_player.controls.pause(true)
+
       $scope.closeReviewNotify()
       $scope.studentAnswers[quiz.id] = {}
       $scope.selected_quiz = quiz
@@ -562,7 +563,7 @@ angular.module('scalearAngularApp')
         $location.search('time', 0);
       } else if (!($rootScope.is_mobile)) {
         $scope.lecture_player.controls.seek(0)
-        $scope.lecture_player.controls.pause()
+        $scope.lecture_player.controls.pause(true)
       }
     }
 
@@ -668,7 +669,7 @@ angular.module('scalearAngularApp')
         clearQuiz()
       $scope.skip_pause_update = true
       $scope.seek(time, lecture_id)
-      $scope.lecture_player.controls.pause()
+      $scope.lecture_player.controls.pause(true)
     }
 
     $scope.progressSeek = function(time) {
@@ -744,12 +745,12 @@ angular.module('scalearAngularApp')
 
     var returnToQuiz = function(time) {
       $scope.seek(time)
-      $scope.lecture_player.controls.pause()
+      $scope.lecture_player.controls.pause(true)
       showNotification('lectures.choose_correct_answer')
     }
     var returnToSlideNote = function(time) {
       $scope.seek(time)
-      $scope.lecture_player.controls.pause()
+      $scope.lecture_player.controls.pause(true)
     }
 
     $scope.lecture_player.events.onPlay = function() {

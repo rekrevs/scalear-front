@@ -146,8 +146,13 @@ angular.module('scalearAngularApp')
         player.play();
       }
 
-      player_controls.pause = function() {
-        player.pause();
+      player_controls.pause = function(afterSeek) {
+        //if isKaltura check
+        if(afterSeek && isKaltura(scope.url)){
+          player.video.pauseAfterSeek()
+        } else {
+          player.pause();
+        }
       }
 
       player_controls.mute = function() {
@@ -503,7 +508,7 @@ angular.module('scalearAngularApp')
           var video_url = url || scope.url.split(" ")[1]|| ""
 
           return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)[a-z]*\&flashvars(&.*)?/)
-        }  
+        }
       }
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""

@@ -70,7 +70,6 @@ angular.module('scalearAngularApp')
           data[index] = question
         } else {
           data[index] = questions[index]
-          console.log(data)
         }
       }
       return Quiz.updateQuestions({

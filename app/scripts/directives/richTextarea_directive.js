@@ -243,9 +243,7 @@ angular.module('scalearAngularApp')
               this.button.classList.add(activeClass);
           }
         })
-
         //////////////////////////////////////////////////////////////////////////////
-        // var clickCounter = 0
         var CustomImageExtension = MediumEditor.extensions.button.extend({
           name: 'customImage',
           tagNames:['img'],
@@ -275,17 +273,9 @@ angular.module('scalearAngularApp')
               var src = selectedImage.getAttribute("src")
               this.execAction('insertHTML', {value: src })
             } else {
-
-
-
               this.setActive()
-
               var imgHtml = this.setImageHtmlElement()
-
-
-
               this.execAction('insertHTML', {value: imgHtml })
-
               var transformedImage = this.base.options.contentWindow.getSelection().baseNode
               var editor = new MediumEditor(transformedImage, {
                   toolbar:{
@@ -347,7 +337,6 @@ angular.module('scalearAngularApp')
                newContent+= "<p class='medium-editor-p'>"+contentBlock+"</p>"
               }
             }
-
             this.base.getSelectedParentElement().innerHTML = newContent
             //re-select the previously selected text
             this.base.selectElement(this.base.getSelectedParentElement().children[1])
@@ -370,8 +359,6 @@ angular.module('scalearAngularApp')
             } else { //if first content in the editor
               return node.nodeName==='IMG'
             }
-
-
           },
           isActive: function() {
             var activeClass = this.base.options['activeButtonClass']

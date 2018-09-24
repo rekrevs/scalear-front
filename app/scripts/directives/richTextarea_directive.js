@@ -332,9 +332,9 @@ angular.module('scalearAngularApp')
             contentBlocks.splice(1,0,url)
             //put each component in p
             var newContent=""
-            for(var contentBlock of contentBlocks){
-              if(contentBlock){
-               newContent+= "<p class='medium-editor-p'>"+contentBlock+"</p>"
+            for(var i in contentBlocks){
+              if(contentBlocks[i]){
+               newContent+= "<p class='medium-editor-p'>"+contentBlocks[i]+"</p>"
               }
             }
             this.base.getSelectedParentElement().innerHTML = newContent
@@ -346,8 +346,10 @@ angular.module('scalearAngularApp')
             var contentBlocks = innerText.split(url);
             contentBlocks.splice(1,0,url)
             var newContent=""
-            for(var contentBlock of contentBlocks){
-              newContent+= "<p class='medium-editor-p'>"+contentBlock+"</p>"
+            for(var i in contentBlocks){
+              if(contentBlocks[i]){
+                newContent+= "<p class='medium-editor-p'>"+contentBlocks[i]+"</p>"
+              }
             }
             this.base.setContent(newContent)
             this.base.restoreSelection()

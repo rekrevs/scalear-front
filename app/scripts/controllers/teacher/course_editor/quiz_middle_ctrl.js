@@ -78,13 +78,9 @@ angular.module('scalearAngularApp')
     }
 
     function addShortucts() {
-      shortcut.add("Enter",
+      shortcut.add("Shift+Enter",
         function() {
-          var elem_name = angular.element(document.activeElement).attr('name')
-          if(elem_name == 'qlabel') {
-            QuestionModel.addQuestion()
-          }
-          $scope.$apply()
+          
         }, { "disable_in_input": false, 'propagate': true });
     };
 

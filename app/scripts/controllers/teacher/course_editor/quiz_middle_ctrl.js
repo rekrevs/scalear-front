@@ -80,8 +80,7 @@ angular.module('scalearAngularApp')
     function addShortucts() {
       shortcut.add("Shift+Enter",
         function() {
-          
-        }, { "disable_in_input": false, 'propagate': true });
+        });
     };
 
   }])

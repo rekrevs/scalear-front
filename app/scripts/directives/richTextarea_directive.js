@@ -302,7 +302,7 @@ angular.module('scalearAngularApp')
             event.preventDefault();
             event.stopPropagation();
           },
-          setImageHtmlElement(){
+          setImageHtmlElement: function(){
             var mediumEditor   = this.base
             var editor_element = this.base.elements[0]
             var src = mediumEditor.options.contentWindow.getSelection().toString().trim();
@@ -323,7 +323,7 @@ angular.module('scalearAngularApp')
            }
           return imgHtml
           },
-          rewriteSelectedElementParentContent(url){
+          rewriteSelectedElementParentContent: function(url){
             //specify the parent element
             var selectedElementParent=this.base.getSelectedParentElement()
             var selectedElementParentContent = selectedElementParent.innerText
@@ -341,7 +341,7 @@ angular.module('scalearAngularApp')
             //re-select the previously selected text
             this.base.selectElement(this.base.getSelectedParentElement().children[1])
           },
-          rewriteMediumEditorContent(innerText,url){
+          rewriteMediumEditorContent: function(innerText,url){
             this.base.saveSelection()
             var contentBlocks = innerText.split(url);
             contentBlocks.splice(1,0,url)
@@ -354,7 +354,7 @@ angular.module('scalearAngularApp')
             this.base.setContent(newContent)
             this.base.restoreSelection()
           },
-          isAlreadyApplied(node){
+          isAlreadyApplied: function(node){
             //if amoung text image
             if(node.firstChild) {
               return node.firstChild.nodeName === "IMG"

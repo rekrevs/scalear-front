@@ -269,7 +269,7 @@ angular.module('scalearAngularApp')
           $scope.next_quiz = $scope.lecture.video_quizzes[index + 1]
       }
       $scope.seek(quiz.time)
-      $scope.lecture_player.controls.pause(true)
+      $scope.lecture_player.controls.pause({afterSeek: true})
       $scope.closeReviewNotify()
       $scope.studentAnswers[quiz.id] = {}
       $scope.selected_quiz = quiz

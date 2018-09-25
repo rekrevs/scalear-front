@@ -146,9 +146,9 @@ angular.module('scalearAngularApp')
         player.play();
       }
 
-      player_controls.pause = function(afterSeek) {
-        //if isKaltura check
-        if(afterSeek && isKaltura(scope.url)){
+      player_controls.pause = function(options) {
+        //if isKaltura and pause is requested after seek check 
+        if(options && options.afterSeek && isKaltura(scope.url)){
           player.video.pauseAfterSeek()
         } else {
           player.pause();

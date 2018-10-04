@@ -50,9 +50,9 @@
     	</form>
     </div>
     <div class="with-margin-top small-12 columns" ng-if="passed_requirments">         
-        <button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
+        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts==quiz.retries+1 && quiz.quiz_type == 'survey') || save_inprogress" type="button" class="button tiny" ng-click="saveQuiz('save')">
             <span translate>button.submit</span>
-        </button>
+         </button> 
         <button id="next_button" type="button" ng-show="next_item.id" ng-click="nextItem()" class="button tiny">
             <span translate>button.next</span>
         </button>

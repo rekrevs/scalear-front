@@ -28,19 +28,21 @@ angular.module('scalearAngularApp')
           }
         };
 
-        scope.updateValues = function(ques) {
-          if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
-            scope.values = 0;
-          else if(typeof(scope.studentAnswers[ques]) == "number" || (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
-            scope.values = 1;
-          else {
-            for(var element in scope.studentAnswers[ques]) {
-              if(scope.studentAnswers[ques][element] == true)
-                scope.values = 1;
+        scope.updateValues = function (ques) {
+          if (scope.quiz.quiz_type == "quiz") {
+            if (scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
+              scope.values = 0;
+            else if (typeof (scope.studentAnswers[ques]) == "number" || (typeof (scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
+              scope.values = 1;
+            else {
+              for (var element in scope.studentAnswers[ques]) {
+                if (scope.studentAnswers[ques][element] == true)
+                  scope.values = 1;
+              }
             }
+            scope.saveSelection('save')
+            return scope.values
           }
-          scope.saveSelection('save')
-          return scope.values
         };
 
         scope.valid = function(ques) {

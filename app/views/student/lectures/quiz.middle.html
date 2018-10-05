@@ -42,12 +42,17 @@
                     <h2 style="top:60px;font-weight:300;font-size:18px" ><span translate>lectures.messages.finish_before_proceeding</span></h2>
                 </div>
             </center>
-            <span ng-if="passed_requirments">
+            <span ng-if="passed_requirments"> 
         		    <student-quiz  quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct" explanation="explanation"  save-selection="saveQuiz" update-time="selectionUpdateTime" selection-submitted="status.status"></student-quiz>
             </span>
     	</form>
     </div>
-    <div class="with-margin-top small-12 columns" ng-if="passed_requirments">
+    <div class="with-margin-top small-12 columns" >   
+        <!-- survey save button but its text is submit -->
+        <button ng-disabled="status.status=='Submitted' || quiz.questions.length==0 || (status.attempts>quiz.retries && quiz.quiz_type == 'survey') || save_inprogress" ng-if="quiz.quiz_type=='survey'" type="button" class="button tiny" ng-click="saveQuiz('save')">
+            <span translate>button.submit</span>
+        </button>
+         <!-- quiz submit button       -->
         <button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
             <span translate>button.submit</span>
         </button>

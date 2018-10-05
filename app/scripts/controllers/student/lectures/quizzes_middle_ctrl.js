@@ -57,9 +57,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.selectionUpdateTime
-    $scope.saveQuiz = function (action) { console.log($scope);
-    
-      if ( $scope.status && $scope.status.attempts < $scope.quiz.retries) {
+    $scope.saveQuiz = function (action) {
+      if (($scope.status==null)||($scope.status.attempts < $scope.quiz.retries)) {
         $scope.save_inprogress = true
         if ($scope.form.$valid || action == "save") { //validate only if submit.
           $scope.submitted = false;

@@ -493,15 +493,17 @@ angular.module('scalearAngularApp')
         var video_url = url || scope.url || ""
         return video_url.match(/(.*mp4$)/)
       }
-      var isKaltura= function(frame_url) {
+      var isKaltura= function(iframe) {
         var url
-        if (frame_url.match( 'src\=(.*)[a-z]\"' )){
-          url = frame_url.match( 'src\=(.*)[a-z]\"' )[0]
-        }
+        if (iframe) {
+          if (iframe.match( 'src\=(.*)[a-z]\"' )){
+            url = iframe.match( 'src\=(.*)[a-z]\"' )[0]
+          }
 
-        var video_url = url || scope.url.split(" ")[1]|| ""
+          var video_url = url || scope.url.split(" ")[1]|| ""
 
-        return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
+          return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)[a-z]*\&flashvars(&.*)?/)
+        }  
       }
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""

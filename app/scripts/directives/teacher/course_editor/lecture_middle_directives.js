@@ -271,7 +271,7 @@ angular.module('scalearAngularApp')
             document.execCommand('selectAll', false, null);
           })
         }
-        scope.updateValues = function() {
+        scope.updateValues = function() { 
           scope.values = 0
           for (var element in scope.quiz.answers) {
             if (scope.quiz.answers[element].correct) {
@@ -315,7 +315,7 @@ angular.module('scalearAngularApp')
           template = "<form name='aform'>" +
           "<label class='show-inline'><span translate>editor.answer</span><h6 class='no-margin-bottom'><small translate>editor.popover.shown_in_graph</small></h6></label>" +
           "<span class='right' tooltip-append-to-body='true' tooltip={{'editor.tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>" +
-          "<div><rich-textarea ng-change='save()' rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
+          "<div><rich-textarea rows=3 class='must_save answer_text' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()'  name='answer' required /></div>" +
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -328,14 +328,14 @@ angular.module('scalearAngularApp')
           "<span translate>editor.answer</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_in_graph</small></h6>" +
           // "<textarea rows=3 class='must_save medium-textarea' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>" +
-          "<div><rich-textarea ng-change='save()' rows=3 class='must_save answer_text' ng-model='data.answer' ng-class='{error: aform.answer.$error.required}' required ng-init='selectField($event)'/></div>"+
+          "<div><rich-textarea rows=3 class='must_save answer_text' ng-model='data.answer' ng-class='{error: aform.answer.$error.required}' required ng-init='selectField($event)'/></div>"+
           "<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>error_message.required</span>!</small>" +
           "</label>" +
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
           // "<textarea medium-editor bind-options='medium_editor_options' rows=3 class='must_save medium-editor-textarea' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>" +
-          "<rich-textarea ng-change='save()' rows=3 class='must_save' ng-model='data.explanation' />"+
+          "<rich-textarea rows=3 class='must_save' ng-model='data.explanation' />"+
           "</label>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="delete()" vertical="false" text="true" style="margin:8px 0;" class="small-6 columns no-padding"></delete_button>' +
@@ -355,7 +355,7 @@ angular.module('scalearAngularApp')
             scope.popover_options.instant_show = 'click'
           }
 
-        scope.$watch('quiz.answers', function() {
+        scope.$watch('quiz.answers', function() { 
           scope.updateValues();
         }, true)
 
@@ -679,14 +679,15 @@ angular.module('scalearAngularApp')
         "</div>",
       link: function(scope) {
         scope.removeAnswer = scope.remove()
-        scope.updateValues = function() {
+        scope.updateValues = function() { 
           scope.values = 0
           for (var element in scope.quiz.answers)
-            if (scope.quiz.answers[element].correct)
-              scope.values += 1
+            if (scope.quiz.answers[element].correct) { 
+               scope.values += 1
+            } 
         }
 
-        scope.radioChange = function(corr_ans) {
+        scope.radioChange = function(corr_ans) { 
           scope.quiz.answers.forEach(function(ans) {
             ans.correct = false
           })

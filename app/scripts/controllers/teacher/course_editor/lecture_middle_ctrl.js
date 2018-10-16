@@ -230,7 +230,7 @@ angular.module('scalearAngularApp')
       return true;
     };
 
-    $scope.saveQuizBtn = function(options) {
+    $scope.saveQuizBtn = function(options) { 
       $scope.quiz_errors = {}
       return $scope.selected_quiz.validate()
         .then(function(data) {
@@ -278,8 +278,8 @@ angular.module('scalearAngularApp')
         $scope.submitted = true;
         $scope.hide_alerts = false;
         $scope.lecture_player.controls.seek_and_pause($scope.selected_quiz.time);
-        $scope.selected_quiz.hide_quiz_answers = false
-        showQuizBackground($scope.selected_quiz)
+        $scope.selected_quiz.hide_quiz_answers = false      
+        showQuizBackground($scope.selected_quiz)                
         return true
       }
     }

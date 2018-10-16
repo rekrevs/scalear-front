@@ -679,7 +679,7 @@ angular.module('scalearAngularApp')
         "</div>",
       link: function(scope) {
         scope.removeAnswer = scope.remove()
-        scope.updateValues = function() { c
+        scope.updateValues = function() { 
           scope.values = 0
           for (var element in scope.quiz.answers)
             if (scope.quiz.answers[element].correct) { 

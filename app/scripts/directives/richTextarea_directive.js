@@ -407,7 +407,7 @@ angular.module('scalearAngularApp')
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
           'paste': {
-              cleanPastedHTML: true,
+              cleanPastedHTML: false,
               forcePlainText: false
           },
           'extensions': {

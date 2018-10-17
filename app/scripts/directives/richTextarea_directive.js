@@ -407,15 +407,9 @@ angular.module('scalearAngularApp')
           },
           'placeholder': (!$attrs.placeholder) ? false : { text: $interpolate($attrs.placeholder)() },
           'paste': {
-<<<<<<< HEAD
-              cleanPastedHTML: true,
-              forcePlainText: false
-          },
-=======
             forcePlainText: false,
             cleanPastedHTML: false
             },
->>>>>>> 0d53a3f754ece72206fe9505b0e35628270b742a
           'extensions': {
             'colorPicker': pickerExtension,
             'increaseFontSize': new FontSizeIncreseExtension(),

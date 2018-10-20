@@ -8,7 +8,7 @@
     <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;background:black;z-index: 0;">
       <div class="inclass_sceen original_video" ng-mouseover="playerButtonTooltip()" ng-mouseleave="playerButtonTooltipLeave()">
         <youtube class="widescreen inclass_sceen" id="inclass_video" url="lecture_url" player="inclass_player" start="selected_item.start_time" end="selected_item.end_time">
-          <quiz ng-style="quiz_layer" style="z-index: 1;">
+          <quiz ng-show="selected_timeline_item" ng-style="quiz_layer" style="z-index: 1;">
             <div ng-if="selected_timeline_item.type=='inclass' && selected_timeline_item.data.quiz_type == 'html' && (inclass_session == 2 || inclass_session == 3)">
               <student-answer-form submitted="submitted" quiz="selected_timeline_item.data" student-answers="studentAnswers" />
             </div>

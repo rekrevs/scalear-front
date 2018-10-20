@@ -1,52 +1,81 @@
 // Karma configuration
-// http://karma-runner.github.io/0.10/config/configuration-file.html
+// Generated on Wed Oct 31 2018 18:02:10 GMT+0200 (EET)
 
 module.exports = function(config) {
   config.set({
-    // base path, that will be used to resolve files and exclude
+
+    // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    // testing framework to use (jasmine/mocha/qunit/...)
+
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
+
 
     // list of files / patterns to load in the browser
     files: [
-      'app/bower_components/angular/angular.js',
-      'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/scripts/*.js',
-      'app/scripts/**/*.js',
-      'test/mock/**/*.js',
-      'test/spec/**/*.js'
+      // './node_modules/angular/angular.js',                             // angular
+      // './node_modules/angular-ui-router/release/angular-ui-router.js', // ui-router
+      // './node_modules/angular-mocks/angular-mocks.js',
+      './app/bower_components/**/*.js',
+      // './node_modules/**/*.js',   
+      // 'app/scripts/*.js',
+      // 'app/scripts/**/*.js',
+      // './app/scripts/externals/popcorn.HTMLKalturaVideoElement.js',
+
+      // './app/scripts/controllers/course_ctrl.js',
+     'app/scripts/core.app.js',
+     './app/scripts/services/course.js',
+      './test/spec/directives/course.spec.js'
     ],
 
+
     // list of files / patterns to exclude
-    exclude: [],
+    exclude: [
+    ],
+
+
+    // preprocess matching files before serving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+    },
+
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress'],
+
 
     // web server port
-    port: 8080,
+    port: 9876,
+
+
+    // enable / disable colors in the output (reporters and logs)
+    colors: true,
+
 
     // level of logging
-    // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
+    // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
-    // Start these browsers, currently available:
-    // - Chrome
-    // - ChromeCanary
-    // - Firefox
-    // - Opera
-    // - Safari (only Mac)
-    // - PhantomJS
-    // - IE (only Windows)
+    // start these browsers
+    // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
 
 
     // Continuous Integration mode
-    // if true, it capture browsers, run tests and exit
-    singleRun: false
-  });
-};
+    // if true, Karma captures browsers, runs the tests and exits
+    singleRun: false,//Karma should automatically restart any time you save changes to your tests or code
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}

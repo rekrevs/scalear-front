@@ -408,7 +408,7 @@ module.exports = function(grunt) {
         html: ['<%= yeoman.dist %>/*.html']
       }
     },
-    ngmin: {
+    ngAnnotate: {
       dist: {
         files: [{
           expand: true,
@@ -486,7 +486,7 @@ module.exports = function(grunt) {
             debug: true,
             ga_token: "",
             host: '',
-            version: '4.4.0 (' + new Date().toUTCString() + ')',
+            version: '4.4.2 (' + new Date().toUTCString() + ')',
             instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
             flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
             teacher_welcome_video: "https://www.youtube.com/watch?v=tqE7wRQCgmU",
@@ -583,7 +583,7 @@ module.exports = function(grunt) {
     'autoprefixer',
     'concat:generated', //done in usemin
     'copy:dist',
-    'ngmin',
+    'ngAnnotate',
     'cssmin:generated', //done in usemin
     'uglify:generated', //done in usemin
     'rev:dist',

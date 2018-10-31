@@ -331,7 +331,6 @@
       elem.setAttribute('id', 'kalturaVideo')
     }
 
-
     function changeSrc( aSrc ) {
       impl.src = aSrc;
 

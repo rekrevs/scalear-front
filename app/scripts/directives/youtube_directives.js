@@ -878,6 +878,7 @@ angular.module('scalearAngularApp')
       scope.setCaptionTrack = function(track){
         scope.selectedCaptionTrack = track;
         player.video.setCaptionTrack(track);
+        $cookieStore.put('captionTrack',  scope.selectedCaptionTrack)
       }
 
       var unwatchMute = scope.$watch("volume", function() {
@@ -1150,7 +1151,9 @@ angular.module('scalearAngularApp')
       })
 
       if (scope.player.controls.youtube || scope.player.controls.kaltura) {
-
+        if ($cookieStore.get('captionTrack')) {
+          scope.setCaptionTrack($cookieStore.get('captionTrack'))
+        }
         scope.speeds = scope.player.controls.getSpeeds();
         scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
         if ($cookieStore.get('volume') != null){

@@ -60,6 +60,7 @@
                     <li class="dark-text" translate>player.quality</li>
                     <li ng-repeat="quality in qualities" ng-class="{'blue': chosen_quality==quality}">
                         <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality(quality)"><small>{{quality_names[quality]}}</small></a>
+                        <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality(quality)" ng-show="player.controls.kaltura"><small>{{quality}}</small></a>
                     </li>
                 </div>
                 <div class="small-4 columns no-padding" style="border-left: 1px solid rgb(174, 174, 174); border-right:1px solid rgb(174, 174, 174);">
@@ -90,7 +91,7 @@
         </span>
         <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
             <span>
-                <span style="float:left;color: rgb(100, 100, 100);" ng-if="editing==='quiz' ">{{current_time|format:'h:mm:ss.MMM'}}</span>
+                <span style="float:left;color: rgb(100, 100, 100);" ng-if="editing==='quiz' ">{{current_time|format:'h:mm:ss'}}</span>
                 <span style="float:left;color: rgb(100, 100, 100);" ng-if="!(editing==='quiz')">{{current_time|format:'h:mm:ss'}}</span>
                 <span> / {{ (duration || 0) |format:'h:mm:ss'}}</span>
             </span>

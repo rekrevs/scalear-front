@@ -14,7 +14,7 @@
         <button type="button" class="left button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)"  translate>courses.list.all_finished</button>
       </div>
       <div class="small-7 medium-4 columns with-small-margin-top">
-        <input type="search" ng-model="searchText" placeholder="{{'global.search' | translate}}" />
+        <input type="search" ng-model="searchText" placeholder="{{'global.search' | translate}}" ng-model-options="{debounce:200}"/>
         <span ng-show="filtered_teacher">
           <br />
           <a ng-click="removeFilter()" style="cursor:pointer" translate>courses.list.button.back</a>

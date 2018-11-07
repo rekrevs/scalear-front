@@ -24,6 +24,9 @@ angular.module('scalearAngularApp')
               }
             }
           }
+          if (data.status !== null){
+            $scope.selectionUpdateTime=new Date(data.status.updated_at).toLocaleString([], { hour12: true })
+          }
           $scope.quiz.questions = data.questions
           $scope.studentAnswers = data.quiz_grades;
           $scope.status = data.status;
@@ -53,27 +56,33 @@ angular.module('scalearAngularApp')
       $state.go(next_state, to);
     }
 
-    $scope.saveQuiz = function(action) {
-      $scope.save_inprogress = true
-      if($scope.form.$valid || action == "save") { //validate only if submit.
-        $scope.submitted = false;
-        $scope.quiz.studentSolve($scope.studentAnswers, action)
-          .then(function(data) {
-            $scope.save_inprogress = false
-            $scope.status = data.status;
-            $scope.alert_messages = data.alert_messages;
-            $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
-            $scope.next_item = data.next_item;
-            if(data.correct)
-              $scope.correct = data.correct;
-            if(data.explanation)
-              $scope.explanation = data.explanation;
-            if(data.done[2])
-              $scope.quiz.markDone()
-          })
-      } else { // client validation error.
-        $scope.save_inprogress = false
-        $scope.submitted = true;
+    $scope.selectionUpdateTime
+    $scope.saveQuiz = function (action) {
+      if (($scope.status==null)||($scope.status.attempts <= $scope.quiz.retries)) {
+        $scope.save_inprogress = true
+        if ($scope.form.$valid || action == "save") { //validate only if submit.
+          $scope.submitted = false;
+          $scope.quiz.studentSolve($scope.studentAnswers, action)
+            .then(function (data) {
+              if (data.status !== null) {
+                $scope.selectionUpdateTime = new Date(data.status.updated_at).toLocaleString([], { hour12: true })
+              }
+              $scope.save_inprogress = false
+              $scope.status = data.status;
+              $scope.alert_messages = data.alert_messages;
+              $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
+              $scope.next_item = data.next_item;
+              if (data.correct)
+                $scope.correct = data.correct;
+              if (data.explanation)
+                $scope.explanation = data.explanation;
+              if (data.done[2])
+                $scope.quiz.markDone()
+            })
+        } else { // client validation error.
+          $scope.save_inprogress = false
+          $scope.submitted = true;
+        }
       }
     };
 
@@ -87,6 +96,14 @@ angular.module('scalearAngularApp')
           return $translate.instant("events.due") + " " + $translate.instant("time.today") + " " + $translate.instant("at") + " " + $scope.alert_messages[key]
       }
     }
+
+    $scope.$watch('correct',function(correct){
+      if (correct){
+        //number of keys in the 'correct' object whose value is 1 or 3 (1 is correct for mcq/ocq/drag, 3 is correct for free text with match)
+        $scope.numberOfCorrectAnswers = Object.values(correct).reduce(function(n,value){return n + (value == '1' || value == '3')},0);
+        $scope.pass = $scope.numberOfCorrectAnswers >= $scope.quiz.correct_question_count;
+      }
+    })
 
 
     if($scope.quiz){

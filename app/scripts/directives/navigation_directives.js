@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation) {
+  }]).directive('contentNavigator', ['Module', '$stateParams', '$state', '$timeout', 'Lecture', 'Course', 'ContentNavigator', '$rootScope', 'Preview', '$log', 'MobileDetector','UserSession', 'VideoInformation', 'ScalearUtils', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log, MobileDetector,UserSession, VideoInformation, ScalearUtils) {
     return {
       restrict: 'E',
       replace: true,
@@ -185,11 +185,9 @@ angular.module('scalearAngularApp')
             scope.currentitem = null
           }
         })
-
         $rootScope.$watch('clipboard', function() {
           scope.clipboard = $rootScope.clipboard
         })
-
         scope.$on('item_done', function(ev, item) {
           var time = 0
           if(!ContentNavigator.getStatus()) {
@@ -205,6 +203,9 @@ angular.module('scalearAngularApp')
               }, 1000)
             }
           }, time)
+        })
+        scope.$on('content_navigator_overlay', function(ev, data){
+          toggleModuleOverlay(data.status)
         })
 
         scope.moduleSortableOptions = {
@@ -238,17 +239,14 @@ angular.module('scalearAngularApp')
           }
         }
 
+
+        function toggleModuleOverlay(status){
+          scope.show_module_overlay = status
+        }
+
         scope.showModuleCourseware = function(module, event) {
           scope.currentmodule = module
-          // if(MobileDetector.isPhone()) {
-          //   $timeout(function() {
-          //     ContentNavigator.close()
-          //   })
-          //   // $state.go('course.module.student_inclass', { 'module_id': module.id })
-          //   $state.go("course.module.courseware.overview", {'module_id': module.id})
-          // } else {
           $state.go("course.module.courseware.overview", {'module_id': module.id})
-          //}
           event.stopPropagation()
         }
 
@@ -275,21 +273,32 @@ angular.module('scalearAngularApp')
         }
 
         scope.showModule = function(module, event) {
-          if(scope.currentmodule && scope.currentmodule.id == module.id)
+          if(scope.currentmodule){
             event.stopPropagation()
-          if($state.includes("course.progress_overview") || $state.includes("course.progress_main") || $state.includes("course.progress_graph") || $state.includes("course.progress"))
+          }
+          if($state.includes("course.progress_overview") || $state.includes("course.progress_main") || $state.includes("course.progress_graph") || $state.includes("course.progress")) {
             $state.go('course.module.progress_overview', { module_id: module.id })
-          else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress") || $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students"))
+          } else if($state.includes("course.module.progress_overview") || $state.includes("course.module.progress") || $state.includes("course.module.progress_statistics") || $state.includes("course.module.progress_students")) {
             $state.go('.', { module_id: module.id })
-          else if($state.includes("course.module.inclass") || $state.includes("course.inclass")) {
+          } else if($state.includes("course.module.inclass") || $state.includes("course.inclass")) {
             $state.go('course.module.inclass', { module_id: module.id })
-          } else
+          } else {
             $state.go('course.module.course_editor.overview', { module_id: module.id })
             scope.currentmodule = { id: $state.params.module_id }
+          }
           $timeout(function() {
             scope.scrollIntoView(scope.currentmodule)
           })
+        }
 
+        scope.removeModuleHover = function(event,ui, data){
+          data.module.hovered = false
+          ScalearUtils.safeApply();
+        }
+
+        scope.showModuleHover = function(event,ui, data) {
+          data.module.hovered = true
+          ScalearUtils.safeApply();
         }
 
         scope.preview = function() {
@@ -310,6 +319,21 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast('paste_item')
           else
             $rootScope.$broadcast('paste_item', module_id)
+        }
+
+        scope.copyDraggedItem=function(event,ui, data){
+          $rootScope.$broadcast('copy_item', data.draggedItem)
+        }
+
+        scope.pasteDraggedItem = function(event,ui, data) {
+          if(scope.currentmodule.id == data.module.id){
+            $rootScope.$broadcast('clear_item')
+          } else {
+            $rootScope.$broadcast('paste_item', data.module.id, {cut: true})
+            toggleModuleOverlay(true)
+          }
+          scope.currentmodule.id = data.module.id
+          data.module.hovered = false
         }
 
         scope.scrollIntoView = function(module) {

@@ -8,30 +8,43 @@ angular.module('scalearAngularApp')
         studentAnswers: "=",
         submitted: "=",
         correct: "=",
-        explanation: "="
+        explanation: "=",
+        saveSelection:"=",
+        updateTime:"=",
+        selectionSubmitted:"="
       },
       restrict: 'E',
       templateUrl: '/views/student/lectures/student_quiz.html',
       link: function(scope) {
         scope.index = 0
         scope.drag_explanation = {}
+
         scope.getIndex = function() {
           return ++scope.index
         }
-        scope.updateValues = function(ques) {
-          scope.values = 0;
-          if(scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
-            scope.values = 0;
-          else if(typeof(scope.studentAnswers[ques]) == "number" || (typeof(scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
-            scope.values = 1;
-          else {
-            for(var element in scope.studentAnswers[ques]) {
-              if(scope.studentAnswers[ques][element] == true)
-                scope.values = 1;
-            }
+        scope.sortableOptions={
+          stop:function(e,ui){
+            scope.saveSelection('save')
           }
-          return scope.values
         };
+
+        scope.updateValues = function (ques) {
+          if (scope.quiz.quiz_type == "quiz") {
+            if (scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
+              scope.values = 0;
+            else if (typeof (scope.studentAnswers[ques]) == "number" || (typeof (scope.studentAnswers[ques]) == "string" && scope.studentAnswers[ques].length > 0)) //ocq solved
+              scope.values = 1;
+            else {
+              for (var element in scope.studentAnswers[ques]) {
+                if (scope.studentAnswers[ques][element] == true)
+                  scope.values = 1;
+              }
+            }
+            scope.saveSelection('save')
+            return scope.values
+          }
+        };
+
         scope.valid = function(ques) {
           return scope.updateValues(ques) != 0
         }
@@ -54,17 +67,18 @@ angular.module('scalearAngularApp')
         })
 
         function updateExplanation() {
-          scope.quiz.questions.forEach(function(question) {
-            if(question.question_type.toUpperCase() !== "DRAG") {
-              question.answers.forEach(function(answer) {
-                answer.options = scope.getExplanationPop(answer.id)
-              })
-            } else {
-              scope.studentAnswers[question.id].forEach(function(answer, idx) {
-                scope.drag_explanation[idx] = scope.getExplanationPop(question.answers[0].id, idx)
-              })
-            }
-          })
+            scope.quiz.questions.forEach(function(question) {
+              if(question.question_type.toUpperCase() !== "DRAG") {
+                question.answers.forEach(function(answer) {
+                  answer.options = scope.explanation[answer.id]?scope.getExplanationPop(answer.id) : '';
+                })
+              } else {
+                scope.studentAnswers[question.id].forEach(function(answer, idx) {
+                  scope.drag_explanation[idx] = scope.explanation[question.answers[0].id]? scope.getExplanationPop(question.answers[0].id, idx) : '';
+                })
+              }
+            })
+          
         }
 
       }

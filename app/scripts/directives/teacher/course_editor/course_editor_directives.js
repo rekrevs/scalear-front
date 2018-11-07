@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
                     });
                 }
                 else
-                  $rootScope.$broadcast("delete_module", scope.module)  
+                  $rootScope.$broadcast("delete_module", scope.module)
             }
 
             scope.copy=function(event){
@@ -87,7 +87,8 @@ angular.module('scalearAngularApp')
 }]).directive('itemEdit', ['$rootScope','$timeout','$anchorScroll','$location','$state','$log', function($rootScope, $timeout, $anchorScroll,$location,$state,$log) {
     return {
         scope: {
-            item:'=data'
+            item:'=data',
+            copyDraggedItem:'='
         },
         restrict: 'E',
         templateUrl: '/views/teacher/course_editor/item_edit.html',
@@ -102,7 +103,7 @@ angular.module('scalearAngularApp')
             }
 
             scope.copy=function(event){
-                $log.debug("copy")         
+                $log.debug("copy")
                 event.preventDefault();
                 $rootScope.$broadcast('copy_item', scope.item)
             }

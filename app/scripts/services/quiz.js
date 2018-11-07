@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
         }
         if(quiz.due_date_module) {
           quiz.due_date = module.due_date;
-        }        
+        }
       })
 
       function instanceType() {

@@ -43,7 +43,7 @@
 		<tr >
 			<td class="right-border"><span translate>editor.details.retries</span>:</td>
 			<td>
-				<details-number min="0" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />
+				<details-number min="1" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />
 				</td>
 		</tr>
 		<tr>
@@ -103,6 +103,23 @@
 			<td class="right-border"><span translate>editor.details.student_link_quiz</span>:</td>
 			<td class="break-text">
 				<span >{{link_url}}</span>
+			</td>
+		</tr>
+		<tr>
+			<td class="right-border"><span translate>editor.details.graded</span>:</td>
+			<td>
+				<input type="checkbox" ng-model="quiz.exam" ng-change="updateQuiz()" class="no-margin">
+				<span class="size-12" translate>editor.details.quiz_pass_fail</span>
+				</br>
+				<div ng-show="quiz.exam">
+					<details-number min="0" value="quiz.correct_question_count" save="updateQuiz()" validate="validateQuiz" column="correct_question_count" ></details-number> <span> / {{quiz.questions_count}}</span>
+					<span class="size-12" translate>editor.details.correct_to_pass</span></br>
+
+					<input type="checkbox" ng-model="quiz.show_explanation" ng-change="updateQuiz()" class="no-margin">
+					<span class="size-12" translate>editor.details.show_explanation</span>
+				</div>
+				
+				
 			</td>
 		</tr>
 	</table>

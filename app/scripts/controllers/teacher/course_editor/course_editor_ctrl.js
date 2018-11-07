@@ -53,34 +53,45 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('delete_item', function(event, item) {
-      if(item.class_name == 'lecture')
+
+      if(item.class_name == 'lecture') {
+
         $scope.removeLecture(item)
-      else if(item.class_name == 'customlink')
+
+      } else if(item.class_name == 'customlink') {
+
         $scope.removeCustomLink(item)
-      else
+
+      } else {
+
         $scope.removeQuiz(item)
+
+      }
+    })
+    $scope.$on('clear_item', function(event, item) {
+      emptyClipboard()
     })
 
     $scope.$on('copy_item', function(event, item) {
       $scope.copy(item)
     })
 
-    $scope.$on('paste_item', function(event, module_id) {
-      $scope.paste(module_id)
+    $scope.$on('paste_item', function(event, module_id, options) {
+      $scope.paste(module_id, options)
     })
 
-    if($state.params.new_course) { 
-      $modal.open({ 
-        templateUrl: '/views/teacher/course_list/email_student_answers_modal.html', 
-        scope: $scope, 
-        controller:['$modalInstance', function($modalInstance ) { 
+    if($state.params.new_course) {
+      $modal.open({
+        templateUrl: '/views/teacher/course_list/email_student_answers_modal.html',
+        scope: $scope,
+        controller:['$modalInstance', function($modalInstance ) {
           $scope.updateEmailDiscussion = function (email_discussion) {
-            $scope.course.updateTeacherDiscussionEmail(email_discussion) 
-            $modalInstance.dismiss('cancel'); 
-          } 
-        }] 
-      }) 
-    }  
+            $scope.course.updateTeacherDiscussionEmail(email_discussion)
+            $modalInstance.dismiss('cancel');
+          }
+        }]
+      })
+    }
 
     $scope.capitalize = function(s) {
       return ScalearUtils.capitalize(s)
@@ -151,6 +162,7 @@ angular.module('scalearAngularApp')
           if($state.params.quiz_id == quiz.id)
             $state.go('course.module.course_editor.overview')
         })
+
     }
 
     $scope.addCustomLink = function(module_id) {
@@ -178,7 +190,8 @@ angular.module('scalearAngularApp')
         id: item.id,
         name: item.name,
         type: item.class_name || 'module',
-        show_msg: true
+        show_msg: true,
+        remove: item.remove
       }
     }
 
@@ -186,17 +199,29 @@ angular.module('scalearAngularApp')
       $rootScope.clipboard = null
     }
 
-    $scope.paste = function(module_id) {
+    $scope.paste = function(module_id, options) {
       var item = $rootScope.clipboard
+      var successful_paste
+      if(item) {
+        if(item.type == 'module') {
+          successful_paste = ModuleModel.paste(item)
+        } else if(item.type == 'lecture') {
+          successful_paste=LectureModel.paste(item, module_id)
+        } else if(item.type == 'quiz') {
+          successful_paste = QuizModel.paste(item, module_id)
+        } else if(item.type == 'customlink') {
+          successful_paste = LinkModel.paste(item, module_id)
+        }
 
-      if(item.type == 'module') {
-        ModuleModel.paste(item)
-      } else if(item.type == 'lecture') {
-        LectureModel.paste(item, module_id)
-      } else if(item.type == 'quiz') {
-        QuizModel.paste(item, module_id)
-      } else if(item.type == 'customlink') {
-        LinkModel.paste(item, module_id)
+        successful_paste.then(function(){
+          if(options.cut){
+            $scope.$broadcast("delete_item", item)
+            $rootScope.$broadcast("content_navigator_overlay", {status: false})
+          }
+        }).catch(function(err){
+          console.log(err);
+          $rootScope.$broadcast("content_navigator_overlay", {status: false})
+        })
       }
 
     }

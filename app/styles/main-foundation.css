@@ -12,6 +12,11 @@ body {
   padding:10px;
   background:#5ee;
 }*/
+
+#kalturaVideo{
+  width: 100%;
+  height: 100%;
+}
 #thick{
   font-weight: bold;
 }
@@ -26,6 +31,18 @@ padding-top: 45px;
   bottom:0;
   left:0;
   /*background:#ee5;*/
+}
+.small_img{
+  width:  32px;  
+}
+.medium_img{
+  width:  64px;
+}
+.large_img{
+  width:  128px;
+}
+.veryLarge_img{
+  width:  256px;
 }
 
 /*.navigator_open{
@@ -1698,6 +1715,18 @@ label{
   left: 240px !important;
   /*left: auto !important;*/
 }
+.module_overlay{
+  background: grey;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  position: absolute;
+  z-index: 1;
+}
+#scalable-spinner-image .spinner-icon-image{
+  content:url("/images/loading2.gif");
+  height: 25px;
+}
 
 /*Animations*/
 
@@ -2705,7 +2734,21 @@ body.ngdialog-open { overflow: initial !important; }
 }
 
 .medium-toolbar-arrow-under:after{
-  top: 100px;
+    top: 100px;
+}
+
+.medium-size-toolbar-arrow-under:after{
+    top: 50px;
+    border-style: solid;
+    content: '';
+    display: block;
+    height: 0;
+    left: 50%;
+    margin-left: -8px;
+    position: absolute;
+    width: 0;
+    border-width: 8px 8px 0 8px;
+    border-color: #242424 transparent transparent transparent;
 }
 
 .medium-editor-toolbar-form{
@@ -2984,4 +3027,7 @@ dd#second_accordion > a:hover{
   right: 50px !important;
   top :0 !important;
   z-index:10 !important;
+}
+.moduleHovered {
+  background-color: grey;
 }

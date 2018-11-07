@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
 
     function paste(l, module_id) {
       var module = ModuleModel.getById(module_id)
-      CustomLink.linkCopy({
+      return CustomLink.linkCopy({
           link_id: l.id,
           course_id: module.course_id,
           module_id: module.id
@@ -74,9 +74,9 @@ angular.module('scalearAngularApp')
       }
 
       function remove() {
-        return CustomLink.destroy({ 
+        return CustomLink.destroy({
             course_id: link.course_id,
-            link_id: link.id 
+            link_id: link.id
           }, {})
           .$promise
           .then(function() {
@@ -93,9 +93,9 @@ angular.module('scalearAngularApp')
       }
 
       function validate() {
-        return CustomLink.validate({ 
+        return CustomLink.validate({
             link_id: link.id ,
-          }, { 
+          }, {
             link: link ,
             course_id: link.course_id,
           })

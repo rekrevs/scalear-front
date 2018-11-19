@@ -576,8 +576,8 @@
 
     //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
       var captionLanguages = []
-      rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){
-        captionLanguages.push(textSource.title)
+      rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){        
+        captionLanguages.push({'displayName': textSource.title})
       })
       return captionLanguages
     }

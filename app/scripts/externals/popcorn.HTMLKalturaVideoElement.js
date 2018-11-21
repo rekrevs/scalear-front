@@ -505,10 +505,10 @@
       self.dispatchEvent( "progress" );
     }
 
-    self.play = function() {
+    self.play = function () {
       impl.paused = false;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.play(); } );
+      if (!mediaReady) {
+        addMediaReadyCallback(function () { self.play(); });
         return;
       }
       player.sendNotification("doPlay");
@@ -572,8 +572,6 @@
       resetPlayer()
     }
     self.getCaptionTracks = function(){
-
-    //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
       var captionLanguages = []
       rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){        
         captionLanguages.push({'displayName': textSource.title})

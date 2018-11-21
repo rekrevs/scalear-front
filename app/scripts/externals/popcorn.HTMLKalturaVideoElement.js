@@ -506,7 +506,6 @@
     }
 
     self.play = function() {
-      console.log("in play")
       impl.paused = false;
       if( !mediaReady ) {
         addMediaReadyCallback( function() { self.play(); } );

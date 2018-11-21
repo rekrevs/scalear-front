@@ -846,7 +846,6 @@ angular.module('scalearAngularApp')
       }
 
       scope.play = function() {
-        console.log(scope.player.controls.paused())
         if (scope.player.controls.paused()) {
           scope.player.controls.play()
           scope.play_class = "pause";
@@ -873,12 +872,10 @@ angular.module('scalearAngularApp')
       scope.loadCaptionTracks = function(){
         if (!scope.captionTracks){          
           scope.captionTracks = player.video.getCaptionTracks();
-          console.log(scope.captionTracks)
         }
       }
 
       scope.setCaptionTrack = function(track){
-        console.log(track)
         scope.selectedCaptionTrack = track;
         player.video.setCaptionTrack(track);
         $cookieStore.put('captionTrack',  scope.selectedCaptionTrack)

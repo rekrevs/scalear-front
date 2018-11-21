@@ -229,7 +229,7 @@
 
       // We can't easily determine canplaythrough, but will send anyway.
       impl.readyState = self.HAVE_ENOUGH_DATA;
-      self.dispatchEvent( "canplaythrough" );
+      // self.dispatchEvent( "canplaythrough" );
 
     }
 
@@ -255,7 +255,7 @@
           } else if ( catchRoguePlayEvent ){
             catchRoguePlayEvent = false;
             player.sendNotification("doPause");
-          } else {
+          } else { 
             onPlay();
           }
           break;
@@ -377,7 +377,7 @@
         				"glowColor" : "0x133693",
         				"defaultLanguageKey" : "en",
         				"hideWhenEmpty" : true,
-        				"whiteListLanguagesCodes" : "en,es,fr,jp"
+        				"whiteListLanguagesCodes" : "en,es,fr,jp,pt"
         			},
               "playbackRateSelector": {
         				"plugin" : true,
@@ -497,7 +497,7 @@
           loopedPlay = true;
           self.dispatchEvent( "play" );
         }
-        self.dispatchEvent( "playing" );
+        self.dispatchEvent( "play" );
       }
     }
 
@@ -505,11 +505,10 @@
       self.dispatchEvent( "progress" );
     }
 
-    self.play = function() {
-
+    self.play = function () {
       impl.paused = false;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.play(); } );
+      if (!mediaReady) {
+        addMediaReadyCallback(function () { self.play(); });
         return;
       }
       player.sendNotification("doPlay");
@@ -573,23 +572,25 @@
       resetPlayer()
     }
     self.getCaptionTracks = function(){
-
-    //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
       var captionLanguages = []
-      var captionObjects   = rawPlayer.plugins.closedCaptions.textSources
-      var l = captionObjects.length
-      while (l--){
-        if(captionObjects[l].loaded){
-          captionLanguages.push({'displayName': captionObjects[l].label})
-        }
-      }
+      rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){        
+        captionLanguages.push({'displayName': textSource.title})
+      })
       return captionLanguages
     }
 
     self.setCaptionTrack = function(track){
-      player.sendNotification('showClosedCaptions')
-      if(Object.values(track ).length == 0 ) {
+      if (Object.values(track).length == 0) {
         self.unsetCaptionTrack()
+      } else {
+        var closedCaptionPlugin = rawPlayer.plugins.closedCaptions
+        closedCaptionPlugin.textSources.forEach(function (textSource) {
+          if (textSource.title == track.displayName) {
+            closedCaptionPlugin.selectSource(textSource)
+            player.sendNotification('showClosedCaptions')
+            return;
+          }
+        })
       }
     }
 

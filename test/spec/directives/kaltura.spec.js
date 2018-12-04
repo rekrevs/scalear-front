@@ -1,7 +1,4 @@
 describe('Kaltura', function() {
-  var compile;
-  var element;
-  var scope;
   var kalVideo 
   var rawPlayer 
   var kalPlayer 
@@ -39,11 +36,17 @@ describe('Kaltura', function() {
       done()
     }, 15000);
   });
-
+  //pauseAfterSeek
   xit('it should pauseAfterSeek',function(){    // settimeout of pauseAfterSeek doesn't work with jasmine   
     kalVideo.play()
     kalVideo.pauseAfterSeek()//(done)  
     expect(rawPlayer.currentState).toBe("pause")
+  });
+  //volume
+  xit('it should control volume',function(){//found a bug
+    kalVideo.volume = 0.4   
+    var currentVolume = kalVideo.volume
+    expect(currentVolume).toBe(0.4)
   });
   //src
   it('it should have video src',function(){
@@ -112,7 +115,6 @@ describe('Kaltura', function() {
       done()
     },10000) 
   });
-
   //paused
   it('it should pause',function(){
     kalVideo.pause()
@@ -129,12 +131,6 @@ describe('Kaltura', function() {
   //networkState
   it('it should return networkState',function(){
     expect(kalVideo.networkState).toBeDefined   
-  });
-  //volume
-  xit('it should control volume',function(){//found a bug
-    kalVideo.volume = 0.4   
-    var currentVolume = kalVideo.volume
-    expect(currentVolume).toBe(0.4)
   });
   //src
   it('it should have source',function(){
@@ -163,6 +159,7 @@ describe('Kaltura', function() {
   })
   //setCaptionTrack
   it('it should setCaptionTrack',function(){
+    kalVideo.showControlBar()
     kalVideo.setCaptionTrack({'displayName':'Spanish'}) 
     var selectedLanguage = rawPlayer.plugins.closedCaptions.selectedSource.label   
     expect(selectedLanguage).toBe('Spanish')   
@@ -201,8 +198,9 @@ describe('Kaltura', function() {
     var correctSpeeds = rawPlayer.plugins.playbackRateSelector.speedSet
     expect(speeds).toEqual(correctSpeeds)
   });
-    //buffered
+  //buffered
   it('it should be buffered',function(done){// this test depends on network speed           kalPlayer.sendNotification("doPlay")
+    kalVideo.play()
     setTimeout(function () {
       kalVideo.pause()
       expect(kalVideo.buffered.end(0)).toBeGreaterThan(19)

@@ -255,7 +255,7 @@
           } else if (catchRoguePlayEvent) {
             catchRoguePlayEvent = false;
             player.sendNotification("doPause");
-          } else {
+          } else { 
             onPlay();
           }
           break;
@@ -351,6 +351,7 @@
 
       kWidget.embed({
         'targetId': 'kalturaVideo',
+<<<<<<< HEAD
         'wid': '_' + kalturaIDs.partner_id,
         'uiconf_id': kalturaIDs.uiconf_id,
         'entry_id': kalturaIDs.entry_id,
@@ -397,6 +398,54 @@
         },
         readyCallback: function (playerId) {
           player = document.getElementById(playerId);
+=======
+        'wid':  '_'+kalturaIDs.partner_id,
+        'uiconf_id' : kalturaIDs.uiconf_id,
+        'entry_id' : kalturaIDs.entry_id,
+        'flashvars':{
+              'autoPlay':false,
+              'controlBarContainer.plugin': true,
+	            'largePlayBtn.plugin': false,
+	            'loadingSpinner.plugin': false,
+              "sourceSelector": {
+        				"plugin" : true,
+        				"switchOnResize" : false,
+        				"simpleFormat" : true,
+        				"displayMode" : "size"
+        			},
+              "closedCaptions": {
+        				"layout" : "ontop",
+        				"useCookie" : true,
+        				"fontFamily" : "Arial",
+        				"fontsize" : "12",
+        				"fontColor" : "0xFFFFFF",
+        				"bg" : "0x335544",
+        				"useGlow" : false,
+        				"glowBlur" : "4",
+        				"glowColor" : "0x133693",
+        				"defaultLanguageKey" : "en",
+        				"hideWhenEmpty" : true,
+        				"whiteListLanguagesCodes" : "en,es,fr,jp,pt"
+        			},
+              "playbackRateSelector": {
+        				"plugin" : true,
+        				"position" : "after",
+        				"loadingPolicy" : "onDemand",
+        				"defaultSpeed" : "1",
+        				"speeds" : ".5,.75,1,1.5,2",
+        				"relativeTo" : "PlayerHolder"
+        			},
+              "KalturaClipDescription": {
+                 "startTime": 30
+              },
+              "operationAttributes":{
+                "offset":2000,
+                "duration":10000
+              }
+            },
+        readyCallback: function( playerId ){
+          player = document.getElementById( playerId );
+>>>>>>> origin/develop
           rawPlayer = player.firstChild.contentWindow.document.getElementById(playerId);
 
           player.kBind("playerReady", onPlayerReady);
@@ -497,7 +546,11 @@
           loopedPlay = true;
           self.dispatchEvent("play");
         }
+<<<<<<< HEAD
         self.dispatchEvent("play");
+=======
+        self.dispatchEvent( "play" );
+>>>>>>> origin/develop
       }
     }
 
@@ -571,16 +624,27 @@
     self.destroy = function () {
       resetPlayer()
     }
+<<<<<<< HEAD
 
     self.getCaptionTracks = function () {
       var captionLanguages = []
       rawPlayer.plugins.closedCaptions.textSources.forEach(function (textSource) {
         captionLanguages.push({ 'displayName': textSource.title })
+=======
+    self.getCaptionTracks = function(){
+      var captionLanguages = []
+      rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){        
+        captionLanguages.push({'displayName': textSource.title})
+>>>>>>> origin/develop
       })
       return captionLanguages
     }
 
+<<<<<<< HEAD
     self.setCaptionTrack = function (track) {
+=======
+    self.setCaptionTrack = function(track){
+>>>>>>> origin/develop
       if (Object.values(track).length == 0) {
         self.unsetCaptionTrack()
       } else {

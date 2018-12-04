@@ -36,15 +36,15 @@
     "grunt-contrib-htmlmin": "~2.4.0",
     "grunt-contrib-imagemin": "~2.0.1",
     "grunt-contrib-jshint": "~1.1.0",
-    "grunt-contrib-uglify": "~3.3.0",
+    "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "~1.0.0",
     "grunt-filerev": "~2.3.1",
     "grunt-google-cdn": "~0.4.3",
     "grunt-htmlclean": "~2.7.13",
     "grunt-inline-angular-templates": "~0.1.5",
     "grunt-istanbul": "~0.8.0",
+    "grunt-ng-annotate": "^3.0.0",
     "grunt-ng-constant": "~2.0.1",
-    "grunt-ngmin": "0.0.3",
     "grunt-protractor-coverage": "~0.2.18",
     "grunt-protractor-runner": "~1.1.1",
     "grunt-rev": "~0.1.0",
@@ -62,5 +62,8 @@
     "load-grunt-tasks": "~3.5.2",
     "netlify-cli": "^1.2.2",
     "time-grunt": "~1.4.0"
+  },
+  "dependencies": {
+    "grunt-contrib-uglify-es": "github:gruntjs/grunt-contrib-uglify#harmony"
   }
 }

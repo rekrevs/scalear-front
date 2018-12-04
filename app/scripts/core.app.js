@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp', [
-     'ngCookies',
+    'ngCookies',
     'ngResource',
     'ngSanitize',
     'ui.router',

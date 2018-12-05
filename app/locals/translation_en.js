@@ -1076,6 +1076,7 @@ var translation_en={
     registration: "Registration",
     report_period: "Report Period",
     generate_report: "Generate Report",
+    generate_youtube_privacy_status_report: "Generate youtube privacy status report",
     login: "@:navigation.login",
     lecture_views: "Lecture Views",
     questions_asked: "Questions Asked",

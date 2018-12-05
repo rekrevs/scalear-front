@@ -36,24 +36,31 @@ angular.module('scalearAngularApp')
     var total_questions_answered_students =  0
     var total_questions_answered_teachers =  0
     var remaining_get_course_data = 0
+    var privacy_statuses = {}
 
     $scope.report.start_date = moment().subtract(30,'days').format('DD-MMMM-YYYY')
     $scope.report.end_date = moment().format('DD-MMMM-YYYY')
 
-    function reset_variables(){
-      $scope.total_hours =  0
-      $scope.total_online_quiz_solved =  0
-      $scope.total_questions =  0
-      $scope.total_questions_answered_students =  0
-      $scope.total_questions_answered_teachers =  0
-      $scope.total_student_watched  = 0
-      $scope.total_course_been_watched  = 0
-      $scope.total_online_quiz_course  = 0
-      $scope.total_online_quiz_lecture  = 0
-      $scope.total_online_quiz_student  = 0
-      $scope.total_questions_students  = 0
-      $scope.total_questions_courses  = 0
-      $scope.total_questions_lectures  = 0
+    $scope.show_youtube_statistics = false
+    $scope.total_youtube_video_private = 0
+    $scope.total_youtube_video_public = 0
+    $scope.total_youtube_video_unlisted = 0
+    $scope.youtube_video_urls
+
+    function reset_variables() {
+      $scope.total_hours = 0
+      $scope.total_online_quiz_solved = 0
+      $scope.total_questions = 0
+      $scope.total_questions_answered_students = 0
+      $scope.total_questions_answered_teachers = 0
+      $scope.total_student_watched = 0
+      $scope.total_course_been_watched = 0
+      $scope.total_online_quiz_course = 0
+      $scope.total_online_quiz_lecture = 0
+      $scope.total_online_quiz_student = 0
+      $scope.total_questions_students = 0
+      $scope.total_questions_courses = 0
+      $scope.total_questions_lectures = 0
       $scope.total_hours_string = ScalearUtils.toHourMin($scope.total_hours)
       $scope.total_student_watched_string = ScalearUtils.toHourMin($scope.total_student_watched)
       $scope.total_course_been_watched_string = ScalearUtils.toHourMin($scope.total_course_been_watched)
@@ -61,10 +68,10 @@ angular.module('scalearAngularApp')
       total_online_quiz_solved = 0
       total_questions = 0
       total_questions_answered_students = 0
-      total_questions_answered_teachers = 0 
+      total_questions_answered_teachers = 0
     }
 
-    
+
     function validateDate() {
       var deferred = $q.defer()
       var errors = {}
@@ -78,49 +85,99 @@ angular.module('scalearAngularApp')
       } else if (($scope.report.end_date == "Invalid Date")) {
         errors.end_date = "not a Date"
         deferred.reject(errors)
-      } else 
-      if (!($scope.report.start_date < $scope.report.end_date)) {
-        errors.start_date = "must be before end date"
-        deferred.reject(errors)
-      } else {
-        errors.start_date = null
-        errors.end_date = null
+      } else
+        if (!($scope.report.start_date < $scope.report.end_date)) {
+          errors.start_date = "must be before end date"
+          deferred.reject(errors)
+        } else {
+          errors.start_date = null
+          errors.end_date = null
 
-        deferred.resolve(errors)
-      }
+          deferred.resolve(errors)
+        }
       $scope.report.start_date = moment($scope.report.start_date).format('DD-MMMM-YYYY')
       $scope.report.end_date = moment($scope.report.end_date).format('DD-MMMM-YYYY')
       return deferred.promise
     }
 
-    $scope.showStatistics = function() {
+
+    function getYoutubePrivacyStatus(data) {
+      //youtube snippet code
+      //return [[video url1,privacy],[video url2,privacy]]
+      return [["ww.ut1.com", 'public'], 
+              ["ww.ut2.com", 'public'],
+              ["ww.ut3.com", 'public'],
+              ["ww.ut1.com", 'private'],
+              ["ww.ut2.com", 'private'],
+              ["ww.ut3.com", 'private'],
+              ["ww.ut1.com", 'unlisted'],
+              ["ww.ut2.com", 'unlisted'], 
+              ["ww.ut3.com", 'unlisted']]
+    }
+
+
+    function summarizeYoutubePrivacyStatus(privacy_statuses) {
+      if (privacy_statuses.length) {
+        for (var i in privacy_statuses) {
+          var url_status = privacy_statuses[i][1]
+          switch (url_status) {
+            case "public":
+              $scope.total_youtube_video_public += 1
+              break;
+            case "private":
+              $scope.total_youtube_video_private += 1
+              break;
+            case "unlisted":
+              $scope.total_youtube_video_unlisted += 1
+              break;
+          }
+        }
+      }
+    }
+
+
+    $scope.showYoutubePrivacyStatus = function () {
+      //execute function to retrieve youtube urls from backend
+      Kpi.getAllYoutubeVideoUrls({},
+        function (data) {
+          //retrieve data from youtube to get the privacy status of these urls 
+          var privacy_statuses = getYoutubePrivacyStatus(data) //data array of youtube urls
+          //summarize privacy statuses 
+          summarizeYoutubePrivacyStatus(privacy_statuses)
+          $scope.show_youtube_statistics = true
+        }
+      )
+    },
+
+
+    $scope.showStatistics = function () {
       validateDate()
-        .then(function(errors) {
+        .then(function (errors) {
           $scope.loading = true
           $scope.show_statistics = false
           reset_variables()
           Kpi.readTotalsForDuration({
-              start_date: $scope.report.start_date,
-              end_date: $scope.report.end_date,
-              domain: $scope.report.selected_domain
-            },
-            function(data) {
+            start_date: $scope.report.start_date,
+            end_date: $scope.report.end_date,
+            domain: $scope.report.selected_domain
+          },
+            function (data) {
               $scope.show_statistics = true
-              var limit_course = 100 
+              var limit_course = 100
               $scope.total_courses = data.total_courses
               $scope.total_students = data.total_students
               $scope.total_teachers = data.total_teachers
               $scope.total_lectures = data.total_lectures
               remaining_get_course_data = data.course_ids.length
               $scope.course_data_array = []
-              while (data.course_ids.length > 0){
+              while (data.course_ids.length > 0) {
                 getReportDataCourseDuration(data.course_ids.splice(0, limit_course))
               }
             }
           )
           angular.extend($scope.errors, errors)
         })
-        .catch(function(errors) {
+        .catch(function (errors) {
           $scope.show_statistics = false
           angular.extend($scope.errors, errors)
           return true

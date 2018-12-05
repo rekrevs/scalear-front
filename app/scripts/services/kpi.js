@@ -11,8 +11,8 @@ angular.module('scalearAngularApp')
         'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} }, // Not DONE
         'readTotalsForDuration':{method: 'GET', headers:headers, params: {action: 'read_totals_for_duration'} },
         'getReportDataCourseDuration':{method: 'POST', headers:headers, params: {action: 'get_report_data_course_duration'} },
-        'exportSchoolStatistics':{method:'GET',headers:headers, params: {action: 'export_school_statistics'}} // Not DONE
-
+        'exportSchoolStatistics':{method:'GET',headers:headers, params: {action: 'export_school_statistics'}}, // Not DONE
+        'getAllYoutubeVideoUrls':{method:'GET',headers:headers, params: {action: 'get_all_youtube_video_urls'}}
       });
 
 }])

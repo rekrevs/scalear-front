@@ -45,8 +45,6 @@ angular.module('scalearAngularApp')
 
     $scope.courses_details_privacy_statuses = {} //{crs1:{course_name:'crs1',teacher_mail:'a@b.co',teacher_name:'a',public:1,private:2,unlisted:3}}
 
-<<<<<<< HEAD
-=======
     function addCourse(course, email, teacher, status) {//status would be public,private or unlisted
       var courses_to_privacy = $scope.courses_details_privacy_statuses
       if (typeof courses_to_privacy[course] == 'undefined') {
@@ -57,52 +55,10 @@ angular.module('scalearAngularApp')
       }
     }
 
->>>>>>> 82439a2b... aggregate by course
     function summarizeYoutubePrivacyStatus(privacy_statuses) {
       $scope.show_YT_statistics = true
       if (privacy_statuses && privacy_statuses.length) {
         privacy_statuses.forEach((privacy_status) => {
-<<<<<<< HEAD
-          switch (privacy_status) {
-            case "public":
-              $scope.total_youtube_video_public += 1
-              break;
-            case "private":
-              $scope.total_youtube_video_private += 1
-              break;
-            case "unlisted":
-              $scope.total_youtube_video_unlisted += 1
-              break;
-          }
-        })
-        $scope.show_youtube_statistics = true
-        $scope.show_youtube_statistics_loading=false
-      }
-    }
-
-    function getRequestUrl(youtube_video_ids) {
-      var ids_coma_separated = ""
-      youtube_video_ids.forEach((youtube_video_id, i) => ids_coma_separated += (i < youtube_video_ids.length - 2) ? youtube_video_id + "," : youtube_video_id)
-      return 'https://www.googleapis.com/youtube/v3/videos?id=' + ids_coma_separated + '&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&part=status'
-    }
-
-    function getYoutubeVideosIds(urls) {
-      var youtube_video_ids = []   
-      urls.forEach((url)=>youtube_video_ids.push(url.split("&")[0].split("=")[1]))
-      return youtube_video_ids
-    }
-
-    function setYoutubePrivacyStatus(urls) {
-      var privacy_statuses = []
-      var youtube_videos_ids = getYoutubeVideosIds(urls)
-      var request_url = getRequestUrl(youtube_videos_ids)
-
-      $.getJSON(request_url, function (data) {
-        if (data && data.items.length) {
-          for (var i in data.items) {
-            privacy_statuses.push(data.items[i].status.privacyStatus)
-          }
-=======
           var status = privacy_status.privacy_status
           var teacher_mail = privacy_status.teacher_mail
           var teacher_name = privacy_status.teacher_name
@@ -144,7 +100,6 @@ angular.module('scalearAngularApp')
               "teacher_name":course_data.teacher
             }
           })
->>>>>>> 82439a2b... aggregate by course
         }
       })
         .done(() => { 
@@ -155,15 +110,6 @@ angular.module('scalearAngularApp')
     $scope.showYoutubePrivacyStatus = function () {
       $scope.show_YT_statistics_loading = true
       Kpi.getAllYoutubeVideoUrls([],
-<<<<<<< HEAD
-        function (urls) {
-          setYoutubePrivacyStatus(urls)
-        }
-      )
-    },
-
-
-=======
         function (jurls) {
           urls = jurls.map(function (jurl) { return Object.values(jurl) }) //[[youtube_video_url,course_id],[...]]
           var chunk = 20
@@ -175,10 +121,10 @@ angular.module('scalearAngularApp')
               }
             )
           }
-        })
+        }
+      )
     }
-  
->>>>>>> 82439a2b... aggregate by course
+
     function reset_variables() {
       $scope.total_hours = 0
       $scope.total_online_quiz_solved = 0

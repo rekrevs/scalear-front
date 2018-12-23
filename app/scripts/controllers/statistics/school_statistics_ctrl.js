@@ -40,6 +40,11 @@ angular.module('scalearAngularApp')
     $scope.report.start_date = moment().subtract(30,'days').format('DD-MMMM-YYYY')
     $scope.report.end_date = moment().format('DD-MMMM-YYYY')
 
+    $scope.total_courses = 0
+    $scope.total_students = 0
+    $scope.total_teachers = 0
+    $scope.total_lectures = 0
+                  
     function reset_variables(){
       $scope.total_hours =  0
       $scope.total_online_quiz_solved =  0
@@ -61,7 +66,11 @@ angular.module('scalearAngularApp')
       total_online_quiz_solved = 0
       total_questions = 0
       total_questions_answered_students = 0
-      total_questions_answered_teachers = 0 
+      total_questions_answered_teachers = 0
+      $scope.total_courses  = 0
+      $scope.total_students = 0
+      $scope.total_teachers = 0
+      $scope.total_lectures = 0
     }
 
     
@@ -95,32 +104,37 @@ angular.module('scalearAngularApp')
 
     $scope.showStatistics = function() {
       validateDate()
-        .then(function(errors) {
+        .then(function (errors) {
           $scope.loading = true
           $scope.show_statistics = false
           reset_variables()
-          Kpi.readTotalsForDuration({
-              start_date: $scope.report.start_date,
-              end_date: $scope.report.end_date,
-              domain: $scope.report.selected_domain
-            },
-            function(data) {
-              $scope.show_statistics = true
-              var limit_course = 100 
-              $scope.total_courses = data.total_courses
-              $scope.total_students = data.total_students
-              $scope.total_teachers = data.total_teachers
-              $scope.total_lectures = data.total_lectures
-              remaining_get_course_data = data.course_ids.length
-              $scope.course_data_array = []
-              while (data.course_ids.length > 0){
-                getReportDataCourseDuration(data.course_ids.splice(0, limit_course))
-              }
-            }
-          )
+          Kpi.getAllCoursesIds({
+            domain: $scope.report.selected_domain
+          },
+            function (all_courses_ids) {
+              var limit_course = 100
+              $scope.course_data_array = []  
+              while(all_courses_ids.length>0) {                
+                iterative_courses_ids = all_courses_ids.splice(0,limit_course)               
+                Kpi.readTotalsForDuration({
+                  start_date: $scope.report.start_date,
+                  end_date: $scope.report.end_date,
+                  course_ids: [iterative_courses_ids]
+                }, function (data) {
+                  $scope.total_courses += data.total_courses
+                  $scope.total_students += data.total_students
+                  $scope.total_teachers += data.total_teachers
+                  $scope.total_lectures += data.total_lectures
+                  if (iterative_courses_ids.length < 10) {
+                    remaining_get_course_data = 0
+                  }
+                  getReportDataCourseDuration(data.course_ids)
+                })
+              } 
+            })
           angular.extend($scope.errors, errors)
         })
-        .catch(function(errors) {
+        .catch(function (errors) {
           $scope.show_statistics = false
           angular.extend($scope.errors, errors)
           return true
@@ -134,7 +148,6 @@ angular.module('scalearAngularApp')
             course_ids: course_ids
           },
           function(data) {
-            remaining_get_course_data -= course_ids.length
             total_hours += data.total_hours
             total_online_quiz_solved += data.total_online_quiz_solved
             total_questions += data.total_questions
@@ -148,7 +161,8 @@ angular.module('scalearAngularApp')
               value["active_view"] = value["active_view"] 
               $scope.course_data_array.push(value)
             })
-            if(remaining_get_course_data == 0 ){
+            $scope.show_statistics = true
+            if(remaining_get_course_data == 0 ){ 
               $scope.loading = false
               $scope.total_hours = total_hours
               $scope.total_online_quiz_solved = total_online_quiz_solved

@@ -155,7 +155,7 @@
             <span translate>editor.details.set_date</span>:
           <br>
           <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-          <span tooltip-placement="left" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (lecture.appearance_time| fromNow) }}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png'/></span>
+          <span tooltip-placement="left" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (lecture.appearance_time| fromNow) }}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
           <br>
           <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
           </span>

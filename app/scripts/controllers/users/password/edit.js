@@ -14,10 +14,10 @@ angular.module('scalearAngularApp')
             Token.setToken($scope.user)
             delete $scope.user.errors;
             User.change_password({}, $scope.user,
-                function (resp, headers) {
-                    UserSession.signIn(resp.data).then(function(data){
+                function (resp, headers) { console.log(resp)
+                    User.getCurrentUser({},function(){
                         $state.go("dashboard");
-                    })
+                    });
                 },
                 function (data) {
                     $scope.user.errors = data.data.errors;

@@ -1851,8 +1851,10 @@ textarea.editable-input{
   font-size: 14px !important;
 }
 .check_answer_button{
-  padding-top:0.5625rem !important;
-  padding-bottom: 0.4rem !important;
+  padding: 0.4rem !important;
+  z-index: 100;
+  height: 35px;
+  width: 282px;
 }
 
 .ipad .check_answer_button{

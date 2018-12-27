@@ -442,15 +442,15 @@ angular.module('scalearAngularApp')
         var template = '<ul class="no-margin">' +
           '<label>' +
           '<span translate>editor.drag.instruction</span>' +
-          '<rich-textarea ng-change="save()"  rows=3 style="resize:vertical;" class="answer_text must_save" ng-model="data.answer" ng-init="selectField()"/>' +
+          '<rich-textarea rows=3 style="resize:vertical;" class="answer_text must_save" ng-model="data.answer" ng-init="selectField()"/>' +
           '</label>' +
           '<label>' +
           '<span translate>editor.drag.correct</span>:' +
-          '<rich-textarea ng-change= "save()" rows=3 style="resize:vertical;" class="must_save" ng-model="data.explanation[pos]" />' +
+          '<rich-textarea rows=3 style="resize:vertical;" class="must_save" ng-model="data.explanation[pos]" />' +
           '</label>' +
           '<label ng-repeat=\'num in list|filter:"!"+data.pos\' >' +
           '<span translate translate-values="{num:num+1}">editor.drag.incorrect</span>:' +
-          '<rich-textarea ng-change="save()" rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
+          '<rich-textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />' +
           '</label>' +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-5 columns'><span translate>button.close</span></button>" +
           '<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;" class="small-7 columns no-padding"></delete_button>' +
@@ -529,7 +529,7 @@ angular.module('scalearAngularApp')
           "<label style='margin-top:10px'>" +
           "<span translate>editor.explanation</span>" +
           "<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>editor.popover.shown_to_student</small></h6>" +
-          "<rich-textarea ng-change='save()' rows=3 class='must_save' type='text' ng-model='data.explanation'></textarea>" +
+          "<rich-textarea rows=3 class='must_save' type='text' ng-model='data.explanation'></textarea>" +
           "</label>" +
           "<button type='button' ng-click='close()' class='button tiny success with-small-margin-top small-6 columns'><span translate>button.close</span></button>" +
           "</form>"

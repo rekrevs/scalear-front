@@ -1069,6 +1069,7 @@ var translation_sv={
     registration: "Registrering",
     report_period: "Rapport-period",
     generate_report: "Generera rapport",
+    generate_youtube_privacy_status_report:"generera youtube integritetsstatus rapport",
     login: "@:navigation.login",
     lecture_views: "Videos visade",
     questions_asked: "Frågor ställda",

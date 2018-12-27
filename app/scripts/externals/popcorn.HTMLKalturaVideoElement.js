@@ -1,27 +1,27 @@
 /* istanbul ignore next */
-(function( Popcorn, window, document ) {
+(function (Popcorn, window, document) {
 
   var
 
-  CURRENT_TIME_MONITOR_MS = 10,
-  EMPTY_STRING = "",
-  ABS = Math.abs,
+    CURRENT_TIME_MONITOR_MS = 10,
+    EMPTY_STRING = "",
+    ABS = Math.abs,
 
-  // Setup for Kaltura API
-  kReady = false,
-  kLoaded = false,
-  kCallbacks = [];
+    // Setup for Kaltura API
+    kReady = false,
+    kLoaded = false,
+    kCallbacks = [];
 
   function isKalturaReady(url) {
-    if( !kLoaded ) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
-      var tag = document.createElement( "script" );
+    if (!kLoaded) {//<script src="http://cdnapi.kaltura.com/p/243342/sp/24334200/embedIframeJs/uiconf_id/12905712/partner_id/243342"></script>
+      var tag = document.createElement("script");
       var kalturaIDs = extractKalturaIDs(url)
       tag.src = url.toString().split('src="')[1].split("?") //"http://cdnapi.kaltura.com/p/"+kalturaIDs.partner_id+"/sp/"+kalturaIDs.partner_id+"00/embedIframeJs/uiconf_id/"+kalturaIDs.uiconf_id+"/partner_id/"+kalturaIDs.partner_id
-      var firstScriptTag = document.getElementsByTagName( "script" )[ 0 ];
-      firstScriptTag.parentNode.insertBefore( tag, firstScriptTag );
+      var firstScriptTag = document.getElementsByTagName("script")[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       kLoaded = true;
-      kWidgetInterval = setInterval(function(){
-        if(window.kWidget){
+      kWidgetInterval = setInterval(function () {
+        if (window.kWidget) {
           onKalturaAPIReady();
           clearInterval(kWidgetInterval);
         }
@@ -30,59 +30,59 @@
     return kReady;
   };
 
-  function extractKalturaIDs(url){
-      var temp_url = url.toString()
-      var kalturaIDs = {}
+  function extractKalturaIDs(url) {
+    var temp_url = url.toString()
+    var kalturaIDs = {}
 
-      kalturaIDs.partner_id = url.match("\/p\/([0-9]+)")[1]
-      kalturaIDs.uiconf_id  = url.match("\/uiconf_id\/([0-9]+)")[1]
-      kalturaIDs.entry_id   = url.match("\&entry_id\=([0-9]_[a-z0-9]+)\&")[1]
+    kalturaIDs.partner_id = url.match("\/p\/([0-9]+)")[1]
+    kalturaIDs.uiconf_id = url.match("\/uiconf_id\/([0-9]+)")[1]
+    kalturaIDs.entry_id = url.match("\&entry_id\=([0-9]_[a-z0-9]+)\&")[1]
 
-      return kalturaIDs
-    }
-
-  function addKalturaCallback( callback ) {
-    kCallbacks.unshift( callback );
+    return kalturaIDs
   }
 
-  function onKalturaAPIReady(){
+  function addKalturaCallback(callback) {
+    kCallbacks.unshift(callback);
+  }
+
+  function onKalturaAPIReady() {
     kReady = true;
     var i = kCallbacks.length;
-    while(i-- ) {
-       if (kCallbacks[ i ] instanceof Function) kCallbacks[ i ]();
-      delete kCallbacks[ i ];
+    while (i--) {
+      if (kCallbacks[i] instanceof Function) kCallbacks[i]();
+      delete kCallbacks[i];
     }
   }
 
-  function HTMLKalturaVideoElement( id ) {
+  function HTMLKalturaVideoElement(id) {
     // Kaltura iframe API requires postMessage
-    if( !window.postMessage ) {
+    if (!window.postMessage) {
       throw "ERROR: HTMLKalturaVideoElement requires window.postMessage";
     }
 
     var self = this,
-      parent = typeof id === "string" ? document.querySelector( id ) : id,
-      elem = document.createElement( "div" );
+      parent = typeof id === "string" ? document.querySelector(id) : id,
+      elem = document.createElement("div");
     elem.setAttribute('id', 'kalturaVideo')
 
     var impl = {
-        src: EMPTY_STRING,
-        networkState: self.NETWORK_EMPTY,
-        readyState: self.HAVE_NOTHING,
-        seeking: false,
-        autoplay: false,
-        preload: EMPTY_STRING,
-        controls: false,
-        loop: false,
-        poster: EMPTY_STRING,
-        volume: 1,
-        muted: false,
-        currentTime: 0,
-        duration: NaN,
-        ended: false,
-        paused: true,
-        error: null
-      },
+      src: EMPTY_STRING,
+      networkState: self.NETWORK_EMPTY,
+      readyState: self.HAVE_NOTHING,
+      seeking: false,
+      autoplay: false,
+      preload: EMPTY_STRING,
+      controls: false,
+      loop: false,
+      poster: EMPTY_STRING,
+      volume: 1,
+      muted: false,
+      currentTime: 0,
+      duration: NaN,
+      ended: false,
+      paused: true,
+      error: null
+    },
       playerReady = false,
       catchRoguePauseEvent = false,
       catchRoguePlayEvent = false,
@@ -91,7 +91,7 @@
       loopedPlay = false,
       player,
       rawPlayer,
-      videoQualities = [] ,
+      videoQualities = [],
       playerPaused = true,
       mediaReadyCallbacks = [],
       playerState = -1,
@@ -100,49 +100,49 @@
       currentTimeInterval,
       timeUpdateInterval,
       firstPlay = false;
-      video_srcs=[];
+    video_srcs = [];
 
     // Namespace all events we'll produce
-    self._eventNamespace =  Popcorn.guid( "HTMLKalturaVideoElement::" );
+    self._eventNamespace = Popcorn.guid("HTMLKalturaVideoElement::");
 
     self.parentNode = parent;
 
     // Mark this as Kaltura
     self._util.type = "Kaltura";
 
-    function addMediaReadyCallback( callback ) {
-      mediaReadyCallbacks.unshift( callback );
+    function addMediaReadyCallback(callback) {
+      mediaReadyCallbacks.unshift(callback);
     }
 
-    function onPlayerReady( event ) {
+    function onPlayerReady(event) {
 
       var duration_secs = parseInt(player.evaluate(" {duration} "));
       impl.duration = duration_secs
-      self.dispatchEvent( "durationchange" );
+      self.dispatchEvent("durationchange");
       durationReady = true;
       onFirstPlay();
 
       var audioAndVideoSources = rawPlayer.plugins.sourceSelector.getSources()
-      for(i in audioAndVideoSources){
-         var temp_size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(audioAndVideoSources[i])
-         if (temp_size) {
-          audioAndVideoSources[i].size =temp_size
+      for (i in audioAndVideoSources) {
+        var temp_size = rawPlayer.plugins.sourceSelector.getSourceTitleSize(audioAndVideoSources[i])
+        if (temp_size) {
+          audioAndVideoSources[i].size = temp_size
           video_srcs.push(audioAndVideoSources[i])
-         }
+        }
       }
 
-      var onMuted = function() {
-        if ( player.isMuted() ) {
+      var onMuted = function () {
+        if (player.isMuted()) {
           // force an initial play on the video, to remove autostart on initial seekTo.
-          if ( !navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) )
+          if (!navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i))
             player.sendNotification("doPlay")
-          else{
-            if ( durationReady ) {
+          else {
+            if (durationReady) {
               onFirstPlay();
             }
           }
         } else {
-          setTimeout( onMuted, 0 );
+          setTimeout(onMuted, 0);
         }
       };
       playerReady = true;
@@ -159,7 +159,7 @@
       // There's no perfect mapping to HTML5 errors from Kaltura errors.
       var err = { name: "MediaError" };
 
-      switch( event.data ) {
+      switch (event.data) {
 
         // invalid parameter
         case 2:
@@ -191,20 +191,20 @@
       }
 
       impl.error = err;
-      self.dispatchEvent( "error" );
+      self.dispatchEvent("error");
     }
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-      addMediaReadyCallback(function() {
-        bufferedInterval = setInterval( monitorBuffered, 50 );
+      addMediaReadyCallback(function () {
+        bufferedInterval = setInterval(monitorBuffered, 50);
       });
 
       // Set initial paused state
-      if( impl.autoplay || !impl.paused ) {
+      if (impl.autoplay || !impl.paused) {
         impl.paused = false;
-        addMediaReadyCallback(function() {
-        onPlay();
+        addMediaReadyCallback(function () {
+          onPlay();
         });
       } else {
         catchRoguePauseEvent = false;
@@ -212,50 +212,50 @@
       }
 
       impl.readyState = self.HAVE_METADATA;
-      self.dispatchEvent( "loadedmetadata" );
-      currentTimeInterval = setInterval( monitorCurrentTime,CURRENT_TIME_MONITOR_MS );
+      self.dispatchEvent("loadedmetadata");
+      currentTimeInterval = setInterval(monitorCurrentTime, CURRENT_TIME_MONITOR_MS);
       //cuurentTimeInterval = player.evaluate('{video.player.currentTime}');
 
-      self.dispatchEvent( "loadeddata" );
+      self.dispatchEvent("loadeddata");
 
       impl.readyState = self.HAVE_FUTURE_DATA;
-      self.dispatchEvent( "canplay" );
+      self.dispatchEvent("canplay");
 
       mediaReady = true;
-      while( mediaReadyCallbacks.length ) {
-        mediaReadyCallbacks[ 0 ]();
+      while (mediaReadyCallbacks.length) {
+        mediaReadyCallbacks[0]();
         mediaReadyCallbacks.shift();
       }
 
       // We can't easily determine canplaythrough, but will send anyway.
       impl.readyState = self.HAVE_ENOUGH_DATA;
-      self.dispatchEvent( "canplaythrough" );
+      // self.dispatchEvent( "canplaythrough" );
 
     }
 
-    function onPlayerStateChange( event ) {
+    function onPlayerStateChange(event) {
       //uninitialized / loading / ready / playing / paused / buffering / playbackError
 
-      switch( event ) {
+      switch (event) {
         // playing
         case "playbackComplete": {
-            onEnded();
-            break;
+          onEnded();
+          break;
         }
         case "playing":
 
-          if( !firstPlay ) {
+          if (!firstPlay) {
             // fake ready event
             firstPlay = true;
             // Duration ready happened first, we're now ready.
-            if ( durationReady ) {
+            if (durationReady) {
               onFirstPlay();
             }
 
-          } else if ( catchRoguePlayEvent ){
+          } else if (catchRoguePlayEvent) {
             catchRoguePlayEvent = false;
             player.sendNotification("doPause");
-          } else {
+          } else { 
             onPlay();
           }
           break;
@@ -265,7 +265,7 @@
 
           // Kaltura fires a paused event before an ended event.
           // We have no need for this.
-          if ( player.getDuration() === rawPlayer.evaluate('{video.player.currentTime}') ) {
+          if (player.getDuration() === rawPlayer.evaluate('{video.player.currentTime}')) {
             onEnded();
 
             break;
@@ -273,7 +273,7 @@
 
           // a seekTo call fires a pause event, which we don't want at this point.
           // as long as a seekTo continues to do this, we can safly toggle this state.
-          if ( catchRoguePauseEvent ) {
+          if (catchRoguePauseEvent) {
             catchRoguePauseEvent = false;
             break;
           }
@@ -284,7 +284,7 @@
         // buffering
         case "buffering":
           impl.networkState = self.NETWORK_LOADING;
-          self.dispatchEvent( "waiting" );
+          self.dispatchEvent("waiting");
           break;
 
         // video cued
@@ -294,8 +294,8 @@
           break;
       }
 
-      if ( event.data !== "buffering" &&
-           playerState === "buffering" ) {
+      if (event.data !== "buffering" &&
+        playerState === "buffering") {
         onProgress();
       }
 
@@ -303,141 +303,141 @@
     }
 
     function destroyPlayer() {
-      if( !( playerReady && player ) ) {
+      if (!(playerReady && player)) {
         return;
       }
       player.sendNotification("doStop");
       player.sendNotification("cleanMedia");
     }
 
-    function resetPlayer(){
-      if( !( playerReady && player ) ) {
+    function resetPlayer() {
+      if (!(playerReady && player)) {
         return;
       }
       durationReady = false;
       firstPlay = false;
-      clearInterval( currentTimeInterval );
-      clearInterval( bufferedInterval );
+      clearInterval(currentTimeInterval);
+      clearInterval(bufferedInterval);
       player.sendNotification("cleanMedia");
     }
 
-    function destroyElement(){
-      if( !( playerReady && player ) ) {
+    function destroyElement() {
+      if (!(playerReady && player)) {
         return;
       }
-      parent.removeChild( elem );
+      parent.removeChild(elem);
       kWidget.destroy(id.split("#")[1]);
-      elem = document.createElement( "div" );
+      elem = document.createElement("div");
       elem.setAttribute('id', 'kalturaVideo')
     }
 
 
-    function changeSrc( aSrc ) {
+    function changeSrc(aSrc) {
       impl.src = aSrc;
 
-      if( !isKalturaReady(aSrc) ) {
-        return addKalturaCallback( function() { changeSrc( aSrc ); } );
+      if (!isKalturaReady(aSrc)) {
+        return addKalturaCallback(function () { changeSrc(aSrc); });
       }
 
-      if( playerReady ) {
+      if (playerReady) {
         resetPlayer();
         resetPlayer();
         destroyElement();
       }
 
-      parent.appendChild( elem );
+      parent.appendChild(elem);
 
       var kalturaIDs = extractKalturaIDs(aSrc)
 
       kWidget.embed({
         'targetId': 'kalturaVideo',
-        'wid':  '_'+kalturaIDs.partner_id,
-        'uiconf_id' : kalturaIDs.uiconf_id,
-        'entry_id' : kalturaIDs.entry_id,
-        'flashvars':{
-              'autoPlay':false,
-              'controlBarContainer.plugin': true,
-	            'largePlayBtn.plugin': false,
-	            'loadingSpinner.plugin': false,
-              "sourceSelector": {
-        				"plugin" : true,
-        				"switchOnResize" : false,
-        				"simpleFormat" : true,
-        				"displayMode" : "size"
-        			},
-              "closedCaptions": {
-        				"layout" : "ontop",
-        				"useCookie" : true,
-        				"fontFamily" : "Arial",
-        				"fontsize" : "12",
-        				"fontColor" : "0xFFFFFF",
-        				"bg" : "0x335544",
-        				"useGlow" : false,
-        				"glowBlur" : "4",
-        				"glowColor" : "0x133693",
-        				"defaultLanguageKey" : "en",
-        				"hideWhenEmpty" : true,
-        				"whiteListLanguagesCodes" : "en,es,fr,jp"
-        			},
-              "playbackRateSelector": {
-        				"plugin" : true,
-        				"position" : "after",
-        				"loadingPolicy" : "onDemand",
-        				"defaultSpeed" : "1",
-        				"speeds" : ".5,.75,1,1.5,2",
-        				"relativeTo" : "PlayerHolder"
-        			},
-              "KalturaClipDescription": {
-                 "startTime": 30
-              },
-              "operationAttributes":{
-                "offset":2000,
-                "duration":10000
-              }
-            },
-        readyCallback: function( playerId ){
-          player = document.getElementById( playerId );
+        'wid': '_' + kalturaIDs.partner_id,
+        'uiconf_id': kalturaIDs.uiconf_id,
+        'entry_id': kalturaIDs.entry_id,
+        'flashvars': {
+          'autoPlay': false,
+          'controlBarContainer.plugin': true,
+          'largePlayBtn.plugin': false,
+          'loadingSpinner.plugin': false,
+          "sourceSelector": {
+            "plugin": true,
+            "switchOnResize": false,
+            "simpleFormat": true,
+            "displayMode": "size"
+          },
+          "closedCaptions": {
+            "layout": "ontop",
+            "useCookie": true,
+            "fontFamily": "Arial",
+            "fontsize": "12",
+            "fontColor": "0xFFFFFF",
+            "bg": "0x335544",
+            "useGlow": false,
+            "glowBlur": "4",
+            "glowColor": "0x133693",
+            "defaultLanguageKey": "en",
+            "hideWhenEmpty": true,
+            "whiteListLanguagesCodes": "en,es,fr,jp,pt"
+          },
+          "playbackRateSelector": {
+            "plugin": true,
+            "position": "after",
+            "loadingPolicy": "onDemand",
+            "defaultSpeed": "1",
+            "speeds": ".5,.75,1,1.5,2",
+            "relativeTo": "PlayerHolder"
+          },
+          "KalturaClipDescription": {
+            "startTime": 30
+          },
+          "operationAttributes": {
+            "offset": 2000,
+            "duration": 10000
+          }
+        },
+        readyCallback: function (playerId) {
+          player = document.getElementById(playerId);
           rawPlayer = player.firstChild.contentWindow.document.getElementById(playerId);
 
-          player.kBind("playerReady",onPlayerReady);
-          player.kBind("playerStateChange",onPlayerStateChange);
-          player.kBind("mediaError",onPlayerError)
-       }
+          player.kBind("playerReady", onPlayerReady);
+          player.kBind("playerStateChange", onPlayerStateChange);
+          player.kBind("mediaError", onPlayerError)
+        }
       });
       impl.networkState = self.NETWORK_LOADING;
-      self.dispatchEvent( "loadstart" );
-      self.dispatchEvent( "progress" );
+      self.dispatchEvent("loadstart");
+      self.dispatchEvent("progress");
     }
 
 
     function monitorCurrentTime() {
       var playerTime = rawPlayer.evaluate('{video.player.currentTime}');
-      if ( !impl.seeking ) {
-        if ( ABS( impl.currentTime - playerTime ) > CURRENT_TIME_MONITOR_MS ) {
+      if (!impl.seeking) {
+        if (ABS(impl.currentTime - playerTime) > CURRENT_TIME_MONITOR_MS) {
           onSeeking();
           onSeeked();
         }
         impl.currentTime = playerTime;
-      } else if ( ABS( playerTime - impl.currentTime ) < 1 ) {
+      } else if (ABS(playerTime - impl.currentTime) < 1) {
         onSeeked();
-      }else if(playerTime == impl.currentTime){
+      } else if (playerTime == impl.currentTime) {
         onEnded()
       }
     }
 
-    function getVideoSrc(srcs,quality){
+    function getVideoSrc(srcs, quality) {
       quality = quality.toLowerCase()
-      for(i in srcs){
+      for (i in srcs) {
         if (srcs[i].size == quality)
-            break;
+          break;
       }
-      return  srcs[i]
+      return srcs[i]
     }
 
     function monitorBuffered() {
       var fraction = player.evaluate("{video.buffer.percent}")
 
-      if ( fraction && lastLoadedFraction !== fraction ) {
+      if (fraction && lastLoadedFraction !== fraction) {
         lastLoadedFraction = fraction;
         onProgress();
       }
@@ -447,10 +447,10 @@
       return impl.currentTime;
     }
 
-    function changeCurrentTime( aTime ) {
+    function changeCurrentTime(aTime) {
       impl.currentTime = aTime;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() {
+      if (!mediaReady) {
+        addMediaReadyCallback(function () {
           onSeeking();
         });
         return;
@@ -460,7 +460,7 @@
     }
 
     function onTimeUpdate() {
-      self.dispatchEvent( "timeupdate" );
+      self.dispatchEvent("timeupdate");
     }
 
     function onSeeking() {
@@ -468,48 +468,47 @@
       // we don't want to listen for this, so this state catches the event.
       // catchRoguePauseEvent = true;
       impl.seeking = true;
-      self.dispatchEvent( "seeking" );
+      self.dispatchEvent("seeking");
     }
 
     function onSeeked() {
       impl.ended = false;
       impl.seeking = false;
-      self.dispatchEvent( "timeupdate" );
-      self.dispatchEvent( "seeked" );
-      self.dispatchEvent( "canplay" );
-      self.dispatchEvent( "canplaythrough" );
+      self.dispatchEvent("timeupdate");
+      self.dispatchEvent("seeked");
+      self.dispatchEvent("canplay");
+      self.dispatchEvent("canplaythrough");
     }
 
     function onPlay() {
-      if( impl.ended ) {
-        changeCurrentTime( 0 );
+      if (impl.ended) {
+        changeCurrentTime(0);
         impl.ended = false;
       }
-      if(timeUpdateInterval)
-        clearInterval( timeUpdateInterval );
-      timeUpdateInterval = setInterval( onTimeUpdate,
-                                        self._util.TIMEUPDATE_MS );
+      if (timeUpdateInterval)
+        clearInterval(timeUpdateInterval);
+      timeUpdateInterval = setInterval(onTimeUpdate,
+        self._util.TIMEUPDATE_MS);
       impl.paused = false;
-      if( playerPaused ) {
+      if (playerPaused) {
         playerPaused = false;
         // Only 1 play when video.loop=true
-        if ( ( impl.loop && !loopedPlay ) || !impl.loop ) {
+        if ((impl.loop && !loopedPlay) || !impl.loop) {
           loopedPlay = true;
-          self.dispatchEvent( "play" );
+          self.dispatchEvent("play");
         }
-        self.dispatchEvent( "playing" );
+        self.dispatchEvent("play");
       }
     }
 
     function onProgress() {
-      self.dispatchEvent( "progress" );
+      self.dispatchEvent("progress");
     }
 
-    self.play = function() {
-
+    self.play = function () {
       impl.paused = false;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.play(); } );
+      if (!mediaReady) {
+        addMediaReadyCallback(function () { self.play(); });
         return;
       }
       player.sendNotification("doPlay");
@@ -517,20 +516,20 @@
 
     function onPause() {
       impl.paused = true;
-      if ( !playerPaused ) {
+      if (!playerPaused) {
         playerPaused = true;
-        clearInterval( timeUpdateInterval );
-        self.dispatchEvent( "pause" );
+        clearInterval(timeUpdateInterval);
+        self.dispatchEvent("pause");
       }
     }
-    self.pauseAfterSeek = function(){
-      setTimeout(function(){self.pause()},1000)
+    self.pauseAfterSeek = function () {
+      setTimeout(function () { self.pause();}, 1000)
     };
 
-    self.pause = function() {
+    self.pause = function () {
       impl.paused = true;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { self.pause(); } );
+      if (!mediaReady) {
+        addMediaReadyCallback(function () { self.pause(); });
         return;
       }
       // if a pause happens while seeking, ensure we catch it.
@@ -540,78 +539,80 @@
       player.sendNotification("doPause")
     };
 
-    self.getSpeeds = function(){
-      var speed_temp  = player.evaluate('{playbackRateSelector.speeds}')
+    self.getSpeeds = function () {
+      var speed_temp = player.evaluate('{playbackRateSelector.speeds}')
       return speed_temp.split(",")
     };
 
-    self.setSpeed = function(speed){
-      player.sendNotification('playbackRateChangeSpeed', speed );
+    self.setSpeed = function (speed) {
+      player.sendNotification('playbackRateChangeSpeed', speed);
     }
 
-    self.getAvailableQuality=function(){
-      videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
-      for (i in videoQualities ){
-        videoQualities[i]=videoQualities[i].toLowerCase()
+    self.getAvailableQuality = function () {
+      videoQualities = rawPlayer.plugins.sourceSelector.sourcesList
+      for (i in videoQualities) {
+        videoQualities[i] = videoQualities[i].toLowerCase()
       }
       return videoQualities
     }
 
-    self.getQuality=function(){
-      var videoQualities =  rawPlayer.plugins.sourceSelector.sourcesList
+    self.getQuality = function () {
+      var videoQualities = rawPlayer.plugins.sourceSelector.sourcesList
       return videoQualities
     }
 
-    self.setQuality=function(quality){
-      var videoSrcOfChosenQuality = getVideoSrc(video_srcs,quality)
+    self.setQuality = function (quality) {
+      var videoSrcOfChosenQuality = getVideoSrc(video_srcs, quality)
       rawPlayer.mediaElement.setSource(videoSrcOfChosenQuality)
       changeCurrentTime(getCurrentTime())
       // player.playVideo();
     }
 
-    self.destroy = function(){
+    self.destroy = function () {
       resetPlayer()
     }
     self.getCaptionTracks = function(){
-
-    //  var rawPlayer = player.firstChild.contentWindow.document.getElementById('lecture_video');
       var captionLanguages = []
-      var captionObjects   = rawPlayer.plugins.closedCaptions.textSources
-      var l = captionObjects.length
-      while (l--){
-        if(captionObjects[l].loaded){
-          captionLanguages.push({'displayName': captionObjects[l].label})
-        }
-      }
+      rawPlayer.plugins.closedCaptions.textSources.forEach(function(textSource){        
+        captionLanguages.push({'displayName': textSource.title})
+      })
       return captionLanguages
     }
 
-    self.setCaptionTrack = function(track){
-      player.sendNotification('showClosedCaptions')
-      if(Object.values(track ).length == 0 ) {
+    self.setCaptionTrack = function (track) {
+      if (Object.values(track).length == 0) {
         self.unsetCaptionTrack()
+      } else {
+        var closedCaptionPlugin = rawPlayer.plugins.closedCaptions
+        closedCaptionPlugin.textSources.forEach(function (textSource) {
+          if (textSource.title == track.displayName) {
+            closedCaptionPlugin.selectSource(textSource)
+            player.sendNotification('showClosedCaptions')
+            return;
+          }
+        })
       }
     }
 
-    self.unsetCaptionTrack = function(){
+    self.unsetCaptionTrack = function () {
       player.sendNotification('hideClosedCaptions')
     }
 
-    self.showControlBar = function(){
+    self.showControlBar = function () {
       rawPlayer.plugins.controlBarContainer.show()
       rawPlayer.getVideoHolder()[0].style.height = ''
       rawPlayer.getControlBarContainer()[0].style.display = "inline"
     }
 
-    self.hideControlBar = function (){
+    self.hideControlBar = function () {
       rawPlayer.plugins.controlBarContainer.hide()
       rawPlayer.getVideoHolder()[0].style.height = '100%'
       rawPlayer.getControlBarContainer()[0].style.display = "none"
     }
 
     function onEnded() {
-      if( impl.loop ) {
-        changeCurrentTime( 0 );
+      if (impl.loop) {
+        changeCurrentTime(0);
         self.play();
       } else {
         impl.ended = true;
@@ -620,148 +621,148 @@
         onPause();
         // Kaltura will fire a Playing State change after the video has ended, causing it to loop.
         catchRoguePlayEvent = true;
-        self.dispatchEvent( "timeupdate" );
-        self.dispatchEvent( "ended" );
+        self.dispatchEvent("timeupdate");
+        self.dispatchEvent("ended");
       }
     }
 
-    function setVolume( aValue ) {
+    function setVolume(aValue) {
       impl.volume = aValue;
-      player.sendNotification("changeVolume",aValue);
-      self.dispatchEvent( "volumechange" );
+      player.sendNotification("changeVolume", aValue);
+      self.dispatchEvent("volumechange");
     }
 
     function getVolume() {
-     return impl.volume;
+      return impl.volume;
     }
 
-    function setMuted( aValue ) {
+    function setMuted(aValue) {
       impl.muted = aValue;
-      if( !mediaReady ) {
-        addMediaReadyCallback( function() { setMuted( impl.muted ); } );
+      if (!mediaReady) {
+        addMediaReadyCallback(function () { setMuted(impl.muted); });
         return;
       }
-      player.sendNotification("changeVolume",0);
-      self.dispatchEvent( "volumechange" );
+      player.sendNotification("changeVolume", 0);
+      self.dispatchEvent("volumechange");
     }
 
     function getMuted() {
       return impl.muted;
     }
 
-    Object.defineProperties( self, {
+    Object.defineProperties(self, {
       src: {
-        get: function() {
+        get: function () {
           return impl.src;
         },
-        set: function( aSrc ) {
-          if( aSrc && aSrc !== impl.src ) {
-            changeSrc( aSrc );
+        set: function (aSrc) {
+          if (aSrc && aSrc !== impl.src) {
+            changeSrc(aSrc);
           }
         }
       },
 
       autoplay: {
-        get: function() {
+        get: function () {
           return impl.autoplay;
         },
-        set: function( aValue ) {
-          impl.autoplay = self._util.isAttributeSet( aValue );
+        set: function (aValue) {
+          impl.autoplay = self._util.isAttributeSet(aValue);
         }
       },
 
       loop: {
-        get: function() {
+        get: function () {
           return impl.loop;
         },
-        set: function( aValue ) {
-          impl.loop = self._util.isAttributeSet( aValue );
+        set: function (aValue) {
+          impl.loop = self._util.isAttributeSet(aValue);
         }
       },
 
       width: {
-        get: function() {
+        get: function () {
           return self.parentNode.offsetWidth;
         }
       },
 
       height: {
-        get: function() {
+        get: function () {
           return self.parentNode.offsetHeight;
         }
       },
 
       currentTime: {
-        get: function() {
+        get: function () {
           return getCurrentTime();
         },
-        set: function( aValue ) {
+        set: function (aValue) {
 
-          changeCurrentTime( aValue );
+          changeCurrentTime(aValue);
         }
       },
 
       duration: {
-        get: function() {
+        get: function () {
           return impl.duration;
         }
       },
 
       ended: {
-        get: function() {
+        get: function () {
           return impl.ended;
         }
       },
 
       paused: {
-        get: function() {
+        get: function () {
           return impl.paused;
         }
       },
 
       seeking: {
-        get: function() {
+        get: function () {
           return impl.seeking;
         }
       },
 
       readyState: {
-        get: function() {
+        get: function () {
           return impl.readyState;
         }
       },
 
       networkState: {
-        get: function() {
+        get: function () {
           return impl.networkState;
         }
       },
 
       volume: {
-        get: function() {
+        get: function () {
           // Remap from HTML5's 0-1 to Kaltura's 0-100 range
           var volume = getVolume();
           return volume / 100;
         },
-        set: function( aValue ) {
-          if( aValue < 0 || aValue > 1 ) {
+        set: function (aValue) {
+          if (aValue < 0 || aValue > 1) {
             throw "Volume value must be between 0.0 and 1.0";
           }
-          setVolume( aValue );
+          setVolume(aValue);
         }
       },
 
       muted: {
-        get: function() {
+        get: function () {
           return getMuted();
         },
-        set: function( aValue ) {
-          setMuted( self._util.isAttributeSet( aValue ) );
+        set: function (aValue) {
+          setMuted(self._util.isAttributeSet(aValue));
         }
       },
 
       error: {
-        get: function() {
+        get: function () {
           return impl.error;
         }
       },
@@ -769,16 +770,16 @@
       buffered: {
         get: function () {
           var timeRanges = {
-            start: function( index ) {
-              if ( index === 0 ) {
+            start: function (index) {
+              if (index === 0) {
                 return 0;
               }
               //throw fake DOMException/INDEX_SIZE_ERR
               throw "INDEX_SIZE_ERR: DOM Exception 1";
             },
-            end: function( index ) {
-              if ( index === 0 ) {
-                if ( !impl.duration ) {
+            end: function (index) {
+              if (index === 0) {
+                if (!impl.duration) {
                   return 0;
                 }
 
@@ -790,9 +791,9 @@
             }
           };
 
-          Object.defineProperties( timeRanges, {
+          Object.defineProperties(timeRanges, {
             length: {
-              get: function() {
+              get: function () {
                 return 1;
               }
             }
@@ -807,8 +808,8 @@
   HTMLKalturaVideoElement.prototype = new Popcorn._MediaElementProto();
   HTMLKalturaVideoElement.prototype.constructor = HTMLKalturaVideoElement;
 
-  Popcorn.HTMLKalturaVideoElement = function( id ) {
-    return new HTMLKalturaVideoElement( id );
+  Popcorn.HTMLKalturaVideoElement = function (id) {
+    return new HTMLKalturaVideoElement(id);
   };
 
-}( Popcorn, window, document ));
+}(Popcorn, window, document));

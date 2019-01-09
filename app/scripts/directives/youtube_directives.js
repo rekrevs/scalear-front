@@ -228,14 +228,12 @@ angular.module('scalearAngularApp')
         player.currentTime(time);
       }
 
-      player_controls.seek_and_pause = function(time) {
-
-        if(isKaltura(scope.url)){
-          if(time==0){
+      player_controls.seek_and_pause = function (time) {
+        if (isKaltura(scope.url)) {
+          if (time == 0) {
             player_controls.seek(0)
           } else {
-            player_controls.seek(time)
-            player.video.pauseAfterSeek()
+            player.video.pauseAfterSeek(time)
           }
         } else {
           player_controls.seek(time)

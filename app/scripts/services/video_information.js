@@ -54,7 +54,7 @@ angular.module('scalearAngularApp')
       return "https://www.youtube.com/watch?v=" + id;
     }
     service.isMP4=function(url) {
-      return url.match(/(.*mp4$)/);
+      return url.match(/(.*mp4$)/)||url.match(/(.*m4v$)/);
     }
     service.isMediaSite=function(url) {
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)

@@ -65,6 +65,7 @@ angular.module('scalearAngularApp')
           player.autoplay(scope.autoplay);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
+          console.log('in load video')
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
           player = Popcorn(video, {});
           video.src = scope.url
@@ -278,7 +279,7 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
-
+        console.log('in refresh video')
         scope.kill_popcorn()
         loadVideo()
       }
@@ -490,8 +491,9 @@ angular.module('scalearAngularApp')
       }
 
       var isMP4 = function(url) {
+        console.log('in isMP4')
         var video_url = url || scope.url || ""
-        return video_url.match(/(.*mp4$)/)
+        return video_url.match(/(.*mp4$)/)||video_url.match(/(.*m4v$)/)
       }
       var isKaltura= function(iframe) {
         var url

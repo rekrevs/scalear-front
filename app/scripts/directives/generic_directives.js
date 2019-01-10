@@ -159,7 +159,6 @@ angular.module('scalearAngularApp')
           if(screenfull.enabled) {
             if(scope.active){
               var mainVideoContainer = angular.element(element)[0]              
-           
               if (mainVideoContainer.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
                 mainVideoContainer.webkitRequestFullscreen();
               } else {

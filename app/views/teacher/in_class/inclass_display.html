@@ -36,7 +36,6 @@
         </ul>
       </div>
       <div class="normal_question_block" style="background-color: white;">
-        {{selected_timeline_item.type}}
         <div ng-if="!hide_questions && (selected_timeline_item.type == 'charts' || selected_timeline_item.type == 'inclass')">
           <div class="quiz" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" style="height: 10%; padding-left:5px;padding-top: 0.5%;padding-bottom: 0.5%;background-color: lightgrey;">
             <div><span ng-bind-html='selected_timeline_item.data.title' style="padding-left:5px;font-weight: bold;"></span>

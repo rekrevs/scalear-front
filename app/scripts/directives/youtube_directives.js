@@ -489,7 +489,6 @@ angular.module('scalearAngularApp')
       }
 
       var isMP4 = function(url) {
-        console.log('in isMP4')
         var video_url = url || scope.url || ""
         return video_url.match(/(.*mp4$)/)||video_url.match(/(.*m4v$)/)
       }

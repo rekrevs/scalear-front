@@ -276,7 +276,6 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
-
         scope.kill_popcorn()
         loadVideo()
       }
@@ -489,7 +488,7 @@ angular.module('scalearAngularApp')
 
       var isMP4 = function(url) {
         var video_url = url || scope.url || ""
-        return video_url.match(/(.*mp4$)/)
+        return video_url.match(/(.*mp4$)/)||video_url.match(/(.*m4v$)/)
       }
       var isKaltura= function(iframe) {
         var url

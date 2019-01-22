@@ -58,12 +58,12 @@ angular.module('scalearAngularApp')
 
     $scope.selectionUpdateTime
     $scope.saveQuiz = function (action) { 
-      if (($scope.status==null)||($scope.status.attempts <= $scope.quiz.retries)) { console.log('inside first if')
+      if (($scope.status==null)||($scope.status.attempts <= $scope.quiz.retries)) { 
         $scope.save_inprogress = true
         if ($scope.form.$valid || action == "save") { //validate only if submit.
           $scope.submitted = false;
           $scope.quiz.studentSolve($scope.studentAnswers, action)
-            .then(function (data) { console.log('inside reply to studetnsolve',data)
+            .then(function (data) {
               if (data.status !== null) {
                 $scope.selectionUpdateTime = new Date(data.status.updated_at).toLocaleString([], { hour12: true })
               }

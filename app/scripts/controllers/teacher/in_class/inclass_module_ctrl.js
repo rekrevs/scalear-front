@@ -899,7 +899,7 @@ angular.module("scalearAngularApp")
           group_percent = group_count / total_group * 100,
           tooltip_text = "<div style='padding:8px'><b>" + formatted_text + "</b><br>" +
           $translate.instant("inclass.self_stage") + ": " + self_count + " (" + self_percent + "%)" + "<br>" +
-          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + group_percent + "%)" + "</div>",raw_text
+          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + group_percent + "%)" + "</div>"
   
         var row = {
           "c": [

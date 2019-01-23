@@ -825,7 +825,7 @@ var translation_en={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_explanation: "Hover for explanation",
+    hover_for_explanation: "Hover for explanation, click play to continue.",
     tap_for_explanation: "Tap for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",

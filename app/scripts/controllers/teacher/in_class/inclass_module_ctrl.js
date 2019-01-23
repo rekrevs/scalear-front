@@ -14,7 +14,7 @@ angular.module("scalearAngularApp")
       question: 2
     };
 
-    var REPLACE_STYLING = "[REPLACE-STYLING]";
+   
 
     $scope.display = function() {
       resetVariables();
@@ -774,7 +774,7 @@ angular.module("scalearAngularApp")
         type: "BarChart",
         options: {
           "width": angular.element(".reveal-modal").width() - 50,
-          "colors": ["green", "gray"],
+          "colors": ["gray"],
           "isStacked": "false",
           "fill": 25,
           "backgroundColor": "white",
@@ -836,9 +836,7 @@ angular.module("scalearAngularApp")
           if (color == "orange") {
             color = "gray";
             answer_status = "Incorrect: ";
-          } else {
-            raw_text = REPLACE_STYLING + raw_text;
-          }
+          } 
           if (!isSurvey()) {
             tooltip_text += answer_status;
           }
@@ -901,8 +899,8 @@ angular.module("scalearAngularApp")
           group_percent = group_count / total_group * 100,
           tooltip_text = "<div style='padding:8px'><b>" + formatted_text + "</b><br>" +
           $translate.instant("inclass.self_stage") + ": " + self_count + " (" + self_percent + "%)" + "<br>" +
-          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + group_percent + "%)" + "</div>",
-          raw_text = (data[ind][1] == "green") ? REPLACE_STYLING + raw_text : raw_text;
+          $translate.instant("inclass.group_stage") + ": " + group_count + " (" + group_percent + "%)" + "</div>"
+  
         var row = {
           "c": [
             { "v": raw_text },
@@ -1271,18 +1269,6 @@ angular.module("scalearAngularApp")
       if (!$scope.chart.options.fontSize) {
         $scope.chart.options.fontSize = calculateFontSize("small");
       }
-
-      $("text:contains('" + REPLACE_STYLING + "')").each(function(idx, elem) {
-        var $elem = $(elem);
-        var text = $elem.text().replace(REPLACE_STYLING, "");
-        $elem.html("<tspan>" + text + "</tspan>");
-      });
-
-      $("div[style*='background: infobackground;']:contains('" + REPLACE_STYLING + "')").each(function(idx, elem) {
-        var $elem = $(elem);
-        var text = $elem.text().replace(REPLACE_STYLING, "");
-        $elem.text(text);
-      });
 
       $(window).resize();
       $scope.loading_chart = false;

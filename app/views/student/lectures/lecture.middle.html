@@ -67,6 +67,9 @@
               <dynamic-annotation-student   close="dismissDynamicAnnotation" action="toggleVideoPlayback" data="dynamic_annotation" text-to-show="'annotation'" ng-if="dynamic_annotation && !dynamic_annotation.as_slide &&  !selected_quiz && !lecture.distance_peer" />
               <dynamic-annotation-student close="dismissQuestionText" data="selected_quiz"  text-to-show="'question'" ng-if="selected_quiz.actual_display_text" />
             </youtube>
+            <div ng-show="quiz_mode" style="position: absolute; left: 37.5%;">
+              <button type="button" ng-hide="hide_quiz_button" class="small success button no-margin check_answer_button" ng-click="checkAnswer()">{{check_answer_title | translate}}</button>
+            </div>
             <progress-bar class='video-progress-bar' ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" role="2">
               <div ng-show="video_end && !distance_peer_session_id" class="video-end-panel">
                 <button id="replay_button" class="button end-btn replay-btn" ng-click="replay()"  translate>button.replay</button>
@@ -74,10 +77,7 @@
               </div>
               <div class="right notification" ng-show="quiz_mode || distance_peer_session_id">
                 <notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message" />
-              </div>
-              <div ng-show="quiz_mode" class="right check-answer-btn">
-                <button type="button" ng-hide="hide_quiz_button" class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()">{{check_answer_title | translate}}</button>
-              </div>
+              </div>          
               <div ng-show="slide_note" class="right check-answer-btn">
               	<button type="button" class="tiny success button no-margin check_answer_button" ng-click="dismissSlideNote();toggleVideoPlayback()" translate>button.continue</button>
               </div>

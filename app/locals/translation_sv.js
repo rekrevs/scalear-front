@@ -666,7 +666,8 @@ var translation_sv={
     annotation:"Annotering",
     tooltip:{
       invisible: "Inte synlig för eleverna.",
-      invisible_quiz:"Opublicera: Inte synlig för eleverna.",
+      visible_quiz: "Publicerad: synlig för studenter.",
+      invisible_quiz:"Opublicerad: Inte synlig för studenterna.",
       invisible_con: "Kommer att synas på detta datum.",
         students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
         students_must_complete_required:"Alla nödvändiga objekt måste fyllas i, i tid, för att studenten ska få tillgodoräkna sig modulen",
@@ -822,7 +823,7 @@ var translation_sv={
     incorrect: "@:global.incorrect",
     confused: "@:global.confused",
     really_confused: "@:global.really_confused",
-    hover_for_explanation: "Hovra med pekaren för förklaring",
+    hover_for_explanation: "Hovra med pekaren för förklaring, klicka på spel för att fortsätta",
     tap_for_explanation: "Knacka (tap) för förklaring",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",

@@ -228,14 +228,12 @@ angular.module('scalearAngularApp')
         player.currentTime(time);
       }
 
-      player_controls.seek_and_pause = function(time) {
-
-        if(isKaltura(scope.url)){
-          if(time==0){
+      player_controls.seek_and_pause = function (time) {
+        if (isKaltura(scope.url)) {
+          if (time == 0) {
             player_controls.seek(0)
           } else {
-            player_controls.seek(time)
-            player.video.pauseAfterSeek()
+            player.video.pauseAfterSeek(time)
           }
         } else {
           player_controls.seek(time)
@@ -278,7 +276,6 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
-
         scope.kill_popcorn()
         loadVideo()
       }
@@ -491,7 +488,7 @@ angular.module('scalearAngularApp')
 
       var isMP4 = function(url) {
         var video_url = url || scope.url || ""
-        return video_url.match(/(.*mp4$)/)
+        return video_url.match(/(.*mp4$)/)||video_url.match(/(.*m4v$)/)
       }
       var isKaltura= function(iframe) {
         var url

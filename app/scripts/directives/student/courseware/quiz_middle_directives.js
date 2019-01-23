@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
           }
         };
 
-        scope.updateValues = function (ques) {
+        scope.updateValues = function (ques) { 
           if (scope.quiz.quiz_type == "quiz") {
             if (scope.studentAnswers[ques] == "" && scope.studentAnswers[ques] == null) // ocq/mcq not solved
               scope.values = 0;
@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
           return scope.updateValues(ques) != 0
         }
 
-        scope.getExplanationPop = function(answer_id, drag_id) {
+        scope.getExplanationPop = function(answer_id, drag_id) { 
           return {
             content: '<div ng-bind-html="explanation[' + answer_id + ']' + ((drag_id != null) ? '[' + drag_id + ']' : '') + '"></div>',
             html: true,
@@ -61,21 +61,21 @@ angular.module('scalearAngularApp')
         scope.$watch('explanation', function(newval) {
         	if(newval){
 	          if(Object.keys(scope.explanation).length) {
-	            updateExplanation()
+              updateExplanation() 
 	          }
 	        }
         })
 
         function updateExplanation() {
             scope.quiz.questions.forEach(function(question) {
-              if(question.question_type.toUpperCase() !== "DRAG") {
+              if(question.question_type.toUpperCase() !== "DRAG") { 
                 question.answers.forEach(function(answer) {
                   answer.options = scope.explanation[answer.id]?scope.getExplanationPop(answer.id) : '';
                 })
-              } else {
+              } else { 
                 scope.studentAnswers[question.id].forEach(function(answer, idx) {
                   scope.drag_explanation[idx] = scope.explanation[question.answers[0].id]? scope.getExplanationPop(question.answers[0].id, idx) : '';
-                })
+                  })
               }
             })
           

@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
       $scope.saveQuestions()
     }
     $scope.saving = false
-    $scope.saveQuestions = function() {
+    $scope.saveQuestions = function() { 
       setTimeout(function(){
         if (autoSaveTimeOut){
           clearTimeout(autoSaveTimeOut)

@@ -662,7 +662,7 @@ angular.module('scalearAngularApp')
       $scope.video_end = false
     }
 
-    $scope.seek_and_pause = function(time, lecture_id) {
+    $scope.seek_and_pause = function (time, lecture_id) {
       if ($scope.lecture_player.controls.getTime() != time)
         clearQuiz()
       $scope.skip_pause_update = true
@@ -670,13 +670,15 @@ angular.module('scalearAngularApp')
       $scope.lecture_player.controls.pause()
     }
 
-    $scope.progressSeek = function(time) {
-      $scope.seek(time)
-      checkIfQuizSolved()
-      checkIfSlideShown()
+    $scope.progressSeek = function (time) {
+      if (!$scope.quiz_mode) {
+        $scope.seek(time)
+        checkIfQuizSolved()
+        checkIfSlideShown()
+      }
     }
 
-    var checkIfQuizSolved = function() {
+    var checkIfQuizSolved = function () {
       if (!$scope.distance_peer_session_id) {
         if ($scope.quiz_mode) {
           if (!$scope.selected_quiz.solved_quiz && $scope.selected_quiz.graded && $scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
@@ -703,7 +705,7 @@ angular.module('scalearAngularApp')
               }
             } else {
               var selected_answers = []
-              $scope.selected_quiz.online_answers.forEach(function(answer) {
+              $scope.selected_quiz.online_answers.forEach(function (answer) {
                 if (answer.selected)
                   selected_answers.push(answer.id)
               })

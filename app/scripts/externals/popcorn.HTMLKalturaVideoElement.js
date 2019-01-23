@@ -522,8 +522,9 @@
         self.dispatchEvent("pause");
       }
     }
-    self.pauseAfterSeek = function () {
-      setTimeout(function () { self.pause();}, 1000)
+    self.pauseAfterSeek = function (time) {      
+      rawPlayer.seek(time,true)
+      impl.paused = true;
     };
 
     self.pause = function () {

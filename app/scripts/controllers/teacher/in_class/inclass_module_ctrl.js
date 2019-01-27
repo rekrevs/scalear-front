@@ -25,7 +25,13 @@ angular.module("scalearAngularApp")
       $scope.zooom_graph = false;
       $scope.setOriginalClass();
       $scope.setInclassShortcuts();
-      screenfull.request();
+      var inclassModal = angular.element(document).find('body')[0]
+      console.log("inclassModal:",inclassModal)            
+      if (inclassModal.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        inclassModal.webkitRequestFullscreen();
+      } else {
+        screenfull.request();
+      }
       $scope.fullscreen = true;
       $scope.blurButtons();
       $scope.timer = Math.ceil(

@@ -26,7 +26,6 @@ angular.module("scalearAngularApp")
       $scope.setOriginalClass();
       $scope.setInclassShortcuts();
       var inclassModal = angular.element(document).find('body')[0]
-      console.log("inclassModal:",inclassModal)            
       if (inclassModal.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
         inclassModal.webkitRequestFullscreen();
       } else {

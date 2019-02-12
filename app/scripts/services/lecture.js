@@ -221,7 +221,6 @@ angular.module('scalearAngularApp')
         var deferred = $q.defer();
         lecture.aspect_ratio = "widescreen"
         lecture.url = lecture.url.trim()
-
         if(lecture.url && lecture.url != "none" && lecture.url != "http://") {
 
           var type = VideoInformation.isYoutube(lecture.url)
@@ -254,8 +253,8 @@ angular.module('scalearAngularApp')
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
-          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url)){
-            VideoInformation.waitForDurationSetup().then(function (duration) {
+          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url) || VideoInformation.isHTML5(lecture.url)){
+            VideoInformation.waitForDurationSetup().then(function (duration) { 
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration

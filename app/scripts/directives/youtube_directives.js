@@ -72,7 +72,13 @@ angular.module('scalearAngularApp')
           if ($rootScope.is_mobile || scope.controls == "default")
             player.controls(true);
           player.autoplay(false);
-        } else if (isMediaSite(scope.url)){
+
+
+        } else if (isHTML5(scope.url)) {
+          $log.debug("HTML5")
+          player = Popcorn.smart('#' + scope.id,scope.url) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+         
+        } else if (isMediaSite(scope.url)) {
           $log.debug("mediasite")
           var video = Popcorn.HTMLMediaSiteVideoElement('#' + scope.id)
           player = Popcorn(video);
@@ -228,9 +234,10 @@ angular.module('scalearAngularApp')
         player.currentTime(time);
       }
 
-      player_controls.seek_and_pause = function (time) {
-        if (isKaltura(scope.url)) {
-          if (time == 0) {
+      player_controls.seek_and_pause = function(time) {
+
+        if(isKaltura(scope.url)){
+          if(time==0){
             player_controls.seek(0)
           } else {
             player.video.pauseAfterSeek(time)
@@ -276,6 +283,7 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
+
         scope.kill_popcorn()
         loadVideo()
       }
@@ -364,11 +372,11 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               ScalearUtils.safeApply()
             }
-            var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
-            VideoInformation.setDuration(duration)
-            onReadyCallback()
-          });
-
+          var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
+          VideoInformation.setDuration(duration)
+          onReadyCallback()
+        });
+     
         player.on('playing',
           function() {
             $log.debug("youtube playing")
@@ -488,19 +496,25 @@ angular.module('scalearAngularApp')
 
       var isMP4 = function(url) {
         var video_url = url || scope.url || ""
-        return video_url.match(/(.*mp4$)/)||video_url.match(/(.*m4v$)/)
+        return video_url.match(/(.*mp4$)/) || video_url.match(/(.*m4v$)/)  
       }
-      var isKaltura= function(iframe) {
+
+      var isHTML5= function(url){
+        var video_url = url || scope.url || ""
+        return video_url.match(/(.*webm$)/) || video_url.match(/(.*ogv$)/)  
+      }
+
+      var isKaltura = function (iframe) {
         var url
         if (iframe) {
-          if (iframe.match( 'src\=(.*)[a-z]\"' )){
-            url = iframe.match( 'src\=(.*)[a-z]\"' )[0]
+          if (iframe.match('src\=(.*)[a-z]\"')) {
+            url = iframe.match('src\=(.*)[a-z]\"')[0]
           }
 
-          var video_url = url || scope.url.split(" ")[1]|| ""
+          var video_url = url || scope.url.split(" ")[1] || ""
 
           return video_url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)[a-z]*\&flashvars(&.*)?/)
-        }  
+        }
       }
       var isMediaSite = function(url) {
         var video_url = url || scope.url || ""
@@ -510,10 +524,11 @@ angular.module('scalearAngularApp')
       player_controls.isYoutube = isYoutube
       player_controls.isMP4  = isMP4
       player_controls.isKaltura = isKaltura
+      player_controls.isHTML5 = isHTML5
 
       scope.$watch('url', function() {
 
-        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) )){
+        if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) || isHTML5(scope.url))){
 
           player_controls.refreshVideo()
         }
@@ -714,7 +729,7 @@ angular.module('scalearAngularApp')
             scope.duration = scope.player.controls.getAbsoluteDuration();
           }
           else{
-            scope.duration = scope.player.controls.getDuration();
+            scope.duration = scope.player.controls.isHTML5? scope.player.element.duration():scope.player.controls.getDuration();
           }
         })
 
@@ -1068,7 +1083,6 @@ angular.module('scalearAngularApp')
           meta.position.left = scope.video.start_location + offset
         if (meta.position.left > scope.video.progress_width)
           meta.position.left = scope.video.progress_width
-
         scope.video.end_time = (meta.position.left / scope.video.progress_width) * scope.duration
         scope.player.controls.setVideoEndTime(scope.video.end_time)
         scope.player.controls.absoluteSeek(scope.video.end_time)

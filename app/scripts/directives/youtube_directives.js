@@ -72,12 +72,9 @@ angular.module('scalearAngularApp')
           if ($rootScope.is_mobile || scope.controls == "default")
             player.controls(true);
           player.autoplay(false);
-
-
         } else if (isHTML5(scope.url)) {
           $log.debug("HTML5")
-          player = Popcorn.smart('#' + scope.id,scope.url) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
-         
+          player = Popcorn.smart('#' + scope.id,scope.url) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});    
         } else if (isMediaSite(scope.url)) {
           $log.debug("mediasite")
           var video = Popcorn.HTMLMediaSiteVideoElement('#' + scope.id)
@@ -235,7 +232,6 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.seek_and_pause = function(time) {
-
         if(isKaltura(scope.url)){
           if(time==0){
             player_controls.seek(0)
@@ -283,7 +279,6 @@ angular.module('scalearAngularApp')
 
       player_controls.refreshVideo = function() {
         $log.debug("refreshVideo!")
-
         scope.kill_popcorn()
         loadVideo()
       }

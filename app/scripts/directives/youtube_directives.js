@@ -357,9 +357,9 @@ angular.module('scalearAngularApp')
         }
       }
 
-      var setupEvents = function() {
+      var setupEvents = function () {
         player.on("loadeddata",
-          function() {
+          function () {
             $log.debug("Video data loaded and ready")
             if ($rootScope.is_mobile)
               player.controls(false);
@@ -367,13 +367,13 @@ angular.module('scalearAngularApp')
               player_events.onReady();
               ScalearUtils.safeApply()
             }
-          var duration = (player_controls.youtube)? player_controls.getDuration() : player_controls.getAbsoluteDuration()
-          VideoInformation.setDuration(duration)
-          onReadyCallback()
-        });
-     
+            var duration = (player_controls.youtube) ? player_controls.getDuration() : player_controls.getAbsoluteDuration()
+            VideoInformation.setDuration(duration)
+            onReadyCallback()
+          });
+
         player.on('playing',
-          function() {
+          function () {
             $log.debug("youtube playing")
             parent.focus()
             if (player_events.onPlay) {

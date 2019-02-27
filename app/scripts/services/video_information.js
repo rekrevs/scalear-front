@@ -53,17 +53,20 @@ angular.module('scalearAngularApp')
     service.getFinalUrl = function(id) {
       return "https://www.youtube.com/watch?v=" + id;
     }
-    service.isMP4=function(url) {
-      return url.match(/(.*mp4$)/)||url.match(/(.*m4v$)/);
+    service.isMP4 = function (url) {
+      return url.match(/(.*mp4$)/) || url.match(/(.*m4v$)/);
     }
-    service.isMediaSite=function(url) {
+    service.isHTML5 = function (url) {
+      return url.match(/(.*webm$)/) || url.match(/(.*ogv$)/)
+    }
+    service.isMediaSite = function (url) {
       return url.match(/^(http|https):\/\/.*(\/Play\/)/)
     }
     service.isKaltura=function(url) {
       return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
     }
     service.invalidUrl=function(url) {
-      return(url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKaltura(url)) )
+      return (url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKaltura(url) && !service.isHTML5(url)) )
     }
     service.setDuration=function(newDuration) {
       service.duration = newDuration
@@ -71,9 +74,9 @@ angular.module('scalearAngularApp')
     service.waitForDurationSetup=function() {
       var deferred = $q.defer();
       var watchDuration = $interval(function(){
-        if(service.duration){
+        if(service.duration){ 
           deferred.resolve(service.duration)
-          $interval.cancel(watchDuration);
+          $interval.cancel(watchDuration); 
         }
       }, 500)
       return deferred.promise;

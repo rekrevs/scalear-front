@@ -239,7 +239,6 @@
       switch (event) {
         // playing
         case "playing":
-
           if (!firstPlay) {
             // fake ready event
             firstPlay = true;
@@ -247,7 +246,6 @@
             if (durationReady) {
               onFirstPlay();
             }
-
           } else if (catchRoguePlayEvent) {
             catchRoguePlayEvent = false;
             player.sendNotification("doPause");
@@ -255,37 +253,25 @@
             onPlay();
           }
           break;
-
         // paused
         case "paused":
-
-          if (player.getDuration() === rawPlayer.evaluate('{video.player.currentTime}')) {
-            onEnded();
-            break;
-          }
-
           // a seekTo call fires a pause event, which we don't want at this point.
           // as long as a seekTo continues to do this, we can safly toggle this state.
           if (catchRoguePauseEvent) {
             catchRoguePauseEvent = false;
             break;
           }
-
           onPause();
           break;
-
         // buffering
         case "buffering":
           impl.networkState = self.NETWORK_LOADING;
           self.dispatchEvent("waiting");
           break;
       }
-
-      if (event.data !== "buffering" &&
-        playerState === "buffering") {
+      if (event.data !== "buffering" && playerState === "buffering") {
         onProgress();
       }
-
       playerState = event.data;
     }
 

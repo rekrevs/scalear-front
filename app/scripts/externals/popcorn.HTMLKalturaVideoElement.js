@@ -120,6 +120,7 @@
       impl.duration = duration_secs
       self.dispatchEvent("durationchange");
       durationReady = true;
+      firstPlay=true
       onFirstPlay();
 
       var audioAndVideoSources = rawPlayer.plugins.sourceSelector.getSources()
@@ -235,13 +236,8 @@
 
     function onPlayerStateChange(event) {
       //uninitialized / loading / ready / playing / paused / buffering / playbackError
-
       switch (event) {
         // playing
-        case "playbackComplete": {
-          onEnded();
-          break;
-        }
         case "playing":
 
           if (!firstPlay) {
@@ -255,7 +251,7 @@
           } else if (catchRoguePlayEvent) {
             catchRoguePlayEvent = false;
             player.sendNotification("doPause");
-          } else { 
+          } else {
             onPlay();
           }
           break;
@@ -263,11 +259,8 @@
         // paused
         case "paused":
 
-          // Kaltura fires a paused event before an ended event.
-          // We have no need for this.
           if (player.getDuration() === rawPlayer.evaluate('{video.player.currentTime}')) {
             onEnded();
-
             break;
           }
 
@@ -285,12 +278,6 @@
         case "buffering":
           impl.networkState = self.NETWORK_LOADING;
           self.dispatchEvent("waiting");
-          break;
-
-        // video cued
-        case "cued":
-
-          // XXX: cued doesn't seem to fire reliably, bug in Kaltura api?
           break;
       }
 
@@ -400,6 +387,7 @@
           rawPlayer = player.firstChild.contentWindow.document.getElementById(playerId);
 
           player.kBind("playerReady", onPlayerReady);
+          player.kBind("playerPlayEnd", onEnded);
           player.kBind("playerStateChange", onPlayerStateChange);
           player.kBind("mediaError", onPlayerError)
         }
@@ -613,12 +601,10 @@
 
     function onEnded() {
       if (impl.loop) {
-        changeCurrentTime(0);
+        changeCurrentTime(0); 
         self.play();
       } else {
         impl.ended = true;
-
-        player.pauseVideo()
         onPause();
         // Kaltura will fire a Playing State change after the video has ended, causing it to loop.
         catchRoguePlayEvent = true;

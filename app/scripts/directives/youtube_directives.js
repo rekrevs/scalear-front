@@ -388,6 +388,8 @@ angular.module('scalearAngularApp')
             if (player_events.onPause) {
               player_events.onPause();
               scope.$apply();
+              console.log('in youtube directive pause watch')
+              scope.play_class = "play";
             }
 
           });
@@ -451,7 +453,7 @@ angular.module('scalearAngularApp')
         player.on('ended', function() {
           parent.focus()
           if (player_events.onEnd) {
-            player_events.onEnd();
+            player_events.onEnd();   
             scope.$apply();
           }
         })

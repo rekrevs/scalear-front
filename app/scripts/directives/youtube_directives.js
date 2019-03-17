@@ -60,9 +60,9 @@ angular.module('scalearAngularApp')
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           $log.debug("vimeo")
-          player = Popcorn.smart('#' + scope.id, scope.url + "?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0", { width: '100%', height: '100%', controls: 0 });
-          player.controls(scope.controls);
-          player.autoplay(scope.autoplay);
+          player = Popcorn.smart('#' + scope.id, scope.url )//+ "?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0", { width: '100%', height: '100%', controls: 0 });
+          // player.controls(scope.controls);
+          // player.autoplay(scope.autoplay);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
@@ -486,7 +486,7 @@ angular.module('scalearAngularApp')
 
       var isVimeo = function(url) {
         var video_url = url || scope.url || ""
-        return video_url.match(/vimeo/)
+      return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
       }
 
       var isMP4 = function(url) {
@@ -520,6 +520,7 @@ angular.module('scalearAngularApp')
       player_controls.isMP4  = isMP4
       player_controls.isKaltura = isKaltura
       player_controls.isHTML5 = isHTML5
+      player_controls.isVimeo = isVimeo
 
       scope.$watch('url', function() {
 

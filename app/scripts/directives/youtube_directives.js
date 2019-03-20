@@ -59,10 +59,12 @@ angular.module('scalearAngularApp')
           video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
-          $log.debug("vimeo")
-          player = Popcorn.smart('#' + scope.id, scope.url )//+ "?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0", { width: '100%', height: '100%', controls: 0 });
-          // player.controls(scope.controls);
-          // player.autoplay(scope.autoplay);
+          var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id)
+          video.src = scope.url
+          player = Popcorn(video);
+          player_controls.vimeo = true;
+          player.controls(scope.controls);
+          player.autoplay(scope.autoplay);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
@@ -187,7 +189,9 @@ angular.module('scalearAngularApp')
         // else{
         //  duration = player_controls.getAbsoluteDuration()
         // }
-
+        if (player_controls.vimeo){
+          return player.duration()
+        }
         return scope.end - scope.start
       }
 
@@ -389,7 +393,6 @@ angular.module('scalearAngularApp')
               player_events.onPause();
               scope.$apply();
             }
-
           });
 
         player.on('timeupdate',
@@ -398,7 +401,6 @@ angular.module('scalearAngularApp')
               player_events.timeUpdate();
               scope.$apply();
             }
-
           });
 
         player.on('loadedmetadata', function() {
@@ -484,9 +486,9 @@ angular.module('scalearAngularApp')
         return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
       }
 
-      var isVimeo = function(url) {
+      var isVimeo = function (url) {
         var video_url = url || scope.url || ""
-      return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
+        return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
       }
 
       var isMP4 = function(url) {
@@ -523,9 +525,7 @@ angular.module('scalearAngularApp')
       player_controls.isVimeo = isVimeo
 
       scope.$watch('url', function() {
-
         if (scope.url && ((isYoutube(scope.url) && isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url) || isKaltura(scope.url)|| isMediaSite(scope.url) || isHTML5(scope.url))){
-
           player_controls.refreshVideo()
         }
       })

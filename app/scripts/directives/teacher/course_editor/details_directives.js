@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .directive('detailsText', ['$timeout', function($timeout) {
     return {
       template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("global.empty"|translate) }} <i ng-class="overclass"></i></a>',
+    
       restrict: 'E',
       scope: {
         value: "=",
@@ -40,11 +41,15 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  }]).directive('detailsUrl', ['$timeout', '$translate','$filter', function($timeout, $translate, $filter) {
+  }]).directive('detailsUrl', ['$timeout', '$translate','$filter','ScalearUtils','$rootScope' ,'$modal',function($timeout, $translate, $filter,ScalearUtils,$modal,$rootScope) {
     return {
-      template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>',
+      template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
+      "</br><div>or</div>"+
+      "<div id='drop_zone' ngf-drop='upload($files);showProgressModal()' style='border-style: dashed;'>drop your file here</div>",
+     
       restrict: 'E',
       scope: {
+        showProgressModal:"&",
         value: "=",
         save: "&",
         validate: "&",
@@ -63,7 +68,67 @@ angular.module('scalearAngularApp')
               element.find('.editable-input').val("")
           });
         };
-
+        scope.upload = function (file){
+          var accessToken = 'e6783970f529d6099598c4a7357a9aae'  
+                   
+          var uploader = new VimeoUpload({
+            file: file[0],
+            name:file[0].name,
+            token: accessToken,
+            onProgress: function (data) {              
+              var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
+              angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")           
+              console.log('on progress:',data.loaded,data.total)
+              
+               
+            },
+            onComplete: function (videoId, index) {
+             
+              scope.$emit("update_progress",{"uploading":false,"transcoding":true})
+              
+              var isTranscoded = function(vimeo_vid_id,callback){
+                getTranscodData(vimeo_vid_id,callback)
+              }
+              var getTranscodData = function(callback,fn){
+                var http = new XMLHttpRequest()
+                var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
+                http.open('GET',ask,true)
+                http.setRequestHeader("Authorization","Bearer 158e50263e24a8eba295b3a554a26bb6")
+                http.setRequestHeader('Content-Type', 'application/json')
+                http.onreadystatechange = function() {
+                  if (http.readyState === 4) { 
+                    var transcode = JSON.parse(http.response) 
+                    if (transcode.transcode.status == "complete"){ console.log("transcode complete")
+                      fn(true)
+                    } else {
+                      fn(false) 
+                    }
+                  }
+                }
+                http.send()  
+              }       
+              var waitingTranscodDone = function(videoId){
+                isTranscoded(videoId,function(is_transcoded){
+                  if(is_transcoded){ scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
+                    scope.value = 'https://vimeo.com/' + videoId
+                    scope.text = scope.value
+                    ScalearUtils.safeApply()
+                    scope.save()
+                                     
+                  } else {
+                    setTimeout(function(){ scope.transcoding = true
+                      waitingTranscodDone(videoId)}
+                    ,1000)
+                  }    
+                })
+              }
+              waitingTranscodDone(videoId)    
+            }
+          });
+           uploader.upload();
+           
+        };
+        
         scope.saveData = function() {
           if(!scope.value.toString().startsWith("<iframe")){
               scope.value = $filter("formatURL")(scope.value)

@@ -77,7 +77,41 @@ angular.module('scalearAngularApp')
       return new Date(appearance_time) <= new Date()
     }
 
-    $scope.updateLectureUrl = function() {
+    $scope.showProgressModal = function() { 
+      console.log("in show progress bar at elcture details controller")
+      
+      $scope.openModal = $modal.open({
+        windowClass: 'upload-progress-modal-window',
+        template: "<div ng-show='uploading'>"+
+        "<H2 >Uploading</H2>"+
+        "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
+        "</br><button class='right button' ng-click='cancel()'>cancel</button>"+
+        "</div>"+
+        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></div>",      
+        controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
+          $scope.uploading = true
+          $scope.transcoding = false
+          console.log("$scope",$scope)
+          console.log("$rootScope",$rootScope)
+          console.log( $scope.openModal)
+        
+          $rootScope.$on('update_progress',function(ev,{"uploading":uploading,"transcoding":transcoding}){ 
+             $scope.transcoding = transcoding
+             $scope.uploading = uploading
+             $scope.$apply()
+              console.log("in on:",uploading,transcoding)
+             if(uploading===false && transcoding===false ) {
+              $modalInstance.close()
+             }
+          })
+
+          $scope.cancel = function(){ console.log($modal)
+            $modalInstance.dismiss('cancel')
+          }
+        }]
+      })
+    }
+    $scope.updateLectureUrl = function() { 
 
       $scope.lecture.updateUrl()
         .then(function(should_trim) {

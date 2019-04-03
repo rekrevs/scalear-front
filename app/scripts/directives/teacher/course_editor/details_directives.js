@@ -77,15 +77,10 @@ angular.module('scalearAngularApp')
             token: accessToken,
             onProgress: function (data) {              
               var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
-              angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")           
-              console.log('on progress:',data.loaded,data.total)
-              
-               
+              angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
             },
-            onComplete: function (videoId, index) {
-             
+            onComplete: function (videoId, index) {             
               scope.$emit("update_progress",{"uploading":false,"transcoding":true})
-              
               var isTranscoded = function(vimeo_vid_id,callback){
                 getTranscodData(vimeo_vid_id,callback)
               }
@@ -98,7 +93,7 @@ angular.module('scalearAngularApp')
                 http.onreadystatechange = function() {
                   if (http.readyState === 4) { 
                     var transcode = JSON.parse(http.response) 
-                    if (transcode.transcode.status == "complete"){ console.log("transcode complete")
+                    if (transcode.transcode.status == "complete"){
                       fn(true)
                     } else {
                       fn(false) 
@@ -109,12 +104,12 @@ angular.module('scalearAngularApp')
               }       
               var waitingTranscodDone = function(videoId){
                 isTranscoded(videoId,function(is_transcoded){
-                  if(is_transcoded){ scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
+                  if(is_transcoded){ 
+                    scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
                     scope.value = 'https://vimeo.com/' + videoId
                     scope.text = scope.value
                     ScalearUtils.safeApply()
-                    scope.save()
-                                     
+                    scope.save()                                  
                   } else {
                     setTimeout(function(){ scope.transcoding = true
                       waitingTranscodDone(videoId)}

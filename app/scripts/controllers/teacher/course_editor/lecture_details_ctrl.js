@@ -95,14 +95,14 @@ angular.module('scalearAngularApp')
           console.log("$rootScope",$rootScope)
           console.log( $scope.openModal)
         
-          $rootScope.$on('update_progress',function(ev,{"uploading":uploading,"transcoding":transcoding}){ 
-             $scope.transcoding = transcoding
-             $scope.uploading = uploading
-             $scope.$apply()
-              console.log("in on:",uploading,transcoding)
-             if(uploading===false && transcoding===false ) {
+          $rootScope.$on('update_progress', function (ev, { "uploading": uploading, "transcoding": transcoding }) {
+            $scope.transcoding = transcoding
+            $scope.uploading = uploading
+            $scope.$apply()
+            console.log("in on:", uploading, transcoding)
+            if (uploading === false && transcoding === false && $modalInstance) {
               $modalInstance.close()
-             }
+            }
           })
 
           $scope.cancel = function(){ console.log($modal)
@@ -117,6 +117,7 @@ angular.module('scalearAngularApp')
         .then(function(should_trim) {
           should_trim && checkToTrim()
         })
+      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)  
     }
 
     $scope.showQuiz = function(quiz) {

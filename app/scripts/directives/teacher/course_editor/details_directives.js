@@ -69,8 +69,8 @@ angular.module('scalearAngularApp')
           });
         };
         scope.upload = function (file){
-          var accessToken = 'e6783970f529d6099598c4a7357a9aae'  
-                   
+          var accessToken = 'e6783970f529d6099598c4a7357a9aae'
+                              
           var uploader = new VimeoUpload({
             file: file[0],
             name:file[0].name,
@@ -120,8 +120,7 @@ angular.module('scalearAngularApp')
               waitingTranscodDone(videoId)    
             }
           });
-           uploader.upload();
-           
+           uploader.upload(); 
         };
         
         scope.saveData = function() {

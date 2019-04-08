@@ -37,6 +37,7 @@ angular.module('scalearAngularApp')
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
+      "updateVimeoUploads":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -288,10 +289,21 @@ angular.module('scalearAngularApp')
           course_id: lecture.course_id,
           lecture_id: lecture.id
         }, {
-          percent: milestone
-        })
-        .$promise
-    }
+            percent: milestone
+          })
+          .$promise
+      }
+
+      function updateVimeoUploadedVideos(vimeo_url) {
+        return Lecture.updateVimeoUploads({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id,
+          url:vimeo_url
+        },{
+         
+        }).$promise
+      }
+
 
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
@@ -335,6 +347,7 @@ angular.module('scalearAngularApp')
         instanceType: instanceType,
         remove: remove,
         updateViewPercentage: updateViewPercentage,
+        updateVimeoUploadedVideos:updateVimeoUploadedVideos,
         module: module,
         setAsSelected:setAsSelected,
         markDone:markDone,

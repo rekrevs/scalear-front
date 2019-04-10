@@ -54,7 +54,9 @@ angular.module('scalearAngularApp')
         save: "&",
         validate: "&",
         column: "@",
-        open: "="
+        open: "=",
+        getVimeoUploadToken:"&",
+        cancelUpload:"="
       },
       link: function(scope, element, attr) {
         var unwatch = scope.$watch('value', function() {
@@ -68,59 +70,63 @@ angular.module('scalearAngularApp')
               element.find('.editable-input').val("")
           });
         };
-        scope.upload = function (file){
-          var accessToken = 'e6783970f529d6099598c4a7357a9aae'
-                              
-          var uploader = new VimeoUpload({
-            file: file[0],
-            name:file[0].name,
-            token: accessToken,
-            onProgress: function (data) {              
-              var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
-              angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
-            },
-            onComplete: function (videoId, index) {             
-              scope.$emit("update_progress",{"uploading":false,"transcoding":true})
-              var isTranscoded = function(vimeo_vid_id,callback){
-                getTranscodData(vimeo_vid_id,callback)
-              }
-              var getTranscodData = function(callback,fn){
-                var http = new XMLHttpRequest()
-                var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
-                http.open('GET',ask,true)
-                http.setRequestHeader("Authorization","Bearer 158e50263e24a8eba295b3a554a26bb6")
-                http.setRequestHeader('Content-Type', 'application/json')
-                http.onreadystatechange = function() {
-                  if (http.readyState === 4) { 
-                    var transcode = JSON.parse(http.response) 
-                    if (transcode.transcode.status == "complete"){
-                      fn(true)
-                    } else {
-                      fn(false) 
+  
+        scope.upload = function (file){      
+          scope.getVimeoUploadToken()
+          .then(function(accessToken){
+              
+            var uploader = new VimeoUpload({
+              file: file[0],
+              name:file[0].name,
+              token: accessToken,
+              onProgress: function (data) {              
+                var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
+                angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
+              },
+              onComplete: function (videoId, index) {             
+                scope.$emit("update_progress",{"uploading":false,"transcoding":true})
+                var isTranscoded = function(vimeo_vid_id,callback){
+                  getTranscodData(vimeo_vid_id,callback)
+                }
+                var getTranscodData = function(callback,fn){
+                  var http = new XMLHttpRequest()
+                  var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
+                  http.open('GET',ask,true)
+                  http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
+                  http.setRequestHeader('Content-Type', 'application/json')
+                  http.onreadystatechange = function() {
+                    if (http.readyState === 4) { 
+                      var transcode = JSON.parse(http.response) 
+                      if (transcode.transcode.status == "complete"){
+                        fn(true)
+                      } else {
+                        fn(false) 
+                      }
                     }
                   }
+                  http.send()  
+                }       
+                var waitingTranscodDone = function(videoId){
+                  isTranscoded(videoId,function(is_transcoded){
+                    if(is_transcoded){ 
+                      scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
+                      scope.value = 'https://vimeo.com/' + videoId
+                      scope.text = scope.value
+                      ScalearUtils.safeApply()
+                      scope.save()                                  
+                    } else {
+                      setTimeout(function(){ scope.transcoding = true
+                        waitingTranscodDone(videoId)}
+                      ,1000)
+                    }    
+                  })
                 }
-                http.send()  
-              }       
-              var waitingTranscodDone = function(videoId){
-                isTranscoded(videoId,function(is_transcoded){
-                  if(is_transcoded){ 
-                    scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
-                    scope.value = 'https://vimeo.com/' + videoId
-                    scope.text = scope.value
-                    ScalearUtils.safeApply()
-                    scope.save()                                  
-                  } else {
-                    setTimeout(function(){ scope.transcoding = true
-                      waitingTranscodDone(videoId)}
-                    ,1000)
-                  }    
-                })
+                waitingTranscodDone(videoId)    
               }
-              waitingTranscodDone(videoId)    
-            }
-          });
-           uploader.upload(); 
+            });
+            console.log(uploader)
+            uploader.upload(); 
+          })
         };
         
         scope.saveData = function() {

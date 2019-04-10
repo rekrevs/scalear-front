@@ -77,8 +77,13 @@ angular.module('scalearAngularApp')
       return new Date(appearance_time) <= new Date()
     }
 
+    $scope.getVimeoUploadAccessToken = function(){
+      console.log(2)
+      return $scope.lecture.getVimeoAccessToken() 
+    }
+    $scope.cancelUploading=false
     $scope.showProgressModal = function() { 
-      console.log("in show progress bar at elcture details controller")
+      // console.log("in show progress bar at elcture details controller")
       
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
@@ -87,13 +92,13 @@ angular.module('scalearAngularApp')
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
         "</br><button class='right button' ng-click='cancel()'>cancel</button>"+
         "</div>"+
-        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></div>",      
+        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></br><button class='right button' ng-click='cancel()'>cancel</button></div>",      
         controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
           $scope.uploading = true
           $scope.transcoding = false
-          console.log("$scope",$scope)
-          console.log("$rootScope",$rootScope)
-          console.log( $scope.openModal)
+          // console.log("$scope",$scope)
+          // console.log("$rootScope",$rootScope)
+          // console.log( $scope.openModal)
         
           $rootScope.$on('update_progress', function (ev, { "uploading": uploading, "transcoding": transcoding }) {
             $scope.transcoding = transcoding
@@ -106,6 +111,7 @@ angular.module('scalearAngularApp')
           })
 
           $scope.cancel = function(){ console.log($modal)
+            $scope.cancelUploading=true
             $modalInstance.dismiss('cancel')
           }
         }]

@@ -38,7 +38,8 @@ angular.module('scalearAngularApp')
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
       "updateVimeoUploads":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
-      "generateVimeoAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_upload_access_token' }, headers: headers } 
+      "generateVimeoAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_upload_access_token' }, headers: headers },
+      "deleteUploadedVimeoVideo":{ method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -295,14 +296,24 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
+      function cancelTranscodingViemoVideo(vimeo_video_id) {
+        console.log(vimeo_video_id)
+        return Lecture.deleteUploadedVimeoVideo({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id,
+        }, {
+            vimeo_vid_id: vimeo_video_id
+          })
+          .$promise
+      }
+
       function updateVimeoUploadedVideos(vimeo_url) {
         return Lecture.updateVimeoUploads({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
           url:vimeo_url
-        },{
-         
-        }).$promise
+        },{})
+          .$promise
       }
 
       function getVimeoAccessToken() {
@@ -360,6 +371,7 @@ angular.module('scalearAngularApp')
         remove: remove,
         updateViewPercentage: updateViewPercentage,
         updateVimeoUploadedVideos:updateVimeoUploadedVideos,
+        cancelTranscodingViemoVideo:cancelTranscodingViemoVideo,    
         getVimeoAccessToken:getVimeoAccessToken,
         module: module,
         setAsSelected:setAsSelected,

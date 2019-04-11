@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
@@ -78,10 +78,14 @@ angular.module('scalearAngularApp')
     }
 
     $scope.getVimeoUploadAccessToken = function(){
-      console.log(2)
       return $scope.lecture.getVimeoAccessToken() 
     }
-    $scope.cancelUploading=false
+    $scope.vimeoVideo={}
+    $scope.vimeoVideo.id=0
+    $scope.cancelTranscoding = function(){
+      console.log( $scope.vimeoVideo.id)
+      $scope.lecture.cancelTranscodingViemoVideo( $scope.vimeoVideo.id)  
+    }
     $scope.showProgressModal = function() { 
       // console.log("in show progress bar at elcture details controller")
       
@@ -90,28 +94,25 @@ angular.module('scalearAngularApp')
         template: "<div ng-show='uploading'>"+
         "<H2 >Uploading</H2>"+
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
-        "</br><button class='right button' ng-click='cancel()'>cancel</button>"+
+        "</br><button class='right button' ng-click='quitUploading()'>cancel</button>"+
         "</div>"+
-        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></br><button class='right button' ng-click='cancel()'>cancel</button></div>",      
+        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></br><button class='right button' ng-click='quitUploading()'>cancel</button></div>",      
         controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
           $scope.uploading = true
           $scope.transcoding = false
-          // console.log("$scope",$scope)
-          // console.log("$rootScope",$rootScope)
-          // console.log( $scope.openModal)
-        
+
           $rootScope.$on('update_progress', function (ev, { "uploading": uploading, "transcoding": transcoding }) {
             $scope.transcoding = transcoding
             $scope.uploading = uploading
             $scope.$apply()
-            console.log("in on:", uploading, transcoding)
+            // console.log("in on:", uploading, transcoding)
             if (uploading === false && transcoding === false && $modalInstance) {
               $modalInstance.close()
             }
           })
 
-          $scope.cancel = function(){ console.log($modal)
-            $scope.cancelUploading=true
+          $scope.quitUploading = function () {
+            $rootScope.$broadcast('upload_canceled',{'cancel_upload':true})
             $modalInstance.dismiss('cancel')
           }
         }]

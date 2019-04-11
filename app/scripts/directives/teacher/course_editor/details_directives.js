@@ -56,9 +56,10 @@ angular.module('scalearAngularApp')
         column: "@",
         open: "=",
         getVimeoUploadToken:"&",
-        cancelUpload:"="
+        terminateTranscoding:"&",
+        vid:"="
       },
-      link: function(scope, element, attr) {
+      link: function(scope,element, attr) {
         var unwatch = scope.$watch('value', function() {
           scope.text = scope.value == "none" ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value
           unwatch()
@@ -70,20 +71,22 @@ angular.module('scalearAngularApp')
               element.find('.editable-input').val("")
           });
         };
-  
+        
         scope.upload = function (file){      
           scope.getVimeoUploadToken()
-          .then(function(accessToken){
-              
+          .then(function(accessToken){    
+            var upload_canceled = false
             var uploader = new VimeoUpload({
               file: file[0],
               name:file[0].name,
               token: accessToken,
-              onProgress: function (data) {              
+              onProgress: function (data) {        
                 var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
                 angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
+                scope.transcoding = false
               },
-              onComplete: function (videoId, index) {             
+              onComplete: function (videoId, index) {
+                scope.vid=videoId                
                 scope.$emit("update_progress",{"uploading":false,"transcoding":true})
                 var isTranscoded = function(vimeo_vid_id,callback){
                   getTranscodData(vimeo_vid_id,callback)
@@ -106,29 +109,39 @@ angular.module('scalearAngularApp')
                   }
                   http.send()  
                 }       
-                var waitingTranscodDone = function(videoId){
-                  isTranscoded(videoId,function(is_transcoded){
-                    if(is_transcoded){ 
-                      scope.$emit("update_progress",{"uploading":false,"transcoding":false})  
+                var waitingTranscodDone = function (videoId) {
+                  isTranscoded(videoId, function (is_transcoded) {
+                    if (is_transcoded) {
+                      scope.$emit("update_progress", { "uploading": false, "transcoding": false })
                       scope.value = 'https://vimeo.com/' + videoId
                       scope.text = scope.value
                       ScalearUtils.safeApply()
-                      scope.save()                                  
+                      scope.save()
                     } else {
-                      setTimeout(function(){ scope.transcoding = true
-                        waitingTranscodDone(videoId)}
-                      ,1000)
-                    }    
+                      setTimeout(function () {
+                        scope.transcoding = true
+                        if (upload_canceled == true) return;
+                        waitingTranscodDone(videoId)
+                      }, 1000)
+                    }
                   })
                 }
-                waitingTranscodDone(videoId)    
+                waitingTranscodDone(videoId)
               }
             });
-            console.log(uploader)
-            uploader.upload(); 
-          })
+              uploader.upload();         
+              scope.$on('upload_canceled', function (ev,{'cancel_upload':cancelUpload}) { 
+                if (cancelUpload){
+                  upload_canceled = true
+                  uploader.xhr.abort()
+                  if(scope.transcoding){          
+                    scope.terminateTranscoding()
+                  }               
+                }       
+              })   
+            })
         };
-        
+
         scope.saveData = function() {
           if(!scope.value.toString().startsWith("<iframe")){
               scope.value = $filter("formatURL")(scope.value)

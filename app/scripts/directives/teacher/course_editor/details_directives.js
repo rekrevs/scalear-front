@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
     };
   }]).directive('detailsUrl', ['$timeout', '$translate','$filter','ScalearUtils','$rootScope' ,'$modal',function($timeout, $translate, $filter,ScalearUtils,$modal,$rootScope) {
     return {
-      template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
+      template: '<a id="inserted_url" ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
       "</br><div>or</div>"+
       "<div id='drop_zone' ngf-drop='upload($files);showProgressModal()' style='border-style: dashed;'>drop your file here</div>",
      
@@ -60,8 +60,10 @@ angular.module('scalearAngularApp')
         vid:"="
       },
       link: function(scope,element, attr) {
+        var url_is_vimeo
         var unwatch = scope.$watch('value', function() {
-          scope.text = scope.value == "none" ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value
+          url_is_vimeo = scope.value.includes('vimeo.com')
+          scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
           unwatch()
         })
         scope.selectField = function() {
@@ -85,21 +87,23 @@ angular.module('scalearAngularApp')
                 angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
                 scope.transcoding = false
               },
-              onComplete: function (videoId, index) {
+              onComplete: function (videoId, index) {console.log(videoId)
                 scope.vid=videoId                
                 scope.$emit("update_progress",{"uploading":false,"transcoding":true})
                 var isTranscoded = function(vimeo_vid_id,callback){
                   getTranscodData(vimeo_vid_id,callback)
                 }
                 var getTranscodData = function(callback,fn){
+
                   var http = new XMLHttpRequest()
                   var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
                   http.open('GET',ask,true)
                   http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
                   http.setRequestHeader('Content-Type', 'application/json')
-                  http.onreadystatechange = function() {
+                  http.onreadystatechange = function() { 
                     if (http.readyState === 4) { 
                       var transcode = JSON.parse(http.response) 
+                      console.log(transcode)
                       if (transcode.transcode.status == "complete"){
                         fn(true)
                       } else {
@@ -113,8 +117,7 @@ angular.module('scalearAngularApp')
                   isTranscoded(videoId, function (is_transcoded) {
                     if (is_transcoded) {
                       scope.$emit("update_progress", { "uploading": false, "transcoding": false })
-                      scope.value = 'https://vimeo.com/' + videoId
-                      scope.text = scope.value
+                      scope.value = 'https://vimeo.com/' + videoId.split(':')[0]
                       ScalearUtils.safeApply()
                       scope.save()
                     } else {
@@ -150,11 +153,14 @@ angular.module('scalearAngularApp')
             // if(scope.text !== scope.value) {
               scope.text = scope.value
               scope.save()
+              scope.value=""
             // }
           })
         }
 
-        scope.show = function() {
+        scope.show = function () {
+          if (url_is_vimeo)
+            scope.value=""
           scope.textBtnForm.$show()
         }
 

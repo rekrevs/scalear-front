@@ -76,7 +76,7 @@ angular.module('scalearAngularApp')
     $scope.visible = function(appearance_time) {
       return new Date(appearance_time) <= new Date()
     }
-
+    
     $scope.getVimeoUploadAccessToken = function(){
       return $scope.lecture.getVimeoAccessToken() 
     }
@@ -91,7 +91,12 @@ angular.module('scalearAngularApp')
       
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
-        template: "<div ng-show='uploading'>"+
+        template: "<div><p>Click `I agree` to upload the video to scalable learning, the last will only be seen by teachers and students enrolled in this course"+
+        "Click `Cancel` your file will not be uploaded "+
+        "</p><div>"+        
+        "<div><button type='button' ng-click>I agree</button></div>"+
+        "<div><button type='button' ng-click=>I agree</button></div>"+
+        "<div ng-show='uploading'>"+
         "<H2 >Uploading</H2>"+
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
         "</br><button class='right button' ng-click='quitUploading()'>cancel</button>"+

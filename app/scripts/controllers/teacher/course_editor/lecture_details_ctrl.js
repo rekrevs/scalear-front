@@ -160,8 +160,9 @@ angular.module('scalearAngularApp')
                       isTranscoded(videoId, function (is_transcoded) {                        
                         if (is_transcoded=="complete") {
                           $scope.transcodingProgress='complete'
-                          ScalearUtils.safeApply()
                           $scope.lecture.url = 'https://vimeo.com/' + videoId.split(':')[0]                        
+                          console.log($scope)
+                          ScalearUtils.safeApply()
                           setTimeout(function(){ 
                             $scope.uploading= false
                             $scope.transcoding=false 
@@ -209,7 +210,9 @@ angular.module('scalearAngularApp')
         .then(function(should_trim) {
           should_trim && checkToTrim()           
         })
+
       $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)  
+
     }
 
     $scope.showQuiz = function(quiz) {

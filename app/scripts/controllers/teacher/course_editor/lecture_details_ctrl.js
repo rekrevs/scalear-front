@@ -169,6 +169,7 @@ angular.module('scalearAngularApp')
                           },1000)                        
                         } else {
                           $scope.transcodingProgress='in progess'
+                          ScalearUtils.safeApply()
                           setTimeout(function () {
                             if ($scope.cancelUpload) return;
                             waitingTranscodDone(videoId)
@@ -204,13 +205,9 @@ angular.module('scalearAngularApp')
       })
     }
     $scope.updateLectureUrl = function() { 
-
       $scope.lecture.updateUrl()
         .then(function(should_trim) {
-          should_trim && checkToTrim()
-        })
-        .then(function(){
-          $scope.lecture.url=''
+          should_trim && checkToTrim()           
         })
       $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)  
     }

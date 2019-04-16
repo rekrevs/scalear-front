@@ -163,9 +163,12 @@ angular.module('scalearAngularApp')
         }
 
         scope.show = function () {
-          if (url_is_vimeo)
-            scope.value=""
           scope.textBtnForm.$show()
+          if (scope.value.includes('vimeo.com')) {
+            $timeout(function () {
+              element.find('.editable-input').val("")
+            })
+          }
         }
 
         if(attr.open) {

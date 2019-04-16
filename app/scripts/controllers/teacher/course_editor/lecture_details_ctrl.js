@@ -86,38 +86,118 @@ angular.module('scalearAngularApp')
       console.log( $scope.vimeoVideo.id)
       $scope.lecture.cancelTranscodingViemoVideo( $scope.vimeoVideo.id)  
     }
+    $scope.droppedFile={}
+    $scope.droppedFile.files=""
     $scope.showProgressModal = function() { 
       // console.log("in show progress bar at elcture details controller")
-      
+      console.log('file=>',$scope.droppedFile)
+     
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
-        template: "<div><p>Click `I agree` to upload the video to scalable learning, the last will only be seen by teachers and students enrolled in this course"+
-        "Click `Cancel` your file will not be uploaded "+
-        "</p><div>"+        
-        "<div><button type='button' ng-click>I agree</button></div>"+
-        "<div><button type='button' ng-click=>I agree</button></div>"+
+        scope:$scope,
+        backdrop: 'static',
+        template: "<div ng-show='consenting'><H1>Upload consent</H1>"+
+        "<p>Click `Accept` to upload the video to scalable learning, which will only be seen by teachers and students enrolled in this course</p>"+
+        "<p>Click `Cancel` your file will not be uploaded </p>"+               
+        "<button type='button' ng-click='startUploading()'  class='right button success small'>Accept</button>"+
+        "<button type='button' ng-click='cancelUploading()'  class='right button small with-margin-right'>Cancel</button></div>"+
         "<div ng-show='uploading'>"+
-        "<H2 >Uploading</H2>"+
+        "<H1 >Uploading</H1>"+
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
-        "</br><button class='right button' ng-click='quitUploading()'>cancel</button>"+
+        "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>"+
         "</div>"+
-        "<div ng-show='transcoding'><H2>Transcoding</H2><img src='/images/dots.gif' width='50'></br><button class='right button' ng-click='quitUploading()'>cancel</button></div>",      
+        "<div ng-show='transcoding'><span style='font-size: 2em; margin: .67em 0'>Processing</span>: {{transcodingProgress}}<img src='/images/dots.gif' width='50'></br><button class='right button small' ng-click='quitUploading()'>cancel</button></div>",      
         controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
-          $scope.uploading = true
+          $scope.consenting=true
+          $scope.uploading = false
           $scope.transcoding = false
-
-          $rootScope.$on('update_progress', function (ev, { "uploading": uploading, "transcoding": transcoding }) {
-            $scope.transcoding = transcoding
-            $scope.uploading = uploading
-            $scope.$apply()
-            // console.log("in on:", uploading, transcoding)
-            if (uploading === false && transcoding === false && $modalInstance) {
+          $scope.cancelUpload = false
+          $scope.$watch('transcoding', function () {
+          
+            if ($scope.consenting==false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
               $modalInstance.close()
             }
           })
-
+          $scope.startUploading = function(){ console.log($scope)
+            $scope.consenting=false
+            $scope.uploading=true
+            $scope.getVimeoUploadAccessToken()
+              .then(function(accessToken){    
+                var upload_canceled = false
+                var uploader = new VimeoUpload({
+                  file:$scope.$parent.droppedFile.files[0],
+                  name:$scope.droppedFile.files[0].name,
+                  token: accessToken,
+                  onProgress: function (data) {        
+                    var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
+                    angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
+                    $scope.transcoding = false
+                  },
+                  onComplete: function (videoId, index) {console.log($scope)
+                    $scope.transcoding=true
+                    $scope.vid=videoId                
+                    $scope.uploading=false
+                    $scope.transcodingProgress='started'
+                    $scope.$apply()
+                    var isTranscoded = function(vimeo_vid_id,callback){
+                      getTranscodData(vimeo_vid_id,callback)
+                    }
+                    var getTranscodData = function(callback,fn){
+                      var http = new XMLHttpRequest()
+                      var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
+                      http.open('GET',ask,true)
+                      http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
+                      http.setRequestHeader('Content-Type', 'application/json')
+                      http.onreadystatechange = function() { 
+                        if (http.readyState === 4) { 
+                          var transcode = JSON.parse(http.response) 
+                          fn(transcode.transcode.status)
+                        }
+                      }
+                      http.send()  
+                    }       
+                    var waitingTranscodDone = function (videoId) {
+                      isTranscoded(videoId, function (is_transcoded) {                        
+                        if (is_transcoded=="complete") {
+                          $scope.transcodingProgress='complete'
+                          ScalearUtils.safeApply()
+                          $scope.lecture.url = 'https://vimeo.com/' + videoId.split(':')[0]                        
+                          setTimeout(function(){ 
+                            $scope.uploading= false
+                            $scope.transcoding=false 
+                            $scope.updateLectureUrl()
+                          },1000)                        
+                        } else {
+                          $scope.transcodingProgress='in progess'
+                          setTimeout(function () {
+                            if ($scope.cancelUpload) return;
+                            waitingTranscodDone(videoId)
+                          }, 1000)
+                        }
+                        
+                      })
+                    }
+                    waitingTranscodDone(videoId)
+                  }
+                });
+                uploader.upload();         
+                $scope.$watch('cancelUpload', function () { 
+                  if ( $scope.cancelUpload){
+                    upload_canceled = true
+                    uploader.xhr.abort()
+                    if($scope.transcoding){          
+                      $scope.cancelTranscoding()
+                    }               
+                  }       
+                })   
+              })
+          }
+          $scope.cancelUploading = function(){
+            $modalInstance.dismiss('cancel')
+          }
           $scope.quitUploading = function () {
-            $rootScope.$broadcast('upload_canceled',{'cancel_upload':true})
+            // $rootScope.$broadcast('upload_canceled',{'cancel_upload':true})
+            $scope.cancelUpload=true
             $modalInstance.dismiss('cancel')
           }
         }]
@@ -128,6 +208,9 @@ angular.module('scalearAngularApp')
       $scope.lecture.updateUrl()
         .then(function(should_trim) {
           should_trim && checkToTrim()
+        })
+        .then(function(){
+          $scope.lecture.url=''
         })
       $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)  
     }

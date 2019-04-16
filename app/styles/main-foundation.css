@@ -440,7 +440,8 @@ span.error, small.error{
 
 }
 .upload-progress-modal-window{
-  height:  50%;
+  height:  auto;
+  width: 50%;
   overflow-y: auto;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
@@ -3048,6 +3049,7 @@ dd#second_accordion > a:hover{
   background-color: grey;
 }
 #drop_zone {
+  font-size: 0.875rem;
   border: 2px dashed #bbb;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;

@@ -45,7 +45,7 @@ angular.module('scalearAngularApp')
     return {
       template: '<a id="inserted_url" ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
       "</br><div>or</div>"+
-      "<div id='drop_zone' ngf-drop='upload($files);showProgressModal()' style='border-style: dashed;'>drop your file here</div>",
+      "<div id='drop_zone' class='small' ngf-drop='showConsentModal($files)'  style='border-style: dashed;'>drop your file here</div>",
      
       restrict: 'E',
       scope: {
@@ -57,7 +57,8 @@ angular.module('scalearAngularApp')
         open: "=",
         getVimeoUploadToken:"&",
         terminateTranscoding:"&",
-        vid:"="
+        vid:"=",
+        droppedFile:"="
       },
       link: function(scope,element, attr) {
         var url_is_vimeo
@@ -73,77 +74,80 @@ angular.module('scalearAngularApp')
               element.find('.editable-input').val("")
           });
         };
-        
-        scope.upload = function (file){      
-          scope.getVimeoUploadToken()
-          .then(function(accessToken){    
-            var upload_canceled = false
-            var uploader = new VimeoUpload({
-              file: file[0],
-              name:file[0].name,
-              token: accessToken,
-              onProgress: function (data) {        
-                var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
-                angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
-                scope.transcoding = false
-              },
-              onComplete: function (videoId, index) {console.log(videoId)
-                scope.vid=videoId                
-                scope.$emit("update_progress",{"uploading":false,"transcoding":true})
-                var isTranscoded = function(vimeo_vid_id,callback){
-                  getTranscodData(vimeo_vid_id,callback)
-                }
-                var getTranscodData = function(callback,fn){
+        scope.showConsentModal=function(file){         
+          scope.droppedFile=file
+          scope.showProgressModal()
+        }
+        // scope.upload = function (file){      
+        //   scope.getVimeoUploadToken()
+        //   .then(function(accessToken){    
+        //     var upload_canceled = false
+        //     var uploader = new VimeoUpload({
+        //       file: file[0],
+        //       name:file[0].name,
+        //       token: accessToken,
+        //       onProgress: function (data) {        
+        //         var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
+        //         angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
+        //         scope.transcoding = false
+        //       },
+        //       onComplete: function (videoId, index) {console.log(videoId)
+        //         scope.vid=videoId                
+        //         scope.$emit("update_progress",{"uploading":false,"transcoding":true})
+        //         var isTranscoded = function(vimeo_vid_id,callback){
+        //           getTranscodData(vimeo_vid_id,callback)
+        //         }
+        //         var getTranscodData = function(callback,fn){
 
-                  var http = new XMLHttpRequest()
-                  var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
-                  http.open('GET',ask,true)
-                  http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
-                  http.setRequestHeader('Content-Type', 'application/json')
-                  http.onreadystatechange = function() { 
-                    if (http.readyState === 4) { 
-                      var transcode = JSON.parse(http.response) 
-                      console.log(transcode)
-                      if (transcode.transcode.status == "complete"){
-                        fn(true)
-                      } else {
-                        fn(false) 
-                      }
-                    }
-                  }
-                  http.send()  
-                }       
-                var waitingTranscodDone = function (videoId) {
-                  isTranscoded(videoId, function (is_transcoded) {
-                    if (is_transcoded) {
-                      scope.$emit("update_progress", { "uploading": false, "transcoding": false })
-                      scope.value = 'https://vimeo.com/' + videoId.split(':')[0]
-                      ScalearUtils.safeApply()
-                      scope.save()
-                    } else {
-                      setTimeout(function () {
-                        scope.transcoding = true
-                        if (upload_canceled == true) return;
-                        waitingTranscodDone(videoId)
-                      }, 1000)
-                    }
-                  })
-                }
-                waitingTranscodDone(videoId)
-              }
-            });
-              uploader.upload();         
-              scope.$on('upload_canceled', function (ev,{'cancel_upload':cancelUpload}) { 
-                if (cancelUpload){
-                  upload_canceled = true
-                  uploader.xhr.abort()
-                  if(scope.transcoding){          
-                    scope.terminateTranscoding()
-                  }               
-                }       
-              })   
-            })
-        };
+        //           var http = new XMLHttpRequest()
+        //           var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
+        //           http.open('GET',ask,true)
+        //           http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
+        //           http.setRequestHeader('Content-Type', 'application/json')
+        //           http.onreadystatechange = function() { 
+        //             if (http.readyState === 4) { 
+        //               var transcode = JSON.parse(http.response) 
+        //               console.log(transcode)
+        //               if (transcode.transcode.status == "complete"){
+        //                 fn(true)
+        //               } else {
+        //                 fn(false) 
+        //               }
+        //             }
+        //           }
+        //           http.send()  
+        //         }       
+        //         var waitingTranscodDone = function (videoId) {
+        //           isTranscoded(videoId, function (is_transcoded) {
+        //             if (is_transcoded) {
+        //               scope.$emit("update_progress", { "uploading": false, "transcoding": false })
+        //               scope.value = 'https://vimeo.com/' + videoId.split(':')[0]
+        //               ScalearUtils.safeApply()
+        //               scope.save()
+        //             } else {
+        //               setTimeout(function () {
+        //                 scope.transcoding = true
+        //                 if (upload_canceled == true) return;
+        //                 waitingTranscodDone(videoId)
+        //               }, 1000)
+        //             }
+        //           })
+        //         }
+        //         waitingTranscodDone(videoId)
+        //       }
+        //     });
+        //       uploader.upload();         
+        //       scope.$on('upload_canceled', function (ev,{'cancel_upload':cancelUpload}) { 
+        //         if (cancelUpload){
+        //           upload_canceled = true
+        //           uploader.xhr.abort()
+        //           if(scope.transcoding){          
+        //             scope.terminateTranscoding()
+        //           }               
+        //         }       
+        //       })   
+        //     })
+        // };
 
         scope.saveData = function() {
           if(!scope.value.toString().startsWith("<iframe")){

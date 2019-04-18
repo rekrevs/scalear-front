@@ -45,7 +45,7 @@ angular.module('scalearAngularApp')
     return {
       template: '<a id="inserted_url" ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
       "</br><div>or</div>"+
-      "<div id='drop_zone' ngf-drop='showConsentModal($files)'  style='border-style: dashed;'>drop your file here</div>",
+      "<div id='drop_zone' ngf-drop='showConsentModal($files)'  style='border-style: dashed;font-size: 0.875rem'>drop your file here</div>",
      
       restrict: 'E',
       scope: {

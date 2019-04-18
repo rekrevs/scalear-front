@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
         "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>"+
         "</div>"+
-        "<div ng-show='transcoding'><span style='font-size: 2em; margin: .67em 0'>Processing</span>: {{transcodingProgress}}<img src='/images/dots.gif' width='50'></br><button class='right button small' ng-click='quitUploading()'>cancel</button></div>",      
+        "<div ng-show='transcoding'><span style='font-size: 2em; margin: .67em 0'>Processing</span>: {{transcodingProgress}}<img src='./images/dots.gif' width='50'></br><button class='right button small' ng-click='quitUploading()'>cancel</button></div>",      
         controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
           $scope.consenting=true
           $scope.uploading = false

@@ -3061,3 +3061,9 @@ dd#second_accordion > a:hover{
   height: 140px;
 }
 
+.hide_video{
+  display: inline-block
+}
+.show_video{
+  display: block
+}

@@ -11,7 +11,21 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events = {}
     $scope.marker_errors = {}
     $scope.quiz_errors = {}
-
+    $scope.transcoding = false
+    $scope.vimeo_video_id=0
+    $scope.$on('transcoding_begins',function(ev,vimeoVidId){
+      $scope.transcoding = true
+      $scope.vimeo_video_id = vimeoVidId.vimeoVidId
+      $scope.chosenDisplay = 'inline-block'
+    })
+    $scope.$on('transcoding_ends',function(ev){  
+      $scope.transcoding = false
+    })
+    $scope.cancelTranscoding = function(){
+      $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)  
+      $scope.transcoding = false
+      $rootScope.$broadcast('transcoding_canceled',{})
+    }
     $scope.alert = {
       type: "alert",
       msg: "error_message.got_some_errors"

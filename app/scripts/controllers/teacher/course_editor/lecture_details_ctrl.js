@@ -82,10 +82,7 @@ angular.module('scalearAngularApp')
     }
     $scope.vimeoVideo={}
     $scope.vimeoVideo.id=0
-    $scope.cancelTranscoding = function(){
-      console.log( $scope.vimeoVideo.id)
-      $scope.lecture.cancelTranscodingViemoVideo( $scope.vimeoVideo.id)  
-    }
+
     $scope.droppedFile={}
     $scope.droppedFile.files=""
     $scope.showProgressModal = function() { 
@@ -105,15 +102,12 @@ angular.module('scalearAngularApp')
         "<H1 >Uploading</H1>"+
         "</br><div id='upload_progress_container'><div id='upload_progress_bar'></div></div>"+
         "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>"+
-        "</div>"+
-        "<div ng-show='transcoding'><span style='font-size: 2em; margin: .67em 0'>Processing</span>: {{transcodingProgress}}<img src='./images/dots.gif' width='50'></br><button class='right button small' ng-click='quitUploading()'>cancel</button></div>",      
+        "</div>",      
         controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
           $scope.consenting=true
           $scope.uploading = false
-          $scope.transcoding = false
           $scope.cancelUpload = false
-          $scope.$watch('transcoding', function () {
-          
+          $scope.$watch('transcoding', function () {        
             if ($scope.consenting==false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
               $modalInstance.close()
             }
@@ -123,7 +117,7 @@ angular.module('scalearAngularApp')
             $scope.uploading=true
             $scope.getVimeoUploadAccessToken()
               .then(function(accessToken){    
-                var upload_canceled = false
+                // var upload_canceled = false
                 var uploader = new VimeoUpload({
                   file:$scope.$parent.droppedFile.files[0],
                   name:$scope.droppedFile.files[0].name,
@@ -133,12 +127,17 @@ angular.module('scalearAngularApp')
                     angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
                     $scope.transcoding = false
                   },
-                  onComplete: function (videoId, index) {console.log($scope)
-                    $scope.transcoding=true
-                    $scope.vid=videoId                
-                    $scope.uploading=false
-                    $scope.transcodingProgress='started'
+                  onComplete: function (videoId, index) {
+                    $modalInstance.dismiss()
+
+                    $rootScope.$broadcast('transcoding_begins',{'vimeoVidId':videoId})
+                    $scope.terminate=false
+                   
                     $scope.$apply()
+                    var videoId = videoId.split(':')[0]
+                    $scope.$on('transcoding_canceled',function(ev){
+                      $scope.terminate=true
+                    })
                     var isTranscoded = function(vimeo_vid_id,callback){
                       getTranscodData(vimeo_vid_id,callback)
                     }
@@ -154,20 +153,22 @@ angular.module('scalearAngularApp')
                           fn(transcode.transcode.status)
                         }
                       }
-                      http.send()  
+                      if ($scope.terminate) return
+                      http.send() 
                     }       
-                    var waitingTranscodDone = function (videoId) {
-                      isTranscoded(videoId, function (is_transcoded) {                        
-                        if (is_transcoded=="complete") {
-                          $scope.transcodingProgress='complete'
-                          $scope.lecture.url = 'https://vimeo.com/' + videoId.split(':')[0]                        
-                          console.log($scope)
+                    var waitingTranscodDone = function (videoId) {                    
+                      isTranscoded(videoId, function (is_transcoded) {
+                        if (is_transcoded == "complete") {
+                          $rootScope.$broadcast('transcoding_ends', {})
+                          console.log("rootscope broadcast")
+                          $scope.transcodingProgress = 'complete'
+                          $scope.lecture.url = 'https://vimeo.com/' + videoId
                           ScalearUtils.safeApply()
-                          setTimeout(function(){ 
-                            $scope.uploading= false
-                            $scope.transcoding=false 
+                          setTimeout(function () {
+                            $scope.uploading = false
+                            $scope.transcoding = false
                             $scope.updateLectureUrl()
-                          },1000)                        
+                          }, 1000)                        
                         } else {
                           $scope.transcodingProgress='in progess'
                           ScalearUtils.safeApply()
@@ -175,21 +176,17 @@ angular.module('scalearAngularApp')
                             if ($scope.cancelUpload) return;
                             waitingTranscodDone(videoId)
                           }, 1000)
-                        }
-                        
+                        }                       
                       })
-                    }
+                    } 
                     waitingTranscodDone(videoId)
                   }
                 });
                 uploader.upload();         
                 $scope.$watch('cancelUpload', function () { 
                   if ( $scope.cancelUpload){
-                    upload_canceled = true
-                    uploader.xhr.abort()
-                    if($scope.transcoding){          
-                      $scope.cancelTranscoding()
-                    }               
+                    // upload_canceled = true
+                    uploader.xhr.abort()           
                   }       
                 })   
               })
@@ -197,9 +194,8 @@ angular.module('scalearAngularApp')
           $scope.cancelUploading = function(){
             $modalInstance.dismiss('cancel')
           }
-          $scope.quitUploading = function () {
-            // $rootScope.$broadcast('upload_canceled',{'cancel_upload':true})
-            $scope.cancelUpload=true
+          $scope.quitUploading = function(){
+            $scope.cancelUpload = true
             $modalInstance.dismiss('cancel')
           }
         }]

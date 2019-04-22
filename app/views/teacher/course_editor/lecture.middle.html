@@ -12,12 +12,13 @@
 			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help</h5>
 			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help_continue</h5>
 		</overlay>
-		<overlay ng-show='transcoding' style="width:100%">
-			<img src="./images/loading2.gif" style="position:relative;top:25%;width:7%" alt="processing...">
-			<span class="color-grey no-margin" style="position:relative;top:25%">Processing</span>
-			</br>
-			</br>
-			<button class="small" style="position:relative;top:30%" ng-click='cancelTranscoding()' >Cancel</button>
+		<overlay ng-show='transcoding' style="width:100%"> 
+			<div class="no-margin" style="position:relative;top:20%">
+				<img src="./images/loading2.gif" style="width:7%">
+				<span>Processing </span>
+			</div>
+			<p class="color-grey" style="margin-top:17%">Please wait while your video is being processed,<br/>don't press back or refresh</p>
+			<button class="small" style="margin-top:4%" ng-click='cancelTranscoding()' >Cancel</button>
 		</overlay>
 		<form name="answer_form" novalidate >
 			<center>

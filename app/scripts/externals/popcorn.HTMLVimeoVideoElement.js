@@ -294,7 +294,7 @@
   
         switch ( data.event ) {
           case "ready":
-            player = new VimeoPlayer( elem );
+            player = new VimeoPlayer( elem ); 
             player.addEventListener( "loadProgress" );
             player.addEventListener( "pause" );
             player.setVolume( 0 );

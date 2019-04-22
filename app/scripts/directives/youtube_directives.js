@@ -59,8 +59,14 @@ angular.module('scalearAngularApp')
           video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
-          var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id)
-          video.src = scope.url
+          var vimeo_options = {
+            background: true,
+            muted: false,
+            autoplay:false,
+            loop:false
+          };
+          var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id,vimeo_options)
+          video.src = scope.url+"?background=1&autoplay=0&muted=0&loop=0"
           player = Popcorn(video);
           player_controls.vimeo = true;
           player.controls(scope.controls);

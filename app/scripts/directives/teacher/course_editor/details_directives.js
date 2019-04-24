@@ -63,8 +63,14 @@ angular.module('scalearAngularApp')
       link: function(scope,element, attr) {
         scope.$watch('value', function() {
           var url_is_vimeo = scope.value.includes('vimeo.com')
-          scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
-          // unwatch()
+          // scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
+          if(scope.value == "none"){
+            scope.text = "(" + $translate.instant("editor.details.add_video") + "...)"
+          } else if(url_is_vimeo){
+            scope.text = "Delete video"
+          } else{
+            scope.text =  scope.value
+          }
         })
         scope.selectField = function() {
           $timeout(function() {

@@ -76,83 +76,83 @@ angular.module('scalearAngularApp')
     $scope.visible = function(appearance_time) {
       return new Date(appearance_time) <= new Date()
     }
-    
-    $scope.getVimeoUploadAccessToken = function(){
-      return $scope.lecture.getVimeoAccessToken() 
-    }
-    $scope.vimeoVideo={}
-    $scope.vimeoVideo.id=0
 
-    $scope.droppedFile={}
-    $scope.droppedFile.files=""
-    $scope.showProgressModal = function() { 
+    $scope.getVimeoUploadAccessToken = function () {
+      return $scope.lecture.getVimeoAccessToken()
+    }
+    $scope.vimeoVideo = {}
+    $scope.vimeoVideo.id = 0
+
+    $scope.droppedFile = {}
+    $scope.droppedFile.files = ""
+    $scope.showProgressModal = function () {
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
-        scope:$scope,
+        scope: $scope,
         backdrop: 'static',
-        template: "<div ng-show='consenting'><H1>Permission to Upload Videos</H1>"+
-        "<div class='muted with-margin-bottom'><p>By uploading this video you confirm that you grant permission to use this video on ScalableLearning and that this video will only be used for teaching.<br>Videos uploaded to ScalableLearning will only be seen by teachers and students enrolled in the course and administrators </p></div>"+               
-        "<button type='button' ng-click='startUploading()'  class='right button success small'>I Grant Permission</button>"+
-        "<button type='button' ng-click='cancelUploading()'  class='right button small with-margin-right'>Cancel Upload</button></div>"+
-        "<div ng-show='uploading'>"+
-        "<H1 >Uploading</H1>"+
-        "<span class='muted with-margin-bottom'>Please wait...</span>"+
-        "<div id='upload_progress_container'><p id='upload_progress_bar'></p></div>"+
-        "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>"+
-        "</div>",      
-        controller: ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance) {
-          $scope.consenting=true
+        template: "<div ng-show='consenting'><H1>Permission to Upload Videos</H1>" +
+          "<div class='muted with-margin-bottom'><p>By uploading this video you confirm that you have permission to use this video on ScalableLearning and that this video will only be used for teaching.<br>Videos uploaded to ScalableLearning will only be seen by teachers and students enrolled in the course and administrators <br>ScalableLearning reserves the right to remove inappropriate content</p></div>" +
+          "<button type='button' ng-click='startUploading()'  class='right button success small'>I Have Permission</button>" +
+          "<button type='button' ng-click='cancelUploading()'  class='right button small with-margin-right'>Cancel Upload</button></div>" +
+          "<div ng-show='uploading'>" +
+          "<H1 >Uploading</H1>" +
+          "<span class='muted with-margin-bottom'>Please wait...</span>" +
+          "<div id='upload_progress_container'><p id='upload_progress_bar'></p></div>" +
+          "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>" +
+          "</div>",
+        controller: ['$scope', '$modalInstance', '$rootScope', function ($scope, $modalInstance) {
+          $scope.consenting = true
           $scope.uploading = false
           $scope.cancelUpload = false
-          $scope.$watch('transcoding', function () {        
-            if ($scope.consenting==false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
+          $scope.$watch('transcoding', function () {
+            if ($scope.consenting == false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
               $modalInstance.close()
             }
           })
-          $scope.startUploading = function(){
-            $scope.consenting=false
-            $scope.uploading=true
+          $scope.startUploading = function () {
+            $scope.consenting = false
+            $scope.uploading = true
             $scope.getVimeoUploadAccessToken()
-              .then(function(accessToken){    
+              .then(function (accessToken) {
                 var uploader = new VimeoUpload({
-                  file:$scope.$parent.droppedFile.files[0],
-                  name:$scope.droppedFile.files[0].name,
+                  file: $scope.$parent.droppedFile.files[0],
+                  name: $scope.droppedFile.files[0].name,
                   token: accessToken,
-                  onProgress: function (data) {        
-                    var uploadedPercentage = Math.ceil((data.loaded/data.total*100)).toString()
-                    angular.element('#upload_progress_bar')[0].setAttribute("style","width:"+uploadedPercentage+"%")                      
+                  onProgress: function (data) {
+                    var uploadedPercentage = Math.ceil((data.loaded / data.total * 100)).toString()
+                    angular.element('#upload_progress_bar')[0].setAttribute("style", "width:" + uploadedPercentage + "%")
                     $scope.transcoding = false
                   },
                   onComplete: function (videoId, index) {
                     $modalInstance.dismiss()
 
-                    $rootScope.$broadcast('transcoding_begins',{'vimeoVidId':videoId})
-                    $scope.terminate=false
-                   
+                    $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
+                    $scope.terminate = false
+
                     $scope.$apply()
                     var videoId = videoId.split(':')[0]
-                    $scope.$on('transcoding_canceled',function(ev){
-                      $scope.terminate=true
+                    $scope.$on('transcoding_canceled', function (ev) {
+                      $scope.terminate = true
                     })
-                    var isTranscoded = function(vimeo_vid_id,callback){
-                      getTranscodData(vimeo_vid_id,callback)
+                    var isTranscoded = function (vimeo_vid_id, callback) {
+                      getTranscodData(vimeo_vid_id, callback)
                     }
-                    var getTranscodData = function(callback,fn){
+                    var getTranscodData = function (callback, fn) {
                       var http = new XMLHttpRequest()
-                      var ask = "https://api.vimeo.com/videos/"+videoId+"?fields=transcode.status"
-                      http.open('GET',ask,true)
-                      http.setRequestHeader("Authorization","Bearer "+accessToken)//158e50263e24a8eba295b3a554a26bb6")
+                      var ask = "https://api.vimeo.com/videos/" + videoId + "?fields=transcode.status"
+                      http.open('GET', ask, true)
+                      http.setRequestHeader("Authorization", "Bearer " + accessToken)//158e50263e24a8eba295b3a554a26bb6")
                       http.setRequestHeader('Content-Type', 'application/json')
-                      http.onreadystatechange = function() { 
-                        if (http.readyState === 4) { 
-                          var transcode = JSON.parse(http.response) 
+                      http.onreadystatechange = function () {
+                        if (http.readyState === 4) {
+                          var transcode = JSON.parse(http.response)
                           fn(transcode.transcode.status)
                         }
                       }
                       if ($scope.terminate) return
-                      http.send() 
-                    }       
-                    var waitingTranscodDone = function (videoId) {                    
+                      http.send()
+                    }
+                    var waitingTranscodDone = function (videoId) {
                       isTranscoded(videoId, function (is_transcoded) {
                         if (is_transcoded == "complete") {
                           $rootScope.$broadcast('transcoding_ends', {})
@@ -163,32 +163,32 @@ angular.module('scalearAngularApp')
                             $scope.uploading = false
                             $scope.transcoding = false
                             $scope.updateLectureUrl()
-                          }, 1000)                        
+                          }, 1000)
                         } else {
-                          $scope.transcodingProgress='in progess'
+                          $scope.transcodingProgress = 'in progess'
                           ScalearUtils.safeApply()
                           setTimeout(function () {
                             if ($scope.cancelUpload) return;
                             waitingTranscodDone(videoId)
                           }, 1000)
-                        }                       
+                        }
                       })
-                    } 
+                    }
                     waitingTranscodDone(videoId)
                   }
                 });
-                uploader.upload();         
-                $scope.$watch('cancelUpload', function () { 
-                  if ( $scope.cancelUpload){
-                    uploader.xhr.abort()           
-                  }       
-                })   
+                uploader.upload();
+                $scope.$watch('cancelUpload', function () {
+                  if ($scope.cancelUpload) {
+                    uploader.xhr.abort()
+                  }
+                })
               })
           }
-          $scope.cancelUploading = function(){
+          $scope.cancelUploading = function () {
             $modalInstance.dismiss('cancel')
           }
-          $scope.quitUploading = function(){
+          $scope.quitUploading = function () {
             $scope.cancelUpload = true
             $modalInstance.dismiss('cancel')
           }
@@ -196,15 +196,15 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.updateLectureUrl = function() { 
+    $scope.updateLectureUrl = function () {
       $scope.lecture.updateUrl()
-        .then(function(should_trim) {
-          should_trim && checkToTrim()           
+        .then(function (should_trim) {
+          should_trim && checkToTrim()
         })
-      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)  
+      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)
     }
 
-    $scope.showQuiz = function(quiz) {
+    $scope.showQuiz = function (quiz) {
       $rootScope.$broadcast("show_online_quiz", quiz)
     }
 

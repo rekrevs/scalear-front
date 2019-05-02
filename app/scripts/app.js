@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
             }
         })
         .state('course.module.course_editor.lecture', {
-            url: '/lectures/:lecture_id',
+            url: '/lectures/:lecture_id/:transcoding',
             views: {
                 'details': {
                     templateUrl: '/views/teacher/course_editor/lecture.details.html',
@@ -187,7 +187,7 @@ angular.module('scalearAngularApp')
                     controller: 'lectureMiddleCtrl'
                 }
             },
-            params : { time:null }
+            params: { time: null, transcoding: 'false' }
         })
         .state('course.module.course_editor.quiz', {
             url: '/quizzes/:quiz_id',

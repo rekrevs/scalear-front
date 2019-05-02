@@ -5,23 +5,35 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
-
+ 
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
     $scope.marker_errors = {}
     $scope.quiz_errors = {}
+
+    $scope.vimeo_video_id = 0
     $scope.transcoding = false
-    $scope.vimeo_video_id=0
-    $scope.$on('transcoding_begins',function(ev,vimeoVidId){
+    console.log($scope)
+    $scope.lecture.getVimeoUploadingStatus()
+      .then(function(status){ 
+        $scope.transcoding= status=="transcoding"? true:false
+    }) 
+
+    $scope.$on('transcoding_begins',function(ev,vimeoVidId){      
       $scope.transcoding = true
       $scope.vimeo_video_id = vimeoVidId.vimeoVidId
       $scope.chosenDisplay = 'inline-block'
+      $state.go('.',{transcoding:true},{notify:false})
     })
+
     $scope.$on('transcoding_ends',function(ev){  
       $scope.transcoding = false
+      $stateParams.transcoding = $scope.transcoding 
+      
     })
-    $scope.cancelTranscoding = function(){
+
+    $scope.cancelTranscoding = function(){  
       $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)  
       $scope.transcoding = false
       $rootScope.$broadcast('transcoding_canceled',{})

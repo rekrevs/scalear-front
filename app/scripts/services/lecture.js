@@ -39,7 +39,8 @@ angular.module('scalearAngularApp')
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
       "updateVimeoUploads":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
       "generateVimeoAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_upload_access_token' }, headers: headers },
-      "deleteUploadedVimeoVideo":{ method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers }
+      "deleteUploadedVimeoVideo":{ method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers },
+      "getUploadingStatus":{ method: 'GET', params: { action: 'get_uploading_status' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -297,7 +298,6 @@ angular.module('scalearAngularApp')
       }
 
       function cancelTranscodingViemoVideo(vimeo_video_id) {
-        console.log(vimeo_video_id)
         return Lecture.deleteUploadedVimeoVideo({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
@@ -307,13 +307,26 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
-      function updateVimeoUploadedVideos(vimeo_url) {
+      function updateVimeoUploadedVideos(vimeo_url,status,lecture_id) {
         return Lecture.updateVimeoUploads({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
-          url:vimeo_url
-        },{})
+          url: vimeo_url,
+          status: status,
+          lecture_id: lecture_id
+        }, {})
           .$promise
+      }
+      
+      function getVimeoUploadingStatus() { 
+        return Lecture.getUploadingStatus({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, {})
+          .$promise
+          .then(function (data) { 
+            return data.status
+          })
       }
 
       function getVimeoAccessToken() {
@@ -321,12 +334,12 @@ angular.module('scalearAngularApp')
           course_id: lecture.course_id,
           lecture_id: lecture.id
         }, {})
-        .$promise
-        .then(function(data){
-          return data.upload_token
-        })
+          .$promise
+          .then(function (data) {
+            return data.upload_token
+          })
       }
-    
+
 
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
@@ -371,6 +384,7 @@ angular.module('scalearAngularApp')
         remove: remove,
         updateViewPercentage: updateViewPercentage,
         updateVimeoUploadedVideos:updateVimeoUploadedVideos,
+        getVimeoUploadingStatus:getVimeoUploadingStatus,
         cancelTranscodingViemoVideo:cancelTranscodingViemoVideo,    
         getVimeoAccessToken:getVimeoAccessToken,
         module: module,

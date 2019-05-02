@@ -125,14 +125,20 @@ angular.module('scalearAngularApp')
                   },
                   onComplete: function (videoId, index) {
                     $modalInstance.dismiss()
-
+                    
+                   
                     $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
                     $scope.terminate = false
 
                     $scope.$apply()
+                    
                     var videoId = videoId.split(':')[0]
+                    var videoUrl= 'https://vimeo.com/' + videoId
+                    $scope.lecture.updateVimeoUploadedVideos(videoUrl,'transcoding',$scope.lecture.id)
+
                     $scope.$on('transcoding_canceled', function (ev) {
                       $scope.terminate = true
+                      console.log('terminate:', $scope.terminate)
                     })
                     var isTranscoded = function (vimeo_vid_id, callback) {
                       getTranscodData(vimeo_vid_id, callback)
@@ -157,7 +163,7 @@ angular.module('scalearAngularApp')
                         if (is_transcoded == "complete") {
                           $rootScope.$broadcast('transcoding_ends', {})
                           $scope.transcodingProgress = 'complete'
-                          $scope.lecture.url = 'https://vimeo.com/' + videoId
+                          $scope.lecture.url = videoUrl//'https://vimeo.com/' + videoId
                           ScalearUtils.safeApply()
                           setTimeout(function () {
                             $scope.uploading = false
@@ -201,7 +207,8 @@ angular.module('scalearAngularApp')
         .then(function (should_trim) {
           should_trim && checkToTrim()
         })
-      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url)
+      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url,'complete', $scope.lecture.id)
+      
     }
 
     $scope.showQuiz = function (quiz) {

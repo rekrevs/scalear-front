@@ -33,6 +33,14 @@ angular.module('scalearAngularApp')
       
     })
 
+    // $rootScope.$on('delete_video',function(ev){  
+    //   $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)
+    //   console.log('video delteed')
+    //   $scope.lecture.url='none'
+    //   $scope.lecture.updateUrl()
+     
+    // })
+
     $scope.cancelTranscoding = function(){  
       $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)  
       $scope.transcoding = false

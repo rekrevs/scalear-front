@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 
         scope.saveData = function() {
           $timeout(function() {
-            scope.save()
+            scope.save({uploaded:false})
           })
         }
 
@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
       link: function(scope,element, attr) {
         scope.$watch('value', function() {
           var url_is_vimeo = scope.value.includes('vimeo.com')
-          // scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
+          scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
           if(scope.value == "none"){
             scope.text = "(" + $translate.instant("editor.details.add_video") + "...)"
           } else if(url_is_vimeo){
@@ -71,6 +71,7 @@ angular.module('scalearAngularApp')
           } else{
             scope.text =  scope.value
           }
+       
         })
         scope.selectField = function() {
           $timeout(function() {
@@ -90,19 +91,25 @@ angular.module('scalearAngularApp')
           }    
           $timeout(function() {
             // if(scope.text !== scope.value) {
+              console.log(scope.text)
+              console.log(scope.value)
               scope.text = scope.value
               scope.save()
-              scope.value=""
+              // scope.value=""
             // }
           })
         }
 
         scope.show = function () {
-          scope.textBtnForm.$show()
-          if (scope.value.includes('vimeo.com')) {
-            $timeout(function () {
-              element.find('.editable-input').val("")
-            })
+          if (scope.text == 'Delete video') {
+            scope.$emit('delete_video')
+          } else {
+            scope.textBtnForm.$show()
+            if (scope.value.includes('vimeo.com')) {
+              $timeout(function () {
+                element.find('.editable-input').val("")
+              })
+            }
           }
         }
 
@@ -135,7 +142,7 @@ angular.module('scalearAngularApp')
         };
 
         scope.$watch('value', function() {
-          if(scope.value) { console.log('here')
+          if(scope.value) {
             scope.short_url = scope.shorten ? shrort_url(scope.value, scope.shorten) : scope.value
           }
         })

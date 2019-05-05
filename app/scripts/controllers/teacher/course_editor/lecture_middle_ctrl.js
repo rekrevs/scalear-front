@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
- 
+    console.log($scope.lecture)
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
 
     $scope.vimeo_video_id = 0
     $scope.transcoding = false
-    console.log($scope)
+    
     $scope.lecture.getVimeoUploadingStatus()
       .then(function(status){ 
         $scope.transcoding= status=="transcoding"? true:false
@@ -23,29 +23,39 @@ angular.module('scalearAngularApp')
     $scope.$on('transcoding_begins',function(ev,vimeoVidId){      
       $scope.transcoding = true
       $scope.vimeo_video_id = vimeoVidId.vimeoVidId
-      $scope.chosenDisplay = 'inline-block'
-      $state.go('.',{transcoding:true},{notify:false})
     })
 
     $scope.$on('transcoding_ends',function(ev){  
       $scope.transcoding = false
       $stateParams.transcoding = $scope.transcoding 
-      
+      console.log($scope.lecture.url)
     })
 
-    // $rootScope.$on('delete_video',function(ev){  
-    //   $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)
-    //   console.log('video delteed')
-    //   $scope.lecture.url='none'
-    //   $scope.lecture.updateUrl()
-     
-    // })
+    var listnerDeleteVideo=$rootScope.$on('delete_video',function(ev){  
+      $scope.lecture.deleteVideo(10)
+      resetVideoDetails()
+    })
+   
 
-    $scope.cancelTranscoding = function(){  
-      $scope.lecture.cancelTranscodingViemoVideo($scope.vimeo_video_id)  
-      $scope.transcoding = false
-      $rootScope.$broadcast('transcoding_canceled',{})
+    function resetVideoDetails() {
+      $scope.lecture.url = 'none'
+      $scope.lecture.duration = null
     }
+
+    $scope.cancelTranscoding = function () { console.log('cancelTranscoding:',$scope.vimeo_video_id)
+      if ($scope.vimeo_video_id == 0) {
+        $scope.lecture.getVimeoVideoId()
+          .then(function (vimeo_video_id) {
+            console.log('vimeo_video_id',vimeo_video_id)
+            $scope.lecture.deleteVideo(vimeo_video_id)
+          })
+      } else {
+        $scope.lecture.deleteVideo($scope.vimeo_video_id)
+      }
+      $scope.transcoding = false
+      $rootScope.$broadcast('transcoding_canceled', {})
+    }
+
     $scope.alert = {
       type: "alert",
       msg: "error_message.got_some_errors"
@@ -677,6 +687,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on("$destroy", function() {
       removeShortcuts()
+      listnerDeleteVideo()
     })
 
   }]);

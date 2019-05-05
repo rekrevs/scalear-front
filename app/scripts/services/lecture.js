@@ -40,7 +40,9 @@ angular.module('scalearAngularApp')
       "updateVimeoUploads":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
       "generateVimeoAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_upload_access_token' }, headers: headers },
       "deleteUploadedVimeoVideo":{ method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers },
-      "getUploadingStatus":{ method: 'GET', params: { action: 'get_uploading_status' }, headers: headers }
+      "getUploadingStatus":{ method: 'GET', params: { action: 'get_uploading_status' }, headers: headers },
+      "getVimeoVideoId":{ method: 'GET', params: { action: 'get_vimeo_video_id' }, headers: headers }
+      
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -297,7 +299,7 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
-      function cancelTranscodingViemoVideo(vimeo_video_id) {
+      function deleteVideo(vimeo_video_id) {
         return Lecture.deleteUploadedVimeoVideo({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
@@ -317,14 +319,24 @@ angular.module('scalearAngularApp')
         }, {})
           .$promise
       }
-      
+      function getVimeoVideoId(){ console.log('in getVimeoVideoId')
+        return Lecture.getVimeoVideoId({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, {})
+          .$promise
+          .then(function (data) { 
+            return data.vimeo_video_id
+          })
+      }
+
       function getVimeoUploadingStatus() { 
         return Lecture.getUploadingStatus({
           course_id: lecture.course_id,
           lecture_id: lecture.id
         }, {})
           .$promise
-          .then(function (data) { 
+          .then(function (data) {
             return data.status
           })
       }
@@ -385,7 +397,8 @@ angular.module('scalearAngularApp')
         updateViewPercentage: updateViewPercentage,
         updateVimeoUploadedVideos:updateVimeoUploadedVideos,
         getVimeoUploadingStatus:getVimeoUploadingStatus,
-        cancelTranscodingViemoVideo:cancelTranscodingViemoVideo,    
+        getVimeoVideoId:getVimeoVideoId,
+        deleteVideo:deleteVideo,    
         getVimeoAccessToken:getVimeoAccessToken,
         module: module,
         setAsSelected:setAsSelected,

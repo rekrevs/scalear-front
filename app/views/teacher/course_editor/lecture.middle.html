@@ -5,24 +5,28 @@
 			<span>{{lecture.name}}</span>
 		</h4>
 		<overlay ng-show="lecture.url=='none' && !transcoding" >
-			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url</h3>
-			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url_continue</h3>
-			<br/>
-			<br/>
-			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help</h5>
-			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help_continue</h5>
+			<div style='background: #e8e8e8cc; height:1000%'>
+				<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url</h3>
+				<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.enter_url_continue</h3>
+				<br/>
+				<br/>
+				<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help</h5>
+				<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>editor.messages.for_help_continue</h5>
+			</div>	
 		</overlay>
-		<overlay ng-show='transcoding' style="width:100%"> --{{transcoding}}
-			<div class="no-margin" style="position:relative;top:20%">
-				<img src="./images/loading2.gif" style="width:7%">
-				<span>Processing </span>
+		<overlay ng-show='transcoding'>
+			<div  style='background: #e8e8e8cc; height:1000%'>
+				<div class="no-margin" style="position:relative;top:20%">
+					<img src="./images/loading2.gif" style="width:7%">
+					<span>Processing </span>
+				</div>
+				<p class="color-grey" style="margin-top:17%">Please wait...</p>
+				<button class="small" style="margin-top:4%" ng-click='cancelTranscoding()' >Cancel</button>
 			</div>
-			<p class="color-grey" style="margin-top:17%">Please wait...</p>
-			<button class="small" style="margin-top:4%" ng-click='cancelTranscoding()' >Cancel</button>
 		</overlay>
 		<form name="answer_form" novalidate >
 			<center>
-				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12">
+				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12" ng-hide="lecture.url=='none'">
 					<youtube id="lecture_video"  ng-style="video_layer" ng-class="{'show_video':!transcoding,'hide_video':transcoding}" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
 						<quiz ng-show="selected_quiz || selected_marker" ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />

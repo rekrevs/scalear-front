@@ -125,21 +125,18 @@ angular.module('scalearAngularApp')
                   },
                   onComplete: function (videoId, index) {
                     $modalInstance.dismiss()
-                    
-                   
-                    $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
+
+                    var videoId = videoId.split(':')[0]
+                    var videoUrl = 'https://vimeo.com/' + videoId
                     $scope.terminate = false
 
-                    $scope.$apply()
-                    
-                    var videoId = videoId.split(':')[0]
-                    var videoUrl= 'https://vimeo.com/' + videoId
-                    $scope.lecture.updateVimeoUploadedVideos(videoUrl,'transcoding',$scope.lecture.id)
+                    $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
+                    $scope.lecture.updateVimeoUploadedVideos(videoUrl, 'transcoding', $scope.lecture.id)
 
                     $scope.$on('transcoding_canceled', function (ev) {
                       $scope.terminate = true
-                      console.log('terminate:', $scope.terminate)
                     })
+
                     var isTranscoded = function (vimeo_vid_id, callback) {
                       getTranscodData(vimeo_vid_id, callback)
                     }
@@ -168,7 +165,8 @@ angular.module('scalearAngularApp')
                           setTimeout(function () {
                             $scope.uploading = false
                             $scope.transcoding = false
-                            $scope.updateLectureUrl()
+                            $scope.updateLectureUrl(true)
+                          
                           }, 1000)
                         } else {
                           $scope.transcodingProgress = 'in progess'
@@ -202,14 +200,14 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.updateLectureUrl = function () {
+    $scope.updateLectureUrl = function (uploaded) {
       $scope.lecture.updateUrl()
         .then(function (should_trim) {
           should_trim && checkToTrim()
-        })
-      $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url,'complete', $scope.lecture.id)
-      
+        })  
+      if(uploaded && uploaded==true) $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url,'complete', $scope.lecture.id)
     }
+   
 
     $scope.showQuiz = function (quiz) {
       $rootScope.$broadcast("show_online_quiz", quiz)

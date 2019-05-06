@@ -138,7 +138,6 @@ angular.module('scalearAngularApp')
                     $scope.$on('transcoding_canceled', function (ev) {
                       $scope.terminate = true
                     })
-
                     var isTranscoded = function (vimeo_vid_id, callback) {
                       getTranscodData(vimeo_vid_id, callback)
                     }

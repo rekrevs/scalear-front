@@ -131,7 +131,9 @@ angular.module('scalearAngularApp')
                     $scope.terminate = false
 
                     $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
-                    $scope.lecture.updateVimeoUploadedVideos(videoUrl, 'transcoding', $scope.lecture.id)
+
+                    $scope.lecture.updateVimeoUploadedVideos(videoUrl, 'transcoding', $scope.lecture.id, this.name)
+                    if ($scope.$parent.lecture.name == 'New Lecture') $scope.$parent.lecture.name = this.name
 
                     $scope.$on('transcoding_canceled', function (ev) {
                       $scope.terminate = true
@@ -166,7 +168,7 @@ angular.module('scalearAngularApp')
                             $scope.uploading = false
                             $scope.transcoding = false
                             $scope.updateLectureUrl(true)
-                          
+                            
                           }, 1000)
                         } else {
                           $scope.transcodingProgress = 'in progess'
@@ -182,6 +184,9 @@ angular.module('scalearAngularApp')
                   }
                 });
                 uploader.upload();
+                
+               
+               
                 $scope.$watch('cancelUpload', function () {
                   if ($scope.cancelUpload) {
                     uploader.xhr.abort()

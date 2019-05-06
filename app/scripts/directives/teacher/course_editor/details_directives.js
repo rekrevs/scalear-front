@@ -44,8 +44,8 @@ angular.module('scalearAngularApp')
   }]).directive('detailsUrl', ['$timeout', '$translate','$filter','ScalearUtils','$rootScope' ,'$modal',function($timeout, $translate, $filter,ScalearUtils,$modal,$rootScope) {
     return {
       template: '<a id="inserted_url" ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
-      "</br><div>or</div>"+
-      "<div id='drop_zone' ngf-drop='showConsentModal($files)'  style='border-style: dashed;font-size: 0.875rem'>drop your file here</div>",
+      "</br><div ng-hide='videoUploaded'><div>or</div>"+
+      "<div id='drop_zone' ngf-drop='showConsentModal($files)'  style='border-style: dashed;font-size: 0.875rem'>drop your file here</div></div>",
      
       restrict: 'E',
       scope: {
@@ -61,6 +61,7 @@ angular.module('scalearAngularApp')
         droppedFile:"="
       },
       link: function(scope,element, attr) {
+       
         scope.$watch('value', function() {
           var url_is_vimeo = scope.value.includes('vimeo.com')
           scope.text = scope.value == "none" || url_is_vimeo ? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   
@@ -68,6 +69,7 @@ angular.module('scalearAngularApp')
             scope.text = "(" + $translate.instant("editor.details.add_video") + "...)"
           } else if(url_is_vimeo){
             scope.text = "Delete video"
+            scope.videoUploaded=true
           } else{
             scope.text =  scope.value
           }
@@ -103,6 +105,7 @@ angular.module('scalearAngularApp')
         scope.show = function () {
           if (scope.text == 'Delete video') {
             scope.$emit('delete_video')
+            scope.videoUploaded=false
           } else {
             scope.textBtnForm.$show()
             if (scope.value.includes('vimeo.com')) {

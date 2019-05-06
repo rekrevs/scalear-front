@@ -309,13 +309,14 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
-      function updateVimeoUploadedVideos(vimeo_url,status,lecture_id) {
+      function updateVimeoUploadedVideos(vimeo_url,status,lecture_id,title) { 
         return Lecture.updateVimeoUploads({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
           url: vimeo_url,
           status: status,
-          lecture_id: lecture_id
+          lecture_id: lecture_id,
+          title: title
         }, {})
           .$promise
       }

@@ -3067,3 +3067,7 @@ dd#second_accordion > a:hover{
 .show_video{
   display: block
 }
+.video_input_disabled{
+  opacity: 0.5;
+  pointer-events: none;
+}

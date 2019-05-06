@@ -34,8 +34,6 @@ angular.module('scalearAngularApp')
       }
     };
 
-
-
     $scope.updateLecture = function() {
       $scope.lecture.update()
     }
@@ -85,6 +83,7 @@ angular.module('scalearAngularApp')
 
     $scope.droppedFile = {}
     $scope.droppedFile.files = ""
+    console.log('controller scope',$scope)
     $scope.showProgressModal = function () {
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
@@ -104,6 +103,7 @@ angular.module('scalearAngularApp')
           $scope.consenting = true
           $scope.uploading = false
           $scope.cancelUpload = false
+          $scope.$parent.transcoding=false
           $scope.$watch('transcoding', function () {
             if ($scope.consenting == false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
               $modalInstance.close()
@@ -112,6 +112,8 @@ angular.module('scalearAngularApp')
           $scope.startUploading = function () {
             $scope.consenting = false
             $scope.uploading = true
+            
+            // uploadVideoFile($scope.$parent.droppedFile.files[0])
             $scope.getVimeoUploadAccessToken()
               .then(function (accessToken) {
                 var uploader = new VimeoUpload({
@@ -125,7 +127,7 @@ angular.module('scalearAngularApp')
                   },
                   onComplete: function (videoId, index) {
                     $modalInstance.dismiss()
-
+                    $scope.$parent.transcoding=true
                     var videoId = videoId.split(':')[0]
                     var videoUrl = 'https://vimeo.com/' + videoId
                     $scope.terminate = false
@@ -137,6 +139,8 @@ angular.module('scalearAngularApp')
 
                     $scope.$on('transcoding_canceled', function (ev) {
                       $scope.terminate = true
+                      $scope.$parent.transcoding=false
+                      ScalearUtils.safeApply()
                     })
                     var isTranscoded = function (vimeo_vid_id, callback) {
                       getTranscodData(vimeo_vid_id, callback)
@@ -160,6 +164,7 @@ angular.module('scalearAngularApp')
                       isTranscoded(videoId, function (is_transcoded) {
                         if (is_transcoded == "complete") {
                           $rootScope.$broadcast('transcoding_ends', {})
+                          $scope.$parent.transcoding=false
                           $scope.transcodingProgress = 'complete'
                           $scope.lecture.url = videoUrl//'https://vimeo.com/' + videoId
                           ScalearUtils.safeApply()
@@ -182,10 +187,7 @@ angular.module('scalearAngularApp')
                     waitingTranscodDone(videoId)
                   }
                 });
-                uploader.upload();
-                
-               
-               
+                uploader.upload();        
                 $scope.$watch('cancelUpload', function () {
                   if ($scope.cancelUpload) {
                     uploader.xhr.abort()
@@ -198,14 +200,34 @@ angular.module('scalearAngularApp')
           }
           $scope.quitUploading = function () {
             $scope.cancelUpload = true
+            $scope.$parent.transcoding=false
             $modalInstance.dismiss('cancel')
           }
         }]
       })
     }
+    function uploadVideoFile(content){
+      //get upload link from be
+      var url = "https://1512435594.cloud.vimeo.com/upload?ticket_id=228082718&video_file_id=1320486201&signature=b3117de827518a82a8f88716edef3cf0&v6=1&redirect_url=https%3A%2F%2Fvimeo.com%2Fupload%2Fapi%3Fvideo_file_id%3D1320486201%26app_id%3D145153%26ticket_id%3D228082718%26signature%3D5d4896484baa5a89b4bd33f25dfd5e0eb7e296d4"
+      //create the request
+
+
+      var xhr = new XMLHttpRequest()
+      xhr.open('PATCH', url, true)
+      xhr.setRequestHeader('Tus-Resumable','1.0.0')
+      xhr.setRequestHeader('Upload-Offset','0')
+      xhr.setRequestHeader('Content-Type', 'application/offset+octet-stream')
+          // xhr.setRequestHeader('Content-Length', this.file.size)
+      xhr.setRequestHeader('Accept', 'application/vnd.vimeo.*+json;version=3.4')
+      //send the body
+      xhr.onload = function () {
+        console.log('done')
+      };
+      
+      xhr.send(content)
+    }
     function cutVideoNameExtension(extended_name){
-     var name = extended_name.slice(0,extended_name.lastIndexOf('.'))
-     return name
+      return extended_name.includes('.')? extended_name.slice(0,extended_name.lastIndexOf('.')):name   
     }
     $scope.updateLectureUrl = function (uploaded) {
       $scope.lecture.updateUrl()

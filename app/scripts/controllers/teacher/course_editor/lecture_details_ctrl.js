@@ -116,7 +116,7 @@ angular.module('scalearAngularApp')
               .then(function (accessToken) {
                 var uploader = new VimeoUpload({
                   file: $scope.$parent.droppedFile.files[0],
-                  name: $scope.droppedFile.files[0].name,
+                  name: cutVideoNameExtension($scope.droppedFile.files[0].name),
                   token: accessToken,
                   onProgress: function (data) {
                     var uploadedPercentage = Math.ceil((data.loaded / data.total * 100)).toString()
@@ -203,7 +203,10 @@ angular.module('scalearAngularApp')
         }]
       })
     }
-
+    function cutVideoNameExtension(extended_name){
+     var name = extended_name.slice(0,extended_name.lastIndexOf('.'))
+     return name
+    }
     $scope.updateLectureUrl = function (uploaded) {
       $scope.lecture.updateUrl()
         .then(function (should_trim) {

@@ -40,13 +40,13 @@ angular.module('scalearAngularApp')
     function resetVideoDetails() {
       $scope.lecture.url = 'none'
       $scope.lecture.duration = null
+      $scope.lecture.name='New Lecture'
     }
 
-    $scope.cancelTranscoding = function () { console.log('cancelTranscoding:',$scope.vimeo_video_id)
+    $scope.cancelTranscoding = function () {
       if ($scope.vimeo_video_id == 0) {
         $scope.lecture.getVimeoVideoId()
           .then(function (vimeo_video_id) {
-            console.log('vimeo_video_id',vimeo_video_id)
             $scope.lecture.deleteVideo(vimeo_video_id)
           })
       } else {

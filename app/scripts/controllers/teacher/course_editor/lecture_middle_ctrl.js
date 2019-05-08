@@ -40,7 +40,6 @@ angular.module('scalearAngularApp')
     function resetVideoDetails() {
       $scope.lecture.url = 'none'
       $scope.lecture.duration = null
-      $scope.lecture.name='New Lecture'
     }
 
     $scope.cancelTranscoding = function () {

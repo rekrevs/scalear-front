@@ -75,15 +75,15 @@ angular.module('scalearAngularApp')
       return new Date(appearance_time) <= new Date()
     }
 
-    $scope.getVimeoUploadAccessToken = function () {
-      return $scope.lecture.getVimeoAccessToken()
+    $scope.getVimeoUploadDetails = function () {
+      return $scope.lecture.getVimeoUploadDetails()
     }
     $scope.vimeoVideo = {}
     $scope.vimeoVideo.id = 0
 
     $scope.droppedFile = {}
     $scope.droppedFile.files = ""
-    console.log('controller scope',$scope)
+    
     $scope.showProgressModal = function () {
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
@@ -113,19 +113,20 @@ angular.module('scalearAngularApp')
             $scope.consenting = false
             $scope.uploading = true
             
-            // uploadVideoFile($scope.$parent.droppedFile.files[0])
-            $scope.getVimeoUploadAccessToken()
-              .then(function (accessToken) {
+           $scope.getVimeoUploadDetails()
+              .then(function (details) {
                 var uploader = new VimeoUpload({
                   file: $scope.$parent.droppedFile.files[0],
                   name: cutVideoNameExtension($scope.droppedFile.files[0].name),
-                  token: accessToken,
+                  upload_details:details,//<<<<<-------------
+                  deleteCompleteLink:$scope.lecture.deleteVimeoUploadLink,
+                  updateVideoData:$scope.lecture.updateVimeoVideoData,
                   onProgress: function (data) {
                     var uploadedPercentage = Math.ceil((data.loaded / data.total * 100)).toString()
                     angular.element('#upload_progress_bar')[0].setAttribute("style", "width:" + uploadedPercentage + "%")
                     $scope.transcoding = false
                   },
-                  onComplete: function (videoId, index) {
+                  onComplete: function (videoId) {
                     $modalInstance.dismiss()
                     $scope.$parent.transcoding=true
                     var videoId = videoId.split(':')[0]
@@ -149,7 +150,7 @@ angular.module('scalearAngularApp')
                       var http = new XMLHttpRequest()
                       var ask = "https://api.vimeo.com/videos/" + videoId + "?fields=transcode.status"
                       http.open('GET', ask, true)
-                      http.setRequestHeader("Authorization", "Bearer " + accessToken)//158e50263e24a8eba295b3a554a26bb6")
+                      http.setRequestHeader("Authorization", "Bearer " + details.video_info_access_token)
                       http.setRequestHeader('Content-Type', 'application/json')
                       http.onreadystatechange = function () {
                         if (http.readyState === 4) {
@@ -206,26 +207,9 @@ angular.module('scalearAngularApp')
         }]
       })
     }
-    function uploadVideoFile(content){
-      //get upload link from be
-      var url = "https://1512435594.cloud.vimeo.com/upload?ticket_id=228082718&video_file_id=1320486201&signature=b3117de827518a82a8f88716edef3cf0&v6=1&redirect_url=https%3A%2F%2Fvimeo.com%2Fupload%2Fapi%3Fvideo_file_id%3D1320486201%26app_id%3D145153%26ticket_id%3D228082718%26signature%3D5d4896484baa5a89b4bd33f25dfd5e0eb7e296d4"
-      //create the request
-
-
-      var xhr = new XMLHttpRequest()
-      xhr.open('PATCH', url, true)
-      xhr.setRequestHeader('Tus-Resumable','1.0.0')
-      xhr.setRequestHeader('Upload-Offset','0')
-      xhr.setRequestHeader('Content-Type', 'application/offset+octet-stream')
-          // xhr.setRequestHeader('Content-Length', this.file.size)
-      xhr.setRequestHeader('Accept', 'application/vnd.vimeo.*+json;version=3.4')
-      //send the body
-      xhr.onload = function () {
-        console.log('done')
-      };
-      
-      xhr.send(content)
-    }
+    // function deleteUploadLink(){ 
+    //    $scope.lecture.deleteVimeoUploadLink()
+    // } 
     function cutVideoNameExtension(extended_name){
       return extended_name.includes('.')? extended_name.slice(0,extended_name.lastIndexOf('.')):name   
     }

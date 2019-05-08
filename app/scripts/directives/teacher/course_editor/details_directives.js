@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
         }
 
         scope.show = function () {
-          if (!transcoding){
+          if (!scope.transcoding){
             if (scope.text == 'Delete video') {
               scope.$emit('delete_video')
               scope.videoUploaded=false

@@ -38,10 +38,12 @@ angular.module('scalearAngularApp')
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
       "updateVimeoUploads":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
-      "generateVimeoAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_upload_access_token' }, headers: headers },
+      "generateVimeoUploadDetails":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_vimeo_upload_details' }, headers: headers },
       "deleteUploadedVimeoVideo":{ method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers },
       "getUploadingStatus":{ method: 'GET', params: { action: 'get_uploading_status' }, headers: headers },
-      "getVimeoVideoId":{ method: 'GET', params: { action: 'get_vimeo_video_id' }, headers: headers }
+      "getVimeoVideoId":{ method: 'GET', params: { action: 'get_vimeo_video_id' }, headers: headers },
+      "deleteUploadLink":{ method: 'DELETE', params: { action: 'delete_complete_link' }, headers: headers },
+      "updateVimeoUploadedVideoData":{ method: 'POST', params: { action: 'update_vimeo_video_data' }, headers: headers }
       
     });
 
@@ -308,7 +310,14 @@ angular.module('scalearAngularApp')
           })
           .$promise
       }
-
+      function deleteVimeoUploadLink(link) {
+        return Lecture.deleteUploadLink({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id,
+          link:link
+        }, {})
+          .$promise
+      }
       function updateVimeoUploadedVideos(vimeo_url,status,lecture_id,title) { 
         return Lecture.updateVimeoUploads({
           course_id: lecture.course_id,
@@ -317,6 +326,15 @@ angular.module('scalearAngularApp')
           status: status,
           lecture_id: lecture_id,
           title: title
+        }, {})
+          .$promise
+      }
+      function updateVimeoVideoData(video_id,data) { console.log('here')
+        return Lecture.updateVimeoUploadedVideoData({
+          course_id: lecture.course_id,
+          lecture_id: lecture.id,
+          video_id: video_id,
+          name:data.name
         }, {})
           .$promise
       }
@@ -342,17 +360,16 @@ angular.module('scalearAngularApp')
           })
       }
 
-      function getVimeoAccessToken() {
-        return Lecture.generateVimeoAccessToken({
+      function getVimeoUploadDetails() {
+        return Lecture.generateVimeoUploadDetails({
           course_id: lecture.course_id,
           lecture_id: lecture.id
         }, {})
           .$promise
           .then(function (data) {
-            return data.upload_token
+            return data.details
           })
       }
-
 
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
@@ -400,7 +417,9 @@ angular.module('scalearAngularApp')
         getVimeoUploadingStatus:getVimeoUploadingStatus,
         getVimeoVideoId:getVimeoVideoId,
         deleteVideo:deleteVideo,    
-        getVimeoAccessToken:getVimeoAccessToken,
+        deleteVimeoUploadLink:deleteVimeoUploadLink,
+        getVimeoUploadDetails:getVimeoUploadDetails,
+        updateVimeoVideoData:updateVimeoVideoData,
         module: module,
         setAsSelected:setAsSelected,
         markDone:markDone,

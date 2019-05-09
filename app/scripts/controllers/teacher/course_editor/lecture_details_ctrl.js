@@ -83,27 +83,19 @@ angular.module('scalearAngularApp')
 
     $scope.droppedFile = {}
     $scope.droppedFile.files = ""
-    
+
     $scope.showProgressModal = function () {
       $scope.openModal = $modal.open({
         windowClass: 'upload-progress-modal-window',
         scope: $scope,
         backdrop: 'static',
-        template: "<div ng-show='consenting'><H1>Permission to Upload Videos</H1>" +
-          "<div class='muted with-margin-bottom'><p>By uploading this video you confirm that you have permission to use this video on ScalableLearning and that this video will only be used for teaching.<br>Videos uploaded to ScalableLearning will only be seen by teachers and students enrolled in the course and administrators <br>ScalableLearning reserves the right to remove inappropriate content</p></div>" +
-          "<button type='button' ng-click='startUploading()'  class='right button success small'>I Have Permission</button>" +
-          "<button type='button' ng-click='cancelUploading()'  class='right button small with-margin-right'>Cancel Upload</button></div>" +
-          "<div ng-show='uploading'>" +
-          "<H1 >Uploading</H1>" +
-          "<span class='muted with-margin-bottom'>Please wait...</span>" +
-          "<div id='upload_progress_container'><p id='upload_progress_bar'></p></div>" +
-          "</br><button class='right button small' ng-click='quitUploading()'>Cancel</button>" +
-          "</div>",
+        templateUrl:'views/teacher/course_editor/video_upload_modal.html',
         controller: ['$scope', '$modalInstance', '$rootScope', function ($scope, $modalInstance) {
           $scope.consenting = true
           $scope.uploading = false
           $scope.cancelUpload = false
           $scope.$parent.transcoding=false
+ 
           $scope.$watch('transcoding', function () {
             if ($scope.consenting == false && $scope.uploading === false && $scope.transcoding === false && $modalInstance) {
               $modalInstance.close()
@@ -118,7 +110,7 @@ angular.module('scalearAngularApp')
                 var uploader = new VimeoUpload({
                   file: $scope.$parent.droppedFile.files[0],
                   name: cutVideoNameExtension($scope.droppedFile.files[0].name),
-                  upload_details:details,//<<<<<-------------
+                  upload_details:details,
                   deleteCompleteLink:$scope.lecture.deleteVimeoUploadLink,
                   updateVideoData:$scope.lecture.updateVimeoVideoData,
                   onProgress: function (data) {
@@ -166,7 +158,7 @@ angular.module('scalearAngularApp')
                         if (is_transcoded == "complete") {
                           $rootScope.$broadcast('transcoding_ends', {})
                           $scope.$parent.transcoding=false
-                          $scope.transcodingProgress = 'complete'
+                          // $scope.transcodingProgress = 'complete'
                           $scope.lecture.url = videoUrl//'https://vimeo.com/' + videoId
                           ScalearUtils.safeApply()
                           setTimeout(function () {
@@ -176,7 +168,7 @@ angular.module('scalearAngularApp')
                             
                           }, 1000)
                         } else {
-                          $scope.transcodingProgress = 'in progess'
+                          // $scope.transcodingProgress = 'in progess'
                           ScalearUtils.safeApply()
                           setTimeout(function () {
                             if ($scope.cancelUpload) return;
@@ -207,9 +199,7 @@ angular.module('scalearAngularApp')
         }]
       })
     }
-    // function deleteUploadLink(){ 
-    //    $scope.lecture.deleteVimeoUploadLink()
-    // } 
+
     function cutVideoNameExtension(extended_name){
       return extended_name.includes('.')? extended_name.slice(0,extended_name.lastIndexOf('.')):name   
     }

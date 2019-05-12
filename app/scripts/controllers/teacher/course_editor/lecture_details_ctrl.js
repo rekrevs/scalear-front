@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
         windowClass: 'upload-progress-modal-window',
         scope: $scope,
         backdrop: 'static',
-        templateUrl:'views/teacher/course_editor/video_upload_modal.html',
+        templateUrl:'/views/teacher/course_editor/video_upload_modal.html',
         controller: 'UploadModalCtrl'
       })
     }

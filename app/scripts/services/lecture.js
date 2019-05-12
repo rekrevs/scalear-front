@@ -261,13 +261,13 @@ angular.module('scalearAngularApp')
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
-          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url) || VideoInformation.isHTML5(lecture.url)){
+          }else if(VideoInformation.isMediaSite(lecture.url) ||VideoInformation.isVimeo(lecture.url)|| VideoInformation.isKaltura(lecture.url) || VideoInformation.isHTML5(lecture.url)){
             VideoInformation.waitForDurationSetup().then(function (duration) { 
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration
               update().then(function() {
-                deferred.resolve(false);
+                deferred.resolve(true);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             })
@@ -329,7 +329,7 @@ angular.module('scalearAngularApp')
         }, {})
           .$promise
       }
-      function updateVimeoVideoData(video_id,data) { console.log('here')
+      function updateVimeoVideoData(video_id,data) { 
         return Lecture.updateVimeoUploadedVideoData({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
@@ -338,7 +338,7 @@ angular.module('scalearAngularApp')
         }, {})
           .$promise
       }
-      function getVimeoVideoId(){ console.log('in getVimeoVideoId')
+      function getVimeoVideoId(){ 
         return Lecture.getVimeoVideoId({
           course_id: lecture.course_id,
           lecture_id: lecture.id

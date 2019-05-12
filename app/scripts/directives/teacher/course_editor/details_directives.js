@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
      
       restrict: 'E',
       scope: {
-        showProgressModal:"&",
+        showUploadModal:"&",
         value: "=",
         transcoding:'=',
         save: "&",
@@ -58,7 +58,6 @@ angular.module('scalearAngularApp')
         open: "=",
         getVimeoUploadToken:"&",
         terminateTranscoding:"&",
-        vid:"=",
         droppedFile:"="
       },
       link: function(scope,element, attr) {
@@ -85,7 +84,7 @@ angular.module('scalearAngularApp')
         };
         scope.showConsentModal=function(file){         
           scope.droppedFile=file
-          scope.showProgressModal()
+          scope.showUploadModal()
         }
 
         scope.saveData = function() {

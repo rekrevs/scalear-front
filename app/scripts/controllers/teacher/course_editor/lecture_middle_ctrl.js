@@ -5,7 +5,6 @@ angular.module('scalearAngularApp')
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
-    console.log($scope.lecture)
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}

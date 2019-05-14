@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
       "updateVimeoUploads": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
       "generateVimeoUploadDetails": { method: 'GET', ignoreLoadingBar: true, params: { action: 'get_vimeo_upload_details' }, headers: headers },
-      "deleteUploadedVimeoVideo": { method: 'POST', params: { action: 'delete_vimeo_video' }, headers: headers },
+      "deleteUploadedVimeoVideo": { method: 'DELETE', params: { action: 'delete_vimeo_video_angular' }, headers: headers },
       "getUploadingStatus": { method: 'GET', params: { action: 'get_uploading_status' }, headers: headers },
       "getVimeoVideoId": { method: 'GET', params: { action: 'get_vimeo_video_id' }, headers: headers },
       "deleteUploadLink": { method: 'DELETE', params: { action: 'delete_complete_link' }, headers: headers },
@@ -306,9 +306,8 @@ angular.module('scalearAngularApp')
         return Lecture.deleteUploadedVimeoVideo({
           course_id: lecture.course_id,
           lecture_id: lecture.id,
-        }, {
-            vimeo_vid_id: vimeo_video_id
-          })
+          vimeo_vid_id: vimeo_video_id
+        }, {})
           .$promise
       }
       function deleteVimeoUploadLink(link) {

@@ -34,15 +34,15 @@ angular.module('scalearAngularApp')
                             var videoId = this.upload_details.video_id
                             this.upload_details.video_url = 'https://vimeo.com/' + videoId
                             $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
-                            $scope.lecture.updateVimeoUploadedVideos(this.upload_details.video_url, 'transcoding', $scope.lecture.id, this.name)
-                            if ($scope.$parent.lecture.name == 'New Lecture') {
-                                $scope.$parent.lecture.name = this.name
-                            }
+                            $scope.lecture.updateVimeoUploadedVideos(this.upload_details.video_url, 'transcoding', $scope.lecture.id, this.name)                          
                             $modalInstance.dismiss()
                         },
                         onTranscodComplete: function () {        
                             $scope.$parent.transcoding = false
                             $scope.lecture.url = this.upload_details.video_url
+                            if ($scope.$parent.lecture.name == 'New Lecture') {
+                                $scope.$parent.lecture.name = this.name
+                            }
                             $scope.updateLectureUrl()
                             setTimeout(function () {
                                 $rootScope.$broadcast('transcoding_ends', {})

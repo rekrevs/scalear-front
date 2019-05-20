@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils','VimeoModel',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils,VimeoModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
@@ -75,10 +75,6 @@ angular.module('scalearAngularApp')
       return new Date(appearance_time) <= new Date()
     }
 
-    $scope.getVimeoUploadDetails = function () {
-      return $scope.lecture.getVimeoUploadDetails()
-    }
-
     $scope.droppedFile = {}
     $scope.droppedFile.files = ""
 
@@ -93,12 +89,14 @@ angular.module('scalearAngularApp')
     }
    
     $scope.updateLectureUrl = function () {
+      console.log($scope)
+      
       $scope.lecture.updateUrl()
         .then(function (should_trim) {
           should_trim && checkToTrim()
         })  
     }
-
+    
     $scope.showQuiz = function (quiz) {
       $rootScope.$broadcast("show_online_quiz", quiz)
     }

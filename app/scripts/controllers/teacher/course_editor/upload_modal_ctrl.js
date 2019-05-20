@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UploadModalCtrl', ['$scope', '$modalInstance', '$rootScope', function ($scope, $modalInstance, $rootScope) {
+    .controller('UploadModalCtrl', ['$scope', '$modalInstance', '$rootScope', 'VimeoModel',function ($scope, $modalInstance, $rootScope,VimeoModel) {
 
         $scope.consenting = true
         $scope.uploading = false
@@ -17,14 +17,14 @@ angular.module('scalearAngularApp')
         $scope.startUploading = function () {
             $scope.consenting = false
             $scope.uploading = true
-            $scope.getVimeoUploadDetails()
+            VimeoModel.getVimeoUploadDetails()
                 .then(function (details) {
                     var uploader = new VimeoUpload({
                         file: $scope.$parent.droppedFile.files[0],
                         name: cutExtension($scope.droppedFile.files[0].name),
                         upload_details: details,
-                        deleteCompleteLink: $scope.lecture.deleteVimeoUploadLink,
-                        updateVideoData: $scope.lecture.updateVimeoVideoData,
+                        deleteCompleteLink: VimeoModel.deleteVimeoUploadLink,
+                        updateVideoData: VimeoModel.updateVimeoVideoData,
                         onUploadProgress: function (data) {
                             var uploadedPercentage = calculatePercentage(data)
                             angular.element('#upload_progress_bar')[0].setAttribute("style", "width:" + uploadedPercentage + "%")
@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
                             var videoId = this.upload_details.video_id
                             this.upload_details.video_url = 'https://vimeo.com/' + videoId
                             $rootScope.$broadcast('transcoding_begins', { 'vimeoVidId': videoId })
-                            $scope.lecture.updateVimeoUploadedVideos(this.upload_details.video_url, 'transcoding', $scope.lecture.id, this.name)                          
+                            VimeoModel.updateVimeoUploadedVideos(this.upload_details.video_url, 'transcoding', $scope.lecture.id, this.name)                          
                             $modalInstance.dismiss()
                         },
                         onTranscodComplete: function () {        
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
                             $scope.updateLectureUrl()
                             setTimeout(function () {
                                 $rootScope.$broadcast('transcoding_ends', {})
-                                $scope.lecture.updateVimeoUploadedVideos($scope.lecture.url,'complete', $scope.lecture.id)
+                                VimeoModel.updateVimeoUploadedVideos($scope.lecture.url,'complete', $scope.lecture.id)
                             }, 1000)
                         }
                     });

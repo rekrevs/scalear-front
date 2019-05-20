@@ -36,15 +36,7 @@ angular.module('scalearAngularApp')
       "checkIfInDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_in_distance_peer_session' }, headers: headers },
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
-      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
-      "updateVimeoUploads": { method: 'POST', ignoreLoadingBar: true, params: { action: 'update_vimeo_table' }, headers: headers },
-      "generateVimeoUploadDetails": { method: 'GET', ignoreLoadingBar: true, params: { action: 'get_vimeo_upload_details' }, headers: headers },
-      "deleteUploadedVimeoVideo": { method: 'DELETE', params: { action: 'delete_vimeo_video_angular' }, headers: headers },
-      "getUploadingStatus": { method: 'GET', params: { action: 'get_uploading_status' }, headers: headers },
-      "getVimeoVideoId": { method: 'GET', params: { action: 'get_vimeo_video_id' }, headers: headers },
-      "deleteUploadLink": { method: 'DELETE', params: { action: 'delete_complete_link' }, headers: headers },
-      "updateVimeoUploadedVideoData": { method: 'POST', params: { action: 'update_vimeo_video_data' }, headers: headers }
-
+      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function (Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -302,75 +294,6 @@ angular.module('scalearAngularApp')
           .$promise
       }
 
-      function deleteVideo(vimeo_video_id) {
-        return Lecture.deleteUploadedVimeoVideo({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id,
-          vimeo_vid_id: vimeo_video_id
-        }, {})
-          .$promise
-      }
-      function deleteVimeoUploadLink(link) {
-        return Lecture.deleteUploadLink({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id,
-          link: link
-        }, {})
-          .$promise
-      }
-      function updateVimeoUploadedVideos(vimeo_url, status, lecture_id, title) {
-        return Lecture.updateVimeoUploads({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id,
-          url: vimeo_url,
-          status: status,
-          lecture_id: lecture_id,
-          title: title
-        }, {})
-          .$promise
-      }
-      function updateVimeoVideoData(video_id, data) {
-        return Lecture.updateVimeoUploadedVideoData({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id,
-          video_id: video_id,
-          name: data.name
-        }, {})
-          .$promise
-      }
-      function getVimeoVideoId() {
-        return Lecture.getVimeoVideoId({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id
-        }, {})
-          .$promise
-          .then(function (data) {
-            return data.vimeo_video_id
-          })
-      }
-
-      function getVimeoUploadingStatus() {
-        return Lecture.getUploadingStatus({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id
-        }, {})
-          .$promise
-          .then(function (data) {
-            return data.status
-          })
-      }
-
-      function getVimeoUploadDetails() {
-        return Lecture.generateVimeoUploadDetails({
-          course_id: lecture.course_id,
-          lecture_id: lecture.id
-        }, {})
-          .$promise
-          .then(function (data) {
-            return data.details
-          })
-      }
-
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
       }
@@ -413,13 +336,6 @@ angular.module('scalearAngularApp')
         instanceType: instanceType,
         remove: remove,
         updateViewPercentage: updateViewPercentage,
-        updateVimeoUploadedVideos: updateVimeoUploadedVideos,
-        getVimeoUploadingStatus: getVimeoUploadingStatus,
-        getVimeoVideoId: getVimeoVideoId,
-        deleteVideo: deleteVideo,
-        deleteVimeoUploadLink: deleteVimeoUploadLink,
-        getVimeoUploadDetails: getVimeoUploadDetails,
-        updateVimeoVideoData: updateVimeoVideoData,
         module: module,
         setAsSelected: setAsSelected,
         markDone: markDone,

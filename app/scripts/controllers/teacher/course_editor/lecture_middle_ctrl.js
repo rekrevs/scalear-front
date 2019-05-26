@@ -16,11 +16,11 @@ angular.module('scalearAngularApp')
     
     if (isVimeo) {
       VimeoModel.getVimeoUploadingStatus($scope.lecture.id)
-        .then(function (status) { console.log(status)
+        .then(function (status) {
           $scope.transcoding = status == "transcoding" ? true : false
         })
       VimeoModel.getVimeoVideoId($scope.lecture.id)
-        .then(function (vimeo_video_id) { console.log(vimeo_video_id)
+        .then(function (vimeo_video_id) {
           $scope.vimeo_video_id = vimeo_video_id == 'none' ? $scope.lecture.url.split('https://vimeo.com/')[1] : vimeo_video_id
         })
     }
@@ -36,9 +36,7 @@ angular.module('scalearAngularApp')
     })
 
     var listnerDeleteVideo=$rootScope.$on('delete_video',function(ev){  
-      // console.log(VimeoModel)
        VimeoModel.deleteVideo($scope.vimeo_video_id,$scope.lecture.id)
-      // $scope.lecture.deleteVideo($scope.vimeo_video_id,$scope.lecture.id)
       resetVideoDetails()
     }) 
 

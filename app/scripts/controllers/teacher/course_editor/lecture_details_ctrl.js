@@ -89,8 +89,6 @@ angular.module('scalearAngularApp')
     }
    
     $scope.updateLectureUrl = function () {
-      console.log($scope)
-      
       $scope.lecture.updateUrl()
         .then(function (should_trim) {
           should_trim && checkToTrim()

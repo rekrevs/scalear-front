@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
         service.getVimeoUploadingStatus = function (lecture_id) {
             return VimeoUtils.getUploadingStatus({
                 id: lecture_id
-            }, { id: lecture_id })
+            }, {})
                 .$promise
                 .then(function (data) {
                     return data.status

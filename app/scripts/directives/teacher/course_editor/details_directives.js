@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 
         scope.saveData = function() {
           $timeout(function() {
-            scope.save({uploaded:false})
+            scope.save()
           })
         }
 

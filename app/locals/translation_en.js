@@ -733,7 +733,7 @@ var translation_en={
         use_module_required: "Use Module’s Required",
         use_module_skip_ahead: "Use Module’s Skip Ahead",
         vidoe_not_exist: "Video may not exist or may still be uploading",
-        incompatible_video_link: "The video link you provided is unsupported. Please use a YouTube, Mediasite, Kaltura, or mp4 video link. If you would like us to look into supporting this type of video, please contact us via the Support link in the Help menu.",
+        incompatible_video_link: "The video link you provided is unsupported. Please use a YouTube, Mediasite, Kaltura, Vimeo or mp4 video link. If you would like us to look into supporting this type of video, please contact us via the Support link in the Help menu.",
         student_link_lecture:"Student link to lecture",
         appearance_date: "Appearance Date",
         due_date: "Due Date",

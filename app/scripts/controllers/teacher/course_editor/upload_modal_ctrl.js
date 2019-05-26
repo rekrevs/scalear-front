@@ -41,7 +41,7 @@ angular.module('scalearAngularApp')
                             $scope.$parent.transcoding = false
                             $scope.lecture.url = this.upload_details.video_url
                             if ($scope.$parent.lecture.name == 'New Lecture') {
-                                $scope.$parent.lecture.name = this.name
+                                $scope.$parent.lecture.name =  $scope.lecture.name
                             }
                             $scope.updateLectureUrl()
                             setTimeout(function () {

@@ -32,7 +32,7 @@ angular.module('scalearAngularApp')
                 return email.trim()
               })
             }, function() {
-              $scope.Close()
+              $scope.closeThisDialog()
             })
           }
         }]

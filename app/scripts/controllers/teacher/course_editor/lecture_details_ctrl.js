@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils','VimeoModel',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils,VimeoModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
 
@@ -33,8 +33,6 @@ angular.module('scalearAngularApp')
         return temp_lecture.validate() // return a promise
       }
     };
-
-
 
     $scope.updateLecture = function() {
       $scope.lecture.update()
@@ -77,15 +75,27 @@ angular.module('scalearAngularApp')
       return new Date(appearance_time) <= new Date()
     }
 
-    $scope.updateLectureUrl = function() {
+    $scope.droppedFile = {}
+    $scope.droppedFile.files = ""
 
-      $scope.lecture.updateUrl()
-        .then(function(should_trim) {
-          should_trim && checkToTrim()
-        })
+    $scope.showUploadModal = function () {
+      $scope.openModal = $modal.open({
+        windowClass: 'upload-progress-modal-window',
+        scope: $scope,
+        backdrop: 'static',
+        templateUrl:'/views/teacher/course_editor/video_upload_modal.html',
+        controller: 'UploadModalCtrl'
+      })
     }
-
-    $scope.showQuiz = function(quiz) {
+   
+    $scope.updateLectureUrl = function () {
+      $scope.lecture.updateUrl()
+        .then(function (should_trim) {
+          should_trim && checkToTrim()
+        })  
+    }
+    
+    $scope.showQuiz = function (quiz) {
       $rootScope.$broadcast("show_online_quiz", quiz)
     }
 

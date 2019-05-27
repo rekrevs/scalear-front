@@ -254,7 +254,6 @@ angular.module('scalearAngularApp')
             var mediumEditor = this.base
             var editor = this.base.elements[0]
             this.base.subscribe("editableClick", function(event, editor){
-              console.log(event)
               if(event.target.tagName === 'IMG'){
                 mediumEditor.selectElement(event.target.parentNode)
               }

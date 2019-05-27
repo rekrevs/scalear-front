@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('Lecture', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
+  .factory('Lecture', ['$resource', '$http', '$stateParams', 'scalear_api', 'headers', '$rootScope', '$translate', function ($resource, $http, $stateParams, scalear_api, headers, $rootScope, $translate) {
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host + '/:lang/courses/:course_id/lectures/:lecture_id/:action', { course_id: $stateParams.course_id, lecture_id: '@id', lang: $translate.use() }, {
@@ -36,10 +36,10 @@ angular.module('scalearAngularApp')
       "checkIfInDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_in_distance_peer_session' }, headers: headers },
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
-      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
+      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers }
     });
 
-  }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function(Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
+  }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function (Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
 
     var selected_lecture = null
 
@@ -53,34 +53,34 @@ angular.module('scalearAngularApp')
     }
 
     function clearSelectedLecture() {
-      if(selected_lecture){
+      if (selected_lecture) {
         selected_lecture.destroy()
       }
       selected_lecture = null
     }
 
     function isInstance(instance) {
-      return(instance.instanceType && instance.instanceType() == "Lecture");
+      return (instance.instanceType && instance.instanceType() == "Lecture");
     }
 
     function create(video_type) {
-      var inclass =  false
+      var inclass = false
       var distance_peer = false
-      if(video_type== 1){
+      if (video_type == 1) {
         inclass = true
       }
-      if(video_type== 2){
+      if (video_type == 2) {
         distance_peer = true
       }
       var module = ModuleModel.getSelectedModule()
       return Lecture.newLecture({
-          course_id: module.course_id,
-          group: module.id,
-          inclass: inclass,
-          distance_peer: distance_peer
-        })
+        course_id: module.course_id,
+        group: module.id,
+        inclass: inclass,
+        distance_peer: distance_peer
+      })
         .$promise
-        .then(function(data) {
+        .then(function (data) {
           data.lecture.class_name = 'lecture'
           var lecture = createInstance(data.lecture)
           $rootScope.$broadcast("Item:added", lecture)
@@ -91,11 +91,11 @@ angular.module('scalearAngularApp')
     function paste(lec, module_id) {
       var module = ModuleModel.getById(module_id)
       return Lecture.lectureCopy({ course_id: module.course_id }, {
-          lecture_id: lec.id,
-          module_id: module.id
-        })
+        lecture_id: lec.id,
+        module_id: module.id
+      })
         .$promise
-        .then(function(data) {
+        .then(function (data) {
           data.lecture.class_name = 'lecture'
           var lecture = createInstance(data.lecture)
           $rootScope.$broadcast("Item:added", lecture)
@@ -106,35 +106,35 @@ angular.module('scalearAngularApp')
 
     function createInstance(lecture) {
 
-      if(isInstance(lecture)) {
+      if (isInstance(lecture)) {
         return lecture;
       }
 
       lecture.timeline = new Timeline()
 
-      $rootScope.$on("Module:" + lecture.group_id + ":updated", function(evt, module) {
-        if(lecture.appearance_time_module) {
+      $rootScope.$on("Module:" + lecture.group_id + ":updated", function (evt, module) {
+        if (lecture.appearance_time_module) {
           lecture.appearance_time = module.appearance_time;
         }
-        if(lecture.due_date_module) {
+        if (lecture.due_date_module) {
           lecture.due_date = module.due_date;
         }
-        if(lecture.required_module) {
+        if (lecture.required_module) {
           lecture.required = module.required;
         }
-        if(lecture.graded_module) {
+        if (lecture.graded_module) {
           lecture.graded = module.graded;
         }
-        if(lecture.skip_ahead_module) {
+        if (lecture.skip_ahead_module) {
           lecture.skip_ahead = module.skip_ahead;
         }
       })
 
-      $rootScope.$on("Lecture:" + lecture.id + ":add_to_timeline", function(evt, time, type, item) {
+      $rootScope.$on("Lecture:" + lecture.id + ":add_to_timeline", function (evt, time, type, item) {
         addToTimeline(time, type, item)
       })
 
-      $rootScope.$on("Lecture:" + lecture.id + ":remove_from_timeline", function(evt, item, type) {
+      $rootScope.$on("Lecture:" + lecture.id + ":remove_from_timeline", function (evt, item, type) {
         removeFromTimeline(item, type)
       })
 
@@ -150,13 +150,13 @@ angular.module('scalearAngularApp')
         delete modified_lecture.selected;
 
         return Lecture.update({
-            course_id: lecture.course_id,
-            lecture_id: lecture.id
-          }, {
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, {
             lecture: modified_lecture
           })
           .$promise
-          .then(function(data) {
+          .then(function (data) {
 
             angular.extend(lecture, data.lecture)
           })
@@ -164,29 +164,29 @@ angular.module('scalearAngularApp')
 
       function validateUrl() {
         var deferred = $q.defer();
-        if(VideoInformation.invalidUrl(lecture.url)) {
+        if (VideoInformation.invalidUrl(lecture.url)) {
           deferred.reject($translate.instant('editor.details.incompatible_video_link'));
         } else {
           validate()
-            .then(function() {
+            .then(function () {
               var type = VideoInformation.isYoutube(lecture.url)
 
-              if(type) {
+              if (type) {
                 var id = type[1]
                 VideoInformation.emptyCachedInfo()
                 VideoInformation.requestInfoFromYoutube(id)
-                  .then(function(data) {
-                    if(data.items.length > 0) {
-                        if(data.items[0].status.uploadStatus === "processed"){
-                            deferred.resolve();
-                        } else {
-                            deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
-                        }
+                  .then(function (data) {
+                    if (data.items.length > 0) {
+                      if (data.items[0].status.uploadStatus === "processed") {
+                        deferred.resolve();
+                      } else {
+                        deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
+                      }
                     } else {
                       deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                     }
                   })
-                  .catch(function() {
+                  .catch(function () {
                     deferred.reject($translate.instant('editor.details.vidoe_not_exist'));
                     return deferred.promise
                   })
@@ -194,7 +194,7 @@ angular.module('scalearAngularApp')
                 deferred.resolve()
               }
             })
-            .catch(function(msg) {
+            .catch(function (msg) {
               deferred.reject(msg)
             })
         }
@@ -203,12 +203,12 @@ angular.module('scalearAngularApp')
 
       function validate() {
         return Lecture.validateLecture({
-            course_id: lecture.course_id,
-            lecture_id: lecture.id
-          }, lecture)
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, lecture)
           .$promise
-          .catch(function(resp) {
-            if(resp.status == 422)
+          .catch(function (resp) {
+            if (resp.status == 422)
               return resp.data.errors.join();
             else
               return 'Server Error';
@@ -221,52 +221,52 @@ angular.module('scalearAngularApp')
         var deferred = $q.defer();
         lecture.aspect_ratio = "widescreen"
         lecture.url = lecture.url.trim()
-
-        if(lecture.url && lecture.url != "none" && lecture.url != "http://") {
+        if (lecture.url && lecture.url != "none" && lecture.url != "http://") {
 
           var type = VideoInformation.isYoutube(lecture.url)
-          if(type) {
+          if (type) {
             var video_id = type[1];
-            if(!VideoInformation.isFinalUrl(lecture.url)) {
+            if (!VideoInformation.isFinalUrl(lecture.url)) {
               lecture.url = VideoInformation.getFinalUrl(video_id)
             }
 
             VideoInformation.requestInfoFromYoutube(video_id)
-              .then(function(data) {
+              .then(function (data) {
 
                 var duration = ScalearUtils.parseDuration(data.items[0].contentDetails.duration)
                 lecture.duration = (duration.hour * (60 * 60) + duration.minute * (60) + duration.second)
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
-                update().then(function() {
+                update().then(function () {
                   deferred.resolve(true);
 
                 });
                 $rootScope.$broadcast("update_module_time", lecture.group_id)
               })
-          } else if(VideoInformation.isMP4(lecture.url)) {
+          } else if (VideoInformation.isMP4(lecture.url)) {
             var video = $('video')
-            video.bind('loadeddata', function(event) {
+            video.bind('loadeddata', function (event) {
               lecture.start_time = 0
               lecture.end_time = event.target.duration || 0
-              update().then(function() {
+              update().then(function () {
                 deferred.resolve(false);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
-          }else if(VideoInformation.isMediaSite(lecture.url) || VideoInformation.isKaltura(lecture.url)){
+          } else if (VideoInformation.isMediaSite(lecture.url) || VideoInformation.isVimeo(lecture.url) || VideoInformation.isKaltura(lecture.url) || VideoInformation.isHTML5(lecture.url)) {
             VideoInformation.waitForDurationSetup().then(function (duration) {
               lecture.duration = duration
               lecture.start_time = 0
               lecture.end_time = lecture.duration
-              update().then(function() {
-                deferred.resolve(false);
+              update().then(function () {
+                var resolve = VideoInformation.isVimeo(lecture.url) ? true : false
+                deferred.resolve(resolve);
               });
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             })
           }
         } else {
-          lecture.url= "none"
+          lecture.url = "none"
           deferred.reject()
         }
 
@@ -275,11 +275,11 @@ angular.module('scalearAngularApp')
 
       function remove() {
         return Lecture.destroy({
-            course_id: lecture.course_id,
-            lecture_id: lecture.id
-          }, {})
+          course_id: lecture.course_id,
+          lecture_id: lecture.id
+        }, {})
           .$promise
-          .then(function() {
+          .then(function () {
             $rootScope.$broadcast("Item:removed", lecture)
           });
       }
@@ -289,10 +289,10 @@ angular.module('scalearAngularApp')
           course_id: lecture.course_id,
           lecture_id: lecture.id
         }, {
-          percent: milestone
-        })
-        .$promise
-    }
+            percent: milestone
+          })
+          .$promise
+      }
 
       function addToTimeline(time, type, data) {
         lecture.timeline.add(time, type, data)
@@ -337,9 +337,9 @@ angular.module('scalearAngularApp')
         remove: remove,
         updateViewPercentage: updateViewPercentage,
         module: module,
-        setAsSelected:setAsSelected,
-        markDone:markDone,
-        destroy:destroy
+        setAsSelected: setAsSelected,
+        markDone: markDone,
+        destroy: destroy
       })
     }
 
@@ -350,7 +350,7 @@ angular.module('scalearAngularApp')
       getSelectedLecture: getSelectedLecture,
       setSelectedLecture: setSelectedLecture,
       create: create,
-      paste:paste
+      paste: paste
     }
 
   }])

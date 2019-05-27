@@ -3237,6 +3237,20 @@ label.error {
   .joyride-close-tip:hover, .joyride-close-tip:focus {
     color: #EEEEEE !important; }
 
+#drop_zone {
+  font-size: 0.875rem;
+  border: 2px dashed #bbb;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding-top: 60px;
+  text-align: center;
+  font: 20pt bold 'Helvetica';
+  color: #bbb;
+  height: 140px;
+}
+
+    
 .joyride-modal-bg {
   position: fixed;
   height: 100%;

@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
             return VimeoUtils.generateVimeoUploadDetails({
             }, {})
                 .$promise
-                .then(function (data) {
+                .then(function (data) { console.log(data.details)
                     return data.details
                 })
         }

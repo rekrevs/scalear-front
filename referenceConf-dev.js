@@ -216,7 +216,8 @@ exports.config = {
     //     delete_course:'test/e2e/spec/delete_course.spec.js'
     //   },
     specs: [
-        'test/e2e/spec/teacher_upload_video.spec.js'
+        //'test/e2e/spec/teacher_upload_video.spec.js'
+       'test/e2e/spec/students_quiz_in_vimeo_lecture.spec.js'
         // 'test/e2e/spec/create_course.spec.js', // 
         // 'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
         // 'test/e2e/spec/inclass_pi.spec.js', //
@@ -314,8 +315,11 @@ exports.config = {
     // and
     // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
     capabilities: {
-        'browserName': 'chrome'
+        'browserName': 'chrome',
         // 'browserName': 'firefox'
+        'chromeOptions': {
+            args: ['start-fullscreen','show-fps-counter=true']
+           }
     },
 
     // ----- More information for your tests ----

@@ -51,19 +51,62 @@ describe("Solve Course",function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
 			it("should answer OCQ quiz",function(){
-				//  student_lec.mark_answer(1)
-				 var x = element(by.id('ontop')).all(by.tagName('input'))
-				 expect(x.count(),3)
-				 expect(x.first().getTagName()).toBe('input')
-				 browser.driver.manage().window().maximize()
-				 ch1=x.first()
-				 ch1.click()
-				 browser.manage,
-				 console.log(x.first().getInnerHtml())
-				 x.first().click()
-				  sleep(15000)
-				 student_lec.check_answer()
-				  sleep(3000)
+				// //  student_lec.mark_answer(1)
+				 // var x = element(by.id('ontop')).all(by.tagName('input'))
+				// //  expect(x.count(),3)
+				// //  expect(x.first().getTagName()).toBe('input')
+				// //  expect(x.first().getAttribute('style')).toBe('eft: 57.5053%; top: 17.5987%;  position: absolute;')
+				// // // expect(x.first().getLocation()).toBe('input')
+				// //  expect(x.first().isDisplayed()).toBeTruthy();
+
+				// browser.driver.actions() .mouseMove(x.first()).perform() //, { x: 656.75, y:209.390625 }) .perform().then(() => browser.actions() .click() .perform());
+				// browser.driver.actions() .mouseMove(x.first(), { x: 1, y:1}).perform()
+			    // browser.driver.actions().click().perform();
+				// // //Actions c = new Actions(driver).click(x.first())
+				// element(by.id('ontop')).all(by.model('data.selected')).get(0).click()
+				// // // expect(x.last()).toBe(0)
+				// x.first().click().then(function(){
+
+				
+				// 	expect( x.first().  getAttribute('type')).toBe('radio')
+				// 	expect( x.first().  getAttribute('name')).toBe('student_answer')
+				// 	expect( x.first().  isSelected()).toBeTruthy()
+				// })
+				// expect( x.first().getAttribute('value')).toBe('on')
+				 //expect( x.first().  isEnabled()).toBeTruthy()
+				fstcheck= element(by.id('mowmowma123'))
+				console.log(fstcheck)
+				fstcheck.click()
+				//  var itemss = element.all(by.repeater("answer in selected_quiz.online_answers"));
+				//  var firstCheckbox = itemss.get(0).element(by.model("data.selected"));
+				//  expect(firstCheckbox.isDisplayed()).toBeTruthy()
+				//  firstCheckbox.click()
+				.then(
+					 function(c){
+						 console.log("click completed",c)
+					 },
+					 function(e){
+						 console.log("error",e)
+					 }
+					)
+
+				 sleep(2000)
+				//  browser.driver.manage().window().maximize();
+				//  browser.actions().mouseMove(firstCheckbox).perform();
+				//  element(by.id('ontop')).all(by.tagName('input')).then(function(elts){
+				// 	elts[0].click()
+				//  })
+			
+				 sleep(3000)
+
+				 element(by.css('body')).allowAnimations(false);
+				 var EC = protractor.ExpectedConditions;
+				// expect(EC.elementToBeClickable(firstCheckbox)).toBeTruthy()
+				// expect(firstCheckbox.getAttribute('style')).toBe('left: 25.7928%; top: 19.4784%; position: absolute;')
+				 // expect( fstcheck.  isSelected()).toBeTruthy()
+				 sleep(3000000)
+				
+				
 			})
 			xit("should check that it is incorrect",function(){
 				expect(student_lec.notification).toContain("Correct")

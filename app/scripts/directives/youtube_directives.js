@@ -731,7 +731,8 @@ angular.module('scalearAngularApp')
             scope.duration = scope.player.controls.getAbsoluteDuration();
           }
           else{
-            scope.duration = scope.player.controls.isHTML5? scope.player.element.duration():scope.player.controls.getDuration();
+            //scope.player.controls.isHTML5(scope.url)? scope.player.element.duration():
+            scope.duration = scope.player.controls.getDuration();
           }
         })
 

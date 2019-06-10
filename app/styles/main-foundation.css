@@ -3048,6 +3048,7 @@ dd#second_accordion > a:hover{
 .moduleHovered {
   background-color: grey;
 }
+
 #drop_zone {
   font-size: 0.875rem;
   border: 2px dashed #bbb;
@@ -3055,11 +3056,12 @@ dd#second_accordion > a:hover{
   -webkit-border-radius: 5px;
   border-radius: 5px;
   padding-top: 60px;
-  text-align: center;
-  font: 20pt bold 'Helvetica';
-  color: #bbb;
+  text-align: center; 
   height: 140px;
+  font: inherit;
+  color: #787777;
 }
+
 
 .hide_video{
   display: inline-block

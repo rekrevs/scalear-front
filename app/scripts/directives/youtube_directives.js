@@ -494,7 +494,7 @@ angular.module('scalearAngularApp')
 
       var isVimeo = function (url) {
         var video_url = url || scope.url || ""
-        return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
+        return video_url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
       }
 
       var isMP4 = function(url) {

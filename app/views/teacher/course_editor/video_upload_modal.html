@@ -1,0 +1,19 @@
+<div>
+    <div ng-show='consenting'>
+    <H1>Permission to Upload Videos</H1> 
+    <div class='muted with-margin-bottom'>
+        <p>By uploading this video you confirm that you have the right to use this video on ScalableLearning and that this video will only be used for teaching.<br>Videos uploaded to ScalableLearning will only be seen by teachers and students enrolled in the course and administrators. <br>ScalableLearning reserves the right to remove inappropriate content.</p>
+    </div> 
+    <button type='button' ng-click='startUploading()'  class='right button success small '>Upload</button> 
+    <button type='button' ng-click='cancelUploading()'  class='right button small with-margin-right'>Cancel</button>
+    </div> 
+    <div ng-show='uploading'> 
+        <H1 >Uploading</H1> 
+        <span class='muted with-margin-bottom'>Please wait...</span> 
+        <div id='upload_progress_container'>
+            <p id='upload_progress_bar'></p>
+        </div> 
+        </br>
+        <button class='right button small' ng-click='quitUploading()'>Cancel</button>
+    <div>
+</div>   

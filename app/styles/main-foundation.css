@@ -439,6 +439,22 @@ span.error, small.error{
 	overflow-y: auto;
 
 }
+.upload-progress-modal-window{
+  height:  auto;
+  width: 50%;
+  overflow-y: auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+#upload_progress_container{
+  color:#000!important;
+  background-color:#f1f1f1!important;
+}
+#upload_progress_bar{
+  height:24px;
+  width:0px;
+  color:#fff!important;
+  background-color:#4CAF50!important;
+}
 .thumbactive{
 	-webkit-box-shadow: 0 0 6px 1px rgba(0, 140, 186, 0.5);
 	box-shadow: 0 0 6px 1px rgba(0, 140, 186, 0.5);
@@ -3023,7 +3039,6 @@ dd#second_accordion > a:hover{
   height:90px;
   margin-left:5px;
 }
-
 .google-visualization-tooltip {
   position: absolute !important;
   right: 50px !important;
@@ -3032,4 +3047,29 @@ dd#second_accordion > a:hover{
 }
 .moduleHovered {
   background-color: grey;
+}
+
+#drop_zone {
+  font-size: 0.875rem;
+  border: 2px dashed #bbb;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  padding-top: 60px;
+  text-align: center; 
+  height: 140px;
+  font: inherit;
+  color: #787777;
+}
+
+
+.hide_video{
+  display: inline-block
+}
+.show_video{
+  display: block
+}
+.video_input_disabled{
+  opacity: 0.5;
+  pointer-events: none;
 }

@@ -65,8 +65,11 @@ angular.module('scalearAngularApp')
     service.isKaltura=function(url) {
       return url.match(/https?:\/\/.*\/[a-zA-Z]+\/[0-9]+\/[a-zA-Z]+\/[0-9]+00\/[a-zA-Z]+\/uiconf_id\/([0-9]+)\/partner_id\/([0-9]+).*&entry_id=(.+)(&.*)?/)
     }
+    service.isVimeo = function (url) {                                            
+    return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
+    }
     service.invalidUrl=function(url) {
-      return (url.trim().length <= 0 || (!service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKaltura(url) && !service.isHTML5(url)) )
+      return (url.trim().length <= 0 || (!service.isVimeo(url) &&  !service.isMP4(url) && !service.isYoutube(url) && !service.isMediaSite(url) && !service.isKaltura(url) && !service.isHTML5(url)) )
     }
     service.setDuration=function(newDuration) {
       service.duration = newDuration

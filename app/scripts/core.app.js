@@ -10,10 +10,11 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.datepicker',
     'ui.bootstrap.timepicker',
     // 'ui.bootstrap.tooltip',
-    // 'ngAnimate',
+    // 'ngAnimate',timeout
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
+    'ngFileUpload',
     'infinite-scroll',
     'xeditable',
     'googlechart',

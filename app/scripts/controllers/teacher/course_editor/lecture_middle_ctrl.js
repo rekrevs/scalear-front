@@ -1,16 +1,59 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation',  function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation,VimeoModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
-
     $scope.quiz_layer = {}
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
     $scope.marker_errors = {}
     $scope.quiz_errors = {}
+
+    $scope.vimeo_video_id = 0
+    $scope.transcoding = false
+    
+    if (isVimeo) {
+      VimeoModel.getVimeoUploadingStatus($scope.lecture.id)
+        .then(function (status) {
+          $scope.transcoding = status == "transcoding" ? true : false
+        })
+      VimeoModel.getVimeoVideoId($scope.lecture.id)
+        .then(function (vimeo_video_id) {
+          $scope.vimeo_video_id = vimeo_video_id == 'none' ? $scope.lecture.url.split('https://vimeo.com/')[1] : vimeo_video_id
+        })
+    }
+
+    $scope.$on('transcoding_begins',function(ev,vimeoVidId){      
+      $scope.transcoding = true
+      $scope.vimeo_video_id = vimeoVidId.vimeoVidId
+    })
+
+    $scope.$on('transcoding_ends',function(ev){  
+      $scope.transcoding = false
+      $stateParams.transcoding = $scope.transcoding 
+    })
+
+    var listnerDeleteVideo=$rootScope.$on('delete_video',function(ev){  
+       VimeoModel.deleteVideo($scope.vimeo_video_id,$scope.lecture.id)
+      resetVideoDetails()
+    }) 
+
+    function isVimeo(){
+      return  $scope.lecture.url.includes('https://vimeo.com/')
+    }
+
+    function resetVideoDetails() {
+      $scope.lecture.url = 'none'
+      $scope.lecture.duration = 0
+    }
+
+    $scope.cancelTranscoding = function () {
+      VimeoModel.deleteVideo($scope.vimeo_video_id,$scope.lecture.id)
+      $scope.transcoding = false
+      $rootScope.$broadcast('transcoding_canceled', {})
+    }
 
     $scope.alert = {
       type: "alert",
@@ -643,6 +686,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on("$destroy", function() {
       removeShortcuts()
+      listnerDeleteVideo()
     })
 
   }]);

@@ -219,7 +219,6 @@ angular.module('scalearAngularApp')
             $rootScope.$broadcast("content_navigator_overlay", {status: false})
           }
         }).catch(function(err){
-          console.log(err);
           $rootScope.$broadcast("content_navigator_overlay", {status: false})
         })
       }

@@ -46,58 +46,15 @@ describe("Solve Course",function(){
 				video.play()
 				video.seek(20)
 				student_lec.wait_for_quiz()
-
 				sleep(3000)
 			})
 			it('should expect OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
 			it("should answer OCQ quiz",function(){
-				// //  student_lec.mark_answer(1)
-				 // var x = element(by.id('ontop')).all(by.tagName('input'))
-				// //  expect(x.count(),3)
-				// //  expect(x.first().getTagName()).toBe('input')
-				// //  expect(x.first().getAttribute('style')).toBe('eft: 57.5053%; top: 17.5987%;  position: absolute;')
-				// // // expect(x.first().getLocation()).toBe('input')
-				// //  expect(x.first().isDisplayed()).toBeTruthy();
-
-				// browser.driver.actions() .mouseMove(x.first()).perform() //, { x: 656.75, y:209.390625 }) .perform().then(() => browser.actions() .click() .perform());
-				// browser.driver.actions() .mouseMove(x.first(), { x: 1, y:1}).perform()
-			    // browser.driver.actions().click().perform();
-				// // //Actions c = new Actions(driver).click(x.first())
-				// element(by.id('ontop')).all(by.model('data.selected')).get(0).click()
-				// // // expect(x.last()).toBe(0)
-				// x.first().click().then(function(){
-
-				
-				// 	expect( x.first().  getAttribute('type')).toBe('radio')
-				// 	expect( x.first().  getAttribute('name')).toBe('student_answer')
-				// 	expect( x.first().  isSelected()).toBeTruthy()
-				// })
-				// expect( x.first().getAttribute('value')).toBe('on')
-				 //expect( x.first().  isEnabled()).toBeTruthy()
-				fstcheck =  element(by.id('ontop')).all(by.tagName('input')).first() //= element(by.id('mowmowma123'))
-			
-				expect(fstcheck.getAttribute('style')).toBe('left: 74.5387%; top: 46.168%; position: absolute;')
-				browser.executeScript("arguments[0].click();", fstcheck);
-				// fstcheck.click()
-				//  var itemss = element.all(by.repeater("answer in selected_quiz.online_answers"));
-				//  var firstCheckbox = itemss.get(0).element(by.model("data.selected"));
-				//  expect(firstCheckbox.isDisplayed()).toBeTruthy()
-				//  firstCheckbox.click()
-				
-				//  browser.driver.manage().window().maximize();
-				//  browser.actions().mouseMove(firstCheckbox).perform();
-				//  element(by.id('ontop')).all(by.tagName('input')).then(function(elts){
-				// 	elts[0].click()
-				//  })
-			
-				 sleep(1000)
-				 expect( fstcheck.  isSelected()).toBeTruthy()
-				 student_lec.check_answer_button.click()
-				 sleep(1000)
-				
-				
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+				student_lec.check_answer_button.click()			
 			})
 			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")

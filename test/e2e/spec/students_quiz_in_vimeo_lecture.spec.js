@@ -44,8 +44,10 @@ describe("Solve Course",function(){
 				browser.refresh()
 				video.wait_till_ready()
 				video.play()
-				video.seek(50)
+				video.seek(20)
 				student_lec.wait_for_quiz()
+
+				sleep(3000)
 			})
 			it('should expect OCQ quiz', function(){
 				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
@@ -74,41 +76,30 @@ describe("Solve Course",function(){
 				// })
 				// expect( x.first().getAttribute('value')).toBe('on')
 				 //expect( x.first().  isEnabled()).toBeTruthy()
-				fstcheck= element(by.id('mowmowma123'))
-				console.log(fstcheck)
-				fstcheck.click()
+				fstcheck =  element(by.id('ontop')).all(by.tagName('input')).first() //= element(by.id('mowmowma123'))
+			
+				expect(fstcheck.getAttribute('style')).toBe('left: 74.5387%; top: 46.168%; position: absolute;')
+				browser.executeScript("arguments[0].click();", fstcheck);
+				// fstcheck.click()
 				//  var itemss = element.all(by.repeater("answer in selected_quiz.online_answers"));
 				//  var firstCheckbox = itemss.get(0).element(by.model("data.selected"));
 				//  expect(firstCheckbox.isDisplayed()).toBeTruthy()
 				//  firstCheckbox.click()
-				.then(
-					 function(c){
-						 console.log("click completed",c)
-					 },
-					 function(e){
-						 console.log("error",e)
-					 }
-					)
-
-				 sleep(2000)
+				
 				//  browser.driver.manage().window().maximize();
 				//  browser.actions().mouseMove(firstCheckbox).perform();
 				//  element(by.id('ontop')).all(by.tagName('input')).then(function(elts){
 				// 	elts[0].click()
 				//  })
 			
-				 sleep(3000)
-
-				 element(by.css('body')).allowAnimations(false);
-				 var EC = protractor.ExpectedConditions;
-				// expect(EC.elementToBeClickable(firstCheckbox)).toBeTruthy()
-				// expect(firstCheckbox.getAttribute('style')).toBe('left: 25.7928%; top: 19.4784%; position: absolute;')
-				 // expect( fstcheck.  isSelected()).toBeTruthy()
-				 sleep(3000000)
+				 sleep(1000)
+				 expect( fstcheck.  isSelected()).toBeTruthy()
+				 student_lec.check_answer_button.click()
+				 sleep(1000)
 				
 				
 			})
-			xit("should check that it is incorrect",function(){
+			it("should check that it is correct",function(){
 				expect(student_lec.notification).toContain("Correct")
 				sleep(3000)
 			})

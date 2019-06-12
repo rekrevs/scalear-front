@@ -7,6 +7,8 @@
 //====================================================
 //               add new course
 //====================================================
+var sleep = require('./utils').sleep;
+
 exports.create_course = function(ptor, short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites){
     	o_c.open_new_course(ptor);
 
@@ -809,14 +811,8 @@ exports.init_lecture = function(ptor, lec_name, lec_url){
 /////////////////////////////////////////////////////////////////////
 //						in video questions
 //////////////////////////////////////////////////////////////////////
-exports.open_content_new_in_video_ques = function(ptor){
-    locator.by_id(ptor, 'content').then(function(btn){
-        btn.click().then(function(){
-        	locator.by_id(ptor, 'new_in_video_ques').then(function(btn2){
-        		btn2.click();
-        	})
-        })
-    })
+exports.add_in_video_ques = function(){
+	element(by.id('new_question')).click()
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -993,7 +989,7 @@ exports.add_survey = function(ptor){
 // //====================================================
 
 var create_invideo_quiz=function(id){
-	exports.open_content_new_in_video_ques(ptor);
+	exports.add_in_video_ques();
 	element(by.id(id)).click()
 	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
 }
@@ -1218,55 +1214,49 @@ exports.make_ocq_text_questions=function(ptor){
 	})
 }
 
-exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
-	locator.by_id(ptor,'ontop').then(function(ontop){
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
+exports.make_ocq_questions=function(q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+    browser.driver.findElement(by.id('ontop')).then(function(ontop){
+		browser.actions().mouseMove(ontop).perform();
+		browser.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
+		browser.actions().doubleClick().perform();
 
-		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 1");
-		})
+		element(by.id('correct_checkbox')).click();
+		element(by.model("data.explanation")).sendKeys("explanation 1");
+		sleep(2000)
+		browser.actions().click().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		browser.actions().mouseMove(ontop).perform();
+		browser.actions().mouseMove({x: 5, y: 5}).perform();
+		browser.actions().click().perform();
+		sleep(1000);
 
-		ptor.sleep(2000);
+		browser.actions().mouseMove(ontop).perform();
+		browser.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
+		browser.actions().doubleClick().perform();
+		sleep(1000)
+	  
+		element(by.model("data.explanation")).sendKeys("explanation 2");
+		sleep(2000)
+		browser.actions().click().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
-		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 2");
-		})
+		browser.actions().mouseMove(ontop).perform();
+		browser.actions().mouseMove({x: 5, y: 5}).perform();
+        browser.sleep(2000);
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		browser.actions().mouseMove(ontop).perform();
+		browser.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
+		browser.actions().doubleClick().perform();
+	
 
-        ptor.sleep(2000);
+		element(by.model("data.explanation")).sendKeys("explanation 2");
+		sleep(2000)
+		browser.actions().click().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
+		sleep(1000)
 
-		element.all(by.model("data.explanation")).then(function(ex){
-			ex[0].sendKeys("explanation 3");
-		})
-
-		ptor.sleep(2000);
-		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Done')).click()
-		// .then(function(btn){
-		// 	btn.click().then(function(){
-		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
-		// 	})
-		// })
+
+		sleep(20000)
 	})
 }
 

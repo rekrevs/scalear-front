@@ -9,7 +9,10 @@ var ShareModal = require('./pages/share_modal');
 var SharedPage = require('./pages/shared_page');
 var NewCourse = require('./pages/new_course');
 var SubHeader = require('./pages/sub_header');
+var Video = require('./pages/video');
 var sleep = require('./lib/utils').sleep;
+var dropFile = require('./lib/drop-File')
+var teacher = require('./lib/teacher_module');
 var ContentItems = require('./pages/content_items');
 
 var params = browser.params;
@@ -26,7 +29,7 @@ var navigator = new ContentNavigator(1)
 var upload = new UploadModal()
 var trim = new TrimModal()
 var content_items= new ContentItems()
-var dropFile = require('./lib/drop-File')
+var video = new Video();
 
 describe("Upload a video",function(){
     describe("Teacher1",function(){
@@ -59,9 +62,14 @@ describe("Upload a video",function(){
             }, 300000)
             browser.driver.manage().window().maximize();
             trim.cancel_trim()
-            sleep(300000)
+            sleep(3000)
         })
         it("should  create a quiz",function(){
+           // teacher.create_invideo_ocq_quiz()
+            video.seek(50);
+            sleep(3000)
+		    teacher.create_invideo_ocq_quiz();
+		    teacher.make_ocq_questions(params.ocq_q1_x, params.ocq_q1_y, params.ocq_q2_x, params.ocq_q2_y, params.ocq_q3_x, params.ocq_q3_y);
  
         })
         it("should logout",function(){

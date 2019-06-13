@@ -494,7 +494,7 @@ angular.module('scalearAngularApp')
 
       var isVimeo = function (url) {
         var video_url = url || scope.url || ""
-        return url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
+        return video_url.match(/(http|https):\/\/player.vimeo.com\/video\/[0-9]*/) || url.match(/(http|https):\/\/vimeo.com\/[0-9]*/)
       }
 
       var isMP4 = function(url) {
@@ -731,7 +731,8 @@ angular.module('scalearAngularApp')
             scope.duration = scope.player.controls.getAbsoluteDuration();
           }
           else{
-            scope.duration = scope.player.controls.isHTML5? scope.player.element.duration():scope.player.controls.getDuration();
+            //scope.player.controls.isHTML5(scope.url)? scope.player.element.duration():
+            scope.duration = scope.player.controls.getDuration();
           }
         })
 

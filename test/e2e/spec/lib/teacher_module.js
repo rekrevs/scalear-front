@@ -1248,7 +1248,7 @@ exports.make_ocq_questions=function(q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		browser.actions().doubleClick().perform();
 	
 
-		element(by.model("data.explanation")).sendKeys("explanation 2");
+		element(by.model("data.explanation")).sendKeys("explanation 3");
 		sleep(2000)
 		browser.actions().click().perform();
 

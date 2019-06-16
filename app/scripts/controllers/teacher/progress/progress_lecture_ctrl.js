@@ -620,7 +620,6 @@ angular.module('scalearAngularApp')
           $scope.video_start = video.start_time
           $scope.video_end = video.end_time
           $scope.progress_player.controls.setStartTime(video.start_time)
-          console.log('here')
           $scope.url_lecture_id = video.id
           if ($scope.progress_player.controls.isYoutube(video.url)){
             $scope.url = video.url + "&controls=1&fs=1&theme=light"

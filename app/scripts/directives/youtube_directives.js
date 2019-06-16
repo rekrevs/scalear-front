@@ -237,8 +237,7 @@ angular.module('scalearAngularApp')
 
       player_controls.absoluteSeek = function(time) {
         player.currentTime(time);
-        if (isVimeo(scope.url)) {
-          console.log('here')
+        if (player.isVimeo(scope.url)) {
           player.pause()
         }
 
@@ -724,7 +723,6 @@ angular.module('scalearAngularApp')
         scope.video = {
           start_time: scope.player.controls.getVideoStartTime(),
           end_time: scope.player.controls.getVideoEndTime()
-
         }
 
         scope.$watch('editing', function() {
@@ -1066,6 +1064,7 @@ angular.module('scalearAngularApp')
         scope.video.start_location = (scope.video.start_time / scope.duration) * progress_width
         scope.video.end_location = (scope.video.end_time / scope.duration) * progress_width
         scope.video.progress_width = progress_width
+
       }
 
       scope.calculateVideoStartTime = function(event, meta) {
@@ -1092,7 +1091,7 @@ angular.module('scalearAngularApp')
         scope.video.end_time = (meta.position.left / scope.video.progress_width) * scope.duration
         scope.player.controls.setVideoEndTime(scope.video.end_time)
         scope.player.controls.absoluteSeek(scope.video.end_time)
-
+      
       }
 
       scope.seekToQuiz = function(quiz) {
@@ -1135,6 +1134,7 @@ angular.module('scalearAngularApp')
           scope.elapsed_width = ((scope.current_time / scope.duration) * 100)
           scope.elapsed_head = scope.elapsed_width > 0.5 ? scope.elapsed_width - 0.45 : 0
           scope.elapsed_head = scope.elapsed_head > 99.4 ? 99.4 : scope.elapsed_head
+          if (scope.elapsed_head == 99.4 && scope.player.controls.vimeo) player.pause() 
         }
 
         scope.$apply()

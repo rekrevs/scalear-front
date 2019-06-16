@@ -672,7 +672,8 @@ angular.module('scalearAngularApp')
 
     $scope.progressSeek = function (time) {
       if (!$scope.quiz_mode) {
-        $scope.seek(time)
+        $scope.seek(time) 
+        console.log('progressSeek',time)
         checkIfQuizSolved()
         checkIfSlideShown()
       }

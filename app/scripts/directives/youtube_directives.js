@@ -237,6 +237,11 @@ angular.module('scalearAngularApp')
 
       player_controls.absoluteSeek = function(time) {
         player.currentTime(time);
+        if (isVimeo(scope.url)) {
+          console.log('here')
+          player.pause()
+        }
+
       }
 
       player_controls.seek_and_pause = function(time) {

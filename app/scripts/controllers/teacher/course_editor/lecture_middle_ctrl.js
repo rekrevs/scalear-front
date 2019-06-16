@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation,VimeoModel) {
+  .controller('lectureMiddleCtrl', ['$modal','$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', function($modal,$state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation,VimeoModel) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
         .then(function (vimeo_video_id) {
           $scope.vimeo_video_id = vimeo_video_id == 'none' ? $scope.lecture.url.split('https://vimeo.com/')[1] : vimeo_video_id
         })
+        checkToTrim()  
     }
 
     $scope.$on('transcoding_begins',function(ev,vimeoVidId){      
@@ -43,7 +44,20 @@ angular.module('scalearAngularApp')
     function isVimeo(){
       return  $scope.lecture.url.includes('https://vimeo.com/')
     }
-
+    function checkToTrim() {
+      $modal.open({
+        templateUrl: '/views/teacher/course_editor/trim_modal.html',
+        controller: ['$scope', '$rootScope', '$modalInstance', function($scope, $rootScope, $modalInstance) {
+          $scope.trim = function() {
+            $rootScope.$broadcast("start_trim_video")
+            $modalInstance.close();
+          }
+          $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+          }
+        }]
+      });
+    }
     function resetVideoDetails() {
       $scope.lecture.url = 'none'
       $scope.lecture.duration = 0

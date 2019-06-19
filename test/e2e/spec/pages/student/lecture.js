@@ -174,9 +174,13 @@ LecturePage.prototype=Object.create({},{
 	forward_10_sec_shortcut:{value:function(){$('body').sendKeys('l');}},
 	backward_10_sec_shortcut:{value:function(){$('body').sendKeys('j');}},
 	play_pause_shortcut:{value:function(){$('body').sendKeys('k');}},
-	check_answer_button:{get:function(){return element(by.className("check_answer_button"))}},
-	check_answer:{value:function(){this.check_answer_button.click()}},
-	quiz_layer:{get:function(){return element(by.className('ontop'))}},
+	check_answer_button:{get:function(){ 
+		return element(by.className("check_answer_button"))
+	}},
+	check_answer:{value:function(){ 
+		this.check_answer_button.click()
+	}},
+	quiz_layer:{get:function(){ return element(by.id('ontop'))}},
 	review_panel:{get:function(){return element(by.className('review_panel'))}},
 	review_panel_buttons:{get:function(){return this.review_panel.all(by.className('button'))}},
 	end_buttons:{get:function(){return this.quiz_layer.all(by.className('button'))}},
@@ -220,7 +224,9 @@ LecturePage.prototype=Object.create({},{
 	retry_previous_question:{value:function(){
 		this.review_panel_buttons.get(2).click()
 	}},
-	answers:{get:function(){return this.quiz_layer.all(by.tagName("input"))}},
+	answers:{get:function(){ 
+		return this.quiz_layer.all(by.tagName("input"))
+	}},
 	draggables:{get:function(){return this.quiz_layer.all(by.className("dragged"))}},
 	droppables:{get:function(){return this.quiz_layer.all(by.className("ui-droppable"))}},
 	text_drag_container:{get:function(){return this.quiz_layer.all(by.className("drag-sort"))}},
@@ -238,20 +244,21 @@ LecturePage.prototype=Object.create({},{
 	
 	show_explanation:{value:function(num){
 		browser.driver.actions().mouseMove(this.answers.get(num-1)).perform();
-		browser.driver.actions().mouseMove({x: 5, y: 5}).perform();
-	}},
-	mark_answer:{value:function(num){this.answers.get(num-1).click()}},
-	drag_answer:{value:function(num, drop){
-		var drag = this.draggables.get(num-1)
-		var droppables = this.droppables
-		var drop_location = drop? this.draggables.get(drop-1) : drag
-		drop_location.getText().then(function(text){
+		browser.driver.actions().mouseMove({ x: 5, y: 5 }).perform();
+	}
+	},
+	mark_answer: { value: function (num) { browser.executeScript("arguments[0].click();", this.answers.get(num - 1)); } },
+	drag_answer: {
+		value: function (num, drop) {
+			var drag = this.draggables.get(num - 1)
+			var droppables = this.droppables
+			var drop_location = drop ? this.draggables.get(drop - 1) : drag
+			drop_location.getText().then(function (text) {
 			browser.driver.actions().mouseMove(drag).perform();
 			browser.driver.actions().mouseDown().perform();
 			browser.driver.actions().mouseMove(droppables.get(text.split(' ')[1]-1)).perform();
         	browser.driver.actions().mouseUp().perform();
 		})
-
 	}},
 	answer_text_drag_incorrect:{value:function(){
 		var arrows = this.text_drag_arrows

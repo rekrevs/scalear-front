@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
           player = Popcorn(video);
           player_controls.vimeo = true;
           player.controls(scope.controls);
-          player.autoplay(scope.autoplay);
+          player.autoplay(false);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});

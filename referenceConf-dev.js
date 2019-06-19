@@ -103,6 +103,12 @@ var params= {
     q1_y:127,
     q2_y:157,
     q3_y:187,
+    ocq_q1_x : 169, 
+    ocq_q1_y : 100,
+    ocq_q2_x : 139,
+    ocq_q2_y : 110, 
+    ocq_q3_x : 110, 
+    ocq_q3_y : 120, 
 
     short_name: "csc-test",
     course_name: "aesting course 100",
@@ -151,6 +157,7 @@ exports.config = {
     // 3. sauceUser/sauceKey - to use remote Selenium servers via SauceLabs.
 
     // The location of the selenium standalone server .jar file.
+  
     seleniumServerJar: null, //'selenium/selenium-server-standalone-2.39.0.jar',
     // The port to start the selenium server on, or null if the server should
     // find its own unused port.
@@ -181,8 +188,8 @@ exports.config = {
     allScriptsTimeout: 120000,
 
     // ----- What tests to run -----
-    //
-    // Spec patterns are relative to the location of this config.
+    
+   // Spec patterns are relative to the location of this config.
     suites: {
         course_create:[
             'test/e2e/spec/create_course.spec.js',
@@ -216,93 +223,94 @@ exports.config = {
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
+        'test/e2e/spec/teacher_upload_video.spec.js',
+        'test/e2e/spec/students_quiz_in_vimeo_lecture.spec.js'//,
+//         'test/e2e/spec/create_course.spec.js', // 
+//         'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
+//         'test/e2e/spec/inclass_pi.spec.js', //
+//         'test/e2e/spec/fill_course_dp.spec.js', //(demo)
+//         'test/e2e/spec/inclass_dp.spec.js', //(demo)  ////////////////////////////////////
+//         'test/e2e/spec/fill_course.spec.js', // 
+//         'test/e2e/spec/markers.spec.js', // 
+//         'test/e2e/spec/course_information_validation.spec.js', // 
+//         'test/e2e/spec/account_information_validation.spec.js', // 
+//         'test/e2e/spec/enrollment_help.spec.js', // 
+//         'test/e2e/spec/course_editor_basic.spec.js', // 
+//         'test/e2e/spec/course_editor_copy.spec.js', // 
+//         'test/e2e/spec/course_editor_sharing.spec.js', //         
+//         'test/e2e/spec/module_statistics.spec.js', // 
+//         'test/e2e/spec/announcements.spec.js', // 
+//         'test/e2e/spec/teacher-managment.spec.js', // 
+//         'test/e2e/spec/students_solve_course.spec.js', //  (inOrder Functionality )
+//         'test/e2e/spec/notes.spec.js', // 
+//         'test/e2e/spec/discussions.spec.js', //
+//         'test/e2e/spec/student_timeline_features.spec.js',
+//         'test/e2e/spec/inclass_teacher_side.spec.js', //
 
-        'test/e2e/spec/create_course.spec.js', // 
-        'test/e2e/spec/fill_course_pi.spec.js', // (starting offset isn't 4.9!!)
-        'test/e2e/spec/inclass_pi.spec.js', //
-        'test/e2e/spec/fill_course_dp.spec.js', //(demo)
-        'test/e2e/spec/inclass_dp.spec.js', //(demo)  ////////////////////////////////////
-        'test/e2e/spec/fill_course.spec.js', // 
-        'test/e2e/spec/markers.spec.js', // 
-        'test/e2e/spec/course_information_validation.spec.js', // 
-        'test/e2e/spec/account_information_validation.spec.js', // 
-        'test/e2e/spec/enrollment_help.spec.js', // 
-        'test/e2e/spec/course_editor_basic.spec.js', // 
-        'test/e2e/spec/course_editor_copy.spec.js', // 
-        'test/e2e/spec/course_editor_sharing.spec.js', //         
-        'test/e2e/spec/module_statistics.spec.js', // 
-        'test/e2e/spec/announcements.spec.js', // 
-        'test/e2e/spec/teacher-managment.spec.js', // 
-        'test/e2e/spec/students_solve_course.spec.js', //  (inOrder Functionality )
-        'test/e2e/spec/notes.spec.js', // 
-        'test/e2e/spec/discussions.spec.js', //
-        'test/e2e/spec/student_timeline_features.spec.js',
-        'test/e2e/spec/inclass_teacher_side.spec.js', //
+//         'test/e2e/spec/module_overview.spec.js', // 
+//         'test/e2e/spec/progress-module.spec.js', //
+//         'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
+//         'test/e2e/spec/validations.spec.js', //
 
-        'test/e2e/spec/module_overview.spec.js', // 
-        'test/e2e/spec/progress-module.spec.js', //
-        'test/e2e/spec/progress-completion-module.spec.js', //  //missing to change grade of quiz or lecture and check it       
-        'test/e2e/spec/validations.spec.js', //
-
-        'test/e2e/spec/delete_course.spec.js', //
+//         'test/e2e/spec/delete_course.spec.js', //
         
-/// change delete course 2 to delete course 1
-        // 'test/e2e/spec/preview-as-student.spec.js',         
-        // 'test/e2e/spec/fill_course_part2.spec.js', // Need To wtite the test code for it 
+// // change delete course 2 to delete course 1
+//         'test/e2e/spec/preview-as-student.spec.js',         
+//         'test/e2e/spec/fill_course_part2.spec.js', // Need To wtite the test code for it 
 
        
-        //rewritten tests
+//         //rewritten tests
 
 
-        // 'test/e2e/spec/calendar-teacher-student.spec.js', (postponed)
+//         'test/e2e/spec/calendar-teacher-student.spec.js', //(postponed)
 
 
 
-        // to test email features locall
+//         // to test email features locall
 
-        // 'test/e2e/spec/add_user.spec.js',
-        // 'test/e2e/spec/create_course.spec.js',
-        // 'test/e2e/spec/fill_course.spec.js',
-        // 'test/e2e/spec/email_notification.spec.js',
-        // 'test/e2e/spec/delete_user.spec.js',
+//         'test/e2e/spec/add_user.spec.js',
+//         'test/e2e/spec/create_course.spec.js',
+//         'test/e2e/spec/fill_course.spec.js',
+//         'test/e2e/spec/email_notification.spec.js',
+//         'test/e2e/spec/delete_user.spec.js',
 
-   //{{reviewed}}
-        // 'test/e2e/spec/init-progress-data.spec.js', //
-        // 'test/e2e/spec/account-info-validation.spec.js',//
+//  // {{reviewed}}
+//         'test/e2e/spec/init-progress-data.spec.js', //
+//         'test/e2e/spec/account-info-validation.spec.js',//
 
-        // 'test/e2e/spec/copying.spec.js', //
-        // 'test/e2e/spec/course-editor-basic.spec.js', //
-        // 'test/e2e/spec/create-announcements.spec.js', //
-        // 'test/e2e/spec/dashboard.spec.js', //
-        // 'test/e2e/spec/enrollment-help.spec.js', //
-        // 'test/e2e/spec/module-statistics.spec.js'
-        // 'test/e2e/spec/discussions.spec.js', //
-        // 'test/e2e/spec/notes.spec.js', //
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
-        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //
-        // 'test/e2e/spec/normal-quiz.spec.js', //
-        // 'test/e2e/spec/normal-survey.spec.js', //
-        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
-        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js', //
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js', //
-        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//
-        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
-        // 'test/e2e/spec/sharing.spec.js',//
-        // 'test/e2e/spec/teacher-managment.spec.js', //
-        // 'test/e2e/spec/student-lectures.spec.js', //
+//         'test/e2e/spec/copying.spec.js', //
+//         'test/e2e/spec/course-editor-basic.spec.js', //
+//         'test/e2e/spec/create-announcements.spec.js', //
+//         'test/e2e/spec/dashboard.spec.js', //
+//         'test/e2e/spec/enrollment-help.spec.js', //
+//         'test/e2e/spec/module-statistics.spec.js',
+//         'test/e2e/spec/discussions.spec.js', //
+//         'test/e2e/spec/notes.spec.js', //
+//         'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
+//         'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
+//         'test/e2e/spec/mcq-survey-over-video.spec.js', //
+//         'test/e2e/spec/normal-quiz.spec.js', //
+//         'test/e2e/spec/normal-survey.spec.js', //
+//         'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
+//         'test/e2e/spec/ocq-quizzez-over-video.spec.js', //
+//         'test/e2e/spec/ocq-survey-over-video.spec.js', //
+//         'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//
+//         'test/e2e/spec/drag-quizzez-over-video.spec.js',//
+//         'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
+//         'test/e2e/spec/sharing.spec.js',//
+//         'test/e2e/spec/teacher-managment.spec.js', //
+//         'test/e2e/spec/student-lectures.spec.js', //
 
-        // 'test/e2e/spec/timeline.spec.js',
-        // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
-        // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
-        // 'test/e2e/spec/enrolled-students.spec.js',//
-        //
-        // 'test/e2e/spec/progress-main.spec.js', //
-        // 'test/e2e/spec/progress-module.spec.js', //
-        // 'test/e2e/spec/inclass.spec.js',
-        // 'test/e2e/spec/statistics.spec.js',  //
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',  //
+//         'test/e2e/spec/timeline.spec.js',
+//         'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
+//         'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
+//         'test/e2e/spec/enrolled-students.spec.js',//
+        
+//         'test/e2e/spec/progress-main.spec.js', //
+//         'test/e2e/spec/progress-module.spec.js', //
+//         'test/e2e/spec/inclass.spec.js',
+//         'test/e2e/spec/statistics.spec.js',  //
+//         'test/e2e/spec/calendar-teacher-student.spec.js',  //
 
 
     ],

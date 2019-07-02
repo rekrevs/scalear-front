@@ -254,16 +254,19 @@ angular.module('scalearAngularApp')
               $rootScope.$broadcast("update_module_time", lecture.group_id)
             });
           } else if (VideoInformation.isMediaSite(lecture.url) || VideoInformation.isVimeo(lecture.url) || VideoInformation.isKaltura(lecture.url) || VideoInformation.isHTML5(lecture.url)) {
-            VideoInformation.waitForDurationSetup().then(function (duration) {
-              lecture.duration = duration
-              lecture.start_time = 0
-              lecture.end_time = lecture.duration
-              update().then(function () {
-                var resolve = VideoInformation.isVimeo(lecture.url) ? true : false
-                deferred.resolve(resolve);
-              });
-              $rootScope.$broadcast("update_module_time", lecture.group_id)
-            })
+            if (VideoInformation.isVimeo(lecture.url)) {
+              deferred.resolve(true)
+            } else {
+              VideoInformation.waitForDurationSetup().then(function (duration) {
+                lecture.duration = duration
+                lecture.start_time = 0
+                lecture.end_time = lecture.duration
+                update().then(function () {
+                  deferred.resolve(false);
+                });
+                $rootScope.$broadcast("update_module_time", lecture.group_id)
+              })
+            }
           }
         } else {
           lecture.url = "none"

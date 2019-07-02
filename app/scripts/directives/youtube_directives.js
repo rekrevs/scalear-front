@@ -195,9 +195,9 @@ angular.module('scalearAngularApp')
         // else{
         //  duration = player_controls.getAbsoluteDuration()
         // }
-        if (player_controls.vimeo){
-          return player.duration()
-        }
+        // if (player_controls.vimeo){
+        //   return player.duration()
+        // }
         return scope.end - scope.start
       }
 

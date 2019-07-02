@@ -185,6 +185,7 @@ angular.module('scalearAngularApp')
         scope.selected_lecture = {}
         scope.lecture_errors = {}
         var duration = scope.lecture.end_time
+        console.log('duration:',duration)
         scope.selected_lecture.start_time_formated_time = $filter('format')(scope.lecture.start_time)
         scope.selected_lecture.end_time_formated_time = $filter('format')(scope.lecture.end_time)
         scope.$watch('lecture.start_time', function(newval,oldval){

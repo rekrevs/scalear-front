@@ -57,10 +57,10 @@
           networkState: self.NETWORK_EMPTY,
           readyState: self.HAVE_NOTHING,
           seeking: false,
-          autoplay: EMPTY_STRING,
+          autoplay: 0,
           preload: EMPTY_STRING,
           controls: true,
-          loop: false,
+          loop: 0,
           poster: EMPTY_STRING,
           // Vimeo seems to use .77 as default
           volume: 1,
@@ -404,7 +404,8 @@
             // Turn off as much of the metadata/branding as possible
             "title=0",
             "byline=0",
-            "portrait=0"
+            "portrait=0",
+            "loop=0"
           ];
   
         // Sync loop and autoplay based on URL params, and delete.

@@ -60,17 +60,17 @@ angular.module('scalearAngularApp')
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           var vimeo_options = {
-            background: true,
+            background: false,
             muted: false,
             autoplay:false,
             loop:false
           };
           var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id,vimeo_options)
-          video.src = scope.url+"?background=1&autoplay=0&muted=0&loop=0"
+          video.src = scope.url+"?background=0&autoplay=0&muted=0&loop=0"
           player = Popcorn(video);
           player_controls.vimeo = true;
           player.controls(scope.controls);
-          player.autoplay(scope.autoplay);
+          player.autoplay(false);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});

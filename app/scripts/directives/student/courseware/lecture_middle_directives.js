@@ -295,9 +295,6 @@ angular
               corr_ans.selected = true;
             }
           };
-          scope.radiClicked = function(){
-            console.log(' radio clicked')
-          }
           scope.$watch("explanation[data.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.data.id]) {
               scope.checkAnswerClicked = true

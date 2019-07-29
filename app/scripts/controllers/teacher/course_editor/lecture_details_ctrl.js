@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
     VideoQuizModel.getQuizzes()
     MarkerModel.getMarkers()
 
-
+    checkToTrim()
     $scope.validateLecture = function(column, data) {
       var lecture = { id: $scope.lecture.id, course_id: $scope.lecture.course_id, group_id: $scope.lecture.group_id };
       lecture[column] = data;

@@ -237,13 +237,13 @@ angular.module('scalearAngularApp')
 
       player_controls.absoluteSeek = function(time) {
         player.currentTime(time);
-        if (player.isVimeo(scope.url)) {
+        if (isVimeo(scope.url)) {
           player.pause()
         }
 
       }
 
-      player_controls.seek_and_pause = function(time) {
+      player_controls.seek_and_pause = function(time) { 
         if(isKaltura(scope.url)){
           if(time==0){
             player_controls.seek(0)

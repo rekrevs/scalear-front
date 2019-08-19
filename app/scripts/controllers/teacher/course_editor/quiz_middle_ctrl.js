@@ -40,11 +40,11 @@ angular.module('scalearAngularApp')
     $scope.closeAlerts = function() {
       $scope.hide_alerts = true;
     }
-    $scope.removeAndSaveQuestions = function (){
-      $scope.removeQuestion()
-      setTimeout(function(){
+    $scope.removeAndSaveQuestions = function (index) {
+      $scope.removeQuestion(index)
+      setTimeout(function () {
         $scope.saveQuestions()
-      },500) // time out to wait till error message vanish
+      }, 500) // time out to wait till error message vanish
     }
     $scope.removeAndSaveAnswer = function (index, question){
       $scope.removeAnswer(index, question)

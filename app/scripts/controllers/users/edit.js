@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state', '$modal', 'Page', '$translate','UserSession', function($rootScope, $scope, User, $state, $modal, Page, $translate, UserSession) {
+  .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state', '$modal', 'Page', '$translate','UserSession','scalear_api', '$http', function($rootScope, $scope, User, $state, $modal, Page, $translate, UserSession, scalear_api, $http) {
 
     Page.setTitle('navigation.account_information')
     $scope.dayNamesOption = [{
@@ -88,5 +88,15 @@ angular.module('scalearAngularApp')
             $scope.user.first_day = $scope.dayNamesOption[$scope.user.first_day]
           })
       }
+    }
+
+    $scope.getCurrentUserActivityData = function () {
+      var url = scalear_api.host + '/en/users/generate_user_activity_file?email=' + $scope.user.email
+      $http.get(url, { responseType: 'blob' })
+        .success(function (data) {
+          const blob = new Blob([data], { type: 'application/zip' });
+          saveAs(blob, $scope.user.name + ".zip");
+        }
+        )
     }
   }]);

@@ -95,8 +95,8 @@ angular.module('scalearAngularApp')
       $http.get(url, { responseType: 'blob' })
         .success(function (data) {
           const blob = new Blob([data], { type: 'application/zip' });
-          saveAs(blob, $scope.user.name + ".zip");
-        }
-        )
+          console.log($scope.user )
+          saveAs(blob, "personal_data_for_"+ $scope.user.screen_name + ".zip");
+        })
     }
   }]);

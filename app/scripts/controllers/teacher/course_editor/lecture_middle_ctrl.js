@@ -105,6 +105,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $scope.is_youtube = is_youtube
       $scope.slow = true
+      console.log('slow')
     }
     function showMarker(marker) {
       $rootScope.$broadcast("show_online_marker", marker)

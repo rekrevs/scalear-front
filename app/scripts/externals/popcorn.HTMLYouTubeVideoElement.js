@@ -341,7 +341,7 @@
       }
     }
 
-    function changeSrc( aSrc ) {
+    function changeSrc( {aSrc, savedDuration} ) {
       if( !self._canPlaySrc( aSrc ) ) {
         impl.error = {
           name: "MediaError",
@@ -356,7 +356,7 @@
 
       // Make sure YouTube is ready, and if not, register a callback
       if( !isYouTubeReady() ) {
-        addYouTubeCallback( function() { changeSrc( aSrc ); } );
+        addYouTubeCallback( function() { changeSrc( {aSrc, savedDuration} ); } );
         return;
       }
 
@@ -417,6 +417,16 @@
         var warning = "failed to retreive duration data, reason: ";
         if ( resp.error ) {
           console.warn( warning + resp.error.message );
+          if(savedDuration){
+            impl.duration = savedDuration
+            self.dispatchEvent( "durationchange" );
+            durationReady = true;
+
+            // First play happened first, we're now ready.
+            if ( firstPlay ) {
+              onFirstPlay();
+            } 
+          }
           return ;
         } else if ( !resp.items || resp.items.length ==0 ) {
           console.warn( warning + "no response data" );
@@ -661,9 +671,9 @@
         get: function() {
           return impl.src;
         },
-        set: function( aSrc ) {
+        set: function( {aSrc,savedDuration}) {
           if( aSrc && aSrc !== impl.src ) {
-            changeSrc( aSrc );
+            changeSrc( {aSrc,savedDuration} );
           }
         }
       },

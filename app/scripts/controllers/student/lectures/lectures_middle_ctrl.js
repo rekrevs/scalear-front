@@ -474,7 +474,8 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onReady = function(close_student) {
       $scope.slow = false
-      $scope.total_duration = $scope.lecture_player.controls.getDuration()
+      console.log($scope)
+      $scope.total_duration = $scope.lecture.duration//$scope.lecture_player.controls.getDuration()
       $scope.lecture_player.controls.removeAllTrackEvents()
 
       var duration_milestones = [0]
@@ -794,9 +795,13 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $log.debug("youtube is")
-      $log.debug(is_youtube)
+      $log.debug(is_youtube) 
+      console.log('slow')
       $scope.is_youtube = is_youtube
       $scope.slow = true
+      setTimeout(() => {
+        $scope.lecture_player.events.onReady(true)
+      }, 200);
     }
 
     $scope.lecture_player.events.canPlay = function() {

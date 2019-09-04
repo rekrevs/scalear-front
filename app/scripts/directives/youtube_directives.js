@@ -56,10 +56,10 @@ angular.module('scalearAngularApp')
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           $log.debug("youtube")
           player = Popcorn(video);
-          console.log("<<<<<<<<<<<<<<youtube directive",scope)
           var aSrc = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
           var savedDuration = scope.end - scope.start
-          video.src = {aSrc,savedDuration} 
+          video.src = aSrc 
+          video.duration = savedDuration
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           var vimeo_options = {
@@ -374,7 +374,7 @@ angular.module('scalearAngularApp')
 
       var setupEvents = function () {
         player.on("loadeddata",
-          function () { console.log("player_events.onReady---------->",player_events.onReady)
+          function () { 
             $log.debug("Video data loaded and ready")
             if ($rootScope.is_mobile)
               player.controls(false);
@@ -414,7 +414,7 @@ angular.module('scalearAngularApp')
             }
           });
 
-        player.on('loadedmetadata', function() { console.log('loadedmetadata')
+        player.on('loadedmetadata', function() { 
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();
@@ -468,7 +468,7 @@ angular.module('scalearAngularApp')
             scope.$apply();
           }
         })
-        scope.slow_off = scope.$on('slow', function(ev, data) { console.log('low off',data)
+        scope.slow_off = scope.$on('slow', function(ev, data) { 
           parent.focus()
           if (player_events.onSlow) {
             player_events.onSlow(data);

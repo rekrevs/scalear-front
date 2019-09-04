@@ -341,7 +341,7 @@
       }
     }
 
-    function changeSrc( {aSrc, savedDuration} ) {
+    function changeSrc( aSrc ) {
       if( !self._canPlaySrc( aSrc ) ) {
         impl.error = {
           name: "MediaError",
@@ -356,7 +356,7 @@
 
       // Make sure YouTube is ready, and if not, register a callback
       if( !isYouTubeReady() ) {
-        addYouTubeCallback( function() { changeSrc( {aSrc, savedDuration} ); } );
+        addYouTubeCallback( function() { changeSrc( aSrc ) } );
         return;
       }
 
@@ -417,8 +417,7 @@
         var warning = "failed to retreive duration data, reason: ";
         if ( resp.error ) {
           console.warn( warning + resp.error.message );
-          if(savedDuration){
-            impl.duration = savedDuration
+          if(impl.duration ){
             self.dispatchEvent( "durationchange" );
             durationReady = true;
 
@@ -671,9 +670,9 @@
         get: function() {
           return impl.src;
         },
-        set: function( {aSrc,savedDuration}) {
-          if( aSrc && aSrc !== impl.src ) {
-            changeSrc( {aSrc,savedDuration} );
+        set: function ( aSrc) {
+          if (aSrc && aSrc !== impl.src) {
+            changeSrc(aSrc)
           }
         }
       },
@@ -720,7 +719,10 @@
       duration: {
         get: function() {
           return impl.duration;
-        }
+        } ,
+        set: function(aValue){
+          impl.duration = aValue
+        } 
       },
 
       ended: {

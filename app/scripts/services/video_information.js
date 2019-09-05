@@ -21,9 +21,6 @@ angular.module('scalearAngularApp')
     }
 
     service.requestInfoFromYoutube = function (id, lecture_id, request_for) {
-      console.log("current_user_id-->", $rootScope.current_user.id)
-      console.log("lecture_id-->", lecture_id)
-      console.log('retrieve status,contentDetails,snippet to get:', request_for)
       YTapiReqLog.registerRequest($rootScope.current_user.id , lecture_id,request_for)
       var deferred = $q.defer();
       var url = generateYoutubeApiVideoUrl(id)

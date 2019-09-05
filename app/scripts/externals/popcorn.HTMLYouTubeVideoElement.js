@@ -418,7 +418,6 @@
       Popcorn.getJSONP( xhrURL, function( resp ) {
         impl.info['cause'] = 'duration'
         impl.regYtDataApiReq(impl.info['user_id'],impl.info['lecture_id'],impl.info['cause'])
-        console.log('hello!',impl.info,impl.regYtDataApiReq)
         var warning = "failed to retreive duration data, reason: ";
         if ( resp.error ) {
           console.warn( warning + resp.error.message );

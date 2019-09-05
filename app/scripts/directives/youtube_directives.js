@@ -61,7 +61,6 @@ angular.module('scalearAngularApp')
           var savedDuration = scope.end - scope.start
           video.src = aSrc 
           video.duration = savedDuration
-          console.log('$rootScope',scope.lectureId)
           video.regYtDataApiReq = YTapiReqLog.registerRequest
           video.info = {user_id:$rootScope.current_user.id,lecture_id:scope.lectureId}
           $log.debug(video.src)

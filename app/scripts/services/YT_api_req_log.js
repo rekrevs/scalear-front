@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 
     }]).factory("YTapiReqLog", ['YTapiReqLogUtils', function (YTapiReqLogUtils) {
         var service = {}
-        service.registerRequest = function (user_id, lec_id, cause) { console.log("<<<<<<<<<<<<<<here!")
+        service.registerRequest = function (user_id, lec_id, cause) { 
             return YTapiReqLogUtils.registerYtApiRequest({
                 user_id: user_id,
                 lecture_id: lec_id,

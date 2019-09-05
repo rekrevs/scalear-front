@@ -61,6 +61,8 @@
       parent = typeof id === "string" ? document.querySelector( id ) : id,
       elem = document.createElement( "div" ),
       impl = {
+        info:{user_id:0,lecture_id:0},
+        regYtDataApiReq:function(){},
         src: EMPTY_STRING,
         networkState: self.NETWORK_EMPTY,
         readyState: self.HAVE_NOTHING,
@@ -414,6 +416,9 @@
       // Get duration value.
 
       Popcorn.getJSONP( xhrURL, function( resp ) {
+        impl.info['cause'] = 'duration'
+        impl.regYtDataApiReq(impl.info['user_id'],impl.info['lecture_id'],impl.info['cause'])
+        console.log('hello!',impl.info,impl.regYtDataApiReq)
         var warning = "failed to retreive duration data, reason: ";
         if ( resp.error ) {
           console.warn( warning + resp.error.message );
@@ -666,6 +671,16 @@
     }
 
     Object.defineProperties( self, {
+      info:{
+        set: function(info){
+          impl.info = info
+        }
+      },
+      regYtDataApiReq:{
+        set: function(f){
+          impl.regYtDataApiReq = f
+        }
+      },
       src: {
         get: function() {
           return impl.src;

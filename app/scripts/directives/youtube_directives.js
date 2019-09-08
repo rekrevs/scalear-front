@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     restrict: "E",
     template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid"
   };
-}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', 'ScalearUtils', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation, ScalearUtils) {
+}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', 'ScalearUtils', 'YTapiReqLog',function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation, ScalearUtils,YTapiReqLog) {
   return {
     transclude: true,
     restrict: 'E',
@@ -22,7 +22,8 @@ angular.module('scalearAngularApp')
       autoplay: '@',
       controls: '@',
       start: "=",
-      end: "="
+      end: "=",
+      lectureId: "="
     },
     template: "<div><div ng-transclude></div></div>",
     link: function(scope, element) {
@@ -56,7 +57,10 @@ angular.module('scalearAngularApp')
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           $log.debug("youtube")
           player = Popcorn(video);
-          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
+          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end || scope.end, scope.autoplay, scope.controls)
+          video.duration = scope.end - scope.start
+          video.regYtDataApiReq = YTapiReqLog.registerRequest
+          video.info = { user_id: $rootScope.current_user.id, lecture_id: scope.lectureId }
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           var vimeo_options = {

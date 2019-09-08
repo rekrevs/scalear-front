@@ -414,38 +414,41 @@
       // var xhrURL = "https://gdata.youtube.com/feeds/api/videos/" + aSrc + "?v=2&alt=jsonc&callback=?";
       var xhrURL = "https://www.googleapis.com/youtube/v3/videos?id=" + aSrc + "&part=contentDetails&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&fields=items(contentDetails(duration))"
       // Get duration value.
-
-      Popcorn.getJSONP( xhrURL, function( resp ) {
-        impl.info['cause'] = 'duration'
-        impl.regYtDataApiReq(impl.info['user_id'],impl.info['lecture_id'],impl.info['cause'])
-        var warning = "failed to retreive duration data, reason: ";
-        if ( resp.error ) {
-          console.warn( warning + resp.error.message );
-          if(impl.duration ){
-            self.dispatchEvent( "durationchange" );
-            durationReady = true;
-
-            // First play happened first, we're now ready.
-            if ( firstPlay ) {
-              onFirstPlay();
-            } 
-          }
-          return ;
-        } else if ( !resp.items || resp.items.length ==0 ) {
-          console.warn( warning + "no response data" );
-          return;
-        }
-
-        var duration = parseDuration(resp.items[0].contentDetails.duration)
-        impl.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//resp.data.duration;
+      if(impl.duration ){ //Loading video for student or not first time for teacher. Video duration previously retrieved.  
         self.dispatchEvent( "durationchange" );
         durationReady = true;
-
+        console.warn('duration retreived from SL')
         // First play happened first, we're now ready.
         if ( firstPlay ) {
           onFirstPlay();
-        }
-      });
+        } 
+      } else {
+        Popcorn.getJSONP( xhrURL, function( resp ) {//Loading Video for teacher at first time.
+         
+          impl.info['cause'] = 'duration'
+          impl.regYtDataApiReq(impl.info['user_id'],impl.info['lecture_id'],impl.info['cause'])
+          var warning = "failed to retreive duration data, reason: ";
+          if ( resp.error ) {
+            console.warn( warning + resp.error.message );
+            return ;
+          } else if ( !resp.items || resp.items.length ==0 ) {
+            console.warn( warning + "no response data" );
+            return;
+          }
+  
+          var duration = parseDuration(resp.items[0].contentDetails.duration)
+          impl.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//resp.data.duration;
+          self.dispatchEvent( "durationchange" );
+          durationReady = true;
+          console.warn('duration retreived from YT')
+
+          // First play happened first, we're now ready.
+          if ( firstPlay ) {
+            onFirstPlay();
+          }
+        });
+      }
+     
 
       player = new YT.Player( elem, {
         width: "100%",

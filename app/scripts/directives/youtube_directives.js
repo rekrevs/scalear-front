@@ -62,6 +62,8 @@ angular.module('scalearAngularApp')
           video.src = aSrc 
           video.duration = savedDuration
           video.regYtDataApiReq = YTapiReqLog.registerRequest
+          console.log('saved duration:',savedDuration)
+          console.log(scope)
           video.info = {user_id:$rootScope.current_user.id,lecture_id:scope.lectureId}
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {

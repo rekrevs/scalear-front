@@ -474,7 +474,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onReady = function(close_student) {
       $scope.slow = false
-      $scope.total_duration = $scope.lecture.duration//$scope.lecture_player.controls.getDuration()
+      $scope.total_duration = $scope.lecture_player.controls.getDuration()
       $scope.lecture_player.controls.removeAllTrackEvents()
 
       var duration_milestones = [0]

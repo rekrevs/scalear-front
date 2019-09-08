@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('VideoInformation', ['$http', '$q', '$interval','$rootScope','YTapiReqLog', function($http, $q, $interval,$rootScope,YTapiReqLog) {
+  .factory('VideoInformation', ['$http', '$q', '$interval', '$rootScope', 'YTapiReqLog', function ($http, $q, $interval, $rootScope, YTapiReqLog) {
 
     var service = {
       youtube_video_information: {},

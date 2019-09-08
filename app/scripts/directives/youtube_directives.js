@@ -57,8 +57,8 @@ angular.module('scalearAngularApp')
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           $log.debug("youtube")
           player = Popcorn(video);
-          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end || scope.end, scope.autoplay, scope.controls)
           video.duration = scope.end - scope.start
+          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end || scope.end, scope.autoplay, scope.controls)
           video.regYtDataApiReq = YTapiReqLog.registerRequest
           video.info = { user_id: $rootScope.current_user.id, lecture_id: scope.lectureId }
           $log.debug(video.src)

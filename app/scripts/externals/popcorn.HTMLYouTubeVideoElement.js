@@ -61,8 +61,8 @@
       parent = typeof id === "string" ? document.querySelector( id ) : id,
       elem = document.createElement( "div" ),
       impl = {
-        info:{user_id:0,lecture_id:0},
-        regYtDataApiReq:function(){},
+        info: { user_id: 0, lecture_id: 0 },
+        regYtDataApiReq: function () { },
         src: EMPTY_STRING,
         networkState: self.NETWORK_EMPTY,
         readyState: self.HAVE_NOTHING,
@@ -358,7 +358,7 @@
 
       // Make sure YouTube is ready, and if not, register a callback
       if( !isYouTubeReady() ) {
-        addYouTubeCallback( function() { changeSrc( aSrc ) } );
+        addYouTubeCallback( function() { changeSrc( aSrc ); } );
         return;
       }
 

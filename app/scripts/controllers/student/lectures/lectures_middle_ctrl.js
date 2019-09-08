@@ -794,7 +794,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow = function(is_youtube) {
       $log.debug("youtube is")
-      $log.debug(is_youtube) 
+      $log.debug(is_youtube)
       $scope.is_youtube = is_youtube
       $scope.slow = true
     }

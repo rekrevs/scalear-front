@@ -57,14 +57,10 @@ angular.module('scalearAngularApp')
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           $log.debug("youtube")
           player = Popcorn(video);
-          var aSrc = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
-          var savedDuration = scope.end - scope.start
-          video.src = aSrc 
-          video.duration = savedDuration
+          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end || scope.end, scope.autoplay, scope.controls)
+          video.duration = scope.end - scope.start
           video.regYtDataApiReq = YTapiReqLog.registerRequest
-          console.log('saved duration:',savedDuration)
-          console.log(scope)
-          video.info = {user_id:$rootScope.current_user.id,lecture_id:scope.lectureId}
+          video.info = { user_id: $rootScope.current_user.id, lecture_id: scope.lectureId }
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           var vimeo_options = {
@@ -379,7 +375,7 @@ angular.module('scalearAngularApp')
 
       var setupEvents = function () {
         player.on("loadeddata",
-          function () { 
+          function () {
             $log.debug("Video data loaded and ready")
             if ($rootScope.is_mobile)
               player.controls(false);
@@ -419,7 +415,7 @@ angular.module('scalearAngularApp')
             }
           });
 
-        player.on('loadedmetadata', function() { 
+        player.on('loadedmetadata', function() {
           parent.focus()
           if (player_events.onMeta) {
             player_events.onMeta();
@@ -473,7 +469,7 @@ angular.module('scalearAngularApp')
             scope.$apply();
           }
         })
-        scope.slow_off = scope.$on('slow', function(ev, data) { 
+        scope.slow_off = scope.$on('slow', function(ev, data) {
           parent.focus()
           if (player_events.onSlow) {
             player_events.onSlow(data);

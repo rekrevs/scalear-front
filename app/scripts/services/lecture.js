@@ -174,7 +174,7 @@ angular.module('scalearAngularApp')
               if (type) {
                 var id = type[1]
                 VideoInformation.emptyCachedInfo()
-                VideoInformation.requestInfoFromYoutube(id, lecture.id, 'info:status')
+                VideoInformation.requestInfoFromYoutube(id, lecture.id, 'info: status')
                   .then(function (data) {
                     if (data.items.length > 0) {
                       if (data.items[0].status.uploadStatus === "processed") {

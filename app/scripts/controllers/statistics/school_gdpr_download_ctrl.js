@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
         $rootScope.subheader_message = 'GDPR'
         var admin_email;
         $scope.email_sent = false;
-        $scope.student_email = 'x';
+        $scope.student_email = '';
 
         UserSession.getCurrentUser()
             .then(function (user) {
@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
                     angular.element('#send_gdpr')[0].textContent = 'send'
                 }, 3000);
                 $scope.student_email = "";
-                
+
                 if (data.not_found_students) {
                     $scope.unfound_accounts = data.not_found_students.toString();
                     angular.element('#send_gdpr')[0].textContent = 'send'

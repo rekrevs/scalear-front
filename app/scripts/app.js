@@ -348,6 +348,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/statistics/school_statistics.html',
           controller: 'schoolStatisticsCtrl'
         })
+        .state('school_gdpr_download', {
+            url: '/school_gdpr_download',
+            templateUrl: '/views/statistics/school_gdpr_download.html',
+            controller: 'schoolGdprDownloadCtrl'
+        }) 
         .state('welcome_message', {
           url: '/welcome_message',
           templateUrl: '/views/welcome_message.html',

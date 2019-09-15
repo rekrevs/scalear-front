@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="styles/teacher/statistics.css" />
+<div class="admin-dates">
+    <span translate>Students email:</span>
+    <span>
+      <input name="emails" type="text" ng-model="student_email" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 25%;" />
+      <button id ='send_gdpr' ng-click="sendStudentsGdpr()" class="button medium dark-green"><span translate>send</span></button>
+    </span>
+    <span ng-show='email_sent'>
+       <div>These accounts don't exist: {{unfound_accounts}}</div> 
+    </span>
+</div>

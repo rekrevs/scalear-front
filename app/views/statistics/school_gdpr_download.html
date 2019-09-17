@@ -1,11 +1,13 @@
 <link rel="stylesheet" href="styles/teacher/statistics.css" />
 <div class="admin-dates">
-    <span translate>Students email:</span>
+    <div>To download the information as an administrator, enter the email addresses of the users (students or teachers) here. An email with the archived user information will then be sent to the email account associated with your administrator account.</div>
+    </br>
+    <span translate>Emails (comma separated):</span>
     <span>
       <input name="emails" type="text" ng-model="student_email" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 25%;" />
       <button id ='send_gdpr' ng-click="sendStudentsGdpr()" class="button medium dark-green"><span translate>send</span></button>
     </span>
-    <span ng-show='email_sent'>
-       <div>These accounts don't exist: {{unfound_accounts}}</div> 
+    <span >
+       <div  id='unprocessable_students' ng-show="unprocessable_students">These accounts don't exist or out of your domain: {{unprocessable_students}}</div> 
     </span>
 </div>

@@ -1201,6 +1201,7 @@ var translation_en={
     unprocessable_account:"These accounts don't exist or out of your domain:",
     download:"GDPR Download",
     checking_out:"Checking out!",
+    email_sent:"email sent"
   },
   languages:{
     languages:"Languages",

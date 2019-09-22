@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
                     }, 3000);
 
                 } else if (data.unprocessable_students && data.processable_students) {
-                    angular.element('#send_gdpr')[0].textContent = $translate.instant('email_sent')
+                    angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.email_sent')
                     $scope.unprocessable_students = data.unprocessable_students.toString();
 
                     setTimeout(() => {
@@ -45,7 +45,7 @@ angular.module('scalearAngularApp')
                     }, 3000);
 
                 } else {
-                    angular.element('#send_gdpr')[0].textContent = $translate.instant('email_sent')
+                    angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.email_sent')
 
                     setTimeout(() => {
                         angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.send_email')

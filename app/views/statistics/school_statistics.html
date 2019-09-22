@@ -29,7 +29,7 @@
     <small class="error with-tiny-padding" style="display: inline;" ng-show="errors.end_date">{{errors.end_date}}</small>
   </span>
   <button ng-click="showStatistics()" ng-disabled="loading" class="button medium dark-green"><span translate>statistics.generate_report</span></button>
-  <button ng-click="showYoutubePrivacyStatus()" ng-disabled="loading" class="button medium dark-green" ng-show="current_user.roles.includes(5)"><span translate>statistics.generate_youtube_privacy_status_report</span></button>
+  <!-- <button ng-click="showYoutubePrivacyStatus()" ng-disabled="loading" class="button medium dark-green" ng-show="current_user.roles.includes(5)"><span translate>statistics.generate_youtube_privacy_status_report</span></button> -->
   <div ng-show="show_YTstatistics_loading">
       <span>loading</span> 
       <img style="width:4%;" src="./images/dots.gif"> 

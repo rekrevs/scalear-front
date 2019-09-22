@@ -1,5 +1,5 @@
 angular.module('scalearAngularApp')
-    .controller('schoolGdprDownloadCtrl', ['$scope', '$rootScope', 'UserSession', 'User', 'Page', function ($scope, $rootScope, UserSession, User, Page) {
+    .controller('schoolGdprDownloadCtrl', ['$scope', '$rootScope', 'UserSession', 'User', 'Page','$translate', function ($scope, $rootScope, UserSession, User, Page, $translate) {
 
         Page.setTitle('GDPR');
         $rootScope.subheader_message = 'GDPR'
@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
             })
 
         $scope.sendStudentsGdpr = function () {
-            angular.element('#send_gdpr')[0].textContent = 'Checking out!'
+            angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.checking_out')
             angular.element('#send_gdpr')[0].disabled = true
 
             User.sendStudentActivityFile({
@@ -24,8 +24,7 @@ angular.module('scalearAngularApp')
                 $scope.student_email = ""
 
                 if (data.unprocessable_students && !data.processable_students) {
-                    angular.element('#send_gdpr')[0].textContent = 'send'
-                    
+                    angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.send_email')
                     $scope.unprocessable_students = data.unprocessable_students.toString();
 
                     setTimeout(() => {
@@ -35,21 +34,21 @@ angular.module('scalearAngularApp')
                     }, 3000);
 
                 } else if (data.unprocessable_students && data.processable_students) {
-                    angular.element('#send_gdpr')[0].textContent = 'email sent'
+                    angular.element('#send_gdpr')[0].textContent = $translate.instant('email_sent')
                     $scope.unprocessable_students = data.unprocessable_students.toString();
 
                     setTimeout(() => {
                         angular.element('#unprocessable_students').hide()
                         angular.element('#send_gdpr')[0].disabled = false
-                        angular.element('#send_gdpr')[0].textContent = 'send'
+                        angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.send_email')
                         $scope.unprocessable_students =""
                     }, 3000);
 
                 } else {
-                    angular.element('#send_gdpr')[0].textContent = 'email sent'
+                    angular.element('#send_gdpr')[0].textContent = $translate.instant('email_sent')
 
                     setTimeout(() => {
-                        angular.element('#send_gdpr')[0].textContent = 'send'
+                        angular.element('#send_gdpr')[0].textContent = $translate.instant('gdpr.send_email')
                         angular.element('#send_gdpr')[0].disabled = false
                         $scope.unprocessable_students =""
                     }, 1000);

@@ -1194,6 +1194,14 @@ var translation_en={
       }
     }
   },
+  gdpr:{
+    intro:"To download the information as an administrator, enter the email addresses of the users (students or teachers) here. An email with the archived user information will then be sent to the email account associated with your administrator account.",
+    emails_comma_separated:"Emails (comma separated):",
+    send_email:"Send email with user data",
+    unprocessable_account:"These accounts don't exist or out of your domain:",
+    download:"GDPR Download",
+    checking_out:"Checking out!",
+  },
   languages:{
     languages:"Languages",
     en: 'English',

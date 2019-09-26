@@ -7,6 +7,7 @@ var translation_en={
     empty:"Empty",
     back: "Back",
     pref_language: "Language Preference",
+    activity_data:"Activity data",
     welcome: "Welcome",
     to:"to",
     or: "or",
@@ -132,6 +133,7 @@ var translation_en={
     cancel: "Cancel",
     show: "Show",
     save_changes: "Save Changes",
+    download: "Download all personal data",
     remove: "Remove",
     replay: "Replay",
     retry: "Retry",
@@ -1191,6 +1193,15 @@ var translation_en={
         ocq: "Multiple Choice (one selection)",
       }
     }
+  },
+  gdpr:{
+    intro:"To download the information as an administrator, enter the email addresses of the users (students or teachers) here. An email with the archived user information will then be sent to the email account associated with your administrator account.",
+    emails_comma_separated:"Emails (comma separated):",
+    send_email:"Send email with user data",
+    unprocessable_account:"These accounts don't exist or out of your domain:",
+    download:"GDPR Download",
+    checking_out:"Checking out!",
+    email_sent:"email sent"
   },
   languages:{
     languages:"Languages",

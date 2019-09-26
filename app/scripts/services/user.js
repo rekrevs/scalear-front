@@ -25,8 +25,7 @@ angular.module('scalearAngularApp')
         'submitWelcomeMessage': { method: 'POST', headers: headers , params: {action: 'submit_welcome_message'}},
         'agreeToPrivacyPolicy': { method: 'POST', headers: headers , params: {action: 'agree_to_privacy_policy'}},
         'validateUser': { method: 'POST', headers: headers , params: {action: 'validate_user'}},
-
-
+        'sendStudentActivityFile':{ method: 'GET', headers: headers , params: {action: 'send_user_activity_file'}} 
       });
 
 }]);

@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
         droppedFile:"="
       },
       link: function(scope,element, attr) {
-        scope.is_link=scope.$parent.link == undefined? false:true
+        scope.is_link = scope.$parent.link == undefined ? false : true
         scope.$watch('value', function() {
           var url_is_vimeo = scope.value.includes('vimeo.com')
           scope.text = scope.value == "none"? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   

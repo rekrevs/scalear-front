@@ -486,7 +486,7 @@ module.exports = function(grunt) {
             debug: true,
             ga_token: "",
             host: '',
-            version: '4.4.22 (' + new Date().toUTCString() + ')',
+            version: '4.4.24 (' + new Date().toUTCString() + ')',
             instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.22.pdf',
             flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
             teacher_welcome_video: "https://www.youtube.com/watch?v=tqE7wRQCgmU",

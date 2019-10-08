@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
   }]).directive('detailsUrl', ['$timeout', '$translate','$filter','ScalearUtils','$rootScope' ,'$modal',function($timeout, $translate, $filter,ScalearUtils,$modal,$rootScope) {
     return {
       template: '<a id="inserted_url" ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-textarea="value" e-rows="5" e-cols="100" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class="{video_input_disabled:transcoding}" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>'+
-      "</br><div ng-hide='videoUploaded'><div>or</div>"+
+      "</br><div ng-hide='videoUploaded || is_link'><div>or</div>"+
       "<div id='drop_zone' ng-class='{video_input_disabled:transcoding}' ngf-drop-disabled='transcoding' ngf-drop='showConsentModal($files)'  style='border-style: dashed;font-size: 0.875rem'>Drag video here to upload.</div></div>",
      
       restrict: 'E',
@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
         droppedFile:"="
       },
       link: function(scope,element, attr) {
-       
+        scope.is_link = scope.$parent.link == undefined ? false : true
         scope.$watch('value', function() {
           var url_is_vimeo = scope.value.includes('vimeo.com')
           scope.text = scope.value == "none"? "(" + $translate.instant("editor.details.add_video") + "...)" : scope.value   

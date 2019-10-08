@@ -7,6 +7,7 @@ var translation_sv={
     empty:"Fältet är tomt",
     back: "Tillbaka",
     pref_language: "Språkinställning",
+    activity_data:"aktivitetsdata",
     welcome: "Välkommen",
     to: "till",
     or: "eller",
@@ -130,6 +131,7 @@ var translation_sv={
     cancel: "Avbryt",
     show: "Visa",
     save_changes: "Spara ändringar",
+    download:"ladda ner all personlig information",
     remove: "Ta bort",
     replay: "Spela igen",
     retry: "Försök igen",
@@ -1185,6 +1187,15 @@ var translation_sv={
         ocq: "Flervals (ett korrekt svar)",
       }
     }
+  },
+  gdpr:{
+    intro:"Om du vill ladda ner informationen som administratör anger du e-postadresserna för användarna (elever eller lärare) här. Ett e-postmeddelande med den arkiverade användarinformationen skickas sedan till det e-postkonto som är kopplat till ditt administratörskonto",
+    emails_comma_separated:"E-postmeddelanden (komma separerade)",
+    send_email:"Skicka e-post med användardata",
+    unprocessable_account:"Dessa konton finns inte eller går ut ur din domän:",
+    download:"GDPR ladda ner",
+    checking_out:"Checkar ut!",
+    email_sent:'email skickat'
   },
   languages:{
     languages:"Languages",

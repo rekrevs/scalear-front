@@ -79,9 +79,11 @@ angular.module('scalearAngularApp')
       $scope.container_class = ''
       $scope.passed_requirments = true
       $scope.lecture = null
-      $scope.video_ready = false
-      $scope.show_progressbar = false
 
+      $scope.video_ready = true
+      $scope.show_progressbar = false
+  
+     
       removeShortcuts()
         //  distance peer variables
       $scope.next_stop_time = null

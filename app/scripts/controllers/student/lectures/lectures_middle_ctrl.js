@@ -547,10 +547,11 @@ angular.module('scalearAngularApp')
       })
 
       $scope.video_ready = true
-      if (!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)) {
-        $scope.show_progressbar = true
-      }
       var time = $state.params.time
+      // if (!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)) {
+        $scope.show_progressbar = true
+      // }
+      
       if (time) {
         $timeout(function (argument) {
           $scope.seek(time);

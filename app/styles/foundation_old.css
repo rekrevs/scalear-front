@@ -1087,7 +1087,7 @@ select {
     .small-block-grid-12 > li:nth-of-type(12n+1) {
       clear: both; } }
 
-@media only screen and (min-width:40.063em) {
+@media only screen and (min-width:15.063em) {
   .medium-block-grid-1 > li {
     width: 100%;
     padding: 0 0.625rem 1.25rem;

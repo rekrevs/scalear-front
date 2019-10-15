@@ -89,6 +89,7 @@ angular.module('scalearAngularApp')
           player = Popcorn.smart('#' + scope.id,scope.url) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});    
         } else if (isMediaSite(scope.url)) {
           $log.debug("mediasite")
+          console.log('scope.id',scope.id)
           var video = Popcorn.HTMLMediaSiteVideoElement('#' + scope.id)
           player = Popcorn(video);
           video.src = scope.url

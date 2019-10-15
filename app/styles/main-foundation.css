@@ -3,10 +3,39 @@ body {
   margin:0;
   padding:0;
   height:100%;
+  width:auto;
 }
 #main {
   min-height:100%;
   position:relative;
+
+}
+@media only screen and (max-width:40.063em) {
+  #main {
+    min-height:100%;
+    position:relative;
+  }
+  body {
+    margin:0;
+    padding:0;
+    height:100%;
+    width:95%;
+  }
+  .mob_margin{
+    margin-left: 14px !important;
+    margin-top: 2px !important;
+  }
+  .check_answer_button {
+    font-size: 65% !important;
+    width: 100% !important;
+    top: -2px;
+    left: 80%;
+    padding:1%;
+    align-content: center;
+  }
+  .mob_left {
+    left: 50%;
+  }  
 }
 /*.header {
   padding:10px;
@@ -23,6 +52,7 @@ body {
 .container {
 padding-bottom: 25px;
 padding-top: 45px;
+
 }
 .footer {
   width:100%;
@@ -786,6 +816,7 @@ input[type="checkbox"]{
     height: 14px;
     width: 14px;
 }
+
 
 /*@media only screen and (max-width:40.063em) {
 	.left-navigation{
@@ -1868,9 +1899,10 @@ textarea.editable-input{
 }
 .check_answer_button{
   padding: 0.4rem !important;
-  z-index: 100;
+  /* z-index: 100; */
   height: 35px;
   width: 282px;
+  /* width: 105%; */
 }
 
 .ipad .check_answer_button{

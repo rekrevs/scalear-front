@@ -41,7 +41,7 @@ meta.foundation-data-attribute-namespace {
   font-family: false; }
 
 html, body {
-  height: 100%; }
+  height: 100%; width:auto;}
 
 *,
 *:before,
@@ -1887,7 +1887,7 @@ button::-moz-focus-inner {
       border-color: rgba(255, 255, 255, 0.5); }
     .button-group.stack-for-small > li:first-child button, .button-group.stack-for-small > li:first-child .button {
       border-left: 0; }
-    @media only screen and (max-width: 10em) {
+    @media only screen and (max-width: 40em) {
       .button-group.stack-for-small > li {
         margin: 0 -2px;
         display: inline-block;

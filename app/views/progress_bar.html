@@ -91,8 +91,8 @@
         </span>
         <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
             <span>
-                <span style="float:left;color: rgb(100, 100, 100);" >{{current_time|format:'h:mm:ss'}}</span>
-                <span> / {{ (duration || 0) |format:'h:mm:ss'}}</span>
+                <span style="float:left;color: rgb(100, 100, 100);" >{{ (current_time || 0) |format:'h:mm:ss'}}</span>
+                <span> / {{ (duration || 0) |format:'h:mm:ss'}}</span> 
             </span>
         </div>
     </div>

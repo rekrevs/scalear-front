@@ -550,6 +550,8 @@ angular.module('scalearAngularApp')
       var time = $state.params.time
       // if (!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)) {
         $scope.show_progressbar = true
+        $scope.lecture_player.controls.seek(0)
+       // $scope.lecture_player.controls.pause()
       // }
       
       if (time) {

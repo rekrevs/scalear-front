@@ -3,7 +3,7 @@ body {
   margin:0;
   padding:0;
   height:100%;
-  width:auto;
+  /* width:auto; */
 }
 #main {
   min-height:100%;
@@ -15,11 +15,12 @@ body {
     min-height:100%;
     position:relative;
   }
+
   body {
     margin:0;
     padding:0;
     height:100%;
-    width:95%;
+    width:100%;
   }
   .mob_margin{
     margin-left: 14px !important;

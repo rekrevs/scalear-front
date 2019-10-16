@@ -16,15 +16,11 @@ body {
     position:relative;
   }
 
-  body {
+  html,body {
     margin:0;
     padding:0;
     height:100%;
     width:100%;
-  }
-  .mob_margin{
-    margin-left: 14px !important;
-    margin-top: 2px !important;
   }
   .check_answer_button {
     font-size: 65% !important;

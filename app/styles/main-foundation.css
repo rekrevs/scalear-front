@@ -10,6 +10,7 @@ body {
   position:relative;
 
 }
+
 @media only screen and (max-width:40.063em) {
   #main {
     min-height:100%;
@@ -33,6 +34,27 @@ body {
   .mob_left {
     left: 50%;
   }  
+  #replay_button{
+		padding-top: .875rem;
+    padding-right: 1.75rem;
+    padding-bottom: .9375rem;
+    padding-left: 1.75rem;
+    font-size: .8125rem;
+    width:auto;
+    height:auto;
+    top: 32px;
+    left: -90px;
+	}
+	#next_button{
+		padding-top: .875rem;
+		padding-right: 1.75rem;
+		padding-bottom: .9375rem;
+		padding-left: 1.75rem;
+    font-size: .8125rem;  
+    width:auto;
+    height:auto;
+    top: 32px;
+	}
 }
 /*.header {
   padding:10px;

@@ -868,12 +868,7 @@ angular.module('scalearAngularApp')
         }
 
         $(window).bind('orientationchange', function(event) {
-          if(MobileDetector.isAndroid()){
-            $timeout(orientationchange, 200)
-          }
-          else{
-            orientationchange()
-          }
+          setTimeout(orientationchange, 200)
         })
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }

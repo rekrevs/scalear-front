@@ -39,6 +39,7 @@ angular.module('scalearAngularApp')
         scope.goToCourse = function(course, role) {
           if(course.id != $state.params.course_id){
             $state.go('course', { course_id: course.id })
+            scope.closeMenu()
           }
         }
 

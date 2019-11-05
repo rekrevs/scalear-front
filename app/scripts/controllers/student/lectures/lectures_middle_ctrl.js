@@ -1115,7 +1115,8 @@ angular.module('scalearAngularApp')
         if ($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.solved_quiz = true;
           if ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey' && ($scope.selected_quiz.quiz_type != 'html' && $scope.selected_quiz.question_type.toUpperCase() !== 'FREE TEXT QUESTION'))
-            var sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+            console.log("--------------------",$rootScope.is_tablet)
+            var sub_message = ($rootScope.is_mobile || $rootScope.is_tablet) ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
             // $scope.explanation[] = data.explanation[]
             middle_msg = "lectures.messages.press_to_continue"
@@ -1136,7 +1137,8 @@ angular.module('scalearAngularApp')
             if ($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
               middle_msg = 'lectures.multiple_correct'
           }
-          sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          console.log('$rootScope',$rootScope)
+          sub_message = ($rootScope.is_mobile || $rootScope.is_tablet )? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
             middle_msg = "lectures.messages.press_to_continue"
             sub_message = ''

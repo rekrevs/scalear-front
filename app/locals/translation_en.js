@@ -181,8 +181,10 @@ var translation_en={
     administration: "Administration",
     add_teacher: "Add Teacher/TA",
     student_list: "Student List",
-    join_course: "Join a new course (student)",
-    new_course: "Create a new course (teacher)",
+    student_heading: "Student",
+    join_course: "Join a New Course",
+    teacher_heading:"Teacher",
+    new_course: "Create a New Course",
     review: "Review",
     welcome_message: "Welcome Message",
     register:{

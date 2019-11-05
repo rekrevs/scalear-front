@@ -77,11 +77,15 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
             </li>
+            <li class="divider border-grey medium-opacity"></li>    
+            <li>
+            <span class="lighter-grey list-subheader" translate>navigation.student_heading</span>
+            <a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()"
+              translate>navigation.join_course</a>
+            </li>
             <li class="divider border-grey medium-opacity"></li>
             <li>
-            <a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>navigation.join_course</a>
-            </li>
-            <li>
+              <span class="lighter-grey list-subheader" translate>navigation.teacher_heading</span> 
               <a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>navigation.new_course</a>
             </li>
             <li ng-show="areShared()">

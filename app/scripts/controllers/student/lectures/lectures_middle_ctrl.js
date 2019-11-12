@@ -1137,7 +1137,6 @@ angular.module('scalearAngularApp')
             if ($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
               middle_msg = 'lectures.multiple_correct'
           }
-          console.log('$rootScope',$rootScope)
           sub_message = ($rootScope.is_mobile || $rootScope.is_tablet )? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
             middle_msg = "lectures.messages.press_to_continue"

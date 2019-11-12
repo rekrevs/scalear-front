@@ -1115,7 +1115,6 @@ angular.module('scalearAngularApp')
         if ($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.solved_quiz = true;
           if ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey' && ($scope.selected_quiz.quiz_type != 'html' && $scope.selected_quiz.question_type.toUpperCase() !== 'FREE TEXT QUESTION'))
-            console.log("--------------------",$rootScope.is_tablet)
             var sub_message = ($rootScope.is_mobile || $rootScope.is_tablet) ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
             // $scope.explanation[] = data.explanation[]

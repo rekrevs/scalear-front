@@ -446,7 +446,7 @@ var translation_en={
     policy_changes: "Privacy policy changes",
     policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Any significant changes in the privacy policy will be sent by email to all active accounts. Changes to the privacy policy take effect when posted here.",
     policy_agree: "I agree to the ScalableLearning Privacy Policy and I consent to allow ScalableLearning to Process my data.",
-    last_update: "Last update: May-2018",
+    last_update: "Last update: Nov-2019",
     agree: "Agree",
     cancel: "Cancel",
   },

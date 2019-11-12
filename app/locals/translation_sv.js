@@ -440,7 +440,7 @@ var translation_sv={
     policy_changes: "Ändringar av användningsvillkor",
     policy_changes_details: "De nuvarande användningsvillkoren kommer alltid att finnas på den här sidan och vi uppmanar dig att besöka den här sidan för att granska ändringar. Eventuella väsentliga ändringar skickas via e-post till alla aktiva konton. Ändringar träder i kraft när de publiceras här.",
     policy_agree: "Jag godkänner Privacy Policy för ScalableLearning och jag godkänner att ScalableLearning kan behandla mina data",
-    last_update: "Senast uppdaterad: Maj-2018",
+    last_update: "Senast uppdaterad: Mov-2019",
     agree: "hålla med",
     cancel: "annullera",
   },

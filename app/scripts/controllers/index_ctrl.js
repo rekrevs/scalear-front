@@ -14,8 +14,8 @@ angular.module('scalearAngularApp')
     $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
     $rootScope.is_mobile = MobileDetector.isMobile()
-    $rootScope.is_tablet = MobileDetector.isTablet()
-
+    $rootScope.is_ipad = MobileDetector.isiPad()
+    
     $scope.$on('content_navigator_change', function(ev, status) {
       if(!status) {
         $scope.cancelDelay = $timeout(function() {

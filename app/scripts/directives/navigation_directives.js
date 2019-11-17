@@ -261,7 +261,7 @@ angular.module('scalearAngularApp')
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
             if (MobileDetector.isPhone() || MobileDetector.isiPhone()) {
-              setTimeout(function () { console.log('before close naviagot')
+              setTimeout(function () { 
                 ContentNavigator.close()
               }
                 , 3000)

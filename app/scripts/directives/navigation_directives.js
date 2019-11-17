@@ -260,11 +260,11 @@ angular.module('scalearAngularApp')
             $log.debug(item)
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
-            if(MobileDetector.isPhone()){
-              setTimeout(function(){
-                console.log('before close')
-                ContentNavigator.close()}
-              ,3000)
+            if (MobileDetector.isPhone() || MobileDetector.isiPhone()) {
+              setTimeout(function () { console.log('before close naviagot')
+                ContentNavigator.close()
+              }
+                , 3000)
             }
             $state.go('course.module.' + mode + '.' + item_type, params)
             if(!(mode == 'courseware' && item_type == 'customlink')) {

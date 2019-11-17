@@ -160,7 +160,7 @@ var translation_en={
     dashboard: "Dashboard",
     settings: "Settings",
     account: "Account",
-    show_all_courses: "Show all courses",
+    show_all_courses: "Show All Courses",
     copied_from: "Copied From",
     description:{
       settings_description: "Modify your account information/settings",

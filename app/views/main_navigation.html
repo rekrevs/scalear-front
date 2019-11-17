@@ -64,7 +64,6 @@
         <li has-dropdown>
           <a class="white-with-hover color-gray-hover size-16-light" id="all_courses" ng-class="{'nav-item-active':('course.**' | includedByState) || ('course_list' | includedByState)}" ng-show="user.intro_watched && user.info_complete" translate>navigation.courses</a>
           <ul id='menu_my_courses' class="lighter-grey-no-hover scrollable-if-tall" top-bar-dropdown>
-            <a ng-click="goToCourse({id:11}, 1) ;closeMenu()">ayhabal</a>
             <li ng-repeat="course in student_courses">
               <a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ng-click="goToCourse(course, 2)">
 								{{course.short_name}}

@@ -90,7 +90,7 @@ angular.module('scalearAngularApp')
         isMobile: function() { return devices.any; },
         isPhone: function() { return devices.phone; },
         isTablet: function() { return devices.tablet; },
-        isiPhone: function() { return devices.apple.iphone || devices.apple.ipod; },
+        isiPhone: function() { return devices.apple.phone || devices.apple.ipod; },
         isiPad: function() { return devices.apple.tablet; },
         isAndroidPhone: function() { return devices.android.phone; },
         isAndroidTablet: function() { return devices.android.tablet; },

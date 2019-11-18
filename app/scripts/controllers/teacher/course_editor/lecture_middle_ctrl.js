@@ -14,7 +14,6 @@ angular.module('scalearAngularApp')
     $scope.vimeo_video_id = 0
     $scope.transcoding = false
   
-    alert(' $rootScope.is_ios :', $rootScope.is_ios)
     if (isVimeo) {
       VimeoModel.getVimeoUploadingStatus($scope.lecture.id)
         .then(function (status) {

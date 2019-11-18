@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', function($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation,VimeoModel) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', 'MobileDetector', function ($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation, VimeoModel, MobileDetector) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -13,7 +13,8 @@ angular.module('scalearAngularApp')
 
     $scope.vimeo_video_id = 0
     $scope.transcoding = false
-    
+  
+    alert(' $rootScope.is_ios :', $rootScope.is_ios)
     if (isVimeo) {
       VimeoModel.getVimeoUploadingStatus($scope.lecture.id)
         .then(function (status) {
@@ -222,9 +223,9 @@ angular.module('scalearAngularApp')
       $scope.quiz_layer.overflowY = ''
     }
 
-
-    $scope.addDoubleClickBind = function(event) {
+    $scope.addDoubleClickBind = function(event) { 
       if ($scope.editing_mode && $scope.editing_type == 'quiz' && !$scope.selected_quiz.hide_quiz_answers && !$scope.selected_quiz.isFreeTextVideoQuiz()) {
+   
         var answer_width, answer_height,
           answer_text = "Answer " + ($scope.selected_quiz.answers.length + 1)
 
@@ -235,6 +236,7 @@ angular.module('scalearAngularApp')
           answer_width = 13
           answer_height = 13
         }
+
         var element = angular.element(event.target);
         if (element.attr('id') == "ontop") {
           var left = event.pageX - element.offset().left - 6 //event.offsetX - 6

@@ -106,11 +106,14 @@ angular.module('scalearAngularApp')
         }
         setupEvents()
         parent.focus()
-        scope.timeout_promise = $interval(function() {
-          if (player_controls.readyState() == 0 && !$rootScope.is_mobile){
+      
+        scope.timeout_promise = $interval(function () { 
+          if (player_controls.readyState() == 0 && !$rootScope.is_mobile) {
             scope.$emit('slow', isYoutube(scope.url))
           }
         }, 15000, 1)
+       
+          
       }
 
       var addCallback = function (callback){
@@ -204,7 +207,7 @@ angular.module('scalearAngularApp')
       }
 
       player_controls.readyState = function() {
-        return player.readyState()
+          return player.readyState()
       }
 
       player_controls.seek = function(time) {
@@ -1128,8 +1131,8 @@ angular.module('scalearAngularApp')
             scope.volume_class = "unmute";
         }
       });
-
-
+    
+     
       player.on('timeupdate', function() {
 
         if (onplayhead == false && scope.editing != 'video') {

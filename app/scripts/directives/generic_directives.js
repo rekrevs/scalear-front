@@ -309,37 +309,34 @@ angular.module('scalearAngularApp')
         }
       });
     };
-  }).directive('iosDblclick',
-  function () { 
-
-      const DblClickInterval = 300; //milliseconds
-
-      var firstClickTime;
-      var waitingSecondClick = false;
-
-      return {
+  }).directive('iosDblclick', ['MobileDetector',
+    function (MobileDetector) {
+      var is_ios = MobileDetector.isiPhone() || MobileDetector.isiPad()
+      if (is_ios) {
+        const DblClickInterval = 300; //milliseconds
+        var firstClickTime;
+        var waitingSecondClick = false;
+        return {
           restrict: 'A',
           link: function (scope, element, attrs) {
-              element.bind('click', function (e) {
-                 
-                  if (!waitingSecondClick) {
-                      firstClickTime = (new Date()).getTime();
-                      waitingSecondClick = true;
-
-                      setTimeout(function () {
-                          waitingSecondClick = false;
-                      }, DblClickInterval);
-                  }
-                  else {
-                      waitingSecondClick = false;
-
-                      var time = (new Date()).getTime();
-                      if (time - firstClickTime < DblClickInterval) {
-                          scope.$event = e
-                          scope.$apply(attrs.iosDblclick);
-                      }
-                  }
-              });
+            element.bind('click', function (e) {
+              if (!waitingSecondClick) {
+                firstClickTime = (new Date()).getTime();
+                waitingSecondClick = true;
+                setTimeout(function () {
+                  waitingSecondClick = false;
+                }, DblClickInterval);
+              }
+              else {
+                waitingSecondClick = false;
+                var time = (new Date()).getTime();
+                if (time - firstClickTime < DblClickInterval) {
+                  scope.$event = e
+                  scope.$apply(attrs.iosDblclick);
+                }
+              }
+            });
           }
-      };
-  });
+        };
+      }
+  }]);

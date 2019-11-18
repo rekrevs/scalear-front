@@ -28,7 +28,7 @@
 			<center>
 				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12" ng-hide="lecture.url=='none'" >
 					<youtube lecture_id="lecture.id"  id="lecture_video"  ng-style="video_layer" ng-class="{'show_video':!transcoding,'hide_video':transcoding}" url="lecture.url" player="lecture_player" start="lecture.start_time" end="lecture.end_time" class="flex-video widescreen" style="overflow:visible">
-						<quiz ng-show="selected_quiz || selected_marker" ios-dblclick="is_ios?addDoubleClickBind($event):''" ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
+						<quiz ng-show="selected_quiz || selected_marker" ios-dblclick="addDoubleClickBind($event)" ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
 								<span ng-show="slow">

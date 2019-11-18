@@ -304,7 +304,6 @@
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
-      console.log(self)
     }
 
     function monitorCurrentTime() {

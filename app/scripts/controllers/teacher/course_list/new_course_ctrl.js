@@ -18,8 +18,7 @@ angular.module('scalearAngularApp')
     $scope.selected_course = null;
     $scope.selected_course_description = null;
     $scope.selected_course_prerequists = null;
-    $scope.is_ios = true//MobileDetector.isTablet() || MobileDetector.isiPhone()
-    
+
     CourseModel.getUserOtherCourses().then(function (data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
@@ -192,30 +191,13 @@ angular.module('scalearAngularApp')
           $scope.submitting = false;
       })
     }
-    $scope.myFunction = function (){
-      document.getElementById("myDropdown").classList.toggle("show");
-    } 
+
     $scope.showConfirm = function() {
      // Appending dialog to document.body to cover sidenav in docs app
      $modal.open({
        templateUrl: '/views/teacher/course_list/copy_from_course.html',
        scope: $scope,
        controller: ['$scope', '$modalInstance', function($scope, $modalInstance){
-        $scope.myFunction = function (){
-          document.getElementById("myDropdown").classList.toggle("show");
-        } 
-        window.onclick = function(event) {
-          if (!event.target.matches('.dropbtn')) {
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-              var openDropdown = dropdowns[i];
-              if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-              }
-            }
-          }
-        }
          $scope.close = function () {
            $scope.import_from = $scope.selected_course
 

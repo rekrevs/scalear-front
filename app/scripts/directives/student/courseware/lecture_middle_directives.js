@@ -511,7 +511,7 @@ angular
               scope.explanation_pop = {
                 title:
                   "<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
-                content: "<div style='{z-index:100;}' ng-bind-html='explanation[quiz.id]'></div>",
+                content: "<div ng-bind-html='explanation[quiz.id]'></div>",
                 html: true,
                 trigger: $rootScope.is_mobile ? "click" : "hover",
                 placement: scope.data.xcoor > 0.5 ? "left" : "right",

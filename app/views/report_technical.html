@@ -22,7 +22,7 @@
     </div>
     <center>
         <small ng-show="no_text"  class="error text-left">{{no_text}}</small>
-        <textarea rows="5" cols="12" style="height: 170px;" placeholder="{{'feedback.leave_feedback'|translate}}" ng-model="technical_data">
+        <textarea ng-click="inputClick()" id='tech_data' rows="5" cols="12" style="height: 170px;" placeholder="{{'feedback.leave_feedback'|translate}}" ng-model="technical_data">
         </textarea>
         <loading size="small" show="sending_technical" />
     </center>
@@ -36,3 +36,18 @@
     <button class="button small" ng-click="sendTechnical(selected_type, selected_scalable_website_type, technical_data, user)" translate="button.send"></button>
     <button class="button small alert" ng-click="cancel()" translate="button.cancel"></button>
 </div>
+<!-- <div class="modal-body">
+    	<form ng-submit="enrollStudent()" name="form.key">
+        	<div class="small-12 large-3 small-centered columns">
+                <input id="enrollkey_field" ng-click="inputClick()" type="text" maxlength='11' ng-model="enrollment.key" name="key" required autofocus style="text-align: center;font-weight:bold;font-size: 18px;" class="no-margin with-tiny-margin-bottom"/>
+            </div>
+        	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="error_message.required"></span>
+        	<small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
+            <loading size="small" show="form.processing"></loading>
+            {{'enrollment.enrollement_key_format' | translate}} 
+            <br>
+            <b>ABCDE-12345</b>
+            <br>
+            {{'enrollment.get_enrollment_key' | translate}}
+        </form>
+    </div> -->

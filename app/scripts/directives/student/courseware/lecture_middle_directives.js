@@ -311,7 +311,7 @@ angular
                   "<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
                 content: "<div ng-bind-html='explanation[data.id][1]'></div>",
                 html: true,
-                trigger: $rootScope.is_mobile ? "click" : "hover",
+                trigger: $rootScope.is_mobile || scope.quiz.question_type == "OCQ" ? "click":'hover',
                 placement: scope.data.xcoor > 0.5 ? "left" : "right",
               };
               $timeout(function() {

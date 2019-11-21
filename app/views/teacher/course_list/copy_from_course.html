@@ -7,7 +7,6 @@
 }
 </style>
 
-
 <h4><translate>courses.new.copy_from_existing</translate></h4>
 <div ng-hide="hide_ask_copy" class="muted with-margin-bottom">
   <div ><translate>courses.new.ask_copy_from_existing</translate>
@@ -23,6 +22,17 @@
   <div  ><translate>courses.new.ask_choose_from_existing</translate></div>
   <div style="line-height:1">
     <select ng-model="selected_course"  ng-change=" showSelectedCourseDetails(selected_course)  " ng-options="element as element.short_name+' | '+element.name for element in importing | orderBy:'name'"  ></select>
+    {{is_ios}}
+    <div ng-show='is_ios'>
+      <div class="dropdown">
+          <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+          <div id="myDropdown" class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+    </div>
     <div  ng-show="selected_course_details" >
            <h6>Description:</h6>
            <p>{{ selected_course_description}}</p>

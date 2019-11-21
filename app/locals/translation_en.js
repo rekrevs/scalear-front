@@ -831,6 +831,7 @@ var translation_en={
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hover for explanation, click play to continue.",
     tap_for_explanation: "Tap for explanation",
+    click_for_explanation:"Click for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",

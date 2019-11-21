@@ -250,8 +250,7 @@ angular.module('scalearAngularApp')
           scope.data.height = element.height() / (ontop.height());
         }
 
-        scope.radioChange = function(corr_ans) { console.log(this)
-          console.log(scope)
+        scope.radioChange = function(corr_ans) {
           if (scope.quiz.question_type == "OCQ") {
             $log.debug("radioChange")
             scope.quiz.answers.forEach(function(ans) {

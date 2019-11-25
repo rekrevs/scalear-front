@@ -15,7 +15,6 @@ angular.module('scalearAngularApp')
 
     $rootScope.is_mobile = MobileDetector.isMobile()
     $rootScope.is_ipad = MobileDetector.isiPad()
-    alert( $rootScope.is_ipad )
     $rootScope.is_iphone = MobileDetector.isiPhone()
     $rootScope.is_ios =  $rootScope.is_iphone || $rootScope.is_ipad
     $rootScope.firstEdit = true

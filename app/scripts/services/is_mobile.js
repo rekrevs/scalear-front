@@ -45,8 +45,6 @@ angular.module('scalearAngularApp')
     };
     var detectMobilePlatform = function(userAgent) {
         var ua = userAgent || navigator.userAgent;
-        alert(ua)
-        console.log('ua',ua)
         // Facebook mobile app's integrated browser adds a bunch of strings that
         // match everything. Strip it out if it exists.
         var tmp = ua.split('[FBAN');

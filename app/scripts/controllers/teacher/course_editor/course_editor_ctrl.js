@@ -8,7 +8,6 @@ angular.module('scalearAngularApp')
 
     ContentNavigator.open()
     DetailsNavigator.open()
-    alert($rootScope.is_ios)
     if ( ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone()) || $rootScope.is_ios) &&  $rootScope.firstEdit ) {
       $rootScope.firstEdit = false
       $scope.showMobileWarning = function () {

@@ -79,9 +79,11 @@ angular.module('scalearAngularApp')
       $scope.container_class = ''
       $scope.passed_requirments = true
       $scope.lecture = null
-      $scope.video_ready = false
-      $scope.show_progressbar = false
 
+      $scope.video_ready = true
+      $scope.show_progressbar = false
+  
+     
       removeShortcuts()
         //  distance peer variables
       $scope.next_stop_time = null
@@ -547,10 +549,11 @@ angular.module('scalearAngularApp')
       })
 
       $scope.video_ready = true
-      if (!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)) {
-        $scope.show_progressbar = true
-      }
       var time = $state.params.time
+
+      $scope.show_progressbar = true
+      $scope.lecture_player.controls.seek(0)
+       
       if (time) {
         $timeout(function (argument) {
           $scope.seek(time);
@@ -865,12 +868,7 @@ angular.module('scalearAngularApp')
         }
 
         $(window).bind('orientationchange', function(event) {
-          if(MobileDetector.isAndroid()){
-            $timeout(orientationchange, 200)
-          }
-          else{
-            orientationchange()
-          }
+          setTimeout(orientationchange, 200)
         })
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }

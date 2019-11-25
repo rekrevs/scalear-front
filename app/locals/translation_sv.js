@@ -825,6 +825,7 @@ var translation_sv={
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hovra med pekaren för förklaring, klicka på spel för att fortsätta",
     tap_for_explanation: "Knacka (tap) för förklaring",
+    click_for_explanation:"klicka för förklaring",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
     must_place_items: "Du måste placera alla objekt",

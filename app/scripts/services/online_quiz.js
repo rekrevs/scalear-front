@@ -112,7 +112,8 @@ angular.module('scalearAngularApp')
     }
 
     function setSelectedVideoQuiz(quiz) {
-      quiz.formatedTime = $filter('format')(quiz.time,'hh:mm:ss.MMM')
+      var time_hr_min_sec = 'hh:mm:ss'
+      quiz.formatedTime = $filter('format')(quiz.time, time_hr_min_sec)
 
       quiz.start_formatedTime = $filter('format')(quiz.start_time,'hh:mm:ss.MMM')
       quiz.end_formatedTime = $filter('format')(quiz.end_time,'hh:mm:ss.MMM')

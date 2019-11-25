@@ -1113,8 +1113,11 @@ angular.module('scalearAngularApp')
         if ($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.solved_quiz = true;
           if ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey' && ($scope.selected_quiz.quiz_type != 'html' && $scope.selected_quiz.question_type.toUpperCase() !== 'FREE TEXT QUESTION'))
-            var sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
-          if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
+            var sub_message = ($rootScope.is_mobile || $rootScope.is_ipad) ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+            if ( $scope.selected_quiz.question_type == 'OCQ' ) {
+              var sub_message = 'lectures.click_for_explanation'
+            }
+            if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
             // $scope.explanation[] = data.explanation[]
             middle_msg = "lectures.messages.press_to_continue"
             for (var el in data.explanation)
@@ -1134,7 +1137,10 @@ angular.module('scalearAngularApp')
             if ($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
               middle_msg = 'lectures.multiple_correct'
           }
-          sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          sub_message = ($rootScope.is_mobile || $rootScope.is_ipad )? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          if ( $scope.selected_quiz.question_type == 'OCQ' ) {
+            var sub_message = 'lectures.click_for_explanation'
+          }
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
             middle_msg = "lectures.messages.press_to_continue"
             sub_message = ''

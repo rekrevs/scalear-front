@@ -882,15 +882,15 @@ angular
           correctSelections:"="
         },
         templateUrl: "/views/student/lectures/mark.html",
-          link: function(scope, element, attrs) { 
-            scope.setStyle=function(){
-              var answer = scope.data
-              var mark = element[0].firstElementChild
-              if (answer.xcoor<0.5){ 
-                mark.style.left = $rootScope.is_ios?((answer.xcoor*100)+0.5)+'%':((answer.xcoor*100)+1.5)+'%'
-              } else {
-                mark.style.left = $rootScope.is_ios?((answer.xcoor*100)-3)+'%':((answer.xcoor*100)-2)+'%'
-              }
+        link: function (scope, element, attrs) {
+          scope.setStyle = function () {
+            var answer = scope.data
+            var mark = element[0].firstElementChild
+            if (answer.xcoor < 0.5) {
+              mark.style.left = $rootScope.is_ios ? ((answer.xcoor * 100) + 3) + '%' : ((answer.xcoor * 100) + 1.5) + '%'
+            } else {
+              mark.style.left = $rootScope.is_ios ? ((answer.xcoor * 100) - 5) + '%' : ((answer.xcoor * 100) - 2) + '%'
+            }
               mark.style.top = ((answer.ycoor*100)-0.5)+'%'
               mark.style.position = "absolute"
               mark.style.zIndex = "20"

@@ -145,9 +145,7 @@ var translation_en={
     no_thanks: "No thanks",
   },
   support:{
-    ipad:"iPad support is currently in beta.",
-    mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Student video support is available for Android 4.4 and higher and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
+    issue_and_recommendation:"Not all content creation and editing features are fully supported on mobile platforms. We recommend using a desktop platform for creating and editing courses.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -160,7 +158,7 @@ var translation_en={
     dashboard: "Dashboard",
     settings: "Settings",
     account: "Account",
-    show_all_courses: "Show all courses",
+    show_all_courses: "Show All Courses",
     copied_from: "Copied From",
     description:{
       settings_description: "Modify your account information/settings",

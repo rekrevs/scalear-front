@@ -283,7 +283,7 @@ angular
             var type = scope.quiz.question_type == "MCQ" ? "checkbox" : "radio";
             element[0].children['student_answer'].setAttribute("type", type)
           };
-          scope.radioChange = function(corr_ans) {
+          scope.radioChange = function(corr_ans) { 
             if(!scope.correctSelections){
               scope.checkAnswerClicked = false
             }

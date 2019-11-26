@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
     })
 
     $rootScope.$on("Course:set_modules", function(ev, modules) {
+      console.log(modules)
       setModules(modules)
     })
 
@@ -72,6 +73,7 @@ angular.module('scalearAngularApp')
       all_modules.forEach(function(module) {
         addToCollection(createInstance(module))
       })
+      console.log(all_modules)
       $rootScope.$broadcast("Module:ready", modules)
     }
 

@@ -166,6 +166,7 @@ angular.module('scalearAngularApp')
       },
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
+        scope.today = new Date()
         scope.$state = $state
         UserSession.getCurrentUser()
           .then(function(user) {
@@ -173,6 +174,7 @@ angular.module('scalearAngularApp')
           })
         scope.$on('Module:ready',function(ev, modules){
           scope.modules = modules
+          console.log('modules:',modules)
         })
         scope.$watch('$state.params', function() {
           if($state.params.module_id) {

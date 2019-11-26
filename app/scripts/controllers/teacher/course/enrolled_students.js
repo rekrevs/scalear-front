@@ -87,7 +87,34 @@ angular.module('scalearAngularApp')
           $scope.delete_mode = !$scope.delete_mode
         }
 
-        $scope.listView=function(val){
+        $scope.removeSelectedStudents = function () {
+          $scope.selected_students = $filter('filter')($scope.students, { 'checked': true }, true)
+          $modal.open({
+            template: '<div ng-show="selected_students_count"><H1>Head Up!</H1>' +
+              '<p>Are you sure want to remove {{selected_students_count}} student? This can\'t be undone. </p>' +
+              "<button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='right button small '>Cancel</button>" +
+              "<button type='button' ng-click='unenrollStudents();toggleDeleteMode()'  class='right button success small with-margin-right'>Delete</button></div>" +
+              "<div><p>No selected students to delete!</p>" +
+              "<center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='centered button small '>Ok</button><center>" +
+              "</div>",
+            scope: $scope,
+            windowClass: 'upload-progress-modal-window',
+            controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
+              $scope.selected_students_count = $scope.selected_students.length
+              $scope.unenrollStudents = function () {
+                $scope.selected_students.forEach(function (selected_student) {
+                  $scope.removeStudent(selected_student)
+                })
+                $modalInstance.close()
+              }
+              $scope.cancelStudentsUnenrollment = function () {
+                $modalInstance.dismiss('cancel')
+              }
+            }],
+          })
+        }
+
+        $scope.listView = function (val) {
           $scope.list_view = val
           $cookieStore.put('list_view', val)
         }

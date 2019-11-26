@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
               '<p>Are you sure want to remove {{selected_students_count}} student? This can\'t be undone. </p>' +
               "<button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='right button small '>Cancel</button>" +
               "<button type='button' ng-click='unenrollStudents();toggleDeleteMode()'  class='right button success small with-margin-right'>Delete</button></div>" +
-              "<div><p>No selected students to delete!</p>" +
+              "<div ng-hide='selected_students_count'><p>No selected students to delete!</p>" +
               "<center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='centered button small '>Ok</button><center>" +
               "</div>",
             scope: $scope,

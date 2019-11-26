@@ -115,7 +115,6 @@ angular.module('scalearAngularApp')
       return Course.getCourseEditor({ course_id: id })
         .$promise
         .then(function(data) {
-          console.log(data.groups)
           $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })
@@ -127,7 +126,6 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          console.log(data.groups)
           $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })

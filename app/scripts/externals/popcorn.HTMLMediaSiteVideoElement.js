@@ -36,6 +36,7 @@
         paused: true,
         error: null
       },
+      clickMeRemoved = false,
       playerReady = false,
       catchRoguePauseEvent = false,
       catchRoguePlayEvent = false,
@@ -138,7 +139,6 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-
       // Set initial paused state
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
@@ -180,7 +180,12 @@
     }
 
     function onPlayerStateChange( event ) {
-
+     
+      if (!clickMeRemoved){
+        document.getElementById('clickMe').setAttribute('style','display:none;')
+        clickMeRemoved = true
+      }
+     
       switch( event.playState ) {
 
         // ended
@@ -285,8 +290,9 @@
         destroyElement();
       }
       elem.setAttribute("id", elemId)
+      appendPlayButton(parent)
       parent.appendChild( elem );
-
+      
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {
@@ -304,8 +310,16 @@
       impl.networkState = self.NETWORK_LOADING;
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
+    
     }
+    function appendPlayButton(parent){
+      var play_button_container = document.createElement('DIV')
+      play_button_container.className = 'media_site_play_button'
+      play_button_container.id = 'clickMe'
+      play_button_container.innerHTML = "<button class='media_site_button'>Play</button>";
 
+      parent.appendChild(play_button_container);
+    }
     function monitorCurrentTime() {
       var playerTime = player.getCurrentTime();
       if ( !impl.seeking ) {

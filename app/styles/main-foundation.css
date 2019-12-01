@@ -3140,3 +3140,16 @@ dd#second_accordion > a:hover{
   opacity: 0.5;
   pointer-events: none;
 }
+
+.media_site_play_button {
+  pointer-events: none;
+  padding-top: 18%;
+  width: 51%;
+  height: 108px;
+}
+.media_site_button{
+  border-radius: 100%;
+  width:inherit;
+  height: inherit;
+  font-weight:bold;
+}

@@ -127,7 +127,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
         var _versionMismatchCheck; // undefined for not checked, false for checked and acknowledged, true / version identifier for checked and not acknowledged
 
         // #region Initialize
-        function initialize() { 
+        function initialize() {
             try {
                 var url = options.url;
                 _model = new Mediasite.Player.StateModel();
@@ -303,6 +303,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                     _eventBundle.callHandlers(eventName, argumentsArray);
                 });
             }
+            
         }
 
         function addStateChangedHandlers() {

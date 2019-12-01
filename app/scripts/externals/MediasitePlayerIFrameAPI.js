@@ -303,6 +303,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                     _eventBundle.callHandlers(eventName, argumentsArray);
                 });
             }
+            
         }
 
         function addStateChangedHandlers() { 
@@ -673,6 +674,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
         })();
         // #endregion
 
+
         // #region Public methods
         this.getElement = function () {
             return _element;
@@ -702,6 +704,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
     Mediasite.Player.StateModel = function MediasitePlayerStateModel() {
         // Private properties
         var _properties;
+
         // #region Initialize
         _properties = {};
         // #endregion

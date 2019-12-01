@@ -143,6 +143,7 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                     },
                     initializationData: _version
                 });
+
                 setInitialModelState();
                 addStateChangedHandlers();
                 initEventBundle();
@@ -302,7 +303,6 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                     _eventBundle.callHandlers(eventName, argumentsArray);
                 });
             }
-          
         }
 
         function addStateChangedHandlers() { 
@@ -326,13 +326,11 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
         }
 
         function setInitialModelState() {
-
             _model.Set("activated", false);
             _model.Set("ready", false);
         }
 
         function onReady() {
-          
             _model.Set("ready", true);
         }
 
@@ -672,10 +670,8 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                 _element = presentationContainer;
                 container.parentNode.replaceChild(presentationContainer, container);
             }
-           
         })();
         // #endregion
-
 
         // #region Public methods
         this.getElement = function () {
@@ -706,7 +702,6 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
     Mediasite.Player.StateModel = function MediasitePlayerStateModel() {
         // Private properties
         var _properties;
-    
         // #region Initialize
         _properties = {};
         // #endregion
@@ -836,7 +831,6 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                 _messagePrefix);
 
             _initialized = true;
-
         })();
 
         function onInternalBrokerActivated(data) {

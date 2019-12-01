@@ -180,7 +180,6 @@
     }
 
     function onPlayerStateChange( event ) {
-     
       if (!clickMeRemoved){
         document.getElementById('clickMe').setAttribute('style','display:none;')
         clickMeRemoved = true
@@ -292,7 +291,6 @@
       elem.setAttribute("id", elemId)
       appendPlayButton(parent)
       parent.appendChild( elem );
-      
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {

@@ -303,10 +303,9 @@ if (!window.Mediasite) { // avoid re-instantiating everything if script is inclu
                     _eventBundle.callHandlers(eventName, argumentsArray);
                 });
             }
-            
         }
 
-        function addStateChangedHandlers() { 
+        function addStateChangedHandlers() {
             _broker.addHandler({
                 "_api_state": setModelState,
                 "ready": onReady,

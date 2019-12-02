@@ -139,6 +139,7 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
+      //  removePlayButton()
       // Set initial paused state
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
@@ -178,12 +179,19 @@
       impl.readyState = self.HAVE_ENOUGH_DATA;
       self.dispatchEvent( "canplaythrough" );
     }
-
+    //  self.checkIsPlayable =function(){
+    //   var t2, t1 = player.getCurrentTime()
+    //   console.log(t1)
+    //   new Promise(function (resolve, reject) {
+    //     player.play()
+    //     setTimeout(() => resolve("done!"), 4000);
+    //   }).then(function () {
+    //     t2 = player.getCurrentTime()
+    //     console.log(t2)
+    //     return t2>t1?true:false
+    //   })
+    // }
     function onPlayerStateChange( event ) {
-      if (!clickMeRemoved){
-        document.getElementById('clickMe').setAttribute('style','display:none;')
-        clickMeRemoved = true
-      }
      
       switch( event.playState ) {
 
@@ -269,7 +277,7 @@
       elem = document.createElement( "div" );
       elem.setAttribute("id", elemId)
     }
-
+    
     function changeSrc( aSrc ) {
       if( !self._canPlaySrc( aSrc ) ) {
         impl.error = {
@@ -289,8 +297,9 @@
         destroyElement();
       }
       elem.setAttribute("id", elemId)
-      appendPlayButton(parent)
+      
       parent.appendChild( elem );
+     
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {
@@ -304,19 +313,27 @@
           FrameWidth:0
         } 
       });
-
+     
       impl.networkState = self.NETWORK_LOADING;
+     
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
+      appendPlayButton()
     
     }
-    function appendPlayButton(parent){
+    function appendPlayButton(){ 
       var play_button_container = document.createElement('DIV')
-      play_button_container.className = 'media_site_play_button'
+      play_button_container.className = 'media_site_play_button_container'
       play_button_container.id = 'clickMe'
-      play_button_container.innerHTML = "<button class='media_site_button'>Play</button>";
-
+      play_button_container.innerHTML = "click here to unlock play";
       parent.appendChild(play_button_container);
+    }
+    function removePlayButton(){ 
+      var clickMe_container =  document.getElementById('clickMe')
+      if (!clickMeRemoved && clickMe_container){
+        clickMe_container.setAttribute('style','display:none;')
+        clickMeRemoved = true
+      }
     }
     function monitorCurrentTime() {
       var playerTime = player.getCurrentTime();
@@ -372,7 +389,8 @@
     }
 
     function onPlay() {
-
+      removePlayButton()
+     
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;

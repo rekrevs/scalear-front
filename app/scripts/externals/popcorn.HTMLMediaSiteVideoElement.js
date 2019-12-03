@@ -236,7 +236,24 @@
 
       playerState = event.state;
     }
-
+    function watchVideoInteraction(){
+      var myConfObj = {
+        iframeMouseOver : false
+      }
+      window.addEventListener('blur',function(){
+        if(myConfObj.iframeMouseOver){
+          alert('Wow! Iframe Click!');
+          removePlayButton()
+        }
+      });
+      
+      document.getElementById(elemId).addEventListener('mouseover',function(){
+         myConfObj.iframeMouseOver = true;
+      });
+      document.getElementById(elemId).addEventListener('mouseout',function(){
+          myConfObj.iframeMouseOver = false;
+      });
+    }
     function destroyPlayer() {
       if( !( playerReady && player ) ) {
         return;
@@ -302,14 +319,16 @@
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
       appendPlayButton()
+      
     }
 
     function appendPlayButton(){ 
       var play_button_container = document.createElement('DIV')
-      play_button_container.className = 'media_site_play_button_container media_site_click_button_small_font'
+      play_button_container.className = 'media_site_play_button_container'
       play_button_container.id = 'clickMe'
       play_button_container.innerHTML = "click here to unlock play";
       parent.appendChild(play_button_container);
+      watchVideoInteraction()
     }
 
     function removePlayButton(){ 

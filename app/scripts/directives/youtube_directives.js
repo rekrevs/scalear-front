@@ -725,6 +725,7 @@ angular.module('scalearAngularApp')
       scope.chosen_quality = 'hd720';
       scope.chosen_speed = 1
       scope.is_mobile = $rootScope.is_mobile
+      scope.ratio_on_mobile=0
       $timeout(function() {
         scope.duration = scope.player.controls.getDuration();
         scope.video = {
@@ -747,7 +748,6 @@ angular.module('scalearAngularApp')
         if(scope.is_mobile){
           $timeout(function(){
             document.getElementsByClassName("progressBar")[0].addEventListener("touchstart", scope.playHeadMouseDown, true)
-
           })
         }
       })
@@ -813,7 +813,7 @@ angular.module('scalearAngularApp')
         }
       }
 
-      scope.playHeadMouseDown = function(event) {
+      scope.playHeadMouseDown = function(event) { 
         onplayhead = true;
 
         if(scope.is_mobile){
@@ -845,8 +845,9 @@ angular.module('scalearAngularApp')
         scope.$apply()
       }
 
-      scope.moveplayhead = function(event) {
-        var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth()
+      scope.moveplayhead = function(event) { 
+        var ratio = (event.targetTouches[0].pageX - progress_bar.offset().left) / progress_bar.outerWidth()
+        scope.ratio_on_mobile = ratio
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
           scope.elapsed_head = position > 99.4 ? 99.4 : position
@@ -936,6 +937,7 @@ angular.module('scalearAngularApp')
         if (!(scope.skip_progress_seek && scope.editing == 'quiz')) {
           var progress_bar = angular.element('.progressBar');
           var ratio = (event.pageX - progress_bar.offset().left) / progress_bar.outerWidth();
+          ratio = ($rootScope.is_mobile)? scope.ratio_on_mobile:ratio
           scope.seek()(scope.duration * ratio)
           hideAllQuizzesAnswers()
           if (scope.timeline && scope.user_role == 2)

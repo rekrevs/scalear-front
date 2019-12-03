@@ -333,7 +333,7 @@
       var play_button_container = document.createElement('DIV')
       play_button_container.className = 'media_site_play_button_container'
       play_button_container.id = 'clickMe'
-      play_button_container.innerHTML = "click here to unlock play";
+      play_button_container.innerHTML = "Click to Load Video";
       parent.appendChild(play_button_container);
       watchVideoInteraction()
     }

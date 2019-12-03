@@ -2,7 +2,7 @@
     <div class="progressBar" ng-click="progressSeek($event)" style="position: relative;" ng-class="{'disabled': editing=='video'}" ng-mouseenter="showPlayhead()" ng-mouseleave="hidePlayhead()">
         <span ng-if="user_role==2">
             <div class="elapsed" ng-style="{width: elapsed_width + '%'}" ></div>
-            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
+            <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head-0.7 + '%' }" ng-mousedown="playHeadMouseDown()" ng-touchend='playHeadMouseDown()'></div>
             <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip-html-unsafe="{{'lectures.timeline.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true" tooltip-placement="top"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'lectures.timeline.confused' | translate}}" tooltip-append-to-body="true" tooltip-placement="top"></span>
@@ -12,8 +12,8 @@
         </span>
         <span ng-if="user_role==1 || user_role==5">
             <div class="elapsed transparent" ng-style="{width: elapsed_width + '%'}" ></div>
-            <div ng-show="!editing" class="playhead ease-in-out playhead_big" ng-style="{marginLeft: elapsed_head-0.1 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
-            <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.389 + '%' }" ng-mousedown="playHeadMouseDown()"></div>
+            <div ng-show="!editing" class="playhead ease-in-out playhead_big" ng-style="{marginLeft: elapsed_head-0.1 + '%' }" ng-mousedown="playHeadMouseDown()" ng-touchend='playHeadMouseDown()'></div>
+            <div ng-show="editing && editing!='video'" class="playhead_arrow ease-in-out"  ng-style="{marginLeft: elapsed_head-0.389 + '%' }" ng-mousedown="playHeadMouseDown()" ng-touchend='playHeadMouseDown()'></div>
             <span ng-repeat="element in timeline.items" ng-hide="editing=='video'">
                 <div ng-if="element.type=='marker'" class="progress-events" ng-style="{'left':((element.data.time/duration)*100)-0.25+'%'}" style="z-index: 1;">
                     <span class="progress-events" style="background-color: lightgray;" tooltip-html-unsafe="{{element.data.title}}"  tooltip-placement="top" tooltip-append-to-body="true"></span>

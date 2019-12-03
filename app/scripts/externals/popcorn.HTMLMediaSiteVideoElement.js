@@ -236,22 +236,27 @@
 
       playerState = event.state;
     }
-    function watchVideoInteraction(){
+    function watchVideoInteraction() {
       var myConfObj = {
-        iframeMouseOver : false
+        iframeMouseOver: false
       }
-      window.addEventListener('blur',function(){
-        if(myConfObj.iframeMouseOver){
-          alert('Wow! Iframe Click!');
-          removePlayButton()
+      window.addEventListener('blur', function () {
+        if (myConfObj.iframeMouseOver) {
+          setTimeout(function () {
+            removePlayButton()
+          }, 2000)
         }
       });
-      
-      document.getElementById(elemId).addEventListener('mouseover',function(){
-         myConfObj.iframeMouseOver = true;
+      window.addEventListener('touchend', function(){
+        setTimeout(function () {
+          removePlayButton()
+        }, 5000)
+      })
+      document.getElementById(elemId).addEventListener('mouseover', function () {
+        myConfObj.iframeMouseOver = true;
       });
-      document.getElementById(elemId).addEventListener('mouseout',function(){
-          myConfObj.iframeMouseOver = false;
+      document.getElementById(elemId).addEventListener('mouseout', function () {
+        myConfObj.iframeMouseOver = false;
       });
     }
     function destroyPlayer() {

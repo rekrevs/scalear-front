@@ -7,6 +7,7 @@ var translation_en={
     empty:"Empty",
     back: "Back",
     pref_language: "Language Preference",
+    activity_data:"Activity data",
     welcome: "Welcome",
     to:"to",
     or: "or",
@@ -132,6 +133,7 @@ var translation_en={
     cancel: "Cancel",
     show: "Show",
     save_changes: "Save Changes",
+    download: "Download all personal data",
     remove: "Remove",
     replay: "Replay",
     retry: "Retry",
@@ -143,9 +145,7 @@ var translation_en={
     no_thanks: "No thanks",
   },
   support:{
-    ipad:"iPad support is currently in beta.",
-    mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Student video support is available for Android 4.4 and higher and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
+    issue_and_recommendation:"Not all content creation and editing features are fully supported on mobile platforms. We recommend using a desktop platform for creating and editing courses.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -158,7 +158,7 @@ var translation_en={
     dashboard: "Dashboard",
     settings: "Settings",
     account: "Account",
-    show_all_courses: "Show all courses",
+    show_all_courses: "Show All Courses",
     copied_from: "Copied From",
     description:{
       settings_description: "Modify your account information/settings",
@@ -179,8 +179,10 @@ var translation_en={
     administration: "Administration",
     add_teacher: "Add Teacher/TA",
     student_list: "Student List",
-    join_course: "Join a new course (student)",
-    new_course: "Create a new course (teacher)",
+    student_heading: "Student",
+    join_course: "Join a New Course",
+    teacher_heading:"Teacher",
+    new_course: "Create a New Course",
     review: "Review",
     welcome_message: "Welcome Message",
     register:{
@@ -408,7 +410,7 @@ var translation_en={
     identifiable_information_details: "The personally identifiable information for your account consists of the name and email address you provide when you register an account on the site. This information is attached to your actions on the site. You may access, rectify, and delete your account information via the Account Information page on the website. We store the IP address of all accesses to the site in the server logs.",
     deleting_profile: "Data Retention and Deleting your profile",
     deleting_profile_details: "Your data is retained for 1 year after your last interaction to enable you to enroll in future classes. After 1 year you will receive an email asking if you wish to retain your data in the system, psuedonyminize it, or delete it. If you do nothing your data will be pseudonyminized such that we are unable to identify your name or email, but you can recover your account with your data using your original email address. You can delete your data at any time by simply deleting your account. Note that it may take a period of time for this information to be deleted from backup systems. Your pseudonyminized usage behavior may be retained for research.",
-    video_upload:"Video upload",
+    video_upload:"Video upload"
     video_upload_details:"If you choose to upload videos directly to ScalableLearning they are hosted via the third-party service Vimeo.com and their privacy policy may apply. ScalableLearning provides Vimeo.com with no personally identifiable information in the process of uploading and linking the videos. Videos uploaded through ScalableLearning will be deleted when all uses of them on ScalableLearning are removed or the account that uploaded them is deleted.",
     gdpr_compliance:"GDPR Compliance",
     gdpr_compliance_details_1:"Legal Basis. The legal basis for ScalableLearning’s processing of data is the consent of the teacher and students to use the service. This consent is granted upon registering an account and agreeing to the privacy policy. Users can revoke their consent at any time by deleting their account. Teachers who use this service must have the authority to enroll their students in the service if the students themselves do not have this authority.",
@@ -425,22 +427,22 @@ var translation_en={
     gdpr_compliance_details_12:"Usage Limitations. Data collection and processing is limited to the purposes of helping students and teachers learn, and to develop new teaching techniques and improving the system.",
     gdpr_compliance_details_13:"Right to Access. Information on the purpose for data collections, types of data collected, what is given out, how long data is retained, and where data comes from are described above and in the Impact Assessment.",
     acceptable_use_policy:"Acceptable Use Policy",
-    acceptable_use_policy_intro_1:"The ScalableLearning Acceptable Use Policy sets out the terms under which you may access the ScalableLearning service (“conditions of use”). This policy applies to all users of the ScalableLearning service.",
-    acceptable_use_policy_intro_2:"You are deemed to accept and agree to abide by the Acceptable Use Policy when you create a user account, log in, and/or use the ScalableLearning service.",
     acceptable_use_policy_details_1:"The ScalableLearning Acceptable Use Policy sets out the terms under which you may access the ScalableLearning service (“conditions of use”). This policy applies to all users of the ScalableLearning service.",
     acceptable_use_policy_details_2:"You are deemed to accept and agree to abide by the Acceptable Use Policy when you create a user account, log in, and/or use the ScalableLearning service.",
     acceptable_use_policy_details_3:"You shall only use your ScalableLearning account to perform tasks consistent with the goals of the ScalableLearning service (teaching and learning) and in compliance with these conditions of use.",
     acceptable_use_policy_details_4:"You shall not use your ScalableLearning account for any unlawful purpose.",
     acceptable_use_policy_details_5:"You shall not attempt to breach or circumvent any administrative or security controls.",
     acceptable_use_policy_details_6:"You shall respect copyright and confidentiality agreements.",
-    acceptable_use_policy_details_7:"You shall protect your account and any sensitive data and files to which it gives access.",
-    acceptable_use_policy_details_8:"You shall immediately report any known or suspected security breach or misuse of your registration, or the information to which it gives access, to the ScalableLearning Data Protection Contact (see above) and/or the Service Provider (see below).",
-    acceptable_use_policy_details_9:"Use of the ScalableLearning service is at your own risk. There is no guarantee that the service will be available at any time or that it will suit any purpose.",
-    acceptable_use_policy_details_10:"The managers of the ScalableLearning service are entitled to regulate and terminate access to the service and you shall immediately comply with their instructions, subject to separate agreements.",
-    acceptable_use_policy_details_11:"You are liable for the consequences of any violations by you of the Acceptable Use Policy.",
+    acceptable_use_policy_details_7:"By uploading videos you confirm that you have the right to use the video on ScalableLearning and that the video will only be used for teaching.",
+    acceptable_use_policy_details_8:"You shall protect your account and any sensitive data and files to which it gives access.",
+    acceptable_use_policy_details_9:"You shall immediately report any known or suspected security breach or misuse of your registration, or the information to which it gives access, to the ScalableLearning Data Protection Contact (see above) and/or the Service Provider (see below).",
+    acceptable_use_policy_details_10:"Use of the ScalableLearning service is at your own risk. There is no guarantee that the service will be available at any time or that it will suit any purpose.",
+    acceptable_use_policy_details_11:"The managers of the ScalableLearning service are entitled to regulate and terminate access to the service and you shall immediately comply with their instructions, subject to separate agreements.",
+    acceptable_use_policy_details_12:"You are liable for the consequences of any violations by you of the Acceptable Use Policy.",
+    acceptable_use_policy_details_13:"The managers of the ScalableLearning service are entitled to inspect material on the service and remove inappropriate content",
     other:"Other",
     legal_entity: "Legal Entity/Service Provider",
-    legal_entity_details: "ScalableLearning is provided by RISE SICS AB, Box 1263, SE-16429 Kista, Sweden.",
+    legal_entity_details: "ScalableLearning is provided by RISE Research Institutes of Sweden SICS AB, Box 1263, SE-16429 Kista, Sweden.",
     code_conduct: "GÉANT Data Protection Code of Conduct",
     code_conduct_details: "This privacy policy complies with the GÉANT Data Protection Code of conduct version 1.0, 14 June 2013.",
     policy_changes: "Privacy policy changes",
@@ -831,6 +833,7 @@ var translation_en={
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hover for explanation, click play to continue.",
     tap_for_explanation: "Tap for explanation",
+    click_for_explanation:"Click for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",
@@ -1196,6 +1199,15 @@ var translation_en={
       }
     }
   },
+  gdpr:{
+    intro:"To download the information as an administrator, enter the email addresses of the users (students or teachers) here. An email with the archived user information will then be sent to the email account associated with your administrator account.",
+    emails_comma_separated:"Emails (comma separated):",
+    send_email:"Send email with user data",
+    unprocessable_account:"These accounts don't exist or out of your domain:",
+    download:"GDPR Download",
+    checking_out:"Checking out!",
+    email_sent:"email sent"
+  },
   languages:{
     languages:"Languages",
     en: 'English',
@@ -1203,6 +1215,14 @@ var translation_en={
   },
   welcome_messages:{
     description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
+  },
+  unenroll:{
+    title:"Remove Students",
+    confirmation:"Are you sure you want to remove {{selected_students_count}} students? This cannot be undone.",
+    remove_students:"Remove Students",
+    cancel:"Cancel",
+    no_selected_students:"No selected students to remove!",
+    ok:"Ok"
   }
 }
 

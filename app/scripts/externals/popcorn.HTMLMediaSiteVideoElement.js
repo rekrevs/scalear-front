@@ -247,11 +247,13 @@
           }, 2000)
         }
       });
-      window.addEventListener('touchend', function(){
-        setTimeout(function () {
-          removePlayButton()
-        }, 5000)
-      })
+      window.addEventListener('touchstart', function (event) {
+        if (event.target.id === elemId) {
+          setTimeout(function () {
+            removePlayButton()
+          }, 5000)
+        }
+      }, true)
       document.getElementById(elemId).addEventListener('mouseover', function () {
         myConfObj.iframeMouseOver = true;
       });

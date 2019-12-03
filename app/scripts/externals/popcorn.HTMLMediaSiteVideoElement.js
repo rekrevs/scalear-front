@@ -302,8 +302,8 @@
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
       appendPlayButton()
-    
     }
+
     function appendPlayButton(){ 
       var play_button_container = document.createElement('DIV')
       play_button_container.className = 'media_site_play_button_container'
@@ -383,7 +383,7 @@
         clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
-      impl.paused = false;parent.appendChild( elem );
+      impl.paused = false;
 
       if( playerPaused ) {
         playerPaused = false;

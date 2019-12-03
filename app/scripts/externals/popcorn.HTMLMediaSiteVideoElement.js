@@ -283,9 +283,7 @@
         destroyElement();
       }
       elem.setAttribute("id", elemId)
-      
       parent.appendChild( elem );
-     
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {
@@ -385,7 +383,7 @@
         clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
-      impl.paused = false;
+      impl.paused = false;parent.appendChild( elem );
 
       if( playerPaused ) {
         playerPaused = false;

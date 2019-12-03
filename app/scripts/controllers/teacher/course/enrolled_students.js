@@ -90,12 +90,12 @@ angular.module('scalearAngularApp')
         $scope.removeSelectedStudents = function () {
           $scope.selected_students = $filter('filter')($scope.students, { 'checked': true }, true)
           $modal.open({
-            template: '<div ng-show="selected_students_count"><H1>Head Up!</H1>' +
-              '<p>Are you sure want to remove {{selected_students_count}} student? This can\'t be undone. </p>' +
-              "<button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='right button small '>Cancel</button>" +
-              "<button type='button' ng-click='unenrollStudents();toggleDeleteMode()'  class='right button success small with-margin-right'>Delete</button></div>" +
-              "<div ng-hide='selected_students_count'><p>No selected students to delete!</p>" +
-              "<center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='centered button small '>Ok</button><center>" +
+            template: '<div ng-show="selected_students_count"><H1 translate>unenroll.title</H1>' +
+              "<p translate translate-values='{selected_students_count: selected_students_count}'>unenroll.confirmation</p>" +
+              "<button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='right button small' translate>unenroll.cancel</button>" +
+              "<button type='button' ng-click='unenrollStudents();toggleDeleteMode()'  class='right button success small with-margin-right' translate>unenroll.remove_students</button></div>" +
+              "<div ng-hide='selected_students_count'><p translate>unenroll.no_selected_students</p>" +
+              "<center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='centered button small ' translate>unenroll.ok</button><center>" +
               "</div>",
             scope: $scope,
             windowClass: 'upload-progress-modal-window',

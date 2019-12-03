@@ -36,6 +36,7 @@
         paused: true,
         error: null
       },
+      clickMeRemoved = false,
       playerReady = false,
       catchRoguePauseEvent = false,
       catchRoguePlayEvent = false,
@@ -138,7 +139,6 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-
       // Set initial paused state
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
@@ -178,9 +178,8 @@
       impl.readyState = self.HAVE_ENOUGH_DATA;
       self.dispatchEvent( "canplaythrough" );
     }
-
     function onPlayerStateChange( event ) {
-
+     
       switch( event.playState ) {
 
         // ended
@@ -193,7 +192,6 @@
           if( !firstPlay ) {
             // fake ready event
             firstPlay = true;
-
             // Duration ready happened first, we're now ready.
             if ( durationReady ) {
               onFirstPlay();
@@ -265,7 +263,7 @@
       elem = document.createElement( "div" );
       elem.setAttribute("id", elemId)
     }
-
+    
     function changeSrc( aSrc ) {
       if( !self._canPlaySrc( aSrc ) ) {
         impl.error = {
@@ -286,7 +284,6 @@
       }
       elem.setAttribute("id", elemId)
       parent.appendChild( elem );
-
       player = new Mediasite.Player(elemId, {
         url: aSrc,
         events: {
@@ -300,10 +297,27 @@
           FrameWidth:0
         } 
       });
-
       impl.networkState = self.NETWORK_LOADING;
+     
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
+      appendPlayButton()
+    }
+
+    function appendPlayButton(){ 
+      var play_button_container = document.createElement('DIV')
+      play_button_container.className = 'media_site_play_button_container'
+      play_button_container.id = 'clickMe'
+      play_button_container.innerHTML = "click here to unlock play";
+      parent.appendChild(play_button_container);
+    }
+
+    function removePlayButton(){ 
+      var clickMe_container =  document.getElementById('clickMe')
+      if (!clickMeRemoved && clickMe_container){
+        clickMe_container.setAttribute('style','display:none;')
+        clickMeRemoved = true
+      }
     }
 
     function monitorCurrentTime() {
@@ -360,7 +374,7 @@
     }
 
     function onPlay() {
-
+      removePlayButton()
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;

@@ -389,7 +389,6 @@ angular.module('scalearAngularApp')
             var duration = (player_controls.youtube) ? player_controls.getDuration() : player_controls.getAbsoluteDuration()
             VideoInformation.setDuration(duration)
             onReadyCallback()
-         
           });
 
         player.on('playing',

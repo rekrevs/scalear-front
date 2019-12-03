@@ -139,7 +139,6 @@
 
     // This function needs duration and first play to be ready.
     function onFirstPlay() {
-      //  removePlayButton()
       // Set initial paused state
       if( impl.autoplay || !impl.paused ) {
         impl.paused = false;
@@ -179,18 +178,6 @@
       impl.readyState = self.HAVE_ENOUGH_DATA;
       self.dispatchEvent( "canplaythrough" );
     }
-    //  self.checkIsPlayable =function(){
-    //   var t2, t1 = player.getCurrentTime()
-    //   console.log(t1)
-    //   new Promise(function (resolve, reject) {
-    //     player.play()
-    //     setTimeout(() => resolve("done!"), 4000);
-    //   }).then(function () {
-    //     t2 = player.getCurrentTime()
-    //     console.log(t2)
-    //     return t2>t1?true:false
-    //   })
-    // }
     function onPlayerStateChange( event ) {
      
       switch( event.playState ) {
@@ -205,7 +192,6 @@
           if( !firstPlay ) {
             // fake ready event
             firstPlay = true;
-
             // Duration ready happened first, we're now ready.
             if ( durationReady ) {
               onFirstPlay();
@@ -313,7 +299,6 @@
           FrameWidth:0
         } 
       });
-     
       impl.networkState = self.NETWORK_LOADING;
      
       self.dispatchEvent( "loadstart" );
@@ -328,6 +313,7 @@
       play_button_container.innerHTML = "click here to unlock play";
       parent.appendChild(play_button_container);
     }
+
     function removePlayButton(){ 
       var clickMe_container =  document.getElementById('clickMe')
       if (!clickMeRemoved && clickMe_container){
@@ -335,6 +321,7 @@
         clickMeRemoved = true
       }
     }
+
     function monitorCurrentTime() {
       var playerTime = player.getCurrentTime();
       if ( !impl.seeking ) {
@@ -390,7 +377,6 @@
 
     function onPlay() {
       removePlayButton()
-     
       if( impl.ended ) {
         changeCurrentTime( 0 );
         impl.ended = false;

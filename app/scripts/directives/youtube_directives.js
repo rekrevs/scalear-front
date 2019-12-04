@@ -745,7 +745,7 @@ angular.module('scalearAngularApp')
           }
         })
 
-        if(scope.is_mobile){
+        if(scope.is_mobile || $rootScope.is_ios){
           $timeout(function(){
             document.getElementsByClassName("progressBar")[0].addEventListener("touchstart", scope.playHeadMouseDown, true)
           })
@@ -776,7 +776,7 @@ angular.module('scalearAngularApp')
 
       $rootScope.$on('details_navigator_change', repositionQuizHandles)
 
-      scope.play_class = scope.is_mobile ? "pause" : "play";
+      scope.play_class = scope.is_mobile || $rootScope.is_ios ? "pause" : "play";
 
       scope.quality_names = {
         "auto": "Auto",
@@ -816,7 +816,7 @@ angular.module('scalearAngularApp')
       scope.playHeadMouseDown = function(event) { 
         onplayhead = true;
 
-        if(scope.is_mobile){
+        if(scope.is_mobile || $rootScope.is_ios){
           scope.showPlayhead()
           window.addEventListener('touchmove', scope.moveplayhead, true);
           window.addEventListener("touchend", scope.playHeadMouseUp, true)
@@ -846,8 +846,12 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) { 
-        var ratio = (event.targetTouches[0].pageX - progress_bar.offset().left) / progress_bar.outerWidth()
-        scope.ratio_on_mobile = ratio
+        var event_pageX = ($rootScope.is_mobile)?event.targetTouches[0].pageX:event.pageX 
+        var ratio = (event_pageX- progress_bar.offset().left) / progress_bar.outerWidth()
+        if($rootScope.is_mobile || $rootScope.is_ios ){
+          scope.ratio_on_mobile = ratio
+        }
+      
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
           scope.elapsed_head = position > 99.4 ? 99.4 : position

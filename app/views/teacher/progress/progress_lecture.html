@@ -100,9 +100,12 @@
 									<div ng-if="::module_item.quiz_type == 'quiz'" style="float:right">
 							        	<details-select value="answer.grade" options="grade_options" save="updateGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
 							        </div>
-							    </div>
+								</div>
 								<div style="width: 70%;">{{answer.answer|| '-'}}</div>
-								<div ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue;"><pre ng-bind-html="answer.response"></pre></div>
+								<div ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: #616161;font-size:14px; ">
+									<span class="comment_screen_name" style="font-weight: 600;" >{{screen_name}}</span>:
+									<span class="comment_content" ng-bind-html="answer.response"></span>
+								</div>
 								<span ng-show="answer.response && !answer.show_feedback" ><a ng-click="deleteFeedback(answer)" class="button really-tiny alert" style="margin:0 5px" translate>button.delete</a></span>
 								<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'" style="margin-left: 1.25rem;margin-top: 5px">
 									<div><rich-textarea ng-model="answer.temp_response"  style="width: 60%;height:80px" /></div>

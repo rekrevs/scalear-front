@@ -329,7 +329,7 @@
       
     }
 
-    function appendPlayButton(){ 
+    function appendPlayButton() {
       var play_button_container = document.createElement('DIV')
       play_button_container.className = 'media_site_play_button_container button small'
       play_button_container.id = 'clickMe'
@@ -338,10 +338,10 @@
       watchVideoInteraction()
     }
 
-    function removePlayButton(){ 
-      var clickMe_container =  document.getElementById('clickMe')
-      if (!clickMeRemoved && clickMe_container){
-        clickMe_container.setAttribute('style','display:none;')
+    function removePlayButton() {
+      var clickMe_container = document.getElementById('clickMe')
+      if (!clickMeRemoved && clickMe_container) {
+        clickMe_container.setAttribute('style', 'display:none;')
         clickMeRemoved = true
       }
     }

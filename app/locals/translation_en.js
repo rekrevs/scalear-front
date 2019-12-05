@@ -1211,6 +1211,14 @@ var translation_en={
   },
   welcome_messages:{
     description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
+  },
+  unenroll:{
+    title:"Remove Students",
+    confirmation:"Are you sure you want to remove {{selected_students_count}} students? This cannot be undone.",
+    remove_students:"Remove Students",
+    cancel:"Cancel",
+    no_selected_students:"No selected students to remove!",
+    ok:"Ok"
   }
 }
 

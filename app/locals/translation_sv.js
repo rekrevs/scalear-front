@@ -1203,6 +1203,14 @@ var translation_sv={
   },
   welcome_messages:{
     description: "Ange texten som ska visas för användare från domänen {{domain}} när de loggar in. Denna text kommer att visas längst upp på sidan 'Skapa Kurs'.",
+  },
+  unenroll:{
+    title:"Ta bort studenter",
+    confirmation:"Är du säker på att du vill ta bort {{selected_students_count}} studenter? Detta kan inte göras ogjort.",
+    remove_students:"Ta bort studenter",
+    cancel:" Avbryt",
+    no_selected_students:"Inga utvalda studenter att ta bort!",
+    ok:"Ok"
   }
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams', 'Timeline', 'Module', 'Quiz', 'OnlineQuiz', '$log', '$window', '$translate', '$timeout', 'Forum', 'Page', 'ContentNavigator', 'Lecture', 'ScalearUtils', 'ModuleModel', function($scope, $stateParams, Timeline, Module, Quiz, OnlineQuiz, $log, $window, $translate, $timeout, Forum, Page, ContentNavigator, Lecture, ScalearUtils, ModuleModel) {
+  .controller('progressLectureCtrl', ['$scope', '$rootScope', '$stateParams', 'Timeline', 'Module', 'Quiz', 'OnlineQuiz', '$log', '$window', '$translate', '$timeout', 'Forum', 'Page', 'ContentNavigator', 'Lecture', 'ScalearUtils', 'ModuleModel', function ($scope, $rootScope, $stateParams, Timeline, Module, Quiz, OnlineQuiz, $log, $window, $translate, $timeout, Forum, Page, ContentNavigator, Lecture, ScalearUtils, ModuleModel) {
 
     Page.setTitle('navigation.progress')
     ContentNavigator.close()
@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
       quiz: 3,
       question: 2
     }
-
+    $scope.screen_name = $rootScope.current_user.screen_name
     $scope.selected_module = ModuleModel.getSelectedModule()
     $scope.module_id = $stateParams.module_id
     $scope.course_id = $stateParams.course_id

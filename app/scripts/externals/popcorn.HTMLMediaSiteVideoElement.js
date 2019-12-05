@@ -236,7 +236,31 @@
 
       playerState = event.state;
     }
-
+    function watchVideoInteraction() {
+      var mouseMotion = {
+        iframeMouseOver: false
+      }
+      window.addEventListener('blur', function () {
+        if (mouseMotion.iframeMouseOver) {
+          setTimeout(function () {
+            removePlayButton()
+          }, 2000)
+        }
+      });
+      window.addEventListener('touchstart', function (event) {
+        if (event.target.id === elemId) {
+          setTimeout(function () {
+            removePlayButton()
+          }, 5000)
+        }
+      }, true)
+      document.getElementById(elemId).addEventListener('mouseover', function () {
+        mouseMotion.iframeMouseOver = true;
+      });
+      document.getElementById(elemId).addEventListener('mouseout', function () {
+        mouseMotion.iframeMouseOver = false;
+      });
+    }
     function destroyPlayer() {
       if( !( playerReady && player ) ) {
         return;
@@ -302,20 +326,22 @@
       self.dispatchEvent( "loadstart" );
       self.dispatchEvent( "progress" );
       appendPlayButton()
+      
     }
 
-    function appendPlayButton(){ 
+    function appendPlayButton() {
       var play_button_container = document.createElement('DIV')
-      play_button_container.className = 'media_site_play_button_container media_site_click_button_small_font'
+      play_button_container.className = 'media_site_play_button_container button small'
       play_button_container.id = 'clickMe'
-      play_button_container.innerHTML = "click here to unlock play";
+      play_button_container.innerHTML = "Click to Load Video";
       parent.appendChild(play_button_container);
+      watchVideoInteraction()
     }
 
-    function removePlayButton(){ 
-      var clickMe_container =  document.getElementById('clickMe')
-      if (!clickMeRemoved && clickMe_container){
-        clickMe_container.setAttribute('style','display:none;')
+    function removePlayButton() {
+      var clickMe_container = document.getElementById('clickMe')
+      if (!clickMeRemoved && clickMe_container) {
+        clickMe_container.setAttribute('style', 'display:none;')
         clickMeRemoved = true
       }
     }

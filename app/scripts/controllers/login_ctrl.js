@@ -65,13 +65,7 @@ angular.module('scalearAngularApp')
               $log.debug("login success")
               $scope.sending = false;
               $rootScope.$broadcast("Course:get_current_courses")
-              $scope.is_mobile = MobileDetector.isMobile()
-              if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
-                showMobileWarning(function() {
-                  next(response.user.data)
-                })
-              } else
-                next(response.user.data)
+              next(response.user.data)
         }
         )
        
@@ -82,14 +76,6 @@ angular.module('scalearAngularApp')
         function(resp) {
           $state.go("signup", { input1: $scope.user.email, input2: $scope.user.password })
         })
-    }
-
-    var showMobileWarning = function(callback) {
-      ngDialog.open({
-        template: 'mobileSupport',
-        className: 'ngdialog-theme-default ngdialog-theme-custom',
-        preCloseCallback: callback
-      });
     }
 
     var next = function(user) {
@@ -123,16 +109,7 @@ angular.module('scalearAngularApp')
       $rootScope.busy_loading = true;
       Saml.Login({ idp: idp.entityID },
         function(resp) {
-          $scope.is_mobile = MobileDetector.isMobile()
-          if ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone())) {
-            $rootScope.busy_loading = false;
-            showMobileWarning(function(){
-              $rootScope.busy_loading = true;
-              handleSamlResponse(resp)
-            })
-          } else {
-            handleSamlResponse(resp)
-          }
+          handleSamlResponse(resp)
         },
         function() {
           $rootScope.busy_loading = false;

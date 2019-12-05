@@ -63,7 +63,7 @@
         </li>
         <li has-dropdown>
           <a class="white-with-hover color-gray-hover size-16-light" id="all_courses" ng-class="{'nav-item-active':('course.**' | includedByState) || ('course_list' | includedByState)}" ng-show="user.intro_watched && user.info_complete" translate>navigation.courses</a>
-          <ul class="lighter-grey-no-hover scrollable-if-tall" top-bar-dropdown>
+          <ul id='menu_my_courses' class="lighter-grey-no-hover scrollable-if-tall" top-bar-dropdown>
             <li ng-repeat="course in student_courses">
               <a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ng-click="goToCourse(course, 2)">
 								{{course.short_name}}
@@ -77,11 +77,15 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
             </li>
+            <li class="divider border-grey medium-opacity"></li>    
+            <li>
+            <span class="lighter-grey list-subheader" translate>navigation.student_heading</span>
+            <a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()"
+              translate>navigation.join_course</a>
+            </li>
             <li class="divider border-grey medium-opacity"></li>
             <li>
-            <a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>navigation.join_course</a>
-            </li>
-            <li>
+              <span class="lighter-grey list-subheader" translate>navigation.teacher_heading</span> 
               <a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>navigation.new_course</a>
             </li>
             <li ng-show="areShared()">
@@ -89,7 +93,7 @@
             </li>
             <li class="divider border-grey medium-opacity"></li>
             <li>
-              <a id="course_list" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
+              <a id="course_list" class="lighter-grey dark-text" ui-sref="course_list">
                 <span translate>navigation.show_all_courses</span>
               </a>
             </li>

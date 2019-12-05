@@ -1,13 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseEditorCtrl', ['$rootScope', '$scope', '$state', '$translate', '$log', 'Page', '$modal', '$timeout', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'CourseModel', 'ModuleModel', 'ItemsModel', 'LectureModel', 'QuizModel', 'LinkModel', function($rootScope, $scope, $state, $translate, $log, Page, $modal, $timeout, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, CourseModel, ModuleModel, ItemsModel ,LectureModel, QuizModel, LinkModel) {
+  .controller('courseEditorCtrl', ['$rootScope', '$scope', '$state', '$translate', '$log', 'Page', '$modal', '$timeout', 'ContentNavigator', 'DetailsNavigator', 'Preview', 'ScalearUtils', 'CourseModel', 'ModuleModel', 'ItemsModel', 'LectureModel', 'QuizModel', 'LinkModel', 'ngDialog', 'MobileDetector', function ($rootScope, $scope, $state, $translate, $log, Page, $modal, $timeout, ContentNavigator, DetailsNavigator, Preview, ScalearUtils, CourseModel, ModuleModel, ItemsModel, LectureModel, QuizModel, LinkModel, ngDialog, MobileDetector) {
 
     $scope.course = CourseModel.getSelectedCourse()
     Page.setTitle($translate.instant('navigation.content') + ': ' + $scope.course.name);
 
     ContentNavigator.open()
     DetailsNavigator.open()
+    if ( ($scope.is_mobile && (MobileDetector.isTablet() || MobileDetector.isPhone()) || $rootScope.is_ios) &&  $rootScope.firstEdit ) {
+      $rootScope.firstEdit = false
+      $scope.showMobileWarning = function () {
+        ngDialog.open({
+          template: 'mobileSupport',
+          className: 'ngdialog-theme-default ngdialog-theme-custom'
+        });
+      }()
+    }
 
     $scope.DetailsNavigator = DetailsNavigator
     $scope.ContentNavigator = ContentNavigator

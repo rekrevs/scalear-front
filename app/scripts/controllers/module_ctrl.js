@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     var selected_module = ModuleModel.getById($state.params.module_id)
     if (!selected_module) {
     	$state.go("course_list") //check
-        ErrorHandler.showMessage('Model is not publised .', 'errorMessage', 4000, "error");
+        ErrorHandler.showMessage('Module is not published.', 'errorMessage', 4000, "error");
     }else{
     	ModuleModel.setSelectedModule(selected_module)
     }

@@ -145,9 +145,7 @@ var translation_en={
     no_thanks: "No thanks",
   },
   support:{
-    ipad:"iPad support is currently in beta.",
-    mobiles:"Mobile devices are not currently fully supported.",
-    issue_and_recommendation:"Student video support is available for Android 4.4 and higher and iOS 10.3 and higher. We recommend that teachers use a desktop browser for best results.",
+    issue_and_recommendation:"Not all content creation and editing features are fully supported on mobile platforms. We recommend using a desktop platform for creating and editing courses.",
     ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
   },
   navigation:{
@@ -160,7 +158,7 @@ var translation_en={
     dashboard: "Dashboard",
     settings: "Settings",
     account: "Account",
-    show_all_courses: "Show all courses",
+    show_all_courses: "Show All Courses",
     copied_from: "Copied From",
     description:{
       settings_description: "Modify your account information/settings",
@@ -181,8 +179,10 @@ var translation_en={
     administration: "Administration",
     add_teacher: "Add Teacher/TA",
     student_list: "Student List",
-    join_course: "Join a new course (student)",
-    new_course: "Create a new course (teacher)",
+    student_heading: "Student",
+    join_course: "Join a New Course",
+    teacher_heading:"Teacher",
+    new_course: "Create a New Course",
     review: "Review",
     welcome_message: "Welcome Message",
     register:{
@@ -829,6 +829,7 @@ var translation_en={
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hover for explanation, click play to continue.",
     tap_for_explanation: "Tap for explanation",
+    click_for_explanation:"Click for explanation",
     multiple_correct: "There may be multiple correct answers",
     other_correct_answers: "There may be other correct answers as well",
     must_place_items: "You must place all items",
@@ -1210,6 +1211,14 @@ var translation_en={
   },
   welcome_messages:{
     description: "Enter the text to display to users from the {{domain}} domain when they log in. This text will be displayed at the top of the 'Create Course' page.",
+  },
+  unenroll:{
+    title:"Remove Students",
+    confirmation:"Are you sure you want to remove {{selected_students_count}} students? This cannot be undone.",
+    remove_students:"Remove Students",
+    cancel:"Cancel",
+    no_selected_students:"No selected students to remove!",
+    ok:"Ok"
   }
 }
 

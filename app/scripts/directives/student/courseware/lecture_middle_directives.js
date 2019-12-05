@@ -283,7 +283,7 @@ angular
             var type = scope.quiz.question_type == "MCQ" ? "checkbox" : "radio";
             element[0].children['student_answer'].setAttribute("type", type)
           };
-          scope.radioChange = function(corr_ans) {
+          scope.radioChange = function(corr_ans) { 
             if(!scope.correctSelections){
               scope.checkAnswerClicked = false
             }
@@ -311,7 +311,7 @@ angular
                   "<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
                 content: "<div ng-bind-html='explanation[data.id][1]'></div>",
                 html: true,
-                trigger: $rootScope.is_mobile ? "click" : "hover",
+                trigger: $rootScope.is_mobile || scope.quiz.question_type == "OCQ" ? "click":'hover',
                 placement: scope.data.xcoor > 0.5 ? "left" : "right",
               };
               $timeout(function() {
@@ -505,7 +505,7 @@ angular
             scope.explanation_pop = {};
             scope.explanation[scope.data.id] = null;
           };
-
+       
           scope.$watch("explanation[quiz.id]", function(newval) {
             if (scope.explanation && scope.explanation[scope.quiz.id]) {
               scope.explanation_pop = {
@@ -873,8 +873,8 @@ angular
       };
     }
   ])
-  .directive("correctionMark", [
-    function() {
+  .directive("correctionMark", ['$rootScope',
+    function($rootScope) {
       return {
         restrict: "E",
         scope: {
@@ -882,15 +882,15 @@ angular
           correctSelections:"="
         },
         templateUrl: "/views/student/lectures/mark.html",
-          link: function(scope, element, attrs) {
-            scope.setStyle=function(){
-              var answer = scope.data
-              var mark = element[0].firstElementChild
-              if (answer.xcoor<0.5){
-                mark.style.left = ((answer.xcoor*100)+1.5)+'%'
-              } else {
-                mark.style.left = ((answer.xcoor*100)-2)+'%'
-              }
+        link: function (scope, element, attrs) {
+          scope.setStyle = function () {
+            var answer = scope.data
+            var mark = element[0].firstElementChild
+            if (answer.xcoor < 0.5) {
+              mark.style.left = $rootScope.is_ios ? ((answer.xcoor * 100) + 3) + '%' : ((answer.xcoor * 100) + 1.5) + '%'
+            } else {
+              mark.style.left = $rootScope.is_ios ? ((answer.xcoor * 100) - 5) + '%' : ((answer.xcoor * 100) - 2) + '%'
+            }
               mark.style.top = ((answer.ycoor*100)-0.5)+'%'
               mark.style.position = "absolute"
               mark.style.zIndex = "20"

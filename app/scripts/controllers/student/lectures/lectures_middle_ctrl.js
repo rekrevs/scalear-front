@@ -79,9 +79,11 @@ angular.module('scalearAngularApp')
       $scope.container_class = ''
       $scope.passed_requirments = true
       $scope.lecture = null
-      $scope.video_ready = false
-      $scope.show_progressbar = false
 
+      $scope.video_ready = true
+      $scope.show_progressbar = false
+  
+     
       removeShortcuts()
         //  distance peer variables
       $scope.next_stop_time = null
@@ -547,10 +549,11 @@ angular.module('scalearAngularApp')
       })
 
       $scope.video_ready = true
-      if (!($scope.lecture_player.controls.youtube && $rootScope.is_mobile)) {
-        $scope.show_progressbar = true
-      }
       var time = $state.params.time
+
+      $scope.show_progressbar = true
+      $scope.lecture_player.controls.seek(0)
+       
       if (time) {
         $timeout(function (argument) {
           $scope.seek(time);
@@ -865,12 +868,7 @@ angular.module('scalearAngularApp')
         }
 
         $(window).bind('orientationchange', function(event) {
-          if(MobileDetector.isAndroid()){
-            $timeout(orientationchange, 200)
-          }
-          else{
-            orientationchange()
-          }
+          setTimeout(orientationchange, 200)
         })
       } else if (ScalearUtils.calculateScreenRatio() == "4:3") {
         $scope.video_layer = { 'marginTop': "5.5%", 'marginBottom': "5.5%" }
@@ -1115,8 +1113,11 @@ angular.module('scalearAngularApp')
         if ($scope.selected_quiz.quiz_type == 'survey' || $scope.selected_quiz.quiz_type == 'html_survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review)) {
           $scope.selected_quiz.solved_quiz = true;
           if ($scope.selected_quiz.quiz_type != 'survey' && $scope.selected_quiz.quiz_type != 'html_survey' && ($scope.selected_quiz.quiz_type != 'html' && $scope.selected_quiz.question_type.toUpperCase() !== 'FREE TEXT QUESTION'))
-            var sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
-          if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
+            var sub_message = ($rootScope.is_mobile || $rootScope.is_ipad) ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+            if ( $scope.selected_quiz.question_type == 'OCQ' ) {
+              var sub_message = 'lectures.click_for_explanation'
+            }
+            if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION') {
             // $scope.explanation[] = data.explanation[]
             middle_msg = "lectures.messages.press_to_continue"
             for (var el in data.explanation)
@@ -1136,7 +1137,10 @@ angular.module('scalearAngularApp')
             if ($scope.selected_quiz.question_type.toUpperCase() == 'MCQ' && !data.correct)
               middle_msg = 'lectures.multiple_correct'
           }
-          sub_message = $rootScope.is_mobile ? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          sub_message = ($rootScope.is_mobile || $rootScope.is_ipad )? 'lectures.tap_for_explanation' : 'lectures.hover_for_explanation'
+          if ( $scope.selected_quiz.question_type == 'OCQ' ) {
+            var sub_message = 'lectures.click_for_explanation'
+          }
           if ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
             middle_msg = "lectures.messages.press_to_continue"
             sub_message = ''

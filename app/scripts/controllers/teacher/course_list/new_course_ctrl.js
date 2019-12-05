@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', 'UserSession','User', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal, UserSession, User) {
+  .controller('newCourseCtrl', ['$rootScope', '$scope', 'Course', '$state', '$window', '$log', 'Page', 'ScalearUtils', '$translate', '$filter','CourseModel','$q','$modal', 'UserSession','User','MobileDetector', function($rootScope, $scope, Course, $state, $window, $log, Page, ScalearUtils, $translate, $filter,CourseModel,$q,$modal, UserSession, User,MobileDetector) {
     $window.scrollTo(0, 0);
     $scope.getHtmlText=ScalearUtils.getHtmlText;
     Page.setTitle('navigation.new_course')
@@ -16,9 +16,10 @@ angular.module('scalearAngularApp')
     $scope.course.email_discussion = false
     $scope.selected_course_details = false;
     $scope.selected_course = null;
-    $scope.selected_course_description=null;
+    $scope.selected_course_description = null;
     $scope.selected_course_prerequists = null;
-    CourseModel.getUserOtherCourses().then(function(data) {
+
+    CourseModel.getUserOtherCourses().then(function (data) {
         $scope.importing = data.importing;
         $scope.subdomains = data.subdomains;
       })
@@ -190,6 +191,7 @@ angular.module('scalearAngularApp')
           $scope.submitting = false;
       })
     }
+
     $scope.showConfirm = function() {
      // Appending dialog to document.body to cover sidenav in docs app
      $modal.open({

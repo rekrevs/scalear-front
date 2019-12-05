@@ -1,19 +1,23 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ReportTechnicalCtrl', ['$scope', '$modalInstance', '$log', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', '$state', 'UserSession','scalear_api', function($scope, $modalInstance, $log, $rootScope, Home, $translate, $stateParams, $location, $interval, $state, UserSession,scalear_api) {
+  .controller('ReportTechnicalCtrl', ['$scope', '$timeout','$modalInstance', '$log', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', '$state', 'UserSession','scalear_api', function($scope, $timeout,$modalInstance, $log, $rootScope, Home, $translate, $stateParams, $location, $interval, $state, UserSession,scalear_api) {
 
     $scope.issue_types = [{ value: "system", text: $translate.instant('feedback.system') }]
     if($state.includes("course")) {
       $scope.issue_types.push({ value: "content", text: $translate.instant('feedback.course_content') })
     }
     $scope.selected_type = $scope.issue_types[0];
-
+    $scope.is_ios =  $rootScope.is_ios
     UserSession.getCurrentUser()
       .then(function(user) {
         $scope.current_user = user
       })
-
+    $scope.inputClick = function () {
+      $timeout(function () {
+        $('#tech_data').focus()
+      })
+    }
     $scope.issue_scalable_website_types = [
       { value: "none", text: $translate.instant('feedback.none') },
       { value: "no_access", text: $translate.instant('feedback.no_access') },

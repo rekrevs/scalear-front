@@ -131,24 +131,22 @@ var translation_sv={
     cancel: "Avbryt",
     show: "Visa",
     save_changes: "Spara ändringar",
-    download:"ladda ner all personlig information",
+    download: "ladda ner all personlig information",
     remove: "Ta bort",
     replay: "Spela igen",
     retry: "Försök igen",
     reply: "Svara",
     hide: "Göm",
-    refresh:"Uppdatera skärmen",
-    vote:"Rösta",
-    continue:"Fortsätt",
+    refresh: "Uppdatera skärmen",
+    vote: "Rösta",
+    continue: "Fortsätt",
     no_thanks: "Nej tack",
   },
-  support:{
-    ipad:"Stöd för iPad är för närvarande i beta.",
-    mobiles:"Mobila enheter har för närvarande inte fullständigt stöd.",
-    issue_and_recommendation:"Studentvideostöd är tillgängligt för Android 4.4 och senare och iOS 10.3 och senare. Vi rekommenderar att lärare använder en skrivbords-webbläsare för bästa resultat.",
+  support: {
+    issue_and_recommendation: "Inte alla innehållsskapande och redigeringsfunktioner stöds fullt ut på mobilplattformar. Vi rekommenderar att du använder en stationär plattform för att skapa och redigera kurser.",
     ie_disclaimer: "Internet Explorer stöder inte alla interaktiva videofunktioner som används av Scalable Learning. Vi rekommenderar att du använder",
   },
-  navigation:{
+  navigation: {
     logout: "Logga ut",
     login: "Inloggning",
     account_information: "Kontoinformation",
@@ -827,6 +825,7 @@ var translation_sv={
     really_confused: "@:global.really_confused",
     hover_for_explanation: "Hovra med pekaren för förklaring, klicka på spel för att fortsätta",
     tap_for_explanation: "Knacka (tap) för förklaring",
+    click_for_explanation:"klicka för förklaring",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
     must_place_items: "Du måste placera alla objekt",
@@ -1204,6 +1203,14 @@ var translation_sv={
   },
   welcome_messages:{
     description: "Ange texten som ska visas för användare från domänen {{domain}} när de loggar in. Denna text kommer att visas längst upp på sidan 'Skapa Kurs'.",
+  },
+  unenroll:{
+    title:"Ta bort studenter",
+    confirmation:"Är du säker på att du vill ta bort {{selected_students_count}} studenter? Detta kan inte göras ogjort.",
+    remove_students:"Ta bort studenter",
+    cancel:" Avbryt",
+    no_selected_students:"Inga utvalda studenter att ta bort!",
+    ok:"Ok"
   }
 }
 

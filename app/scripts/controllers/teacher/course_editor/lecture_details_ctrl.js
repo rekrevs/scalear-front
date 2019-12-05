@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils','VimeoModel',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils,VimeoModel) {
+  .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$state', '$log', '$rootScope', '$modal', '$filter', 'ItemsModel', 'DetailsNavigator', 'CourseEditor', 'LectureModel','VideoQuizModel', 'MarkerModel', 'ScalearUtils','VimeoModel','VideoInformation',function($stateParams, $scope, $state, $log, $rootScope, $modal, $filter, ItemsModel, DetailsNavigator, CourseEditor, LectureModel, VideoQuizModel, MarkerModel, ScalearUtils, VimeoModel, VideoInformation) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
+    $scope.url_old  = $scope.lecture.url
+    $scope.start_time_old = $scope.lecture.start_time
+    $scope.end_time_old = $scope.lecture.end_time
 
     $scope.video ={}
     if($scope.lecture.inclass){$scope.video.type = 1}
@@ -92,10 +95,12 @@ angular.module('scalearAngularApp')
     $scope.updateLectureUrl = function () {
       $scope.lecture.updateUrl()
         .then(function (should_trim) {
-          should_trim && checkToTrim()
-        })  
+          should_trim && checkToTrim($scope.url_old,$scope.lecture)
+          $scope.url_old = $scope.lecture.url
+        })
+       
     }
-    
+
     $scope.showQuiz = function (quiz) {
       $rootScope.$broadcast("show_online_quiz", quiz)
     }
@@ -112,16 +117,44 @@ angular.module('scalearAngularApp')
       $rootScope.$broadcast("delete_online_marker", marker)
     }
 
-    function checkToTrim() {
+    function checkToTrim(url,lecture) {
       $modal.open({
         templateUrl: '/views/teacher/course_editor/trim_modal.html',
-        controller: ['$scope', '$rootScope', '$modalInstance', function($scope, $rootScope, $modalInstance) {
-          $scope.trim = function() {
-            $rootScope.$broadcast("start_trim_video")
+        controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
+          console.log('url:', url)
+          $scope.hideKeepTrimBtn = url == 'none' ? true : false
+          $scope.trim = function () {
+            var isVimeo = VideoInformation.isVimeo(lecture.url)
+            if (isVimeo) {
+              VideoInformation.waitForDurationSetup().then(function (duration) {
+                lecture.duration = duration
+                lecture.start_time = 0
+                lecture.end_time = lecture.duration
+                console.log(duration)
+                lecture.update().then(function () {
+                  $rootScope.$broadcast("update_module_time", lecture.group_id)
+                  $rootScope.$broadcast("start_trim_video")
+                })
+              })
+            } else {
+              $rootScope.$broadcast("start_trim_video")
+            }
             $modalInstance.close();
           }
-          $scope.cancel = function() {
+          $scope.cancel = function () {
+            VideoInformation.waitForDurationSetup().then(function (duration) {
+              lecture.duration = duration
+              lecture.start_time = 0
+              lecture.end_time = lecture.duration
+              lecture.update().then(function () {
+                $rootScope.$broadcast("update_module_time", lecture.group_id)
+              });
+             
+            })
             $modalInstance.dismiss('cancel');
+          }
+          $scope.keepPreviousTrim = function(){
+            $modalInstance.close();
           }
         }]
       });

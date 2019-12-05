@@ -202,7 +202,6 @@ angular.module('scalearAngularApp')
         // else{
         //  duration = player_controls.getAbsoluteDuration()
         // }
-
         return scope.end - scope.start
       }
 

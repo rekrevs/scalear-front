@@ -243,7 +243,6 @@ angular.module('scalearAngularApp')
         restrict: 'E',
         templateUrl: '/views/teacher/course_editor/delete_button.html',
         link: function(scope) {
-            console.log(scope.action)
             scope.tooltiptext_translated = $translate.instant(scope.tooltiptext)
             scope.overlay = scope.overlaymode() || false
             scope.display_vertical = scope.vertical()

@@ -237,11 +237,11 @@
       playerState = event.state;
     }
     function watchVideoInteraction() {
-      var myConfObj = {
+      var mouseMotion = {
         iframeMouseOver: false
       }
       window.addEventListener('blur', function () {
-        if (myConfObj.iframeMouseOver) {
+        if (mouseMotion.iframeMouseOver) {
           setTimeout(function () {
             removePlayButton()
           }, 2000)
@@ -255,10 +255,10 @@
         }
       }, true)
       document.getElementById(elemId).addEventListener('mouseover', function () {
-        myConfObj.iframeMouseOver = true;
+        mouseMotion.iframeMouseOver = true;
       });
       document.getElementById(elemId).addEventListener('mouseout', function () {
-        myConfObj.iframeMouseOver = false;
+        mouseMotion.iframeMouseOver = false;
       });
     }
     function destroyPlayer() {

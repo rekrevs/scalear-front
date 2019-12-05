@@ -725,7 +725,7 @@ angular.module('scalearAngularApp')
       scope.chosen_quality = 'hd720';
       scope.chosen_speed = 1
       scope.is_mobile = $rootScope.is_mobile
-      scope.ratio_on_mobile=0
+      scope.ratio_on_mobile = 0
       $timeout(function() {
         scope.duration = scope.player.controls.getDuration();
         scope.video = {
@@ -745,8 +745,8 @@ angular.module('scalearAngularApp')
           }
         })
 
-        if(scope.is_mobile || $rootScope.is_ios){
-          $timeout(function(){
+        if (scope.is_mobile || $rootScope.is_ios) {
+          $timeout(function () {
             document.getElementsByClassName("progressBar")[0].addEventListener("touchstart", scope.playHeadMouseDown, true)
           })
         }
@@ -846,12 +846,12 @@ angular.module('scalearAngularApp')
       }
 
       scope.moveplayhead = function(event) { 
-        var event_pageX = ($rootScope.is_mobile)?event.targetTouches[0].pageX:event.pageX 
-        var ratio = (event_pageX- progress_bar.offset().left) / progress_bar.outerWidth()
-        if($rootScope.is_mobile || $rootScope.is_ios ){
+        var event_pageX = ($rootScope.is_mobile) ? event.targetTouches[0].pageX : event.pageX
+        var ratio = (event_pageX - progress_bar.offset().left) / progress_bar.outerWidth()
+        if ($rootScope.is_mobile || $rootScope.is_ios) {
           scope.ratio_on_mobile = ratio
         }
-      
+
         var position = ratio * 100 - 0.51
         if (position >= 0 && position <= 100) {
           scope.elapsed_head = position > 99.4 ? 99.4 : position

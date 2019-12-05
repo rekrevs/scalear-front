@@ -90,14 +90,20 @@ angular.module('scalearAngularApp')
         $scope.removeSelectedStudents = function () {
           $scope.selected_students = $filter('filter')($scope.students, { 'checked': true }, true)
           $modal.open({
-            template: '<div ng-show="selected_students_count"><H1 translate>unenroll.title</H1>' +
-              "<p translate translate-values='{selected_students_count: selected_students_count}'>unenroll.confirmation</p>" +
-              "<button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='right button small' translate>unenroll.cancel</button>" +
-              "<button type='button' ng-click='unenrollStudents();toggleDeleteMode()'  class='right button success small with-margin-right' translate>unenroll.remove_students</button></div>" +
-              "<div ng-hide='selected_students_count'><p translate>unenroll.no_selected_students</p>" +
-              "<center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()'  class='centered button small ' translate>unenroll.ok</button><center>" +
-              "</div>",
+            template: 
+              `<div ng-show="selected_students_count">
+                <H1 translate>unenroll.title</H1> 
+                <p translate translate-values='{selected_students_count: selected_students_count}'>unenroll.confirmation</p> 
+                <button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()' class='right button small' translate>unenroll.cancel</button> 
+                <button type='button' ng-click='unenrollStudents();toggleDeleteMode()' class='right button success small with-margin-right' translate>unenroll.remove_students</button>
+              </div> 
+              <div ng-hide='selected_students_count'>
+                <p translate>unenroll.no_selected_students</p> 
+                <center><button type='button' ng-click='cancelStudentsUnenrollment();toggleDeleteMode()' class='centered button small' translate>unenroll.ok</button>
+                <center>                    
+              </div>`,
             scope: $scope,
+            backdrop:'static',
             windowClass: 'upload-progress-modal-window',
             controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
               $scope.selected_students_count = $scope.selected_students.length
@@ -109,6 +115,7 @@ angular.module('scalearAngularApp')
               }
               $scope.cancelStudentsUnenrollment = function () {
                 $modalInstance.dismiss('cancel')
+                $scope.deSelectAll()
               }
             }],
           })

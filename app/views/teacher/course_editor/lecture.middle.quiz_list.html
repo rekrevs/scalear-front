@@ -9,7 +9,7 @@
 							<span translate>{{(quiz.data.quiz_type=='survey'? 'editor.survey' : 'editor.quiz')}}</span>
 						</div>
 						<div class="small-4 left columns size-10">
-							<span class="looks-like-a-link">{{quiz.data.time|format:'h:mm:ss.MMM'}}</span>
+							<span class="looks-like-a-link">{{quiz.data.time|format:'h:mm:ss'}}</span>
 						</div>
 						<div class="small-12 columns">
 							<span class="quiz_title color-blue2 looks-like-a-link" ng-bind-html="quiz.data.question"></span>

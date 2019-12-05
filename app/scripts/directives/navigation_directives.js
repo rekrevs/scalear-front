@@ -39,6 +39,7 @@ angular.module('scalearAngularApp')
         scope.goToCourse = function(course, role) {
           if(course.id != $state.params.course_id){
             $state.go('course', { course_id: course.id })
+            scope.closeMenu()
           }
         }
 
@@ -165,7 +166,9 @@ angular.module('scalearAngularApp')
       },
       templateUrl: "/views/content_navigator.html",
       link: function(scope, element, attr) {
+        scope.today = new Date()
         scope.$state = $state
+        scope.preview_as_student = $rootScope.preview_as_student
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user
@@ -259,10 +262,10 @@ angular.module('scalearAngularApp')
             $log.debug(item)
             var item_type = item.class_name.toLowerCase()
             params[item_type + '_id'] = item.id
-            if(MobileDetector.isPhone()){
-            	$timeout(function(){
-            		ContentNavigator.close()
-            	})
+            if (MobileDetector.isPhone() || MobileDetector.isiPhone()) {
+              setTimeout(function () {
+                ContentNavigator.close()
+              }, 3000)
             }
             $state.go('course.module.' + mode + '.' + item_type, params)
             if(!(mode == 'courseware' && item_type == 'customlink')) {

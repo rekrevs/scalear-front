@@ -3,13 +3,13 @@
 		<div class="modules_container" style="height:100%;overflow:auto">
 			<accordion class="accordion no-margin">
 				<span>
-					<accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
+					<!-- <accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
 						<accordion-heading class="accordion-heading">
 						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
 							<div class="show-inline" translate>navigation.course_information</div>
 						</div>
 						</accordion-heading>
-					</accordion-group>
+					</accordion-group> -->
 					<accordion-group class="module accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="($state.params.module_id == module.id)">
 						<accordion-heading class="accordion-heading">
 							<div id='module_{{module.id}}' class="valign-middle" ng-click="showModuleCourseware(module, $event)" title="{{::(module.name)}}" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;display:inline-block;width: 100%;">
@@ -33,7 +33,7 @@
 									<div class="show-inline valign-middle left text-left" style="padding-left:15px;line-height: 2.5">Start In-class Session</div>
 								</div>
 							</li>
-							<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}"  ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass && !(current_user.roles.includes(6)) )}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" >
+							<li ng-hide='item.isVisible()==false && !preview_as_student' class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}"  ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass && !(current_user.roles.includes(6)) )}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" > 
 								<div ng-if="::(item.class_name != 'customlink')" class="position-relative" style="height: 20px;" >
 									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.done}" ></i>
 									<i ng-if="::(item.class_name == 'lecture' && !(item.appearance_time | visible) && ( (current_user.roles.includes(6)) ) )" style="margin-right:5px;float:left;color:#c41c24" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
@@ -41,13 +41,13 @@
 									<i ng-if="::(item.class_name == 'lecture' && !item.inclass && !item.distance_peer)" class="fi-video with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'lecture' && item.inclass)" class="fi-comment-video with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'lecture' && item.distance_peer)" class="fi-torsos-all with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.lecture' | translate)}}"></i>
-									<i ng-if="::(item.class_name == 'quiz' && item.quiz_type == 'quiz')" class="fi-clipboard-notes with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.quiz' | translate)}}"></i>
+									<i ng-if="::(item.class_name == 'quiz' && item.quiz_type == 'quiz' && item.appearance_time<=today)" class="fi-clipboard-notes with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.quiz' | translate)}}"></i>
 									<i ng-if="::(item.class_name == 'quiz' && item.quiz_type == 'survey')" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" ng-title="{{::('content_navigator.survey' | translate)}}"></i>
-									<div class="show-inline valign-middle left text-left" style="width: 65%;">{{::item.name}} </div>
+									<div class="show-inline valign-middle left text-left" style="width: 65%;">{{::item.name}}</div>
 									<div class="no-padding text-right">
 										<small class="color-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</small>
 									</div>
-									<!-- <div class="color-dark-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</div> -->
+									<div class="color-dark-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</div>
 								</div>
 								<a ng-if="::(item.class_name == 'customlink')" class="position-relative" style="height: 20px;" ng-href="{{::item.url}}" target="_blank">
 									<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
@@ -121,3 +121,5 @@
 		</div>
 	</span>
 </div>
+
+

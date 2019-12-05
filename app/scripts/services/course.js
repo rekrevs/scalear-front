@@ -126,7 +126,6 @@ angular.module('scalearAngularApp')
         .then(function(data) {
           // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-
           $rootScope.$broadcast("Course:set_modules", data.groups)
           return data.course;
         })

@@ -6,6 +6,7 @@ angular.module('scalearAngularApp')
     var apple_phone         = /iPhone/i,
         apple_ipod          = /iPod/i,
         apple_tablet        = /iPad/i,
+        apple_tablet_pro    = /Macintosh/i,
         android_phone       = /(?=.*\bAndroid\b)(?=.*\bMobile\b)/i, // Match 'Android' AND 'Mobile'
         android_tablet      = /Android/i,
         amazon_phone        = /(?=.*\bAndroid\b)(?=.*\bSD4930UR\b)/i,
@@ -34,7 +35,14 @@ angular.module('scalearAngularApp')
     var match = function(regex, userAgent) {
         return regex.test(userAgent);
     };
-
+    var isTouch = function(){
+        try {
+            document.createEvent("TouchEvent");
+            return true;
+        }
+        catch (e) { }
+        return false;
+    };
     var detectMobilePlatform = function(userAgent) {
         var ua = userAgent || navigator.userAgent;
         // Facebook mobile app's integrated browser adds a bunch of strings that
@@ -45,9 +53,9 @@ angular.module('scalearAngularApp')
         }
 
         this.apple = {
-            phone:  match(apple_phone, ua),
-            ipod:   match(apple_ipod, ua),
-            tablet: !match(apple_phone, ua) && match(apple_tablet, ua),
+            phone: match(apple_phone, ua),
+            ipod: match(apple_ipod, ua),
+            tablet: !match(apple_phone, ua) && (match(apple_tablet, ua) ||( match(apple_tablet_pro, ua) && isTouch())),
             device: match(apple_phone, ua) || match(apple_ipod, ua) || match(apple_tablet, ua)
         };
         this.amazon = {
@@ -90,7 +98,7 @@ angular.module('scalearAngularApp')
         isMobile: function() { return devices.any; },
         isPhone: function() { return devices.phone; },
         isTablet: function() { return devices.tablet; },
-        isiPhone: function() { return devices.apple.iphone || devices.apple.ipod; },
+        isiPhone: function() { return devices.apple.phone || devices.apple.ipod; },
         isiPad: function() { return devices.apple.tablet; },
         isAndroidPhone: function() { return devices.android.phone; },
         isAndroidTablet: function() { return devices.android.tablet; },

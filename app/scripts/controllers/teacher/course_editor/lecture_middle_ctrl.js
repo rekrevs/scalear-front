@@ -577,6 +577,7 @@ angular.module('scalearAngularApp')
     function saveTrimVideo() {
       $scope.lecture.start_time = Math.floor($scope.lecture.start_time)
       $scope.lecture.end_time = Math.floor($scope.lecture.end_time)
+    
       closeEditor()
       $scope.refreshVideo()
     }

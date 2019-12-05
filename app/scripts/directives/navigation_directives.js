@@ -168,6 +168,7 @@ angular.module('scalearAngularApp')
       link: function(scope, element, attr) {
         scope.today = new Date()
         scope.$state = $state
+        scope.preview_as_student = $rootScope.preview_as_student
         UserSession.getCurrentUser()
           .then(function(user) {
             scope.current_user = user

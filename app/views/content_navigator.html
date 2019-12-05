@@ -33,7 +33,7 @@
 									<div class="show-inline valign-middle left text-left" style="padding-left:15px;line-height: 2.5">Start In-class Session</div>
 								</div>
 							</li>
-							<li ng-hide='item.isVisible()==false' class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}"  ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass && !(current_user.roles.includes(6)) )}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" > 
+							<li ng-hide='item.isVisible()==false && !preview_as_student' class="disable_selection size-13 text-right last-child item looks-like-a-link" style="display:inline-block; width: 100%;padding: 2px; min-height: 24px;"  ng-title="{{::item.name}}"  ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink, 'disabled':(!(item.appearance_time | visible) && item.inclass && !(current_user.roles.includes(6)) )}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')" > 
 								<div ng-if="::(item.class_name != 'customlink')" class="position-relative" style="height: 20px;" >
 									<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.done}" ></i>
 									<i ng-if="::(item.class_name == 'lecture' && !(item.appearance_time | visible) && ( (current_user.roles.includes(6)) ) )" style="margin-right:5px;float:left;color:#c41c24" class="fi-alert" tooltip="{{('editor.tooltip.invisible'|translate) + ' '+ ('editor.tooltip.invisible_cont' | translate) +' '+ (item.appearance_time| fromNow) }}" tooltip-placement="right" tooltip-append-to-body="true"  ></i>
@@ -47,14 +47,13 @@
 									<div class="no-padding text-right">
 										<small class="color-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</small>
 									</div>
-									<!-- <div class="color-dark-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</div> -->
+									<div class="color-dark-grey" ng-show="::(item.duration)" >{{::item.duration | formattime:'h:mm:ss'}}</div>
 								</div>
 								<a ng-if="::(item.class_name == 'customlink')" class="position-relative" style="height: 20px;" ng-href="{{::item.url}}" target="_blank">
 									<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
 									<i class="fi-link with-tiny-margin-right left color-gray" title="{{::('content_navigator.customlink' | translate)}}"></i>
 									<div class="truncate-70 show-inline valign-middle left text-left" >{{::item.name}}</div>
 								</a>
-								<div ng-show='item.appearance_time.toString()<=today'> visible </div> 
 							</li>
 						</ul>
 					</accordion-group>

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     restrict: "E",
     template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid"
   };
-}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', 'ScalearUtils', function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation, ScalearUtils) {
+}).directive('youtube', ['$rootScope', '$log', '$timeout', '$window', '$cookieStore', '$interval','VideoInformation', 'ScalearUtils', 'YTapiReqLog',function($rootScope, $log, $timeout, $window, $cookieStore, $interval,VideoInformation, ScalearUtils,YTapiReqLog) {
   return {
     transclude: true,
     restrict: 'E',
@@ -22,7 +22,8 @@ angular.module('scalearAngularApp')
       autoplay: '@',
       controls: '@',
       start: "=",
-      end: "="
+      end: "=",
+      lectureId: "="
     },
     template: "<div><div ng-transclude></div></div>",
     link: function(scope, element) {
@@ -56,21 +57,24 @@ angular.module('scalearAngularApp')
           var video = Popcorn.HTMLYouTubeVideoElement('#' + scope.id)
           $log.debug("youtube")
           player = Popcorn(video);
-          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end ||scope.end, scope.autoplay, scope.controls)
+          video.duration = scope.end - scope.start
+          video.src = formatYoutubeURL(scope.url, scope.vq, scope.video_start || scope.start, scope.video_end || scope.end, scope.autoplay, scope.controls)
+          video.regYtDataApiReq = YTapiReqLog.registerRequest
+          video.info = { user_id: $rootScope.current_user.id, lecture_id: scope.lectureId }
           $log.debug(video.src)
         } else if (isVimeo(scope.url)) {
           var vimeo_options = {
-            background: true,
+            background: false,
             muted: false,
             autoplay:false,
             loop:false
           };
           var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id,vimeo_options)
-          video.src = scope.url+"?background=1&autoplay=0&muted=0&loop=0"
+          video.src = scope.url+"?background=0&autoplay=0&muted=0&loop=0"
           player = Popcorn(video);
           player_controls.vimeo = true;
           player.controls(scope.controls);
-          player.autoplay(scope.autoplay);
+          player.autoplay(false);
         } else if (isMP4(scope.url)) {
           $log.debug("mp4")
           var video = Popcorn.HTMLVideoElement('#' + scope.id) //Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
@@ -195,9 +199,6 @@ angular.module('scalearAngularApp')
         // else{
         //  duration = player_controls.getAbsoluteDuration()
         // }
-        // if (player_controls.vimeo){
-        //   return player.duration()
-        // }
         return scope.end - scope.start
       }
 
@@ -239,9 +240,13 @@ angular.module('scalearAngularApp')
 
       player_controls.absoluteSeek = function(time) {
         player.currentTime(time);
+        if (isVimeo(scope.url)) {
+          player.pause()
+        }
+
       }
 
-      player_controls.seek_and_pause = function(time) {
+      player_controls.seek_and_pause = function(time) { 
         if(isKaltura(scope.url)){
           if(time==0){
             player_controls.seek(0)
@@ -721,7 +726,6 @@ angular.module('scalearAngularApp')
         scope.video = {
           start_time: scope.player.controls.getVideoStartTime(),
           end_time: scope.player.controls.getVideoEndTime()
-
         }
 
         scope.$watch('editing', function() {
@@ -1063,6 +1067,7 @@ angular.module('scalearAngularApp')
         scope.video.start_location = (scope.video.start_time / scope.duration) * progress_width
         scope.video.end_location = (scope.video.end_time / scope.duration) * progress_width
         scope.video.progress_width = progress_width
+
       }
 
       scope.calculateVideoStartTime = function(event, meta) {
@@ -1089,7 +1094,7 @@ angular.module('scalearAngularApp')
         scope.video.end_time = (meta.position.left / scope.video.progress_width) * scope.duration
         scope.player.controls.setVideoEndTime(scope.video.end_time)
         scope.player.controls.absoluteSeek(scope.video.end_time)
-
+      
       }
 
       scope.seekToQuiz = function(quiz) {
@@ -1132,6 +1137,7 @@ angular.module('scalearAngularApp')
           scope.elapsed_width = ((scope.current_time / scope.duration) * 100)
           scope.elapsed_head = scope.elapsed_width > 0.5 ? scope.elapsed_width - 0.45 : 0
           scope.elapsed_head = scope.elapsed_head > 99.4 ? 99.4 : scope.elapsed_head
+          if (scope.elapsed_head == 99.4 && scope.player.controls.vimeo) player.pause() 
         }
 
         scope.$apply()

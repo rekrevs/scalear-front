@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .factory('VideoInformation', ['$http', '$q', '$interval', function($http, $q, $interval) {
+  .factory('VideoInformation', ['$http', '$q', '$interval', '$rootScope', 'YTapiReqLog', function ($http, $q, $interval, $rootScope, YTapiReqLog) {
 
     var service = {
       youtube_video_information: {},
@@ -20,7 +20,8 @@ angular.module('scalearAngularApp')
         "&part=status,contentDetails,snippet"
     }
 
-    service.requestInfoFromYoutube=function(id) {
+    service.requestInfoFromYoutube = function (id, lecture_id, request_for) {
+      YTapiReqLog.registerRequest($rootScope.current_user.id , lecture_id,request_for)
       var deferred = $q.defer();
       var url = generateYoutubeApiVideoUrl(id)
       if(!service.youtube_video_information[url]) {

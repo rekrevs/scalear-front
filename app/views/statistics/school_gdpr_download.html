@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="styles/teacher/statistics.css" />
+<div class="admin-dates">
+    <div translate>gdpr.intro</div>
+    </br>
+    <span translate>gdpr.emails_comma_separated</span>
+    <span>
+      <input name="emails" type="text" ng-model="student_email" ng-required="true" ng-class="{error: errors.start_date}" style="display: inline;width: 25%;" />
+      <button id ='send_gdpr' ng-click="sendStudentsGdpr()" class="button medium dark-green"><span translate>gdpr.send_email</span></button>
+    </span>
+    <span >
+       <div  id='unprocessable_students' ng-show="unprocessable_students">
+         <span translate>gdpr.unprocessable_account</span> 
+           {{unprocessable_students}}
+        </div> 
+    </span>
+</div>

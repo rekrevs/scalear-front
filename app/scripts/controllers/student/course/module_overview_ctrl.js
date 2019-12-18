@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('studentModuleOverviewCtrl', ['$scope', '$state', 'Module','Page', function($scope, $state, Module, Page) {
     Page.setTitle('global.overview');
 
-    function getSummaryModule(module_id, course_id) { 
+    function getSummaryModule(module_id, course_id) {
       $scope.module_summary = {}
       $scope.module_summary.loading = { summary: true, online_quiz: true, discussion: true }
 

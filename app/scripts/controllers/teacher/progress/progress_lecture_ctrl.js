@@ -143,16 +143,30 @@ angular.module('scalearAngularApp')
 
 
     var getModuleCharts = function() {
-
-      Module.getModuleSummary({
-        module_id: $scope.module_id,
-        course_id: $scope.course_id
-      }, function(data) {
-          $scope.timeline["module"] = new Timeline()
-          // $scope.timeline["module"].add(0, 'module', data.module_data)
-        $scope.module_summary[$scope.module_id].loading.summary = false
-        angular.extend($scope.module_summary[$scope.module_id], data.module)
-      })
+     
+      var getModuleSummary = function(offset,limit){
+        $scope.offset = offset
+        $scope.limit = limit
+        Module.getModuleSummary({
+          module_id: $scope.module_id,
+          course_id: $scope.course_id,
+          offset: $scope.offset,
+          limit: $scope.limit
+        }, function(data) {
+            $scope.timeline["module"] = new Timeline()
+            // $scope.timeline["module"].add(0, 'module', data.module_data)
+          $scope.module_summary[$scope.module_id].loading.summary = false
+          angular.extend($scope.module_summary[$scope.module_id], data.module)
+          getRemainingModuleSummary()
+          })
+        var getRemainingModuleSummary = function () {
+          if ($scope.offset + $scope.limit <= $scope.students_count) {
+            getModuleSummary($scope.offset + $scope.limit, limit)
+          } else {
+          }
+        } 
+      }
+      getModuleSummary(0,100)
 
       Module.getOnlineQuizSummary({
         module_id: $scope.module_id,

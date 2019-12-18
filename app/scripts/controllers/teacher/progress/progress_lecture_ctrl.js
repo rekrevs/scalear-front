@@ -163,12 +163,11 @@ angular.module('scalearAngularApp')
           if ($scope.offset + $scope.limit <= $scope.students_count) {
             getModuleSummary($scope.offset + $scope.limit, limit)
           } else {
-
           }
         } 
       }
-        
       getModuleSummary(0,100)
+
       Module.getOnlineQuizSummary({
         module_id: $scope.module_id,
         course_id: $scope.course_id

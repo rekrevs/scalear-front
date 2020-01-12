@@ -2,14 +2,13 @@
 
 angular.module('scalearAngularApp')
   .controller('systemEmailCtrl', ['$scope', '$state', 'Course', '$stateParams', '$log', '$window', 'Page', '$modalInstance', 'ngDialog', function($scope, $state, Course, $stateParams, $log, $window, Page, $modalInstance, ngDialog) {
-
+    $scope.a='s'
     $window.scrollTo(0, 0);
     $scope.announcement = { emails: "" }
     $scope.updateEmailBody = function(){
       $scope.announcement.message = angular.element('#email_body')[0].innerHTML
     }
     $scope.confirmDialog = function() {
-
       ngDialog.open({
         template: '<div class="ngdialog-message">\
                     <h2><b><span>You are going to send a system wide email!</span></b></h2>\

@@ -70,8 +70,10 @@ angular.module('scalearAngularApp')
             loop:false
           };
           var video = Popcorn.HTMLVimeoVideoElement('#' + scope.id,vimeo_options)
+
           video.src = scope.url+"?background=0&autoplay=0&muted=0&loop=0"
           player = Popcorn(video);
+
           player_controls.vimeo = true;
           player.controls(scope.controls);
           player.autoplay(false);
@@ -344,6 +346,7 @@ angular.module('scalearAngularApp')
           }
         } else {
           player.video.playbackRate = speed
+          console.log(player)
         }
 
         VideoInformation.speed = speed
@@ -897,9 +900,9 @@ angular.module('scalearAngularApp')
       }
 
       scope.loadCaptionTracks = function(){
-        if (!scope.captionTracks){          
-          scope.captionTracks = player.video.getCaptionTracks();
-        }
+        // if (!scope.captionTracks){          
+        //   scope.captionTracks = player.video.getCaptionTracks();
+        // }
       }
 
       scope.setCaptionTrack = function(track){

@@ -30,7 +30,7 @@
         vimeoIFrame.contentWindow.postMessage( data, url );
       }
   
-      var methods = ( "play pause paused seekTo unload getCurrentTime getDuration " +
+      var methods = ( "play pause paused seekTo unload getCurrentTime getDuration setPlayBackRate getPlayBackRate" +
                       "getVideoEmbedCode getVideoHeight getVideoWidth getVideoUrl " +
                       "getColor setColor setLoop getVolume setVolume addEventListener" ).split(" ");
       methods.forEach( function( method ) {
@@ -71,7 +71,8 @@
           duration: NaN,
           ended: false,
           paused: true,
-          error: null
+          error: null,
+          playbackRate:2
         },
         playerReady = false,
         playerUID = Popcorn.guid(),
@@ -81,7 +82,7 @@
         timeUpdateInterval,
         currentTimeInterval,
         lastCurrentTime = 0;
-  
+
       // Namespace all events we'll produce
       self._eventNamespace = Popcorn.guid( "HTMLVimeoVideoElement::" );
   
@@ -298,7 +299,10 @@
             player.addEventListener( "loadProgress" );
             player.addEventListener( "pause" );
             player.setVolume( 0 );
+            player.setPlayBackRate(2)
+            console.log(player)
             player.play();
+
             break;
           case "loadProgress":
             var duration = parseFloat( data.data.duration );
@@ -407,7 +411,7 @@
             "portrait=0",
             "loop=0"
           ];
-  
+
         // Sync loop and autoplay based on URL params, and delete.
         // We'll manage both internally.
         impl.loop = queryKey.loop === "1" || impl.loop;
@@ -434,17 +438,32 @@
         elem.allowFullScreen = true;
         parent.appendChild( elem );
         elem.src = src;
-  
+        elem.playbackRate = 2;
+      
         window.addEventListener( "message", startupMessage, false );
       }
-  
+
       function onVolume( aValue ) {
         if( impl.volume !== aValue ) {
           impl.volume = aValue;
           self.dispatchEvent( "volumechange" );
         }
       }
+      function setPlayBackRate( aValue ) {
+        impl.playbackRate = aValue;
   
+        if( !playerReady ) {
+          addPlayerReadyCallback( function() {
+            setPlayBackRate( aValue );
+          });
+          return;
+        }
+        player.setPlayBackRate( aValue );
+        self.dispatchEvent( "speedchange" );
+      }
+      function getPlayBackRate(){
+        return impl.playbackRate
+      }
       function setVolume( aValue ) {
         impl.volume = aValue;
   
@@ -596,7 +615,17 @@
             setMuted( self._util.isAttributeSet( aValue ) );
           }
         },
-  
+        playbackRate:{
+          set: function(aValue){
+            var pb = {impl:impl.playbackRate,self:self.playbackRate}
+            console.log('pb:',pb)
+            // self.playbackRate = aValue
+            setPlayBackRate(aValue)
+          },
+          get: function(){
+            return getPlayBackRate()
+          }
+        },
         error: {
           get: function() {
             return impl.error;
@@ -606,7 +635,7 @@
   
       self._canPlaySrc = Popcorn.HTMLVimeoVideoElement._canPlaySrc;
       self.canPlayType = Popcorn.HTMLVimeoVideoElement.canPlayType;
-  
+
       return self;
     }
   

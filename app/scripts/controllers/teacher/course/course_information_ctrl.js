@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', '$modal', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel, $modal) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$state', '$translate', '$log', '$window', 'Page', 'ScalearUtils', 'ContentNavigator', 'ErrorHandler', '$location', 'CourseModel', 'TeacherModel', '$modal','Course', function($scope, $state, $translate, $log, $window, Page, ScalearUtils, ContentNavigator, ErrorHandler, $location, CourseModel, TeacherModel, $modal,Course) {
 
     $window.scrollTo(0, 0);
     $scope.in_delete = false;
@@ -68,6 +68,15 @@ angular.module('scalearAngularApp')
             ErrorHandler.showMessage($translate.instant("error_message.export_course"), 'errorMessage', 4000, 'success');
           }
         })
+    }
+    $scope.sendCourseToTeacherMail = function() {
+      Course.sendCourseToTeacherMail({
+        course_id:  $scope.course.id
+      },function(response){
+        if(response.notice) {
+          ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');
+        }
+      })
     }
 
     //teachers part

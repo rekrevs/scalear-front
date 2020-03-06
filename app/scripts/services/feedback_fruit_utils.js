@@ -1,33 +1,33 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .service('FeedbackFruitUtils', ['$rootScope', '$q', function($rootScope, $q) {
-      var getAccessToken = function () {
-          var deferred = $q.defer()
-          var data = "client_id=ScalableLearning&" +
-              "client_secret=of1Xxlp00yrWNOsnri2sSA&" +
-              "grant_type=password&" +
-              "username=poussy@novelari.com&" +
-              "password=poussy123&" +
-              "scope=api.users.read,api.activity_groups.write,api.activity_groups.read,api.emails.write,api.emails.read,api.invitations.write,api.invitations.read,api.videos.write,api.videos.read,api.video_fragments.write,api.video_fragments.read,api.open_questions.write,api.open_questions.read,api.multiple_choice_questions.write,api.multiple_choice_questions.read,api.annotations.write,api.annotations.read"
-          //get access token
-          var access_token
-          var xhr = new XMLHttpRequest()
-          xhr.withCredentials = true
-          xhr.open('POST', 'https://staging-accounts.feedbackfruits.com/auth/token')
-          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-          xhr.onreadystatechange = function () {
-              if (xhr.readyState == 4 && xhr.status == 200) {
-                  var response = JSON.parse(xhr.responseText);
-                  access_token = response.access_token
-                  console.log(access_token)
-                  deferred.resolve(access_token)
+    .service('FeedbackFruitUtils', ['$rootScope', '$q', 'Lecture', function ($rootScope, $q, Lecture) {
+    //   var getAccessToken = function () {
+    //       var deferred = $q.defer()
+    //       var data = "client_id=ScalableLearning&" +
+    //           "client_secret=of1Xxlp00yrWNOsnri2sSA&" +
+    //           "grant_type=password&" +
+    //           "username=poussy@novelari.com&" +
+    //           "password=poussy123&" +
+    //           "scope=api.users.read,api.activity_groups.write,api.activity_groups.read,api.emails.write,api.emails.read,api.invitations.write,api.invitations.read,api.videos.write,api.videos.read,api.video_fragments.write,api.video_fragments.read,api.open_questions.write,api.open_questions.read,api.multiple_choice_questions.write,api.multiple_choice_questions.read,api.annotations.write,api.annotations.read"
+    //       //get access token
+    //       var access_token
+    //       var xhr = new XMLHttpRequest()
+    //       xhr.withCredentials = true
+    //       xhr.open('POST', 'https://staging-accounts.feedbackfruits.com/auth/token')
+    //       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    //       xhr.onreadystatechange = function () {
+    //           if (xhr.readyState == 4 && xhr.status == 200) {
+    //               var response = JSON.parse(xhr.responseText);
+    //               access_token = response.access_token
+    //               console.log(access_token)
+    //               deferred.resolve(access_token)
                   
-              }
-          }
-          xhr.send(data);
-          return deferred.promise
-      }
+    //           }
+    //       }
+    //       xhr.send(data);
+    //       return deferred.promise
+    //   }
       // get current user id
       var getCurrentUserId = function (access_token) {
           var user_id
@@ -62,7 +62,6 @@ angular.module('scalearAngularApp')
                   console.log("activity_group_id:", activity_group_id)
                   console.log("activity_group_response:", activity_group_response)
                   deferred.resolve(activity_group_id)
-
               }
           }
           xhr.send(blob)
@@ -220,7 +219,7 @@ angular.module('scalearAngularApp')
 
           },
           exportVideoToFbf: function (url) {
-              getAccessToken().then(function (access_token) {
+            Lecture.getFeedbackFruitAccessToken({}).then(function (access_token) {
                 //   console.log("access_token:", access_token)
                   createActivityGroupId(access_token).then(function (activity_group_id) {
                     //   console.log("activity_group_id:", activity_group_id)

@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
       "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
-      "getFeedbackFruitAccessToken":{ method: 'GET', ignoreLoadingBar: true, params: { action: 'get_feedbackFruit_access_token' }, headers: headers }
+      "exportLectureToFeedbackFruit":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'export_lecture_to_feedbackfruit' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function (Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -346,7 +346,17 @@ angular.module('scalearAngularApp')
         destroy: destroy
       })
     }
-
+    function exportLectureFBF(){
+      return Lecture.exportLectureToFeedbackFruit({
+        course_id:1,
+        lecture_id:2
+      })
+        .$promise
+        .then(function (data) {
+       
+          return true
+        })
+    }
     return {
       createInstance: createInstance,
       isInstance: isInstance,
@@ -354,7 +364,8 @@ angular.module('scalearAngularApp')
       getSelectedLecture: getSelectedLecture,
       setSelectedLecture: setSelectedLecture,
       create: create,
-      paste: paste
+      paste: paste,
+      exportLectureFBF:exportLectureFBF
     }
 
   }])

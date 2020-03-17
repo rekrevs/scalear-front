@@ -93,6 +93,6 @@ angular.module('scalearAngularApp')
     //       $scope.lecture_scroll_disable = true
     //   }
 
-    $scope.getAllItemsProgress(0, 5)
+    $scope.getAllItemsProgress(0, 1)
 
   }]);

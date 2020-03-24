@@ -31,6 +31,7 @@ angular.module('scalearAngularApp')
       'getModuleProgress': { method: 'GET', ignoreLoadingBar: true, params: { action: 'module_progress_angular' }, headers: headers },
       'getTotalChart': { method: 'GET', params: { action: 'get_total_chart_angular' }, headers: headers },
       'getCourseware': { method: 'GET', params: { action: 'courseware_angular' }, headers: headers },
+      'getCurrentStudentGroups': { method: 'GET', params: { action: 'get_current_student_groups' }, headers: headers },
       'getEnrolledStudents': { method: 'GET', params: { action: 'enrolled_students' }, headers: headers, isArray: true },
       'exportCsv': { method: 'GET', params: { action: 'export_csv' }, headers: headers },
       'exportStudentCsv': { method: 'GET', params: { action: 'export_student_csv' }, headers: headers },
@@ -121,15 +122,31 @@ angular.module('scalearAngularApp')
     }
 
     function getStudentData(id) {
-      return Course.getCourseware({ course_id: id })
+
+      function getGroups(){
+        return Course.getCurrentStudentGroups({ first_half: true })
         .$promise
         .then(function(data) {
-          // data.course = JSON.parse(data.course);
-          data.course.next_item = data.next_item
+          // data.course.next_item = data.next_item
+          // console.log('data.next_item',data.next_item)
+          console.log(data)
           $rootScope.$broadcast("Course:set_modules", data.groups)
-          return data.course;
+          return data.groups;
         })
-      return deferred.promise;
+      }
+    
+      return Course.getCourseware({ course_id: id })
+      .$promise
+      .then(function(data) {
+        // data.course = JSON.parse(data.course);
+        var var_data_groups = getGroups()
+        var data_course = data.course
+        console.log("var_data_groups:",var_data_groups)
+        console.log("data_course",data_course)
+        return data_course;
+      })
+      
+
     }
 
     function setCourse(course_data) {

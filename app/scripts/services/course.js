@@ -31,7 +31,6 @@ angular.module('scalearAngularApp')
       'getModuleProgress': { method: 'GET', ignoreLoadingBar: true, params: { action: 'module_progress_angular' }, headers: headers },
       'getTotalChart': { method: 'GET', params: { action: 'get_total_chart_angular' }, headers: headers },
       'getCourseware': { method: 'GET', params: { action: 'courseware_angular' }, headers: headers },
-      'getCurrentStudentGroups': { method: 'GET', params: { action: 'get_current_student_groups' }, headers: headers },
       'getEnrolledStudents': { method: 'GET', params: { action: 'enrolled_students' }, headers: headers, isArray: true },
       'exportCsv': { method: 'GET', params: { action: 'export_csv' }, headers: headers },
       'exportStudentCsv': { method: 'GET', params: { action: 'export_student_csv' }, headers: headers },

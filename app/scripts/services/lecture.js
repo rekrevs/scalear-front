@@ -346,17 +346,17 @@ angular.module('scalearAngularApp')
         destroy: destroy
       })
     }
-    function exportLectureFBF(){
-      return Lecture.exportLectureToFeedbackFruit({
-        course_id:1,
-        lecture_id:2
-      })
-        .$promise
-        .then(function (data) {
-       
-          return true
-        })
-    }
+    // function exportLectureFBF(){
+    //   return Lecture.exportLectureToFeedbackFruit({
+    //     course_id:1,
+    //     lecture_id:2
+    //   })
+    //     .$promise
+    //     .then(function (data) {
+    //       console.log(data)
+    //       return true
+    //     })
+    // }
     return {
       createInstance: createInstance,
       isInstance: isInstance,
@@ -364,8 +364,8 @@ angular.module('scalearAngularApp')
       getSelectedLecture: getSelectedLecture,
       setSelectedLecture: setSelectedLecture,
       create: create,
-      paste: paste,
-      exportLectureFBF:exportLectureFBF
+      paste: paste
+      // exportLectureFBF:exportLectureFBF
     }
 
   }])

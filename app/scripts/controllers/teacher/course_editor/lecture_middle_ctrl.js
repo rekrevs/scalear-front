@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', 'MobileDetector', 'Lecture',function ($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation, VimeoModel, MobileDetector,Lecture) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', 'MobileDetector', 'Lecture', 'ErrorHandler',function ($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation, VimeoModel, MobileDetector,Lecture,ErrorHandler) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -64,11 +64,24 @@ angular.module('scalearAngularApp')
     setUpShortcuts()
     setUpEventsListeners()
     $scope.exportVideo = function () {
-      console.log('in export video')
+      ErrorHandler.showMessage("video export to feedbackFruit started", 'errorMessage', 4000, 'success');
+      angular.element('#export_button_2_fbf')[0].disabled = true
+      var tooltip = angular.element('.tooltip')[0]
+      if (tooltip){
+        tooltip.remove()
+      }
       Lecture.exportLectureToFeedbackFruit({
         course_id: $scope.course.id,
         lecture_id: $scope.lecture.id
-      },{},{})
+      },{}
+      ,function(response){
+        angular.element('#export_button_2_fbf')[0].disabled = false
+        if (response.notice){
+          ErrorHandler.showMessage("video export to feedbackFruit accomplished", 'errorMessage', 4000, 'success');
+        } else {
+          ErrorHandler.showMessage("video export failed", 'errorMessage', 4000, 'error');
+        }
+      })
     };
 
     

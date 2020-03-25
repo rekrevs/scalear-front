@@ -1001,6 +1001,7 @@ var translation_sv={
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",
             export_as: "Exportera anonymiserade kursdata",
+            export_as_canvas: "Exporterar kurs till Canvas Package",
             invite: "Bjud in",
             send_email_reminder: "Skicka ett mail påminnelser",
         },

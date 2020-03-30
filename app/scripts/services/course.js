@@ -121,17 +121,37 @@ angular.module('scalearAngularApp')
     }
 
     function getStudentData(id) {
-      return Course.getCourseware({ course_id: id })
+      return Course.getCourseware({ course_id: id ,first_half:true})
         .$promise
         .then(function(data) {
-          // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          $rootScope.$broadcast("Course:set_modules", data.groups)
-          return data.course;
+          var first_half_groups = data.groups
+          var data_course = data.course
+          return Course.getCourseware({ course_id: id ,first_half:false})
+          .$promise
+          .then(function(data) {
+            var second_half_groups = data.groups
+            var all_groups = first_half_groups.concat(second_half_groups)
+            $rootScope.$broadcast("Course:set_modules", all_groups)
+            return data_course
+          })
+          
         })
-      return deferred.promise;
     }
 
+    // function getStudentData(id) {
+    //   return Course.getCourseware({ course_id: id })
+    //     .$promise
+    //     .then(function(data) {
+    //       // data.course = JSON.parse(data.course);
+    //       data.course.next_item = data.next_item
+    //       console.log("data.next_item",data.next_item)
+    //       // console.log(data.groups)
+    //       $rootScope.$broadcast("Course:set_modules", data.groups)
+    //       return data.course;
+    //     })
+    //   return deferred.promise;
+    // }
     function setCourse(course_data) {
       selected_course = course_data
     }

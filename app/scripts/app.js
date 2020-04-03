@@ -378,6 +378,11 @@ angular.module('scalearAngularApp')
           templateUrl: '/views/teacher/help/teacher_getting_started.html',
           controller: 'TeacherGettingStartedCtrl'
         })
+        .state('future', {
+            url: '/future',
+            templateUrl: '/views/future.html',
+            // controller: 'FutureCtrl'
+        })
         .state('preview', {
           url: '/preview',
           params : { course_id: null, module_id: null, lecture_id: null,quiz_id:null,time:null, prevState:null },

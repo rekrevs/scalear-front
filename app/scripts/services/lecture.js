@@ -36,7 +36,8 @@ angular.module('scalearAngularApp')
       "checkIfInDistancePeerSession": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_in_distance_peer_session' }, headers: headers },
       "changeStatusDistancePeer": { method: 'GET', ignoreLoadingBar: true, params: { action: 'change_status_distance_peer' }, headers: headers },
       "checkIfDistancePeerStatusIsSync": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_status_is_sync' }, headers: headers },
-      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers }
+      "checkIfDistancePeerIsAlive": { method: 'GET', ignoreLoadingBar: true, params: { action: 'check_if_distance_peer_is_alive' }, headers: headers },
+      "exportLectureToFeedbackFruit":{ method: 'POST', ignoreLoadingBar: true, params: { action: 'export_lecture_to_feedbackfruit' }, headers: headers }
     });
 
   }]).factory("LectureModel", ['Lecture', '$rootScope', 'VideoInformation', '$translate', 'Timeline', 'ScalearUtils', '$q', 'ModuleModel', function (Lecture, $rootScope, VideoInformation, $translate, Timeline, ScalearUtils, $q, ModuleModel) {
@@ -345,7 +346,17 @@ angular.module('scalearAngularApp')
         destroy: destroy
       })
     }
-
+    // function exportLectureFBF(){
+    //   return Lecture.exportLectureToFeedbackFruit({
+    //     course_id:1,
+    //     lecture_id:2
+    //   })
+    //     .$promise
+    //     .then(function (data) {
+    //       console.log(data)
+    //       return true
+    //     })
+    // }
     return {
       createInstance: createInstance,
       isInstance: isInstance,
@@ -354,6 +365,7 @@ angular.module('scalearAngularApp')
       setSelectedLecture: setSelectedLecture,
       create: create,
       paste: paste
+      // exportLectureFBF:exportLectureFBF
     }
 
   }])

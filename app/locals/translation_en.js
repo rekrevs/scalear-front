@@ -636,6 +636,7 @@ var translation_en={
     student_cancelled:'{{name}} cancelled the invitation',
   },
   editor:{
+    export_video: "Export video to feedbackFruit",
     explanation: "Explanation",
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",
@@ -675,6 +676,7 @@ var translation_en={
     title:"@:global.title",
     annotation:"Annotation",
     tooltip:{
+      export_video:"Click on this button to create a copy of this lecture on feedbackFuit on your account",
       invisible: "Not currently visible to students.",
       visible_quiz: "Published: visible to students.",
       invisible_quiz:"Unpublished: not visible to students.",

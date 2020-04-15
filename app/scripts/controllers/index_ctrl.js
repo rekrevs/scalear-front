@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
     $scope.changeLanguage($translate.use());
 
     $scope.closeBanner = function(){
-      angular.element('#banner').remove()
+      angular.element('#banner_container').remove()
     }
     //Google Analytics
     ga('create', scalear_api.ga_token);

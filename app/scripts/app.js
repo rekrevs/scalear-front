@@ -381,7 +381,7 @@ angular.module('scalearAngularApp')
         .state('future', {
             url: '/future',
             templateUrl: '/views/future.html',
-            // controller: 'FutureCtrl'
+            controller: 'FutureCtrl'
         })
         .state('preview', {
           url: '/preview',

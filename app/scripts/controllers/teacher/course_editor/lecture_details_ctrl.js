@@ -118,13 +118,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.exportVideo = function () {
-      // ErrorHandler.showMessage("video export to feedbackFruit started", 'errorMessage', 4000, 'success');
-      // angular.element('#export_button_2_fbf')[0].disabled = true
-      // var tooltip = angular.element('.tooltip')[0]
-      // if (tooltip){
-      //   tooltip.remove()
-      // }
-      console.log($rootScope)
       Lecture.exportLectureToFeedbackFruit({
         course_id: $scope.lecture.course_id,
         lecture_id: $scope.lecture.id
@@ -153,7 +146,6 @@ angular.module('scalearAngularApp')
       $modal.open({
         templateUrl: '/views/teacher/course_editor/trim_modal.html',
         controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
-          console.log('url:', url)
           $scope.hideKeepTrimBtn = url == 'none' ? true : false
           $scope.trim = function () {
             var isVimeo = VideoInformation.isVimeo(lecture.url)
@@ -162,7 +154,6 @@ angular.module('scalearAngularApp')
                 lecture.duration = duration
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
-                console.log(duration)
                 lecture.update().then(function () {
                   $rootScope.$broadcast("update_module_time", lecture.group_id)
                   $rootScope.$broadcast("start_trim_video")

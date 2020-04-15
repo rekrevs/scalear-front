@@ -8,13 +8,6 @@
       </div>
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
-      <tr >
-        <div style='text-align: center'>
-          <button id="export_button_2_fbf" class="button small" style="margin:auto;display: inline-block;" ng-click="exportVideo()" tooltip="{{'editor.tooltip.export_video' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true"  ng-hide="lecture.url=='none' || (editing_mode && editing_type=='video') || transcoding">
-              <span translate>editor.export_video</span>
-            </button>
-       </div>
-      </tr>
       <tr>
         <td class="right-border small-4"><span translate>editor.details.title</span>:</td>
         <td class="small-8">
@@ -30,6 +23,22 @@
           <details-url id="url" transcoding='transcoding' value="lecture.url" dropped-file="droppedFile.files" terminate-transcoding="cancelTranscoding()" show-upload-modal="showUploadModal()" get-vimeo-upload-token="getVimeoUploadAccessToken()" save="updateLectureUrl()" validate="validateLecture" column="url">
             <details-url>
         </td>
+      </tr>
+      <tr>
+        <td class="right-border small-4">
+          Export lecture:
+        </td>
+        <td>
+          <div style='text-align: center'> 
+          <button id="export_button_2_fbf" class="button small"
+              ng-click="exportVideo()" tooltip="{{'editor.tooltip.export_video' | translate}}" tooltip-placement="bottom"
+              tooltip-append-to-body="true"
+              ng-hide="lecture.url=='none' || (editing_mode && editing_type=='video') || transcoding">
+              <span translate>editor.export_video</span>
+            </button> 
+         </div>
+        </td>
+      
       </tr>
       <!-- <tr>
         <td class="right-border small-4">Start/Stop</td>

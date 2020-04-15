@@ -121,7 +121,6 @@ angular.module('scalearAngularApp')
       $modal.open({
         templateUrl: '/views/teacher/course_editor/trim_modal.html',
         controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
-          console.log('url:', url)
           $scope.hideKeepTrimBtn = url == 'none' ? true : false
           $scope.trim = function () {
             var isVimeo = VideoInformation.isVimeo(lecture.url)
@@ -130,7 +129,6 @@ angular.module('scalearAngularApp')
                 lecture.duration = duration
                 lecture.start_time = 0
                 lecture.end_time = lecture.duration
-                console.log(duration)
                 lecture.update().then(function () {
                   $rootScope.$broadcast("update_module_time", lecture.group_id)
                   $rootScope.$broadcast("start_trim_video")

@@ -93,6 +93,7 @@ var translation_en={
     change_password_confirmation: "You have successfully changed your password.",
     confirm_change_email: "You have successfully changed your email.",
     export_course: "Your anonymized course data will be emailed to you shortly." ,
+    export_course_cc:"Your course material will be emailed to you shortly as canvas common cartridge package",
     export_student:"Your student list will be emailed to you shortly.",
     export_school_administration: "Statistics will be exported to CSV and sent to your Email.",
     another_marker: "There is another marker at the same time",
@@ -1005,7 +1006,8 @@ var translation_en={
         button:{
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
-            export_as: "Export anonymized course data",
+            export_as: "Export Anonymized Course Data",
+            export_as_canvas: "Export Course to Canvas Package",
             invite: "Invite to Join",
             send_email_reminder: "Send email reminders",
         },

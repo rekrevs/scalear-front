@@ -1007,7 +1007,7 @@ var translation_en={
             add_teacher: "Add Teacher",
             remove_teacher: "Remove Teacher",
             export_as: "Export Anonymized Course Data",
-            export_as_canvas: "Export Course to Canvas Packag",
+            export_as_canvas: "Export Course to Canvas Package",
             invite: "Invite to Join",
             send_email_reminder: "Send email reminders",
         },

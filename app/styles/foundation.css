@@ -6219,4 +6219,44 @@ th.hide-for-touch {
 
   th.show-for-print {
     display: table-cell !important; } }
-
+    @media only screen and (max-width: 40.063em) {
+      #banner_content{
+        background-color: #d7270a;
+        color: white;
+        font-size: 11px;
+        padding: 0.5%;
+        margin-top: 10px;
+        padding-right: 1%;
+        padding-left: 1%;
+        padding-right: 7%!important;
+        text-align: justify;
+        position: relative;
+      }
+      #close_banner{
+        color: white;
+        position: absolute;
+        right: 1%;
+        top: 0%!important;
+      }
+    }
+#banner_container{
+position: relative;
+}
+#banner_content{
+  background-color: #d7270a;
+  color: white;
+  font-size: 11px;
+  padding: 0.5%;
+  margin-top: 10px;
+  padding-right: 1%;
+  padding-left: 1%;
+  padding-right: 4%;
+  text-align: justify;
+  position: relative;
+}
+#close_banner{
+  color: white;
+  position: absolute;
+  right: 1%;
+  top: 12%;
+}

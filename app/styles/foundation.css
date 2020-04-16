@@ -6225,18 +6225,20 @@ th.hide-for-touch {
         color: white;
         font-size: 11px;
         padding: 0.5%;
-        margin-top: 10px;
         padding-right: 1%;
         padding-left: 1%;
         padding-right: 7%!important;
         text-align: justify;
         position: relative;
+        margin-top: 2%;
+        z-index: 10;
       }
       #close_banner{
         color: white;
         position: absolute;
         right: 1%;
         top: 0%!important;
+        z-index: 10;
       }
     }
 #banner_container{
@@ -6247,7 +6249,6 @@ position: relative;
   color: white;
   font-size: 11px;
   padding: 0.5%;
-  margin-top: 10px;
   padding-right: 1%;
   padding-left: 1%;
   padding-right: 4%;

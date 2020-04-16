@@ -18,7 +18,6 @@ angular.module('scalearAngularApp')
         $rootScope.$watch('preview_as_student', function() {
           scope.preview_as_student = $rootScope.preview_as_student
         })
-
         scope.logout = function() {
           $rootScope.busy_loading = true;
           $timeout(function() {

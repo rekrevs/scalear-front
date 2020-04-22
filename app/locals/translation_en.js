@@ -635,7 +635,7 @@ var translation_en={
     student_cancelled:'{{name}} cancelled the invitation',
   },
   editor:{
-    export_video: "Export video to feedbackFruit",
+    export_video: "Export video to FeedbackFruits",
     explanation: "Explanation",
     quiz_question: "Quiz Question",
     quiz_time: "Quiz Time",

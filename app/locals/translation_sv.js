@@ -630,7 +630,7 @@ var translation_sv={
     student_cancelled:'{{name}} avbrutit inbjudan.',
   },
   editor:{
-    export_video: "Exportera videon feedbackFruit",
+    export_video: "Exportera videon FeedbackFruits",
     explanation: "Förklaring",
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",

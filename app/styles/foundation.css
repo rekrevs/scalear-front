@@ -6247,12 +6247,13 @@ position: relative;
 #banner_content{
   background-color: #d7270a;
   color: white;
-  font-size: 11px;
+  font-weight: normal;
+  font-size: 14px;
   padding: 0.5%;
   padding-right: 1%;
   padding-left: 1%;
   padding-right: 4%;
-  text-align: justify;
+  text-align: center;
   position: relative;
 }
 #close_banner{

@@ -69,9 +69,10 @@ angular.module('scalearAngularApp')
           }
         })
     }
-    $scope.sendCourseToTeacherMail = function() {
+    $scope.sendCourseToTeacherMail = function(fbf) {
       Course.sendCourseToTeacherMail({
-        course_id:  $scope.course.id
+        course_id:  $scope.course.id,
+        export_lec_2_fbf: fbf.with_fbf,
       },function(response){
         if(response.notice) {
           ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');

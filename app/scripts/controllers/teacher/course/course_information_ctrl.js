@@ -70,14 +70,29 @@ angular.module('scalearAngularApp')
         })
     }
     $scope.sendCourseToTeacherMail = function(fbf) {
-      Course.sendCourseToTeacherMail({
-        course_id:  $scope.course.id,
-        export_lec_2_fbf: fbf.with_fbf,
-      },function(response){
-        if(response.notice) {
-          ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');
-        }
-      })
+      checkToExport(fbf, $scope.course.id)
+    }
+    function checkToExport(fbf, course_id) {
+      $modal.open({
+        templateUrl: '/views/teacher/course_editor/export_modal.html',
+        controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
+          $scope.course_export_dialogue = true
+          $scope.cancelExport = function () {
+            $modalInstance.close();
+          }
+          $scope.beginExport = function () {
+            $modalInstance.close();
+            Course.sendCourseToTeacherMail({
+              course_id: course_id,
+              export_lec_2_fbf: fbf.with_fbf,
+            }, function (response) {
+              if (response.notice) {
+                ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');
+              }
+            })
+          }
+        }]
+      });
     }
 
     //teachers part

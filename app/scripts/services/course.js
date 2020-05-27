@@ -33,9 +33,11 @@ angular.module('scalearAngularApp')
       'getCourseware': { method: 'GET', params: { action: 'courseware_angular' }, headers: headers },
       'getEnrolledStudents': { method: 'GET', params: { action: 'enrolled_students' }, headers: headers, isArray: true },
       'exportCsv': { method: 'GET', params: { action: 'export_csv' }, headers: headers },
+    
       'exportStudentCsv': { method: 'GET', params: { action: 'export_student_csv' }, headers: headers },
       'currentCourses': { method: 'GET',isArray: false, headers: headers, params: { action: 'current_courses' } },
-      'exportModuleProgress': { method: 'GET', headers: headers, params: { action: 'export_modules_progress' } },
+      'exportModuleProgress': { method: 'GET', headers: headers, params: { action: 'export_modules_progress' } }, //
+      'sendCourseToTeacherMail': { method: 'GET', headers: headers, params: { action: 'send_course_to_mail' } }, //
       'systemWideEmail': { method: 'POST', params: { action: 'send_system_announcement' }, headers: headers },
       'getRole': { method: 'GET', headers: headers, params: { action: 'get_role' } },
     });
@@ -121,17 +123,37 @@ angular.module('scalearAngularApp')
     }
 
     function getStudentData(id) {
-      return Course.getCourseware({ course_id: id })
+      return Course.getCourseware({ course_id: id ,first_half:true})
         .$promise
         .then(function(data) {
-          // data.course = JSON.parse(data.course);
           data.course.next_item = data.next_item
-          $rootScope.$broadcast("Course:set_modules", data.groups)
-          return data.course;
+          var first_half_groups = data.groups
+          var data_course = data.course
+          return Course.getCourseware({ course_id: id ,first_half:false})
+          .$promise
+          .then(function(data) {
+            var second_half_groups = data.groups
+            var all_groups = first_half_groups.concat(second_half_groups)
+            $rootScope.$broadcast("Course:set_modules", all_groups)
+            return data_course
+          })
+          
         })
-      return deferred.promise;
     }
 
+    // function getStudentData(id) {
+    //   return Course.getCourseware({ course_id: id })
+    //     .$promise
+    //     .then(function(data) {
+    //       // data.course = JSON.parse(data.course);
+    //       data.course.next_item = data.next_item
+    //       console.log("data.next_item",data.next_item)
+    //       // console.log(data.groups)
+    //       $rootScope.$broadcast("Course:set_modules", data.groups)
+    //       return data.course;
+    //     })
+    //   return deferred.promise;
+    // }
     function setCourse(course_data) {
       selected_course = course_data
     }
@@ -234,7 +256,7 @@ angular.module('scalearAngularApp')
         getAnnouncements: getAnnouncements,
         getStudentDueDateEmail: getStudentDueDateEmail,
         updateStudentDueDateEmail: updateStudentDueDateEmail,
-        updateTeacherDiscussionEmail: updateTeacherDiscussionEmail
+        updateTeacherDiscussionEmail: updateTeacherDiscussionEmail,
       })
     }
 

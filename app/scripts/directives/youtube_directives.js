@@ -342,7 +342,8 @@ angular.module('scalearAngularApp')
           if (player_controls.getSpeeds().indexOf(speed) != -1) {
             player.media.setSpeed(speed)
           }
-        } else {
+        }
+        else {
           player.video.playbackRate = speed
         }
 

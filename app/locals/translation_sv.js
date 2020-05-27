@@ -630,6 +630,7 @@ var translation_sv={
     student_cancelled:'{{name}} avbrutit inbjudan.',
   },
   editor:{
+    export_video: "Exportera videon FeedbackFruits",
     explanation: "Förklaring",
     quiz_question: "Quiz-fråga",
     quiz_time: "Quiz-tidpunkt",
@@ -1000,7 +1001,8 @@ var translation_sv={
         button:{
             add_teacher: "Lägg till lärare",
             remove_teacher: "Ta bort lärare",
-            export_as: "Exportera anonymiserade kursdata",
+            export_as: "Exportera Anonymiserade Kursdata",
+            export_as_canvas: "Exporterar kurs till Canvas Package",
             invite: "Bjud in",
             send_email_reminder: "Skicka ett mail påminnelser",
         },

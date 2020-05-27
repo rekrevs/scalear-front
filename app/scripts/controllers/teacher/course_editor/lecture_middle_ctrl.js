@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', 'MobileDetector', function ($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation, VimeoModel, MobileDetector) {
+  .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$translate', '$log', '$rootScope', '$timeout', '$q', 'DetailsNavigator', 'ngDialog', 'ItemsModel', 'VideoQuizModel', 'ScalearUtils', 'MarkerModel', '$urlRouter', 'VideoInformation', 'VimeoModel', 'MobileDetector', 'Lecture', 'ErrorHandler',function ($state, $stateParams, $scope, $translate, $log, $rootScope, $timeout, $q, DetailsNavigator, ngDialog, ItemsModel, VideoQuizModel, ScalearUtils, MarkerModel, $urlRouter, VideoInformation, VimeoModel, MobileDetector,Lecture,ErrorHandler) {
 
     $scope.lecture = ItemsModel.getLecture($stateParams.lecture_id)
     ItemsModel.setSelectedItem($scope.lecture)
@@ -60,10 +60,10 @@ angular.module('scalearAngularApp')
       msg: "error_message.got_some_errors"
     }
     $scope.hide_alerts = true;
-
+    
     setUpShortcuts()
     setUpEventsListeners()
-
+    
     $scope.lecture_player.events.onMeta = function() {
       // update duration for all video types.
       var total_duration = $scope.lecture_player.controls.getDuration()
@@ -690,5 +690,5 @@ angular.module('scalearAngularApp')
       removeShortcuts()
       listnerDeleteVideo()
     })
-
+    
   }]);

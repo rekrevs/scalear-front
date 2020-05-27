@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('lectureProgressCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$log', 'Lecture', 'Quiz', 'ModuleModel', function($scope, $stateParams, $timeout, Module, $log, Lecture, Quiz, ModuleModel) {
-
+    
     $scope.module = ModuleModel.getSelectedModule()
     $scope.getAllItemsProgress = function(offset, limit) {
       $scope.lecture_limit = limit
@@ -93,6 +93,6 @@ angular.module('scalearAngularApp')
     //       $scope.lecture_scroll_disable = true
     //   }
 
-    $scope.getAllItemsProgress(0, 20)
+    $scope.getAllItemsProgress(0, 1)
 
   }]);

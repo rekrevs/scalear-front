@@ -55,8 +55,20 @@
     <![endif]-->
      <div ui-view="landing"></div>
      <span ng-if="!('landing'| includedByState) && !('home'| includedByState) ">
-         <header>
-            <main-navigation user="current_user" teacher-courses="current_teacher_courses" student-courses="current_student_courses"></main-navigation>
+        <header>
+            <main-navigation user="current_user" teacher-courses="current_teacher_courses"
+                student-courses="current_student_courses"></main-navigation>
+            <div id='banner_container'>
+                <div id='banner_content'>
+                    <i class="fas fa-exclamation-triangle" style="color:white"></i>
+                    ScalableLearning will be shutting down at the end of December 2020.
+                    For information on how to export your course to other platforms please click <a href='#/future' style="color: white !important;
+                            text-decoration: underline;"> here</a>.
+                </div>
+                <div id='close_banner'>
+                    <i class="fas fa-times-circle" ng-click='closeBanner()'></i>
+                </div>
+            </div>
         </header>
         <div id="main" role="main">
             <div class="header">
@@ -95,7 +107,7 @@
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     </script>
-
+    <script src="https://kit.fontawesome.com/fb66b677a5.js" crossorigin="anonymous"></script>  
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 -    <!-- build:js({.tmp,app}) scripts/externals.js -->
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
@@ -298,6 +310,7 @@
     <script src="scripts/controllers/teacher/in_class/inclass_display_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/help/teacher_getting_started_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/help/future_ctrl.js"></script>
     <script src="scripts/controllers/teacher/help/lti_help_ctrl.js"></script>
 
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>

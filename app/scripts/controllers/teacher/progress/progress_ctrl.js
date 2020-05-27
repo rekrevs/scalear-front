@@ -78,9 +78,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.export=function () {
-      Course.exportModuleProgress({course_id: $stateParams.course_id})
-      .$promise
-      .then(function(response) {
+      Course.exportModuleProgress({
+        course_id: $stateParams.course_id
+      },function(response) {
         if(response.notice) {
           ErrorHandler.showMessage($translate.instant("error_message.export_course"), 'errorMessage', 4000, 'success');
         }

@@ -197,7 +197,7 @@
         self.dispatchEvent( "canplay" );
         self.dispatchEvent( "canplaythrough" );
       }
-  
+
       self.pause = function() {
         impl.paused = true;
         if( !playerReady ) {
@@ -317,7 +317,7 @@
         }
       }
   
-      function onStateChange( event ) {
+      function onStateChange( event ) { 
         if( event.origin !== VIMEO_HOST ) {
           return;
         }
@@ -332,9 +332,10 @@
         if ( data.player_id != playerUID ) {
           return;
         }
-  
+
         // Methods
         switch ( data.method ) {
+
           case "getCurrentTime":
             onCurrentTime( parseFloat( data.value ) );
             break;
@@ -347,7 +348,8 @@
         }
   
         // Events
-        switch ( data.event ) {
+        switch ( data.event ) { 
+          
           case "loadProgress":
             self.dispatchEvent( "progress" );
             updateDuration( parseFloat( data.data.duration ) );

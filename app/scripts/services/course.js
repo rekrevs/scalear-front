@@ -38,6 +38,7 @@ angular.module('scalearAngularApp')
       'currentCourses': { method: 'GET',isArray: false, headers: headers, params: { action: 'current_courses' } },
       'exportModuleProgress': { method: 'GET', headers: headers, params: { action: 'export_modules_progress' } }, //
       'sendCourseToTeacherMail': { method: 'GET', headers: headers, params: { action: 'send_course_to_mail' } }, //
+      'sendCourseTextToTeacherMail': { method: 'GET', headers: headers, params: { action: 'send_course_txt_to_mail' } }, //
       'systemWideEmail': { method: 'POST', params: { action: 'send_system_announcement' }, headers: headers },
       'getRole': { method: 'GET', headers: headers, params: { action: 'get_role' } },
     });

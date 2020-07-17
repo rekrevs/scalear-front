@@ -136,7 +136,6 @@ angular.module('scalearAngularApp')
       $modal.open({
         templateUrl: '/views/teacher/course_editor/export_modal.html',
         controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
-          $scope.video_export_dialogue = true
           $scope.confirmExport = function(){
             $modalInstance.close();
           }

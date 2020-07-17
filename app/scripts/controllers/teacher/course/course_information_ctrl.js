@@ -76,7 +76,8 @@ angular.module('scalearAngularApp')
       $modal.open({
         templateUrl: '/views/teacher/course_editor/export_modal.html',
         controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
-          $scope.course_export_dialogue = true
+          $scope.course_export_dialogue = fbf.with_fbf == true?  true:false
+          $scope.canvas = fbf.with_fbf == false? true:false
           $scope.cancelExport = function () {
             $modalInstance.close();
           }

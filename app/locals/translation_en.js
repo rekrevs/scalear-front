@@ -1010,7 +1010,7 @@ var translation_en={
             remove_teacher: "Remove Teacher",
             export_as: "Export Anonymized Course Data",
             export_as_canvas: "Export Course to Canvas Package",
-            export_as_canvas_fbf: "Export Course to Canvas Package with feedbackFruits lectures",
+            export_as_canvas_fbf: "Export Course to Canvas Package with FeedbackFruits lectures",
             invite: "Invite to Join",
             send_email_reminder: "Send email reminders",
         },

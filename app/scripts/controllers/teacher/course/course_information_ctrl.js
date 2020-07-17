@@ -69,14 +69,31 @@ angular.module('scalearAngularApp')
           }
         })
     }
-    $scope.sendCourseToTeacherMail = function() {
-      Course.sendCourseToTeacherMail({
-        course_id:  $scope.course.id
-      },function(response){
-        if(response.notice) {
-          ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');
-        }
-      })
+    $scope.sendCourseToTeacherMail = function(fbf) {
+      checkToExport(fbf, $scope.course.id)
+    }
+    function checkToExport(fbf, course_id) {
+      $modal.open({
+        templateUrl: '/views/teacher/course_editor/export_modal.html',
+        controller: ['$scope', '$rootScope', '$modalInstance', function ($scope, $rootScope, $modalInstance) {
+          $scope.course_export_dialogue = fbf.with_fbf == true?  true:false
+          $scope.canvas = fbf.with_fbf == false? true:false
+          $scope.cancelExport = function () {
+            $modalInstance.close();
+          }
+          $scope.beginExport = function () {
+            $modalInstance.close();
+            Course.sendCourseToTeacherMail({
+              course_id: course_id,
+              export_lec_2_fbf: fbf.with_fbf,
+            }, function (response) {
+              if (response.notice) {
+                ErrorHandler.showMessage($translate.instant("error_message.export_course_cc"), 'errorMessage', 4000, 'success');
+              }
+            })
+          }
+        }]
+      });
     }
     $scope.sendCourseTextToTeacherMail = function () {
       Course.sendCourseTextToTeacherMail({

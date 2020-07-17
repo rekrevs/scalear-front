@@ -95,7 +95,15 @@ angular.module('scalearAngularApp')
         }]
       });
     }
-
+    $scope.sendCourseTextToTeacherMail = function () {
+      Course.sendCourseTextToTeacherMail({
+        course_id:  $scope.course.id
+      },function(response){
+        if(response.notice) {
+          ErrorHandler.showMessage($translate.instant("error_message.export_course_text"), 'errorMessage', 4000, 'success');
+        }
+      })
+    }
     //teachers part
     function getTeachers() {
       TeacherModel.getTeachers().then(function(value) {

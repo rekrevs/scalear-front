@@ -117,31 +117,36 @@ angular.module('scalearAngularApp')
       $rootScope.$broadcast("delete_online_marker", marker)
     }
 
-  
-    $scope.checkToExportVideo = function() {
-      console.log('here')
+    exportVideo = function (course_id,lecture_id) {
+      Lecture.exportLectureToFeedbackFruit({
+        course_id: course_id,
+        lecture_id: lecture_id
+      },{}
+      ,function(response){
+        angular.element('#export_button_2_fbf')[0].disabled = false
+        if (response.notice){
+          ErrorHandler.showMessage("video export to feedbackFruit accomplished", 'errorMessage', 4000, 'success');
+        } else {
+          ErrorHandler.showMessage("video export failed", 'errorMessage', 4000, 'error');
+        }
+      })
+    };
+   
+    checkToExportVideo = function(course_id,lecture_id){
       $modal.open({
         templateUrl: '/views/teacher/course_editor/export_modal.html',
         controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
           $scope.video_export_dialogue = true
           $scope.course_export_dialogue = false
           $scope.confirmExport = function(){
-            $modalInstance.close();
-            Lecture.exportLectureToFeedbackFruit({
-              course_id: $scope.lecture.course_id,
-              lecture_id: $scope.lecture.id
-            },{}
-            ,function(response){
-              angular.element('#export_button_2_fbf')[0].disabled = false
-              if (response.notice){
-                ErrorHandler.showMessage("video export to feedbackFruit accomplished", 'errorMessage', 4000, 'success');
-              } else {
-                ErrorHandler.showMessage("video export failed", 'errorMessage', 4000, 'error');
-              }
-            })
+            $modalInstance.close(); 
+            $scope.exportVideo(course_id,lecture_id)
           }
         }]
       });
+    }
+    $scope.checkToExportVideo = function() {
+      checkToExportVideo($scope.lecture.course_id,$scope.lecture.id)
     }
     function checkToTrim(url,lecture) {
       $modal.open({

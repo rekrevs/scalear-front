@@ -117,7 +117,7 @@ angular.module('scalearAngularApp')
       $rootScope.$broadcast("delete_online_marker", marker)
     }
 
-    exportVideo = function (course_id,lecture_id) {
+    $scope.exportVideo = function (course_id,lecture_id) {
       Lecture.exportLectureToFeedbackFruit({
         course_id: course_id,
         lecture_id: lecture_id
@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
       })
     };
    
-    checkToExportVideo = function(course_id,lecture_id){
+    function checkToExportVideo (course_id,lecture_id) {
       $modal.open({
         templateUrl: '/views/teacher/course_editor/export_modal.html',
         controller: ['$scope', '$modalInstance', function ($scope, $modalInstance) {
@@ -140,7 +140,7 @@ angular.module('scalearAngularApp')
           $scope.course_export_dialogue = false
           $scope.confirmExport = function(){
             $modalInstance.close(); 
-            exportVideo(course_id,lecture_id)
+            $scope.exportVideo(course_id,lecture_id)
           }
         }]
       });

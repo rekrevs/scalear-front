@@ -140,7 +140,7 @@ angular.module('scalearAngularApp')
           $scope.course_export_dialogue = false
           $scope.confirmExport = function(){
             $modalInstance.close(); 
-            $scope.exportVideo(course_id,lecture_id)
+            exportVideo(course_id,lecture_id)
           }
         }]
       });

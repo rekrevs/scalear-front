@@ -38,7 +38,12 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
-  </head>
+    <style>
+        body { 
+        display : none   
+       }
+    </style>
+</head>
 
 
   <body>
@@ -359,5 +364,11 @@
             else
                 self.location = "ie.html"
         }
-    </script>
+        if(self == top) {
+        document.getElementsByTagName("body")[0].style.display = 'block';
+        }
+        else{
+        top.location = self.location;
+        }
+    </script>   
 </html>
